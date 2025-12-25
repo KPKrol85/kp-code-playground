@@ -1,0 +1,2 @@
+Codex działa poprawnie
+Nie zmieniaj nic więcej w projekcie.
