@@ -12,8 +12,7 @@ function renderAppShell(viewTitle, contentNode) {
   const appTopbar = dom.h("div", "app-topbar");
   appTopbar.innerHTML = `
     <a class="app-topbar__brand logo flex" href="#/app" aria-label="FleetOps - Panel" data-scroll-top="app" style="--app-logo-size: 26px;">
-      <img class="logo__icon logo__icon--light" src="assets/icons/logo-black.svg" alt="FleetOps logo" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
-      <img class="logo__icon logo__icon--dark" src="assets/icons/logo-white.svg" alt="" aria-hidden="true" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
+      <img class="logo__icon" src="${theme === "dark" ? "assets/icons/logo-white.svg" : "assets/icons/logo-black.svg"}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="FleetOps logo" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
       <span>FleetOps</span>
     </a>
     <div class="app-topbar__actions">
@@ -27,8 +26,7 @@ function renderAppShell(viewTitle, contentNode) {
         </svg>
       </button>
       <button class="button ghost" id="drawerToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="appDrawer">
-        <img class="drawer-toggle__icon drawer-toggle__icon--light" src="assets/icons/hamburger-light.svg" alt="Menu" width="22" height="22" />
-        <img class="drawer-toggle__icon drawer-toggle__icon--dark" src="assets/icons/hamburger-dark.svg" alt="Menu" width="22" height="22" />
+        <img class="drawer-toggle__icon" src="${theme === "dark" ? "assets/icons/hamburger-dark.svg" : "assets/icons/hamburger-light.svg"}" data-theme-src-light="assets/icons/hamburger-light.svg" data-theme-src-dark="assets/icons/hamburger-dark.svg" alt="Menu" width="22" height="22" />
       </button>
     </div>
   `;
@@ -40,11 +38,13 @@ function renderAppShell(viewTitle, contentNode) {
 
   const sidebar = dom.h("aside", "sidebar drawer");
   sidebar.setAttribute("id", "appDrawer");
+  sidebar.setAttribute("role", "dialog");
+  sidebar.setAttribute("aria-modal", "true");
+  sidebar.setAttribute("aria-label", "Nawigacja aplikacji");
   sidebar.setAttribute("aria-hidden", "true");
   sidebar.innerHTML = `
     <a class="logo flex" href="#/app" aria-label="FleetOps - Panel" data-scroll-top="app" style="--app-logo-size: 30px;">
-      <img class="logo__icon logo__icon--light" src="assets/icons/logo-black.svg" alt="FleetOps logo" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
-      <img class="logo__icon logo__icon--dark" src="assets/icons/logo-white.svg" alt="" aria-hidden="true" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
+      <img class="logo__icon" src="${theme === "dark" ? "assets/icons/logo-white.svg" : "assets/icons/logo-black.svg"}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="FleetOps logo" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
       <span>FleetOps</span>
     </a>
     <nav aria-label="Aplikacja">
@@ -78,7 +78,7 @@ function renderAppShell(viewTitle, contentNode) {
       </button>
       <button class="button ghost" aria-label="Powiadomienia" type="button">Powiadomienia</button>
       <div class="dropdown">
-        <button class="button ghost avatar" id="userMenuBtn" type="button">${initials}</button>
+        <button class="button ghost avatar" id="userMenuBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="userMenu">${initials}</button>
         <div class="dropdown-menu" id="userMenu" role="menu">
           <div class="dropdown-item muted">${auth.user ? auth.user.name : "Użytkownik demo"}</div>
           <div class="dropdown-item"><a href="#/about">O projekcie</a></div>
@@ -151,6 +151,30 @@ function renderAppShell(viewTitle, contentNode) {
   const firstLink = sidebar.querySelector("nav a");
   let isDrawerOpen = false;
 
+  const getDrawerFocusables = () => Array.from(
+    sidebar.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+  );
+
+  const trapDrawerFocus = (event) => {
+    if (!isDrawerOpen || event.key !== "Tab") return;
+    const focusables = getDrawerFocusables();
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+
+    if (event.shiftKey) {
+      if (active === first || !sidebar.contains(active)) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else if (active === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   const syncDrawerUI = () => {
     sidebar.setAttribute("aria-hidden", String(!isDrawerOpen));
     drawerBackdrop.classList.toggle("is-visible", isDrawerOpen);
@@ -166,6 +190,7 @@ function renderAppShell(viewTitle, contentNode) {
   const closeDrawer = () => {
     isDrawerOpen = false;
     syncDrawerUI();
+    drawerToggle.focus();
   };
 
   drawerToggle.addEventListener("click", () => {
@@ -182,7 +207,9 @@ function renderAppShell(viewTitle, contentNode) {
   const handleKeydown = (event) => {
     if (event.key === "Escape" && isDrawerOpen) {
       closeDrawer();
+      return;
     }
+    trapDrawerFocus(event);
   };
   document.addEventListener("keydown", handleKeydown);
 

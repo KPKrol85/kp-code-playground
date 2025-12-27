@@ -153,11 +153,12 @@ function initResourcesMenu() {
 
   let isOpen = false;
 
-  const closeMenu = () => {
+  const closeMenu = (returnFocus = false) => {
     if (!isOpen) return;
     isOpen = false;
     menu.classList.remove("open");
     toggle.setAttribute("aria-expanded", "false");
+    if (returnFocus) toggle.focus();
   };
 
   const openMenu = () => {
@@ -172,27 +173,26 @@ function initResourcesMenu() {
   toggle.addEventListener("click", (event) => {
     event.preventDefault();
     if (isOpen) {
-      closeMenu();
+      closeMenu(true);
     } else {
       openMenu();
     }
   });
 
   menu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeMenu);
+    link.addEventListener("click", () => closeMenu(true));
   });
 
   const handleDocClick = (event) => {
     if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-      closeMenu();
+      closeMenu(true);
     }
   };
   document.addEventListener("click", handleDocClick);
 
   const handleDocKeydown = (event) => {
     if (event.key === "Escape" && isOpen) {
-      closeMenu();
-      toggle.focus();
+      closeMenu(true);
     }
   };
   document.addEventListener("keydown", handleDocKeydown);
@@ -208,6 +208,8 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
   if (!app) return;
 
   setMarketingTheme();
+  const theme = FleetStore.state.preferences.theme || "light";
+  const themeAsset = (light, dark) => (theme === "dark" ? dark : light);
   setPageMeta(title, description);
 
   app.innerHTML = `
@@ -215,15 +217,13 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
       <header class="container navbar" role="banner">
         <a class="logo flex" href="#/" aria-label="FleetOps — Strona główna" data-scroll-top="home">
 
-          <img class="logo__icon logo__icon--light" src="assets/icons/logo-black.svg" alt="FleetOps logo" width="52" height="52" />
-          <img class="logo__icon logo__icon--dark"  src="assets/icons/logo-white.svg" alt="" aria-hidden="true" width="52" height="52" />
+          <img class="logo__icon" src="${themeAsset("assets/icons/logo-black.svg", "assets/icons/logo-white.svg")}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
 
           <span>FleetOps</span>
         </a>
         <nav class="nav" aria-label="Nawigacja glowna">
           <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przelacz nawigacje">
-            <img class="nav-toggle__icon nav-toggle__icon--light" src="assets/icons/hamburger-light.svg" alt="" aria-hidden="true" />
-            <img class="nav-toggle__icon nav-toggle__icon--dark" src="assets/icons/hamburger-dark.svg" alt="" aria-hidden="true" />
+            <img class="nav-toggle__icon" src="${themeAsset("assets/icons/hamburger-light.svg", "assets/icons/hamburger-dark.svg")}" data-theme-src-light="assets/icons/hamburger-light.svg" data-theme-src-dark="assets/icons/hamburger-dark.svg" alt="" aria-hidden="true" />
           </button>
           <div class="nav-backdrop" data-nav-close></div>
           <div class="nav-drawer" id="mobileNav" role="dialog" aria-modal="true" aria-label="Nawigacja mobilna">
@@ -276,8 +276,7 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
           <div class="footer__grid">
             <div class="footer__brand">
               <a class="footer__logo" href="#/" aria-label="FleetOps home" data-scroll-top="home">
-                <img class="logo__icon logo__icon--light" src="assets/icons/logo-black.svg" alt="FleetOps logo" width="52" height="52" />
-                <img class="logo__icon logo__icon--dark"  src="assets/icons/logo-white.svg" alt="" aria-hidden="true" width="52" height="52" />
+                <img class="logo__icon" src="${themeAsset("assets/icons/logo-black.svg", "assets/icons/logo-white.svg")}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
               </a>
               <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
               <span class="footer__eyebrow">Stworzone dla zespołów operacyjnych</span>
@@ -373,6 +372,9 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
 }
 
 function renderProductPage() {
+  const theme = FleetStore.state.preferences.theme || "light";
+  const themeAsset = (light, dark) => (theme === "dark" ? dark : light);
+
   renderMarketingShell({
     title: "Produkt FleetOps",
     eyebrow: "Produkt",
@@ -513,8 +515,7 @@ function renderProductPage() {
     mark.setAttribute("aria-hidden", "true");
     mark.setAttribute("role", "presentation");
     mark.innerHTML = `
-      <img class="logo__icon logo__icon--light" src="assets/icons/logo-black.svg" alt="" aria-hidden="true" />
-      <img class="logo__icon logo__icon--dark" src="assets/icons/logo-white.svg" alt="" aria-hidden="true" />
+      <img class="logo__icon" src="${themeAsset("assets/icons/logo-black.svg", "assets/icons/logo-white.svg")}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="" aria-hidden="true" />
     `;
     hero.appendChild(mark);
   }
@@ -689,6 +690,52 @@ function renderPricingPage() {
         <div class="hero-cta">
           <a class="button primary" href="#/contact">Skontaktuj sie</a>
           <a class="button secondary" href="#/login">Testuj demo</a>
+        </div>
+      </section>
+    `,
+  });
+}
+
+function renderSecurityPage() {
+  renderMarketingShell({
+    title: "Bezpieczenstwo",
+    eyebrow: "Bezpieczenstwo",
+    lead: "Informacje o standardach bezpieczenstwa FleetOps udostepnimy wkrotce.",
+    description: "Bezpieczenstwo FleetOps - strona w przygotowaniu.",
+    body: `
+      <section class="section-tight">
+        <div class="marketing-card">
+          <p class="tag">Coming soon</p>
+          <h2>Bezpieczenstwo w przygotowaniu</h2>
+          <p>Ta podstrona jest w trakcie przygotowan. Udostepnimy szczegoly o praktykach i certyfikacjach bezpieczenstwa.</p>
+          <p class="muted small">Under construction - wroc wkrotce.</p>
+          <div class="hero-cta" style="margin-top: var(--space-2);">
+            <a class="button primary" href="#/contact">Skontaktuj sie</a>
+            <a class="button secondary" href="#/app">Zobacz demo</a>
+          </div>
+        </div>
+      </section>
+    `,
+  });
+}
+
+function renderCareersPage() {
+  renderMarketingShell({
+    title: "Kariera",
+    eyebrow: "Kariera",
+    lead: "Otwarte role i informacje o zespolach FleetOps pojawia sie wkrotce.",
+    description: "Kariera w FleetOps - strona w przygotowaniu.",
+    body: `
+      <section class="section-tight">
+        <div class="marketing-card">
+          <p class="tag">Coming soon</p>
+          <h2>Kariera w przygotowaniu</h2>
+          <p>Budujemy sekcje z ofertami pracy i opisem zespolu. Jesli chcesz porozmawiac wczesniej, odezwij sie.</p>
+          <p class="muted small">Under construction - sprawdz ponownie niebawem.</p>
+          <div class="hero-cta" style="margin-top: var(--space-2);">
+            <a class="button primary" href="#/contact">Skontaktuj sie</a>
+            <a class="button secondary" href="#/app">Zobacz demo</a>
+          </div>
         </div>
       </section>
     `,
@@ -1244,6 +1291,8 @@ function renderCookiesPage() {
 window.renderProductPage = renderProductPage;
 window.renderFeaturesPage = renderFeaturesPage;
 window.renderPricingPage = renderPricingPage;
+window.renderSecurityPage = renderSecurityPage;
+window.renderCareersPage = renderCareersPage;
 window.renderAboutPage = renderAboutPage;
 window.renderContactPage = renderContactPage;
 window.renderPrivacyPage = renderPrivacyPage;
