@@ -1,5 +1,13 @@
 function ordersView() {
   const root = dom.h("div");
+  const permissions = window.FleetPermissions || {};
+  const Actions = permissions.Actions || {};
+  const can = permissions.can || (() => true);
+  const explainDeny = permissions.explainDeny || (() => "");
+  const applyDisabledState = permissions.applyDisabledState || ((el) => el && el.setAttribute("aria-disabled", "false"));
+  const guard = permissions.guard || (() => true);
+  const getPermissionContext = (record) => ({ user: FleetStore.state.currentUser, record });
+
 
   const header = dom.h("div", "module-header");
   header.innerHTML = `<div><h3>Zlecenia</h3><p class="muted small">Monitoruj status dostaw</p></div><div class="toolbar"><select class="input" id="ordersSortBy" aria-label="Sortuj"><option value="updated">Aktualizacja</option><option value="client">Klient</option><option value="status">Status</option><option value="priority">Priorytet</option></select><select class="input" id="ordersSortDir" aria-label="Kierunek"><option value="asc">Rosnaco</option><option value="desc">Malejaco</option></select><button class="button primary" id="addOrder" type="button">Add order</button><button class="button secondary" id="exportOrders" type="button">Eksportuj CSV</button></div>`;
@@ -269,6 +277,9 @@ function ordersView() {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       clearFormErrors(form);
+      const action = isEdit ? Actions.ORDERS_EDIT : Actions.ORDERS_CREATE;
+      const context = getPermissionContext(order);
+      if (!guard(action, context)) return;
       const formValues = getOrderFormValues(form);
       const errors = validateOrderForm(formValues);
       Object.keys(errors).forEach((name) => setFieldError(form, name, errors[name]));
@@ -286,12 +297,12 @@ function ordersView() {
       };
 
       if (isEdit && order) {
-        FleetStore.updateOrder(order.id, payload);
+        if (!FleetStore.updateOrder(order.id, payload)) return;
         const updatedOrder = FleetStore.state.domain.orders.find((o) => o.id === order.id);
         buildActivityEntry("updated", updatedOrder || order);
         Toast.show("Zlecenie zaktualizowane", "success");
       } else {
-        FleetStore.addOrder(payload);
+        if (!FleetStore.addOrder(payload)) return;
         const createdOrder = FleetStore.state.domain.orders[FleetStore.state.domain.orders.length - 1];
         buildActivityEntry("created", createdOrder || payload);
         Toast.show("Zlecenie dodane", "success");
@@ -306,6 +317,7 @@ function ordersView() {
   };
 
   const openDeleteConfirm = (order) => {
+    if (!guard(Actions.ORDERS_DELETE, getPermissionContext(order))) return;
     const body = dom.h("div");
     body.innerHTML = `
       <p>Czy na pewno usunac zlecenie <strong>${order.id}</strong>?</p>
@@ -323,7 +335,8 @@ function ordersView() {
 
     body.querySelector("[data-modal-confirm]").addEventListener("click", (e) => {
       e.preventDefault();
-      FleetStore.deleteOrder(order.id);
+      if (!guard(Actions.ORDERS_DELETE, getPermissionContext(order))) return;
+      if (!FleetStore.deleteOrder(order.id)) return;
       buildActivityEntry("deleted", order);
       Toast.show("Zlecenie usuniete", "success");
       Modal.close();
@@ -425,6 +438,13 @@ function ordersView() {
     loadMoreBtn.disabled = !canLoadMore;
 
     tableWrap.querySelectorAll("tr.order-row").forEach((row) => {
+      const order = FleetStore.state.domain.orders.find((o) => o.id === row.dataset.id);
+      const editBtn = row.querySelector('[data-order-action="edit"]');
+      const deleteBtn = row.querySelector('[data-order-action="delete"]');
+      const editAllowed = can(Actions.ORDERS_EDIT, getPermissionContext(order));
+      const deleteAllowed = can(Actions.ORDERS_DELETE, getPermissionContext(order));
+      applyDisabledState(editBtn, editAllowed, explainDeny(Actions.ORDERS_EDIT, getPermissionContext(order)));
+      applyDisabledState(deleteBtn, deleteAllowed, explainDeny(Actions.ORDERS_DELETE, getPermissionContext(order)));
       row.addEventListener("click", (event) => {
         if (event.target.closest("[data-order-menu]")) return;
         openOrder(row.dataset.id);
@@ -448,8 +468,10 @@ function ordersView() {
           if (!order) return;
 
           if (action.dataset.orderAction === "edit") {
+            if (!guard(Actions.ORDERS_EDIT, getPermissionContext(order))) return;
             openOrderForm({ mode: "edit", order });
           } else if (action.dataset.orderAction === "delete") {
+            if (!guard(Actions.ORDERS_DELETE, getPermissionContext(order))) return;
             openDeleteConfirm(order);
           }
 
@@ -538,8 +560,11 @@ function ordersView() {
 
   const addBtn = header.querySelector("#addOrder");
   if (addBtn) {
+    const allowCreate = can(Actions.ORDERS_CREATE, getPermissionContext());
+    applyDisabledState(addBtn, allowCreate, explainDeny(Actions.ORDERS_CREATE, getPermissionContext()));
     addBtn.addEventListener("click", (e) => {
       e.preventDefault();
+      if (!guard(Actions.ORDERS_CREATE, getPermissionContext())) return;
       openOrderForm({ mode: "add" });
     });
   }
