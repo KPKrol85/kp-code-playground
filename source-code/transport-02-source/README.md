@@ -223,7 +223,7 @@ This project is provided for portfolio and educational purposes only.
 FleetOps to nowoczesny, aplikacyjny **frontend-only dashboard typu SaaS** do zarządzania transportem i flotą, stworzony jako profesjonalny projekt portfolio.
 Aplikacja skupia się na czystej architekturze interfejsu, przewidywalnym zarządzaniu stanem oraz wzorcach nawigacji znanych z realnych systemów SaaS — bez integracji backendowej.
 
-🔗 **Demo online:** *(https://transport-project-02.netlify.app/*
+🔗 **Demo online:** *https://transport-project-02.netlify.app/*
 
 Projekt jest częścią większego, profesjonalnego portfolio, którego celem jest pokazanie
 struktury frontendu gotowej do produkcji, świadomości wydajnościowej
