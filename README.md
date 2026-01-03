@@ -1,5 +1,8 @@
+<p align="center">
+  <img src="assets/LOGO-1200x630.png" alt="KP_Code logo" width="440" />
+</p>
+
 # kp-code-playground
-![KP Code Logo](../assets/LOGO-1200x630.png)
 
 Development playground for active and experimental projects.
 
