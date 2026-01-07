@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/fav-icon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/fav-icon/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="css/style.css" />
     <style>
       :root {
         color-scheme: light;
@@ -210,7 +211,7 @@
               <img src="assets/img/logo/logo-and-name/footer-logo-light.svg" alt="Logo Atelier No.02" class="footer__logo footer__logo--light" width="40" height="40" />
               <img src="assets/img/logo/logo-and-name/footer-logo-dark.svg" alt="" class="footer__logo footer__logo--dark" width="40" height="40" />
             </a>
-            <p class="footer__tagline"> Autorska kuchnia oparta na sezonowości i jakości składników.</p>
+            <p class="footer__tagline">Autorska kuchnia oparta na sezonowości i jakości składników.</p>
           </div>
 
           <nav class="footer__nav" aria-label="Footer">
@@ -290,10 +291,23 @@
       </div>
     </footer>
 
+    <!-- No script -->
+    <noscript>
+      <div class="nojs" role="status" aria-live="polite">JavaScript is disabled. Some interactive features may be limited.</div>
+    </noscript>
+    <!-- Script -->
+    <script src="js/script.js" defer></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((reg) => console.log("✅ Service Worker zarejestrowany:", reg.scope))
+            .catch((err) => console.warn("❌ Błąd rejestracji Service Workera:", err));
+        });
+      }
+    </script>
   </body>
 </html>
-
-
-
 
 
