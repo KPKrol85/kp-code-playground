@@ -72,7 +72,7 @@
   --header-backdrop: rgba(248, 241, 231, 0.88);
   --header-border: rgba(0, 0, 0, 0.06);
   --header-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  --header-h: 64px;
+  --header-h: 100px;
   --header-offset: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   --surface-overlay: rgba(255, 253, 248, 0.96);
   --c-surface-1: var(--surface-overlay);
@@ -407,7 +407,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 64px;
+  min-height: var(--header-h);
   gap: 1rem;
 }
 
