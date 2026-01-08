@@ -3,49 +3,55 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Menu • Gastronomy 02 – Atelier No.02</title>
-    <meta name="color-scheme" content="light dark" />
+    <title>Menu | Atelier No.02</title>
 
-    <meta name="description" content="Pełne menu restauracji Gastronomy 02: przystawki, dania główne, zupy, desery i autorskie koktajle. Poznaj składniki i ceny fine dining od Atelier No.02." />
+    <!-- SEO -->
+    <meta name="description" content="Menu Atelier No.02: przystawki, dania główne, zupy, desery oraz autorskie koktajle. Poznaj składniki i ceny w stylu fine dining." />
     <link rel="canonical" href="https://gastronomy-project-02.netlify.app/menu.html" />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="KP_Code" />
 
-    <meta name="author" content="Atelier No.02" />
+    <!-- PWA / UI -->
+    <meta name="color-scheme" content="light dark" />
     <meta name="application-name" content="Atelier No.02" />
     <meta name="apple-mobile-web-app-title" content="Atelier No.02" />
     <meta name="msapplication-TileColor" content="#f8f1e7" />
+    <meta name="theme-color" content="#ffffff" />
 
+    <!-- Favicons + manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/fav-icon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/fav-icon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/fav-icon/apple-touch-icon.png" />
     <link rel="mask-icon" href="assets/icons/fav-icon/safari-pinned-tab.svg" color="#000000" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
 
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Atelier No.02" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Menu Gastronomy 02 – pełna karta dań | Atelier No.02" />
-    <meta property="og:description" content="Przystawki, dania główne, desery i koktajle restauracji Gastronomy 02. Elegancka karta degustacyjna przygotowana przez Atelier No.02." />
+    <meta property="og:title" content="Menu | Atelier No.02" />
+    <meta property="og:description" content="Przystawki, dania główne, desery i koktajle Atelier No.02 — pełna karta w stylu fine dining." />
+    <meta property="og:url" content="https://gastronomy-project-02.netlify.app/menu.html" />
     <meta property="og:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Fine dining – kompozycja dań Gastronomy 02" />
-    <meta property="og:url" content="https://gastronomy-project-02.netlify.app/menu.html" />
+    <meta property="og:image:alt" content="Atelier No.02 — fine dining" />
     <meta property="og:locale" content="pl_PL" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Menu Gastronomy 02 – pełna karta dań | Atelier No.02" />
-    <meta name="twitter:description" content="Przystawki, dania główne, desery i koktajle restauracji Gastronomy 02. Elegancka karta degustacyjna przygotowana przez Atelier No.02." />
+    <meta name="twitter:title" content="Menu | Atelier No.02" />
+    <meta name="twitter:description" content="Poznaj menu Atelier No.02: dania sezonowe, desery i autorskie koktajle w stylu fine dining." />
     <meta name="twitter:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
-    <meta name="twitter:image:alt" content="Fine dining – kompozycja dań Gastronomy 02" />
-    <meta name="twitter:site" content="@AtelierNo02" />
-    <meta name="twitter:creator" content="@AtelierNo02" />
+    <meta name="twitter:image:alt" content="Atelier No.02 — fine dining" />
+    <meta name="twitter:site" content="@KP_Code_85" />
+    <meta name="twitter:creator" content="@KP_Code_85" />
 
+    <!-- Preload fonts -->
     <link rel="preload" href="assets/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-400-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 
+    <!-- Theme preload -->
     <script>
       (function () {
         var storageKey = "kp-theme";
@@ -68,302 +74,293 @@
         if (meta) meta.setAttribute("content", theme === "dark" ? "#181210" : "#f8f1e7");
       })();
     </script>
+
+    <!-- JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
+        "@graph": [
           {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Strona główna",
-            "item": "https://gastronomy-project-02.netlify.app/"
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Strona główna",
+                "item": "https://gastronomy-project-02.netlify.app/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Menu",
+                "item": "https://gastronomy-project-02.netlify.app/menu.html"
+              }
+            ]
           },
           {
-            "@type": "ListItem",
-            "position": 2,
+            "@type": "Organization",
+            "@id": "https://gastronomy-project-02.netlify.app/#organization",
+            "name": "Atelier No.02",
+            "url": "https://gastronomy-project-02.netlify.app/",
+            "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
+            "email": "kontakt@kp-code.pl"
+          },
+          {
+            "@type": "Menu",
+            "@id": "https://gastronomy-project-02.netlify.app/menu.html#menu",
             "name": "Menu",
-            "item": "https://gastronomy-project-02.netlify.app/menu.html"
-          }
-        ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "email": "kontakt@kp-code.pl",
-        "@id": "https://gastronomy-project-02.netlify.app/#organization",
-        "name": "Atelier No.02",
-        "url": "https://gastronomy-project-02.netlify.app/",
-        "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
-        "description": "Strona restauracji Atelier No.02 – nowoczesny design, responsywność i SEO.",
-        "image": [
-          {
-            "@type": "ImageObject",
-            "url": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg",
-            "width": 1200,
-            "height": 630
-          },
-          {
-            "@type": "ImageObject",
-            "url": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x1200.jpg",
-            "width": 1200,
-            "height": 1200
-          }
-        ],
-        "sameAs": ["https://github.com/atelier-no-02", "https://x.com/atelierno02"]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Menu",
-        "name": "Gastronomy 02 – Menu",
-        "url": "https://gastronomy-project-02.netlify.app/menu.html",
-        "hasMenuSection": [
-          {
-            "@type": "MenuSection",
-            "name": "Przystawki",
-            "hasMenuItem": [
+            "url": "https://gastronomy-project-02.netlify.app/menu.html",
+            "inLanguage": "pl-PL",
+            "hasMenuSection": [
               {
-                "@type": "MenuItem",
-                "name": "Risotto z Gruszką i Szałwią",
-                "description": "Ryż Carnaroli, karmelizowana gruszka, masło szałwiowe, parmezan dojrzewający.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/przystawki/risotto-960x640.jpg",
-                "suitableForDiet": "https://schema.org/VegetarianDiet",
-                "offers": { "@type": "Offer", "price": "39.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                "@type": "MenuSection",
+                "name": "Przystawki",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Risotto z Gruszką i Szałwią",
+                    "description": "Ryż Carnaroli, karmelizowana gruszka, masło szałwiowe, parmezan dojrzewający.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/przystawki/risotto-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/VegetarianDiet",
+                    "offers": { "@type": "Offer", "price": "39.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Carpaccio z Polędwicy",
+                    "description": "Polędwica wołowa sezonowana, rukola z oliwą truflową, parmezan, marynowane kapary.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/przystawki/carpaccio-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/GlutenFreeDiet",
+                    "offers": { "@type": "Offer", "price": "52.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Burrata z Pesto Bazyliowym",
+                    "description": "Świeża burrata, pieczone pomidory koktajlowe, pesto z bazylii i pistacji, oliwa z pierwszego tłoczenia.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/przystawki/burrata-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/VegetarianDiet",
+                    "offers": { "@type": "Offer", "price": "46.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  }
                 ]
               },
+
               {
-                "@type": "MenuItem",
-                "name": "Carpaccio z Polędwicy",
-                "description": "Polędwica wołowa sezonowana, rukola z oliwą truflową, parmezan, marynowane kapary.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/przystawki/carpaccio-960x640.jpg",
-                "suitableForDiet": "https://schema.org/GlutenFreeDiet",
-                "offers": { "@type": "Offer", "price": "52.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                "@type": "MenuSection",
+                "name": "Dania główne",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Kaczka w Glazurze Burgundowej",
+                    "description": "Pierś z kaczki wolno pieczona, redukcja z wina i fig, puree z topinamburu, grillowana cykoria.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/dania-glowne/kaczka-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "92.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Dorsz Atlantycki z Cytrusami",
+                    "description": "Sous-vide filet dorsza, pianka cytrynowa, mus z groszku cukrowego, chrupiące chipsy z jarmużu.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/dania-glowne/dorsz-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/GlutenFreeDiet",
+                    "offers": { "@type": "Offer", "price": "78.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Ravioli z Pieczoną Dynią",
+                    "description": "Ręcznie lepione ravioli, pieczona dynia piżmowa, masło palone z szałwią, chips z parmezanu.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/dania-glowne/ravioli-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/VegetarianDiet",
+                    "offers": { "@type": "Offer", "price": "64.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  }
                 ]
               },
+
               {
-                "@type": "MenuItem",
-                "name": "Burrata z Pesto Bazyliowym",
-                "description": "Świeża burrata, pieczone pomidory koktajlowe, pesto z bazylii i pistacji, oliwa z pierwszego tłoczenia.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/przystawki/burrata-960x640.jpg",
-                "suitableForDiet": "https://schema.org/VegetarianDiet",
-                "offers": { "@type": "Offer", "price": "46.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              }
-            ]
-          },
-          {
-            "@type": "MenuSection",
-            "name": "Dania główne",
-            "hasMenuItem": [
-              {
-                "@type": "MenuItem",
-                "name": "Kaczka w Glazurze Burgundowej",
-                "description": "Pierś z kaczki wolno pieczona, redukcja z wina i fig, puree z topinamburu, grillowana cykoria.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/dania-glowne/kaczka-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "92.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Dorsz Atlantycki z Cytrusami",
-                "description": "Sous-vide filet dorsza, pianka cytrynowa, mus z groszku cukrowego, chrupiące chipsy z jarmużu.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/dania-glowne/dorsz-960x640.jpg",
-                "suitableForDiet": "https://schema.org/GlutenFreeDiet",
-                "offers": { "@type": "Offer", "price": "78.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Ravioli z Pieczoną Dynią",
-                "description": "Ręcznie lepione ravioli, pieczona dynia piżmowa, masło palone z szałwią, chips z parmezanu.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/dania-glowne/ravioli-960x640.jpg",
-                "suitableForDiet": "https://schema.org/VegetarianDiet",
-                "offers": { "@type": "Offer", "price": "64.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              }
-            ]
-          },
-          {
-            "@type": "MenuSection",
-            "name": "Zupy",
-            "hasMenuItem": [
-              {
-                "@type": "MenuItem",
-                "name": "Bulion z Pieczonego Drobiu",
-                "description": "Długo gotowany bulion, pierożki z foie gras, olej z natki pietruszki, warzywa julienne.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/zupy/bulion-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "32.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                "@type": "MenuSection",
+                "name": "Zupy",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Bulion z Pieczonego Drobiu",
+                    "description": "Długo gotowany bulion, pierożki z foie gras, olej z natki pietruszki, warzywa julienne.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/zupy/bulion-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "32.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Krem z Pieczonego Kalafiora",
+                    "description": "Kalafior pieczony z laską wanilii, oliwa truflowa, prażone migdały, chip z parmezanu dojrzewającego.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/zupy/krem-kalafior-960x640.jpg",
+                    "suitableForDiet": ["https://schema.org/VegetarianDiet", "https://schema.org/GlutenFreeDiet"],
+                    "offers": { "@type": "Offer", "price": "28.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Krem Kokosowy z Trawą Cytrynową",
+                    "description": "Mleko kokosowe, trawa cytrynowa, imbir, limonka, piklowane shiitake, olej z kolendry.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/zupy/krem-kokos-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/VeganDiet",
+                    "offers": { "@type": "Offer", "price": "31.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Ostrość", "value": "tak" },
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  }
                 ]
               },
+
               {
-                "@type": "MenuItem",
-                "name": "Krem z Pieczonego Kalafiora",
-                "description": "Kalafior pieczony z laską wanilii, oliwa truflowa, prażone migdały, chip z parmezanu dojrzewającego.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/zupy/krem-kalafior-960x640.jpg",
-                "suitableForDiet": ["https://schema.org/VegetarianDiet", "https://schema.org/GlutenFreeDiet"],
-                "offers": { "@type": "Offer", "price": "28.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                "@type": "MenuSection",
+                "name": "Kuchnia szefa",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Amuse-Bouche Szefa",
+                    "description": "Codziennie nowe trio przekąsek inspirowanych rynkiem lokalnym: tartaletka, marynowany łosoś, sorbet ziołowy.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/kuchnia-szefa/amuse-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "29.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Polędwica Sous-Vide",
+                    "description": "Polędwica wołowa 48h sous-vide, demi-glace z jałowcem, puree z selera, karmelizowane szalotki.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/kuchnia-szefa/poledwica-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "118.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Sandacz z Emulsją Szczypiorkową",
+                    "description": "Sandacz z jeziora Rożnowskiego, emulsja szczypiorkowa, kawior z pstrąga, młode warzywa w maśle.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/kuchnia-szefa/sandacz-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "96.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  }
                 ]
               },
+
               {
-                "@type": "MenuItem",
-                "name": "Krem Kokosowy z Trawą Cytrynową",
-                "description": "Mleko kokosowe, trawa cytrynowa, imbir, limonka, piklowane shiitake, olej z kolendry.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/zupy/krem-kokos-960x640.jpg",
-                "suitableForDiet": "https://schema.org/VeganDiet",
-                "offers": { "@type": "Offer", "price": "31.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Ostrość", "value": "tak" },
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              }
-            ]
-          },
-          {
-            "@type": "MenuSection",
-            "name": "Kuchnia szefa",
-            "hasMenuItem": [
-              {
-                "@type": "MenuItem",
-                "name": "Amuse-Bouche Szefa",
-                "description": "Codziennie nowe trio przekąsek inspirowanych rynkiem lokalnym: tartaletka, marynowany łosoś, sorbet ziołowy.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/kuchnia-szefa/amuse-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "29.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Polędwica Sous-Vide",
-                "description": "Polędwica wołowa 48h sous-vide, demi-glace z jałowcem, puree z selera, karmelizowane szalotki.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/kuchnia-szefa/poledwica-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "118.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Sandacz z Emulsją Szczypiorkową",
-                "description": "Sandacz z jeziora Rożnowskiego, emulsja szczypiorkowa, kawior z pstrąga, młode warzywa w maśle.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/kuchnia-szefa/sandacz-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "96.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              }
-            ]
-          },
-          {
-            "@type": "MenuSection",
-            "name": "Desery",
-            "hasMenuItem": [
-              {
-                "@type": "MenuItem",
-                "name": "Cytrusowe Ciasto na Oliwie",
-                "description": "Oliwa z pierwszego tłoczenia, kandyzowana pomarańcza, krem mascarpone z miodem lawendowym.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/desery/cytrusowe-ciasto-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "34.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                "@type": "MenuSection",
+                "name": "Desery",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Cytrusowe Ciasto na Oliwie",
+                    "description": "Oliwa z pierwszego tłoczenia, kandyzowana pomarańcza, krem mascarpone z miodem lawendowym.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/desery/cytrusowe-ciasto-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "34.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Mus z Gorzkiej Czekolady",
+                    "description": "70% kakao, chrupiące praline z orzechów laskowych, sorbet z wiśni, chrust kakaowy.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/desery/mus-czekoladowy-960x640.jpg",
+                    "suitableForDiet": "https://schema.org/GlutenFreeDiet",
+                    "offers": { "@type": "Offer", "price": "36.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Semifreddo z Owocami Leśnymi",
+                    "description": "Ser mascarpone, konfitura z malin i jeżyn, biszkopt migdałowy, chips z białej czekolady.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/desery/semifreddo-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "33.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  }
                 ]
               },
+
               {
-                "@type": "MenuItem",
-                "name": "Mus z Gorzkiej Czekolady",
-                "description": "70% kakao, chrupiące praline z orzechów laskowych, sorbet z wiśni, chrust kakaowy.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/desery/mus-czekoladowy-960x640.jpg",
-                "suitableForDiet": "https://schema.org/GlutenFreeDiet",
-                "offers": { "@type": "Offer", "price": "36.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                "@type": "MenuSection",
+                "name": "Drinki",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Koktajl Szampański",
+                    "description": "Szampan brut, syrop malinowy, likier kwiatów czarnego bzu, bitter grejpfrutowy.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/drinki/koktajl-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "47.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Old Fashioned",
+                    "description": "Bourbon single barrel, bitter pomarańczowy, syrop cukrowy muscovado, skórka pomarańczy palona.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/drinki/old-fashioned-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "41.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ]
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Ogrodowy Mocktail",
+                    "description": "Tonik ogórkowy, świeży sok z limonki, syrop z białej herbaty, bitter ogrodowy, listki mięty.",
+                    "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/drinki/mocktail-960x640.jpg",
+                    "offers": { "@type": "Offer", "price": "29.00", "priceCurrency": "PLN" },
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Bezalkoholowe", "value": "tak" },
+                      { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
+                      { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
+                    ],
+                    "suitableForDiet": "https://schema.org/VeganDiet"
+                  }
                 ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Semifreddo z Owocami Leśnymi",
-                "description": "Ser mascarpone, konfitura z malin i jeżyn, biszkopt migdałowy, chips z białej czekolady.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/desery/semifreddo-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "33.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              }
-            ]
-          },
-          {
-            "@type": "MenuSection",
-            "name": "Drinki",
-            "hasMenuItem": [
-              {
-                "@type": "MenuItem",
-                "name": "Koktajl Szampański",
-                "description": "Szampan brut, syrop malinowy, likier kwiatów czarnego bzu, bitter grejpfrutowy.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/drinki/koktajl-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "47.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Old Fashioned",
-                "description": "Bourbon single barrel, bitter pomarańczowy, syrop cukrowy muscovado, skórka pomarańczy palona.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/drinki/old-fashioned-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "41.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ]
-              },
-              {
-                "@type": "MenuItem",
-                "name": "Ogrodowy Mocktail",
-                "description": "Tonik ogórkowy, świeży sok z limonki, syrop z białej herbaty, bitter ogrodowy, listki mięty.",
-                "image": "https://gastronomy-project-02.netlify.app/assets/img/subpage-menu/drinki/mocktail-960x640.jpg",
-                "offers": { "@type": "Offer", "price": "29.00", "priceCurrency": "PLN" },
-                "additionalProperty": [
-                  { "@type": "PropertyValue", "name": "Bezalkoholowe", "value": "tak" },
-                  { "@type": "PropertyValue", "name": "Alergeny", "value": "wg obsługi" },
-                  { "@type": "PropertyValue", "name": "Kaloryczność", "value": "brak danych" }
-                ],
-                "suitableForDiet": "https://schema.org/VeganDiet"
               }
             ]
           }
@@ -377,7 +374,7 @@
   <!-- Body -->
   <body class="page page--menu">
     <a class="skip-link" href="#main" id="skip-to-content">Przejdź do treści</a>
-    <a class="skip-link" href="#menu-tabs-start" id="skip-to-categories">Pomiń do kategorii</a>
+    <a class="skip-link" href="#menu-tabs-start" id="skip-to-categories">Przejdź do kategorii menu</a>
 
     <!-- Header -->
     <header class="site-header" aria-label="Nagłówek strony z nawigacją">
@@ -501,7 +498,6 @@
             <p class="menu-section__intro">Sezonowe akcenty, świeże warzywa i przejrzyste smaki, które pobudzą apetyt na dalszą część kolacji.</p>
           </div>
           <ul class="cards menu-cards" data-reveal-group>
-            <!-- Przystawka 01 -->
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -552,7 +548,7 @@
                 </div>
               </article>
             </li>
-            <!-- Przystawka 02 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -602,7 +598,7 @@
                 </div>
               </article>
             </li>
-            <!-- Przystawka 03 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -664,7 +660,6 @@
             <p class="menu-section__intro">Wyselekcjonowane składniki i kompozycje, które celebrują klasykę gastronomii w nowoczesnym wydaniu.</p>
           </div>
           <ul class="cards menu-cards" data-reveal-group>
-            <!-- Danie główne 01 -->
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -714,7 +709,7 @@
                 </div>
               </article>
             </li>
-            <!-- Danie główne 02 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -765,7 +760,7 @@
                 </div>
               </article>
             </li>
-            <!-- Danie główne 03 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -827,7 +822,6 @@
             <p class="menu-section__intro">Aromatyczne buliony i kremy przygotowywane z dbałością o detal – idealne na początek lub w przerwie degustacji.</p>
           </div>
           <ul class="cards menu-cards" data-reveal-group>
-            <!-- Zupa 01 -->
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -865,7 +859,7 @@
                 </div>
               </article>
             </li>
-            <!-- Zupa 02 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -916,7 +910,7 @@
                 </div>
               </article>
             </li>
-            <!-- Zupa 03 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -979,7 +973,6 @@
             <p class="menu-section__intro">Limitowane propozycje inspirowane sezonem i podróżami naszego zespołu kulinarnego.</p>
           </div>
           <ul class="cards menu-cards" data-reveal-group>
-            <!-- Kuchnia Szefa 01 -->
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1029,7 +1022,7 @@
                 </div>
               </article>
             </li>
-            <!-- Kuchnia Szefa 02 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1080,7 +1073,7 @@
                 </div>
               </article>
             </li>
-            <!-- Kuchnia Szefa 03 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1143,7 +1136,6 @@
             <p class="menu-section__intro">Finezyjne, lekkie słodkości, które kończą kolację w wyszukanym, lecz niewymuszonym stylu.</p>
           </div>
           <ul class="cards menu-cards" data-reveal-group>
-            <!-- Deser 01 -->
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1193,7 +1185,7 @@
                 </div>
               </article>
             </li>
-            <!-- Deser 02 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1244,7 +1236,7 @@
                 </div>
               </article>
             </li>
-            <!-- Deser 03 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1305,7 +1297,6 @@
             <p class="menu-section__intro">Autorskie koktajle i klasyki w interpretacji naszego barmańskiego zespołu.</p>
           </div>
           <ul class="cards menu-cards" data-reveal-group>
-            <!-- Drink 01 -->
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1351,7 +1342,7 @@
                 </div>
               </article>
             </li>
-            <!-- Drink 02 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1401,7 +1392,7 @@
                 </div>
               </article>
             </li>
-            <!-- Drink 03 -->
+
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1586,8 +1577,3 @@
     </script>
   </body>
 </html>
-
-
-
-
-

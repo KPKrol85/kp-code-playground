@@ -3,125 +3,169 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Galeria • Gastronomy 02 – Atelier No.02</title>
+    <title>Galeria | Atelier No.02</title>
 
-    <meta name="author" content="Atelier No.02" />
-    <meta name="description" content="Galeria Gastronomy 02: wnętrza restauracji, autorskie dania, desery i koktajle. Zanurz się w atmosferze fine dining przygotowanej przez Atelier No.02." />
-    <link rel="canonical" href="https://gastronomy-project-02.netlify.app/gallery.html" />
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Poznaj Atelier No.02: fine dining oparty na sezonowości i kuchni autorskiej. Lokalni dostawcy, rzemiosło i troska o doświadczenie gościa — zobacz zespół i filozofię." />
+    <link rel="canonical" href="https://gastronomy-project-02.netlify.app/about.html" />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="KP_Code" />
 
+    <!-- PWA / UI -->
     <meta name="color-scheme" content="light dark" />
     <meta name="application-name" content="Atelier No.02" />
     <meta name="apple-mobile-web-app-title" content="Atelier No.02" />
     <meta name="msapplication-TileColor" content="#f8f1e7" />
+    <meta name="theme-color" content="#ffffff" />
 
+    <!-- Favicons + manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/fav-icon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/fav-icon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/fav-icon/apple-touch-icon.png" />
     <link rel="mask-icon" href="assets/icons/fav-icon/safari-pinned-tab.svg" color="#000000" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
 
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Atelier No.02" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Galeria Gastronomy 02 – fine dining w kadrach | Atelier No.02" />
-    <meta property="og:description" content="Wnętrza, dania i koktajle Gastronomy 02. Poznaj atmosferę restauracji w galerii zdjęć przygotowanej przez Atelier No.02." />
+    <meta property="og:title" content="O nas | Atelier No.02 – Fine dining, sezonowość i kuchnia autorska" />
+    <meta property="og:description" content="Fine dining oparty na sezonowości i kuchni autorskiej. Poznaj filozofię Atelier No.02, zespół i lokalnych dostawców." />
+    <meta property="og:url" content="https://gastronomy-project-02.netlify.app/about.html" />
     <meta property="og:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Fine dining – elegancka aranżacja Gastronomy 02" />
-    <meta property="og:url" content="https://gastronomy-project-02.netlify.app/gallery.html" />
+    <meta property="og:image:alt" content="Atelier No.02 — fine dining" />
     <meta property="og:locale" content="pl_PL" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Galeria Gastronomy 02 – fine dining w kadrach | Atelier No.02" />
-    <meta name="twitter:description" content="Wnętrza, dania oraz koktajle Gastronomy 02 uchwycone w eleganckich ujęciach. Galeria restauracji Atelier No.02." />
+    <meta name="twitter:title" content="O nas | Atelier No.02 – Fine dining, sezonowość i kuchnia autorska" />
+    <meta name="twitter:description" content="Poznaj zespół i filozofię Atelier No.02. Sezonowość, lokalni dostawcy i kuchnia autorska w eleganckim wydaniu." />
     <meta name="twitter:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
-    <meta name="twitter:image:alt" content="Fine dining – elegancka aranżacja Gastronomy 02" />
-    <meta name="twitter:site" content="@AtelierNo02" />
-    <meta name="twitter:creator" content="@AtelierNo02" />
+    <meta name="twitter:image:alt" content="Atelier No.02 — fine dining" />
+    <meta name="twitter:site" content="@KP_Code_85" />
+    <meta name="twitter:creator" content="@KP_Code_85" />
 
+    <!-- Preload fonts -->
     <link rel="preload" href="assets/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-400-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 
+    <!-- Theme preload -->
     <script>
       (function () {
         var storageKey = "kp-theme";
         var root = document.documentElement;
         var theme = null;
+
         try {
           var stored = localStorage.getItem(storageKey);
           if (stored === "light" || stored === "dark") theme = stored;
         } catch (err) {}
+
         if (!theme) {
           var preset = root.getAttribute("data-theme");
           if (preset === "light" || preset === "dark") theme = preset;
         }
+
         if (!theme) {
           var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           theme = prefersDark ? "dark" : "light";
         }
+
         root.setAttribute("data-theme", theme);
+
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute("content", theme === "dark" ? "#181210" : "#f8f1e7");
       })();
     </script>
+
+    <!-- JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
+        "@graph": [
           {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Strona główna",
-            "item": "https://gastronomy-project-02.netlify.app/"
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://gastronomy-project-02.netlify.app/" },
+              { "@type": "ListItem", "position": 2, "name": "O nas", "item": "https://gastronomy-project-02.netlify.app/about.html" }
+            ]
           },
           {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Galeria",
-            "item": "https://gastronomy-project-02.netlify.app/gallery.html"
+            "@type": "Organization",
+            "@id": "https://gastronomy-project-02.netlify.app/#organization",
+            "name": "Atelier No.02",
+            "url": "https://gastronomy-project-02.netlify.app/",
+            "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
+            "email": "kontakt@kp-code.pl"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Jak wcześnie warto zarezerwować stolik?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Weekendy rezerwują się z dwutygodniowym wyprzedzeniem. W tygodniu zwykle znajdziemy stolik z 3–4-dniowym wyprzedzeniem."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Czy uwzględniacie alergie pokarmowe?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Tak, przygotowujemy alternatywy dla najczęstszych alergenów. Prosimy o informację przy rezerwacji."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Czy menu ulega zmianom sezonowym?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Dwa razy w sezonie aktualizujemy menu degustacyjne, a karta à la carte rotuje w rytmie tygodniowych dostaw."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Czy przyjmujecie większe grupy?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Tak, do 20 osób. Przygotowujemy dedykowane menu i możliwość prywatnego saloniku."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Czy dostępne są opcje wegetariańskie i wegańskie?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Tak. W menu znajdziesz pełne kompozycje roślinne, a w degustacyjnym przygotujemy alternatywne kursy na prośbę."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Czy oferujecie bony prezentowe?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Tak. Bony kwotowe oraz na menu degustacyjne. Zamówisz je online — napisz do nas przez formularz kontaktowy."
+                }
+              }
+            ]
           }
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "email": "kontakt@kp-code.pl",
-        "@id": "https://gastronomy-project-02.netlify.app/#organization",
-        "name": "Atelier No.02",
-        "url": "https://gastronomy-project-02.netlify.app/",
-        "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
-        "description": "Strona restauracji Atelier No.02 – nowoczesny design, responsywność i SEO.",
-        "image": [
-          {
-            "@type": "ImageObject",
-            "url": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg",
-            "width": 1200,
-            "height": 630
-          },
-          {
-            "@type": "ImageObject",
-            "url": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x1200.jpg",
-            "width": 1200,
-            "height": 1200
-          }
-        ],
-        "sameAs": ["https://github.com/atelier-no-02", "https://x.com/atelierno02"]
-      }
-    </script>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <!-- Body -->
   <body class="page page-gallery">
-    <a class="skip-link" href="#main" id="skip-to-content">Przejdź do treści głównej</a>
+    <a class="skip-link" href="#main" id="skip-to-content">Przejdź do treści</a>
 
     <!-- Header -->
     <header class="site-header" aria-label="Nagłówek strony z nawigacją">
@@ -196,8 +240,6 @@
       <!-- Wnętrza -->
       <section id="wnetrza" class="section gallery" aria-labelledby="wnetrza-title">
         <div class="container">
-
-          <!-- Wnetrze 01 -->
           <ul class="gallery__grid" data-reveal-group>
             <li class="gallery__item" data-reveal>
               <a
@@ -247,7 +289,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Wnetrze 02 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -296,7 +338,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Wnetrze 03 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -353,9 +395,7 @@
       <!-- Dania -->
       <section id="dania" class="section gallery" aria-labelledby="dania-title">
         <div class="container">
-
           <ul class="gallery__grid" data-reveal-group>
-            <!-- Danie 01 -->
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -403,7 +443,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Danie 02 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -451,7 +491,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Danie 03 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -506,9 +546,7 @@
       <!-- Desery -->
       <section id="desery" class="section gallery" aria-labelledby="desery-title">
         <div class="container">
-
           <ul class="gallery__grid" data-reveal-group>
-            <!-- Deser 01 -->
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -556,7 +594,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Deser 02 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -604,7 +642,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Deser 03 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -659,9 +697,7 @@
       <!-- Napoje -->
       <section id="napoje" class="section gallery" aria-labelledby="napoje-title">
         <div class="container">
-
           <ul class="gallery__grid" data-reveal-group>
-            <!-- Napoje 01 -->
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -670,7 +706,6 @@
                 data-lb-caption="Przygotowanie koktajlu — barman nalewa rum do szklanek z miętą, lodem i syropem cukrowym.">
                 <figure class="gallery__figure">
                   <picture>
-                    <!-- AVIF -->
                     <source
                       type="image/avif"
                       srcset="
@@ -680,7 +715,7 @@
                         assets/img/podstrona-galeria/napoje/napoje-01-1600x1200.avif 1600w
                       "
                       sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                    <!-- WebP -->
+
                     <source
                       type="image/webp"
                       srcset="
@@ -690,7 +725,7 @@
                         assets/img/podstrona-galeria/napoje/napoje-01-1600x1200.webp 1600w
                       "
                       sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                    <!-- JPG fallback -->
+
                     <img
                       class="gallery__img"
                       src="assets/img/podstrona-galeria/napoje/napoje-01-800x600.jpg"
@@ -710,7 +745,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Napoje 02 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -719,7 +754,6 @@
                 data-lb-caption="Toast przy stole — kolorowe koktajle w wysokich szklankach podczas spotkania towarzyskiego.">
                 <figure class="gallery__figure">
                   <picture>
-                    <!-- AVIF -->
                     <source
                       type="image/avif"
                       srcset="
@@ -729,7 +763,7 @@
                         assets/img/podstrona-galeria/napoje/napoje-02-1600x1200.avif 1600w
                       "
                       sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                    <!-- WebP -->
+
                     <source
                       type="image/webp"
                       srcset="
@@ -739,7 +773,7 @@
                         assets/img/podstrona-galeria/napoje/napoje-02-1600x1200.webp 1600w
                       "
                       sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                    <!-- JPG fallback -->
+
                     <img
                       class="gallery__img"
                       src="assets/img/podstrona-galeria/napoje/napoje-02-800x600.jpg"
@@ -759,7 +793,7 @@
                 </figure>
               </a>
             </li>
-            <!-- Napoje 03 -->
+
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -768,7 +802,6 @@
                 data-lb-caption="Owoce i napoje — orzeźwiające napary z cytrusami, truskawkami i listkami mięty.">
                 <figure class="gallery__figure">
                   <picture>
-                    <!-- AVIF -->
                     <source
                       type="image/avif"
                       srcset="
@@ -778,7 +811,7 @@
                         assets/img/podstrona-galeria/napoje/napoje-03-1600x1200.avif 1600w
                       "
                       sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                    <!-- WebP -->
+
                     <source
                       type="image/webp"
                       srcset="
@@ -788,7 +821,7 @@
                         assets/img/podstrona-galeria/napoje/napoje-03-1600x1200.webp 1600w
                       "
                       sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                    <!-- JPG fallback -->
+
                     <img
                       class="gallery__img"
                       src="assets/img/podstrona-galeria/napoje/napoje-03-800x600.jpg"
@@ -920,4 +953,3 @@
     </script>
   </body>
 </html>
-

@@ -5,137 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Atelier No.02 | Restauracja Fine Dining</title>
 
-    <meta name="author" content="Atelier No.02" />
-    <meta
-      name="description"
-      content="Profesjonalna, responsywna strona internetowa dla branży gastronomicznej. Nowoczesny design, sezonowe menu, opinie gości i pełna optymalizacja SEO. Strona restauracji Atelier No.02." />
-    <meta name="keywords" content="strona dla restauracji, projekt gastronomiczny, Atelier No.02, fine dining, nowoczesna restauracja, menu online, responsywna strona gastronomiczna" />
+    <!-- SEO -->
+    <meta name="description" content="Atelier No.02 to restauracja fine dining oparta na sezonowości i kuchni autorskiej. Poznaj menu, zobacz galerię i zarezerwuj stolik." />
     <link rel="canonical" href="https://gastronomy-project-02.netlify.app/" />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="KP_Code" />
 
+    <!-- PWA / UI -->
     <meta name="color-scheme" content="light dark" />
     <meta name="application-name" content="Atelier No.02" />
     <meta name="apple-mobile-web-app-title" content="Atelier No.02" />
     <meta name="msapplication-TileColor" content="#f8f1e7" />
+    <meta name="theme-color" content="#ffffff" />
 
+    <!-- Favicons + manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/fav-icon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/fav-icon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/fav-icon/apple-touch-icon.png" />
     <link rel="mask-icon" href="assets/icons/fav-icon/safari-pinned-tab.svg" color="#000000" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
 
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Atelier No.02" />
     <meta property="og:type" content="website" />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:title" content="Profesjonalna Strona dla Gastronomii – Atelier No.02" />
-    <meta property="og:description" content="Szybka, responsywna i gotowa do wdrożenia strona dla branży gastronomicznej. Strona restauracji Atelier No.02." />
+    <meta property="og:title" content="Atelier No.02 | Restauracja Fine Dining" />
+    <meta property="og:description" content="Sezonowe menu, kuchnia autorska i eleganckie doświadczenie fine dining. Zobacz galerię i poznaj Atelier No.02." />
     <meta property="og:url" content="https://gastronomy-project-02.netlify.app/" />
     <meta property="og:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Profesjonalna Strona dla Gastronomii – Atelier No.02" />
+    <meta property="og:image:alt" content="Atelier No.02 — fine dining" />
     <meta property="og:locale" content="pl_PL" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Profesjonalna Strona dla Gastronomii – Atelier No.02" />
-    <meta name="twitter:description" content="Szybka, responsywna i gotowa do wdrożenia strona gastronomiczna. Oficjalna strona restauracji Atelier No.02." />
+    <meta name="twitter:title" content="Atelier No.02 | Restauracja Fine Dining" />
+    <meta name="twitter:description" content="Sezonowe menu i kuchnia autorska w eleganckim wydaniu. Poznaj Atelier No.02." />
     <meta name="twitter:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
-    <meta name="twitter:image:alt" content="Profesjonalna Strona dla Gastronomii – Atelier No.02" />
-    <meta name="twitter:site" content="@AtelierNo02" />
-    <meta name="twitter:creator" content="@AtelierNo02" />
+    <meta name="twitter:image:alt" content="Atelier No.02 — fine dining" />
+    <meta name="twitter:site" content="@KP_Code_85" />
+    <meta name="twitter:creator" content="@KP_Code_85" />
 
+    <!-- Preload fonts -->
     <link rel="preload" href="assets/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-400-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 
+    <!-- Preload hero -->
     <link
       rel="preload"
       as="image"
       href="assets/img/hero/hero-768x614.avif"
       imagesrcset="assets/img/hero/hero-640x512.avif 640w, assets/img/hero/hero-768x614.avif 768w, assets/img/hero/hero-960x768.avif 960w, assets/img/hero/hero-1200x960.avif 1200w"
-      fetchpriority="high"
-      imagesizes="(max-width: 768px) 100vw, 45vw" />
+      imagesizes="(max-width: 768px) 100vw, 45vw"
+      fetchpriority="high" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Restaurant",
-        "email": "kontakt@kp-code.pl",
-        "@id": "https://gastronomy-project-02.netlify.app/#restaurant",
-        "name": "Gastronomy 02 – Atelier No.02",
-        "url": "https://gastronomy-project-02.netlify.app/",
-        "image": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg",
-        "servesCuisine": ["Fine dining", "Europejska"],
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Tarnów",
-          "addressCountry": "PL"
-        },
-        "telephone": "+48 533 537 091",
-        "hasMenu": "https://gastronomy-project-02.netlify.app/menu.html"
-      }
-    </script>
-
+    <!-- Theme preload  -->
     <script>
       (function () {
         var storageKey = "kp-theme";
         var root = document.documentElement;
         var theme = null;
+
         try {
           var stored = localStorage.getItem(storageKey);
           if (stored === "light" || stored === "dark") theme = stored;
         } catch (err) {}
+
         if (!theme) {
           var preset = root.getAttribute("data-theme");
           if (preset === "light" || preset === "dark") theme = preset;
         }
+
         if (!theme) {
           var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           theme = prefersDark ? "dark" : "light";
         }
+
         root.setAttribute("data-theme", theme);
+
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute("content", theme === "dark" ? "#181210" : "#f8f1e7");
       })();
     </script>
 
+    <!-- JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "email": "kontakt@kp-code.pl",
-        "@id": "https://gastronomy-project-02.netlify.app/#organization",
-        "name": "Atelier No.02",
-        "description": "Strona restauracji Atelier No.02 – nowoczesny design, responsywność i optymalizacja SEO.",
-        "url": "https://gastronomy-project-02.netlify.app/",
-        "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
-        "image": [
+        "@graph": [
           {
-            "@type": "ImageObject",
-            "url": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg",
-            "width": 1200,
-            "height": 630,
-            "caption": "Profesjonalna Strona dla Gastronomii – Atelier No.02"
+            "@type": "Organization",
+            "@id": "https://gastronomy-project-02.netlify.app/#organization",
+            "name": "Atelier No.02",
+            "url": "https://gastronomy-project-02.netlify.app/",
+            "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
+            "email": "kontakt@kp-code.pl"
           },
           {
-            "@type": "ImageObject",
-            "url": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x1200.jpg",
-            "width": 1200,
-            "height": 1200,
-            "caption": "Profesjonalna Strona dla Gastronomii – Atelier No.02"
+            "@type": "Restaurant",
+            "@id": "https://gastronomy-project-02.netlify.app/#restaurant",
+            "name": "Atelier No.02",
+            "url": "https://gastronomy-project-02.netlify.app/",
+            "image": "https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg",
+            "servesCuisine": ["Fine Dining", "Europejska"],
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Tarnów",
+              "addressCountry": "PL"
+            },
+            "hasMenu": "https://gastronomy-project-02.netlify.app/menu.html"
           }
-        ],
-        "sameAs": ["https://github.com/atelier-no-02", "https://x.com/atelierno02"]
+        ]
       }
     </script>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <!-- Body -->
-  <body>
-    <a class="skip-link" href="#main" id="skip-to-content">Skip to content</a>
+  <body class="page page--home">
+    <a class="skip-link" href="#main" id="skip-to-content">Przejdź do treści</a>
 
     <!-- Header -->
     <header class="site-header" aria-label="Nagłówek strony z nawigacją">
@@ -362,7 +353,6 @@
           </div>
 
           <ul class="gallery__grid" data-reveal-group>
-            <!-- Item 1 -->
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -398,7 +388,6 @@
               </a>
             </li>
 
-            <!-- Item 2 -->
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -432,7 +421,6 @@
               </a>
             </li>
 
-            <!-- Item 3 -->
             <li class="gallery__item" data-reveal>
               <a
                 class="gallery__link"
@@ -725,6 +713,7 @@
         </div>
       </div>
     </footer>
+
     <!-- No script -->
     <noscript>
       <div class="nojs" role="status" aria-live="polite">JavaScript is disabled. Some interactive features may be limited.</div>

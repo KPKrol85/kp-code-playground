@@ -1,51 +1,57 @@
 <!doctype html>
 <html lang="pl">
   <head>
-    <!-- NETLIFY DEPLOY -->
-    <!-- https://gastronomy-project-02.netlify.app/cookies.html -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Polityka cookies — Atelier No.02</title>
-    <meta name="color-scheme" content="light dark" />
+    <title>Polityka cookies | Atelier No.02</title>
+
+    <!-- SEO -->
     <meta name="description" content="Jak używamy plików cookies: typy, cele, okresy ważności, zarządzanie preferencjami i wycofanie zgody." />
     <link rel="canonical" href="https://gastronomy-project-02.netlify.app/cookies.html" />
-    <meta name="author" content="Atelier No.02" />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="KP_Code" />
+
+    <!-- PWA / UI -->
+    <meta name="color-scheme" content="light dark" />
     <meta name="application-name" content="Atelier No.02" />
     <meta name="apple-mobile-web-app-title" content="Atelier No.02" />
     <meta name="msapplication-TileColor" content="#f8f1e7" />
+    <meta name="theme-color" content="#ffffff" />
 
-    <!-- ✅ Favicons + manifest (spójne z /assets/icons/fav-icon/) -->
+    <!-- Favicons + manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/fav-icon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/fav-icon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/fav-icon/apple-touch-icon.png" />
     <link rel="mask-icon" href="assets/icons/fav-icon/safari-pinned-tab.svg" color="#000000" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
-    <!-- ✅ Koniec sekcji favicon -->
 
-    <!-- Open Graph / Twitter -->
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Atelier No.02" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Polityka cookies — Atelier No.02" />
+    <meta property="og:title" content="Polityka cookies | Atelier No.02" />
     <meta property="og:description" content="Informacje o plikach cookies: kategorie, cele, okresy ważności oraz zarządzanie zgodą i preferencjami." />
     <meta property="og:url" content="https://gastronomy-project-02.netlify.app/cookies.html" />
     <meta property="og:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Atelier No.02 — fine dining" />
     <meta property="og:locale" content="pl_PL" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Polityka cookies — Atelier No.02" />
+    <meta name="twitter:title" content="Polityka cookies | Atelier No.02" />
     <meta name="twitter:description" content="Zasady używania plików cookies i sposoby zarządzania preferencjami." />
     <meta name="twitter:image" content="https://gastronomy-project-02.netlify.app/assets/img/og-img/og-img-1200x630.jpg" />
+    <meta name="twitter:image:alt" content="Atelier No.02 — fine dining" />
+    <meta name="twitter:site" content="@KP_Code_85" />
+    <meta name="twitter:creator" content="@KP_Code_85" />
 
-    <!-- Preload lokalnych fontów -->
+    <!-- Preload fonts -->
     <link rel="preload" href="assets/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-400-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/lato-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Motyw jasny / ciemny (dynamiczne theme-color) -->
+    <!-- Theme preload -->
     <script>
       (function () {
         var storageKey = "kp-theme";
@@ -69,7 +75,7 @@
       })();
     </script>
 
-    <!-- JSON-LD WebPage + Breadcrumbs -->
+    <!-- JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -83,9 +89,20 @@
           },
           {
             "@type": "WebPage",
-            "name": "Polityka cookies — Atelier No.02",
+            "@id": "https://gastronomy-project-02.netlify.app/cookies.html#webpage",
+            "name": "Polityka cookies | Atelier No.02",
             "url": "https://gastronomy-project-02.netlify.app/cookies.html",
+            "inLanguage": "pl-PL",
+            "isPartOf": { "@id": "https://gastronomy-project-02.netlify.app/#organization" },
             "dateModified": "2025-11-03"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://gastronomy-project-02.netlify.app/#organization",
+            "name": "Atelier No.02",
+            "url": "https://gastronomy-project-02.netlify.app/",
+            "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
+            "email": "kontakt@kp-code.pl"
           }
         ]
       }
@@ -94,10 +111,11 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
+  <!-- Body -->
   <body class="page page-legal">
-    <a class="skip-link" href="#main" id="skip-to-content">Przejdź do treści głównej</a>
+    <a class="skip-link" href="#main" id="skip-to-content">Przejdź do treści</a>
 
-    <!-- HEADER -->
+    <!-- Header -->
     <header class="site-header" aria-label="Nagłówek strony z nawigacją">
       <div class="container header__inner">
         <a class="brand" href="/#hero" aria-label="Atelier No.02 — Strona główna">
@@ -131,7 +149,7 @@
       </div>
     </header>
 
-    <!-- MAIN -->
+    <!-- Main -->
     <main id="main" tabindex="-1">
       <nav class="breadcrumbs" aria-label="Okruchy nawigacji">
         <ol>
@@ -151,7 +169,7 @@
         </div>
       </section>
 
-      <!-- TOC -->
+      <!-- Doc -->
       <section class="section" aria-labelledby="toc-title">
         <div class="container">
           <h2 id="toc-title" class="visually-hidden">Spis treści</h2>
@@ -249,7 +267,7 @@
       </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="footer" aria-label="Stopka strony">
       <div class="container">
         <div class="footer__grid">
@@ -327,7 +345,7 @@
             </ul>
           </div>
         </div>
-        <!-- Legal -->
+
         <div class="footer__legal">
           <span>
             ©
@@ -338,11 +356,11 @@
       </div>
     </footer>
 
-    <!-- NO SCRIPT -->
+    <!-- No script -->
     <noscript>
       <div class="nojs" role="status" aria-live="polite">JavaScript is disabled. Some interactive features may be limited.</div>
     </noscript>
-    <!-- SCRIPT -->
+    <!-- Script -->
     <script src="js/script.js" defer></script>
     <script>
       if ("serviceWorker" in navigator) {
@@ -356,7 +374,3 @@
     </script>
   </body>
 </html>
-
-
-
-
