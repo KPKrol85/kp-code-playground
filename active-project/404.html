@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/fav-icon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/fav-icon/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.min.css" />
     <style>
       :root {
         color-scheme: light;
@@ -218,7 +218,7 @@
       <div class="container">
         <div class="footer__grid">
           <div class="footer__brand">
-            <a class="brand" href="/" aria-label="Atelier No.02 — Strona główna">
+            <a class="brand" href="/#hero" aria-label="Atelier No.02 — Strona główna">
               <img src="assets/img/logo/logo-and-name/footer-logo-light.svg" alt="Logo Atelier No.02" class="footer__logo footer__logo--light" width="40" height="40" />
               <img src="assets/img/logo/logo-and-name/footer-logo-dark.svg" alt="" class="footer__logo footer__logo--dark" width="40" height="40" />
             </a>
@@ -228,9 +228,9 @@
           <nav class="footer__nav" aria-label="Nawigacja w stopce">
             <p class="footer__heading">Odkrywaj</p>
             <ul class="footer__list">
-              <li><a href="/about.html">O nas</a></li>
-              <li><a href="/menu.html">Menu</a></li>
-              <li><a href="/gallery.html">Galeria</a></li>
+              <li><a href="/#about">O nas</a></li>
+              <li><a href="/#menu">Menu</a></li>
+              <li><a href="/#gallery">Galeria</a></li>
               <li><a href="/#testimonials">Opinie</a></li>
               <li><a href="/#contact">Kontakt</a></li>
             </ul>
@@ -240,16 +240,13 @@
             <ul class="footer__list">
               <li><a href="/polityka-prywatnosci.html">Polityka prywatności</a></li>
               <li><a href="/cookies.html">Polityka cookies</a></li>
+              <li><a href="/regulamin.html">Regulamin</a></li>
             </ul>
           </nav>
 
           <div class="footer__contact">
             <p class="footer__heading">Kontakt</p>
             <address>
-              <p>
-                <img src="assets/icons/svg-icon/home-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
-                <a href="https://www.google.com/maps?q=ul.+Marynarki+Wojennej+12%2F31+33-100+Tarn%C3%B3w" aria-label="Otwórz adres w Mapach Google">ul. Marynarki Wojennej 12/31 33-100 Tarnów</a>
-              </p>
               <p>
                 <img src="assets/icons/svg-icon/phone-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                 <a href="tel:+48533537091">+48 533 537 091</a>
@@ -258,6 +255,9 @@
                 <img src="assets/icons/svg-icon/mail-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                 <a href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
               </p>
+              <p>
+                <a href="https://www.google.com/maps?q=ul.+Marynarki+Wojennej+12%2F31+33-100+Tarn%C3%B3w" aria-label="Otwórz adres w Mapach Google">ul. Marynarki Wojennej 12/31 33-100 Tarnów</a>
+              </p>
             </address>
           </div>
 
@@ -265,25 +265,41 @@
             <p class="footer__heading">Media społecznościowe</p>
             <ul class="footer__list">
               <li>
-                <a href="https://github.com/" aria-label="Github – otwórz stronę">
+                <a
+                  href="https://github.com/KPKrol85"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Profil KPKrol85 na GitHubie">
                   <img src="assets/icons/svg-icon/github-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">Github</span>
                 </a>
               </li>
               <li>
-                <a href="https://instagram.com/" aria-label="Instagram – otwórz profil">
+                <a
+                  href="https://www.instagram.com/kpkrol85/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Profil KPKrol85 na Instagramie">
                   <img src="assets/icons/svg-icon/instagram-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">Instagram</span>
                 </a>
               </li>
               <li>
-                <a href="https://x.com/" aria-label="X – otwórz profil">
+                <a
+                  href="https://x.com/KP_Code_85"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Profil KP_Code_85 na X">
                   <img src="assets/icons/svg-icon/x-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">X</span>
                 </a>
               </li>
               <li>
-                <a href="https://facebook.com/" aria-label="Facebook – otwórz profil">
+                <a
+                  href="https://www.facebook.com/kpkrol85"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Profil KPKrol85 na Facebooku">
                   <img src="assets/icons/svg-icon/facebook-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">Facebook</span>
                 </a>
@@ -291,12 +307,12 @@
             </ul>
           </div>
         </div>
-
+        <!-- Legal -->
         <div class="footer__legal">
           <span>
             ©
             <span id="year"></span>
-            Atelier No.02. Wszelkie prawa zastrzeżone. Projekt i wdrożenie: Atelier No.02
+            KP_Code | Wszelkie prawa zastrzeżone
           </span>
         </div>
       </div>
@@ -307,7 +323,7 @@
       <div class="nojs" role="status" aria-live="polite">JavaScript is disabled. Some interactive features may be limited.</div>
     </noscript>
     <!-- Script -->
-    <script src="js/script.js" defer></script>
+    <script src="js/script.min.js" defer></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
@@ -318,5 +334,23 @@
         });
       }
     </script>
-  </body>
+  
+    <div class="demo-legal-modal" id="demo-legal-modal" aria-hidden="true" hidden>
+      <div class="demo-legal-modal__backdrop" data-demo-legal-close></div>
+      <div class="demo-legal-modal__panel" role="dialog" aria-modal="true" aria-labelledby="demo-legal-title" aria-describedby="demo-legal-desc" tabindex="-1">
+        <h2 class="demo-legal-modal__title" id="demo-legal-title">Projekt demonstracyjny</h2>
+        <p class="demo-legal-modal__text" id="demo-legal-desc">
+          Serwis Atelier No.02 jest projektem demo. Właścicielem jest Kamil Król (KP_Code). Korzystając z serwisu akceptujesz
+          <a href="regulamin.html">Regulamin</a>.
+        </p>
+        <div class="demo-legal-modal__links">
+          <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+          <a href="cookies.html">Cookies</a>
+        </div>
+        <div class="demo-legal-modal__actions">
+          <button class="btn btn--primary" type="button" data-demo-legal-accept>Akceptuję</button>
+        </div>
+      </div>
+    </div>
+</body>
 </html>

@@ -102,7 +102,7 @@
             "@id": "https://gastronomy-project-02.netlify.app/#organization",
             "name": "Atelier No.02",
             "url": "https://gastronomy-project-02.netlify.app/",
-            "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo-light-mode.svg",
+            "logo": "https://gastronomy-project-02.netlify.app/assets/img/logo/logo/logo-light-mode.svg",
             "email": "kontakt@kp-code.pl"
           },
           {
@@ -368,7 +368,7 @@
       }
     </script>
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.min.css" />
   </head>
 
   <!-- Body -->
@@ -393,9 +393,39 @@
 
           <nav class="nav" id="primary-nav" aria-label="Nawigacja główna">
             <ul class="nav__list">
-              <li><a href="/about.html">O nas</a></li>
-              <li><a href="/menu.html" aria-current="page">Menu</a></li>
-              <li><a href="/gallery.html">Galeria</a></li>
+              <li class="nav__item nav__item--dropdown">
+                <a class="nav__link" href="/#about">O nas</a>
+                <button class="nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="nav-dd-about" aria-label="Pokaż więcej: O nas">
+                  <svg class="nav__chevron" aria-hidden="true" viewBox="0 0 16 16" focusable="false">
+                    <path d="M3.25 5.75L8 10.5l4.75-4.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <ul class="nav__dropdown" id="nav-dd-about" aria-label="Skróty: O nas">
+                  <li><a href="/about.html">Poznaj nas</a></li>
+                </ul>
+              </li>
+              <li class="nav__item nav__item--dropdown">
+                <a class="nav__link" href="/#menu">Menu</a>
+                <button class="nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="nav-dd-menu" aria-label="Pokaż więcej: Menu">
+                  <svg class="nav__chevron" aria-hidden="true" viewBox="0 0 16 16" focusable="false">
+                    <path d="M3.25 5.75L8 10.5l4.75-4.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <ul class="nav__dropdown" id="nav-dd-menu" aria-label="Skróty: Menu">
+                  <li><a href="/menu.html" aria-current="page">Pełne menu</a></li>
+                </ul>
+              </li>
+              <li class="nav__item nav__item--dropdown">
+                <a class="nav__link" href="/#gallery">Galeria</a>
+                <button class="nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="nav-dd-gallery" aria-label="Pokaż więcej: Galeria">
+                  <svg class="nav__chevron" aria-hidden="true" viewBox="0 0 16 16" focusable="false">
+                    <path d="M3.25 5.75L8 10.5l4.75-4.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <ul class="nav__dropdown" id="nav-dd-gallery" aria-label="Skróty: Galeria">
+                  <li><a href="/gallery.html">Pełna galeria</a></li>
+                </ul>
+              </li>
               <li><a href="/#testimonials">Opinie</a></li>
               <li><a href="/#contact">Kontakt</a></li>
             </ul>
@@ -497,7 +527,7 @@
             <h2 id="przystawki-title">Przystawki</h2>
             <p class="menu-section__intro">Sezonowe akcenty, świeże warzywa i przejrzyste smaki, które pobudzą apetyt na dalszą część kolacji.</p>
           </div>
-          <ul class="cards menu-cards" data-reveal-group>
+          <ul class="cards menu-cards" data-reveal-group data-menu-category="przystawki">
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -659,7 +689,7 @@
             <h2 id="dania-glowne-title">Dania główne</h2>
             <p class="menu-section__intro">Wyselekcjonowane składniki i kompozycje, które celebrują klasykę gastronomii w nowoczesnym wydaniu.</p>
           </div>
-          <ul class="cards menu-cards" data-reveal-group>
+          <ul class="cards menu-cards" data-reveal-group data-menu-category="dania-glowne">
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -821,7 +851,7 @@
             <h2 id="zupy-title">Zupy</h2>
             <p class="menu-section__intro">Aromatyczne buliony i kremy przygotowywane z dbałością o detal – idealne na początek lub w przerwie degustacji.</p>
           </div>
-          <ul class="cards menu-cards" data-reveal-group>
+          <ul class="cards menu-cards" data-reveal-group data-menu-category="zupy">
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -972,7 +1002,7 @@
             <h2 id="kuchnia-szefa-title">Kuchnia szefa</h2>
             <p class="menu-section__intro">Limitowane propozycje inspirowane sezonem i podróżami naszego zespołu kulinarnego.</p>
           </div>
-          <ul class="cards menu-cards" data-reveal-group>
+          <ul class="cards menu-cards" data-reveal-group data-menu-category="kuchnia-szefa">
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1135,7 +1165,7 @@
             <h2 id="desery-title">Desery</h2>
             <p class="menu-section__intro">Finezyjne, lekkie słodkości, które kończą kolację w wyszukanym, lecz niewymuszonym stylu.</p>
           </div>
-          <ul class="cards menu-cards" data-reveal-group>
+          <ul class="cards menu-cards" data-reveal-group data-menu-category="desery">
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1296,7 +1326,7 @@
             <h2 id="drinki-title">Drinki</h2>
             <p class="menu-section__intro">Autorskie koktajle i klasyki w interpretacji naszego barmańskiego zespołu.</p>
           </div>
-          <ul class="cards menu-cards" data-reveal-group>
+          <ul class="cards menu-cards" data-reveal-group data-menu-category="drinki">
             <li class="card menu-card" data-reveal>
               <article>
                 <figure class="menu-card__figure">
@@ -1475,7 +1505,7 @@
       <div class="container">
         <div class="footer__grid">
           <div class="footer__brand">
-            <a class="brand" href="/" aria-label="Atelier No.02 — Strona główna">
+            <a class="brand" href="/#hero" aria-label="Atelier No.02 — Strona główna">
               <img src="assets/img/logo/logo-and-name/footer-logo-light.svg" alt="Logo Atelier No.02" class="footer__logo footer__logo--light" width="40" height="40" />
               <img src="assets/img/logo/logo-and-name/footer-logo-dark.svg" alt="" class="footer__logo footer__logo--dark" width="40" height="40" />
             </a>
@@ -1485,9 +1515,9 @@
           <nav class="footer__nav" aria-label="Nawigacja w stopce">
             <p class="footer__heading">Odkrywaj</p>
             <ul class="footer__list">
-              <li><a href="/about.html">O nas</a></li>
-              <li><a href="/menu.html">Menu</a></li>
-              <li><a href="/gallery.html">Galeria</a></li>
+              <li><a href="/#about">O nas</a></li>
+              <li><a href="/#menu">Menu</a></li>
+              <li><a href="/#gallery">Galeria</a></li>
               <li><a href="/#testimonials">Opinie</a></li>
               <li><a href="/#contact">Kontakt</a></li>
             </ul>
@@ -1497,16 +1527,13 @@
             <ul class="footer__list">
               <li><a href="/polityka-prywatnosci.html">Polityka prywatności</a></li>
               <li><a href="/cookies.html">Polityka cookies</a></li>
+              <li><a href="/regulamin.html">Regulamin</a></li>
             </ul>
           </nav>
 
           <div class="footer__contact">
             <p class="footer__heading">Kontakt</p>
             <address>
-              <p>
-                <img src="assets/icons/svg-icon/home-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
-                <a href="https://www.google.com/maps?q=ul.+Marynarki+Wojennej+12%2F31+33-100+Tarn%C3%B3w" aria-label="Otwórz adres w Mapach Google">ul. Marynarki Wojennej 12/31 33-100 Tarnów</a>
-              </p>
               <p>
                 <img src="assets/icons/svg-icon/phone-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                 <a href="tel:+48533537091">+48 533 537 091</a>
@@ -1515,6 +1542,9 @@
                 <img src="assets/icons/svg-icon/mail-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                 <a href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
               </p>
+              <p>
+                <a href="https://www.google.com/maps?q=ul.+Marynarki+Wojennej+12%2F31+33-100+Tarn%C3%B3w" aria-label="Otwórz adres w Mapach Google">ul. Marynarki Wojennej 12/31 33-100 Tarnów</a>
+              </p>
             </address>
           </div>
 
@@ -1522,25 +1552,25 @@
             <p class="footer__heading">Media społecznościowe</p>
             <ul class="footer__list">
               <li>
-                <a href="https://github.com/" aria-label="Github – otwórz stronę">
+                <a href="https://github.com/KPKrol85" target="_blank" rel="noopener noreferrer" aria-label="Profil KPKrol85 na GitHubie">
                   <img src="assets/icons/svg-icon/github-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">Github</span>
                 </a>
               </li>
               <li>
-                <a href="https://instagram.com/" aria-label="Instagram – otwórz profil">
+                <a href="https://www.instagram.com/kpkrol85/" target="_blank" rel="noopener noreferrer" aria-label="Profil KPKrol85 na Instagramie">
                   <img src="assets/icons/svg-icon/instagram-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">Instagram</span>
                 </a>
               </li>
               <li>
-                <a href="https://x.com/" aria-label="X – otwórz profil">
+                <a href="https://x.com/KP_Code_85" target="_blank" rel="noopener noreferrer" aria-label="Profil KP_Code_85 na X">
                   <img src="assets/icons/svg-icon/x-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">X</span>
                 </a>
               </li>
               <li>
-                <a href="https://facebook.com/" aria-label="Facebook – otwórz profil">
+                <a href="https://www.facebook.com/kpkrol85" target="_blank" rel="noopener noreferrer" aria-label="Profil KPKrol85 na Facebooku">
                   <img src="assets/icons/svg-icon/facebook-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
                   <span class="visually-hidden">Facebook</span>
                 </a>
@@ -1548,12 +1578,12 @@
             </ul>
           </div>
         </div>
-
+        <!-- Legal -->
         <div class="footer__legal">
           <span>
             ©
             <span id="year"></span>
-            Atelier No.02. Wszelkie prawa zastrzeżone. Projekt i wdrożenie: Atelier No.02
+            KP_Code | Wszelkie prawa zastrzeżone
           </span>
         </div>
       </div>
@@ -1564,7 +1594,7 @@
       <div class="nojs" role="status" aria-live="polite">JavaScript is disabled. Some interactive features may be limited.</div>
     </noscript>
     <!-- Script -->
-    <script src="js/script.js" defer></script>
+    <script src="js/script.min.js" defer></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
@@ -1575,5 +1605,23 @@
         });
       }
     </script>
-  </body>
+
+    <div class="demo-legal-modal" id="demo-legal-modal" aria-hidden="true" hidden>
+      <div class="demo-legal-modal__backdrop" data-demo-legal-close></div>
+      <div class="demo-legal-modal__panel" role="dialog" aria-modal="true" aria-labelledby="demo-legal-title" aria-describedby="demo-legal-desc" tabindex="-1">
+        <h2 class="demo-legal-modal__title" id="demo-legal-title">Projekt demonstracyjny</h2>
+        <p class="demo-legal-modal__text" id="demo-legal-desc">
+          Serwis Atelier No.02 jest projektem demo. Właścicielem jest Kamil Król (KP_Code). Korzystając z serwisu akceptujesz
+          <a href="regulamin.html">Regulamin</a>.
+        </p>
+        <div class="demo-legal-modal__links">
+          <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+          <a href="cookies.html">Cookies</a>
+        </div>
+        <div class="demo-legal-modal__actions">
+          <button class="btn btn--primary" type="button" data-demo-legal-accept>Akceptuję</button>
+        </div>
+      </div>
+    </div>
+</body>
 </html>
