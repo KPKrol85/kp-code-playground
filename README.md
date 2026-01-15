@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/LOGO-1200x630.png" alt="KP_Code logo" width="440" />
+  <img src="assets/logo-darm-mode.png" alt="KP_Code logo" width="440" />
 </p>
 
 # kp-code-playground
