@@ -1,22 +1,52 @@
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 12px 20px;
+  padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: var(--color-accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
 }
 
 .button:hover {
-  background: var(--color-accent-strong);
-  box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--color-focus) 30%, transparent),
+    var(--shadow-sm);
+}
+.button:disabled,
+.button[aria-disabled="true"],
+.button[data-loading="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.button:disabled:hover,
+.button[aria-disabled="true"]:hover,
+.button[data-loading="true"]:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .button.secondary {
@@ -64,6 +94,9 @@
 .card-product {
   display: grid;
   gap: var(--space-4);
+  --card-cta-fs: clamp(0.82rem, 0.78rem + 0.3vw, 0.95rem);
+  --card-cta-py: clamp(0.5rem, 0.45rem + 0.35vw, 0.7rem);
+  --card-cta-px: clamp(0.7rem, 0.55rem + 0.5vw, 1rem);
 }
 
 .card-product img {
@@ -73,6 +106,32 @@
 
 .card-product h3 {
   margin: 0;
+}
+
+.card-product .flex-between {
+  justify-content: flex-start;
+  gap: var(--space-3);
+  flex-wrap: nowrap;
+}
+
+.card-product .flex-between .button {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: var(--card-cta-fs);
+  padding: var(--card-cta-py) var(--card-cta-px);
+  white-space: nowrap;
+}
+
+.card-product .flex-between .button:not(.secondary):not(.ghost) {
+  flex: 1.15 1 0;
+}
+
+@media (max-width: 1200px) {
+  .card-product {
+    --card-cta-fs: clamp(0.8rem, 0.76rem + 0.28vw, 0.92rem);
+    --card-cta-py: clamp(0.48rem, 0.44rem + 0.32vw, 0.66rem);
+    --card-cta-px: clamp(0.66rem, 0.52rem + 0.45vw, 0.95rem);
+  }
 }
 
 .price {
@@ -150,8 +209,12 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
 .notice {

@@ -1,40 +1,36 @@
 import { createElement, clearElement } from "../utils/dom.js";
+import { navigateHash } from "../utils/navigation.js";
 import { formatCurrency } from "../utils/format.js";
 import { validators } from "../utils/validators.js";
 import { cartService } from "../services/cart.js";
 import { purchasesService } from "../services/purchases.js";
 import { showToast } from "../components/toast.js";
 import { store } from "../store/store.js";
+import { renderNotice } from "../components/uiStates.js";
+import { setMeta } from "../utils/meta.js";
+import { setButtonLoading, clearButtonLoading } from "../utils/ui-state.js";
+import { renderEmptyState } from "../components/ui-state-helpers.js";
 
 export const renderCheckout = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
 
-  const { cart, products, user } = store.getState();
+  const { cart, products } = store.getState();
 
   const container = createElement("section", { className: "container" });
   container.appendChild(createElement("h1", { text: "Checkout" }));
 
   if (!cart.length) {
     container.appendChild(
-      createElement("div", { className: "notice" }, [
-        createElement("h2", { text: "Brak produktów" }),
-        createElement("p", { text: "Dodaj produkty do koszyka, aby kontynuować." }),
-        createElement("a", { className: "button", text: "Wróć do katalogu", attrs: { href: "#/products" } }),
-      ])
+      renderEmptyState({
+        title: "Twój koszyk jest pusty.",
+        message: "Przeglądaj produkty to get started.",
+        ctaText: "Przeglądaj produkty",
+        ctaHref: "#/products",
+      })
     );
     main.appendChild(container);
     return;
-  }
-
-  if (!user) {
-    container.appendChild(
-      createElement("div", { className: "notice" }, [
-        createElement("h2", { text: "Zaloguj się" }),
-        createElement("p", { text: "Aby ukończyć zakup, potrzebujemy aktywnego konta." }),
-        createElement("a", { className: "button", text: "Przejdź do logowania", attrs: { href: "#/auth" } }),
-      ])
-    );
   }
 
   const form = createElement("form", { className: "card" });
@@ -42,54 +38,56 @@ export const renderCheckout = () => {
 
   const nameField = createElement("input", {
     className: "input",
-    attrs: { type: "text", name: "name", placeholder: "Imię i nazwisko" },
+    attrs: { id: "checkout-name", type: "text", name: "name", placeholder: "Imię i nazwisko" },
   });
   const emailField = createElement("input", {
     className: "input",
-    attrs: { type: "email", name: "email", placeholder: "E-mail" },
+    attrs: { id: "checkout-email", type: "email", name: "email", placeholder: "E-mail" },
   });
-  const addressField = createElement("textarea", {
-    className: "textarea",
-    attrs: { name: "address", rows: "3", placeholder: "Adres rozliczeniowy" },
+  const companyField = createElement("input", {
+    className: "input",
+    attrs: {
+      id: "checkout-company",
+      type: "text",
+      name: "company",
+      placeholder: "Firma (opcjonalnie)",
+    },
   });
-  const licenseSelect = createElement("select", {
-    className: "select",
-    attrs: { name: "license" },
-  });
-  [
-    { value: "Personal", label: "Licencja Personal" },
-    { value: "Commercial", label: "Licencja Commercial" },
-  ].forEach((option) => {
-    licenseSelect.appendChild(
-      createElement("option", { text: option.label, attrs: { value: option.value } })
-    );
+  const taxIdField = createElement("input", {
+    className: "input",
+    attrs: { id: "checkout-tax-id", type: "text", name: "taxId", placeholder: "NIP (opcjonalnie)" },
   });
 
-  const termsCheckbox = createElement("input", {
-    attrs: { type: "checkbox", id: "terms" },
-  });
-  const termsLabel = createElement("label", { text: "Akceptuję regulamin i politykę prywatności", attrs: { for: "terms" } });
-  const termsWrapper = createElement("div", { className: "form-field" }, [termsCheckbox, termsLabel]);
-
+  const nameError = createElement("div", { className: "form-error" });
+  const emailError = createElement("div", { className: "form-error" });
   const errorBox = createElement("div", { className: "form-error" });
 
-  form.appendChild(createElement("div", { className: "form-field" }, [
-    createElement("label", { text: "Imię i nazwisko" }),
-    nameField,
-  ]));
-  form.appendChild(createElement("div", { className: "form-field" }, [
-    createElement("label", { text: "E-mail" }),
-    emailField,
-  ]));
-  form.appendChild(createElement("div", { className: "form-field" }, [
-    createElement("label", { text: "Adres" }),
-    addressField,
-  ]));
-  form.appendChild(createElement("div", { className: "form-field" }, [
-    createElement("label", { text: "Licencja" }),
-    licenseSelect,
-  ]));
-  form.appendChild(termsWrapper);
+  form.appendChild(
+    createElement("div", { className: "form-field" }, [
+      createElement("label", { text: "Imię i nazwisko", attrs: { for: "checkout-name" } }),
+      nameField,
+      nameError,
+    ])
+  );
+  form.appendChild(
+    createElement("div", { className: "form-field" }, [
+      createElement("label", { text: "E-mail", attrs: { for: "checkout-email" } }),
+      emailField,
+      emailError,
+    ])
+  );
+  form.appendChild(
+    createElement("div", { className: "form-field" }, [
+      createElement("label", { text: "Firma", attrs: { for: "checkout-company" } }),
+      companyField,
+    ])
+  );
+  form.appendChild(
+    createElement("div", { className: "form-field" }, [
+      createElement("label", { text: "NIP", attrs: { for: "checkout-tax-id" } }),
+      taxIdField,
+    ])
+  );
   form.appendChild(errorBox);
 
   const submitButton = createElement("button", {
@@ -108,60 +106,85 @@ export const renderCheckout = () => {
     if (!product) {
       return;
     }
-    total += product.price * item.quantity;
+    const lineTotal = product.price * item.quantity;
+    total += lineTotal;
     list.appendChild(
-      createElement("li", { text: `${product.name} x${item.quantity} — ${formatCurrency(product.price * item.quantity)}` })
+      createElement("li", {
+        text: `${product.name} x${item.quantity} - ${formatCurrency(lineTotal)}`,
+      })
     );
   });
   summary.appendChild(list);
   summary.appendChild(createElement("p", { className: "price", text: formatCurrency(total) }));
 
+  let isProcessing = false;
+  const validateForm = () => {
+    nameError.textContent = "";
+    emailError.textContent = "";
+    errorBox.textContent = "";
+
+    const nameValid =
+      validators.required(nameField.value) && validators.minLength(2)(nameField.value.trim());
+    const emailValid = validators.email(emailField.value);
+
+    if (!nameValid) {
+      nameError.textContent = "Podaj imię i nazwisko (min. 2 znaki).";
+    }
+    if (!emailValid) {
+      emailError.textContent = "Podaj poprawny e-mail.";
+    }
+    submitButton.disabled = !nameValid || !emailValid || isProcessing;
+    return nameValid && emailValid;
+  };
+
+  const updateProcessingState = (processing) => {
+    isProcessing = processing;
+    if (processing) {
+      setButtonLoading(submitButton, { loadingText: "Przetwarzanie..." });
+    } else {
+      clearButtonLoading(submitButton);
+    }
+    submitButton.disabled = processing || !validateForm();
+  };
+
+  [nameField, emailField].forEach((field) => {
+    field.addEventListener("input", validateForm);
+  });
+  validateForm();
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    errorBox.textContent = "";
-    const errors = [];
-
-    if (!validators.required(nameField.value)) {
-      errors.push("Podaj imię i nazwisko.");
-    }
-    if (!validators.email(emailField.value)) {
-      errors.push("Podaj poprawny e-mail.");
-    }
-    if (!validators.required(addressField.value)) {
-      errors.push("Podaj adres rozliczeniowy.");
-    }
-    if (!termsCheckbox.checked) {
-      errors.push("Zaakceptuj regulamin i politykę prywatności.");
-    }
-    if (!user) {
-      errors.push("Musisz być zalogowany, aby złożyć zamówienie.");
-    }
-
-    if (errors.length) {
-      errorBox.textContent = errors.join(" ");
+    if (!validateForm() || isProcessing) {
+      errorBox.textContent = "Popraw zaznaczone pola.";
       return;
     }
 
+    updateProcessingState(true);
     const order = {
       id: crypto.randomUUID(),
-      items: [...cart],
-      total,
-      license: licenseSelect.value,
       createdAt: new Date().toISOString(),
+      items: cart.map((item) => {
+        const product = products.find((entry) => entry.id === item.productId);
+        return {
+          productId: item.productId,
+          quantity: item.quantity,
+          priceAtPurchase: product ? product.price : 0,
+        };
+      }),
+      total,
     };
 
-    const libraryItems = cart.map((item) => ({
-      productId: item.productId,
-      license: licenseSelect.value,
-      purchasedAt: new Date().toISOString(),
-    }));
-
-    purchasesService.addOrder(user.id, order);
-    purchasesService.addToLibrary(user.id, libraryItems);
-    cartService.clear();
-    store.setState({ cart: [] });
-    showToast("Zakup zakończony sukcesem.");
-    location.hash = "#/checkout/success";
+    window.setTimeout(() => {
+      purchasesService.addPurchase(order);
+      cartService.clear();
+      store.setState({ cart: [] });
+      showToast("Zakup zakończony sukcesem.");
+      setMeta({
+        title: "Dziękujemy za zakup",
+        description: "Zakup zakończony. Pliki zostały dodane do Twojej biblioteki.",
+      });
+      navigateHash("#/library");
+    }, 700);
   });
 
   const layout = createElement("div", { className: "grid grid-2 section" }, [form, summary]);
@@ -172,15 +195,29 @@ export const renderCheckout = () => {
 export const renderCheckoutSuccess = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
+  setMeta({
+    title: "Dziękujemy za zakup",
+    description: "Zakup zakończony. Pliki zostały dodane do Twojej biblioteki.",
+  });
   const container = createElement("section", { className: "container" }, [
     createElement("div", { className: "card" }, [
       createElement("h1", { text: "Dziękujemy za zakup!" }),
       createElement("p", { text: "Pliki zostały dodane do Twojej biblioteki." }),
       createElement("div", { className: "nav-links" }, [
-        createElement("a", { className: "button", text: "Przejdź do biblioteki", attrs: { href: "#/library" } }),
-        createElement("a", { className: "button secondary", text: "Wróć do katalogu", attrs: { href: "#/products" } }),
+        createElement("a", {
+          className: "button",
+          text: "Przejdź do biblioteki",
+          attrs: { href: "#/library" },
+        }),
+        createElement("a", {
+          className: "button secondary",
+          text: "Wróć do katalogu",
+          attrs: { href: "#/products" },
+        }),
       ]),
     ]),
   ]);
   main.appendChild(container);
 };
+
+

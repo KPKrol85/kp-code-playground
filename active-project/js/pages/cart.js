@@ -3,23 +3,51 @@ import { formatCurrency } from "../utils/format.js";
 import { cartService } from "../services/cart.js";
 import { showToast } from "../components/toast.js";
 import { store } from "../store/store.js";
+import { renderNotice } from "../components/uiStates.js";
+import { withButtonLoading } from "../utils/ui-state.js";
+import { renderEmptyState } from "../components/ui-state-helpers.js";
 
 export const renderCart = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
 
-  const { cart, products } = store.getState();
+  const { cart, products, productsStatus, productsError } = store.getState();
+
+  if (productsStatus === "loading" || productsStatus === "idle") {
+    const container = createElement("section", { className: "container" });
+    container.appendChild(createElement("h1", { text: "Twój koszyk" }));
+    renderNotice(container, {
+      title: "Ładowanie koszyka",
+      message: "Trwa pobieranie danych produktów.",
+      headingTag: "h2",
+    });
+    main.appendChild(container);
+    return;
+  }
+
+  if (productsStatus === "error") {
+    const container = createElement("section", { className: "container" });
+    container.appendChild(createElement("h1", { text: "Twój koszyk" }));
+    renderNotice(container, {
+      title: "Nie udało się pobrać produktów",
+      message: productsError || "Spróbuj ponownie później.",
+      headingTag: "h2",
+    });
+    main.appendChild(container);
+    return;
+  }
 
   const container = createElement("section", { className: "container" });
   container.appendChild(createElement("h1", { text: "Twój koszyk" }));
 
   if (!cart.length) {
     container.appendChild(
-      createElement("div", { className: "notice" }, [
-        createElement("h2", { text: "Koszyk jest pusty" }),
-        createElement("p", { text: "Dodaj produkty, aby rozpocząć zakup." }),
-        createElement("a", { className: "button", text: "Przeglądaj katalog", attrs: { href: "#/products" } }),
-      ])
+      renderEmptyState({
+        title: "Twój koszyk jest pusty.",
+        message: "Przeglądaj produkty, aby zacząć.",
+        ctaText: "Przeglądaj produkty",
+        ctaHref: "#/products",
+      })
     );
     main.appendChild(container);
     return;
@@ -36,13 +64,21 @@ export const renderCart = () => {
     const card = createElement("div", { className: "card" });
     card.appendChild(createElement("h3", { text: product.name }));
     card.appendChild(createElement("p", { text: product.shortDescription }));
+    const quantityId = `cart-qty-${product.id}`;
+    const quantityLabel = createElement("label", {
+      className: "sr-only",
+      text: "Ilość",
+      attrs: { for: quantityId },
+    });
     const quantityField = createElement("input", {
       className: "input",
-      attrs: { type: "number", min: "1", value: String(item.quantity) },
+      attrs: { id: quantityId, type: "number", min: "1", value: String(item.quantity) },
     });
     quantityField.addEventListener("change", () => {
-      const value = Number(quantityField.value);
-      cartService.updateItem(product.id, value);
+      const rawValue = Number(quantityField.value);
+      const safeValue = Number.isFinite(rawValue) ? Math.max(1, Math.floor(rawValue)) : 1;
+      quantityField.value = String(safeValue);
+      cartService.updateItem(product.id, safeValue);
       store.setState({ cart: cartService.getCart() });
       renderCart();
     });
@@ -59,16 +95,24 @@ export const renderCart = () => {
       renderCart();
     });
 
-    card.appendChild(createElement("p", { className: "price", text: formatCurrency(product.price) }));
+    card.appendChild(
+      createElement("p", { className: "price", text: formatCurrency(product.price) })
+    );
+    card.appendChild(quantityLabel);
     card.appendChild(quantityField);
     card.appendChild(removeButton);
     itemsWrapper.appendChild(card);
   });
 
   const summary = createElement("div", { className: "card" });
+  const promoLabel = createElement("label", {
+    className: "sr-only",
+    text: "Kod rabatowy",
+    attrs: { for: "promo-code" },
+  });
   const promoField = createElement("input", {
     className: "input",
-    attrs: { type: "text", placeholder: "Kod rabatowy (mock)" },
+    attrs: { id: "promo-code", type: "text", placeholder: "Kod rabatowy (mock)" },
   });
   const applyButton = createElement("button", {
     className: "button secondary",
@@ -76,18 +120,44 @@ export const renderCart = () => {
     attrs: { type: "button" },
   });
   applyButton.addEventListener("click", () => {
-    showToast("Kod rabatowy zastosowany (demo).");
+    withButtonLoading(
+      applyButton,
+      async () => {
+        showToast("Kod rabatowy zastosowany (demo).");
+      },
+      { loadingText: "Przetwarzanie..." }
+    );
   });
 
   summary.appendChild(createElement("h2", { text: "Podsumowanie" }));
   summary.appendChild(createElement("p", { text: `Suma: ${formatCurrency(subtotal)}` }));
+  summary.appendChild(promoLabel);
   summary.appendChild(promoField);
   summary.appendChild(applyButton);
+  const clearButton = createElement("button", {
+    className: "button secondary",
+    text: "Wyczyść koszyk",
+    attrs: { type: "button" },
+  });
+  clearButton.addEventListener("click", () => {
+    cartService.clear();
+    store.setState({ cart: [] });
+    renderCart();
+  });
+  summary.appendChild(clearButton);
   summary.appendChild(
-    createElement("a", { className: "button block", text: "Przejdź do checkout", attrs: { href: "#/checkout" } })
+    createElement("a", {
+      className: "button block",
+      text: "Przejd« do checkout",
+      attrs: { href: "#/checkout" },
+    })
   );
 
-  const layout = createElement("div", { className: "grid grid-2 section" }, [itemsWrapper, summary]);
+  const layout = createElement("div", { className: "grid grid-2 section" }, [
+    itemsWrapper,
+    summary,
+  ]);
   container.appendChild(layout);
   main.appendChild(container);
 };
+

@@ -2,41 +2,58 @@ import { createElement, clearElement } from "../utils/dom.js";
 import { formatDate } from "../utils/format.js";
 import { purchasesService } from "../services/purchases.js";
 import { store } from "../store/store.js";
+import { renderNotice } from "../components/uiStates.js";
 
 export const renderLibrary = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
 
-  const { user, products } = store.getState();
+  const { products, productsStatus, productsError } = store.getState();
   const container = createElement("section", { className: "container" });
   container.appendChild(createElement("h1", { text: "Twoja biblioteka" }));
 
-  if (!user) {
-    container.appendChild(
-      createElement("div", { className: "notice" }, [
-        createElement("p", { text: "Zaloguj się, aby zobaczyć zakupione pliki." }),
-        createElement("a", { className: "button", text: "Zaloguj się", attrs: { href: "#/auth" } }),
-      ])
-    );
+  if (productsStatus === "loading" || productsStatus === "idle") {
+    renderNotice(container, {
+      title: "Ładowanie biblioteki",
+      message: "Trwa pobieranie danych produktów.",
+      headingTag: "h2",
+    });
     main.appendChild(container);
     return;
   }
 
-  const library = purchasesService.getLibrary(user.id);
-  if (!library.length) {
-    container.appendChild(
-      createElement("div", { className: "notice" }, [
-        createElement("h2", { text: "Brak zakupów" }),
-        createElement("p", { text: "Po zakupie produkty pojawią się tutaj automatycznie." }),
-        createElement("a", { className: "button", text: "Przejdź do katalogu", attrs: { href: "#/products" } }),
-      ])
-    );
+  if (productsStatus === "error") {
+    renderNotice(container, {
+      title: "Nie udało się pobrać produktów",
+      message: productsError || "Spróbuj ponownie później.",
+      headingTag: "h2",
+    });
     main.appendChild(container);
     return;
   }
+
+  const libraryItems = purchasesService.getLibraryItems();
+  if (!libraryItems.length) {
+    renderNotice(container, {
+      title: "Brak zakupów",
+      message: "Po zakupie produkty pojawiają się tutaj automatycznie.",
+      action: { label: "Przejdź do katalogu", href: "#/products" },
+      headingTag: "h2",
+    });
+    main.appendChild(container);
+    return;
+  }
+
+  const latestByProduct = new Map();
+  libraryItems.forEach((entry) => {
+    const existing = latestByProduct.get(entry.productId);
+    if (!existing || new Date(entry.purchasedAt) > new Date(existing.purchasedAt)) {
+      latestByProduct.set(entry.productId, entry);
+    }
+  });
 
   const grid = createElement("div", { className: "grid grid-2 section" });
-  library.forEach((entry) => {
+  Array.from(latestByProduct.values()).forEach((entry) => {
     const product = products.find((item) => item.id === entry.productId);
     if (!product) {
       return;
@@ -62,3 +79,4 @@ export const renderLibrary = () => {
   container.appendChild(grid);
   main.appendChild(container);
 };
+

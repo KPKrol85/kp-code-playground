@@ -2,6 +2,7 @@ import { createElement, clearElement } from "../utils/dom.js";
 import { formatDate } from "../utils/format.js";
 import { store } from "../store/store.js";
 import { purchasesService } from "../services/purchases.js";
+import { renderNotice } from "../components/uiStates.js";
 
 const createLicenseBlob = (details) => {
   const content = [
@@ -14,27 +15,69 @@ const createLicenseBlob = (details) => {
   return new Blob([content], { type: "text/plain" });
 };
 
+const buildLicenseKey = (purchaseId, productId) => {
+  const shortPurchase = String(purchaseId || "")
+    .replace(/-/g, "")
+    .slice(0, 8);
+  return `${shortPurchase}-${productId}`.toUpperCase();
+};
+
 export const renderLicenses = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
 
-  const { user, licenses, products } = store.getState();
+  const { licenses, products, productsStatus, productsError } = store.getState();
   const container = createElement("section", { className: "container" });
   container.appendChild(createElement("h1", { text: "Licencje" }));
 
+  if (productsStatus === "loading" || productsStatus === "idle") {
+    renderNotice(container, {
+      title: "Ładowanie licencji",
+      message: "Trwa pobieranie danych produktów.",
+      headingTag: "h2",
+    });
+    main.appendChild(container);
+    return;
+  }
+
+  if (productsStatus === "error") {
+    renderNotice(container, {
+      title: "Nie udało się pobrać produktów",
+      message: productsError || "Spróbuj ponownie później.",
+      headingTag: "h2",
+    });
+    main.appendChild(container);
+    return;
+  }
+
   const licenseGrid = createElement("div", { className: "grid grid-2" });
-  licenses.forEach((license) => {
-    const card = createElement("div", { className: "card" }, [
-      createElement("h2", { text: license.type }),
-      createElement("p", { text: license.summary }),
-      createElement("h4", { text: "Uprawnienia" }),
-      createElement("ul", {}, license.permissions.map((item) => createElement("li", { text: item }))),
-      createElement("h4", { text: "Ograniczenia" }),
-      createElement("ul", {}, license.limitations.map((item) => createElement("li", { text: item }))),
-      createElement("p", { text: `Wsparcie: ${license.support}` }),
-    ]);
-    licenseGrid.appendChild(card);
-  });
+  if (!licenses.length) {
+    renderNotice(licenseGrid, {
+      title: "Brak licencji",
+      message: "Brak licencji do wyświetlenia.",
+    });
+  } else {
+    licenses.forEach((license) => {
+      const card = createElement("div", { className: "card" }, [
+        createElement("h2", { text: license.type }),
+        createElement("p", { text: license.summary }),
+        createElement("h4", { text: "Uprawnienia" }),
+        createElement(
+          "ul",
+          {},
+          license.permissions.map((item) => createElement("li", { text: item }))
+        ),
+        createElement("h4", { text: "Ograniczenia" }),
+        createElement(
+          "ul",
+          {},
+          license.limitations.map((item) => createElement("li", { text: item }))
+        ),
+        createElement("p", { text: `Wsparcie: ${license.support}` }),
+      ]);
+      licenseGrid.appendChild(card);
+    });
+  }
 
   container.appendChild(licenseGrid);
 
@@ -42,23 +85,22 @@ export const renderLicenses = () => {
     createElement("h2", { text: "Twoje licencje" }),
   ]);
 
-  if (!user) {
-    assignedSection.appendChild(createElement("p", { text: "Zaloguj się, aby zobaczyć przypisane licencje." }));
+  const purchases = purchasesService.getPurchases();
+  if (!purchases.length) {
+    assignedSection.appendChild(createElement("p", { text: "Brak przypisanych licencji." }));
   } else {
-    const library = purchasesService.getLibrary(user.id);
-    if (!library.length) {
-      assignedSection.appendChild(createElement("p", { text: "Brak przypisanych licencji." }));
-    } else {
-      const list = createElement("div", { className: "grid grid-2" });
-      library.forEach((entry) => {
-        const product = products.find((item) => item.id === entry.productId);
+    const list = createElement("div", { className: "grid grid-2" });
+    purchases.forEach((purchase) => {
+      purchase.items.forEach((item) => {
+        const product = products.find((entry) => entry.id === item.productId);
         if (!product) {
           return;
         }
+        const licenseKey = buildLicenseKey(purchase.id, product.id);
         const card = createElement("div", { className: "card" }, [
           createElement("h3", { text: product.name }),
-          createElement("p", { text: `Licencja: ${entry.license}` }),
-          createElement("p", { text: `Data zakupu: ${formatDate(entry.purchasedAt)}` }),
+          createElement("p", { text: `Klucz: ${licenseKey}` }),
+          createElement("p", { text: `Data zakupu: ${formatDate(purchase.createdAt)}` }),
         ]);
         const downloadButton = createElement("button", {
           className: "button secondary",
@@ -68,9 +110,9 @@ export const renderLicenses = () => {
         downloadButton.addEventListener("click", () => {
           const blob = createLicenseBlob({
             productName: product.name,
-            license: entry.license,
-            userName: user.name,
-            date: formatDate(entry.purchasedAt),
+            license: licenseKey,
+            userName: "Klient",
+            date: formatDate(purchase.createdAt),
           });
           const url = URL.createObjectURL(blob);
           const link = createElement("a", {
@@ -84,10 +126,11 @@ export const renderLicenses = () => {
         card.appendChild(downloadButton);
         list.appendChild(card);
       });
-      assignedSection.appendChild(list);
-    }
+    });
+    assignedSection.appendChild(list);
   }
 
   container.appendChild(assignedSection);
   main.appendChild(container);
 };
+

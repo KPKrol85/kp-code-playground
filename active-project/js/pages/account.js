@@ -1,4 +1,5 @@
 import { createElement, clearElement } from "../utils/dom.js";
+import { navigateHash } from "../utils/navigation.js";
 import { formatDate, formatCurrency } from "../utils/format.js";
 import { authService } from "../services/auth.js";
 import { purchasesService } from "../services/purchases.js";
@@ -31,12 +32,20 @@ export const renderAccount = () => {
     createElement("p", { text: `E-mail: ${user.email}` }),
     createElement("p", { text: `Data rejestracji: ${formatDate(user.createdAt)}` }),
     createElement("div", { className: "nav-links" }, [
-      createElement("a", { className: "button secondary", text: "Biblioteka", attrs: { href: "#/library" } }),
-      createElement("a", { className: "button secondary", text: "Licencje", attrs: { href: "#/licenses" } }),
+      createElement("a", {
+        className: "button secondary",
+        text: "Biblioteka",
+        attrs: { href: "#/library" },
+      }),
+      createElement("a", {
+        className: "button secondary",
+        text: "Licencje",
+        attrs: { href: "#/licenses" },
+      }),
     ]),
   ]);
 
-  const orders = purchasesService.getOrders(user.id);
+  const orders = purchasesService.getOrders();
   const ordersCard = createElement("div", { className: "card" }, [
     createElement("h2", { text: "Historia zamówień" }),
   ]);
@@ -61,10 +70,9 @@ export const renderAccount = () => {
     attrs: { type: "button" },
   });
   logoutButton.addEventListener("click", () => {
-    authService.logout();
-    store.setState({ user: null, session: null });
+    authService.logout(store);
     showToast("Wylogowano.");
-    location.hash = "#/";
+    navigateHash("#/auth");
   });
 
   const layout = createElement("div", { className: "grid grid-2 section" }, [profile, ordersCard]);

@@ -4,85 +4,164 @@ import { cartService } from "../services/cart.js";
 import { showToast } from "../components/toast.js";
 import { store } from "../store/store.js";
 import { purchasesService } from "../services/purchases.js";
+import { renderNotice } from "../components/uiStates.js";
+import { setMeta } from "../utils/meta.js";
 
 export const renderProductDetails = ({ id }) => {
   const main = document.getElementById("main-content");
   clearElement(main);
 
-  const { products, user } = store.getState();
-  const product = products.find((item) => item.id === id);
+  if (main._productDetailsUnsubscribe) {
+    main._productDetailsUnsubscribe();
+    main._productDetailsUnsubscribe = null;
+  }
 
-  if (!product) {
-    main.appendChild(
-      createElement("div", { className: "container" }, [
-        createElement("h1", { text: "Produkt nie został znaleziony" }),
-        createElement("p", { text: "Sprawdź adres lub wróć do katalogu." }),
-        createElement("a", { className: "button", text: "Wróć do katalogu", attrs: { href: "#/products" } }),
-      ])
+  const renderView = (state) => {
+    clearElement(main);
+    const { products, productsStatus, productsError } = state;
+
+    if (productsStatus === "loading" || productsStatus === "idle") {
+      setMeta({
+        title: "Ładowanie produktu...",
+        description: "Trwa pobieranie danych produktu.",
+      });
+      const container = createElement("div", { className: "container" });
+      renderNotice(container, {
+        title: "Ładowanie produktu",
+        message: "Trwa pobieranie danych produktu.",
+      });
+      main.appendChild(container);
+      return;
+    }
+
+    if (productsStatus === "error") {
+      setMeta({
+        title: "Nie udało się pobrać produktu",
+        description: productsError || "Spróbuj ponownie później.",
+      });
+      const container = createElement("div", { className: "container" });
+      renderNotice(container, {
+        title: "Nie udało się pobrać produktu",
+        message: productsError || "Spróbuj ponownie później.",
+      });
+      main.appendChild(container);
+      return;
+    }
+
+    const product = products.find((item) => item.id === id);
+    if (!product) {
+      setMeta({
+        title: "Produkt nie został znaleziony",
+        description: "Sprawdź adres lub wróć do katalogu produktów.",
+      });
+      const container = createElement("div", { className: "container" });
+      renderNotice(container, {
+        title: "Produkt nie został znaleziony",
+        message: "Sprawdź adres lub wróć do katalogu.",
+        action: { label: "Wróć do katalogu", href: "#/products" },
+      });
+      main.appendChild(container);
+      return;
+    }
+
+    setMeta({
+      title: `${product.name} - KP_Code Digital Vault`,
+      description:
+        product.shortDescription || product.description || "Szczegóły produktu cyfrowego.",
+    });
+
+    const wrapper = createElement("section", { className: "container" });
+    const layout = createElement("div", { className: "grid grid-2" });
+
+    const image = createElement("img", { attrs: { src: product.thumbnail, alt: product.name } });
+    const details = createElement("div", { className: "card" });
+    details.appendChild(createElement("h1", { text: product.name }));
+    details.appendChild(createElement("p", { text: product.description }));
+    details.appendChild(
+      createElement("div", { className: "price", text: formatCurrency(product.price) })
     );
-    return;
-  }
 
-  const wrapper = createElement("section", { className: "container" });
-  const layout = createElement("div", { className: "grid grid-2" });
+    const tags = createElement("div", { className: "tag-list" });
+    product.tags.forEach((tag) =>
+      tags.appendChild(createElement("span", { className: "badge", text: tag }))
+    );
+    details.appendChild(tags);
 
-  const image = createElement("img", { attrs: { src: product.thumbnail, alt: product.name } });
-  const details = createElement("div", { className: "card" });
-  details.appendChild(createElement("h1", { text: product.name }));
-  details.appendChild(createElement("p", { text: product.description }));
-  details.appendChild(createElement("div", { className: "price", text: formatCurrency(product.price) }));
+    const metaList = createElement("div", { className: "surface-muted" }, [
+      createElement("p", { text: `Kategoria: ${product.category}` }),
+      createElement("p", { text: `Wymagania: ${product.requirements}` }),
+      createElement("p", { text: `Wersja: ${product.version}` }),
+      createElement("p", { text: `Aktualizacja: ${formatDate(product.updatedAt)}` }),
+    ]);
+    details.appendChild(metaList);
 
-  const tags = createElement("div", { className: "tag-list" });
-  product.tags.forEach((tag) => tags.appendChild(createElement("span", { className: "badge", text: tag })));
-  details.appendChild(tags);
+    const actionRow = createElement("div", { className: "nav-links" });
+    const addButton = createElement("button", {
+      className: "button",
+      text: "Dodaj do koszyka",
+      attrs: { type: "button" },
+    });
+    addButton.addEventListener("click", () => {
+      cartService.addItem(product.id, 1);
+      store.setState({ cart: cartService.getCart() });
+      showToast("Produkt dodany do koszyka.");
+    });
+    actionRow.appendChild(addButton);
+    actionRow.appendChild(
+      createElement("a", {
+        className: "button secondary",
+        text: "Przejd« do koszyka",
+        attrs: { href: "#/cart" },
+      })
+    );
+    details.appendChild(actionRow);
 
-  const metaList = createElement("div", { className: "surface-muted" }, [
-    createElement("p", { text: `Kategoria: ${product.category}` }),
-    createElement("p", { text: `Wymagania: ${product.requirements}` }),
-    createElement("p", { text: `Wersja: ${product.version}` }),
-    createElement("p", { text: `Aktualizacja: ${formatDate(product.updatedAt)}` }),
-  ]);
-  details.appendChild(metaList);
+    const contents = createElement("div", { className: "card section" }, [
+      createElement("h2", { text: "Zawarto˜† paczki" }),
+    ]);
+    const list = createElement("ul");
+    product.bundleContents.forEach((item) => list.appendChild(createElement("li", { text: item })));
+    contents.appendChild(list);
 
-  const actionRow = createElement("div", { className: "nav-links" });
-  const addButton = createElement("button", { className: "button", text: "Dodaj do koszyka", attrs: { type: "button" } });
-  addButton.addEventListener("click", () => {
-    cartService.addItem(product.id, 1);
-    store.setState({ cart: cartService.getCart() });
-    showToast("Produkt dodany do koszyka.");
-  });
-  actionRow.appendChild(addButton);
-  actionRow.appendChild(createElement("a", { className: "button secondary", text: "Przejdź do koszyka", attrs: { href: "#/cart" } }));
-  details.appendChild(actionRow);
+    const downloads = createElement("div", { className: "card section" }, [
+      createElement("h2", { text: "Pliki do pobrania" }),
+    ]);
+    const downloadList = createElement("ul");
+    const hasAccess = purchasesService
+      .getPurchases()
+      .some((purchase) => purchase.items.some((entry) => entry.productId === product.id));
 
-  const contents = createElement("div", { className: "card section" }, [
-    createElement("h2", { text: "Zawartość paczki" }),
-  ]);
-  const list = createElement("ul");
-  product.bundleContents.forEach((item) => list.appendChild(createElement("li", { text: item })));
-  contents.appendChild(list);
+    product.downloadables.forEach((item) => {
+      const label = hasAccess
+        ? `${item.name} (${item.size})`
+        : `${item.name} (odblokuj po zakupie)`;
+      downloadList.appendChild(createElement("li", { text: label }));
+    });
+    downloads.appendChild(downloadList);
+    if (!hasAccess) {
+      downloads.appendChild(
+        createElement("p", { text: "Pliki pojawi¥ si© w bibliotece po zakoäczeniu zam¢wienia." })
+      );
+    }
 
-  const downloads = createElement("div", { className: "card section" }, [
-    createElement("h2", { text: "Pliki do pobrania" }),
-  ]);
-  const downloadList = createElement("ul");
-  const hasAccess = user ? purchasesService.getLibrary(user.id).some((entry) => entry.productId === product.id) : false;
+    layout.appendChild(image);
+    layout.appendChild(details);
 
-  product.downloadables.forEach((item) => {
-    const label = hasAccess ? `${item.name} (${item.size})` : `${item.name} (odblokuj po zakupie)`;
-    downloadList.appendChild(createElement("li", { text: label }));
-  });
-  downloads.appendChild(downloadList);
-  if (!hasAccess) {
-    downloads.appendChild(createElement("p", { text: "Pliki pojawią się w bibliotece po zakończeniu zamówienia." }));
-  }
+    wrapper.appendChild(layout);
+    wrapper.appendChild(contents);
+    wrapper.appendChild(downloads);
 
-  layout.appendChild(image);
-  layout.appendChild(details);
+    main.appendChild(wrapper);
+  };
 
-  wrapper.appendChild(layout);
-  wrapper.appendChild(contents);
-  wrapper.appendChild(downloads);
+  renderView(store.getState());
+  main._productDetailsUnsubscribe = store.subscribe(renderView);
 
-  main.appendChild(wrapper);
+  return () => {
+    if (main._productDetailsUnsubscribe) {
+      main._productDetailsUnsubscribe();
+      main._productDetailsUnsubscribe = null;
+    }
+  };
 };
+
