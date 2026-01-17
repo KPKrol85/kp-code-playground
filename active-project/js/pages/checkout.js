@@ -62,11 +62,11 @@ export const renderCheckout = () => {
   const emailErrorId = "checkout-email-error";
   const nameError = createElement("div", {
     className: "form-error",
-    attrs: { id: nameErrorId, "aria-live": "polite" },
+    attrs: { id: nameErrorId },
   });
   const emailError = createElement("div", {
     className: "form-error",
-    attrs: { id: emailErrorId, "aria-live": "polite" },
+    attrs: { id: emailErrorId },
   });
   const errorBox = createElement("div", {
     className: "form-error",
@@ -240,4 +240,3 @@ export const renderCheckoutSuccess = () => {
   ]);
   main.appendChild(container);
 };
-

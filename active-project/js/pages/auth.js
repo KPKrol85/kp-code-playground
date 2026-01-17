@@ -67,11 +67,11 @@ export const renderAuth = () => {
     });
     const emailError = createElement("div", {
       className: "form-error sr-only",
-      attrs: { id: "auth-login-email-error", "aria-live": "polite" },
+      attrs: { id: "auth-login-email-error" },
     });
     const passwordError = createElement("div", {
       className: "form-error sr-only",
-      attrs: { id: "auth-login-password-error", "aria-live": "polite" },
+      attrs: { id: "auth-login-password-error" },
     });
     const form = createElement("form");
 
@@ -168,15 +168,15 @@ export const renderAuth = () => {
     });
     const nameError = createElement("div", {
       className: "form-error sr-only",
-      attrs: { id: "auth-register-name-error", "aria-live": "polite" },
+      attrs: { id: "auth-register-name-error" },
     });
     const emailError = createElement("div", {
       className: "form-error sr-only",
-      attrs: { id: "auth-register-email-error", "aria-live": "polite" },
+      attrs: { id: "auth-register-email-error" },
     });
     const passwordError = createElement("div", {
       className: "form-error sr-only",
-      attrs: { id: "auth-register-password-error", "aria-live": "polite" },
+      attrs: { id: "auth-register-password-error" },
     });
     const form = createElement("form");
 
