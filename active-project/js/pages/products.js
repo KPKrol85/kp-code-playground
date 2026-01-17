@@ -76,6 +76,10 @@ export const renderProducts = () => {
   let products = store.getState().products;
   let shouldSyncFromUrl = true;
   let isApplyingFilters = false;
+  const isProductsListHash = () => {
+    const hash = window.location.hash || "";
+    return hash === "#/products" || hash.startsWith("#/products?");
+  };
 
   const readFiltersFromHash = () => {
     const hash = window.location.hash || "";
@@ -119,6 +123,9 @@ export const renderProducts = () => {
   };
 
   const updateUrlFromFilters = (filters, { replace = true } = {}) => {
+    if (!isProductsListHash()) {
+      return;
+    }
     const nextHash = buildHashFromFilters(filters);
     if (window.location.hash === nextHash) {
       return;
@@ -143,6 +150,9 @@ export const renderProducts = () => {
   };
 
   const syncFiltersFromUrl = ({ replaceUrl = false } = {}) => {
+    if (!isProductsListHash()) {
+      return;
+    }
     const rawFilters = readFiltersFromHash();
     const normalized = normalizeFilters(rawFilters, getAvailableCategories());
     applyFiltersToControls(normalized);
@@ -352,15 +362,15 @@ export const renderProducts = () => {
     visibleRows += ROWS_STEP;
     renderList(true);
   });
-  const isProductsHash = () => (window.location.hash || "").startsWith("#/products");
   const handlePopState = () => {
-    if (!isProductsHash()) {
+    if (!isProductsListHash()) {
       return;
     }
     syncFiltersFromUrl({ replaceUrl: true });
   };
   window.addEventListener("popstate", handlePopState);
   addCleanup(() => window.removeEventListener("popstate", handlePopState));
+  addCleanup(() => debouncedFiltersUpdate.cancel?.());
 
   main.appendChild(container);
 
