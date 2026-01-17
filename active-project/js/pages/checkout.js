@@ -58,9 +58,20 @@ export const renderCheckout = () => {
     attrs: { id: "checkout-tax-id", type: "text", name: "taxId", placeholder: "NIP (opcjonalnie)" },
   });
 
-  const nameError = createElement("div", { className: "form-error" });
-  const emailError = createElement("div", { className: "form-error" });
-  const errorBox = createElement("div", { className: "form-error" });
+  const nameErrorId = "checkout-name-error";
+  const emailErrorId = "checkout-email-error";
+  const nameError = createElement("div", {
+    className: "form-error",
+    attrs: { id: nameErrorId, "aria-live": "polite" },
+  });
+  const emailError = createElement("div", {
+    className: "form-error",
+    attrs: { id: emailErrorId, "aria-live": "polite" },
+  });
+  const errorBox = createElement("div", {
+    className: "form-error",
+    attrs: { "aria-live": "polite" },
+  });
 
   form.appendChild(
     createElement("div", { className: "form-field" }, [
@@ -129,9 +140,19 @@ export const renderCheckout = () => {
 
     if (!nameValid) {
       nameError.textContent = "Podaj imię i nazwisko (min. 2 znaki).";
+      nameField.setAttribute("aria-invalid", "true");
+      nameField.setAttribute("aria-describedby", nameErrorId);
+    } else {
+      nameField.removeAttribute("aria-invalid");
+      nameField.removeAttribute("aria-describedby");
     }
     if (!emailValid) {
       emailError.textContent = "Podaj poprawny e-mail.";
+      emailField.setAttribute("aria-invalid", "true");
+      emailField.setAttribute("aria-describedby", emailErrorId);
+    } else {
+      emailField.removeAttribute("aria-invalid");
+      emailField.removeAttribute("aria-describedby");
     }
     submitButton.disabled = !nameValid || !emailValid || isProcessing;
     return nameValid && emailValid;
@@ -219,5 +240,4 @@ export const renderCheckoutSuccess = () => {
   ]);
   main.appendChild(container);
 };
-
 
