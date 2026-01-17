@@ -67,7 +67,7 @@ export const renderLibrary = () => {
     product.downloadables.forEach((file) => {
       const link = createElement("a", {
         text: `${file.name} (${file.size})`,
-        attrs: { href: "assets/demo-download.txt", download: "" },
+        attrs: { href: file.file, download: file.name },
       });
       const item = createElement("li", {}, [link]);
       list.appendChild(item);
@@ -79,4 +79,3 @@ export const renderLibrary = () => {
   container.appendChild(grid);
   main.appendChild(container);
 };
-
