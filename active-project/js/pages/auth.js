@@ -11,7 +11,7 @@ export const renderAuth = () => {
   clearElement(main);
 
   const container = createElement("section", { className: "container" });
-  container.appendChild(createElement("h1", { text: "Konto u3ytkownika" }));
+  container.appendChild(createElement("h1", { text: "Konto użytkownika" }));
 
   const tabs = createElement("div", { className: "tabs", attrs: { role: "tablist" } });
   const loginTab = createElement("button", {
@@ -52,14 +52,14 @@ export const renderAuth = () => {
   const renderLogin = () => {
     clearElement(panel);
     panel.setAttribute("aria-labelledby", "auth-tab-login");
-    panel.appendChild(createElement("h2", { text: "Zaloguj sic" }));
+    panel.appendChild(createElement("h2", { text: "Zaloguj się" }));
     const emailField = createElement("input", {
       className: "input",
       attrs: { id: "auth-login-email", type: "email", placeholder: "E-mail" },
     });
     const passwordField = createElement("input", {
       className: "input",
-      attrs: { id: "auth-login-password", type: "password", placeholder: "Has^o" },
+      attrs: { id: "auth-login-password", type: "password", placeholder: "Hasło" },
     });
     const errorBox = createElement("div", { className: "form-error" });
     const form = createElement("form");
@@ -72,7 +72,7 @@ export const renderAuth = () => {
     );
     form.appendChild(
       createElement("div", { className: "form-field" }, [
-        createElement("label", { text: "Has^o", attrs: { for: "auth-login-password" } }),
+        createElement("label", { text: "Hasło", attrs: { for: "auth-login-password" } }),
         passwordField,
       ])
     );
@@ -95,14 +95,14 @@ export const renderAuth = () => {
               throw new Error("Podaj poprawny e-mail.");
             }
             if (!validators.minLength(6)(passwordField.value)) {
-              throw new Error("Has^o musi mie? minimum 6 znakcw.");
+              throw new Error("Hasło musi mieć minimum 6 znaków.");
             }
             const { user, session } = authService.login({
               email: emailField.value,
               password: passwordField.value,
             });
             store.setState({ user, session });
-            showToast("Zalogowano pomy~lnie.");
+            showToast("Zalogowano pomyślnie.");
             navigateHash("#/account");
           } catch (error) {
             errorBox.textContent = error.message;
@@ -118,10 +118,10 @@ export const renderAuth = () => {
   const renderRegister = () => {
     clearElement(panel);
     panel.setAttribute("aria-labelledby", "auth-tab-register");
-    panel.appendChild(createElement("h2", { text: "Za^c3 konto" }));
+    panel.appendChild(createElement("h2", { text: "Załóż konto" }));
     const nameField = createElement("input", {
       className: "input",
-      attrs: { id: "auth-register-name", type: "text", placeholder: "Imic i nazwisko" },
+      attrs: { id: "auth-register-name", type: "text", placeholder: "Imię i nazwisko" },
     });
     const emailField = createElement("input", {
       className: "input",
@@ -129,14 +129,14 @@ export const renderAuth = () => {
     });
     const passwordField = createElement("input", {
       className: "input",
-      attrs: { id: "auth-register-password", type: "password", placeholder: "Has^o" },
+      attrs: { id: "auth-register-password", type: "password", placeholder: "Hasło" },
     });
     const errorBox = createElement("div", { className: "form-error" });
     const form = createElement("form");
 
     form.appendChild(
       createElement("div", { className: "form-field" }, [
-        createElement("label", { text: "Imic i nazwisko", attrs: { for: "auth-register-name" } }),
+        createElement("label", { text: "Imię i nazwisko", attrs: { for: "auth-register-name" } }),
         nameField,
       ])
     );
@@ -148,14 +148,14 @@ export const renderAuth = () => {
     );
     form.appendChild(
       createElement("div", { className: "form-field" }, [
-        createElement("label", { text: "Has^o", attrs: { for: "auth-register-password" } }),
+        createElement("label", { text: "Hasło", attrs: { for: "auth-register-password" } }),
         passwordField,
       ])
     );
     form.appendChild(errorBox);
     const submitButton = createElement("button", {
       className: "button block",
-      text: "Utwcrz konto",
+      text: "Utwórz konto",
       attrs: { type: "submit" },
     });
     form.appendChild(submitButton);
@@ -168,20 +168,20 @@ export const renderAuth = () => {
           errorBox.textContent = "";
           try {
             if (!validators.required(nameField.value)) {
-              throw new Error("Podaj imic i nazwisko.");
+              throw new Error("Podaj imię i nazwisko.");
             }
             if (!validators.email(emailField.value)) {
               throw new Error("Podaj poprawny e-mail.");
             }
             if (!validators.minLength(6)(passwordField.value)) {
-              throw new Error("Has^o musi mie? minimum 6 znakcw.");
+              throw new Error("Hasło musi mieć minimum 6 znaków.");
             }
             authService.register({
               name: nameField.value,
               email: emailField.value,
               password: passwordField.value,
             });
-            showToast("Konto utworzone, mo3esz sic zalogowa?.");
+            showToast("Konto utworzone, możesz się zalogować.");
             loginTab.click();
           } catch (error) {
             errorBox.textContent = error.message;
