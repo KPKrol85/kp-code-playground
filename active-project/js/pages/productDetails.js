@@ -110,14 +110,14 @@ export const renderProductDetails = ({ id }) => {
     actionRow.appendChild(
       createElement("a", {
         className: "button secondary",
-        text: "Przejd« do koszyka",
+        text: "Przejdź do koszyka",
         attrs: { href: "#/cart" },
       })
     );
     details.appendChild(actionRow);
 
     const contents = createElement("div", { className: "card section" }, [
-      createElement("h2", { text: "Zawarto˜† paczki" }),
+      createElement("h2", { text: "Zawartość paczki" }),
     ]);
     const list = createElement("ul");
     product.bundleContents.forEach((item) => list.appendChild(createElement("li", { text: item })));
@@ -140,7 +140,7 @@ export const renderProductDetails = ({ id }) => {
     downloads.appendChild(downloadList);
     if (!hasAccess) {
       downloads.appendChild(
-        createElement("p", { text: "Pliki pojawi¥ si© w bibliotece po zakoäczeniu zam¢wienia." })
+        createElement("p", { text: "Pliki pojawią się w bibliotece po zakończeniu zamówienia." })
       );
     }
 
@@ -164,4 +164,3 @@ export const renderProductDetails = ({ id }) => {
     }
   };
 };
-

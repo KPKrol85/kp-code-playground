@@ -148,7 +148,7 @@ export const renderCart = () => {
   summary.appendChild(
     createElement("a", {
       className: "button block",
-      text: "Przejd« do checkout",
+      text: "Przejdź do checkout",
       attrs: { href: "#/checkout" },
     })
   );
@@ -160,4 +160,3 @@ export const renderCart = () => {
   container.appendChild(layout);
   main.appendChild(container);
 };
-
