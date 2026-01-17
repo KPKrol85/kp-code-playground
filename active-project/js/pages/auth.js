@@ -5,18 +5,19 @@ import { authService } from "../services/auth.js";
 import { showToast } from "../components/toast.js";
 import { store } from "../store/store.js";
 import { withButtonLoading } from "../utils/ui-state.js";
+import { content } from "../content/pl.js";
 
 export const renderAuth = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
 
   const container = createElement("section", { className: "container" });
-  container.appendChild(createElement("h1", { text: "Konto użytkownika" }));
+  container.appendChild(createElement("h1", { text: content.auth.title }));
 
   const tabs = createElement("div", { className: "tabs", attrs: { role: "tablist" } });
   const loginTab = createElement("button", {
     className: "tab-button",
-    text: "Logowanie",
+    text: content.auth.tabs.login,
     attrs: {
       id: "auth-tab-login",
       type: "button",
@@ -27,7 +28,7 @@ export const renderAuth = () => {
   });
   const registerTab = createElement("button", {
     className: "tab-button",
-    text: "Rejestracja",
+    text: content.auth.tabs.register,
     attrs: {
       id: "auth-tab-register",
       type: "button",
@@ -52,7 +53,7 @@ export const renderAuth = () => {
   const renderLogin = () => {
     clearElement(panel);
     panel.setAttribute("aria-labelledby", "auth-tab-login");
-    panel.appendChild(createElement("h2", { text: "Zaloguj się" }));
+    panel.appendChild(createElement("h2", { text: content.auth.login.title }));
     const emailField = createElement("input", {
       className: "input",
       attrs: { id: "auth-login-email", type: "email", placeholder: "E-mail" },
@@ -92,7 +93,7 @@ export const renderAuth = () => {
     form.appendChild(errorBox);
     const submitButton = createElement("button", {
       className: "button block",
-      text: "Zaloguj",
+      text: content.auth.login.submit,
       attrs: { type: "submit" },
     });
     form.appendChild(submitButton);
@@ -133,13 +134,13 @@ export const renderAuth = () => {
               password: passwordField.value,
             });
             store.setState({ user, session });
-            showToast("Zalogowano pomyślnie.");
+            showToast(content.toasts.loginSuccess);
             navigateHash("#/account");
           } catch (error) {
             errorBox.textContent = error.message;
           }
         },
-        { loadingText: "Logowanie..." }
+        { loadingText: content.auth.login.loading }
       );
     });
 
@@ -149,7 +150,7 @@ export const renderAuth = () => {
   const renderRegister = () => {
     clearElement(panel);
     panel.setAttribute("aria-labelledby", "auth-tab-register");
-    panel.appendChild(createElement("h2", { text: "Załóż konto" }));
+    panel.appendChild(createElement("h2", { text: content.auth.register.title }));
     const nameField = createElement("input", {
       className: "input",
       attrs: { id: "auth-register-name", type: "text", placeholder: "Imię i nazwisko" },
@@ -204,7 +205,7 @@ export const renderAuth = () => {
     form.appendChild(errorBox);
     const submitButton = createElement("button", {
       className: "button block",
-      text: "Utwórz konto",
+      text: content.auth.register.submit,
       attrs: { type: "submit" },
     });
     form.appendChild(submitButton);
@@ -256,13 +257,13 @@ export const renderAuth = () => {
               email: emailField.value,
               password: passwordField.value,
             });
-            showToast("Konto utworzone, możesz się zalogować.");
+            showToast(content.toasts.accountCreated);
             loginTab.click();
           } catch (error) {
             errorBox.textContent = error.message;
           }
         },
-        { loadingText: "Rejestracja..." }
+        { loadingText: content.auth.register.loading }
       );
     });
 

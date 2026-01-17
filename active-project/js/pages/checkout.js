@@ -6,10 +6,10 @@ import { cartService } from "../services/cart.js";
 import { purchasesService } from "../services/purchases.js";
 import { showToast } from "../components/toast.js";
 import { store } from "../store/store.js";
-import { renderNotice } from "../components/uiStates.js";
 import { setMeta } from "../utils/meta.js";
 import { setButtonLoading, clearButtonLoading } from "../utils/ui-state.js";
 import { renderEmptyState } from "../components/ui-state-helpers.js";
+import { content } from "../content/pl.js";
 
 export const renderCheckout = () => {
   const main = document.getElementById("main-content");
@@ -18,14 +18,14 @@ export const renderCheckout = () => {
   const { cart, products } = store.getState();
 
   const container = createElement("section", { className: "container" });
-  container.appendChild(createElement("h1", { text: "Checkout" }));
+  container.appendChild(createElement("h1", { text: content.checkout.title }));
 
   if (!cart.length) {
     container.appendChild(
       renderEmptyState({
-        title: "Twój koszyk jest pusty.",
-        message: "Przeglądaj produkty to get started.",
-        ctaText: "Przeglądaj produkty",
+        title: content.states.checkout.empty.title,
+        message: content.states.checkout.empty.message,
+        ctaText: content.common.browseProducts,
         ctaHref: "#/products",
       })
     );
@@ -34,7 +34,7 @@ export const renderCheckout = () => {
   }
 
   const form = createElement("form", { className: "card" });
-  form.appendChild(createElement("h2", { text: "Dane zamówienia" }));
+  form.appendChild(createElement("h2", { text: content.checkout.orderDetailsTitle }));
 
   const nameField = createElement("input", {
     className: "input",
@@ -103,13 +103,13 @@ export const renderCheckout = () => {
 
   const submitButton = createElement("button", {
     className: "button block",
-    text: "Złóż zamówienie",
+    text: content.checkout.submit,
     attrs: { type: "submit" },
   });
   form.appendChild(submitButton);
 
   const summary = createElement("div", { className: "card" });
-  summary.appendChild(createElement("h2", { text: "Podsumowanie" }));
+  summary.appendChild(createElement("h2", { text: content.common.summaryTitle }));
   let total = 0;
   const list = createElement("ul");
   cart.forEach((item) => {
@@ -161,7 +161,7 @@ export const renderCheckout = () => {
   const updateProcessingState = (processing) => {
     isProcessing = processing;
     if (processing) {
-      setButtonLoading(submitButton, { loadingText: "Przetwarzanie..." });
+      setButtonLoading(submitButton, { loadingText: content.common.processing });
     } else {
       clearButtonLoading(submitButton);
     }
@@ -199,10 +199,10 @@ export const renderCheckout = () => {
       purchasesService.addPurchase(order);
       cartService.clear();
       store.setState({ cart: [] });
-      showToast("Zakup zakończony sukcesem.");
+      showToast(content.toasts.checkoutSuccess);
       setMeta({
-        title: "Dziękujemy za zakup",
-        description: "Zakup zakończony. Pliki zostały dodane do Twojej biblioteki.",
+        title: content.checkout.success.metaTitle,
+        description: content.checkout.success.metaDescription,
       });
       navigateHash("#/library");
     }, 700);
@@ -217,22 +217,22 @@ export const renderCheckoutSuccess = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
   setMeta({
-    title: "Dziękujemy za zakup",
-    description: "Zakup zakończony. Pliki zostały dodane do Twojej biblioteki.",
+    title: content.checkout.success.metaTitle,
+    description: content.checkout.success.metaDescription,
   });
   const container = createElement("section", { className: "container" }, [
     createElement("div", { className: "card" }, [
-      createElement("h1", { text: "Dziękujemy za zakup!" }),
-      createElement("p", { text: "Pliki zostały dodane do Twojej biblioteki." }),
+      createElement("h1", { text: content.checkout.success.title }),
+      createElement("p", { text: content.checkout.success.message }),
       createElement("div", { className: "nav-links" }, [
         createElement("a", {
           className: "button",
-          text: "Przejdź do biblioteki",
+          text: content.checkout.success.ctaLibrary,
           attrs: { href: "#/library" },
         }),
         createElement("a", {
           className: "button secondary",
-          text: "Wróć do katalogu",
+          text: content.checkout.success.ctaCatalog,
           attrs: { href: "#/products" },
         }),
       ]),

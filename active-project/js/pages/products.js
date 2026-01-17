@@ -7,6 +7,7 @@ import { renderDataState } from "../components/uiStates.js";
 import { getVisibleProducts } from "../utils/products.js";
 import { debounce } from "../utils/debounce.js";
 import { renderEmptyState } from "../components/ui-state-helpers.js";
+import { content } from "../content/pl.js";
 
 const VISIBLE_ROWS = 5;
 const ROWS_STEP = 5;
@@ -137,9 +138,9 @@ export const renderProducts = () => {
       showMoreButton.hidden = true;
       grid.appendChild(
         renderEmptyState({
-          title: "Nie znaleziono produktów.",
-          message: "Spróbuj zmienić filtry lub wyszukiwanie.",
-          ctaText: "Wyczyść filtry",
+          title: content.states.products.filteredEmpty.title,
+          message: content.states.products.filteredEmpty.message,
+          ctaText: content.states.products.filteredEmpty.cta,
           onCta: () => {
             searchField.value = "";
             sortSelect.value = "latest";
@@ -160,7 +161,7 @@ export const renderProducts = () => {
         createProductCard(product, (id) => {
           cartService.addItem(id, 1);
           store.setState({ cart: cartService.getCart() });
-          showToast("Dodano produkt do koszyka.");
+          showToast(content.toasts.addedToCart);
         })
       );
     });
@@ -182,12 +183,12 @@ export const renderProducts = () => {
           lineHeights: [18, 14],
         },
         errorState: {
-          title: "Nie udało się pobrać produktów",
-          message: productsError || "Spróbuj ponownie później.",
+          title: content.states.products.error.title,
+          message: productsError || content.states.products.error.message,
         },
         empty: {
-          title: "Brak produktów",
-          message: "Brak produktów do wyświetlenia.",
+          title: content.states.products.empty.title,
+          message: content.states.products.empty.message,
         },
       })
     ) {
@@ -261,4 +262,3 @@ export const renderProducts = () => {
     }
   };
 };
-

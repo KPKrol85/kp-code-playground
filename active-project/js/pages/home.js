@@ -5,6 +5,7 @@ import { cartService } from "../services/cart.js";
 import { showToast } from "../components/toast.js";
 import { store } from "../store/store.js";
 import { renderDataState } from "../components/uiStates.js";
+import { content } from "../content/pl.js";
 
 export const renderHome = () => {
   const main = document.getElementById("main-content");
@@ -327,13 +328,13 @@ export const renderHome = () => {
           lineHeights: [18, 14],
         },
         errorState: {
-          title: "Nie udało się pobrać produktów",
-          message: productsError || "Spróbuj ponownie później.",
+          title: content.states.products.error.title,
+          message: productsError || content.states.products.error.message,
         },
         empty: {
-          title: "Brak produktów",
-          message: "Brak produktów do wyświetlenia.",
-          action: { label: "Przeglądaj produkty", href: "#/products" },
+          title: content.states.products.empty.title,
+          message: content.states.products.empty.message,
+          action: { label: content.common.browseProducts, href: "#/products" },
         },
       })
     ) {
@@ -345,7 +346,7 @@ export const renderHome = () => {
         createProductCard(product, (id) => {
           cartService.addItem(id, 1);
           store.setState({ cart: cartService.getCart() });
-          showToast("Dodano produkt do koszyka.");
+          showToast(content.toasts.addedToCart);
         })
       );
     });
