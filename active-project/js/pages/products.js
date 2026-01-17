@@ -352,7 +352,11 @@ export const renderProducts = () => {
     visibleRows += ROWS_STEP;
     renderList(true);
   });
+  const isProductsHash = () => (window.location.hash || "").startsWith("#/products");
   const handlePopState = () => {
+    if (!isProductsHash()) {
+      return;
+    }
     syncFiltersFromUrl({ replaceUrl: true });
   };
   window.addEventListener("popstate", handlePopState);
