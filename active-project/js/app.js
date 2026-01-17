@@ -99,7 +99,7 @@ const initRoutes = () => {
     title: "KP_Code Digital Vault — Start",
     description: "Nowoczesny sklep z produktami cyfrowymi i biblioteką zakupów.",
   });
-  addRoute(/^\/products$/, renderProducts, {
+  addRoute(/^\/products(?:\?.*)?$/, renderProducts, {
     title: "Katalog produktów — KP_Code Digital Vault",
     description: "Przeglądaj produkty cyfrowe, filtry i sortowanie.",
   });
