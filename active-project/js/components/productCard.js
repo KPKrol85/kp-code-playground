@@ -30,7 +30,18 @@ export const createProductCard = (product, onAdd) => {
     }),
   ]);
 
-  actions.querySelector("button").addEventListener("click", () => onAdd(product.id));
+  const detailsLink = actions.querySelector("a");
+  const addButton = actions.querySelector("button");
+
+  detailsLink.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+
+  addButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onAdd(product.id);
+  });
 
   card.appendChild(image);
   card.appendChild(title);
