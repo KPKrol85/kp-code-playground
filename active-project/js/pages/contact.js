@@ -2,6 +2,7 @@ import { createElement, clearElement } from "../utils/dom.js";
 import { validators } from "../utils/validators.js";
 import { showToast } from "../components/toast.js";
 import { withButtonLoading } from "../utils/ui-state.js";
+import { content } from "../content/pl.js";
 
 const company = {
   brand: "KP_Code Digital Vault",
@@ -88,7 +89,7 @@ export const renderContact = () => {
           errorBox.textContent = errors.join(" ");
           return;
         }
-        showToast("Wiadomość została wysłana (demo).");
+        showToast(content.toasts.contactSent);
         form.reset();
       },
       { loadingText: "Wysyłanie..." }
