@@ -34,12 +34,26 @@ export const renderProducts = () => {
   );
 
   const filters = createElement("div", { className: "grid grid-3" });
+  const searchId = "products-search";
+  const sortId = "products-sort";
+  const categoryId = "products-category";
+  const searchLabel = createElement("label", {
+    className: "sr-only",
+    text: "Szukaj produktu",
+    attrs: { for: searchId },
+  });
   const searchField = createElement("input", {
     className: "input",
-    attrs: { type: "search", placeholder: "Szukaj produktu" },
+    attrs: { id: searchId, type: "search", placeholder: "Szukaj produktu" },
   });
   const sortSelect = createElement("select", {
     className: "select",
+    attrs: { id: sortId },
+  });
+  const sortLabel = createElement("label", {
+    className: "sr-only",
+    text: "Sortowanie",
+    attrs: { for: sortId },
   });
   [
     { value: "latest", label: "Najnowsze" },
@@ -50,7 +64,12 @@ export const renderProducts = () => {
       createElement("option", { text: option.label, attrs: { value: option.value } })
     );
   });
-  const categorySelect = createElement("select", { className: "select" });
+  const categoryLabel = createElement("label", {
+    className: "sr-only",
+    text: "Kategoria",
+    attrs: { for: categoryId },
+  });
+  const categorySelect = createElement("select", { className: "select", attrs: { id: categoryId } });
   let products = store.getState().products;
   const updateCategories = (nextProducts) => {
     clearElement(categorySelect);
@@ -67,8 +86,11 @@ export const renderProducts = () => {
 
   updateCategories(products);
 
+  filters.appendChild(searchLabel);
   filters.appendChild(searchField);
+  filters.appendChild(sortLabel);
   filters.appendChild(sortSelect);
+  filters.appendChild(categoryLabel);
   filters.appendChild(categorySelect);
   container.appendChild(filters);
 
@@ -239,5 +261,4 @@ export const renderProducts = () => {
     }
   };
 };
-
 

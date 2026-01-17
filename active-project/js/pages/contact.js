@@ -5,8 +5,8 @@ import { withButtonLoading } from "../utils/ui-state.js";
 
 const company = {
   brand: "KP_Code Digital Vault",
-  owner: "Kamil Krcl",
-  address: "ul. Marynarki Wojennej 12/31, 33-100 Tarncw, Polska",
+  owner: "Kamil Król",
+  address: "ul. Marynarki Wojennej 12/31, 33-100 Tarnów, Polska",
   phone: "+48 533 537 091",
   email: "kontakt@kp-code.pl",
 };
@@ -30,7 +30,7 @@ export const renderContact = () => {
   form.appendChild(createElement("h2", { text: "Napisz do nas" }));
   const nameField = createElement("input", {
     className: "input",
-    attrs: { id: "contact-name", type: "text", placeholder: "Imic i nazwisko" },
+    attrs: { id: "contact-name", type: "text", placeholder: "Imię i nazwisko" },
   });
   const emailField = createElement("input", {
     className: "input",
@@ -38,13 +38,13 @@ export const renderContact = () => {
   });
   const messageField = createElement("textarea", {
     className: "textarea",
-    attrs: { id: "contact-message", rows: "4", placeholder: "Wiadomo~?" },
+    attrs: { id: "contact-message", rows: "4", placeholder: "Wiadomość" },
   });
   const errorBox = createElement("div", { className: "form-error" });
 
   form.appendChild(
     createElement("div", { className: "form-field" }, [
-      createElement("label", { text: "Imic i nazwisko", attrs: { for: "contact-name" } }),
+      createElement("label", { text: "Imię i nazwisko", attrs: { for: "contact-name" } }),
       nameField,
     ])
   );
@@ -56,14 +56,14 @@ export const renderContact = () => {
   );
   form.appendChild(
     createElement("div", { className: "form-field" }, [
-      createElement("label", { text: "Wiadomo~?", attrs: { for: "contact-message" } }),
+      createElement("label", { text: "Wiadomość", attrs: { for: "contact-message" } }),
       messageField,
     ])
   );
   form.appendChild(errorBox);
   const submitButton = createElement("button", {
     className: "button block",
-    text: "Wy~lij (mock)",
+    text: "Wyślij (mock)",
     attrs: { type: "submit" },
   });
   form.appendChild(submitButton);
@@ -76,22 +76,22 @@ export const renderContact = () => {
         errorBox.textContent = "";
         const errors = [];
         if (!validators.required(nameField.value)) {
-          errors.push("Uzupe^nij imic i nazwisko.");
+          errors.push("Uzupełnij imię i nazwisko.");
         }
         if (!validators.email(emailField.value)) {
           errors.push("Podaj poprawny e-mail.");
         }
         if (!validators.required(messageField.value)) {
-          errors.push("Wpisz wiadomo~?.");
+          errors.push("Wpisz wiadomość.");
         }
         if (errors.length) {
           errorBox.textContent = errors.join(" ");
           return;
         }
-        showToast("Wiadomo~? zosta^a wys^ana (demo).");
+        showToast("Wiadomość została wysłana (demo).");
         form.reset();
       },
-      { loadingText: "Wysylanie..." }
+      { loadingText: "Wysyłanie..." }
     );
   });
 
