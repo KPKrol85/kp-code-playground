@@ -65,7 +65,7 @@ const initData = async () => {
 const initStore = () => {
   const cart = cartService.getCart();
   const session = authService.getSession();
-  const user = authService.getCurrentUser();
+  const user = authService.getUser();
   const { theme, hasSaved } = detectTheme();
   store.setState({
     cart,
@@ -74,6 +74,10 @@ const initStore = () => {
     ui: { theme },
   });
   applyTheme(theme, { persist: hasSaved });
+
+  authService.onAuthChange(({ session: nextSession, user: nextUser }) => {
+    store.setState({ session: nextSession, user: nextUser });
+  });
 
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
   mediaQuery.addEventListener("change", (event) => {
