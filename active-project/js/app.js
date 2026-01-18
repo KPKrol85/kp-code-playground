@@ -27,6 +27,7 @@ import { initKeyboardShortcuts } from "./utils/keyboard-shortcuts.js";
 import { closeModal } from "./components/modal.js";
 import { consumeProgrammaticNav, markProgrammaticNav, navigateHash } from "./utils/navigation.js";
 import { content } from "./content/pl.js";
+import { setMetaImages } from "./utils/meta.js";
 
 const THEME_KEY = "kp_theme";
 
@@ -528,6 +529,7 @@ const initResizeHandling = () => {
 initErrorBoundary();
 initStore();
 initLayout();
+setMetaImages();
 initData();
 initRoutes();
 initRouteScrollHandling();

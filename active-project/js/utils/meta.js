@@ -1,4 +1,8 @@
 const MAX_DESCRIPTION_LENGTH = 160;
+const SITE_URL = window.location.origin;
+const DEFAULT_OG_IMAGE_PATH = "/assets/og/og-default.svg";
+// TODO: Replace with branded OG images per route.
+export const DEFAULT_OG_IMAGE_URL = `${SITE_URL}${DEFAULT_OG_IMAGE_PATH}`;
 
 const normalizeText = (value) => {
   return String(value || "")
@@ -43,5 +47,16 @@ export const setMeta = ({ title, description } = {}) => {
     if (twitterDescription) {
       twitterDescription.setAttribute("content", safeDescription);
     }
+  }
+};
+
+export const setMetaImages = (imageUrl = DEFAULT_OG_IMAGE_URL) => {
+  const ogImage = document.querySelector('meta[property="og:image"]');
+  if (ogImage) {
+    ogImage.setAttribute("content", imageUrl);
+  }
+  const twitterImage = document.querySelector('meta[name="twitter:image"]');
+  if (twitterImage) {
+    twitterImage.setAttribute("content", imageUrl);
   }
 };
