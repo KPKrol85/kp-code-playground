@@ -24,4 +24,24 @@ export const setMeta = ({ title, description } = {}) => {
   }
   const safeDescription = truncateText(description, MAX_DESCRIPTION_LENGTH);
   metaDescription.setAttribute("content", safeDescription);
+  if (title) {
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute("content", String(title));
+    }
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitle) {
+      twitterTitle.setAttribute("content", String(title));
+    }
+  }
+  if (safeDescription) {
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute("content", safeDescription);
+    }
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+    if (twitterDescription) {
+      twitterDescription.setAttribute("content", safeDescription);
+    }
+  }
 };
