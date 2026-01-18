@@ -14,6 +14,7 @@ import { renderCookies, renderPrivacy, renderTerms } from "./pages/legalPages.js
 import { renderContact } from "./pages/contact.js";
 import { renderNotFound } from "./pages/notFound.js";
 import { renderAdmin } from "./pages/admin.js";
+import { createPlaceholderHandler } from "./pages/placeholder.js";
 import { addRoute, startRouter } from "./router/router.js";
 import { mockApi } from "./services/mockApi.js";
 import { cartService } from "./services/cart.js";
@@ -96,6 +97,277 @@ const initLayout = () => {
 };
 
 const initRoutes = () => {
+  const placeholderBullets = {
+    products: [
+      "Przegląd kolekcji tematycznych i filtrów.",
+      "Przykładowe podglądy i checklisty kompatybilności.",
+      "Szybkie porównanie licencji i formatów plików.",
+    ],
+    services: [
+      "Zakres i pakiety usług wraz z orientacyjnymi terminami.",
+      "Case studies i przykładowe realizacje.",
+      "Krótki formularz do szybkiej wyceny.",
+    ],
+    resources: [
+      "Aktualne materiały i przewodniki dla klientów.",
+      "Sekcja pytań i odpowiedzi oraz baza wiedzy.",
+      "Kanały kontaktu i wsparcia technicznego.",
+    ],
+    company: [
+      "Informacje o zespole i misji marki.",
+      "Kamienie milowe oraz plan rozwoju produktu.",
+      "Oferty współpracy i aktualne rekrutacje.",
+    ],
+    account: [
+      "Ustawienia profilu i bezpieczeństwa konta.",
+      "Powiadomienia oraz preferencje komunikacji.",
+      "Zarządzanie danymi rozliczeniowymi.",
+    ],
+  };
+  const defaultCtas = [
+    { label: "Powrót do produktów", href: "#/products" },
+    { label: "Zaloguj się", href: "#/auth", variant: "secondary" },
+  ];
+  const placeholderRoutes = [
+    {
+      pattern: /^\/products\/ui-kits$/,
+      meta: {
+        title: "UI Kits & Components — KP_Code Digital Vault",
+        description: "Kategoria UI Kits & Components jest w przygotowaniu.",
+      },
+      view: {
+        title: "UI Kits & Components",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.products,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/products\/templates$/,
+      meta: {
+        title: "Templates & Dashboards — KP_Code Digital Vault",
+        description: "Kategoria Templates & Dashboards jest w przygotowaniu.",
+      },
+      view: {
+        title: "Templates & Dashboards",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.products,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/products\/assets$/,
+      meta: {
+        title: "Assets & Graphics — KP_Code Digital Vault",
+        description: "Kategoria Assets & Graphics jest w przygotowaniu.",
+      },
+      view: {
+        title: "Assets & Graphics",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.products,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/products\/knowledge$/,
+      meta: {
+        title: "Knowledge & Tools — KP_Code Digital Vault",
+        description: "Kategoria Knowledge & Tools jest w przygotowaniu.",
+      },
+      view: {
+        title: "Knowledge & Tools",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.products,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/services$/,
+      meta: {
+        title: "Usługi — KP_Code Digital Vault",
+        description: "Sekcja usług KP_Code Digital Vault jest w przygotowaniu.",
+      },
+      view: {
+        title: "Usługi",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.services,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/services\/web-development$/,
+      meta: {
+        title: "Web Development — KP_Code Digital Vault",
+        description: "Usługa Web Development jest w przygotowaniu.",
+      },
+      view: {
+        title: "Web Development",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.services,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/services\/wordpress$/,
+      meta: {
+        title: "WordPress Solutions — KP_Code Digital Vault",
+        description: "Usługa WordPress Solutions jest w przygotowaniu.",
+      },
+      view: {
+        title: "WordPress Solutions",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.services,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/services\/ui-ux-branding$/,
+      meta: {
+        title: "UI / UX & Branding — KP_Code Digital Vault",
+        description: "Usługa UI / UX & Branding jest w przygotowaniu.",
+      },
+      view: {
+        title: "UI / UX & Branding",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.services,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/services\/consulting-support$/,
+      meta: {
+        title: "Consulting & Support — KP_Code Digital Vault",
+        description: "Usługa Consulting & Support jest w przygotowaniu.",
+      },
+      view: {
+        title: "Consulting & Support",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.services,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/pricing$/,
+      meta: {
+        title: "Cennik — KP_Code Digital Vault",
+        description: "Cennik jest w przygotowaniu.",
+      },
+      view: {
+        title: "Cennik",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/updates$/,
+      meta: {
+        title: "Aktualizacje — KP_Code Digital Vault",
+        description: "Aktualizacje i changelog są w przygotowaniu.",
+      },
+      view: {
+        title: "Aktualizacje / Changelog",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/docs$/,
+      meta: {
+        title: "Dokumentacja — KP_Code Digital Vault",
+        description: "Dokumentacja jest w przygotowaniu.",
+      },
+      view: {
+        title: "Dokumentacja",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/faq$/,
+      meta: {
+        title: "FAQ — KP_Code Digital Vault",
+        description: "FAQ jest w przygotowaniu.",
+      },
+      view: {
+        title: "FAQ",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/support$/,
+      meta: {
+        title: "Wsparcie — KP_Code Digital Vault",
+        description: "Wsparcie jest w przygotowaniu.",
+      },
+      view: {
+        title: "Wsparcie",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/about$/,
+      meta: {
+        title: "O nas — KP_Code Digital Vault",
+        description: "Sekcja o nas jest w przygotowaniu.",
+      },
+      view: {
+        title: "O nas",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.company,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/roadmap$/,
+      meta: {
+        title: "Plan rozwoju — KP_Code Digital Vault",
+        description: "Plan rozwoju jest w przygotowaniu.",
+      },
+      view: {
+        title: "Plan rozwoju / Roadmap",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.company,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/careers$/,
+      meta: {
+        title: "Kariera — KP_Code Digital Vault",
+        description: "Sekcja kariera jest w przygotowaniu.",
+      },
+      view: {
+        title: "Kariera",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.company,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/settings$/,
+      meta: {
+        title: "Ustawienia konta — KP_Code Digital Vault",
+        description: "Ustawienia konta są w przygotowaniu.",
+      },
+      view: {
+        title: "Ustawienia konta",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.account,
+        ctas: [
+          { label: "Powrót do produktów", href: "#/products" },
+          { label: "Przejdź do konta", href: "#/account", variant: "secondary" },
+        ],
+      },
+    },
+  ];
+
   addRoute(/^\/$/, renderHome, {
     title: "KP_Code Digital Vault — Start",
     description: "Nowoczesny sklep z produktami cyfrowymi i biblioteką zakupów.",
@@ -103,6 +375,9 @@ const initRoutes = () => {
   addRoute(/^\/products(?:\?.*)?$/, renderProducts, {
     title: "Katalog produktów — KP_Code Digital Vault",
     description: "Przeglądaj produkty cyfrowe, filtry i sortowanie.",
+  });
+  placeholderRoutes.forEach((route) => {
+    addRoute(route.pattern, createPlaceholderHandler(route.view), route.meta);
   });
   addRoute(/^\/products\/(?<id>[\w-]+)$/, renderProductDetails, {
     title: "Szczegóły produktu — KP_Code Digital Vault",
@@ -171,18 +446,20 @@ const initRoutes = () => {
 const focusMain = ({ preventScroll = false } = {}) => {
   const main = document.getElementById("main-content");
   if (main) {
+    const heading = main.querySelector("[data-focus-heading]");
+    const target = heading || main;
     if (preventScroll) {
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       try {
-        main.focus({ preventScroll: true });
+        target.focus({ preventScroll: true });
       } catch (error) {
-        main.focus();
+        target.focus();
         window.scrollTo(scrollX, scrollY);
       }
       return;
     }
-    main.focus();
+    target.focus();
   }
 };
 
