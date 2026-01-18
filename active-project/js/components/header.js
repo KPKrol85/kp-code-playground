@@ -1,12 +1,32 @@
 import { createElement, clearElement } from "../utils/dom.js";
 import { store } from "../store/store.js";
+import { authService } from "../services/auth.js";
+import { navigateHash } from "../utils/navigation.js";
+import { showToast } from "./toast.js";
+import { content } from "../content/pl.js";
 
 const navItems = [
   { label: "Start", path: "#/" },
-  { label: "Produkty", path: "#/products" },
-  { label: "Konto", path: "#/account" },
-  { label: "Biblioteka", path: "#/library" },
-  { label: "Licencje", path: "#/licenses" },
+  {
+    label: "Produkty",
+    dropdownRoot: { label: "Wszystkie produkty", path: "#/products" },
+    dropdown: [
+      { label: "UI Kits & Components", path: "#/products/ui-kits" },
+      { label: "Templates & Dashboards", path: "#/products/templates" },
+      { label: "Assets & Graphics", path: "#/products/assets" },
+      { label: "Knowledge & Tools", path: "#/products/knowledge" },
+    ],
+  },
+  {
+    label: "Usługi",
+    dropdownRoot: { label: "Wszystkie usługi", path: "#/services" },
+    dropdown: [
+      { label: "Web Development", path: "#/services/web-development" },
+      { label: "WordPress Solutions", path: "#/services/wordpress" },
+      { label: "UI / UX & Branding", path: "#/services/ui-ux-branding" },
+      { label: "Consulting & Support", path: "#/services/consulting-support" },
+    ],
+  },
   { label: "Kontakt", path: "#/contact" },
 ];
 
@@ -18,6 +38,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
   let menuToggleButton = null;
   let menuDrawer = null;
   let menuOverlay = null;
+  let openDropdown = null;
   let scrollTicking = false;
   let scrollLocked = false;
   let lockedScrollY = 0;
@@ -127,19 +148,91 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     return svg;
   };
 
-  const buildNavLinks = (className) => {
+  const updateDropdownMenu = (menu, items) => {
+    clearElement(menu);
+    items.forEach((entry) => {
+      const link = createElement("a", {
+        text: entry.label,
+        attrs: {
+          href: entry.path,
+          role: "menuitem",
+          "data-action": entry.action || null,
+        },
+      });
+      menu.appendChild(link);
+    });
+  };
+
+  const buildDropdown = ({ label, menuId, items }) => {
+    const itemWrapper = createElement("div", { className: "nav-item nav-dropdown" });
+    const triggerButton = createElement("button", {
+      text: label,
+      className: "nav-link nav-dropdown__button",
+      attrs: {
+        type: "button",
+        "aria-expanded": "false",
+        "aria-controls": menuId,
+      },
+    });
+    const trigger = createElement("div", { className: "nav-dropdown__trigger" }, [triggerButton]);
+    const menu = createElement("div", {
+      className: "nav-dropdown__menu",
+      attrs: { id: menuId, role: "menu", "aria-hidden": "true" },
+    });
+    menu.setAttribute("hidden", "");
+    if (items?.length) {
+      updateDropdownMenu(menu, items);
+    }
+    itemWrapper.appendChild(trigger);
+    itemWrapper.appendChild(menu);
+    return { itemWrapper, menu, triggerButton };
+  };
+
+  const buildNavLinks = (className, { idPrefix = "nav" } = {}) => {
     const navList = createElement("div", { className });
-    navItems.forEach((item) => {
+    navItems.forEach((item, index) => {
+      if (item.dropdown) {
+        const dropdownItems = item.dropdownRoot
+          ? [item.dropdownRoot, ...item.dropdown]
+          : item.dropdown;
+        const { itemWrapper } = buildDropdown({
+          label: item.label,
+          menuId: `${idPrefix}-dropdown-${index}`,
+          items: dropdownItems,
+        });
+        navList.appendChild(itemWrapper);
+        return;
+      }
+
+      const itemWrapper = createElement("div", { className: "nav-item" });
       const link = createElement("a", {
         text: item.label,
+        className: "nav-link",
         attrs: { href: item.path, "data-route": item.path },
       });
-      navList.appendChild(link);
+      itemWrapper.appendChild(link);
+      navList.appendChild(itemWrapper);
     });
     return navList;
   };
 
   const getCartCount = (cart) => cart.reduce((sum, item) => sum + item.quantity, 0);
+  const getAccountItems = (isAuthenticated) => {
+    if (!isAuthenticated) {
+      return [
+        { label: "Zaloguj", path: "#/auth" },
+        { label: "Rejestracja", path: "#/auth" },
+        { label: "Demo konta", path: "#/account" },
+      ];
+    }
+    return [
+      { label: "Panel konta", path: "#/account" },
+      { label: "Biblioteka", path: "#/library" },
+      { label: "Licencje", path: "#/licenses" },
+      { label: "Ustawienia", path: "#/settings" },
+      { label: "Wyloguj", path: "#/auth", action: "logout" },
+    ];
+  };
 
   const buildActions = (className, { withId = false } = {}) => {
     const actions = createElement("div", { className });
@@ -147,7 +240,11 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
       attrs: { href: "#/cart" },
     });
 
-    const authButton = createElement("a");
+    const accountDropdown = buildDropdown({
+      label: "Konto",
+      menuId: `${withId ? "header" : "mobile"}-account-dropdown`,
+      items: getAccountItems(Boolean(store.getState().user)),
+    });
 
     const themeButton = createElement(
       "button",
@@ -167,14 +264,13 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     themeButton.addEventListener("click", onThemeToggle);
 
     actions.appendChild(cartButton);
-    actions.appendChild(authButton);
+    actions.appendChild(accountDropdown.itemWrapper);
     actions.appendChild(themeButton);
     return {
       element: actions,
       update(nextState) {
         cartButton.textContent = `Koszyk (${nextState.cartCount})`;
-        authButton.textContent = nextState.isAuthenticated ? "Moje konto" : "Zaloguj";
-        authButton.setAttribute("href", nextState.isAuthenticated ? "#/account" : "#/auth");
+        updateDropdownMenu(accountDropdown.menu, getAccountItems(nextState.isAuthenticated));
         themeButton.setAttribute("aria-label", getThemeLabel(nextState.theme));
       },
     };
@@ -241,6 +337,20 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
       return;
     }
     menuOpen = next;
+    if (openDropdown) {
+      const dropdownToClose = openDropdown;
+      openDropdown = null;
+      dropdownToClose.classList.remove("is-open");
+      const toggle = dropdownToClose.querySelector(".nav-dropdown__button");
+      const menu = dropdownToClose.querySelector(".nav-dropdown__menu");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+      }
+      if (menu) {
+        menu.setAttribute("aria-hidden", "true");
+        menu.setAttribute("hidden", "");
+      }
+    }
     applyMenuState({ focusOnOpen: menuOpen, restoreFocus });
   };
 
@@ -266,7 +376,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
       className: "primary-nav",
       attrs: { "aria-label": "Glowna" },
     });
-    nav.appendChild(buildNavLinks("nav-links"));
+    nav.appendChild(buildNavLinks("nav-links", { idPrefix: "primary" }));
 
     // --- ACTIONS ---
     const actions = buildActions("nav-links header-actions", { withId: true });
@@ -322,7 +432,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
           "aria-hidden": menuOpen ? "false" : "true",
         },
       },
-      [buildNavLinks("nav-links mobile-nav-links"), mobileActions.element]
+      [buildNavLinks("nav-links mobile-nav-links", { idPrefix: "mobile" }), mobileActions.element]
     );
 
     const mobileOverlay = createElement("div", { className: "mobile-menu-overlay" });
@@ -409,12 +519,99 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     });
   };
 
-  const handleKeydown = (event) => {
-    if (!menuOpen) {
+  const setDropdownOpen = (dropdown, nextOpen, { focusToggle = false } = {}) => {
+    if (!dropdown) {
       return;
     }
+    const toggle = dropdown.querySelector(".nav-dropdown__button");
+    const menu = dropdown.querySelector(".nav-dropdown__menu");
+    if (!toggle || !menu) {
+      return;
+    }
+    dropdown.classList.toggle("is-open", nextOpen);
+    toggle.setAttribute("aria-expanded", nextOpen ? "true" : "false");
+    menu.setAttribute("aria-hidden", nextOpen ? "false" : "true");
+    if (nextOpen) {
+      menu.removeAttribute("hidden");
+      openDropdown = dropdown;
+    } else {
+      menu.setAttribute("hidden", "");
+      if (openDropdown === dropdown) {
+        openDropdown = null;
+      }
+      if (focusToggle) {
+        toggle.focus();
+      }
+    }
+  };
+
+  const toggleDropdown = (dropdown) => {
+    if (!dropdown) {
+      return;
+    }
+    const isOpen = dropdown.classList.contains("is-open");
+    if (isOpen) {
+      setDropdownOpen(dropdown, false, { focusToggle: true });
+      return;
+    }
+    if (openDropdown && openDropdown !== dropdown) {
+      setDropdownOpen(openDropdown, false);
+    }
+    setDropdownOpen(dropdown, true);
+  };
+
+  const handleDropdownClick = (event) => {
+    const toggle = event.target.closest(".nav-dropdown__button");
+    if (toggle) {
+      const dropdown = toggle.closest(".nav-dropdown");
+      if (dropdown) {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleDropdown(dropdown);
+      }
+      return;
+    }
+    const menuLink = event.target.closest(".nav-dropdown__menu a");
+    if (menuLink) {
+      const dropdown = menuLink.closest(".nav-dropdown");
+      if (dropdown) {
+        if (menuLink.dataset.action === "logout") {
+          event.preventDefault();
+          authService.logout(store);
+          showToast(content.toasts.logout);
+          navigateHash("#/auth");
+        }
+        setDropdownOpen(dropdown, false);
+        if (menuOpen) {
+          setMenuOpen(false, { restoreFocus: false });
+        }
+      }
+    }
+  };
+
+  const handleDocumentClick = (event) => {
+    if (!openDropdown) {
+      return;
+    }
+    if (openDropdown.contains(event.target)) {
+      return;
+    }
+    setDropdownOpen(openDropdown, false);
+  };
+
+  const handleKeydown = (event) => {
     if (event.key === "Escape") {
-      setMenuOpen(false);
+      if (openDropdown) {
+        const dropdownToClose = openDropdown;
+        setDropdownOpen(dropdownToClose, false, { focusToggle: true });
+        return;
+      }
+      if (menuOpen) {
+        setMenuOpen(false);
+      }
+      return;
+    }
+    if (!menuOpen) {
       return;
     }
     if (event.key === "Tab" && menuDrawer) {
@@ -446,6 +643,8 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
   }
+  container.addEventListener("click", handleDropdownClick);
+  document.addEventListener("click", handleDocumentClick);
   document.addEventListener("keydown", handleKeydown);
   window.addEventListener("resize", handleResize);
 };
