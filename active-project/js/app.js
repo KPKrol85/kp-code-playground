@@ -526,6 +526,26 @@ const initResizeHandling = () => {
   });
 };
 
+const registerServiceWorker = () => {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(() => {
+        if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+          console.info("Service Worker registered.");
+        }
+      })
+      .catch((error) => {
+        if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+          console.warn("Service Worker registration failed:", error);
+        }
+      });
+  });
+};
+
 initErrorBoundary();
 initStore();
 initLayout();
@@ -537,6 +557,7 @@ initRouteClickTracking();
 initResizeHandling();
 updateHeaderOffset();
 focusMain({ preventScroll: true });
+registerServiceWorker();
 
 initKeyboardShortcuts({
   getSearchInput: () => document.querySelector('input[type="search"]'),
