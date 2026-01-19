@@ -1,0 +1,199 @@
+import { updateActiveNav } from "../components/header.js";
+import { setMeta } from "../utils/meta.js";
+import { authService } from "../services/auth.js";
+import { store } from "../store/store.js";
+import { canAccessRoute } from "../utils/permissions.js";
+import { createElement, clearElement } from "../utils/dom.js";
+import { renderNotice } from "../components/uiStates.js";
+import { navigateHash } from "../utils/navigation.js";
+import { selectors } from "../store/selectors.js";
+
+const routes = [];
+let activeCleanup = null;
+const routeModuleCache = new Map();
+
+const loadRouteModule = async (route) => {
+  if (!route?.loader) {
+    return null;
+  }
+  if (routeModuleCache.has(route.loader)) {
+    return routeModuleCache.get(route.loader);
+  }
+  const loadPromise = route
+    .loader()
+    .then((module) => {
+      routeModuleCache.set(route.loader, module);
+      return module;
+    })
+    .catch((error) => {
+      routeModuleCache.delete(route.loader);
+      throw error;
+    });
+  routeModuleCache.set(route.loader, loadPromise);
+  return loadPromise;
+};
+
+const resolveRouteHandler = (route, module) => {
+  if (typeof route.getHandler === "function") {
+    return route.getHandler(module);
+  }
+  return route.handler;
+};
+
+const renderRouteLoading = (main) => {
+  if (!main) {
+    return;
+  }
+  clearElement(main);
+  const container = createElement("section", { className: "container" });
+  const loading = createElement("div", { text: "Ladowanie widoku..." });
+  container.appendChild(loading);
+  main.appendChild(container);
+};
+
+const renderRouteLoadError = (main) => {
+  if (!main) {
+    return;
+  }
+  clearElement(main);
+  const container = createElement("section", { className: "container" });
+  const notice = createElement("div", {
+    text: "Nie udalo sie zaladowac widoku. Odswiez strone.",
+  });
+  container.appendChild(notice);
+  main.appendChild(container);
+};
+
+export const addRoute = (pattern, handler, meta, options = {}) => {
+  routes.push({ pattern, handler, meta, ...options });
+};
+
+const matchRoute = (path) => {
+  for (const route of routes) {
+    const match = path.match(route.pattern);
+    if (match) {
+      return { ...route, params: match.groups || {} };
+    }
+  }
+  return null;
+};
+
+export const updateMeta = (title, description) => {
+  setMeta({ title, description });
+};
+
+export const startRouter = () => {
+  const notifyRouteRendered = (path) => {
+    window.dispatchEvent(
+      new CustomEvent("route:after", {
+        detail: { path },
+      })
+    );
+  };
+
+  const handleRoute = async () => {
+    if (typeof activeCleanup === "function") {
+      activeCleanup();
+      activeCleanup = null;
+    }
+    const path = location.hash.replace("#", "") || "/";
+    const access = canAccessRoute(path, selectors.user(store.getState()));
+    if (!access.allowed) {
+      if (access.reason === "unauthenticated") {
+        authService.setReturnTo(`#${path}`);
+        if (path !== "/auth") {
+          navigateHash("#/auth");
+          return;
+        }
+      } else if (access.reason === "forbidden") {
+        setMeta({
+          title: "Brak uprawnień",
+          description: "Nie masz uprawnień do tej sekcji.",
+        });
+        const main = document.getElementById("main-content");
+        if (main) {
+          clearElement(main);
+          const container = createElement("section", { className: "container" });
+          renderNotice(container, {
+            title: "Brak uprawnień",
+            message: "Nie masz uprawnień do tej sekcji.",
+            action: { label: "Wróć na stronę główną", href: "#/" },
+            headingTag: "h2",
+          });
+          main.appendChild(container);
+        }
+        updateActiveNav("");
+        notifyRouteRendered(path);
+        return;
+      }
+    }
+    const route = matchRoute(path);
+    if (route) {
+      if (route.meta) {
+        updateMeta(route.meta.title, route.meta.description);
+      }
+      const main = document.getElementById("main-content");
+      if (route.loader) {
+        renderRouteLoading(main);
+      }
+      let handler = route.handler;
+      if (route.loader) {
+        try {
+          const module = await loadRouteModule(route);
+          handler = resolveRouteHandler(route, module);
+        } catch (error) {
+          console.error("Failed to load route module:", error);
+          renderRouteLoadError(main);
+          updateActiveNav(`#${path === "/" ? "/" : path}`);
+          notifyRouteRendered(path);
+          return;
+        }
+      }
+      if (typeof handler === "function") {
+        const cleanup = handler(route.params);
+        if (typeof cleanup === "function") {
+          activeCleanup = cleanup;
+        }
+      }
+      updateActiveNav(`#${path === "/" ? "/" : path}`);
+      notifyRouteRendered(path);
+    } else {
+      const fallback = routes.find((item) => item.pattern.source === "^/404$");
+      if (fallback) {
+        let handler = fallback.handler;
+        if (fallback.loader) {
+          const main = document.getElementById("main-content");
+          renderRouteLoading(main);
+          try {
+            const module = await loadRouteModule(fallback);
+            handler = resolveRouteHandler(fallback, module);
+          } catch (error) {
+            console.error("Failed to load route module:", error);
+            renderRouteLoadError(main);
+            updateActiveNav("");
+            notifyRouteRendered("/404");
+            return;
+          }
+        }
+        if (typeof handler === "function") {
+          const cleanup = handler({});
+          if (typeof cleanup === "function") {
+            activeCleanup = cleanup;
+          }
+        }
+        updateMeta(fallback.meta.title, fallback.meta.description);
+        updateActiveNav("");
+        notifyRouteRendered("/404");
+      }
+    }
+  };
+
+  const runHandleRoute = () => {
+    handleRoute().catch((error) => {
+      console.error("Route handler failed:", error);
+    });
+  };
+
+  window.addEventListener("hashchange", runHandleRoute);
+  runHandleRoute();
+};
