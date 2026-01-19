@@ -106,18 +106,23 @@ export const startRouter = () => {
           navigateHash("#/auth");
           return;
         }
-      } else if (access.reason === "forbidden") {
+      } else if (access.reason === "forbidden" || access.reason === "admin-disabled") {
+        const isAdminDisabled = access.reason === "admin-disabled";
+        const title = isAdminDisabled ? "Administracja niedostępna" : "Brak uprawnień";
+        const message = isAdminDisabled
+          ? "Panel administracyjny wymaga weryfikacji po stronie backendu. W trybie demo jest niedostępny."
+          : "Nie masz uprawnień do tej sekcji.";
         setMeta({
-          title: "Brak uprawnień",
-          description: "Nie masz uprawnień do tej sekcji.",
+          title,
+          description: message,
         });
         const main = document.getElementById("main-content");
         if (main) {
           clearElement(main);
           const container = createElement("section", { className: "container" });
           renderNotice(container, {
-            title: "Brak uprawnień",
-            message: "Nie masz uprawnień do tej sekcji.",
+            title,
+            message,
             action: { label: "Wróć na stronę główną", href: "#/" },
             headingTag: "h2",
           });
