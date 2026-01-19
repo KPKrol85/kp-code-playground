@@ -6,6 +6,48 @@ import { showToast } from "../components/toast.js";
 import { withButtonLoading } from "../utils/ui-state.js";
 import { content } from "../content/pl.js";
 
+const AUTH_FALLBACK_HASH = "#/account";
+
+const isSafeReturnTo = (value) => {
+  if (typeof value !== "string") {
+    return false;
+  }
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return false;
+  }
+  const lower = trimmed.toLowerCase();
+  if (
+    lower.startsWith("http:") ||
+    lower.startsWith("https:") ||
+    lower.startsWith("javascript:") ||
+    lower.startsWith("data:")
+  ) {
+    return false;
+  }
+  if (trimmed.startsWith("//") || trimmed.startsWith("#//")) {
+    return false;
+  }
+  return trimmed.startsWith("#/") || trimmed.startsWith("/");
+};
+
+const normalizeReturnTo = (value) => {
+  if (!isSafeReturnTo(value)) {
+    return null;
+  }
+  return value.startsWith("#") ? value : `#${value}`;
+};
+
+const navigateToReturnTo = (targetHash) => {
+  const onRouteAfter = (event) => {
+    if (event?.detail?.path === "/404") {
+      navigateHash(AUTH_FALLBACK_HASH, { force: true });
+    }
+  };
+  window.addEventListener("route:after", onRouteAfter, { once: true });
+  navigateHash(targetHash, { force: true });
+};
+
 export const renderAuth = () => {
   const main = document.getElementById("main-content");
   clearElement(main);
@@ -155,7 +197,12 @@ export const renderAuth = () => {
               password: passwordField.value,
             });
             showToast(content.toasts.loginSuccess);
-            navigateHash("#/account");
+            const returnTo = normalizeReturnTo(authService.consumeReturnTo());
+            if (returnTo) {
+              navigateToReturnTo(returnTo);
+              return;
+            }
+            navigateHash(AUTH_FALLBACK_HASH);
           } catch (error) {
             errorBox.textContent = error.message;
           }
