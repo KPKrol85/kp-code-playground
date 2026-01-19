@@ -291,10 +291,10 @@ export const renderProducts = () => {
     }
     lastRenderSignature = signature;
     lastRenderProducts = products;
-    clearElement(grid);
 
     const filtered = getVisibleProducts(products, { query, category, sort });
     if (!filtered.length) {
+      clearElement(grid);
       resultsCount.hidden = true;
       showMoreButton.hidden = true;
       grid.appendChild(
@@ -310,17 +310,39 @@ export const renderProducts = () => {
 
     const limit = visibleRows * getGridColumns();
     const visible = filtered.slice(0, limit);
+    const visibleIds = new Set(visible.map((product) => String(product.id)));
+    const existingNodes = new Map();
+    const hasNonCardChildren = Array.from(grid.children).some(
+      (child) => !child.dataset.productId
+    );
+    if (hasNonCardChildren) {
+      clearElement(grid);
+    }
+    grid.querySelectorAll("[data-product-id]").forEach((node) => {
+      existingNodes.set(node.dataset.productId, node);
+    });
+    existingNodes.forEach((node, id) => {
+      if (!visibleIds.has(id)) {
+        node.remove();
+        existingNodes.delete(id);
+      }
+    });
     resultsCount.textContent = `Pokazano ${visible.length} z ${filtered.length}`;
     resultsCount.hidden = false;
+    const fragment = document.createDocumentFragment();
     visible.forEach((product) => {
-      grid.appendChild(
-        createProductCard(product, (id) => {
-          cartService.addItem(id, 1);
+      const id = String(product.id);
+      let card = existingNodes.get(id);
+      if (!card) {
+        card = createProductCard(product, (productId) => {
+          cartService.addItem(productId, 1);
           actions.cart.setCart(cartService.getCart());
           showToast(content.toasts.addedToCart);
-        })
-      );
+        });
+      }
+      fragment.appendChild(card);
     });
+    grid.appendChild(fragment);
 
     showMoreButton.hidden = visible.length >= filtered.length;
   };
