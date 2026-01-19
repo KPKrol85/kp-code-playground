@@ -94,6 +94,8 @@ export const content = {
     accountCreated: "Konto utworzone, możesz się zalogować.",
     logout: "Wylogowano.",
     contactSent: "Wiadomość została wysłana (demo).",
+    updateAvailable: "Dostępna jest nowa wersja. Odśwież, aby zaktualizować.",
+    updateCta: "Odśwież",
   },
   auth: {
     title: "Konto użytkownika",
