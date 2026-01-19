@@ -67,17 +67,17 @@ const initData = async () => {
 };
 
 const initStore = () => {
-  const cart = cartService.getCart();
   const session = authService.getSession();
   const user = authService.getUser();
   const { theme, hasSaved } = detectTheme();
-  actions.cart.setCart(cart);
   actions.user.setSession(session, user);
+  actions.cart.setCart(cartService.getCart());
   actions.ui.setTheme(theme);
   applyTheme(theme, { persist: hasSaved });
 
   authService.onAuthChange(({ session: nextSession, user: nextUser }) => {
     actions.user.setSession(nextSession, nextUser);
+    actions.cart.setCart(cartService.getCart());
   });
 
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
