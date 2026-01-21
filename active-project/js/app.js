@@ -583,6 +583,23 @@ const initResizeHandling = () => {
   });
 };
 
+const initConnectivityFeedback = () => {
+  let lastOnlineState = navigator.onLine;
+  const handleStateChange = (isOnline) => {
+    if (isOnline === lastOnlineState) {
+      return;
+    }
+    lastOnlineState = isOnline;
+    if (isOnline) {
+      showToast("Połączenie przywrócone.", "info");
+    } else {
+      showToast("Jesteś offline — część danych może być nieaktualna.", "warning");
+    }
+  };
+  window.addEventListener("online", () => handleStateChange(true));
+  window.addEventListener("offline", () => handleStateChange(false));
+};
+
 const registerServiceWorker = () => {
   if (!("serviceWorker" in navigator)) {
     return;
@@ -659,6 +676,7 @@ initRoutes();
 initRouteScrollHandling();
 initRouteClickTracking();
 initResizeHandling();
+initConnectivityFeedback();
 updateHeaderOffset();
 focusMain({ preventScroll: true });
 registerServiceWorker();
