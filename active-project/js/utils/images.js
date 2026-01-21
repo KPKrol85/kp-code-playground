@@ -2,6 +2,7 @@ import { createElement } from "./dom.js";
 
 const MANIFEST_URL = "assets/img/_gen/manifest.json";
 const ASSET_ROOT = "assets/img/_gen";
+const FALLBACK_ROOT = "assets/img/_src";
 
 let manifestPromise = null;
 let manifestIndex = null;
@@ -14,6 +15,24 @@ const normalizeBase = (value) => {
   }
   const cleaned = String(value).replace(/^\/?assets\/img\/_gen\//, "");
   return stripExtension(cleaned);
+};
+
+const normalizeFallbackBase = (value) => {
+  if (!value) {
+    return "";
+  }
+  return String(value).replace(/^\/?assets\/img\/(_gen|_src)\//, "");
+};
+
+const buildFallbackSrc = (imageBase) => {
+  const cleaned = normalizeFallbackBase(imageBase);
+  if (!cleaned) {
+    return "";
+  }
+  if (/\.(png|jpe?g|webp|avif)$/i.test(cleaned)) {
+    return `${FALLBACK_ROOT}/${cleaned}`;
+  }
+  return `${FALLBACK_ROOT}/${cleaned}.png`;
 };
 
 const loadManifest = async () => {
@@ -78,6 +97,13 @@ export const updateResponsivePicture = async (picture, imageBase, { sizes } = {}
   const entry = index.get(normalizeBase(imageBase));
   if (!entry) {
     console.warn(`[images] Missing manifest entry for ${imageBase}.`);
+    const img = picture.querySelector("img");
+    if (img) {
+      const fallback = buildFallbackSrc(imageBase);
+      if (fallback) {
+        img.setAttribute("src", fallback);
+      }
+    }
     return;
   }
 
