@@ -50,69 +50,93 @@ export const renderHome = () => {
   heroContent.appendChild(heroActions);
 
   const heroVisual = createElement("div", { className: "hero-visual" });
-  const heroVideo = createElement("video", {
+  const heroPoster = createElement("img", {
     attrs: {
-      autoplay: "",
-      loop: "",
-      muted: "",
-      playsinline: "",
-      preload: "metadata",
-      poster: "assets/video/video-hero-960x540-poster.jpg",
+      src: "assets/video/video-hero-960x540-poster.jpg",
+      width: "960",
+      height: "540",
+      alt: "",
+      loading: "eager",
+      decoding: "async",
+      fetchpriority: "high",
+      style:
+        "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;",
     },
   });
-  const webmSource = createElement("source", {
-    attrs: {
-      type: "video/webm",
-      "data-src": "assets/video/video-hero-960x540.webm",
-    },
-  });
-  const mp4Source = createElement("source", {
-    attrs: {
-      type: "video/mp4",
-      "data-src": "assets/video/video-hero-960x540.optimized.mp4",
-    },
-  });
-  heroVideo.appendChild(webmSource);
-  heroVideo.appendChild(mp4Source);
-  heroVideo.muted = true;
-  heroVideo.autoplay = true;
-  heroVideo.loop = true;
-  heroVideo.playsInline = true;
-  heroVisual.appendChild(heroVideo);
-
-  let heroVideoLoaded = false;
-  const loadHeroVideo = () => {
-    if (heroVideoLoaded) {
-      return;
-    }
-    heroVideoLoaded = true;
-    heroVideo.querySelectorAll("source").forEach((source) => {
-      const dataSrc = source.getAttribute("data-src");
-      if (dataSrc) {
-        source.setAttribute("src", dataSrc);
-      }
-    });
-    heroVideo.load();
-    heroVideo.play().catch(() => {
-      // Autoplay can be blocked; keep the poster frame.
-    });
-  };
+  heroVisual.appendChild(heroPoster);
 
   const prefersReducedMotion =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!prefersReducedMotion && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          loadHeroVideo();
-          observer.disconnect();
+  if (!prefersReducedMotion) {
+    let heroVideoLoaded = false;
+    let idleHandle = null;
+    const interactionEvents = ["pointerdown", "touchstart", "scroll", "keydown"];
+    const removeInteractionListeners = () => {
+      interactionEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, upgradeToVideo);
+      });
+    };
+
+    const upgradeToVideo = () => {
+      if (heroVideoLoaded) {
+        return;
+      }
+      heroVideoLoaded = true;
+      removeInteractionListeners();
+      if (idleHandle !== null) {
+        if ("cancelIdleCallback" in window) {
+          window.cancelIdleCallback(idleHandle);
+        } else {
+          clearTimeout(idleHandle);
         }
-      },
-      { rootMargin: "120px" }
-    );
-    observer.observe(heroVisual);
-  } else if (!prefersReducedMotion) {
-    loadHeroVideo();
+      }
+
+      const heroVideo = createElement("video", {
+        attrs: {
+          autoplay: "",
+          loop: "",
+          muted: "",
+          playsinline: "",
+          preload: "metadata",
+          poster: "assets/video/video-hero-960x540-poster.jpg",
+        },
+      });
+      const webmSource = createElement("source", {
+        attrs: {
+          type: "video/webm",
+          src: "assets/video/video-hero-960x540.webm",
+        },
+      });
+      const mp4Source = createElement("source", {
+        attrs: {
+          type: "video/mp4",
+          src: "assets/video/video-hero-960x540.optimized.mp4",
+        },
+      });
+      heroVideo.appendChild(webmSource);
+      heroVideo.appendChild(mp4Source);
+      heroVideo.muted = true;
+      heroVideo.autoplay = true;
+      heroVideo.loop = true;
+      heroVideo.playsInline = true;
+      heroVisual.removeChild(heroPoster);
+      heroVisual.appendChild(heroVideo);
+      heroVideo.load();
+      heroVideo.play().catch(() => {
+        // Autoplay can be blocked; keep the poster frame.
+      });
+    };
+
+    interactionEvents.forEach((eventName) => {
+      const options = eventName === "keydown" ? { once: true } : { passive: true, once: true };
+      window.addEventListener(eventName, upgradeToVideo, options);
+    });
+
+    if ("requestIdleCallback" in window) {
+      idleHandle = window.requestIdleCallback(upgradeToVideo, { timeout: 2500 });
+    } else {
+      idleHandle = window.setTimeout(upgradeToVideo, 1800);
+    }
   }
 
   hero.appendChild(heroContent);
