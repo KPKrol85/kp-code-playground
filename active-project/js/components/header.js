@@ -51,6 +51,9 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
   let scrollLocked = false;
   let lockedScrollY = 0;
   let isShrunk = false;
+  const mainContent = document.getElementById("main-content");
+  const footerContent = document.querySelector("footer");
+  const inertTargets = [mainContent, footerContent].filter(Boolean);
 
   const focusableSelector = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
 
@@ -305,6 +308,14 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
       unlockScroll();
     }
 
+    inertTargets.forEach((target) => {
+      if (menuOpen) {
+        target.setAttribute("inert", "");
+      } else {
+        target.removeAttribute("inert");
+      }
+    });
+
     if (menuOpen && focusOnOpen) {
       const firstFocusable = menuDrawer.querySelector(focusableSelector);
       if (firstFocusable) {
@@ -416,6 +427,8 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
         attrs: {
           id: "mobile-nav",
           "aria-label": "Menu",
+          role: "dialog",
+          "aria-modal": "true",
           "aria-hidden": menuOpen ? "false" : "true",
         },
       },
