@@ -297,22 +297,24 @@ export const renderCheckout = () => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    
-  const { nameValid, emailValid, isValid } = applyValidation();
+    const { nameValid, emailValid, isValid } = applyValidation();
 
-if (isProcessing) return;
+    if (isProcessing) {
+      return;
+    }
 
-if (missingItems.length) {
-  ...
-  return;
-}
+    if (missingItems.length) {
+      return;
+    }
 
-if (!isValid) {
-  errorBox.textContent = "Popraw zaznaczone pola.";
-  const firstInvalid = !nameValid ? nameField : !emailValid ? emailField : null;
-  if (firstInvalid) firstInvalid.focus();
-  return;
-}
+    if (!isValid) {
+      errorBox.textContent = "Popraw zaznaczone pola.";
+      const firstInvalid = !nameValid ? nameField : !emailValid ? emailField : null;
+      if (firstInvalid) {
+        firstInvalid.focus();
+      }
+      return;
+    }
 
     updateProcessingState(true);
     const order = {
