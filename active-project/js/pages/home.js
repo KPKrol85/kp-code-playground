@@ -261,21 +261,24 @@ export const renderHome = () => {
     };
 
     const scrollByAmount = () => Math.max(container.clientWidth * 0.6, 180);
-    left.addEventListener("click", (event) => {
+    const handleLeftClick = (event) => {
       event.preventDefault();
       container.scrollBy({ left: -scrollByAmount(), behavior: "smooth" });
-    });
-    right.addEventListener("click", (event) => {
+    };
+    const handleRightClick = (event) => {
       event.preventDefault();
       container.scrollBy({ left: scrollByAmount(), behavior: "smooth" });
-    });
+    };
+    left.addEventListener("click", handleLeftClick);
+    right.addEventListener("click", handleRightClick);
 
     container.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate, { passive: true });
 
+    let resizeObserver = null;
     if ("ResizeObserver" in window) {
-      const observer = new ResizeObserver(scheduleUpdate);
-      observer.observe(container);
+      resizeObserver = new ResizeObserver(scheduleUpdate);
+      resizeObserver.observe(container);
     }
 
     if (debugIndicators) {
@@ -285,7 +288,21 @@ export const renderHome = () => {
       });
     }
     scheduleUpdate();
-    return { shell, update: scheduleUpdate };
+    const cleanup = () => {
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+      left.removeEventListener("click", handleLeftClick);
+      right.removeEventListener("click", handleRightClick);
+      container.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+    };
+    return { shell, update: scheduleUpdate, cleanup };
   };
 
   const stats = createElement("div", { className: "stats-grid" }, [
@@ -410,4 +427,13 @@ export const renderHome = () => {
   statsIndicators.update();
   productsIndicators.update();
   main.appendChild(info);
+
+  return () => {
+    if (main._homeUnsubscribe) {
+      main._homeUnsubscribe();
+      main._homeUnsubscribe = null;
+    }
+    statsIndicators.cleanup();
+    productsIndicators.cleanup();
+  };
 };
