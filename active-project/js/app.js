@@ -138,6 +138,7 @@ const initRoutes = () => {
   const placeholderLoader = () => import("./pages/placeholder.js");
   const checkoutLoader = () => import("./pages/checkout.js");
   const legalPagesLoader = () => import("./pages/legalPages.js");
+  const metaRoutes = content.meta.routes;
   const placeholderBullets = {
     products: [
       "Przegląd kolekcji tematycznych i filtrów.",
@@ -173,8 +174,7 @@ const initRoutes = () => {
     {
       pattern: /^\/products\/ui-kits$/,
       meta: {
-        title: "UI Kits & Components — KP_Code Digital Vault",
-        description: "Kategoria UI Kits & Components jest w przygotowaniu.",
+        ...metaRoutes.placeholders.uiKits,
       },
       view: {
         title: "UI Kits & Components",
@@ -186,8 +186,7 @@ const initRoutes = () => {
     {
       pattern: /^\/products\/templates$/,
       meta: {
-        title: "Templates & Dashboards — KP_Code Digital Vault",
-        description: "Kategoria Templates & Dashboards jest w przygotowaniu.",
+        ...metaRoutes.placeholders.templates,
       },
       view: {
         title: "Templates & Dashboards",
@@ -199,8 +198,7 @@ const initRoutes = () => {
     {
       pattern: /^\/products\/assets$/,
       meta: {
-        title: "Assets & Graphics — KP_Code Digital Vault",
-        description: "Kategoria Assets & Graphics jest w przygotowaniu.",
+        ...metaRoutes.placeholders.assets,
       },
       view: {
         title: "Assets & Graphics",
@@ -212,8 +210,7 @@ const initRoutes = () => {
     {
       pattern: /^\/products\/knowledge$/,
       meta: {
-        title: "Knowledge & Tools — KP_Code Digital Vault",
-        description: "Kategoria Knowledge & Tools jest w przygotowaniu.",
+        ...metaRoutes.placeholders.knowledge,
       },
       view: {
         title: "Knowledge & Tools",
@@ -225,8 +222,7 @@ const initRoutes = () => {
     {
       pattern: /^\/services$/,
       meta: {
-        title: "Usługi — KP_Code Digital Vault",
-        description: "Sekcja usług KP_Code Digital Vault jest w przygotowaniu.",
+        ...metaRoutes.placeholders.services,
       },
       view: {
         title: "Usługi",
@@ -238,8 +234,7 @@ const initRoutes = () => {
     {
       pattern: /^\/services\/web-development$/,
       meta: {
-        title: "Web Development — KP_Code Digital Vault",
-        description: "Usługa Web Development jest w przygotowaniu.",
+        ...metaRoutes.placeholders.webDevelopment,
       },
       view: {
         title: "Web Development",
@@ -251,8 +246,7 @@ const initRoutes = () => {
     {
       pattern: /^\/services\/wordpress$/,
       meta: {
-        title: "WordPress Solutions — KP_Code Digital Vault",
-        description: "Usługa WordPress Solutions jest w przygotowaniu.",
+        ...metaRoutes.placeholders.wordpress,
       },
       view: {
         title: "WordPress Solutions",
@@ -264,8 +258,7 @@ const initRoutes = () => {
     {
       pattern: /^\/services\/ui-ux-branding$/,
       meta: {
-        title: "UI / UX & Branding — KP_Code Digital Vault",
-        description: "Usługa UI / UX & Branding jest w przygotowaniu.",
+        ...metaRoutes.placeholders.uiUxBranding,
       },
       view: {
         title: "UI / UX & Branding",
@@ -277,8 +270,7 @@ const initRoutes = () => {
     {
       pattern: /^\/services\/consulting-support$/,
       meta: {
-        title: "Consulting & Support — KP_Code Digital Vault",
-        description: "Usługa Consulting & Support jest w przygotowaniu.",
+        ...metaRoutes.placeholders.consultingSupport,
       },
       view: {
         title: "Consulting & Support",
@@ -290,8 +282,7 @@ const initRoutes = () => {
     {
       pattern: /^\/pricing$/,
       meta: {
-        title: "Cennik — KP_Code Digital Vault",
-        description: "Cennik jest w przygotowaniu.",
+        ...metaRoutes.placeholders.pricing,
       },
       view: {
         title: "Cennik",
@@ -303,8 +294,7 @@ const initRoutes = () => {
     {
       pattern: /^\/updates$/,
       meta: {
-        title: "Aktualizacje — KP_Code Digital Vault",
-        description: "Aktualizacje i changelog są w przygotowaniu.",
+        ...metaRoutes.placeholders.updates,
       },
       view: {
         title: "Aktualizacje / Changelog",
@@ -316,8 +306,7 @@ const initRoutes = () => {
     {
       pattern: /^\/docs$/,
       meta: {
-        title: "Dokumentacja — KP_Code Digital Vault",
-        description: "Dokumentacja jest w przygotowaniu.",
+        ...metaRoutes.placeholders.docs,
       },
       view: {
         title: "Dokumentacja",
@@ -329,8 +318,7 @@ const initRoutes = () => {
     {
       pattern: /^\/faq$/,
       meta: {
-        title: "FAQ — KP_Code Digital Vault",
-        description: "FAQ jest w przygotowaniu.",
+        ...metaRoutes.placeholders.faq,
       },
       view: {
         title: "FAQ",
@@ -342,8 +330,7 @@ const initRoutes = () => {
     {
       pattern: /^\/support$/,
       meta: {
-        title: "Wsparcie — KP_Code Digital Vault",
-        description: "Wsparcie jest w przygotowaniu.",
+        ...metaRoutes.placeholders.support,
       },
       view: {
         title: "Wsparcie",
@@ -355,8 +342,7 @@ const initRoutes = () => {
     {
       pattern: /^\/about$/,
       meta: {
-        title: "O nas — KP_Code Digital Vault",
-        description: "Sekcja o nas jest w przygotowaniu.",
+        ...metaRoutes.placeholders.about,
       },
       view: {
         title: "O nas",
@@ -368,8 +354,7 @@ const initRoutes = () => {
     {
       pattern: /^\/roadmap$/,
       meta: {
-        title: "Plan rozwoju — KP_Code Digital Vault",
-        description: "Plan rozwoju jest w przygotowaniu.",
+        ...metaRoutes.placeholders.roadmap,
       },
       view: {
         title: "Plan rozwoju / Roadmap",
@@ -381,8 +366,7 @@ const initRoutes = () => {
     {
       pattern: /^\/careers$/,
       meta: {
-        title: "Kariera — KP_Code Digital Vault",
-        description: "Sekcja kariera jest w przygotowaniu.",
+        ...metaRoutes.placeholders.careers,
       },
       view: {
         title: "Kariera",
@@ -394,8 +378,7 @@ const initRoutes = () => {
     {
       pattern: /^\/settings$/,
       meta: {
-        title: "Ustawienia konta — KP_Code Digital Vault",
-        description: "Ustawienia konta są w przygotowaniu.",
+        ...metaRoutes.placeholders.settings,
       },
       view: {
         title: "Ustawienia konta",
@@ -409,18 +392,17 @@ const initRoutes = () => {
     },
   ];
 
-  addLazyRoute(/^\/$/, () => import("./pages/home.js"), getHandlerByName("renderHome"), {
-    title: "KP_Code Digital Vault - Start",
-    description: "Nowoczesny sklep z produktami cyfrowymi i bibliotek¥ zakup¢w.",
-  });
+  addLazyRoute(
+    /^\/$/,
+    () => import("./pages/home.js"),
+    getHandlerByName("renderHome"),
+    metaRoutes.home
+  );
   addLazyRoute(
     /^\/products(?:\?.*)?$/,
     () => import("./pages/products.js"),
     getHandlerByName("renderProducts"),
-    {
-      title: "Katalog produkt¢w - KP_Code Digital Vault",
-      description: "Przegl¥daj produkty cyfrowe, filtry i sortowanie.",
-    }
+    metaRoutes.products
   );
   placeholderRoutes.forEach((route) => {
     addLazyRoute(
@@ -434,96 +416,91 @@ const initRoutes = () => {
     /^\/products\/(?<id>[\w-]+)$/,
     () => import("./pages/productDetails.js"),
     getHandlerByName("renderProductDetails"),
-    {
-      title: "Szczeg¢ˆy produktu - KP_Code Digital Vault",
-      description: "Poznaj szczeg¢ˆy produktu cyfrowego i jego zawarto˜†.",
-    }
+    metaRoutes.productDetails
   );
-  addLazyRoute(/^\/cart$/, () => import("./pages/cart.js"), getHandlerByName("renderCart"), {
-    title: "Koszyk - KP_Code Digital Vault",
-    description: "Sprawd« produkty w koszyku i podsumowanie zam¢wienia.",
-  });
-  addLazyRoute(/^\/checkout$/, checkoutLoader, getHandlerByName("renderCheckout"), {
-    title: "Checkout - KP_Code Digital Vault",
-    description: "Zˆ¢¾ zam¢wienie na produkty cyfrowe.",
-  });
+  addLazyRoute(
+    /^\/cart$/,
+    () => import("./pages/cart.js"),
+    getHandlerByName("renderCart"),
+    metaRoutes.cart
+  );
+  addLazyRoute(
+    /^\/checkout$/,
+    checkoutLoader,
+    getHandlerByName("renderCheckout"),
+    metaRoutes.checkout
+  );
   addLazyRoute(
     /^\/checkout\/success$/,
     checkoutLoader,
     getHandlerByName("renderCheckoutSuccess"),
-    {
-      title: "Sukces zam¢wienia - KP_Code Digital Vault",
-      description: "Potwierdzenie zˆo¾enia zam¢wienia.",
-    }
+    metaRoutes.checkoutSuccess
   );
-  addLazyRoute(/^\/auth$/, () => import("./pages/auth.js"), getHandlerByName("renderAuth"), {
-    title: "Logowanie - KP_Code Digital Vault",
-    description: "Zaloguj si© lub utw¢rz konto u¾ytkownika.",
-  });
+  addLazyRoute(
+    /^\/auth$/,
+    () => import("./pages/auth.js"),
+    getHandlerByName("renderAuth"),
+    metaRoutes.auth
+  );
   addLazyRoute(
     /^\/account$/,
     () => import("./pages/account.js"),
     getHandlerByName("renderAccount"),
-    {
-      title: "Konto - KP_Code Digital Vault",
-      description: "Panel u¾ytkownika i historia zam¢wieä.",
-    }
+    metaRoutes.account
   );
   addLazyRoute(
     /^\/library$/,
     () => import("./pages/library.js"),
     getHandlerByName("renderLibrary"),
-    {
-      title: "Biblioteka - KP_Code Digital Vault",
-      description: "Pobieraj zakupione produkty cyfrowe.",
-    }
+    metaRoutes.library
   );
   addLazyRoute(
     /^\/licenses$/,
     () => import("./pages/licenses.js"),
     getHandlerByName("renderLicenses"),
-    {
-      title: "Licencje - KP_Code Digital Vault",
-      description: "Sprawd« typy licencji i pobierz pliki licencyjne.",
-    }
+    metaRoutes.licenses
   );
-  addLazyRoute(/^\/privacy$/, legalPagesLoader, getHandlerByName("renderPrivacy"), {
-    title: "Polityka prywatnosci - KP_Code Digital Vault",
-    description: "Informacje o przetwarzaniu danych i prywatnosci w KP_Code Digital Vault.",
-  });
-  addLazyRoute(/^\/terms$/, legalPagesLoader, getHandlerByName("renderTerms"), {
-    title: "Regulamin - KP_Code Digital Vault",
-    description: "Zasady korzystania z KP_Code Digital Vault i zakupu produktow cyfrowych.",
-  });
-  addLazyRoute(/^\/cookies$/, legalPagesLoader, getHandlerByName("renderCookies"), {
-    title: "Cookies - KP_Code Digital Vault",
-    description: "Informacje o cookies i localStorage w KP_Code Digital Vault.",
-  });
-  addLazyRoute(/^\/admin$/, () => import("./pages/admin.js"), getHandlerByName("renderAdmin"), {
-    title: "Panel administratora - KP_Code Digital Vault",
-    description: "Strefa administracyjna sklepu (w budowie).",
-  });
-  addLazyRoute(/^\/legal$/, () => import("./pages/legal.js"), getHandlerByName("renderLegal"), {
-    title: "Dokumenty prawne - KP_Code Digital Vault",
-    description: "Regulamin i polityka prywatno˜ci sklepu.",
-  });
+  addLazyRoute(
+    /^\/privacy$/,
+    legalPagesLoader,
+    getHandlerByName("renderPrivacy"),
+    metaRoutes.privacy
+  );
+  addLazyRoute(
+    /^\/terms$/,
+    legalPagesLoader,
+    getHandlerByName("renderTerms"),
+    metaRoutes.terms
+  );
+  addLazyRoute(
+    /^\/cookies$/,
+    legalPagesLoader,
+    getHandlerByName("renderCookies"),
+    metaRoutes.cookies
+  );
+  addLazyRoute(
+    /^\/admin$/,
+    () => import("./pages/admin.js"),
+    getHandlerByName("renderAdmin"),
+    metaRoutes.admin
+  );
+  addLazyRoute(
+    /^\/legal$/,
+    () => import("./pages/legal.js"),
+    getHandlerByName("renderLegal"),
+    metaRoutes.legal
+  );
   addLazyRoute(
     /^\/contact$/,
     () => import("./pages/contact.js"),
     getHandlerByName("renderContact"),
-    {
-      title: "Kontakt - KP_Code Digital Vault",
-      description: "Skontaktuj si© z nami w sprawie produkt¢w cyfrowych.",
-    }
+    metaRoutes.contact
   );
   addLazyRoute(
     /^\/404$/,
     () => import("./pages/notFound.js"),
     getHandlerByName("renderNotFound"),
-    {
-      title: "404 - KP_Code Digital Vault",
-      description: "Nie znaleziono strony.",
-    }
+    metaRoutes.notFound
   );
   startRouter();
 };

@@ -118,7 +118,11 @@ export const renderCheckout = () => {
     renderMissingSection(container, missingItems);
   }
 
-  const form = createElement("form", { className: "card" });
+  const errorBoxId = "checkout-form-errors";
+  const form = createElement("form", {
+    className: "card",
+    attrs: { "aria-describedby": errorBoxId },
+  });
   form.appendChild(createElement("h2", { text: content.checkout.orderDetailsTitle }));
 
   const nameField = createElement("input", {
@@ -185,7 +189,7 @@ export const renderCheckout = () => {
   });
   const errorBox = createElement("div", {
     className: "form-error",
-    attrs: { "aria-live": "polite" },
+    attrs: { id: errorBoxId, role: "alert" },
   });
 
   form.appendChild(
@@ -244,7 +248,7 @@ export const renderCheckout = () => {
   summary.appendChild(createElement("p", { className: "price", text: formatCurrency(total) }));
 
   let isProcessing = false;
-  const validateForm = () => {
+  const applyValidation = () => {
     nameError.textContent = "";
     emailError.textContent = "";
     errorBox.textContent = "";
@@ -269,9 +273,11 @@ export const renderCheckout = () => {
       emailField.removeAttribute("aria-invalid");
       emailField.removeAttribute("aria-describedby");
     }
-    submitButton.disabled = !nameValid || !emailValid || isProcessing;
-    return nameValid && emailValid;
+    const isValid = nameValid && emailValid;
+    submitButton.disabled = !isValid || isProcessing;
+    return { nameValid, emailValid, isValid };
   };
+  const validateForm = () => applyValidation().isValid;
 
   const updateProcessingState = (processing) => {
     isProcessing = processing;
@@ -290,19 +296,23 @@ export const renderCheckout = () => {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (missingItems.length) {
-      const missingIds = new Set(missingItems.map((item) => item.productId));
-      const nextCart = cart.filter((item) => !missingIds.has(item.productId));
-      cartService.saveCart(nextCart);
-      actions.cart.setCart(nextCart);
-      errorBox.textContent = "Usunieto niedostepne pozycje. Sprawdz koszyk i sprobuj ponownie.";
-      renderCheckout();
-      return;
-    }
-    if (!validateForm() || isProcessing) {
-      errorBox.textContent = "Popraw zaznaczone pola.";
-      return;
-    }
+
+    
+  const { nameValid, emailValid, isValid } = applyValidation();
+
+if (isProcessing) return;
+
+if (missingItems.length) {
+  ...
+  return;
+}
+
+if (!isValid) {
+  errorBox.textContent = "Popraw zaznaczone pola.";
+  const firstInvalid = !nameValid ? nameField : !emailValid ? emailField : null;
+  if (firstInvalid) firstInvalid.focus();
+  return;
+}
 
     updateProcessingState(true);
     const order = {
