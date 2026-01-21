@@ -242,11 +242,11 @@ export const renderHome = () => {
     });
     const left = createElement("button", {
       className: "scroll-indicator-arrow is-left",
-      attrs: { type: "button", "aria-hidden": "true", tabindex: "-1" },
+      attrs: { type: "button", "aria-label": "Przewiń w lewo", tabindex: "0" },
     });
     const right = createElement("button", {
       className: "scroll-indicator-arrow is-right",
-      attrs: { type: "button", "aria-hidden": "true", tabindex: "-1" },
+      attrs: { type: "button", "aria-label": "Przewiń w prawo", tabindex: "0" },
     });
 
     overlay.appendChild(left);
@@ -293,8 +293,18 @@ export const renderHome = () => {
       event.preventDefault();
       container.scrollBy({ left: scrollByAmount(), behavior: "smooth" });
     };
+    const handleArrowKeydown = (handler) => (event) => {
+      if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        event.preventDefault();
+        handler(event);
+      }
+    };
+    const handleLeftKeydown = handleArrowKeydown(handleLeftClick);
+    const handleRightKeydown = handleArrowKeydown(handleRightClick);
     left.addEventListener("click", handleLeftClick);
     right.addEventListener("click", handleRightClick);
+    left.addEventListener("keydown", handleLeftKeydown);
+    right.addEventListener("keydown", handleRightKeydown);
 
     container.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate, { passive: true });
@@ -319,6 +329,8 @@ export const renderHome = () => {
       }
       left.removeEventListener("click", handleLeftClick);
       right.removeEventListener("click", handleRightClick);
+      left.removeEventListener("keydown", handleLeftKeydown);
+      right.removeEventListener("keydown", handleRightKeydown);
       container.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
       if (resizeObserver) {
