@@ -11,6 +11,7 @@ import { renderEmptyState } from "../components/ui-state-helpers.js";
 import { createBreadcrumbs } from "../components/breadcrumbs.js";
 import { buildBreadcrumbsForPath } from "../utils/breadcrumbs.js";
 import { content } from "../content/pl.js";
+import { applyReducedMotion } from "../reduced-motion-init.js";
 
 const ACCOUNT_NAV_ITEMS = [
   { label: "Przegląd", href: "#/account", match: "/account" },
@@ -213,11 +214,7 @@ const applyThemePreference = (theme) => {
 
 const applyReducedMotionPreference = (enabled) => {
   const value = Boolean(enabled);
-  if (value) {
-    document.documentElement.setAttribute("data-reduced-motion", "true");
-  } else {
-    document.documentElement.removeAttribute("data-reduced-motion");
-  }
+  applyReducedMotion(value);
   storage.set("kp_reduced_motion", value);
 };
 

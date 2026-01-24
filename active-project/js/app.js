@@ -16,6 +16,7 @@ import { closeModal } from "./components/modal.js";
 import { consumeProgrammaticNav, markProgrammaticNav, navigateHash } from "./utils/navigation.js";
 import { content } from "./content/pl.js";
 import { setMetaImages } from "./utils/meta.js";
+import { initReducedMotionPreference } from "./reduced-motion-init.js";
 
 const THEME_KEY = "kp_theme";
 const SW_UPDATE_TOAST_KEY = "kp_sw_update_toast_shown";
@@ -135,6 +136,10 @@ const initDataRetryHandling = () => {
 const initRoutes = () => {
   registerRoutes();
   startRouter();
+};
+
+const initMotionPreference = () => {
+  initReducedMotionPreference();
 };
 
 const focusMain = ({ preventScroll = false } = {}) => {
@@ -299,6 +304,7 @@ const registerServiceWorker = () => {
 
 initErrorBoundary();
 initStore();
+initMotionPreference();
 initLayout();
 setMetaImages();
 initDataRetryHandling();
