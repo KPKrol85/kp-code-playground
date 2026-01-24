@@ -91,6 +91,7 @@ export const renderProducts = () => {
   let shouldSyncFromUrl = true;
   let isApplyingFilters = false;
   let isHydratingFromUrl = false;
+  let lastSyncedHash = "";
   const isProductsListHash = () => {
     const hash = window.location.hash || "";
     return hash === "#/products" || hash.startsWith("#/products?");
@@ -139,28 +140,20 @@ export const renderProducts = () => {
 
   const updateUrlFromFilters = (filters, { replace = true } = {}) => {
     if (!isProductsListHash() || isHydratingFromUrl) {
-      return;
+      return { didRender: false };
     }
     const nextHash = buildHashFromFilters(filters);
     if (window.location.hash === nextHash) {
-      return;
+      return { didRender: false };
     }
+    lastSyncedHash = nextHash;
     if (replace && window.history?.replaceState) {
-      const prevUrl = window.location.href;
       window.history.replaceState(null, "", nextHash);
-      const nextUrl = window.location.href;
-      if (prevUrl !== nextUrl) {
-        try {
-          window.dispatchEvent(
-            new HashChangeEvent("hashchange", { oldURL: prevUrl, newURL: nextUrl })
-          );
-        } catch (error) {
-          window.dispatchEvent(new HashChangeEvent("hashchange"));
-        }
-      }
-      return;
+      syncFiltersFromUrl({ replaceUrl: true });
+      return { didRender: true };
     }
     window.location.hash = nextHash;
+    return { didRender: false };
   };
 
   const applyFiltersToControls = (filters) => {
@@ -199,8 +192,10 @@ export const renderProducts = () => {
       return;
     }
     const filters = getFiltersFromControls();
-    updateUrlFromFilters(filters, { replace });
-    renderList();
+    const { didRender } = updateUrlFromFilters(filters, { replace });
+    if (!didRender) {
+      renderList();
+    }
   };
 
   const resetFilters = ({ replace = false } = {}) => {
@@ -393,6 +388,10 @@ export const renderProducts = () => {
   attachFieldListener(categorySelect, "change", () => handleFiltersUpdate({ replace: false }));
   const handleHashChange = () => {
     if (!isProductsListHash()) {
+      return;
+    }
+    if (lastSyncedHash && window.location.hash === lastSyncedHash) {
+      lastSyncedHash = "";
       return;
     }
     syncFiltersFromUrl({ replaceUrl: true });
