@@ -113,3 +113,8 @@ export const cartService = {
     storage.remove(getCartKey(userId));
   },
 };
+
+export const __cartTestUtils = {
+  normalizeCart,
+  mergeCarts,
+};
