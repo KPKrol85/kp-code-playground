@@ -34,11 +34,11 @@ export const renderProducts = () => {
   if (breadcrumbs) {
     container.appendChild(breadcrumbs);
   }
-  heroContent.appendChild(createElement("h1", { text: "Katalog produktów" }));
+  heroContent.appendChild(createElement("h1", { text: content.products.listPage.title }));
   heroContent.appendChild(
     createElement("p", {
       className: "hero-lead",
-      text: "Filtruj, sortuj i wybieraj produkty cyfrowe dopasowane do Twojego workflow.",
+      text: content.products.listPage.lead,
     })
   );
 
@@ -48,7 +48,7 @@ export const renderProducts = () => {
   const categoryId = "products-category";
   const searchLabel = createElement("label", {
     className: "sr-only",
-    text: "Szukaj produktu",
+    text: content.products.listPage.searchLabel,
     attrs: { for: searchId },
   });
   const searchField = createElement("input", {
@@ -56,7 +56,7 @@ export const renderProducts = () => {
     attrs: {
       id: searchId,
       type: "search",
-      placeholder: "Szukaj produktu",
+      placeholder: content.products.listPage.searchPlaceholder,
       autocomplete: "off",
       inputmode: "search",
       autocapitalize: "none",
@@ -69,13 +69,13 @@ export const renderProducts = () => {
   });
   const sortLabel = createElement("label", {
     className: "sr-only",
-    text: "Sortowanie",
+    text: content.products.listPage.sortLabel,
     attrs: { for: sortId },
   });
   [
-    { value: "latest", label: "Najnowsze" },
-    { value: "price-asc", label: "Cena: rosnąco" },
-    { value: "price-desc", label: "Cena: malejąco" },
+    { value: "latest", label: content.products.listPage.sortOptions.latest },
+    { value: "price-asc", label: content.products.listPage.sortOptions.priceAsc },
+    { value: "price-desc", label: content.products.listPage.sortOptions.priceDesc },
   ].forEach((option) => {
     sortSelect.appendChild(
       createElement("option", { text: option.label, attrs: { value: option.value } })
@@ -83,7 +83,7 @@ export const renderProducts = () => {
   });
   const categoryLabel = createElement("label", {
     className: "sr-only",
-    text: "Kategoria",
+    text: content.products.listPage.categoryLabel,
     attrs: { for: categoryId },
   });
   const categorySelect = createElement("select", { className: "select", attrs: { id: categoryId } });
@@ -219,7 +219,10 @@ export const renderProducts = () => {
   const updateCategories = (nextProducts) => {
     clearElement(categorySelect);
     categorySelect.appendChild(
-      createElement("option", { text: "Wszystkie kategorie", attrs: { value: "all" } })
+      createElement("option", {
+        text: content.products.listPage.categoryAll,
+        attrs: { value: "all" },
+      })
     );
     const categories = getOrderedCategories(nextProducts);
     categories.forEach((category) => {
