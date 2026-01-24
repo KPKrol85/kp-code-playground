@@ -353,9 +353,10 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     });
 
     if (menuOpen && focusOnOpen) {
+      menuDrawer.focus({ preventScroll: true });
       const firstFocusable = menuDrawer.querySelector(focusableSelector);
       if (firstFocusable) {
-        firstFocusable.focus();
+        firstFocusable.focus({ preventScroll: true });
       }
     } else if (!menuOpen && restoreFocus && menuToggleButton) {
       menuToggleButton.focus();
@@ -466,6 +467,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
           role: "dialog",
           "aria-modal": "true",
           "aria-hidden": menuOpen ? "false" : "true",
+          tabindex: "-1",
         },
       },
       [buildNavLinks("nav-links mobile-nav-links", { idPrefix: "mobile" }), mobileActions.element]
@@ -737,7 +739,9 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
       return;
     }
     if (event.key === "Tab" && menuDrawer) {
-      const focusable = menuDrawer.querySelectorAll(focusableSelector);
+      const focusable = Array.from(menuDrawer.querySelectorAll(focusableSelector)).filter(
+        (element) => element !== menuDrawer
+      );
       if (!focusable.length) {
         return;
       }
