@@ -13,10 +13,12 @@ import { showToast } from "./components/toast.js";
 import { initErrorBoundary } from "./utils/error-boundary.js";
 import { initKeyboardShortcuts } from "./utils/keyboard-shortcuts.js";
 import { closeModal } from "./components/modal.js";
-import { consumeProgrammaticNav, markProgrammaticNav, navigateHash } from "./utils/navigation.js";
+import { markProgrammaticNav, navigateHash } from "./utils/navigation.js";
 import { content } from "./content/pl.js";
 import { setMetaImages } from "./utils/meta.js";
 import { initReducedMotionPreference } from "./reduced-motion-init.js";
+import { updateHeaderOffset } from "./utils/layout.js";
+import { focusMain } from "./utils/focusMain.js";
 
 const THEME_KEY = "kp_theme";
 const SW_UPDATE_TOAST_KEY = "kp_sw_update_toast_shown";
@@ -142,52 +144,6 @@ const initMotionPreference = () => {
   initReducedMotionPreference();
 };
 
-const focusMain = ({ preventScroll = false } = {}) => {
-  const main = document.getElementById("main-content");
-  if (main) {
-    const heading = main.querySelector("[data-focus-heading]");
-    const target = heading || main;
-    if (preventScroll) {
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
-      try {
-        target.focus({ preventScroll: true });
-      } catch (error) {
-        target.focus();
-        window.scrollTo(scrollX, scrollY);
-      }
-      return;
-    }
-    target.focus();
-  }
-};
-
-const updateHeaderOffset = () => {
-  const header = document.querySelector("header");
-  if (!header) {
-    return;
-  }
-  const height = Math.round(header.getBoundingClientRect().height);
-  document.documentElement.style.setProperty("--header-offset", `${height}px`);
-};
-
-const initRouteScrollHandling = () => {
-  let isFirstRoute = true;
-  window.addEventListener("route:after", () => {
-    const shouldReset = consumeProgrammaticNav() || isFirstRoute;
-    requestAnimationFrame(() => {
-      if (shouldReset) {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      }
-      requestAnimationFrame(() => {
-        updateHeaderOffset();
-        focusMain({ preventScroll: true });
-      });
-    });
-    isFirstRoute = false;
-  });
-};
-
 const initRouteClickTracking = () => {
   document.addEventListener("click", (event) => {
     if (
@@ -202,7 +158,7 @@ const initRouteClickTracking = () => {
     }
     const link = event.target.closest('a[href^="#/"]');
     if (link) {
-      markProgrammaticNav();
+      markProgrammaticNav("link");
     }
   });
 };
@@ -311,7 +267,6 @@ initDataRetryHandling();
 initData();
 initFooterAfterFirstRoute();
 initRoutes();
-initRouteScrollHandling();
 initRouteClickTracking();
 initResizeHandling();
 initConnectivityFeedback();
