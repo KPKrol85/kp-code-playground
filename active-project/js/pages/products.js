@@ -90,6 +90,7 @@ export const renderProducts = () => {
   let products = store.getState().products;
   let shouldSyncFromUrl = true;
   let isApplyingFilters = false;
+  let isHydratingFromUrl = false;
   const isProductsListHash = () => {
     const hash = window.location.hash || "";
     return hash === "#/products" || hash.startsWith("#/products?");
@@ -137,7 +138,7 @@ export const renderProducts = () => {
   };
 
   const updateUrlFromFilters = (filters, { replace = true } = {}) => {
-    if (!isProductsListHash()) {
+    if (!isProductsListHash() || isHydratingFromUrl) {
       return;
     }
     const nextHash = buildHashFromFilters(filters);
@@ -145,11 +146,18 @@ export const renderProducts = () => {
       return;
     }
     if (replace && window.history?.replaceState) {
+      const prevUrl = window.location.href;
       window.history.replaceState(null, "", nextHash);
-      return;
-    }
-    if (!replace && window.history?.pushState) {
-      window.history.pushState(null, "", nextHash);
+      const nextUrl = window.location.href;
+      if (prevUrl !== nextUrl) {
+        try {
+          window.dispatchEvent(
+            new HashChangeEvent("hashchange", { oldURL: prevUrl, newURL: nextUrl })
+          );
+        } catch (error) {
+          window.dispatchEvent(new HashChangeEvent("hashchange"));
+        }
+      }
       return;
     }
     window.location.hash = nextHash;
@@ -169,7 +177,9 @@ export const renderProducts = () => {
     }
     const rawFilters = readFiltersFromHash();
     const normalized = normalizeFilters(rawFilters, getAvailableCategories());
+    isHydratingFromUrl = true;
     applyFiltersToControls(normalized);
+    isHydratingFromUrl = false;
     if (replaceUrl) {
       updateUrlFromFilters(normalized, { replace: true });
     }
@@ -381,14 +391,14 @@ export const renderProducts = () => {
   attachFieldListener(searchField, "input", debouncedFiltersUpdate);
   attachFieldListener(sortSelect, "change", () => handleFiltersUpdate({ replace: false }));
   attachFieldListener(categorySelect, "change", () => handleFiltersUpdate({ replace: false }));
-  const handlePopState = () => {
+  const handleHashChange = () => {
     if (!isProductsListHash()) {
       return;
     }
     syncFiltersFromUrl({ replaceUrl: true });
   };
-  window.addEventListener("popstate", handlePopState);
-  addCleanup(() => window.removeEventListener("popstate", handlePopState));
+  window.addEventListener("hashchange", handleHashChange);
+  addCleanup(() => window.removeEventListener("hashchange", handleHashChange));
   addCleanup(() => debouncedFiltersUpdate.cancel?.());
   window.addEventListener("resize", debouncedResize);
   addCleanup(() => window.removeEventListener("resize", debouncedResize));
