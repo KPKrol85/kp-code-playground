@@ -78,7 +78,10 @@ const initStore = () => {
 
   authService.onAuthChange(({ session: nextSession, user: nextUser }) => {
     actions.user.setSession(nextSession, nextUser);
-    actions.cart.setCart(cartService.getCart());
+    const cart = nextUser?.id
+      ? cartService.mergeGuestCartIntoUserCart(nextUser.id)
+      : cartService.getCart();
+    actions.cart.setCart(cart);
   });
 
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
