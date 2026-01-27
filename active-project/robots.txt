@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kpcode-ecommerce-02.netlify.app/sitemap.xml

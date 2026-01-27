@@ -1,0 +1,338 @@
+import { content } from "../content/pl.js";
+import { navigateHash } from "../utils/navigation.js";
+
+import { addRoute } from "./router.js";
+
+const getHandlerByName = (name) => (module) => module[name];
+
+const addLazyRoute = (pattern, loader, getHandler, meta) => {
+  addRoute(pattern, null, meta, { loader, getHandler });
+};
+
+export const registerRoutes = () => {
+  const placeholderLoader = () => import("../pages/placeholder.js");
+  const checkoutLoader = () => import("../pages/checkout.js");
+  const legalPagesLoader = () => import("../pages/legalPages.js");
+  const servicesLoader = () => import("../pages/services.js");
+  const caseStudiesLoader = () => import("../pages/caseStudies.js");
+  const roadmapLoader = () => import("../pages/roadmap.js");
+  const aboutLoader = () => import("../pages/about.js");
+  const accountLoader = () => import("../pages/account.js");
+  const metaRoutes = content.meta.routes;
+  const placeholderBullets = {
+    products: [
+      "Przegląd kolekcji tematycznych i filtrów.",
+      "Przykładowe podglądy i checklisty kompatybilności.",
+      "Szybkie porównanie licencji i formatów plików.",
+    ],
+    services: [
+      "Zakres i pakiety usług wraz z orientacyjnymi terminami.",
+      "Case studies i przykładowe realizacje.",
+      "Krótki formularz do szybkiej wyceny.",
+    ],
+    resources: [
+      "Aktualne materiały i przewodniki dla klientów.",
+      "Sekcja pytań i odpowiedzi oraz baza wiedzy.",
+      "Kanały kontaktu i wsparcia technicznego.",
+    ],
+    company: [
+      "Informacje o zespole i misji marki.",
+      "Kamienie milowe oraz plan rozwoju produktu.",
+      "Oferty współpracy i aktualne rekrutacje.",
+    ],
+    account: [
+      "Ustawienia profilu i bezpieczeństwa konta.",
+      "Powiadomienia oraz preferencje komunikacji.",
+      "Zarządzanie danymi rozliczeniowymi.",
+    ],
+  };
+  const defaultCtas = [
+    { label: "Powrót do produktów", href: "#/products" },
+    { label: "Zaloguj się", href: "#/auth", variant: "secondary" },
+  ];
+  const placeholderRoutes = [
+    {
+      pattern: /^\/pricing$/,
+      meta: {
+        ...metaRoutes.placeholders.pricing,
+      },
+      view: {
+        title: "Cennik",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/updates$/,
+      meta: {
+        ...metaRoutes.placeholders.updates,
+      },
+      view: {
+        title: "Aktualizacje / Changelog",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/docs$/,
+      meta: {
+        ...metaRoutes.placeholders.docs,
+      },
+      view: {
+        title: "Dokumentacja",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/faq$/,
+      meta: {
+        ...metaRoutes.placeholders.faq,
+      },
+      view: {
+        title: "FAQ",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/support$/,
+      meta: {
+        ...metaRoutes.placeholders.support,
+      },
+      view: {
+        title: "Wsparcie",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.resources,
+        ctas: defaultCtas,
+      },
+    },
+    {
+      pattern: /^\/careers$/,
+      meta: {
+        ...metaRoutes.placeholders.careers,
+      },
+      view: {
+        title: "Kariera",
+        lead: "W przygotowaniu.",
+        bullets: placeholderBullets.company,
+        ctas: defaultCtas,
+      },
+    },
+  ];
+
+  addLazyRoute(
+    /^\/$/,
+    () => import("../pages/home.js"),
+    getHandlerByName("renderHome"),
+    metaRoutes.home
+  );
+  addLazyRoute(
+    /^\/products(?:\?.*)?$/,
+    () => import("../pages/products.js"),
+    getHandlerByName("renderProducts"),
+    metaRoutes.products
+  );
+  addRoute(
+    /^\/products\/core-ui-components-pack\/panel$/,
+    () => {
+      navigateHash("#/product/core-ui-components-pack", { force: true });
+    },
+    metaRoutes.library
+  );
+  addLazyRoute(
+    /^\/product\/core-ui-components-pack$/,
+    () => import("../pages/productPanels.js"),
+    getHandlerByName("renderCoreUiPanel"),
+    metaRoutes.library
+  );
+  addLazyRoute(
+    /^\/services$/,
+    servicesLoader,
+    getHandlerByName("renderServicesIndex"),
+    metaRoutes.services
+  );
+  addLazyRoute(
+    /^\/services\/(?<slug>[\w-]+)$/,
+    servicesLoader,
+    getHandlerByName("renderServiceDetail"),
+    metaRoutes.serviceDetails
+  );
+  addLazyRoute(
+    /^\/case-studies$/,
+    caseStudiesLoader,
+    getHandlerByName("renderCaseStudiesIndex"),
+    metaRoutes.caseStudies
+  );
+  addLazyRoute(
+    /^\/case-studies\/(?<slug>[\w-]+)$/,
+    caseStudiesLoader,
+    getHandlerByName("renderCaseStudyDetail"),
+    metaRoutes.caseStudyDetails
+  );
+  addLazyRoute(
+    /^\/roadmap$/,
+    roadmapLoader,
+    getHandlerByName("renderRoadmap"),
+    metaRoutes.placeholders.roadmap
+  );
+  addLazyRoute(
+    /^\/about$/,
+    aboutLoader,
+    getHandlerByName("renderAbout"),
+    metaRoutes.placeholders.about
+  );
+  const categoryLoader = () => import("../pages/productCategory.js");
+  const categoryRoutes = [
+    {
+      pattern: /^\/products\/ui-kits$/,
+      meta: metaRoutes.productCategories.uiKits,
+      slug: "ui-kits",
+    },
+    {
+      pattern: /^\/products\/templates$/,
+      meta: metaRoutes.productCategories.templates,
+      slug: "templates",
+    },
+    {
+      pattern: /^\/products\/assets$/,
+      meta: metaRoutes.productCategories.assets,
+      slug: "assets",
+    },
+    {
+      pattern: /^\/products\/knowledge$/,
+      meta: metaRoutes.productCategories.knowledge,
+      slug: "knowledge",
+    },
+  ];
+  categoryRoutes.forEach((route) => {
+    addLazyRoute(
+      route.pattern,
+      categoryLoader,
+      (module) => () => module.renderProductCategory({ category: route.slug }),
+      route.meta
+    );
+  });
+  placeholderRoutes.forEach((route) => {
+    addLazyRoute(
+      route.pattern,
+      placeholderLoader,
+      (module) => module.createPlaceholderHandler(route.view),
+      route.meta
+    );
+  });
+  addRoute(
+    /^\/settings$/,
+    () => {
+      navigateHash("#/account/settings", { force: true });
+    },
+    metaRoutes.accountSettings || metaRoutes.account
+  );
+  addLazyRoute(
+    /^\/products\/(?<id>[\w-]+)$/,
+    () => import("../pages/productDetails.js"),
+    getHandlerByName("renderProductDetails"),
+    metaRoutes.productDetails
+  );
+  addLazyRoute(
+    /^\/cart$/,
+    () => import("../pages/cart.js"),
+    getHandlerByName("renderCart"),
+    metaRoutes.cart
+  );
+  addLazyRoute(
+    /^\/checkout$/,
+    checkoutLoader,
+    getHandlerByName("renderCheckout"),
+    metaRoutes.checkout
+  );
+  addLazyRoute(
+    /^\/checkout\/success$/,
+    checkoutLoader,
+    getHandlerByName("renderCheckoutSuccess"),
+    metaRoutes.checkoutSuccess
+  );
+  addLazyRoute(
+    /^\/auth$/,
+    () => import("../pages/auth.js"),
+    getHandlerByName("renderAuth"),
+    metaRoutes.auth
+  );
+  addLazyRoute(
+    /^\/account$/,
+    accountLoader,
+    getHandlerByName("renderAccountOverview"),
+    metaRoutes.account
+  );
+  addLazyRoute(
+    /^\/account\/orders$/,
+    accountLoader,
+    getHandlerByName("renderAccountOrders"),
+    metaRoutes.accountOrders || metaRoutes.account
+  );
+  addLazyRoute(
+    /^\/account\/downloads$/,
+    accountLoader,
+    getHandlerByName("renderAccountDownloads"),
+    metaRoutes.accountDownloads || metaRoutes.account
+  );
+  addLazyRoute(
+    /^\/account\/settings$/,
+    accountLoader,
+    getHandlerByName("renderAccountSettings"),
+    metaRoutes.accountSettings || metaRoutes.account
+  );
+  addLazyRoute(
+    /^\/library$/,
+    () => import("../pages/library.js"),
+    getHandlerByName("renderLibrary"),
+    metaRoutes.library
+  );
+  addLazyRoute(
+    /^\/licenses$/,
+    () => import("../pages/licenses.js"),
+    getHandlerByName("renderLicenses"),
+    metaRoutes.licenses
+  );
+  addLazyRoute(
+    /^\/privacy$/,
+    legalPagesLoader,
+    getHandlerByName("renderPrivacy"),
+    metaRoutes.privacy
+  );
+  addLazyRoute(/^\/terms$/, legalPagesLoader, getHandlerByName("renderTerms"), metaRoutes.terms);
+  addLazyRoute(
+    /^\/cookies$/,
+    legalPagesLoader,
+    getHandlerByName("renderCookies"),
+    metaRoutes.cookies
+  );
+  addLazyRoute(
+    /^\/admin$/,
+    () => import("../pages/admin.js"),
+    getHandlerByName("renderAdmin"),
+    metaRoutes.admin
+  );
+  addLazyRoute(
+    /^\/legal$/,
+    () => import("../pages/legal.js"),
+    getHandlerByName("renderLegal"),
+    metaRoutes.legal
+  );
+  addLazyRoute(
+    /^\/contact$/,
+    () => import("../pages/contact.js"),
+    getHandlerByName("renderContact"),
+    metaRoutes.contact
+  );
+  addLazyRoute(
+    /^\/404$/,
+    () => import("../pages/notFound.js"),
+    getHandlerByName("renderNotFound"),
+    metaRoutes.notFound
+  );
+};

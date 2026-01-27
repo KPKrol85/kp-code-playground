@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Update https://kpcode-ecommerce-02.netlify.app to your production domain. -->
+  <!-- Hash routes (/#/...) are client-only and intentionally excluded from this sitemap. -->
+  <url>
+    <loc>https://kpcode-ecommerce-02.netlify.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
