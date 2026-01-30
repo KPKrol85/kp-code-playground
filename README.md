@@ -8,4 +8,4 @@ Development playground for active and experimental projects.
 
 ## Structure
 
-- `active-project/` – current working project
+- `kp-code-digital-studio/` – current working project
