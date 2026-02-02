@@ -1,0 +1,103 @@
+:root {
+  --color-bg: #f4f6f9;
+  --color-surface: #ffffff;
+  --color-text: #1b2430;
+  --color-muted: #5f6b7a;
+  --color-accent: #3c6df0;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --radius-md: 16px;
+  --shadow-soft: 0 16px 40px rgba(27, 36, 48, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.page {
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.site-header__title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.hero__eyebrow {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.hero__headline {
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.hero__description {
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 20px rgba(60, 109, 240, 0.25);
+}
+
+.hero__cta:focus,
+.hero__cta:hover {
+  transform: translateY(-1px);
+}
+
+.site-footer__text {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/*
+  Spacing and colors are defined with CSS variables to keep the theme flexible.
+  Layout scales naturally, with a max-width container that keeps content centered on mobile.
+*/
