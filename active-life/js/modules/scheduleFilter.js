@@ -8,8 +8,11 @@ export function initScheduleFilter() {
     return destroyScheduleFilter;
   }
 
-  const buttons = document.querySelectorAll("[data-filter]");
-  const cards = document.querySelectorAll(".schedule-card");
+  const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+  const cards = Array.from(document.querySelectorAll(".schedule-card"));
+  const resultsContainer = document.getElementById("schedule-results");
+  const resultsCount = document.getElementById("schedule-results-count");
+  const liveStatus = document.getElementById("schedule-status");
 
   if (!buttons.length || !cards.length) {
     destroyScheduleFilter = scheduleFilterNoop;
@@ -19,26 +22,76 @@ export function initScheduleFilter() {
   const ac = new AbortController();
   const { signal } = ac;
 
-  const setActive = (button) => {
-    buttons.forEach((btn) => btn.classList.remove("is-active"));
-    button.classList.add("is-active");
+  const getFilterLabel = (button) => button?.textContent?.trim() || "Wszystko";
+
+  const setActive = (activeButton) => {
+    buttons.forEach((button) => {
+      const isActive = button === activeButton;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+
+      if (resultsContainer?.id) {
+        button.setAttribute("aria-controls", resultsContainer.id);
+      }
+    });
   };
 
-  const filterCards = (filter) => {
+  const setCardVisibility = (card, isVisible) => {
+    if (isVisible) {
+      card.removeAttribute("hidden");
+      card.removeAttribute("aria-hidden");
+      return;
+    }
+
+    card.setAttribute("hidden", "");
+    card.setAttribute("aria-hidden", "true");
+  };
+
+  const updateStatus = (visibleCount, filterLabel) => {
+    const countText = `Wyniki: ${visibleCount}`;
+    const statusText = `Pokazywanie ${visibleCount} wyników dla filtra ${filterLabel}.`;
+
+    if (resultsCount) {
+      resultsCount.textContent = countText;
+    }
+
+    if (liveStatus) {
+      liveStatus.textContent = statusText;
+    }
+  };
+
+  const filterCards = (filter, filterLabel) => {
+    let visibleCount = 0;
+
     cards.forEach((card) => {
       const category = card.dataset.category;
       const isVisible = filter === "all" || filter === category;
-      card.style.display = isVisible ? "flex" : "none";
+
+      setCardVisibility(card, isVisible);
+
+      if (isVisible) {
+        visibleCount += 1;
+      }
     });
+
+    updateStatus(visibleCount, filterLabel);
   };
+
+  const activeButton =
+    buttons.find((button) => button.classList.contains("is-active")) || buttons[0];
+
+  setActive(activeButton);
+  filterCards(activeButton.dataset.filter || "all", getFilterLabel(activeButton));
 
   buttons.forEach((button) => {
     button.addEventListener(
       "click",
       () => {
-        const filter = button.dataset.filter;
+        const filter = button.dataset.filter || "all";
+        const filterLabel = getFilterLabel(button);
+
         setActive(button);
-        filterCards(filter);
+        filterCards(filter, filterLabel);
       },
       { signal }
     );
@@ -48,10 +101,22 @@ export function initScheduleFilter() {
 
   destroyScheduleFilter = () => {
     ac.abort();
-    buttons.forEach((btn) => btn.classList.remove("is-active"));
-    cards.forEach((card) => {
-      card.style.removeProperty("display");
+    buttons.forEach((button, index) => {
+      const isDefault = index === 0;
+      button.classList.toggle("is-active", isDefault);
+      button.setAttribute("aria-pressed", String(isDefault));
+      if (resultsContainer?.id) {
+        button.setAttribute("aria-controls", resultsContainer.id);
+      }
     });
+
+    cards.forEach((card) => {
+      card.removeAttribute("hidden");
+      card.removeAttribute("aria-hidden");
+    });
+
+    updateStatus(cards.length, getFilterLabel(buttons[0]));
+
     isScheduleFilterInitialized = false;
     destroyScheduleFilter = scheduleFilterNoop;
   };
