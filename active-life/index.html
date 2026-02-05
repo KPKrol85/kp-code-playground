@@ -173,15 +173,18 @@
           <p class="section__lead">Filtrowanie zajęć pomaga znaleźć idealny blok na dziś.</p>
         </div>
 
-        <div class="schedule__filters" role="group" aria-label="Filtr zajęć" data-reveal>
-          <button class="button button--filter is-active" type="button" data-filter="all">Wszystko</button>
-          <button class="button button--filter" type="button" data-filter="yoga">Yoga</button>
-          <button class="button button--filter" type="button" data-filter="aerobik">Aerobik</button>
-          <button class="button button--filter" type="button" data-filter="trening">Trening</button>
-          <button class="button button--filter" type="button" data-filter="spa">SPA</button>
+        <div class="schedule__filters" role="group" aria-label="Filtr harmonogramu" data-reveal>
+          <button class="button button--filter is-active" type="button" data-filter="all" aria-pressed="true" aria-controls="schedule-results">Wszystko</button>
+          <button class="button button--filter" type="button" data-filter="yoga" aria-pressed="false" aria-controls="schedule-results">Yoga</button>
+          <button class="button button--filter" type="button" data-filter="aerobik" aria-pressed="false" aria-controls="schedule-results">Aerobik</button>
+          <button class="button button--filter" type="button" data-filter="trening" aria-pressed="false" aria-controls="schedule-results">Trening</button>
+          <button class="button button--filter" type="button" data-filter="spa" aria-pressed="false" aria-controls="schedule-results">SPA</button>
         </div>
 
-        <div class="grid grid--schedule" data-reveal>
+        <p id="schedule-results-count" data-reveal>Wyniki: 6</p>
+        <p id="schedule-status" aria-live="polite" role="status" data-reveal>Pokazywanie 6 wyników dla filtra Wszystko.</p>
+
+        <div class="grid grid--schedule" id="schedule-results" data-reveal>
           <article class="schedule-card" data-category="yoga">
             <div>
               <h3 class="schedule-card__title">Morning Flow</h3>
