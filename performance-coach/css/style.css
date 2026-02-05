@@ -1,0 +1,32 @@
+@import url("/performance-coach/css/tokens.css");
+@import url("/performance-coach/css/base.css");
+@import url("/performance-coach/css/layout.css");
+@import url("/performance-coach/css/components.css");
+@import url("/performance-coach/css/sections.css");
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scrollspy-active {
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal--visible {
+    transition: none;
+    transform: none;
+  }
+}
