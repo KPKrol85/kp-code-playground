@@ -139,6 +139,21 @@
   gap: var(--space-sm);
 }
 
+
+.booking__microcopy {
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.booking__next-step {
+  margin: var(--space-sm) 0 0;
+  color: var(--color-text-muted);
+}
+
 .booking__summary {
   padding: var(--space-lg);
   border-radius: var(--radius-md);
