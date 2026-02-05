@@ -197,14 +197,14 @@
   }
 }
 
-@media (min-width: 480px) {
+@media (--bp-sm) {
   .hero__actions {
     grid-template-columns: repeat(2, auto);
     justify-content: start;
   }
 }
 
-@media (min-width: 700px) {
+@media (--bp-md) {
   .hero__content {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -228,7 +228,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (--bp-lg) {
   .hero__glass {
     max-width: 320px;
   }
