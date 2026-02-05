@@ -1,10 +1,11 @@
 .page {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .container {
-  width: min(1120px, 90vw);
-  margin: 0 auto;
+  width: min(1120px, calc(100% - 2rem));
+  max-width: 100%;
+ margin: 0 auto;
 }
 
 .section-title {
@@ -24,7 +25,11 @@
   padding: var(--space-3xl) 0;
 }
 
-@media (min-width: 780px) {
+.header[data-scroll-section] {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
   [data-scroll-section] {
     padding: var(--space-4xl) 0;
   }

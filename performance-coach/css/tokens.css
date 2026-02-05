@@ -7,8 +7,8 @@
   --color-surface: #ffffff;
   --color-border: #d7d9d7;
 
-  --font-editorial: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
-  --font-tech: "IBM Plex Sans", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-editorial: "Lora", Georgia, "Times New Roman", serif;
+  --font-tech: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   --space-2xs: 0.25rem;
   --space-xs: 0.5rem;

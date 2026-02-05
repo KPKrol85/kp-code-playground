@@ -9,8 +9,7 @@ export const initScrollType = () => {
     targets.forEach((el) => {
       const speed = 0.03;
       const translate = Math.min(24, offset * speed);
-      const scale = 1 + Math.min(0.04, offset * 0.00008);
-      el.style.transform = `translateY(${translate}px) scale(${scale})`;
+      el.style.transform = `translateY(${translate}px)`;
     });
   };
 
