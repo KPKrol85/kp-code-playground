@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WordPress — KP_Code Digital Studio</title>
+  <meta name="description" content="Projektuję i wdrażam strony WordPress z naciskiem na ergonomię panelu, bezpieczeństwo i łatwe skalowanie." />
+  <link rel="canonical" href="https://www.kp-code.pl/services/wordpress.html" />
+  <meta property="og:title" content="WordPress — KP_Code Digital Studio" />
+  <meta property="og:description" content="Projektuję i wdrażam strony WordPress z naciskiem na ergonomię panelu, bezpieczeństwo i łatwe skalowanie." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.kp-code.pl/services/wordpress.html" />
+  <meta property="og:image" content="../og/og-default.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="../og/og-default.svg" />
+  <link rel="manifest" href="../seo/manifest.webmanifest" />
+  <script>
+    (() => {
+      const storageKey = 'theme-preference';
+      const stored = localStorage.getItem(storageKey);
+      const preference = stored ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', preference);
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+  <header class="header">
+    <div class="container nav">
+      <a class="nav__brand" href="../index.html" aria-label="KP_Code Digital Studio, strona główna">
+        <picture class="brand__logo">
+          <source srcset="../assets/img/logo/logo-dark-mode.svg" media="(prefers-color-scheme: dark)">
+          <img src="../assets/img/logo/logo-light-mode.svg" alt="KP_Code Digital Studio" />
+        </picture>
+        <span>KP_Code Digital Studio</span>
+      </a>
+      <nav class="nav__links" id="primary-navigation" aria-label="Główna nawigacja">
+        <a class="nav__link" href="../index.html">Start</a>
+        <a class="nav__link" href="../about.html">O mnie</a>
+        <a class="nav__link" href="../services.html" aria-current="page">Usługi</a>
+        <a class="nav__link" href="../projects.html">Projekty</a>
+        <a class="nav__link" href="../contact.html">Kontakt</a>
+      </nav>
+      <div class="nav__backdrop" data-nav-backdrop aria-hidden="true"></div>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">🌓</button>
+        <button class="nav__toggle" type="button" data-nav-toggle aria-label="Otwórz menu" aria-expanded="false" aria-controls="primary-navigation">
+          <span class="nav__toggle-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="section__header">
+          <p class="section__eyebrow">Usługa</p>
+          <h1 class="section__title">WordPress dla zespołów, które chcą łatwo zarządzać treścią.</h1>
+          <p class="section__subtitle">Projektuję i wdrażam strony WordPress z naciskiem na ergonomię panelu, bezpieczeństwo i łatwe skalowanie.</p>
+        </div>
+        <article class="card"><h2 class="card__title">Co dostajesz</h2><p class="card__meta">Dostarczam customowe sekcje edycyjne, integracje formularzy, politykę kopii zapasowych oraz plan utrzymania po wdrożeniu.</p></article>
+        <div class="cta-block"><a class="button button--primary" href="../contact.html?service=wordpress">Umów konsultację</a> <a class="button button--ghost" href="../services.html">Wróć do usług</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <strong>KP_Code Digital Studio</strong>
+        <p class="card__meta">Marketingowo-techniczne wsparcie dla firm, które chcą rosnąć online.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Stopka">
+        <a href="../index.html">Start</a>
+        <a href="../about.html">O mnie</a>
+        <a href="../services.html">Usługi</a>
+        <a href="../projects.html">Projekty</a>
+        <a href="../contact.html">Kontakt</a>
+      </nav>
+      <div>
+        <p class="card__meta">© 2026 Kamil Król.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
