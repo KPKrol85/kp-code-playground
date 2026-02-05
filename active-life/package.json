@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "npx serve .",
     "build:css": "postcss css/style.css -o css/style.min.css",
-    "build:js": "terser js/main.js js/modules/*.js -o js/bundle.min.js --compress --mangle",
-    "images": "imagemin assets/img/* --out-dir=assets/img"
+    "build:js": "cat js/modules/reveal.js js/modules/headerShrink.js js/modules/mobileNav.js js/modules/scheduleFilter.js js/modules/themeToggle.js js/main.js | sed '/^import /d; s/^export //' > js/.app.bundle.js && terser js/.app.bundle.js -o js/app.min.js --compress --mangle && rm js/.app.bundle.js",
+    "images": "imagemin assets/img/* --out-dir=assets/img",
+    "build": "npm run build:css && npm run build:js"
   },
   "devDependencies": {
     "cssnano": "^6.0.2",
