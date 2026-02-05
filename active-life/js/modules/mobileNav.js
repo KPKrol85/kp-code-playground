@@ -16,14 +16,27 @@ function getFocusableElements(container) {
   });
 }
 
+const mobileNavNoop = () => {};
+let destroyMobileNav = mobileNavNoop;
+let isMobileNavInitialized = false;
+
 export function initMobileNav() {
+  if (isMobileNavInitialized) {
+    return destroyMobileNav;
+  }
+
   const toggle = document.querySelector("[data-nav-toggle]");
   const nav = document.querySelector("[data-mobile-nav]");
   const closeBtn = document.querySelector("[data-nav-close]");
   const desktopQuery = window.matchMedia("(min-width: 700px)");
 
-  if (!toggle || !nav || !closeBtn) return;
+  if (!toggle || !nav || !closeBtn) {
+    destroyMobileNav = mobileNavNoop;
+    return destroyMobileNav;
+  }
 
+  const ac = new AbortController();
+  const { signal } = ac;
   let isOpen = false;
   let lastFocused = null;
   let isBodyScrollLocked = false;
@@ -195,29 +208,49 @@ export function initMobileNav() {
     }
   };
 
-  toggle.addEventListener("click", () => {
+  const onToggleClick = () => {
     if (isOpen) {
       closeNav();
       return;
     }
 
     openNav();
-  });
+  };
 
-  closeBtn.addEventListener("click", () => closeNav());
+  toggle.addEventListener("click", onToggleClick, { signal });
+  closeBtn.addEventListener("click", () => closeNav(), { signal });
 
-  nav.addEventListener("click", (event) => {
-    if (event.target === nav) {
-      closeNav();
-    }
-  });
+  nav.addEventListener(
+    "click",
+    (event) => {
+      if (event.target === nav) {
+        closeNav();
+      }
+    },
+    { signal }
+  );
 
-  document.addEventListener("keydown", trapFocus);
+  document.addEventListener("keydown", trapFocus, { signal });
 
   nav.querySelectorAll("a[href]").forEach((link) => {
-    link.addEventListener("click", () => closeNav());
+    link.addEventListener("click", () => closeNav(), { signal });
   });
 
-  desktopQuery.addEventListener("change", syncViewportState);
+  desktopQuery.addEventListener("change", syncViewportState, { signal });
   syncViewportState();
+
+  nav.dataset.initialized = "true";
+
+  isMobileNavInitialized = true;
+
+  destroyMobileNav = () => {
+    ac.abort();
+    closeNav({ restoreFocus: false });
+    nav.dataset.initialized = "false";
+    lastFocused = null;
+    isMobileNavInitialized = false;
+    destroyMobileNav = mobileNavNoop;
+  };
+
+  return destroyMobileNav;
 }
