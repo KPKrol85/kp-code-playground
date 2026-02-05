@@ -12,7 +12,7 @@
       property="og:description"
       content="Premium studio fryzjerskie. Nowoczesna estetyka, precyzyjna koloryzacja i świadoma pielęgnacja." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://studio-noir.example" />
+    <meta property="og:url" content="https://studio-noir.pl/" />
     <meta property="og:image" content="assets/img/hero-editorial.svg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Studio Noir — Hair & Style Atelier" />
@@ -21,6 +21,7 @@
       content="Luksusowe atelier fryzjerskie. Koloryzacja, cięcie, stylizacja, grooming." />
     <meta name="theme-color" content="#0b0b0e" />
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="canonical" href="https://studio-noir.pl/" />
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="preload" href="assets/fonts/playfair-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -28,6 +29,7 @@
     <link rel="preload" href="assets/fonts/playfair-600.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/playfair-700.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/img/hero-editorial.svg" as="image" />
   </head>
   <body class="theme theme--dark">
     <a class="skip-link" href="#main">Przejdź do treści</a>
@@ -48,7 +50,7 @@
             <span class="nav__toggle-line"></span>
             <span class="nav__toggle-line"></span>
           </button>
-          <div class="nav__panel" id="primary-menu" data-nav-panel aria-hidden="true">
+          <div class="nav__panel" id="primary-menu" data-nav-panel role="dialog" aria-modal="true" aria-hidden="true">
             <ul class="nav__list">
               <li><a class="nav__link" href="#about">O nas</a></li>
               <li><a class="nav__link" href="#services">Usługi</a></li>
@@ -68,7 +70,7 @@
       </div>
     </header>
 
-    <main id="main">
+    <main id="main" data-page-content>
       <section class="hero" id="top">
         <div class="container hero__inner">
           <div class="hero__copy" data-reveal>
@@ -86,7 +88,7 @@
             <img
               src="assets/img/hero-editorial.svg"
               alt="Editorialowe ujęcie stylizacji włosów"
-              loading="lazy" />
+              fetchpriority="high" />
           </div>
         </div>
         <div class="hero__overlay" aria-hidden="true"></div>
@@ -297,12 +299,37 @@
                 </button>
               </div>
             </div>
-            <aside class="booking__summary" aria-live="polite">
-              <h3>Podsumowanie</h3>
-              <p class="booking__summary-line">Usługa: <span data-summary-service>—</span></p>
-              <p class="booking__summary-line">Stylista: <span data-summary-stylist>—</span></p>
-              <p class="booking__summary-line">Status: <span data-summary-status>Wybierz opcje</span></p>
-            </aside>
+            <div class="booking__side">
+              <aside class="booking__summary" aria-live="polite">
+                <h3>Podsumowanie</h3>
+                <p class="booking__summary-line">Usługa: <span data-summary-service>—</span></p>
+                <p class="booking__summary-line">Stylista: <span data-summary-stylist>—</span></p>
+                <p class="booking__summary-line">Status: <span data-summary-status>Wybierz opcje</span></p>
+              </aside>
+              <aside class="booking__fallback" aria-label="Szybki kontakt w sprawie rezerwacji">
+                <h3>Szybki kontakt</h3>
+                <p>Jeśli wolisz, zarezerwuj wizytę bezpośrednio.</p>
+                <div class="booking__fallback-actions">
+                  <a class="button button--primary" href="tel:+48600900800" aria-label="Zadzwoń do Studio Noir pod numer +48 600 900 800">
+                    Zadzwoń
+                  </a>
+                  <a class="button button--ghost" href="https://www.instagram.com/studio.noir/" target="_blank" rel="noreferrer" aria-label="Napisz do Studio Noir na Instagramie">
+                    Napisz na Instagramie
+                  </a>
+                  <a class="button button--ghost" href="mailto:kontakt@studionoir.pl" aria-label="Napisz email do Studio Noir">
+                    Napisz email
+                  </a>
+                </div>
+              </aside>
+              <noscript>
+                <p class="booking__noscript">
+                  Rezerwacja online wymaga JavaScript — skontaktuj się:
+                  <a href="tel:+48600900800" aria-label="Zadzwoń do Studio Noir pod numer +48 600 900 800">Zadzwoń</a>
+                  lub
+                  <a href="https://www.instagram.com/studio.noir/" target="_blank" rel="noreferrer" aria-label="Napisz do Studio Noir na Instagramie">Instagram</a>.
+                </p>
+              </noscript>
+            </div>
           </div>
         </div>
       </section>
@@ -340,8 +367,10 @@
             <div>
               <h3>Studio Noir</h3>
               <p>ul. Nowoczesna 12, 00-123 Warszawa</p>
-              <p>tel. +48 600 900 800</p>
-              <p>kontakt@studionoir.pl</p>
+              <p>tel. <a href="tel:+48600900800" aria-label="Zadzwoń do Studio Noir pod numer +48 600 900 800">+48 600 900 800</a></p>
+              <p>
+                <a href="mailto:kontakt@studionoir.pl" aria-label="Napisz email do Studio Noir">kontakt@studionoir.pl</a>
+              </p>
               <a class="button button--ghost" href="https://maps.google.com" target="_blank" rel="noreferrer">
                 Otwórz mapę
               </a>
@@ -369,6 +398,22 @@
       </section>
     </main>
 
+    <nav class="mobile-cta" aria-label="Szybki kontakt">
+      <a class="button button--primary mobile-cta__action" href="#booking" aria-label="Umów wizytę i przejdź do sekcji rezerwacji">
+        Umów wizytę
+      </a>
+      <a class="button button--ghost mobile-cta__action" href="tel:+48600900800" aria-label="Zadzwoń do Studio Noir pod numer +48 600 900 800">
+        Zadzwoń
+      </a>
+      <a
+        class="button button--ghost mobile-cta__action"
+        href="https://www.instagram.com/studio.noir/"
+        data-instagram-link
+        aria-label="Napisz na Instagramie">
+        Napisz na Instagramie
+      </a>
+    </nav>
+
     <footer class="footer">
       <div class="container footer__inner">
         <div>
@@ -376,7 +421,7 @@
           <p>Hair &amp; Style Atelier</p>
         </div>
         <div class="footer__links">
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.instagram.com/studio.noir/" target="_blank" rel="noreferrer" data-instagram-link>Instagram</a>
           <a href="https://www.facebook.com" target="_blank" rel="noreferrer">Facebook</a>
           <a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
         </div>
