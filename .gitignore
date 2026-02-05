@@ -1,2 +1,5 @@
 node_modules/
 .DS_Store
+studio-noir/assets/css/style.min.css
+studio-noir/assets/js/app.min.js
+studio-noir/assets/js/app.min.js.map
