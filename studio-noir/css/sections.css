@@ -133,6 +133,35 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+
+.booking__side {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.booking__fallback {
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(20, 20, 24, 0.5);
+}
+
+.booking__fallback-actions {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.booking__noscript {
+  margin: 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.booking__noscript a {
+  color: var(--color-gold-300);
+}
+
 .testimonials {
   display: grid;
   gap: var(--space-lg);
@@ -223,6 +252,10 @@
 
   .booking {
     grid-template-columns: 2fr 1fr;
+  }
+
+  .booking__side {
+    align-content: start;
   }
 
   .footer__inner {
