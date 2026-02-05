@@ -26,6 +26,7 @@ export function initMobileNav() {
 
   let isOpen = false;
   let lastFocused = null;
+  let isBodyScrollLocked = false;
   let previousBodyOverflow = "";
   let previousBodyPaddingRight = "";
   const backgroundState = new Map();
@@ -81,6 +82,8 @@ export function initMobileNav() {
   };
 
   const lockBodyScroll = () => {
+    if (isBodyScrollLocked) return;
+
     previousBodyOverflow = document.body.style.overflow;
     previousBodyPaddingRight = document.body.style.paddingRight;
 
@@ -88,12 +91,20 @@ export function initMobileNav() {
     document.body.style.overflow = "hidden";
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.body.style.paddingRight = previousBodyPaddingRight;
     }
+
+    isBodyScrollLocked = true;
   };
 
   const unlockBodyScroll = () => {
+    if (!isBodyScrollLocked) return;
+
     document.body.style.overflow = previousBodyOverflow;
     document.body.style.paddingRight = previousBodyPaddingRight;
+
+    isBodyScrollLocked = false;
   };
 
   const focusInitialElement = () => {
