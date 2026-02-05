@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flowdesk-v1';
+const CACHE_NAME = 'flowdesk-v2';
 const OFFLINE_URL = '/offline.html';
 
 const APP_SHELL = [
@@ -35,7 +35,11 @@ const APP_SHELL = [
   '/js/utils/validators.js',
   '/js/utils/storage.js',
   '/assets/icons/icon-192.svg',
-  '/assets/icons/icon-512.svg'
+  '/assets/icons/icon-512.svg',
+  '/assets/fonts/inter-400.woff2',
+  '/assets/fonts/inter-500.woff2',
+  '/assets/fonts/inter-600.woff2',
+  '/assets/fonts/inter-700.woff2'
 ];
 
 self.addEventListener('install', (event) => {
