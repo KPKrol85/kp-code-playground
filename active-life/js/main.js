@@ -4,6 +4,8 @@ import { initMobileNav } from "./modules/mobileNav.js";
 import { initScheduleFilter } from "./modules/scheduleFilter.js";
 import { initThemeToggle } from "./modules/themeToggle.js";
 
+document.documentElement.classList.add("js");
+
 initReveal();
 initHeaderShrink();
 initMobileNav();
