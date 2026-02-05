@@ -147,10 +147,14 @@
   gap: var(--space-xl);
   transform: translateY(-100%);
   transition: transform 0.3s ease;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .nav__panel.is-open {
   transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .nav__list {
@@ -222,6 +226,8 @@
     flex-direction: row;
     background: transparent;
     inset: auto;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .nav__list {
