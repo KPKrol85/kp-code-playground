@@ -1,0 +1,39 @@
+name: Active Life CI
+
+on:
+  push:
+    paths:
+      - "active-life/**"
+      - ".github/workflows/active-life-ci.yml"
+  pull_request:
+    paths:
+      - "active-life/**"
+      - ".github/workflows/active-life-ci.yml"
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: active-life
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Smoke tests
+        run: npm run test:smoke

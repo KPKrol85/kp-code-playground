@@ -55,6 +55,50 @@ npm run preview
 - `npm run preview` – build + lokalny preview artefaktów produkcyjnych.
 - `npm run images` – optymalizacja obrazów w `assets/img`.
 
+## Quality guardrails (lint / format / smoke tests)
+
+### Linting
+
+```bash
+npm run lint
+```
+
+- `npm run lint:js` — ESLint dla JavaScript (ES modules + browser).
+- `npm run lint:css` — Stylelint dla CSS (`css/**/*.css`, z pominięciem artefaktów build).
+
+### Formatowanie
+
+```bash
+npm run format
+npm run format:check
+```
+
+Prettier obejmuje pliki: `js`, `css`, `html`, `json`, `md`.
+
+### Smoke testy E2E (Playwright)
+
+```bash
+npm run test:smoke
+# alias
+npm test
+```
+
+Zakres smoke testów:
+
+1. menu mobilne (open -> podstawowy focus trap -> close -> focus return),
+2. filtry harmonogramu aktualizują wyniki,
+3. minimalny scenariusz offline/network-fail po pierwszej wizycie.
+
+> Uwaga: test offline opiera się na ponownym załadowaniu strony po pierwszym, online wejściu. W środowiskach CI/browser może to zależeć od dostępności cache/service worker.
+
+### Lokalny flow CI
+
+```bash
+npm run ci
+```
+
+Uruchamia kolejno: `lint` + `test:smoke`.
+
 ## Struktura
 
 ```text
