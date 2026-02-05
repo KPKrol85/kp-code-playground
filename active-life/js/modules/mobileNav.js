@@ -17,6 +17,7 @@ function getFocusableElements(container) {
 }
 
 const mobileNavNoop = () => {};
+const supportsInert = "inert" in HTMLElement.prototype;
 let destroyMobileNav = mobileNavNoop;
 let isMobileNavInitialized = false;
 
@@ -30,6 +31,7 @@ export function initMobileNav() {
   const closeBtn = document.querySelector("[data-nav-close]");
   const navList = nav?.querySelector(".mobile-nav__list") || nav;
   const desktopQuery = window.matchMedia("(min-width: 700px)");
+  let desktopQueryListenerMode = null;
 
   if (!toggle || !nav || !closeBtn || !navList) {
     destroyMobileNav = mobileNavNoop;
@@ -71,10 +73,10 @@ export function initMobileNav() {
     collectBackgroundElements().forEach((element) => {
       backgroundState.set(element, {
         ariaHidden: element.getAttribute("aria-hidden"),
-        inert: "inert" in element ? element.inert : null
+        inert: supportsInert ? element.inert : null
       });
       element.setAttribute("aria-hidden", "true");
-      if ("inert" in element) {
+      if (supportsInert) {
         element.inert = true;
       }
     });
@@ -88,7 +90,7 @@ export function initMobileNav() {
         element.setAttribute("aria-hidden", previousState.ariaHidden);
       }
 
-      if (previousState.inert !== null) {
+      if (supportsInert && previousState.inert !== null) {
         element.inert = previousState.inert;
       }
     });
@@ -136,7 +138,9 @@ export function initMobileNav() {
 
     lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : toggle;
     nav.hidden = false;
-    nav.inert = false;
+    if (supportsInert) {
+      nav.inert = false;
+    }
     toggle.setAttribute("aria-expanded", "true");
 
     lockBodyScroll();
@@ -149,7 +153,9 @@ export function initMobileNav() {
   const closeNav = ({ restoreFocus = true } = {}) => {
     if (!isOpen && nav.hidden) return;
 
-    nav.inert = true;
+    if (supportsInert) {
+      nav.inert = true;
+    }
     nav.hidden = true;
     toggle.setAttribute("aria-expanded", "false");
 
@@ -170,7 +176,9 @@ export function initMobileNav() {
       return;
     }
 
-    nav.inert = nav.hidden;
+    if (supportsInert) {
+      nav.inert = nav.hidden;
+    }
   };
 
   const trapFocus = (event) => {
@@ -250,7 +258,13 @@ export function initMobileNav() {
     { signal }
   );
 
-  desktopQuery.addEventListener("change", syncViewportState, { signal });
+  if (desktopQuery.addEventListener) {
+    desktopQuery.addEventListener("change", syncViewportState, { signal });
+    desktopQueryListenerMode = "event";
+  } else if (desktopQuery.addListener) {
+    desktopQuery.addListener(syncViewportState);
+    desktopQueryListenerMode = "listener";
+  }
   syncViewportState();
 
   nav.dataset.initialized = "true";
@@ -258,6 +272,10 @@ export function initMobileNav() {
   isMobileNavInitialized = true;
 
   destroyMobileNav = () => {
+    if (desktopQueryListenerMode === "listener" && desktopQuery.removeListener) {
+      desktopQuery.removeListener(syncViewportState);
+    }
+
     ac.abort();
     closeNav({ restoreFocus: false });
     nav.dataset.initialized = "false";

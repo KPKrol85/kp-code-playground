@@ -1,21 +1,39 @@
+const revealNoop = () => {};
+let isRevealInitialized = false;
+let destroyReveal = revealNoop;
+
+function revealAllImmediately(elements) {
+  elements.forEach((el) => {
+    el.classList.add("is-revealed");
+    el.dataset.revealReady = "true";
+  });
+}
+
 export function initReveal() {
+  if (isRevealInitialized) {
+    return destroyReveal;
+  }
+
   const root = document.documentElement;
   root.classList.add("js");
 
   const elements = document.querySelectorAll("[data-reveal]");
 
   if (!elements.length) {
-    return;
+    destroyReveal = revealNoop;
+    return destroyReveal;
   }
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (prefersReduced || !("IntersectionObserver" in window)) {
-    elements.forEach((el) => {
-      el.classList.add("is-revealed");
-      el.dataset.revealReady = "true";
-    });
-    return;
+    revealAllImmediately(elements);
+    isRevealInitialized = true;
+    destroyReveal = () => {
+      isRevealInitialized = false;
+      destroyReveal = revealNoop;
+    };
+    return destroyReveal;
   }
 
   const observer = new IntersectionObserver(
@@ -39,4 +57,13 @@ export function initReveal() {
     observer.observe(el);
     el.dataset.revealReady = "true";
   });
+
+  isRevealInitialized = true;
+  destroyReveal = () => {
+    observer.disconnect();
+    isRevealInitialized = false;
+    destroyReveal = revealNoop;
+  };
+
+  return destroyReveal;
 }
