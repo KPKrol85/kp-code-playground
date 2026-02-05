@@ -28,9 +28,10 @@ export function initMobileNav() {
   const toggle = document.querySelector("[data-nav-toggle]");
   const nav = document.querySelector("[data-mobile-nav]");
   const closeBtn = document.querySelector("[data-nav-close]");
+  const navList = nav?.querySelector(".mobile-nav__list") || nav;
   const desktopQuery = window.matchMedia("(min-width: 700px)");
 
-  if (!toggle || !nav || !closeBtn) {
+  if (!toggle || !nav || !closeBtn || !navList) {
     destroyMobileNav = mobileNavNoop;
     return destroyMobileNav;
   }
@@ -232,9 +233,22 @@ export function initMobileNav() {
 
   document.addEventListener("keydown", trapFocus, { signal });
 
-  nav.querySelectorAll("a[href]").forEach((link) => {
-    link.addEventListener("click", () => closeNav(), { signal });
-  });
+  navList.addEventListener(
+    "click",
+    (event) => {
+      const link = event.target.closest("a[href]");
+      if (!link || !navList.contains(link)) {
+        return;
+      }
+
+      if (link.target === "_blank") {
+        return;
+      }
+
+      closeNav();
+    },
+    { signal }
+  );
 
   desktopQuery.addEventListener("change", syncViewportState, { signal });
   syncViewportState();

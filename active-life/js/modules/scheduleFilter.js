@@ -8,13 +8,14 @@ export function initScheduleFilter() {
     return destroyScheduleFilter;
   }
 
-  const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+  const filtersContainer = document.querySelector(".schedule__filters");
+  const buttons = Array.from(filtersContainer?.querySelectorAll("button[data-filter]") || []);
   const cards = Array.from(document.querySelectorAll(".schedule-card"));
   const resultsContainer = document.getElementById("schedule-results");
   const resultsCount = document.getElementById("schedule-results-count");
   const liveStatus = document.getElementById("schedule-status");
 
-  if (!buttons.length || !cards.length) {
+  if (!filtersContainer || !buttons.length || !cards.length) {
     destroyScheduleFilter = scheduleFilterNoop;
     return destroyScheduleFilter;
   }
@@ -83,19 +84,22 @@ export function initScheduleFilter() {
   setActive(activeButton);
   filterCards(activeButton.dataset.filter || "all", getFilterLabel(activeButton));
 
-  buttons.forEach((button) => {
-    button.addEventListener(
-      "click",
-      () => {
-        const filter = button.dataset.filter || "all";
-        const filterLabel = getFilterLabel(button);
+  filtersContainer.addEventListener(
+    "click",
+    (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button || !filtersContainer.contains(button)) {
+        return;
+      }
 
-        setActive(button);
-        filterCards(filter, filterLabel);
-      },
-      { signal }
-    );
-  });
+      const filter = button.dataset.filter || "all";
+      const filterLabel = getFilterLabel(button);
+
+      setActive(button);
+      filterCards(filter, filterLabel);
+    },
+    { signal }
+  );
 
   isScheduleFilterInitialized = true;
 
