@@ -220,6 +220,11 @@
   gap: var(--space-xs);
 }
 
+.footer__links .button {
+  justify-self: start;
+  width: fit-content;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(24px);
