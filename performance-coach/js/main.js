@@ -4,6 +4,7 @@ import { initScrollSpy } from "./modules/scrollspy.js";
 import { initMobileNav } from "./modules/mobile-nav.js";
 import { initCounters } from "./modules/counters.js";
 import { initHeaderShrink } from "./modules/header-shrink.js";
+import { initContactForm } from "./modules/contact-form.js";
 
 initReveal();
 initScrollType();
@@ -11,6 +12,7 @@ initScrollSpy();
 initMobileNav();
 initCounters();
 initHeaderShrink();
+initContactForm();
 
 const isLocalhost =
   window.location.hostname === "localhost" ||

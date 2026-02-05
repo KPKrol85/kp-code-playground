@@ -313,20 +313,28 @@
               Availability: <strong>2 slots</strong> / October
             </div>
           </div>
-          <form class="contact__form" data-reveal>
+          <form class="contact__form" id="contact-form" data-reveal>
             <label class="field">
               <span class="field__label">Imię i nazwisko</span>
-              <input class="field__input" type="text" name="name" placeholder="Twoje imię" required />
+              <input class="field__input" type="text" name="name" placeholder="Twoje imię" autocomplete="name" required />
             </label>
             <label class="field">
               <span class="field__label">Email</span>
-              <input class="field__input" type="email" name="email" placeholder="you@email.com" required />
+              <input class="field__input" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
             </label>
             <label class="field">
               <span class="field__label">Cel / wyzwanie</span>
               <textarea class="field__input" name="goal" rows="4" placeholder="Napisz krótko, czego potrzebujesz"></textarea>
             </label>
             <button class="button button--primary" type="submit">Wyślij zapytanie</button>
+            <p
+              class="contact__feedback"
+              id="contact-form-feedback"
+              data-form-feedback
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></p>
           </form>
         </div>
       </section>
