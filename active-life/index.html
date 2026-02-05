@@ -63,8 +63,9 @@
       </div>
     </div>
 
-    <div class="mobile-nav" id="mobile-menu" data-mobile-nav hidden>
-      <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu mobilne">
+    <div class="mobile-nav" id="mobile-menu" data-mobile-nav role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title" tabindex="-1" hidden>
+      <div class="mobile-nav__panel" tabindex="-1">
+        <h2 id="mobile-menu-title" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Menu mobilne</h2>
         <button class="mobile-nav__close" type="button" data-nav-close>✕ Zamknij</button>
         <ul class="mobile-nav__list" role="list">
           <li><a class="mobile-nav__link" href="#offer">Oferta</a></li>
