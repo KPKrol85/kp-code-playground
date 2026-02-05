@@ -43,3 +43,5 @@ npm run build:css
 npm run build:js
 npm run images
 ```
+
+Przed deployem uruchom przynajmniej `npm run build:css`, aby wszystkie strony korzystały z aktualnego `css/style.min.css`.
