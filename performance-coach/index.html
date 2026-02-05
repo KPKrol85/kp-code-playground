@@ -39,7 +39,12 @@
           <span class="sr-only">Otwórz menu</span>
         </button>
 
-        <nav class="nav" id="primary-nav" aria-label="Główna nawigacja">
+        <button class="nav-overlay" type="button" hidden aria-hidden="true" tabindex="-1">
+          <span class="sr-only">Zamknij menu</span>
+        </button>
+
+        <nav class="nav" id="primary-nav" aria-labelledby="mobile-nav-title" tabindex="-1">
+          <h2 id="mobile-nav-title" class="sr-only">Menu główne</h2>
           <ul class="nav__list">
             <li class="nav__item"><a class="nav__link" href="#philosophy">Philosophy</a></li>
             <li class="nav__item"><a class="nav__link" href="#programs">Programs</a></li>
