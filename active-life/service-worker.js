@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const HTML_CACHE = `html-${CACHE_VERSION}`;
 
@@ -7,8 +7,8 @@ const PRECACHE_ASSETS = [
   "/index.html",
   "/offline.html",
   "/404.html",
-  "/css/style.css",
-  "/js/main.js",
+  "/css/style.min.css",
+  "/js/app.min.js",
   "/assets/img/hero-gradient.svg",
   "/assets/img/spa-zone.svg",
   "/assets/img/tennis-zone.svg",

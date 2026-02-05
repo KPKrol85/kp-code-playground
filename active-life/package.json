@@ -4,11 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npx serve .",
+    "dev": "python3 -m http.server 3000",
+    "clean": "rm -f css/style.min.css js/app.min.js js/.app.bundle.js",
     "build:css": "postcss css/style.css -o css/style.min.css",
     "build:js": "cat js/modules/reveal.js js/modules/headerShrink.js js/modules/mobileNav.js js/modules/scheduleFilter.js js/modules/themeToggle.js js/main.js | sed '/^import /d; s/^export //' > js/.app.bundle.js && terser js/.app.bundle.js -o js/app.min.js --compress --mangle && rm js/.app.bundle.js",
     "images": "imagemin assets/img/* --out-dir=assets/img",
-    "build": "npm run build:css && npm run build:js"
+    "build": "npm run clean && npm run build:css && npm run build:js",
+    "preview": "npm run build && python3 -m http.server 4173"
   },
   "devDependencies": {
     "cssnano": "^6.0.2",
