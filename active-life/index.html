@@ -23,6 +23,7 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/manrope-400-latin.woff2" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/manrope-600-latin.woff2" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/fraunces-700-latin.woff2" />
+  <link rel="preload" as="image" href="assets/img/hero-gradient.svg" />
   <script>document.documentElement.classList.add("js");</script>
   <link rel="stylesheet" href="css/style.css" />
   <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -106,7 +107,7 @@
           </div>
         </div>
         <div class="hero__media" data-reveal>
-          <img src="assets/img/hero-gradient.svg" alt="Subtelny gradient inspirowany światłem w strefie wellness" loading="lazy" />
+          <img src="assets/img/hero-gradient.svg" alt="Subtelny gradient inspirowany światłem w strefie wellness" loading="eager" fetchpriority="high" decoding="async" width="1600" height="900" />
           <div class="hero__glass" role="presentation">
             <p class="hero__glass-title">Evening Spa Ritual</p>
             <p class="hero__glass-text">90-minutowa ceremonia regeneracji z aromaterapią i światłem LED.</p>
