@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>O mnie — KP_Code Digital Studio</title>
+  <meta name="description" content="Poznaj doświadczenie i sposób pracy KP_Code Digital Studio." />
+  <link rel="canonical" href="https://www.kp-code.pl/about.html" />
+  <meta property="og:title" content="O mnie — KP_Code Digital Studio" />
+  <meta property="og:description" content="Poznaj doświadczenie i sposób pracy KP_Code Digital Studio." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.kp-code.pl/about.html" />
+  <meta property="og:image" content="./og/og-default.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="./og/og-default.svg" />
+  <link rel="manifest" href="./seo/manifest.webmanifest" />
+  <script>
+    (() => {
+      const storageKey = 'theme-preference';
+      const stored = localStorage.getItem(storageKey);
+      const preference = stored ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', preference);
+    })();
+  </script>
+  <link rel="stylesheet" href="./css/tokens.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/sections.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+  <header class="header">
+    <div class="container nav">
+      <a class="nav__brand" href="./index.html" aria-label="KP_Code Digital Studio, strona główna">
+        <picture class="brand__logo">
+          <source srcset="./assets/img/logo/logo-dark-mode.svg" media="(prefers-color-scheme: dark)">
+          <img src="./assets/img/logo/logo-light-mode.svg" alt="KP_Code Digital Studio" />
+        </picture>
+        <span>KP_Code Digital Studio</span>
+      </a>
+      <nav class="nav__links" id="primary-navigation" aria-label="Główna nawigacja">
+        <a class="nav__link" href="./index.html">Start</a>
+        <a class="nav__link" href="./about.html" aria-current="page">O mnie</a>
+        <a class="nav__link" href="./services.html">Usługi</a>
+        <a class="nav__link" href="./projects.html">Projekty</a>
+        <a class="nav__link" href="./contact.html">Kontakt</a>
+      </nav>
+      <div class="nav__backdrop" data-nav-backdrop aria-hidden="true"></div>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">🌓</button>
+        <button class="nav__toggle" type="button" data-nav-toggle aria-label="Otwórz menu" aria-expanded="false" aria-controls="primary-navigation">
+          <span class="nav__toggle-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="section__header">
+          <p class="section__eyebrow">O mnie</p>
+          <h1 class="section__title">Tworzę strony i produkty cyfrowe, które realnie wspierają sprzedaż.</h1>
+          <p class="section__subtitle">Łączę development, UX i strategię treści, żeby dowozić projekty gotowe na ruch i konwersję.</p>
+        </div>
+        <div class="grid grid--2">
+          <article class="card"><h2 class="card__title">Profil</h2><p class="card__meta">Nazywam się Kamil Król. Wspieram marki usługowe i e-commerce w projektowaniu nowoczesnych stron internetowych, od discovery po wdrożenie i optymalizację.</p></article>
+          <article class="card"><h2 class="card__title">Podejście</h2><p class="card__meta">Każdy projekt opieram na danych: intencji użytkownika, celach biznesowych i analizie lejka. Dzięki temu strona jest nie tylko estetyczna, ale także skuteczna.</p></article>
+          <article class="card"><h2 class="card__title">Technologie</h2><p class="card__meta">Vanilla JS, WordPress, wydajne stacki statyczne, SEO techniczne oraz systemy analityczne. Dobieram narzędzia do potrzeb zespołu i skali projektu.</p></article>
+          <article class="card"><h2 class="card__title">Współpraca</h2><p class="card__meta">Pracuję transparentnie: harmonogram, milestone’y i jasne odpowiedzialności. Klient na każdym etapie wie, co jest realizowane i jaki efekt biznesowy to przynosi.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <strong>KP_Code Digital Studio</strong>
+        <p class="card__meta">Marketingowo-techniczne wsparcie dla firm, które chcą rosnąć online.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Stopka">
+        <a href="./index.html">Start</a>
+        <a href="./about.html">O mnie</a>
+        <a href="./services.html">Usługi</a>
+        <a href="./projects.html">Projekty</a>
+        <a href="./contact.html">Kontakt</a>
+      </nav>
+      <div>
+        <p class="card__meta">© 2026 Kamil Król.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>
