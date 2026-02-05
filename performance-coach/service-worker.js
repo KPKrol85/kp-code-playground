@@ -1,7 +1,8 @@
-const CACHE_NAME = "performance-coach-v1";
+const CACHE_NAME = "performance-coach-v2";
 const ASSETS = [
   "/performance-coach/",
   "/performance-coach/index.html",
+  "/performance-coach/privacy.html",
   "/performance-coach/css/style.css",
   "/performance-coach/css/style.min.css",
   "/performance-coach/js/main.js",
