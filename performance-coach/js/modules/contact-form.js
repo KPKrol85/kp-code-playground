@@ -1,5 +1,6 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 const SUBMIT_DELAY_MS = 800;
+const GOAL_MIN_LENGTH = 24;
 
 export function initContactForm() {
   const form = document.querySelector(".contact__form");
@@ -13,6 +14,16 @@ export function initContactForm() {
   const submitButton = form.querySelector('button[type="submit"]');
   const initialButtonLabel = submitButton?.textContent?.trim() || "Wyślij zapytanie";
   const feedback = form.querySelector("[data-form-feedback]");
+
+  form.addEventListener("input", (event) => {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement) || !target.getAttribute("name")) {
+      return;
+    }
+
+    clearFieldValidation(form, target.getAttribute("name"));
+  });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -65,6 +76,12 @@ function validatePayload(payload) {
     errors.push({ field: "email", message: "Podaj poprawny adres email." });
   }
 
+  if (!payload.goal) {
+    errors.push({ field: "goal", message: "Opisz swój cel treningowy w kilku zdaniach." });
+  } else if (payload.goal.length < GOAL_MIN_LENGTH) {
+    errors.push({ field: "goal", message: `Wpisz minimum ${GOAL_MIN_LENGTH} znaki, żeby lepiej opisać cel.` });
+  }
+
   return errors;
 }
 
@@ -76,8 +93,16 @@ function markInvalidFields(form, errors) {
       return;
     }
 
+    const hintId = `${form.id}-${field}-hint`;
+    const errorId = `${form.id}-${field}-error`;
+    const errorElement = form.querySelector(`[data-field-error="${field}"]`);
+
+    if (errorElement instanceof HTMLElement) {
+      errorElement.textContent = message;
+    }
+
     input.setAttribute("aria-invalid", "true");
-    input.setAttribute("aria-describedby", "contact-form-feedback");
+    input.setAttribute("aria-describedby", `${hintId} ${errorId}`);
   });
 
   const firstInvalidField = form.querySelector('[aria-invalid="true"]');
@@ -88,9 +113,47 @@ function clearValidationState(form) {
   const invalidFields = form.querySelectorAll('[aria-invalid="true"]');
 
   invalidFields.forEach((field) => {
+    if (!(field instanceof HTMLElement)) {
+      return;
+    }
+
+    const fieldName = field.getAttribute("name");
+
     field.removeAttribute("aria-invalid");
-    field.removeAttribute("aria-describedby");
+
+    if (!fieldName) {
+      field.removeAttribute("aria-describedby");
+      return;
+    }
+
+    field.setAttribute("aria-describedby", `${form.id}-${fieldName}-hint`);
   });
+
+  const fieldErrors = form.querySelectorAll("[data-field-error]");
+
+  fieldErrors.forEach((fieldError) => {
+    fieldError.textContent = "";
+  });
+}
+
+function clearFieldValidation(form, fieldName) {
+  if (!fieldName) {
+    return;
+  }
+
+  const input = form.elements.namedItem(fieldName);
+  const errorElement = form.querySelector(`[data-field-error="${fieldName}"]`);
+
+  if (errorElement instanceof HTMLElement) {
+    errorElement.textContent = "";
+  }
+
+  if (!(input instanceof HTMLElement)) {
+    return;
+  }
+
+  input.removeAttribute("aria-invalid");
+  input.setAttribute("aria-describedby", `${form.id}-${fieldName}-hint`);
 }
 
 function setLoadingState(form, submitButton, initialButtonLabel, isLoading) {

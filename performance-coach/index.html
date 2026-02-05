@@ -323,17 +323,50 @@
           <form class="contact__form" id="contact-form" data-reveal>
             <label class="field">
               <span class="field__label">Imię i nazwisko</span>
-              <input class="field__input" type="text" name="name" placeholder="Twoje imię" autocomplete="name" required />
+              <input
+                class="field__input"
+                type="text"
+                name="name"
+                placeholder="Twoje imię"
+                autocomplete="name"
+                aria-describedby="contact-name-hint"
+                required
+              />
+              <span class="field__hint" id="contact-name-hint">Podaj imię i nazwisko, żebym mógł się do Ciebie zwrócić.</span>
+              <span class="field__error" id="contact-name-error" data-field-error="name" role="status" aria-live="polite"></span>
             </label>
             <label class="field">
               <span class="field__label">E-mail</span>
-              <input class="field__input" type="email" name="email" placeholder="twoj@email.com" autocomplete="email" required />
+              <input
+                class="field__input"
+                type="email"
+                name="email"
+                placeholder="twoj@email.com"
+                autocomplete="email"
+                aria-describedby="contact-email-hint"
+                required
+              />
+              <span class="field__hint" id="contact-email-hint">Na ten adres wyślę odpowiedź z kolejnym krokiem.</span>
+              <span class="field__error" id="contact-email-error" data-field-error="email" role="status" aria-live="polite"></span>
             </label>
             <label class="field">
               <span class="field__label">Cel / wyzwanie</span>
-              <textarea class="field__input" name="goal" rows="4" placeholder="Napisz krótko, czego potrzebujesz"></textarea>
+              <textarea
+                class="field__input"
+                name="goal"
+                rows="4"
+                placeholder="Napisz krótko, czego potrzebujesz"
+                autocomplete="off"
+                aria-describedby="contact-goal-hint"
+              ></textarea>
+              <span class="field__hint" id="contact-goal-hint">Opisz swój cel treningowy w kilku zdaniach (minimum 24 znaki).</span>
+              <span class="field__error" id="contact-goal-error" data-field-error="goal" role="status" aria-live="polite"></span>
             </label>
             <button class="button button--primary" type="submit">Wyślij zapytanie</button>
+            <p class="contact__privacy-note">
+              Wysyłając formularz, zgadzasz się na przetwarzanie danych zgodnie z
+              <a href="./privacy.html">Polityką prywatności</a>.
+            </p>
             <p
               class="contact__feedback"
               id="contact-form-feedback"
