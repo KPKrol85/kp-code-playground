@@ -11,6 +11,7 @@ export function initMobileNav() {
   const toggle = document.querySelector("[data-nav-toggle]");
   const nav = document.querySelector("[data-mobile-nav]");
   const closeBtn = document.querySelector("[data-nav-close]");
+  const desktopQuery = window.matchMedia("(min-width: 700px)");
 
   if (!toggle || !nav || !closeBtn) return;
 
@@ -18,6 +19,7 @@ export function initMobileNav() {
 
   const openNav = () => {
     lastFocused = document.activeElement;
+    nav.inert = false;
     nav.hidden = false;
     toggle.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
@@ -27,13 +29,22 @@ export function initMobileNav() {
     }
   };
 
-  const closeNav = () => {
+  const closeNav = ({ restoreFocus = true } = {}) => {
+    nav.inert = true;
     nav.hidden = true;
     toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
-    if (lastFocused) {
+    if (restoreFocus && lastFocused) {
       lastFocused.focus();
     }
+  };
+
+  const syncViewportState = () => {
+    if (desktopQuery.matches) {
+      closeNav({ restoreFocus: false });
+      return;
+    }
+    nav.inert = nav.hidden;
   };
 
   const trapFocus = (event) => {
@@ -80,4 +91,7 @@ export function initMobileNav() {
   nav.querySelectorAll("a[href]").forEach((link) => {
     link.addEventListener("click", closeNav);
   });
+
+  desktopQuery.addEventListener("change", syncViewportState);
+  syncViewportState();
 }

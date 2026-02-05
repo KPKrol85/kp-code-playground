@@ -10,7 +10,7 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font-base);
+  font-family: var(--font-body);
   font-size: var(--font-size-md);
   line-height: 1.6;
   color: var(--color-text);
@@ -87,6 +87,7 @@ h1,
 h2,
 h3,
 h4 {
+  font-family: var(--font-display);
   line-height: 1.2;
   margin: 0 0 var(--space-md);
 }

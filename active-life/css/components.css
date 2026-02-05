@@ -365,6 +365,16 @@
     display: block;
   }
 
+  .mobile-nav {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: static;
+    inset: auto;
+    background: transparent;
+  }
+
   .nav-toggle {
     display: none;
   }
