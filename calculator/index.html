@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d0d10" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Apple-style Calculator</title>
+</head>
+<body>
+  <main class="app" role="application" aria-label="Kalkulator Apple-style">
+    <section class="calculator" aria-label="Kalkulator">
+      <div class="display" aria-live="polite" aria-atomic="true">
+        <div class="display-value" id="display">0</div>
+        <button class="backspace" data-action="backspace" aria-label="Usuń">⌫</button>
+      </div>
+      <div class="keypad" role="group" aria-label="Panel przycisków kalkulatora">
+        <button class="key key--function" data-action="clear" aria-label="Wyczyść">AC</button>
+        <button class="key key--function" data-action="sign" aria-label="Zmień znak">+/-</button>
+        <button class="key key--function" data-action="percent" aria-label="Procent">%</button>
+        <button class="key key--operator" data-action="operator" data-operator="/" aria-label="Dzielenie">÷</button>
+
+        <button class="key key--digit" data-action="digit" data-digit="7" aria-label="7">7</button>
+        <button class="key key--digit" data-action="digit" data-digit="8" aria-label="8">8</button>
+        <button class="key key--digit" data-action="digit" data-digit="9" aria-label="9">9</button>
+        <button class="key key--operator" data-action="operator" data-operator="*" aria-label="Mnożenie">×</button>
+
+        <button class="key key--digit" data-action="digit" data-digit="4" aria-label="4">4</button>
+        <button class="key key--digit" data-action="digit" data-digit="5" aria-label="5">5</button>
+        <button class="key key--digit" data-action="digit" data-digit="6" aria-label="6">6</button>
+        <button class="key key--operator" data-action="operator" data-operator="-" aria-label="Odejmowanie">−</button>
+
+        <button class="key key--digit" data-action="digit" data-digit="1" aria-label="1">1</button>
+        <button class="key key--digit" data-action="digit" data-digit="2" aria-label="2">2</button>
+        <button class="key key--digit" data-action="digit" data-digit="3" aria-label="3">3</button>
+        <button class="key key--operator" data-action="operator" data-operator="+" aria-label="Dodawanie">+</button>
+
+        <button class="key key--digit key--zero" data-action="digit" data-digit="0" aria-label="0">0</button>
+        <button class="key key--digit" data-action="decimal" aria-label="Kropka">.</button>
+        <button class="key key--equals" data-action="equals" aria-label="Równa się">=</button>
+      </div>
+    </section>
+  </main>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
