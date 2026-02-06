@@ -13,18 +13,6 @@ import { initGalleryFilters } from "./features/gallery-filters.js";
 import { setAriaCurrent } from "./features/aria-current.js"; // ⬅️ było initAriaCurrent
 import { initJsonLd } from "./features/seo-jsonld.js";
 
-// A11y: sync aria-pressed for theme toggle
-const themeBtn = document.getElementById('theme-toggle');
-function syncThemeButtonAria() {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  themeBtn?.setAttribute('aria-pressed', String(isDark));
-}
-document.addEventListener('DOMContentLoaded', syncThemeButtonAria);
-themeBtn?.addEventListener('click', () => {
-  // existing theme toggle runs in initTheme(); this just re-syncs aria state
-  syncThemeButtonAria();
-});
-
 function setYear() {
   const el = document.querySelector("[data-year]");
   if (el) el.textContent = new Date().getFullYear();

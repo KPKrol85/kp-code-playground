@@ -95,10 +95,11 @@
         </button>
 
         <!-- Theme toggle (teraz w pasku obok hamburgera) -->
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Przełącz motyw">
-          <img src="assets/img/icons/sun-40x40.svg" alt="" class="theme-icon theme-icon--sun" />
-          <img src="assets/img/icons/moon-40x40.svg" alt="" class="theme-icon theme-icon--moon" />
-        </button>
+        <div id="theme-toggle" class="theme-toggle" role="group" aria-label="Motyw strony">
+          <button class="theme-toggle__btn" type="button" data-theme="auto" aria-pressed="false">Auto</button>
+          <button class="theme-toggle__btn" type="button" data-theme="light" aria-pressed="false">Light</button>
+          <button class="theme-toggle__btn" type="button" data-theme="dark" aria-pressed="false">Dark</button>
+        </div>
 
         <!-- Nav -->
         <nav class="site-nav" id="site-nav" aria-label="Główne">
