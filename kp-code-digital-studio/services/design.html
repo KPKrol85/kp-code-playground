@@ -15,14 +15,7 @@
   <meta name="twitter:image" content="../og/og-default.svg" />
   <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml" />
   <link rel="manifest" href="../seo/manifest.webmanifest" />
-  <script>
-    (() => {
-      const storageKey = 'theme-preference';
-      const stored = localStorage.getItem(storageKey);
-      const preference = stored ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', preference);
-    })();
-  </script>
+  <script src="../js/theme.js"></script>
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
