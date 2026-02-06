@@ -109,7 +109,7 @@
       </nav>
 
       <!-- GALERIA -->
-      <section class="section page-gallery" aria-labelledby="gallery-heading">
+      <section class="section page-gallery" id="wszystkie" aria-labelledby="gallery-heading">
         <div class="container">
           <h1 id="gallery-heading" class="section-title">Galeria</h1>
 
@@ -125,144 +125,150 @@
             </ul>
           </nav>
 
-          <!-- Jedna wspólna siatka dla wszystkich zdjęć -->
-          <h2 id="pokoje" class="sr-only">Pokoje</h2>
-          <div class="gallery-grid">
-            <!-- POKOJE -->
-            <!-- Pokój 01 -->
-            <a
-              href="assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.jpg"
-              class="gallery-grid__item"
-              data-reveal
-              data-lightbox-item
-              data-cat-item="pokoje"
-              data-caption="Pokój dwuosobowy — przestronny i komfortowy">
-              <picture>
-                <source
-                  type="image/avif"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-01-640x427.avif    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-960x640.avif    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.avif  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.avif 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-01-640x427.webp    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-960x640.webp    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.webp  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.webp 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
-                <img
-                  src="assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.jpg"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-01-640x427.jpg    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-960x640.jpg    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.jpg  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.jpg 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw"
-                  alt="Pokój hotelowy z dwoma łóżkami, jasną podłogą i dużym oknem z zasłonami"
-                  width="1600"
-                  height="1067"
-                  loading="lazy"
-                  decoding="async" />
-              </picture>
-            </a>
+          <!-- Sekcje galerii -->
+          <section id="pokoje" class="gallery-section" aria-labelledby="pokoje-heading">
+            <h2 id="pokoje-heading" class="gallery-section__title">Pokoje</h2>
+            <div class="gallery-grid">
+              <!-- POKOJE -->
+              <!-- Pokój 01 -->
+              <a
+                href="assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.jpg"
+                class="gallery-grid__item"
+                data-reveal
+                data-lightbox-item
+                data-cat-item="pokoje"
+                data-caption="Pokój dwuosobowy — przestronny i komfortowy">
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-01-640x427.avif    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-960x640.avif    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.avif  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.avif 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-01-640x427.webp    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-960x640.webp    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.webp  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.webp 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
+                  <img
+                    src="assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.jpg"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-01-640x427.jpg    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-960x640.jpg    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-1280x853.jpg  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-01-1600x1067.jpg 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw"
+                    alt="Pokój hotelowy z dwoma łóżkami, jasną podłogą i dużym oknem z zasłonami"
+                    width="1600"
+                    height="1067"
+                    loading="lazy"
+                    decoding="async" />
+                </picture>
+              </a>
 
-            <!-- Pokój 02 -->
-            <a
-              href="assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.jpg"
-              class="gallery-grid__item"
-              data-reveal
-              data-lightbox-item
-              data-cat-item="pokoje"
-              data-caption="Pokój z widokiem na morze — elegancki i nowoczesny">
-              <picture>
-                <source
-                  type="image/avif"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-02-640x427.avif    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-960x640.avif    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.avif  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.avif 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-02-640x427.webp    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-960x640.webp    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.webp  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.webp 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
-                <img
-                  src="assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.jpg"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-02-640x427.jpg    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-960x640.jpg    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.jpg  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.jpg 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw"
-                  alt="Nowoczesny pokój hotelowy z łóżkiem typu king-size i panoramicznym widokiem na morze"
-                  width="1600"
-                  height="1067"
-                  loading="lazy"
-                  decoding="async" />
-              </picture>
-            </a>
+              <!-- Pokój 02 -->
+              <a
+                href="assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.jpg"
+                class="gallery-grid__item"
+                data-reveal
+                data-lightbox-item
+                data-cat-item="pokoje"
+                data-caption="Pokój z widokiem na morze — elegancki i nowoczesny">
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-02-640x427.avif    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-960x640.avif    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.avif  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.avif 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-02-640x427.webp    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-960x640.webp    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.webp  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.webp 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
+                  <img
+                    src="assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.jpg"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-02-640x427.jpg    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-960x640.jpg    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-1280x853.jpg  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-02-1600x1067.jpg 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw"
+                    alt="Nowoczesny pokój hotelowy z łóżkiem typu king-size i panoramicznym widokiem na morze"
+                    width="1600"
+                    height="1067"
+                    loading="lazy"
+                    decoding="async" />
+                </picture>
+              </a>
 
-            <!-- Pokój 03 -->
-            <a
-              href="assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.jpg"
-              class="gallery-grid__item"
-              data-reveal
-              data-lightbox-item
-              data-cat-item="pokoje"
-              data-caption="Apartament biznesowy — relaks i praca w jednym">
-              <picture>
-                <source
-                  type="image/avif"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-03-640x427.avif    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-960x640.avif    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.avif  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.avif 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-03-640x427.webp    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-960x640.webp    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.webp  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.webp 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
-                <img
-                  src="assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.jpg"
-                  srcset="
-                    assets/img/subpage-gallery/pokoje/pokoj-03-640x427.jpg    640w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-960x640.jpg    960w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.jpg  1280w,
-                    assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.jpg 1600w
-                  "
-                  sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw"
-                  alt="Pokój hotelowy z biurkiem, laptopem i strefą wypoczynkową w ciepłym oświetleniu"
-                  width="1600"
-                  height="1067"
-                  loading="lazy"
-                  decoding="async" />
-              </picture>
-            </a>
+              <!-- Pokój 03 -->
+              <a
+                href="assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.jpg"
+                class="gallery-grid__item"
+                data-reveal
+                data-lightbox-item
+                data-cat-item="pokoje"
+                data-caption="Apartament biznesowy — relaks i praca w jednym">
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-03-640x427.avif    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-960x640.avif    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.avif  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.avif 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-03-640x427.webp    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-960x640.webp    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.webp  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.webp 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw" />
+                  <img
+                    src="assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.jpg"
+                    srcset="
+                      assets/img/subpage-gallery/pokoje/pokoj-03-640x427.jpg    640w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-960x640.jpg    960w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-1280x853.jpg  1280w,
+                      assets/img/subpage-gallery/pokoje/pokoj-03-1600x1067.jpg 1600w
+                    "
+                    sizes="(max-width:700px)100vw,(max-width:1100px)48vw,32vw"
+                    alt="Pokój hotelowy z biurkiem, laptopem i strefą wypoczynkową w ciepłym oświetleniu"
+                    width="1600"
+                    height="1067"
+                    loading="lazy"
+                    decoding="async" />
+                </picture>
+              </a>
+            </div>
+          </section>
 
-            <!-- LOBBY -->
-            <!-- Lobby 01 -->
+          <section id="lobby" class="gallery-section" aria-labelledby="lobby-heading">
+            <h2 id="lobby-heading" class="gallery-section__title">Lobby</h2>
+            <div class="gallery-grid">
+              <!-- LOBBY -->
+              <!-- Lobby 01 -->
             <a
               href="assets/img/subpage-gallery/lobby/lobby-01-1600x1067.jpg"
               class="gallery-grid__item"
@@ -350,7 +356,7 @@
               </picture>
             </a>
 
-            <!-- Lobby 03 -->
+              <!-- Lobby 03 -->
             <a
               href="assets/img/subpage-gallery/lobby/lobby-03-1600x1067.jpg"
               class="gallery-grid__item"
@@ -394,8 +400,14 @@
               </picture>
             </a>
 
-            <!-- RESTAURACJA -->
-            <!-- 01 -->
+            </div>
+          </section>
+
+          <section id="restauracja" class="gallery-section" aria-labelledby="restauracja-heading">
+            <h2 id="restauracja-heading" class="gallery-section__title">Restauracja</h2>
+            <div class="gallery-grid">
+              <!-- RESTAURACJA -->
+              <!-- 01 -->
             <a
               href="assets/img/subpage-gallery/restauracja/restauracja-01-1600x1067.jpg"
               class="gallery-grid__item"
@@ -483,7 +495,7 @@
               </picture>
             </a>
 
-            <!-- 03 -->
+              <!-- 03 -->
             <a
               href="assets/img/subpage-gallery/restauracja/restauracja-03-1600x1067.jpg"
               class="gallery-grid__item"
@@ -527,8 +539,14 @@
               </picture>
             </a>
 
-            <!-- WELLNESS -->
-            <!-- 01 -->
+            </div>
+          </section>
+
+          <section id="wellness" class="gallery-section" aria-labelledby="wellness-heading">
+            <h2 id="wellness-heading" class="gallery-section__title">Wellness</h2>
+            <div class="gallery-grid">
+              <!-- WELLNESS -->
+              <!-- 01 -->
             <a
               href="assets/img/subpage-gallery/wellness/wellness-01-1600x1067.jpg"
               class="gallery-grid__item"
@@ -616,7 +634,7 @@
               </picture>
             </a>
 
-            <!-- 03 -->
+              <!-- 03 -->
             <a
               href="assets/img/subpage-gallery/wellness/wellness-03-1600x1067.jpg"
               class="gallery-grid__item"
@@ -660,8 +678,14 @@
               </picture>
             </a>
 
-            <!-- OKOLICA -->
-            <!-- 01 -->
+            </div>
+          </section>
+
+          <section id="okolica" class="gallery-section" aria-labelledby="okolica-heading">
+            <h2 id="okolica-heading" class="gallery-section__title">Okolica</h2>
+            <div class="gallery-grid">
+              <!-- OKOLICA -->
+              <!-- 01 -->
             <a
               href="assets/img/subpage-gallery/okolica/okolica-01-1600x1067.jpg"
               class="gallery-grid__item"
@@ -749,7 +773,7 @@
               </picture>
             </a>
 
-            <!-- 03 -->
+              <!-- 03 -->
             <a
               href="assets/img/subpage-gallery/okolica/okolica-03-1600x1067.jpg"
               class="gallery-grid__item"
@@ -792,7 +816,8 @@
                   decoding="async" />
               </picture>
             </a>
-          </div>
+            </div>
+          </section>
         </div>
       </section>
     </main>
