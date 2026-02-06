@@ -557,6 +557,10 @@
   display: grid;
   gap: var(--space-xl);
 }
+
+.contact__card {
+  margin-top: var(--space-lg);
+}
 /* CONTACT MQ */
 @media (min-width: 900px) {
   .contact-grid {
