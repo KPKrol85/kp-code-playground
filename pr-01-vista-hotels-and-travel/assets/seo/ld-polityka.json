@@ -1,12 +1,12 @@
 {
   "@context": "https://schema.org",
   "@type": "Hotel",
-  "name": "Vistia",
+  "name": "Vista",
   "url": "https://tourism-project-01.netlify.app/polityka-prywatnosci.html",
   "image": "https://tourism-project-01.netlify.app/assets/img/og/og-1200x630.jpg",
   "logo": "https://tourism-project-01.netlify.app/assets/img/ui/icon-192.png",
   "telephone": "+48 533 537 091",
-  "email": "kontakt@kp-code.pl",
+  "email": "kontakt@vista.pl",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Marynarki Wojennej 12/31",
@@ -18,10 +18,14 @@
     {
       "@type": "ContactPoint",
       "telephone": "+48 533 537 091",
-      "email": "kontakt@kp-code.pl",
+      "email": "kontakt@vista.pl",
       "contactType": "customer service",
       "areaServed": "PL",
-      "availableLanguage": ["pl"]
+      "availableLanguage": [
+        "pl"
+      ]
     }
-  ]
+  ],
+  "alternateName": "Vista — Hotels & Travel",
+  "description": "Vista — Hotels & Travel."
 }
