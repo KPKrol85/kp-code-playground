@@ -11,6 +11,7 @@ import { initTabs } from "./features/tabs.js";
 import { initCompactHeader } from "./features/compact-header.js";
 import { initGalleryFilters } from "./features/gallery-filters.js";
 import { setAriaCurrent } from "./features/aria-current.js"; // ⬅️ było initAriaCurrent
+import { initJsonLd } from "./features/seo-jsonld.js";
 
 // A11y: sync aria-pressed for theme toggle
 const themeBtn = document.getElementById('theme-toggle');
@@ -48,6 +49,7 @@ function boot() {
   initLightbox();
   initForm();
   initTabs();
+  initJsonLd();
 
   if (document.getElementById("gallery-filters")) {
     initGalleryFilters();

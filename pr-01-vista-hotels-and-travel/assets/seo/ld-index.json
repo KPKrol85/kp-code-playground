@@ -1,0 +1,25 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Tourism & Hotels",
+    "url": "index.html",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ul. Marynarki Wojennej 12/31",
+      "addressLocality": "Tarnów",
+      "postalCode": "33-100",
+      "addressCountry": "PL"
+    },
+    "telephone": "+48 533 537 091",
+    "image": "assets/img/hero/hero-01-1280.jpg",
+    "sameAs": ["#", "#", "#", "#"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Tourism & Hotels",
+    "url": "index.html",
+    "logo": "assets/img/ui/icon-192.png"
+  }
+]
