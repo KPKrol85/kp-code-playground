@@ -11,3 +11,7 @@
 ## JSON-LD consistency (P1-4)
 - Ujednolicono JSON-LD w całym serwisie, usuwając placeholdery i wyrównując strukturę.
 - Wprowadzono realne dane kontaktowe i adresowe jako jedno źródło prawdy dla structured data.
+
+## Branding consistency (P1-5)
+- Ujednolicono branding do „Vista — Hotels & Travel” w title, meta, Open Graph i widocznych elementach UI.
+- Usunięto wszystkie wcześniejsze warianty nazw marki (np. KP_Code, Tourism & Hotels, Vistia) z projektu.

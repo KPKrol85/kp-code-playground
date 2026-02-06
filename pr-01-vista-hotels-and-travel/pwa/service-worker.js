@@ -1,4 +1,4 @@
-/* Service Worker – KP_Code_ Website Demo for Tourism & Hotels */
+/* Service Worker – Vista Website Demo for Hotels & Travel */
 
 const CACHE_VERSION = "v1.1.0";
 const STATIC_CACHE = `th-static-${CACHE_VERSION}`;
