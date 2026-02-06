@@ -452,7 +452,7 @@ html[data-theme="dark"] .theme-toggle {
     line-height: 0;
     margin-left: 0;
   }
-  .site-nav {
+  .js .site-nav {
     position: fixed;
     inset: var(--header-h) 0 auto 0;
     background: var(--bg);
@@ -465,7 +465,7 @@ html[data-theme="dark"] .theme-toggle {
     padding: 1rem;
     border-bottom: 1px solid var(--border);
   }
-  .site-nav.is-open {
+  .js .site-nav.is-open {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
