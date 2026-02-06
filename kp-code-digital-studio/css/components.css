@@ -65,16 +65,12 @@
 [data-theme="light"] .brand__logo img {
   content: url("../assets/img/logo/logo-light-mode.svg");
 }
-.nav__links {
+.js .nav__links {
   position: fixed;
   inset: var(--header-links-offset-current) 0 auto 0;
   z-index: 110;
   background: color-mix(in srgb, var(--color-bg) 94%, transparent);
   padding: var(--space-xl) var(--space-lg) var(--space-2xl);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-lg);
   backdrop-filter: blur(22px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -88,11 +84,32 @@
     opacity var(--transition-base),
     visibility var(--transition-base);
 }
-.nav--open .nav__links {
+.js .nav--open .nav__links {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+}
+html:not(.js) .nav__links {
+  position: static;
+  inset: auto;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  backdrop-filter: none;
+  border: none;
+  max-height: none;
+  overflow: visible;
+}
+html:not(.js) .nav__toggle {
+  display: none;
 }
 .nav__link {
   font-weight: 500;
@@ -223,7 +240,8 @@
   .nav__toggle {
     display: none;
   }
-  .nav__links {
+  .nav__links,
+  .js .nav__links {
     position: static;
     inset: auto;
     background: transparent;
