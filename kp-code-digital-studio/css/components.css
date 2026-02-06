@@ -951,6 +951,22 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
+.form__summary {
+  display: grid;
+  gap: var(--space-xs);
+}
+.form__summary ul {
+  margin: 0;
+  padding-left: var(--space-lg);
+}
+.form__error {
+  font-size: var(--font-size-sm);
+  color: var(--color-warning);
+}
+.form__error::before {
+  content: "Błąd: ";
+  font-weight: 600;
+}
 .alert {
   padding: var(--space-md);
   background: var(--color-primary-soft);
