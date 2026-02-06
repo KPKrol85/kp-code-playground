@@ -1,3 +1,6 @@
+// Progressive enhancement: mark JS availability as early as possible
+document.documentElement.classList.add('js');
+
 // Entry: initializes all features on DOMContentLoaded
 import { initNav } from "./features/nav.js";
 import { initTheme } from "./features/theme.js";
