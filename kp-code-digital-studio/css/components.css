@@ -557,7 +557,6 @@
   background: radial-gradient(900px 280px at 10% -10%, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 60%);
 }
 .work-card__image {
-  border-radius: calc(var(--radius-md) - 2px);
   border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
   background: color-mix(in srgb, var(--color-surface-alt) 80%, var(--color-bg));
   padding: var(--space-sm);
@@ -568,7 +567,6 @@
   inline-size: 100%;
   block-size: auto;
   display: block;
-  border-radius: calc(var(--radius-md) - 6px);
   transition:
     transform 220ms ease,
     filter 220ms ease,
@@ -634,7 +632,6 @@
 /* BADGE */
 .badge {
   padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-sm);
   background: var(--color-primary-soft);
   color: var(--color-primary);
   font-size: var(--font-size-xs);
@@ -934,7 +931,6 @@
 .form__textarea {
   width: 100%;
   padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
@@ -957,7 +953,6 @@
 }
 .alert {
   padding: var(--space-md);
-  border-radius: var(--radius-sm);
   background: var(--color-primary-soft);
   color: var(--color-primary);
   font-size: var(--font-size-sm);
