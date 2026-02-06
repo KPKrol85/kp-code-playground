@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tourism-and-hotels.netlify.app/sitemap.xml
