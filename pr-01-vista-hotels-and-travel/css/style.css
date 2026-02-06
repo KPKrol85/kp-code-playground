@@ -997,6 +997,16 @@ html[data-theme="dark"] .theme-toggle {
   gap: 1.25rem;
 }
 
+.page-gallery .gallery-section + .gallery-section {
+  margin-top: 2.5rem;
+}
+
+.page-gallery .gallery-section__title {
+  font-size: var(--fs-500);
+  margin: 0 0 1rem;
+  text-align: left;
+}
+
 .page-gallery .gallery-grid__item img {
   aspect-ratio: 3 / 2;
   object-fit: cover;
