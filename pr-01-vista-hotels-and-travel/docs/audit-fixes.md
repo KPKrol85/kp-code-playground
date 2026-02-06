@@ -15,3 +15,7 @@
 ## Branding consistency (P1-5)
 - Ujednolicono branding do „Vista — Hotels & Travel” w title, meta, Open Graph i widocznych elementach UI.
 - Usunięto wszystkie wcześniejsze warianty nazw marki (np. KP_Code, Tourism & Hotels, Vistia) z projektu.
+
+## Social links cleanup (P2-5)
+- Usunięto martwe linki `href="#"` w stopkach i podpięto je do nowych stron `marka.html` oraz `social.html` z sekcjami dla poszczególnych kanałów.
+- Dodano nowe podstrony informacyjne dla marki i social mediów, aby każdy link prowadził do istniejącej treści.
