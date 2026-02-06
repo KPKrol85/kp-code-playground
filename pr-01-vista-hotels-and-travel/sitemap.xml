@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/</loc>
+    <loc>https://tourism-project-01.netlify.app/</loc>
   </url>
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/rooms.html</loc>
+    <loc>https://tourism-project-01.netlify.app/rooms.html</loc>
   </url>
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/offers.html</loc>
+    <loc>https://tourism-project-01.netlify.app/offers.html</loc>
   </url>
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/gallery.html</loc>
+    <loc>https://tourism-project-01.netlify.app/gallery.html</loc>
   </url>
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/contact.html</loc>
+    <loc>https://tourism-project-01.netlify.app/contact.html</loc>
   </url>
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/legal.html</loc>
+    <loc>https://tourism-project-01.netlify.app/cookies.html</loc>
   </url>
   <url>
-    <loc>https://tourism-and-hotels.netlify.app/offline.html</loc>
+    <loc>https://tourism-project-01.netlify.app/polityka-prywatnosci.html</loc>
+  </url>
+  <url>
+    <loc>https://tourism-project-01.netlify.app/regulamin.html</loc>
   </url>
 </urlset>
