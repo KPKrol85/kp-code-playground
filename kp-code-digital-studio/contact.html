@@ -92,17 +92,21 @@
         </div>
         <div>
           <form class="form" data-contact-form novalidate>
+            <div class="alert form__summary" data-form-summary role="alert" aria-live="assertive" hidden></div>
             <div class="form__field">
               <label for="name">Imię i nazwisko</label>
               <input class="form__input" id="name" name="name" type="text" autocomplete="name" required />
+              <p class="form__error" id="error-name" hidden></p>
             </div>
             <div class="form__field">
               <label for="email">E-mail</label>
               <input class="form__input" id="email" name="email" type="email" autocomplete="email" required />
+              <p class="form__error" id="error-email" hidden></p>
             </div>
             <div class="form__field">
               <label for="message">Wiadomość</label>
               <textarea class="form__textarea" id="message" name="message" rows="5" required></textarea>
+              <p class="form__error" id="error-message" hidden></p>
             </div>
             <button class="button button--primary" type="submit">Wyślij wiadomość</button>
             <p class="form__message" data-form-message aria-live="polite"></p>
@@ -132,7 +136,6 @@
   <script src="./js/main.js"></script>
 </body>
 </html>
-
 
 
 
