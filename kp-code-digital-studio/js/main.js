@@ -260,26 +260,40 @@ if (contactForm) {
   });
 }
 
-const filterButtons = document.querySelectorAll('[data-filter]');
+const filterWrapper = document.querySelector('.project-filter');
 const projectGrid = document.querySelector('[data-project-grid]');
-if (filterButtons.length && projectGrid) {
-  const items = Array.from(projectGrid.children);
-
-  filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      filterButtons.forEach((btn) => {
-        btn.classList.remove('is-active');
-        btn.setAttribute('aria-selected', 'false');
+if (filterWrapper && projectGrid) {
+  const filterButtons = Array.from(filterWrapper.querySelectorAll('[data-filter]'));
+  if (filterButtons.length) {
+    const items = Array.from(projectGrid.children);
+    // This UI filters a single grid (not separate panels), so we use toggle buttons instead of ARIA tabs.
+    const setActiveFilter = (filterKey) => {
+      filterButtons.forEach((button) => {
+        const isActive = button.getAttribute('data-filter') === filterKey;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
       });
-      button.classList.add('is-active');
-      button.setAttribute('aria-selected', 'true');
 
-      const filter = button.getAttribute('data-filter');
       items.forEach((item) => {
         const category = item.getAttribute('data-category');
-        const visible = filter === 'all' || filter === category;
+        const visible = filterKey === 'all' || filterKey === category;
         item.style.display = visible ? 'grid' : 'none';
       });
+    };
+
+    const defaultButton = filterButtons.find((button) => button.classList.contains('is-active'))
+      ?? filterButtons.find((button) => button.getAttribute('data-filter') === 'all')
+      ?? filterButtons[0];
+    if (defaultButton) {
+      setActiveFilter(defaultButton.getAttribute('data-filter'));
+    }
+
+    filterWrapper.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-filter]');
+      if (!button || !filterWrapper.contains(button)) {
+        return;
+      }
+      setActiveFilter(button.getAttribute('data-filter'));
     });
-  });
+  }
 }
