@@ -48,7 +48,7 @@ export const materials = [
     description: 'Gotowe struktury maili i najczęstsze zwroty w komunikacji biznesowej.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'regular',
     tags: ['email', 'biznes'],
   },
   {
@@ -61,7 +61,7 @@ export const materials = [
     description: 'Plan działania, timeboxing i wskazówki do najczęstszych zadań.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'intensive',
     tags: ['egzamin', 'strategia'],
   },
   {
@@ -74,7 +74,7 @@ export const materials = [
     description: 'Zestaw zwrotów do prowadzenia spotkań i prezentowania wniosków.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'regular',
     tags: ['meeting', 'biznes'],
   },
   {
@@ -100,7 +100,7 @@ export const materials = [
     description: 'Przykłady użycia i ćwiczenia z must/should/can w codziennych sytuacjach.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'start',
     tags: ['modals'],
   },
   {
@@ -113,7 +113,7 @@ export const materials = [
     description: 'Nagrania z modelowymi odpowiedziami i krótkimi ćwiczeniami shadowing.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'start',
     tags: ['audio', 'shadowing'],
   },
   {
@@ -139,7 +139,7 @@ export const materials = [
     description: 'Konkretne kryteria oceny i plan przygotowania do części ustnej.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'intensive',
     tags: ['speaking', 'egzamin'],
   },
   {
@@ -165,7 +165,7 @@ export const materials = [
     description: 'Mapy myśli do szybkiej powtórki i łączenia tematów gramatycznych.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'regular',
     tags: ['powtórka', 'mapy'],
   },
   {
@@ -178,7 +178,7 @@ export const materials = [
     description: 'Najczęstsze idiomy z przykładami użycia w kontekście.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'regular',
     tags: ['idiomy', 'kontekst'],
   },
   {
@@ -191,7 +191,7 @@ export const materials = [
     description: 'Krótkie scenki video z zadaniami do samodzielnego przećwiczenia.',
     access: 'premium',
     ctaLabel: 'Kup dostęp',
-    url: 'pakiety.html',
+    packageKey: 'intensive',
     tags: ['role-play', 'video'],
   },
 ];

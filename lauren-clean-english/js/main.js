@@ -7,6 +7,7 @@ import { initResourcesFilter } from './modules/resourcesFilter.js';
 import { initProgressTracker } from './modules/progressTracker.js';
 import { initContactForm } from './modules/contactForm.js';
 import { initMaterialsCatalog } from './modules/materialsCatalog.js';
+import { initAnchorFocus } from './modules/anchorFocus.js';
 
 const initThemeToggle = () => {
   const toggle = document.querySelector('[data-theme-toggle]');
@@ -38,6 +39,7 @@ initAccordion();
 initResourcesFilter();
 initProgressTracker();
 initMaterialsCatalog();
+initAnchorFocus();
 initThemeToggle();
 initContactForm();
 registerServiceWorker();
