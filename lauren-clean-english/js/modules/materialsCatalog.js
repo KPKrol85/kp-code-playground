@@ -1,4 +1,5 @@
 import { materials } from '../data/materials.js';
+import { packages, packagesSectionHref } from '../data/packages.js';
 
 const categoryLabels = {
   grammar: 'Gramatyka',
@@ -39,6 +40,20 @@ const createMetaBadges = (item) => {
 const canAccess = (item) => {
   // TODO: integrate with purchase/access logic
   return item.access === 'free';
+};
+
+const getPremiumCtaHref = (item) => {
+  if (item.packageKey && packages[item.packageKey]) {
+    return packages[item.packageKey].href;
+  }
+  return packagesSectionHref;
+};
+
+const getCtaHref = (item) => {
+  if (item.access === 'premium') {
+    return getPremiumCtaHref(item);
+  }
+  return item.url || '#';
 };
 
 const getFilteredMaterials = (filters) =>
@@ -88,7 +103,7 @@ const renderMaterials = (list, container, emptyState) => {
     const cta = document.createElement('a');
     const hasAccess = canAccess(item);
     cta.className = `button ${hasAccess ? 'button--ghost' : 'button--primary'}`;
-    cta.href = item.url;
+    cta.href = getCtaHref(item);
     cta.textContent = item.ctaLabel;
 
     const footer = document.createElement('div');

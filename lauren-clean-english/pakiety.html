@@ -62,7 +62,7 @@
             </div>
             <ul class="nav__list" role="list">
               <li class="nav__item"><a class="nav__link" href="uslugi.html">Usługi</a></li>
-              <li class="nav__item"><a class="nav__link" href="pakiety.html">Pakiety</a></li>
+              <li class="nav__item"><a class="nav__link" href="pakiety.html#pakiety">Pakiety</a></li>
               <li class="nav__item"><a class="nav__link" href="materialy.html">Materiały</a></li>
               <li class="nav__item"><a class="nav__link" href="index.html#how">Metodyka</a></li>
               <li class="nav__item"><a class="nav__link" href="index.html#testimonials">Opinie</a></li>
@@ -127,14 +127,14 @@
         </div>
       </section>
 
-      <section class="section pricing" id="pricing">
+      <section class="section pricing" id="pakiety" tabindex="-1">
         <div class="container">
           <div class="section__header" data-reveal>
             <h2 class="section__title">Pakiety</h2>
             <p class="section__subtitle">Trzy poziomy intensywności – wybierz rytm i zakres wsparcia.</p>
           </div>
           <div class="grid grid--pricing">
-            <article class="card card--pricing" data-reveal>
+            <article class="card card--pricing" id="pakiet-start" tabindex="-1" data-reveal>
               <h3 class="card__title">Start</h3>
               <p class="card__text">Rytm: spokojny, regularne spotkania w miesiącu.</p>
               <ul class="list" role="list">
@@ -145,7 +145,12 @@
               <p class="card__text"><strong>Dla kogo:</strong> dla osób wracających do nauki.</p>
               <a class="button button--secondary" href="index.html#contact">Zapytaj o Start</a>
             </article>
-            <article class="card card--pricing card--highlight" data-reveal>
+            <article
+              class="card card--pricing card--highlight"
+              id="pakiet-regular"
+              tabindex="-1"
+              data-reveal
+            >
               <p class="card__eyebrow">Najczęściej wybierany</p>
               <h3 class="card__title">Regular</h3>
               <p class="card__text">Rytm: stałe spotkania w tygodniu, spójny progres.</p>
@@ -157,7 +162,7 @@
               <p class="card__text"><strong>Dla kogo:</strong> dla osób, które chcą stabilnie rosnąć.</p>
               <a class="button button--primary" href="index.html#contact">Zapytaj o Regular</a>
             </article>
-            <article class="card card--pricing" data-reveal>
+            <article class="card card--pricing" id="pakiet-intensive" tabindex="-1" data-reveal>
               <h3 class="card__title">Intensive</h3>
               <p class="card__text">Rytm: intensywny, częstsze spotkania i wsparcie między lekcjami.</p>
               <ul class="list" role="list">
@@ -255,7 +260,7 @@
           <h3 class="footer__title">Linki</h3>
           <ul class="footer__list" role="list">
             <li><a href="uslugi.html">Usługi</a></li>
-            <li><a href="pakiety.html">Pakiety</a></li>
+            <li><a href="pakiety.html#pakiety">Pakiety</a></li>
             <li><a href="materialy.html">Materiały</a></li>
             <li><a href="index.html#contact">Kontakt</a></li>
           </ul>
