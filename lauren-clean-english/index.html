@@ -441,33 +441,83 @@
               <p class="card__text">Najbliższe wolne sloty: wt/śr po 17:00.</p>
             </div>
           </div>
-          <form class="form" data-reveal>
+          <form
+            class="form"
+            name="contact"
+            method="POST"
+            action="/thank-you.html"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            data-contact-form
+            data-reveal
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="form__field sr-only" aria-hidden="true">
+              <label class="form__label" for="bot-field">Nie wypełniaj tego pola</label>
+              <input class="form__input" id="bot-field" name="bot-field" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+            <p class="form__hint">Odpowiadam zwykle w 24h w dni robocze.</p>
             <div class="form__field">
               <label class="form__label" for="name">Imię i nazwisko</label>
-              <input class="form__input" id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-hint" />
+              <input
+                class="form__input"
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+                aria-describedby="name-hint name-error"
+                aria-invalid="false"
+                data-error-target="name-error"
+              />
               <p class="form__hint" id="name-hint">Podaj imię i nazwisko.</p>
+              <p class="form__hint" id="name-error" role="status" aria-live="polite" hidden>Uzupełnij imię i nazwisko.</p>
             </div>
             <div class="form__field">
               <label class="form__label" for="email">Email</label>
-              <input class="form__input" id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-hint" />
+              <input
+                class="form__input"
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                aria-describedby="email-hint email-error"
+                aria-invalid="false"
+                data-error-target="email-error"
+              />
               <p class="form__hint" id="email-hint">Użyj aktywnego adresu.</p>
+              <p class="form__hint" id="email-error" role="status" aria-live="polite" hidden>Podaj poprawny adres email.</p>
             </div>
             <div class="form__field">
-              <label class="form__label" for="goal">Cel nauki</label>
-              <select class="form__input" id="goal" name="goal" required>
-                <option value="">Wybierz cel</option>
-                <option>Egzamin</option>
-                <option>Konwersacje</option>
-                <option>Business English</option>
-                <option>Plan ogólny</option>
+              <label class="form__label" for="topic">Temat</label>
+              <select class="form__input" id="topic" name="topic">
+                <option value="">Wybierz temat (opcjonalnie)</option>
+                <option>Korepetycje</option>
+                <option>Kurs</option>
+                <option>Inna</option>
               </select>
             </div>
             <div class="form__field">
               <label class="form__label" for="message">Wiadomość</label>
-              <textarea class="form__input" id="message" name="message" rows="4" required></textarea>
+              <textarea
+                class="form__input"
+                id="message"
+                name="message"
+                rows="4"
+                required
+                aria-describedby="message-error"
+                aria-invalid="false"
+                data-error-target="message-error"
+              ></textarea>
+              <p class="form__hint" id="message-error" role="status" aria-live="polite" hidden>Opisz krótko swoje potrzeby.</p>
             </div>
             <button class="button button--primary" type="submit">Wyślij zgłoszenie</button>
-            <p class="form__disclaimer">Formularz jest demonstracyjny i nie wysyła danych.</p>
+            <p class="form__disclaimer">
+              Wolisz mail lub WhatsApp? Napisz na
+              <a href="mailto:lauren@cleanenglish.pl">lauren@cleanenglish.pl</a> lub
+              <a href="https://wa.me/48600000123" rel="noreferrer">WhatsApp</a>.
+            </p>
           </form>
         </div>
       </section>
