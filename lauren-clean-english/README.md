@@ -10,7 +10,7 @@ Profesjonalna, jednoekranowa strona typu portfolio/landing dla nauczycielki jęz
 - FAQ accordion z obsługą klawiatury.
 - Filtrowanie materiałów w sekcji Resources/Shop.
 - Progress tracker demo z przełączaniem stanu.
-- Prosty przełącznik języka (PL/EN) i motywu (light/dark).
+- Prosty przełącznik motywu (light/dark).
 - Rejestracja Service Worker (PWA).
 
 ## Architektura plików
@@ -46,7 +46,6 @@ Profesjonalna, jednoekranowa strona typu portfolio/landing dla nauczycielki jęz
       accordion.js
       resourcesFilter.js
       progressTracker.js
-      langToggle.js
   package.json
 ```
 

@@ -4,6 +4,9 @@ const OFFLINE_URL = '/offline.html';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
+  '/uslugi.html',
+  '/pakiety.html',
+  '/materialy.html',
   '/thank-you.html',
   '/offline.html',
   '/404.html',
