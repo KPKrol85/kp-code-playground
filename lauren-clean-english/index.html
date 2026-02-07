@@ -253,60 +253,106 @@
             <h2 class="section__title">Materiały i sklepik</h2>
             <p class="section__subtitle">Ebooki, zestawy ćwiczeń i mini-kursy do samodzielnej pracy.</p>
           </div>
-          <div class="filters" role="tablist" aria-label="Filtr kategorii" data-reveal>
-            <button class="pill pill--filter is-active" type="button" data-filter="all" role="tab" aria-selected="true">
+          <div class="filters" data-tablist data-reveal>
+            <button class="pill pill--filter is-active" type="button" data-tab="all">
               Wszystko
             </button>
-            <button class="pill pill--filter" type="button" data-filter="grammar" role="tab" aria-selected="false">
+            <button class="pill pill--filter" type="button" data-tab="grammar">
               Gramatyka
             </button>
-            <button class="pill pill--filter" type="button" data-filter="vocabulary" role="tab" aria-selected="false">
+            <button class="pill pill--filter" type="button" data-tab="vocabulary">
               Słownictwo
             </button>
-            <button class="pill pill--filter" type="button" data-filter="exam" role="tab" aria-selected="false">
+            <button class="pill pill--filter" type="button" data-tab="exam">
               Egzaminy
             </button>
-            <button class="pill pill--filter" type="button" data-filter="business" role="tab" aria-selected="false">
+            <button class="pill pill--filter" type="button" data-tab="business">
               Biznes
             </button>
           </div>
-          <div class="grid grid--resources" data-resources>
-            <article class="card card--resource" data-category="grammar" data-reveal>
-              <h3 class="card__title">Detoks gramatyczny</h3>
-              <p class="card__text">45 stron klarownych zasad + ćwiczenia na czasy.</p>
-              <div class="card__tags">
-                <span class="badge">PDF</span>
-                <span class="badge">Gramatyka</span>
-              </div>
-              <button class="button button--ghost">Zobacz</button>
-            </article>
-            <article class="card card--resource" data-category="vocabulary" data-reveal>
-              <h3 class="card__title">Sprint ze słownictwem</h3>
-              <p class="card__text">Tematyczne listy + mini dialogi do codziennej praktyki.</p>
-              <div class="card__tags">
-                <span class="badge">Ebook</span>
-                <span class="badge">Słownictwo</span>
-              </div>
-              <button class="button button--ghost">Zobacz</button>
-            </article>
-            <article class="card card--resource" data-category="exam" data-reveal>
-              <h3 class="card__title">Pakiet gotowości egzaminacyjnej</h3>
-              <p class="card__text">Strategie, timeboxing i przykładowe arkusze.</p>
-              <div class="card__tags">
-                <span class="badge">PDF</span>
-                <span class="badge">Egzaminy</span>
-              </div>
-              <button class="button button--ghost">Zobacz</button>
-            </article>
-            <article class="card card--resource" data-category="business" data-reveal>
-              <h3 class="card__title">Notatki z angielskiego biznesowego</h3>
-              <p class="card__text">Słownictwo i zwroty do spotkań oraz maili.</p>
-              <div class="card__tags">
-                <span class="badge">PDF</span>
-                <span class="badge">Biznes</span>
-              </div>
-              <button class="button button--ghost">Zobacz</button>
-            </article>
+          <div class="resources__panels" data-tabpanels>
+            <div class="grid grid--resources" data-tab-panel="all">
+              <article class="card card--resource" data-category="grammar" data-reveal>
+                <h3 class="card__title">Detoks gramatyczny</h3>
+                <p class="card__text">45 stron klarownych zasad + ćwiczenia na czasy.</p>
+                <div class="card__tags">
+                  <span class="badge">PDF</span>
+                  <span class="badge">Gramatyka</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+              <article class="card card--resource" data-category="vocabulary" data-reveal>
+                <h3 class="card__title">Sprint ze słownictwem</h3>
+                <p class="card__text">Tematyczne listy + mini dialogi do codziennej praktyki.</p>
+                <div class="card__tags">
+                  <span class="badge">Ebook</span>
+                  <span class="badge">Słownictwo</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+              <article class="card card--resource" data-category="exam" data-reveal>
+                <h3 class="card__title">Pakiet gotowości egzaminacyjnej</h3>
+                <p class="card__text">Strategie, timeboxing i przykładowe arkusze.</p>
+                <div class="card__tags">
+                  <span class="badge">PDF</span>
+                  <span class="badge">Egzaminy</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+              <article class="card card--resource" data-category="business" data-reveal>
+                <h3 class="card__title">Notatki z angielskiego biznesowego</h3>
+                <p class="card__text">Słownictwo i zwroty do spotkań oraz maili.</p>
+                <div class="card__tags">
+                  <span class="badge">PDF</span>
+                  <span class="badge">Biznes</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+            </div>
+            <div class="grid grid--resources" data-tab-panel="grammar">
+              <article class="card card--resource" data-category="grammar" data-reveal>
+                <h3 class="card__title">Detoks gramatyczny</h3>
+                <p class="card__text">45 stron klarownych zasad + ćwiczenia na czasy.</p>
+                <div class="card__tags">
+                  <span class="badge">PDF</span>
+                  <span class="badge">Gramatyka</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+            </div>
+            <div class="grid grid--resources" data-tab-panel="vocabulary">
+              <article class="card card--resource" data-category="vocabulary" data-reveal>
+                <h3 class="card__title">Sprint ze słownictwem</h3>
+                <p class="card__text">Tematyczne listy + mini dialogi do codziennej praktyki.</p>
+                <div class="card__tags">
+                  <span class="badge">Ebook</span>
+                  <span class="badge">Słownictwo</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+            </div>
+            <div class="grid grid--resources" data-tab-panel="exam">
+              <article class="card card--resource" data-category="exam" data-reveal>
+                <h3 class="card__title">Pakiet gotowości egzaminacyjnej</h3>
+                <p class="card__text">Strategie, timeboxing i przykładowe arkusze.</p>
+                <div class="card__tags">
+                  <span class="badge">PDF</span>
+                  <span class="badge">Egzaminy</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+            </div>
+            <div class="grid grid--resources" data-tab-panel="business">
+              <article class="card card--resource" data-category="business" data-reveal>
+                <h3 class="card__title">Notatki z angielskiego biznesowego</h3>
+                <p class="card__text">Słownictwo i zwroty do spotkań oraz maili.</p>
+                <div class="card__tags">
+                  <span class="badge">PDF</span>
+                  <span class="badge">Biznes</span>
+                </div>
+                <button class="button button--ghost">Zobacz</button>
+              </article>
+            </div>
           </div>
         </div>
       </section>
