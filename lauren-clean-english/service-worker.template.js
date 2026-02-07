@@ -7,6 +7,7 @@ const PRECACHE_ASSETS = [
   '/uslugi.html',
   '/pakiety.html',
   '/materialy.html',
+  '/postepy.html',
   '/thank-you.html',
   '/offline.html',
   '/404.html',

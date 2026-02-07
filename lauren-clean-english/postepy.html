@@ -3,24 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Materiały | Lauren – Clean English</title>
+    <title>Postępy (demo) | Lauren – Clean English</title>
     <meta
       name="description"
-      content="Materiały do nauki angielskiego: gramatyka, słownictwo, speaking i przygotowanie do egzaminów. Zestawy PDF i notatki do samodzielnej pracy."
+      content="Demo panelu ucznia do śledzenia postępów w nauce angielskiego. Cele tygodnia, check-iny i statystyki zapisane lokalnie."
     />
     <link
       rel="canonical"
-      href="https://education-pr-01-lauren-english.netlify.app/materialy.html"
+      href="https://education-pr-01-lauren-english.netlify.app/postepy.html"
     />
-    <meta property="og:title" content="Materiały | Lauren – Clean English" />
+    <meta property="og:title" content="Postępy (demo) | Lauren – Clean English" />
     <meta
       property="og:description"
-      content="Ebooki, zestawy ćwiczeń i notatki do nauki angielskiego. Wybierz kategorię i pracuj we własnym tempie."
+      content="Sprawdź, jak wygląda demo trackera postępów: cele tygodnia, check-iny i statystyki bez logowania."
     />
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://education-pr-01-lauren-english.netlify.app/materialy.html"
+      content="https://education-pr-01-lauren-english.netlify.app/postepy.html"
     />
     <meta
       property="og:image"
@@ -85,41 +85,45 @@
     </header>
 
     <main id="main">
-      <section class="section hero">
+      <section class="section hero progress-hero">
         <div class="container hero__grid">
           <div class="hero__content" data-reveal>
-            <p class="hero__eyebrow">Materiały do pracy własnej</p>
-            <h1 class="hero__title">Praktyczne zestawy do nauki angielskiego.</h1>
+            <p class="hero__eyebrow">Demo panelu ucznia</p>
+            <h1 class="hero__title">Postępy, które widać i da się zaplanować.</h1>
             <p class="hero__subtitle">
-              Ebooki, karty pracy i zestawy ćwiczeń, które ułatwiają samodzielną naukę. Wybierz
-              kategorię i pracuj we własnym tempie.
+              To przykładowy tracker postępów – działa w 100% offline, bez kont i logowania.
+              Wszystkie dane są zapisywane wyłącznie w Twojej przeglądarce.
             </p>
             <div class="hero__actions">
-              <a class="button button--primary" href="index.html#contact">Zapytaj o dostęp</a>
-              <a class="button button--secondary" href="uslugi.html">Poznaj usługi</a>
+              <a class="button button--primary" href="#cele">Zobacz cele tygodnia</a>
+              <a class="button button--secondary" href="#statystyki">Statystyki i streak</a>
+            </div>
+            <div class="hero__meta">
+              <div class="pill">✓ Dane lokalne</div>
+              <div class="pill">✓ Kontrola nad celem</div>
+              <div class="pill">✓ Szybki check-in</div>
             </div>
           </div>
           <div class="hero__visual" data-reveal>
             <div class="hero__card">
-              <h3 class="hero__card-title">Co znajdziesz w środku?</h3>
-              <p class="hero__card-text">Krótkie moduły, checklisty i praktyczne ćwiczenia.</p>
+              <h3 class="hero__card-title">Co otrzymujesz w demo?</h3>
               <ul class="progress" role="list">
                 <li class="progress__item">
                   <button class="progress__toggle" type="button" aria-pressed="true">
                     <span class="progress__icon">✓</span>
-                    <span class="progress__label">Checklisty słówek i zwrotów</span>
+                    <span class="progress__label">Cele tygodnia na 3 kluczowe tracki</span>
                   </button>
                 </li>
                 <li class="progress__item">
-                  <button class="progress__toggle" type="button" aria-pressed="false">
-                    <span class="progress__icon">○</span>
-                    <span class="progress__label">Ćwiczenia utrwalające</span>
+                  <button class="progress__toggle" type="button" aria-pressed="true">
+                    <span class="progress__icon">✓</span>
+                    <span class="progress__label">Tydzień w skrócie z check-inami</span>
                   </button>
                 </li>
                 <li class="progress__item">
-                  <button class="progress__toggle" type="button" aria-pressed="false">
-                    <span class="progress__icon">○</span>
-                    <span class="progress__label">Podsumowania gramatyczne</span>
+                  <button class="progress__toggle" type="button" aria-pressed="true">
+                    <span class="progress__icon">✓</span>
+                    <span class="progress__label">Statystyki realizacji i streak</span>
                   </button>
                 </li>
               </ul>
@@ -128,89 +132,71 @@
         </div>
       </section>
 
-      <section class="section resources" id="materials-catalog">
-        <div class="container">
-          <div class="section__header" data-reveal>
-            <h2 class="section__title">Katalog materiałów</h2>
-            <p class="section__subtitle">
-              Przeglądaj materiały według kategorii, poziomu i dostępności. Sklepik i gating są
-              przygotowane pod kolejne etapy rozwoju.
-            </p>
-          </div>
-          <form class="materials__filters" aria-label="Filtry katalogu materiałów" data-reveal>
-            <div class="materials__row">
-              <div class="form__field">
-                <label class="form__label" for="materials-category">Kategoria</label>
-                <select class="form__input" id="materials-category" name="category" data-materials-category>
-                  <option value="all">Wszystkie</option>
-                  <option value="grammar">Gramatyka</option>
-                  <option value="vocabulary">Słownictwo</option>
-                  <option value="speaking">Speaking</option>
-                  <option value="writing">Writing</option>
-                  <option value="exam">Egzaminy</option>
-                  <option value="business">Biznes</option>
-                </select>
-              </div>
-              <div class="form__field">
-                <label class="form__label" for="materials-level">Poziom</label>
-                <select class="form__input" id="materials-level" name="level" data-materials-level>
-                  <option value="all">Wszystkie</option>
-                  <option value="A1">A1</option>
-                  <option value="A2">A2</option>
-                  <option value="B1">B1</option>
-                  <option value="B2">B2</option>
-                  <option value="C1">C1</option>
-                  <option value="All">Ogólny</option>
-                </select>
-              </div>
-              <div class="form__field">
-                <span class="form__label">Dostęp</span>
-                <label class="materials__checkbox" for="materials-free">
-                  <input type="checkbox" id="materials-free" name="freeOnly" data-materials-free />
-                  <span>Tylko darmowe</span>
-                </label>
-              </div>
+      <div id="progress-root">
+        <p class="sr-only" role="status" aria-live="polite" data-progress-status></p>
+
+        <section class="section" id="cele">
+          <div class="container">
+            <div class="section__header" data-reveal>
+              <h2 class="section__title">Cele tygodnia</h2>
+              <p class="section__subtitle">
+                Ustaw liczbę sesji na tydzień i zaznacz dzisiejszą aktywność. Wszystkie dane zapisują
+                się lokalnie w przeglądarce.
+              </p>
             </div>
-            <p class="materials__count" aria-live="polite" data-materials-count></p>
-          </form>
-          <div
-            id="materials-list"
-            class="materials__grid grid grid--resources"
-            data-reveal
-          ></div>
-          <p class="materials__empty" data-materials-empty hidden>
-            Brak materiałów spełniających wybrane kryteria. Zmień filtry, aby zobaczyć więcej.
-          </p>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="card card--soft" data-reveal>
-            <h2 class="card__title">Zasady korzystania</h2>
-            <p class="card__text">
-              Materiały są przeznaczone do użytku osobistego i nie mogą być dalej udostępniane bez zgody.
-              Jeśli chcesz je wykorzystać w pracy z grupą, skontaktuj się w sprawie licencji.
-            </p>
+            <div class="grid grid--cards progress-grid" data-progress-tracks></div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="card card--soft" data-reveal>
-            <h2 class="card__title">Chcesz zestaw dopasowany do siebie?</h2>
-            <p class="card__text">Napisz, nad czym pracujesz, a dobiorę odpowiednie materiały.</p>
-            <a class="button button--primary" href="index.html#contact">Skontaktuj się</a>
+        <section class="section progress-week-section" id="tydzien">
+          <div class="container">
+            <div class="section__header" data-reveal>
+              <h2 class="section__title">Tydzień w skrócie</h2>
+              <p class="section__subtitle">
+                Zobacz, jak wygląda bieżący tydzień w podziale na trzy główne tracki.
+              </p>
+            </div>
+            <div data-progress-week></div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section class="section" id="statystyki">
+          <div class="container">
+            <div class="section__header" data-reveal>
+              <h2 class="section__title">Statystyki</h2>
+              <p class="section__subtitle">
+                Proste liczby, które pomagają utrzymać rytm nauki bez presji.
+              </p>
+            </div>
+            <div data-progress-stats></div>
+          </div>
+        </section>
+
+        <section class="section progress-tools">
+          <div class="container progress-tools__inner">
+            <div>
+              <h2 class="section__title">Narzędzia demo</h2>
+              <p class="section__subtitle">
+                Reset usuwa dane z localStorage. Eksport pobiera JSON na Twoje urządzenie.
+              </p>
+            </div>
+            <div class="progress-tools__actions">
+              <button class="button button--ghost" type="button" data-progress-action="reset">
+                Wyczyść dane
+              </button>
+              <button class="button button--primary" type="button" data-progress-action="export">
+                Eksportuj JSON
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer class="footer">
       <div class="container footer__grid">
         <div>
-          <a class="header__logo" href="index.html">
+          <a class="header__logo" href="#top">
             <span class="header__logo-mark">LC</span>
             <span class="header__logo-text">Lauren – Clean English</span>
           </a>
