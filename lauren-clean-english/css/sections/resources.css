@@ -1,0 +1,4 @@
+.resources .card--resource {
+  display: grid;
+  gap: var(--space-sm);
+}
