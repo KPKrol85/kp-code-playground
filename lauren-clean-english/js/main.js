@@ -8,6 +8,7 @@ import { initProgressTracker } from './modules/progressTracker.js';
 import { initContactForm } from './modules/contactForm.js';
 import { initMaterialsCatalog } from './modules/materialsCatalog.js';
 import { initAnchorFocus } from './modules/anchorFocus.js';
+import { initProgressPage } from './pages/progress-page.js';
 
 const initThemeToggle = () => {
   const toggle = document.querySelector('[data-theme-toggle]');
@@ -42,4 +43,5 @@ initMaterialsCatalog();
 initAnchorFocus();
 initThemeToggle();
 initContactForm();
+initProgressPage();
 registerServiceWorker();
