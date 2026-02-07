@@ -6,6 +6,7 @@ import { initAccordion } from './modules/accordion.js';
 import { initResourcesFilter } from './modules/resourcesFilter.js';
 import { initProgressTracker } from './modules/progressTracker.js';
 import { initContactForm } from './modules/contactForm.js';
+import { initMaterialsCatalog } from './modules/materialsCatalog.js';
 
 const initThemeToggle = () => {
   const toggle = document.querySelector('[data-theme-toggle]');
@@ -36,6 +37,7 @@ initScrollSpy();
 initAccordion();
 initResourcesFilter();
 initProgressTracker();
+initMaterialsCatalog();
 initThemeToggle();
 initContactForm();
 registerServiceWorker();

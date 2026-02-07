@@ -73,3 +73,8 @@ Profesjonalna, jednoekranowa strona typu portfolio/landing dla nauczycielki jęz
 
 ## Uwagi
 Typografia opiera się na fontach systemowych ustawionych w `css/base.css`.
+
+## Materiały (katalog)
+- Dane: `js/data/materials.js` – lista obiektów z polami opisującymi materiały.
+- Dodanie nowego materiału: dopisz obiekt do tablicy `materials`, uzupełniając `id`, `title`, `category`, `level`, `format`, `description`, `access` oraz `ctaLabel` i `url`.
+- Hook pod gating: funkcja `canAccess(item)` w `js/modules/materialsCatalog.js` (TODO do integracji z logiką dostępu/płatności). 
