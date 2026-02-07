@@ -127,113 +127,59 @@
         </div>
       </section>
 
-      <section class="section resources" id="resources">
+      <section class="section resources" id="materials-catalog">
         <div class="container">
           <div class="section__header" data-reveal>
-            <h2 class="section__title">Kategorie materiałów</h2>
-            <p class="section__subtitle">Zestawy są pogrupowane tematycznie – wybierz to, czego potrzebujesz.</p>
+            <h2 class="section__title">Katalog materiałów</h2>
+            <p class="section__subtitle">
+              Przeglądaj materiały według kategorii, poziomu i dostępności. Sklepik i gating są
+              przygotowane pod kolejne etapy rozwoju.
+            </p>
           </div>
-          <div class="filters" data-tablist data-reveal>
-            <button class="pill pill--filter is-active" type="button" data-tab="all">
-              Wszystko
-            </button>
-            <button class="pill pill--filter" type="button" data-tab="grammar">
-              Gramatyka
-            </button>
-            <button class="pill pill--filter" type="button" data-tab="vocabulary">
-              Słownictwo
-            </button>
-            <button class="pill pill--filter" type="button" data-tab="speaking">
-              Speaking
-            </button>
-            <button class="pill pill--filter" type="button" data-tab="exam">
-              Egzaminy
-            </button>
-          </div>
-          <div class="resources__panels" data-tabpanels>
-            <div class="grid grid--resources" data-tab-panel="all">
-              <article class="card card--resource" data-category="grammar" data-reveal>
-                <h3 class="card__title">Gramatyka w pigułce</h3>
-                <p class="card__text">Przejrzyste podsumowania czasów i konstrukcji.</p>
-                <div class="card__tags">
-                  <span class="badge">PDF</span>
-                  <span class="badge">Gramatyka</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-              <article class="card card--resource" data-category="vocabulary" data-reveal>
-                <h3 class="card__title">Słownictwo do pracy</h3>
-                <p class="card__text">Tematyczne listy i mini dialogi do praktyki.</p>
-                <div class="card__tags">
-                  <span class="badge">Ebook</span>
-                  <span class="badge">Słownictwo</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-              <article class="card card--resource" data-category="speaking" data-reveal>
-                <h3 class="card__title">Speaking prompts</h3>
-                <p class="card__text">Zestaw pytań i tematów do rozgrzewki.</p>
-                <div class="card__tags">
-                  <span class="badge">PDF</span>
-                  <span class="badge">Speaking</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-              <article class="card card--resource" data-category="exam" data-reveal>
-                <h3 class="card__title">Strategie egzaminacyjne</h3>
-                <p class="card__text">Plan pracy, timeboxing i checklisty do powtórek.</p>
-                <div class="card__tags">
-                  <span class="badge">PDF</span>
-                  <span class="badge">Egzaminy</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
+          <form class="materials__filters" aria-label="Filtry katalogu materiałów" data-reveal>
+            <div class="materials__row">
+              <div class="form__field">
+                <label class="form__label" for="materials-category">Kategoria</label>
+                <select class="form__input" id="materials-category" name="category" data-materials-category>
+                  <option value="all">Wszystkie</option>
+                  <option value="grammar">Gramatyka</option>
+                  <option value="vocabulary">Słownictwo</option>
+                  <option value="speaking">Speaking</option>
+                  <option value="writing">Writing</option>
+                  <option value="exam">Egzaminy</option>
+                  <option value="business">Biznes</option>
+                </select>
+              </div>
+              <div class="form__field">
+                <label class="form__label" for="materials-level">Poziom</label>
+                <select class="form__input" id="materials-level" name="level" data-materials-level>
+                  <option value="all">Wszystkie</option>
+                  <option value="A1">A1</option>
+                  <option value="A2">A2</option>
+                  <option value="B1">B1</option>
+                  <option value="B2">B2</option>
+                  <option value="C1">C1</option>
+                  <option value="All">Ogólny</option>
+                </select>
+              </div>
+              <div class="form__field">
+                <span class="form__label">Dostęp</span>
+                <label class="materials__checkbox" for="materials-free">
+                  <input type="checkbox" id="materials-free" name="freeOnly" data-materials-free />
+                  <span>Tylko darmowe</span>
+                </label>
+              </div>
             </div>
-            <div class="grid grid--resources" data-tab-panel="grammar">
-              <article class="card card--resource" data-category="grammar" data-reveal>
-                <h3 class="card__title">Gramatyka w pigułce</h3>
-                <p class="card__text">Przejrzyste podsumowania czasów i konstrukcji.</p>
-                <div class="card__tags">
-                  <span class="badge">PDF</span>
-                  <span class="badge">Gramatyka</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-            </div>
-            <div class="grid grid--resources" data-tab-panel="vocabulary">
-              <article class="card card--resource" data-category="vocabulary" data-reveal>
-                <h3 class="card__title">Słownictwo do pracy</h3>
-                <p class="card__text">Tematyczne listy i mini dialogi do praktyki.</p>
-                <div class="card__tags">
-                  <span class="badge">Ebook</span>
-                  <span class="badge">Słownictwo</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-            </div>
-            <div class="grid grid--resources" data-tab-panel="speaking">
-              <article class="card card--resource" data-category="speaking" data-reveal>
-                <h3 class="card__title">Speaking prompts</h3>
-                <p class="card__text">Zestaw pytań i tematów do rozgrzewki.</p>
-                <div class="card__tags">
-                  <span class="badge">PDF</span>
-                  <span class="badge">Speaking</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-            </div>
-            <div class="grid grid--resources" data-tab-panel="exam">
-              <article class="card card--resource" data-category="exam" data-reveal>
-                <h3 class="card__title">Strategie egzaminacyjne</h3>
-                <p class="card__text">Plan pracy, timeboxing i checklisty do powtórek.</p>
-                <div class="card__tags">
-                  <span class="badge">PDF</span>
-                  <span class="badge">Egzaminy</span>
-                </div>
-                <button class="button button--ghost">Zobacz</button>
-              </article>
-            </div>
-          </div>
+            <p class="materials__count" aria-live="polite" data-materials-count></p>
+          </form>
+          <div
+            id="materials-list"
+            class="materials__grid grid grid--resources"
+            data-reveal
+          ></div>
+          <p class="materials__empty" data-materials-empty hidden>
+            Brak materiałów spełniających wybrane kryteria. Zmień filtry, aby zobaczyć więcej.
+          </p>
         </div>
       </section>
 
