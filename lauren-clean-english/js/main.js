@@ -5,7 +5,6 @@ import { initScrollSpy } from './modules/scrollSpy.js';
 import { initAccordion } from './modules/accordion.js';
 import { initResourcesFilter } from './modules/resourcesFilter.js';
 import { initProgressTracker } from './modules/progressTracker.js';
-import { initLangToggle } from './modules/langToggle.js';
 import { initContactForm } from './modules/contactForm.js';
 
 const initThemeToggle = () => {
@@ -37,7 +36,6 @@ initScrollSpy();
 initAccordion();
 initResourcesFilter();
 initProgressTracker();
-initLangToggle();
 initThemeToggle();
 initContactForm();
 registerServiceWorker();
