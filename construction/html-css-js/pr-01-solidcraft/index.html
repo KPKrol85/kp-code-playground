@@ -1239,18 +1239,22 @@
           <form
             class="form"
             method="post"
-            action="#"
+            action="/thank-you/"
+            name="contact"
+            netlify
+            netlify-honeypot="bot-field"
             role="form"
             aria-labelledby="kontakt-heading"
             aria-describedby="privacy-note"
             data-reveal="right"
             data-reveal-delay="200"
           >
+            <input type="hidden" name="form-name" value="contact" />
             <div class="visually-hidden" aria-hidden="true">
-              <label for="hp-website">Nie wypełniaj tego pola</label>
+              <label for="hp-bot-field">Nie wypełniaj tego pola</label>
               <input
-                id="hp-website"
-                name="website"
+                id="hp-bot-field"
+                name="bot-field"
                 type="text"
                 tabindex="-1"
                 autocomplete="off"

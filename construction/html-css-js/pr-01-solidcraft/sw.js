@@ -1,10 +1,11 @@
 /* ===== Service Worker — SolidCraft ===== */
 
-const CACHE_NAME = "solidcraft-v1.5.2";
+const CACHE_NAME = "solidcraft-v1.5.3";
 
 const ASSETS = [
   "/",
   "/index.html",
+  "/thank-you/",
   "/manifest.webmanifest",
   "/css/style.min.css",
   "/js/script.min.js",

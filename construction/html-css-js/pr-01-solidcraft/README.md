@@ -39,6 +39,21 @@ and production-ready front-end structure.
 
 ---
 
+## Contact form (Netlify Forms)
+
+The contact form uses Netlify Forms with progressive enhancement, so it works
+without JavaScript and submits to a dedicated thank-you page. With JavaScript
+enabled, the form submits via `fetch` (URL-encoded) and shows inline
+loading/success/error feedback, plus a honeypot field for basic anti-spam.
+
+Manual test:
+
+1. Run the site locally and open the contact section.
+2. Submit the form and verify the POST request in DevTools → Network.
+3. Deploy to Netlify and confirm the submission appears in **Netlify → Forms**.
+
+---
+
 ## Image optimization
 
 Source images live in `assets/img-src` and are generated into `assets/img`.
@@ -124,6 +139,22 @@ Celem projektu jest zaprezentowanie architektury layoutu,
 - CSS3 (custom properties, layout responsywny)
 - JavaScript (ES6, vanilla)
 - Netlify (hosting i deployment)
+
+---
+
+## Formularz kontaktowy (Netlify Forms)
+
+Formularz korzysta z Netlify Forms i działa również bez JavaScript (progressive
+enhancement) — wysyłka prowadzi na stronę podziękowania. Przy włączonym JS
+formularz wysyła dane przez `fetch` (URL-encoded) i pokazuje stany
+loading/success/error, a dodatkowo zawiera honeypot jako podstawową ochronę
+anty-spamową.
+
+Test manualny:
+
+1. Uruchom stronę lokalnie i przejdź do sekcji kontaktu.
+2. Wyślij formularz i sprawdź request POST w DevTools → Network.
+3. Po wdrożeniu na Netlify potwierdź zgłoszenie w **Netlify → Forms**.
 
 ---
 
