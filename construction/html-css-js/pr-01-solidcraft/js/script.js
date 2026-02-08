@@ -1802,7 +1802,46 @@ function initHomeHelpers() {
   window.addEventListener("pagehide", () => ac.abort(), { once: true, signal });
 }
 
-/* === 14 - Cookie Banner === */
+/* === 14 - Map consent === */
+
+function initMapConsent() {
+  const mapContainer = document.querySelector("[data-map-src]");
+  if (!mapContainer) return;
+
+  const mapSrc = mapContainer.dataset.mapSrc;
+  const placeholder = mapContainer.querySelector(".map-placeholder");
+  const loadBtn = mapContainer.querySelector(".map-load-btn");
+  const storageKey = "consent.maps";
+
+  const loadMap = () => {
+    if (!mapSrc || mapContainer.querySelector("iframe")) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.title = "Mapa dojazdu — przykładowa lokalizacja Tarnów";
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+    iframe.setAttribute("allowfullscreen", "");
+    iframe.src = mapSrc;
+
+    if (placeholder) placeholder.remove();
+    mapContainer.appendChild(iframe);
+  };
+
+  try {
+    if (localStorage.getItem(storageKey) === "true") loadMap();
+  } catch {}
+
+  if (loadBtn) {
+    loadBtn.addEventListener("click", () => {
+      try {
+        localStorage.setItem(storageKey, "true");
+      } catch {}
+      loadMap();
+    });
+  }
+}
+
+/* === 15 - Cookie Banner === */
 
 function initCookieBanner() {
   try {
@@ -1877,6 +1916,7 @@ function initCookieBanner() {
     if (typeof initOfferPrefetch === "function") initOfferPrefetch();
 
     if (typeof initHomeHelpers === "function") initHomeHelpers();
+    if (typeof initMapConsent === "function") initMapConsent();
     if (typeof initContactForm === "function") initContactForm();
     if (typeof initCookieBanner === "function") initCookieBanner();
   };
