@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-Host: activelife.pl
-Sitemap: https://activelife.pl/sitemap.xml
