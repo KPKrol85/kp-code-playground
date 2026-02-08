@@ -5,7 +5,7 @@
 Responsive demo website for a construction and renovation company, created as a portfolio project.
 The focus is on clean UI, accessibility, performance, and modern front-end best practices.
 
-🔗 **Live demo:** https://construction-project-01.netlify.app
+🔗 **Live demo:** https://construction-pr-01-solidcraft.netlify.app
 
 ---
 
@@ -93,7 +93,7 @@ stworzona jako projekt portfolio.
 Projekt koncentruje się na czytelnym interfejsie, dostępności, wydajności
 oraz nowoczesnych standardach front-end.
 
-🔗 **Demo online:** https://construction-project-01.netlify.app
+🔗 **Demo online:** https://construction-pr-01-solidcraft.netlify.app
 
 ---
 
