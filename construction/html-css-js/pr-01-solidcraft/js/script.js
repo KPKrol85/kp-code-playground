@@ -643,11 +643,12 @@ function initContactForm() {
   if (!form) return;
   const note = form.querySelector(".form-note");
   const btnSubmit = form.querySelector('button[type="submit"]');
-  const hpInput = form.querySelector('input[name="website"]');
+  const hpInput = form.querySelector('input[name="bot-field"]');
   const nameInput = form.querySelector("#f-name");
   const phoneInput = form.querySelector("#f-phone");
   const msgInput = form.querySelector("#f-msg");
   const consentInput = form.querySelector("#f-consent");
+  const isDev = ["localhost", "127.0.0.1"].includes(window.location.hostname);
   if (note) {
     note.setAttribute("role", "status");
     note.setAttribute("aria-atomic", "true");
@@ -687,6 +688,9 @@ function initContactForm() {
     note.classList.toggle("is-ok", !!ok);
     note.classList.toggle("is-err", !ok && !!msg);
   };
+
+  const encodeForm = (formEl) =>
+    new URLSearchParams(new FormData(formEl)).toString();
 
   const errSpan = (el) => {
     const ids = (el.getAttribute("aria-describedby") || "").split(/\s+/);
@@ -796,7 +800,7 @@ function initContactForm() {
   let submitting = false;
   form.addEventListener(
     "submit",
-    (e) => {
+    async (e) => {
       e.preventDefault();
       if (submitting) return;
 
@@ -859,16 +863,43 @@ function initContactForm() {
       setBusy(true);
       showNote("Wysyłanie…", true);
 
-      setTimeout(() => {
-        setBusy(false);
-        submitting = false;
+      const submitUrl = form.getAttribute("action") || "/";
+      const timeoutMs = 10000;
+      const fetchController = new AbortController();
+      const timeoutId = window.setTimeout(
+        () => fetchController.abort(),
+        timeoutMs,
+      );
+
+      try {
+        const response = await fetch(submitUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encodeForm(form),
+          signal: fetchController.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Form submit failed: ${response.status}`);
+        }
+
         form
           .querySelectorAll('[aria-invalid="true"]')
           .forEach((el) => el.removeAttribute("aria-invalid"));
         form.reset();
         showNote("Dziękujemy! Skontaktujemy się wkrótce.", true);
         note?.focus?.();
-      }, 900);
+      } catch (err) {
+        if (isDev) console.error(err);
+        const message = fetchController.signal.aborted
+          ? "Przekroczono limit czasu. Spróbuj ponownie."
+          : "Nie udało się wysłać formularza. Spróbuj ponownie.";
+        showNote(message, false);
+      } finally {
+        window.clearTimeout(timeoutId);
+        setBusy(false);
+        submitting = false;
+      }
     },
     { signal },
   );
