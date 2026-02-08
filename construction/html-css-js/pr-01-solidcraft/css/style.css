@@ -201,6 +201,18 @@ body {
   text-wrap: pretty;
 }
 
+html.preload-theme *,
+html.preload-theme *::before,
+html.preload-theme *::after {
+  transition: none !important;
+}
+
+.top-anchor {
+  position: relative;
+  inset: 0;
+  height: 0;
+}
+
 button,
 input,
 select,
@@ -2639,6 +2651,23 @@ section#kontakt .form-note {
   gap: var(--space-4);
   flex-wrap: wrap;
   margin-top: var(--space-4);
+}
+
+.page-404 .error-container {
+  text-align: center;
+  padding: 6rem 1rem;
+}
+
+.page-404 .error-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  margin-bottom: 1rem;
+  color: var(--c-accent);
+}
+
+.page-404 .error-text {
+  font-size: 1.25rem;
+  color: var(--c-muted);
+  margin-bottom: 2rem;
 }
 
 .page-sub .cards {

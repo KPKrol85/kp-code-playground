@@ -23,37 +23,7 @@
       media="(prefers-color-scheme: dark)"
     />
     <meta name="color-scheme" content="light dark" />
-
-    <script>
-      try {
-        const root = document.documentElement;
-        const stored = localStorage.getItem("theme");
-
-        const theme =
-          stored === "light" || stored === "dark"
-            ? stored
-            : window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-
-        root.dataset.theme = theme;
-        root.classList.add("preload-theme");
-      } catch {}
-    </script>
-    <style>
-      html.preload-theme *,
-      html.preload-theme *::before,
-      html.preload-theme *::after {
-        transition: none !important;
-      }
-    </style>
-    <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        requestAnimationFrame(() =>
-          document.documentElement.classList.remove("preload-theme"),
-        );
-      });
-    </script>
+    <script src="/js/theme-init.min.js"></script>
 
     <link rel="stylesheet" href="/css/style.min.css" />
   </head>
