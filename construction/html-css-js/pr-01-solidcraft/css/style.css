@@ -178,11 +178,6 @@ html {
   scrollbar-gutter: stable;
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
   padding-top: var(--header-h);
