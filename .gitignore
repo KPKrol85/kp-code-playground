@@ -1,5 +1,34 @@
-node_modules/
+# --- System ---
 .DS_Store
-studio-noir/assets/css/style.min.css
-studio-noir/assets/js/app.min.js
-studio-noir/assets/js/app.min.js.map
+Thumbs.db
+desktop.ini
+
+# --- Node / tooling ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Builds / outputs ---
+dist/
+build/
+.out/
+coverage/
+
+# --- Minified & sourcemaps (generated files) ---
+*.min.css
+*.min.js
+*.map
+
+# --- Env / secrets ---
+.env
+.env.local
+.env.*.local
+
+# --- Editors ---
+.vscode/
+.idea/
+
+# --- OS temp ---
+*.log
+*.tmp
