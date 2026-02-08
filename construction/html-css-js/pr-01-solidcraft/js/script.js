@@ -849,7 +849,7 @@ function initContactForm() {
         if (!isValidPLPhone(raw)) {
           setFieldError(
             phoneInput,
-            "Podaj poprawny numer (np. 600 700 800 lub +48 600 700 800).",
+            "Podaj poprawny numer (np. 533 537 091 lub +48 533 537 091).",
           );
           form.reportValidity();
           phoneInput.focus({ preventScroll: true });
