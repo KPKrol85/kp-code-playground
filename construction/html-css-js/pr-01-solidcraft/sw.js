@@ -1,6 +1,7 @@
 /* ===== Service Worker — SolidCraft ===== */
 
-const CACHE_NAME = "solidcraft-v1.5.3";
+const CACHE_PREFIX = "solidcraft-";
+const CACHE_NAME = `${CACHE_PREFIX}v1.5.3`;
 
 const ASSETS = [
   "/",
@@ -23,7 +24,15 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith("construction-01-") && k !== CACHE_NAME).map((k) => caches.delete(k)))));
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((k) => k.startsWith(CACHE_PREFIX) && k !== CACHE_NAME)
+          .map((k) => caches.delete(k))
+      )
+    )
+  );
   self.clients.claim();
 });
 
