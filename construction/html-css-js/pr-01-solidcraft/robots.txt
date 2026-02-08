@@ -9,11 +9,11 @@
 
 
 
-# Zezwól wszystkim wyszukiwarkom na indeksowanie strony
+# Zablokuj wszystkim wyszukiwarkom indeksowanie strony (projekt demo)
 
 User-agent: *
 
-Disallow:
+Disallow: /
 
 
 
@@ -32,4 +32,3 @@ Sitemap: https://construction-pr-01-solidcraft.netlify.app/sitemap.xml
 # Dodatkowe informacje (opcjonalnie)
 
 # Crawl-delay: 10  # jeśli chcesz ograniczyć tempo skanowania (rzadko używane)
-
