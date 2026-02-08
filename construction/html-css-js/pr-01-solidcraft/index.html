@@ -1127,8 +1127,14 @@
                 autocapitalize="words"
                 minlength="2"
                 required
+                aria-describedby="f-name-error"
                 placeholder="Jan Kowalski"
               />
+              <span
+                id="f-name-error"
+                class="form-error visually-hidden"
+                aria-live="polite"
+              ></span>
             </div>
             <div class="form-row" data-reveal="up" data-reveal-delay="280">
               <label for="f-phone">Telefon</label>
@@ -1139,8 +1145,14 @@
                 inputmode="tel"
                 autocomplete="tel-national"
                 required
+                aria-describedby="f-phone-error"
                 placeholder="533 537 091 lub +48 533 537 091"
               />
+              <span
+                id="f-phone-error"
+                class="form-error visually-hidden"
+                aria-live="polite"
+              ></span>
             </div>
             <div class="form-row" data-reveal="up" data-reveal-delay="320">
               <label for="f-msg">Opis prac</label>
@@ -1150,8 +1162,14 @@
                 rows="4"
                 required
                 maxlength="1000"
+                aria-describedby="f-msg-error"
                 placeholder="Krótko opisz zakres prac..."
               ></textarea>
+              <span
+                id="f-msg-error"
+                class="form-error visually-hidden"
+                aria-live="polite"
+              ></span>
             </div>
             <div class="form-row" data-reveal="up" data-reveal-delay="360">
               <label class="checkbox" for="f-consent">
@@ -1161,11 +1179,17 @@
                   name="consent"
                   value="yes"
                   required
+                  aria-describedby="f-consent-error"
                 />
                 <span
                   >Wyrażam zgodę na kontakt w celu przygotowania wyceny.</span
                 >
               </label>
+              <span
+                id="f-consent-error"
+                class="form-error visually-hidden"
+                aria-live="polite"
+              ></span>
             </div>
             <button
               class="btn"
@@ -1435,12 +1459,14 @@
       id="cookie-banner"
       class="cc-banner"
       role="dialog"
+      aria-modal="true"
       aria-live="polite"
       aria-label="Informacja o plikach cookies"
+      aria-describedby="cookie-banner-desc"
       hidden
     >
       <div class="cc-inner">
-        <p class="cc-text">
+        <p class="cc-text" id="cookie-banner-desc">
           <span aria-hidden="true">🍪</span>
           Ta strona wykorzystuje pliki cookies w celach funkcjonalnych i
           statystycznych. Szczegóły w
