@@ -27,6 +27,10 @@
     <loc>https://construction-pr-01-solidcraft.netlify.app/oferta/elektryka.html</loc>
     <lastmod>2025-09-19</lastmod>
   </url>
+  <url>
+    <loc>https://construction-pr-01-solidcraft.netlify.app/oferta/remonty.html</loc>
+    <lastmod>2025-09-19</lastmod>
+  </url>
 
   <!-- Dokumenty prawne -->
   <url>
@@ -40,5 +44,11 @@
   <url>
     <loc>https://construction-pr-01-solidcraft.netlify.app/doc/cookies.html</loc>
     <lastmod>2025-09-22</lastmod>
+  </url>
+
+  <!-- Strony narzędziowe -->
+  <url>
+    <loc>https://construction-pr-01-solidcraft.netlify.app/thank-you/</loc>
+    <lastmod>2025-09-19</lastmod>
   </url>
 </urlset>
