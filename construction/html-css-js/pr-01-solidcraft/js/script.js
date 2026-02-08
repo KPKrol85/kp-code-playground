@@ -544,6 +544,35 @@ function initSmoothTop() {
     "(prefers-reduced-motion: reduce)",
   ).matches;
   const behavior = prefersNoAnim ? "auto" : "smooth";
+  const isVisible = (el) =>
+    !!(el && (el.offsetWidth || el.offsetHeight || el.getClientRects().length));
+  const getFocusTarget = () => {
+    const main =
+      document.querySelector("#main") ||
+      document.querySelector("main") ||
+      document.querySelector(".main");
+    if (main && main.getAttribute("aria-hidden") !== "true" && isVisible(main))
+      return main;
+    const heading = Array.from(document.querySelectorAll("h1")).find(
+      (el) => el.getAttribute("aria-hidden") !== "true" && isVisible(el),
+    );
+    if (heading) return heading;
+    const container =
+      document.querySelector('[role="main"]') ||
+      document.querySelector("[data-page]");
+    if (container && container.getAttribute("aria-hidden") !== "true") {
+      return container;
+    }
+    return document.body;
+  };
+  const focusTarget = () => {
+    const target = getFocusTarget();
+    if (!target || typeof target.focus !== "function") return;
+    const hadTabindex = target.hasAttribute("tabindex");
+    if (!hadTabindex) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    if (!hadTabindex) target.removeAttribute("tabindex");
+  };
   const isPrimaryClick = (e) =>
     e.button === 0 &&
     !e.defaultPrevented &&
@@ -566,13 +595,7 @@ function initSmoothTop() {
         return;
       e.preventDefault();
       window.scrollTo({ top: 0, behavior });
-      const topAnchor = document.getElementById("top");
-      if (topAnchor && typeof topAnchor.focus === "function") {
-        const hadTabindex = topAnchor.hasAttribute("tabindex");
-        if (!hadTabindex) topAnchor.setAttribute("tabindex", "-1");
-        topAnchor.focus({ preventScroll: true });
-        if (!hadTabindex) topAnchor.removeAttribute("tabindex");
-      }
+      focusTarget();
       if (history.pushState) history.pushState(null, "", "#top");
       else location.hash = "#top";
     },
@@ -1722,13 +1745,33 @@ function initHomeHelpers() {
     return;
   }
 
-  const focusTopEl = (topEl) => {
-    if (!topEl || typeof topEl.focus !== "function") return;
-
-    topEl.setAttribute("tabindex", "-1");
-    topEl.focus({ preventScroll: true });
-
-    setTimeout(() => topEl.removeAttribute("tabindex"), 800);
+  const isVisible = (el) =>
+    !!(el && (el.offsetWidth || el.offsetHeight || el.getClientRects().length));
+  const getFocusTarget = () => {
+    const main =
+      document.querySelector("#main") ||
+      document.querySelector("main") ||
+      document.querySelector(".main");
+    if (main && main.getAttribute("aria-hidden") !== "true" && isVisible(main))
+      return main;
+    const heading = Array.from(document.querySelectorAll("h1")).find(
+      (el) => el.getAttribute("aria-hidden") !== "true" && isVisible(el),
+    );
+    if (heading) return heading;
+    const container =
+      document.querySelector('[role="main"]') ||
+      document.querySelector("[data-page]");
+    if (container && container.getAttribute("aria-hidden") !== "true") {
+      return container;
+    }
+    return document.body;
+  };
+  const focusTarget = () => {
+    const target = getFocusTarget();
+    if (!target || typeof target.focus !== "function") return;
+    target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    setTimeout(() => target.removeAttribute("tabindex"), 800);
   };
 
   const getScrollBehavior = () => {
@@ -1752,12 +1795,12 @@ function initHomeHelpers() {
 
     if (topEl?.scrollIntoView) {
       topEl.scrollIntoView({ behavior });
-      focusTopEl(topEl);
+      focusTarget();
       return;
     }
 
     window.scrollTo({ top: 0, behavior });
-    focusTopEl(topEl);
+    focusTarget();
   };
 
   document.addEventListener(
@@ -1770,7 +1813,7 @@ function initHomeHelpers() {
         e.preventDefault();
         scrollToTop();
       } else {
-        focusTopEl(document.getElementById("top"));
+        focusTarget();
       }
 
       cleanUrlKeepQuery();
