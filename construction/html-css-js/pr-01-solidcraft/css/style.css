@@ -1959,6 +1959,12 @@ h2 + .lead {
   margin-top: 4px;
 }
 
+.form .form-error {
+  display: block;
+  font-size: 0.9rem;
+  color: #dc2626;
+}
+
 section#kontakt .form-note {
   min-height: 1.6em;
 }
