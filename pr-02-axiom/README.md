@@ -41,6 +41,19 @@ design consistency, accessibility awareness, and scalable front-end patterns.
 
 ---
 
+## Local QA (Lighthouse + Pa11y)
+
+1) Start a local server:
+   - `npm run serve`
+2) Run QA checks:
+   - `npm run qa`
+
+Reports are saved in:
+- `reports/lighthouse/`
+- `reports/pa11y/`
+
+---
+
 ## Project Status
 
 ✔ Completed (v1)
@@ -112,6 +125,19 @@ spójności wizualnej, dostępności oraz skalowalnych wzorców front-endowych.
 - CSS3 (custom properties, architektura modularna)
 - JavaScript (ES6, vanilla)
 - Netlify (hosting i deployment)
+
+---
+
+## Lokalne QA (Lighthouse + Pa11y)
+
+1) Uruchom serwer lokalny:
+   - `npm run serve`
+2) Odpal QA:
+   - `npm run qa`
+
+Raporty zapisują się w:
+- `reports/lighthouse/`
+- `reports/pa11y/`
 
 ---
 
