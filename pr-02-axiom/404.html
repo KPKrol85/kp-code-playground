@@ -51,26 +51,14 @@
   <body class="error-page">
     <script src="js/theme-init.js"></script>
     <main class="not-found">
-      <section style="text-align: center; padding: 5rem 2rem">
-        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); color: var(--primary); margin-bottom: 1rem">404 — Strona nie istnieje</h1>
-        <p style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 2rem">
+      <section class="not-found__section">
+        <h1 class="not-found__title">404 — Strona nie istnieje</h1>
+        <p class="not-found__text">
           Niestety, adres który wpisałeś nie istnieje lub został przeniesiony.
           <br />
           Wróć na stronę główną, aby kontynuować przeglądanie.
         </p>
-        <a
-          href="/"
-          class="btn-primary"
-          style="
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary);
-            color: #fff;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.25s;
-          ">
+        <a href="/" class="btn-primary not-found__button">
           Wróć na stronę główną
         </a>
       </section>
