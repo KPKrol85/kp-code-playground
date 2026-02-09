@@ -1,6 +1,0 @@
-.offline {
-  max-width: 420px;
-  text-align: center;
-  display: grid;
-  gap: var(--space-md);
-}

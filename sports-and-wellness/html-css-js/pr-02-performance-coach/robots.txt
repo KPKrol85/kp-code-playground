@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: /performance-coach/sitemap.xml

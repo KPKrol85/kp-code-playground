@@ -1,2 +1,0 @@
-http://activelife.example.com/* https://activelife.example.com/:splat 301!
-/* /index.html 200
