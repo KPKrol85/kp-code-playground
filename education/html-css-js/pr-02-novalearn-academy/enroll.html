@@ -12,6 +12,8 @@
   <meta property="og:url" content="https://www.novalearn.academy/enroll.html">
   <meta property="og:image" content="https://www.novalearn.academy/assets/img/hero-illustration.svg">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Enroll | NovaLearn Academy">
+  <meta name="twitter:description" content="Request a placement call or consultation with NovaLearn Academy. Share your goals and preferred schedule.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -55,22 +57,22 @@
           <form class="form" data-validate-form>
             <div class="form__group">
               <label class="form__label" for="full-name">Full name</label>
-              <input class="form__input" id="full-name" name="full-name" type="text" autocomplete="name" data-required>
-              <span class="form__error" aria-live="polite"></span>
+              <input class="form__input" id="full-name" name="full-name" type="text" autocomplete="name" data-required required aria-describedby="full-name-error">
+              <span class="form__error" id="full-name-error" aria-live="polite"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="email">Email address</label>
-              <input class="form__input" id="email" name="email" type="email" autocomplete="email" data-required>
-              <span class="form__error" aria-live="polite"></span>
+              <input class="form__input" id="email" name="email" type="email" autocomplete="email" data-required required aria-describedby="email-error">
+              <span class="form__error" id="email-error" aria-live="polite"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="phone">Phone</label>
-              <input class="form__input" id="phone" name="phone" type="tel" autocomplete="tel" data-required>
-              <span class="form__error" aria-live="polite"></span>
+              <input class="form__input" id="phone" name="phone" type="tel" autocomplete="tel" data-required required aria-describedby="phone-error">
+              <span class="form__error" id="phone-error" aria-live="polite"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="interest">Primary goal</label>
-              <select class="form__select" id="interest" name="interest" data-required>
+              <select class="form__select" id="interest" name="interest" data-required required aria-describedby="interest-error">
                 <option value="">Select a goal</option>
                 <option value="exam">Exam preparation</option>
                 <option value="academic">Academic English</option>
@@ -78,24 +80,24 @@
                 <option value="conversation">Conversation fluency</option>
                 <option value="upskilling">Professional upskilling</option>
               </select>
-              <span class="form__error" aria-live="polite"></span>
+              <span class="form__error" id="interest-error" aria-live="polite"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="availability">Preferred schedule</label>
-              <select class="form__select" id="availability" name="availability" data-required>
+              <select class="form__select" id="availability" name="availability" data-required required aria-describedby="availability-error">
                 <option value="">Select availability</option>
                 <option value="weekday-morning">Weekday mornings</option>
                 <option value="weekday-evening">Weekday evenings</option>
                 <option value="weekend">Weekends</option>
                 <option value="flexible">Flexible</option>
               </select>
-              <span class="form__error" aria-live="polite"></span>
+              <span class="form__error" id="availability-error" aria-live="polite"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="message">Tell us about your goal</label>
-              <textarea class="form__textarea" id="message" name="message" data-required></textarea>
-              <span class="form__error" aria-live="polite"></span>
-              <p class="form__hint">Include target exam date or professional requirements if applicable.</p>
+              <textarea class="form__textarea" id="message" name="message" data-required required aria-describedby="message-error message-hint"></textarea>
+              <span class="form__error" id="message-error" aria-live="polite"></span>
+              <p class="form__hint" id="message-hint">Include target exam date or professional requirements if applicable.</p>
             </div>
             <fieldset>
               <legend>Preferred contact method</legend>
