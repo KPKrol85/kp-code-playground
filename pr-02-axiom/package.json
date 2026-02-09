@@ -24,8 +24,9 @@
   "scripts": {
     "img:build": "node tools/images/build-images.mjs",
     "img:clean": "node tools/images/build-images.mjs --clean",
-    "min:css": "cssnano css/style.css css/style.min.css",
+    "build:css": "node tools/css/build-css.mjs",
+    "min:css": "npm run build:css",
     "min:js": "terser js/script.js -o js/script.min.js -c -m --source-map",
-    "build": "npm run min:css && npm run min:js"
+    "build": "npm run build:css && npm run min:js"
   }
 }

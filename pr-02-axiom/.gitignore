@@ -1,0 +1,3 @@
+# Keep production CSS bundle for this project
+!dist/
+!dist/style.min.css
