@@ -2,7 +2,7 @@
 
 const CACHE_NAME = "axiom-construction-v1.0.0";
 const HTML_CACHE = "html-pages-v1";
-const ASSETS = ["./", "./index.html", "./offline.html", "./css/style.min.css", "./js/script.min.js", "./assets/img/favicon/favicon-96x96.png", "./assets/img/og/og-1200x630.jpg"];
+const ASSETS = ["./", "./index.html", "./offline.html", "./dist/style.min.css", "./js/script.min.js", "./assets/img/favicon/favicon-96x96.png", "./assets/img/og/og-1200x630.jpg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
