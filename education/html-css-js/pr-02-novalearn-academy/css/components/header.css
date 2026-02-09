@@ -92,10 +92,25 @@
     flex-direction: column;
     align-items: flex-start;
     min-width: 240px;
+    display: flex;
+  }
+
+  .js .nav__list {
     display: none;
   }
 
-  .nav__list.is-open {
+  .js .nav__list.is-open {
     display: flex;
+  }
+
+  .no-js .nav__toggle {
+    display: none;
+  }
+
+  .no-js .nav__list {
+    position: static;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
   }
 }
