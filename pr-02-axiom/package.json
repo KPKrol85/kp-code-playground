@@ -26,7 +26,7 @@
     "img:clean": "node tools/images/build-images.mjs --clean",
     "build:css": "node tools/css/build-css.mjs",
     "min:css": "npm run build:css",
-    "min:js": "terser js/script.js -o js/script.min.js -c -m --source-map",
-    "build": "npm run build:css && npm run min:js"
+    "build:js": "node tools/js/build-js.mjs",
+    "build": "npm run build:css && npm run build:js"
   }
 }
