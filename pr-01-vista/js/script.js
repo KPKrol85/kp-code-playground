@@ -1,4 +1,4 @@
-document.documentElement.classList.add('js');
+document.documentElement.classList.replace('no-js', 'js');
 
 import { initNav } from "./features/nav.js";
 import { initTheme } from "./features/theme.js";
