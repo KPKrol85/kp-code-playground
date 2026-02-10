@@ -1156,9 +1156,6 @@ body[data-page="tours"] .tour-card a:hover {
   z-index: 30;
 }
 
-.dropdown select {
-  display: none;
-}
 
 .dropdown__button {
   display: flex;
