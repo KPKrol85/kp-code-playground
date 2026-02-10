@@ -4,7 +4,7 @@ A fully optimized, production-ready multi-page demo website for a luxury travel 
 ---
 
 ## 🔗 Live Demo
-https://tourism-project-02.netlify.app/
+https://hospitality-pr02-aurora.netlify.app/
 
 ---
 
