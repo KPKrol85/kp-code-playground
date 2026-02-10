@@ -19,6 +19,7 @@ const htmlPages = [
   'cookies.html',
   'regulamin.html',
   'polityka-prywatnosci.html',
+  'gallery.html',
 ];
 
 if (!fs.existsSync(devCssPath)) {
@@ -38,6 +39,19 @@ for (const page of htmlPages) {
   if (!html.includes('href="css/style.min.css"')) {
     missingProdReferences.push(page);
   }
+}
+
+
+const serviceWorkerPath = path.join(projectRoot, 'service-worker.js');
+const serviceWorkerContent = fs.readFileSync(serviceWorkerPath, 'utf8');
+if (!serviceWorkerContent.includes('/css/style.min.css')) {
+  console.error('Service Worker STATIC_ASSETS must include /css/style.min.css');
+  process.exit(1);
+}
+
+if (serviceWorkerContent.includes('/css/style.css')) {
+  console.error('Service Worker STATIC_ASSETS contains legacy /css/style.css reference');
+  process.exit(1);
 }
 
 if (missingProdReferences.length > 0) {

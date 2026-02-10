@@ -1,11 +1,12 @@
-const VERSION = "kp_code_v1.00.31";
+const VERSION = "kp_code_v1.00.32";
 
 const STATIC_CACHE = `${VERSION}_static`;
 const HTML_CACHE = `${VERSION}_html`;
 
 const OFFLINE_URL = "/offline.html";
 
-const STATIC_ASSETS = ["/", "/index.html", "/css/style.css", "/js/script.js", "/site.webmanifest", OFFLINE_URL];
+// Production-critical assets that must match HTML references exactly (avoid style.css/style.min.css drift).
+const STATIC_ASSETS = ["/", "/index.html", "/css/style.min.css", "/js/script.js", "/site.webmanifest", OFFLINE_URL];
 
 // INSTALL
 self.addEventListener("install", (event) => {
