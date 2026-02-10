@@ -62,7 +62,10 @@ async function cacheFirst(request) {
   if (cached) return cached;
 
   const response = await fetch(request);
-  cache.put(request, response.clone());
+  const isCacheableResponse = response.ok && response.status >= 200 && response.status < 300 && response.type !== "opaque";
+  if (isCacheableResponse) {
+    cache.put(request, response.clone());
+  }
   return response;
 }
 
@@ -70,7 +73,14 @@ async function networkFirst(request) {
   const cache = await caches.open(HTML_CACHE);
   try {
     const response = await fetch(request);
-    cache.put(request, response.clone());
+    const contentType = response.headers.get("content-type") || "";
+    const isCacheableHtmlResponse =
+      response.ok && response.status >= 200 && response.status < 300 && contentType.includes("text/html");
+
+    if (isCacheableHtmlResponse) {
+      cache.put(request, response.clone());
+    }
+
     return response;
   } catch (error) {
     const cached = await cache.match(request);
