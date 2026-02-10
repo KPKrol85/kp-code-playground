@@ -1,13 +1,19 @@
 export function initTourDetail() {
   const params = new URLSearchParams(window.location.search);
-  const tourId = params.get("id");
-  if (!tourId) return;
+  const rawTourId = params.get("id");
+  const tourId = rawTourId ? rawTourId.trim() : "";
+
+  if (!tourId) {
+    return;
+  }
 
   fetch("assets/data/tours.json")
     .then((res) => res.json())
     .then((tours) => {
       const tour = tours.find((t) => t.id === tourId);
-      if (!tour) return;
+      if (!tour) {
+        return;
+      }
 
       fillTourContent(tour);
     })
@@ -30,7 +36,7 @@ function fillTourContent(tour) {
   if (mainImage && mainImageContainer) {
     mainImageContainer.innerHTML = createPictureMarkup(mainImage.base, mainImage.alt);
   }
-  
+
   const galleryEl = document.querySelector("[data-tour-gallery]");
   if (galleryEl && tour.images.length > 0) {
     galleryEl.innerHTML = tour.images.map((img) => createPictureMarkup(img.base, img.alt)).join("");
