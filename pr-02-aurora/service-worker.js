@@ -11,7 +11,6 @@ const STATIC_ASSETS = ["/", "/index.html", "/css/style.min.css", "/js/script.js"
 // INSTALL
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_ASSETS)));
-  self.skipWaiting();
 });
 
 // ACTIVATE
@@ -28,6 +27,12 @@ self.addEventListener("activate", (event) => {
     )
   );
   self.clients.claim();
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 // FETCH
