@@ -18,10 +18,20 @@ function setYear() {
 
 function registerSW() {
   if ("serviceWorker" in navigator) {
+    const isDevMode = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
     navigator.serviceWorker
       .register("pwa/service-worker.js")
-      .then((reg) => console.log("[PWA] Service Worker zarejestrowany", reg.scope))
-      .catch((err) => console.error("[PWA] Błąd rejestracji Service Workera", err));
+      .then((reg) => {
+        if (isDevMode) {
+          console.log("[PWA] Service Worker zarejestrowany", reg.scope);
+        }
+      })
+      .catch((err) => {
+        if (isDevMode) {
+          console.error("[PWA] Błąd rejestracji Service Workera", err);
+        }
+      });
   }
 }
 
