@@ -67,6 +67,11 @@ The project is engineered to match real commercial production standards.
 - Service Worker with cache-first / network-first strategies
 - Netlify `_headers` for CSP, caching, and security
 
+#### Offline smoke test
+1. Open `index.html` once while online so Service Worker installs and caches core assets.
+2. In DevTools, switch network to Offline and reload `index.html` — styles should still be applied.
+3. While still offline, open one subpage (for example `tours.html`) and verify styles are applied there as well.
+
 ### 📱 Responsive & Modern Styling
 - Mobile-first layout
 - Fluid typography
