@@ -362,7 +362,7 @@ html.theme-dark .nav__links a[aria-current="page"] {
 }
 
 .nav__toggle {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 42px;
@@ -404,15 +404,21 @@ html.theme-dark .nav__links a[aria-current="page"] {
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   box-shadow: var(--color-shadow);
   overflow: hidden;
+  max-height: none;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: max-height 320ms ease, opacity 220ms ease, visibility 0s linear 320ms;
+  z-index: 1;
+}
+.js .nav__panel {
   max-height: 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: max-height 320ms ease, opacity 220ms ease, visibility 0s linear 320ms;
-  z-index: 1;
 }
-.nav__panel.nav__panel--open,
-.nav__panel.is-open {
+.js .nav__panel.nav__panel--open,
+.js .nav__panel.is-open {
   max-height: 600px;
   opacity: 1;
   visibility: visible;
@@ -507,7 +513,8 @@ html.theme-dark .header-actions .btn:hover {
 }
 
 @media (min-width: 900px) {
-  .nav__toggle {
+  .nav__toggle,
+  .js .nav__toggle {
     display: none;
   }
   .nav__panel {
@@ -565,8 +572,9 @@ html.theme-dark .header-actions .btn:hover {
     justify-content: center;
     width: auto;
   }
-  .nav__toggle {
+  .js .nav__toggle {
     margin: 0 auto;
+    display: inline-flex;
   }
   .header-actions {
     gap: var(--space-1);
@@ -578,6 +586,12 @@ html.theme-dark .header-actions .btn:hover {
     left: 0;
     right: 0;
     padding: 0 var(--space-2) var(--space-2);
+  }
+  .js .nav__panel {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .nav__panel a {
     font-size: var(--fs-md);
