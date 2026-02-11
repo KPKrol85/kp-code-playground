@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://transport-project-01.netlify.app/sitemap.xml
+
