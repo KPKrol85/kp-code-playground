@@ -8,7 +8,7 @@
           "@type": "Organization",
           "name": "TransLogix",
           "url": "https://transport-project-01.netlify.app/",
-          "logo": "https://transport-project-01.netlify.app/assets/img/brand/logo-translogix.svg",
+          "logo": "https://transport-project-01.netlify.app/assets/img/logo/logo-translogix-light.svg",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+48-500-000-000",
