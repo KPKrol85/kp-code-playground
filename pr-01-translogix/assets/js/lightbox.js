@@ -143,10 +143,11 @@ export function initLightbox() {
 
   const applyCategoryFromTrigger = (triggerEl) => {
     const key = triggerEl.dataset.gallery;
+    const previewImg = triggerEl.querySelector("img");
     if (!key) return;
     titleEl.textContent = triggerEl.dataset.title || "Galeria pojazdu";
-    heroImg.src = triggerEl.currentSrc || triggerEl.src;
-    heroImg.alt = triggerEl.alt || "";
+    heroImg.src = previewImg?.currentSrc || previewImg?.src || "";
+    heroImg.alt = previewImg?.alt || "";
     renderGridForKey(key);
   };
 

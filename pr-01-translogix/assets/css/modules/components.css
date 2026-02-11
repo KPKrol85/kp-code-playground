@@ -628,6 +628,14 @@ html.theme-dark .fleet-card__icon {
   height: auto;
   display: block;
 }
+.fleet-card__icon .lightbox-trigger {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
 
 /* Calculator */
 .calculator {
