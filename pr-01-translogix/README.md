@@ -25,3 +25,23 @@ npm run check
 
 - `check:html` waliduje wszystkie pliki HTML przez `html-validate`.
 - `check:a11y` uruchamia lokalny serwer statyczny i odpala smoke test dostępności przez `pa11y-ci` (WCAG2AA).
+
+## E2E smoke tests (Playwright)
+
+- Uruchom wszystkie testy E2E (one command):
+
+```bash
+npm run test:e2e
+```
+
+- Uruchom interfejs Playwright UI:
+
+```bash
+npm run test:e2e:ui
+```
+
+- Otwórz raport HTML po teście:
+
+```bash
+npm run test:e2e:report
+```
