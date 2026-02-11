@@ -8,6 +8,7 @@
   "scripts": {
     "dev:css": "npm run build:css",
     "build:css": "postcss assets/css/style.css -o assets/css/style.min.css",
+    "build:html": "node scripts/build-html-partials.mjs",
     "deploy:css": "npm run build:css && cp assets/css/style.min.css assets/css/style.css",
     "verify:assets": "node scripts/verify-assets.js",
     "img:opt": "node scripts/optimize-images.js",
