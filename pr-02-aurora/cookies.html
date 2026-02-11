@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Aurora Travel – Informacja o cookies | KP_Code_ Demo</title>
-    <meta name="description" content="Informacja o plikach cookies stosowanych przez Aurora Travel — rodzaje, cele, przechowywanie i zarządzanie. Projekt demo KP_Code_." />
+    <title>Aurora Travel – Informacja o cookies</title>
+    <meta name="description" content="Informacja o plikach cookies stosowanych przez Aurora Travel — rodzaje, cele, przechowywanie i zarządzanie. Projekt KP_Code_." />
     <meta name="robots" content="index,follow" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8f7f2" />
@@ -19,16 +19,14 @@
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Aurora Travel" />
     <meta property="og:title" content="Informacja o cookies – Aurora Travel" />
-    <meta property="og:description" content="Informacja o plikach cookies w demonstracyjnym serwisie Aurora Travel – projekt portfolio KP_Code_." />
+    <meta property="og:description" content="Informacja o plikach cookies w serwisie Aurora Travel – projekt portfolio KP_Code_." />
     <meta property="og:url" content="https://hospitality-pr02-aurora.netlify.app/cookies.html" />
     <meta property="og:image" content="https://hospitality-pr02-aurora.netlify.app/assets/img/og-cover.svg" />
     <meta property="og:locale" content="pl_PL" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Informacja o cookies – Aurora Travel" />
-    <meta name="twitter:description" content="Informacja o cookies w fikcyjnym serwisie Aurora Travel. Projekt demo KP_Code_." />
+    <meta name="twitter:description" content="Informacja o cookies w fikcyjnym serwisie Aurora Travel. Projekt KP_Code_." />
     <meta name="twitter:image" content="https://hospitality-pr02-aurora.netlify.app/assets/img/og-cover.svg" />
-    <!-- CSS -->
-
     <script>
       (function () {
         var key = "kp-travel-theme";
@@ -39,9 +37,7 @@
         } catch (e) {
           stored = null;
         }
-
         var theme;
-
         if (stored === "light" || stored === "dark") {
           theme = stored;
         } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -49,24 +45,21 @@
         } else {
           theme = "light";
         }
-
         var background = theme === "dark" ? "#05060a" : "#f8f7f2";
         document.documentElement.setAttribute("data-theme", theme);
         document.documentElement.style.backgroundColor = background;
         document.documentElement.style.colorScheme = theme;
       })();
     </script>
-
-    <link rel="stylesheet" href="css/style.min.css" />
-    <!--  JSON-LD -->
+    <link rel="stylesheet" href="css/style.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "@id": "https://hospitality-pr02-aurora.netlify.app/cookies.html",
         "url": "https://hospitality-pr02-aurora.netlify.app/cookies.html",
-        "name": "Informacja o cookies – Aurora Travel | KP_Code_ Demo",
-        "description": "Przykładowa informacja o plikach cookies w demonstracyjnym serwisie Aurora Travel – projekt portfolio KP_Code_.",
+        "name": "Informacja o cookies – Aurora Travel | KP_Code_",
+        "description": "Informacja o plikach cookies w serwisie Aurora Travel – projekt portfolio KP_Code_.",
         "inLanguage": "pl-PL",
         "isPartOf": {
           "@id": "https://hospitality-pr02-aurora.netlify.app/"
@@ -104,7 +97,7 @@
       </div>
     </header>
 
-    <!-- MAIN CONTENT -->
+    <!-- Main -->
     <main id="main-content">
       <div class="page-hero">
         <div class="container">
@@ -116,21 +109,19 @@
           </nav>
           <h1>Informacja o cookies</h1>
           <p>
-            Niniejsza strona jest projektem demonstracyjnym przygotowanym przez
+            Niniejsza strona jest projektem przygotowanym przez
             <strong>KP_Code_</strong>
             . Poniższy opis przedstawia sposób użycia plików cookies na potrzeby funkcjonalności testowych oraz symulacji działania serwisu Aurora Travel.
           </p>
         </div>
       </div>
-
       <section class="section legal" aria-labelledby="cookies-heading">
         <div class="container">
           <h2 id="cookies-heading">1. Czym są cookies?</h2>
           <p>
-            Pliki cookies to niewielkie pliki tekstowe zapisywane w przeglądarce użytkownika. W ramach demonstracyjnej strony Aurora Travel służą one poprawnemu działaniu elementów interfejsu oraz
+            Pliki cookies to niewielkie pliki tekstowe zapisywane w przeglądarce użytkownika. W ramach strony Aurora Travel służą one poprawnemu działaniu elementów interfejsu oraz
             prezentacji funkcji dostępnych w projekcie.
           </p>
-
           <h2>2. Rodzaje cookies wykorzystywane w projekcie</h2>
           <ul>
             <li>
@@ -143,19 +134,16 @@
             </li>
             <li>
               <strong>Analityczne (symulowane):</strong>
-              stosowane jedynie w ramach demonstracji. Pozwalają pokazać, jak działają funkcje analityczne w prawdziwych projektach. Nie zbierają danych osobowych.
+              stosowane w serwisie. Pozwalają analizować działanie funkcji i nie zbierają danych osobowych.
             </li>
           </ul>
-
           <h2>3. Zarządzanie cookies</h2>
           <p>
-            Możesz zarządzać plikami cookies poprzez ustawienia swojej przeglądarki. W projekcie demo nie stosujemy zaawansowanego modułu zgód, jednak mechanizmy opisane tutaj obrazują sposób ich
+            Możesz zarządzać plikami cookies poprzez ustawienia swojej przeglądarki. W serwisie nie stosujemy zaawansowanego modułu zgód, jednak mechanizmy opisane tutaj obrazują sposób ich
             użycia w rzeczywistej implementacji.
           </p>
-
           <h2>4. Okres przechowywania</h2>
           <p>Cookies sesyjne są usuwane po zamknięciu przeglądarki. Cookies funkcjonalne mogą być przechowywane od 1 do 12 miesięcy, co odzwierciedla standardową praktykę w tego typu projektach.</p>
-
           <h2>5. Informacje dodatkowe</h2>
           <p>
             Projekt ma charakter edukacyjno-portfolio i nie prowadzi rzeczywistego przetwarzania danych. Szczegółowe informacje o zasadach przetwarzania znajdują się w dokumencie:
@@ -166,20 +154,27 @@
       </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="site-footer">
       <div class="container site-footer__grid">
         <div>
           <img src="assets/img/logo/logo.svg" alt="" class="footer-logo" />
           <a class="logo footer-logo-link" href="index.html">Aurora Travel</a>
           <p>Ekskluzywne biuro podróży tworzące spersonalizowane doświadczenia dla wymagających globtroterów.</p>
-          <p class="footer-demo-note">
-            Projekt demo stworzony przez
+          <p class="footer-note">
+            Projekt stworzony przez
             <strong>KP_Code_</strong>
           </p>
-          <p>ul. Marynarki Wojennej 12/31, 33-100 Tarnów</p>
+          <address class="contact-address">
+            <p class="contact-address__item">
+              ul. Marynarki Wojennej 12
+              <br />
+              33-100 Tarnów
+              <br />
+              Polska
+            </p>
+          </address>
         </div>
-
         <div>
           <h3>Nawigacja</h3>
           <ul>
@@ -198,33 +193,35 @@
             <li><a href="cookies.html">Cookies</a></li>
           </ul>
         </div>
-
         <div>
           <h3>Kontakt</h3>
-
+          <address class="contact-address">
+            <p class="contact-address__item">
+              ul. Marynarki Wojennej 12
+              <br />
+              33-100 Tarnów
+              <br />
+              Polska
+            </p>
+          </address>
           <p class="contact-item">
             <img src="assets/img/svg-icons/tel.svg" alt="" class="contact-icon" />
             <a href="tel:+48533537091">+48 533 537 091</a>
           </p>
-
           <p class="contact-item">
             <img src="assets/img/svg-icons/email.svg" alt="" class="contact-icon" />
-            <a href="mailto:kp_code_@gmail.com">kp_code_@gmail.com</a>
+            <a href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
           </p>
-
           <div class="socials">
             <a href="https://www.facebook.com/ktravel" aria-label="Facebook">
               <img src="assets/img/svg-icons/fb.svg" alt="" class="socials__icon" />
             </a>
-
             <a href="https://github.com/kp-code" aria-label="GitHub">
               <img src="assets/img/svg-icons/github.svg" alt="" class="socials__icon" />
             </a>
-
             <a href="https://twitter.com/kp_code_" aria-label="X (Twitter)">
               <img src="assets/img/svg-icons/x.svg" alt="" class="socials__icon" />
             </a>
-
             <a href="https://www.youtube.com/@kp_code_" aria-label="YouTube">
               <img src="assets/img/svg-icons/youtube.svg" alt="" class="socials__icon" />
             </a>
@@ -233,12 +230,12 @@
       </div>
       <p class="site-footer__copy">
         &copy;
-        <span id="current-year">2024</span>
-        KP_Code_ &amp; Demo Aurora Travel – wszelkie prawa zastrzeżone.
+        <span id="current-year">2026</span>
+        KP_Code Digital Studio – Wszelkie prawa zastrzeżone
       </p>
     </footer>
 
-    <!-- JS -->
+    <!-- Script -->
     <script type="module" src="js/script.js"></script>
   </body>
 </html>
