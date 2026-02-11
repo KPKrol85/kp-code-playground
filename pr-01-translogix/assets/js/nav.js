@@ -1,11 +1,12 @@
-// Handles mobile navigation interactions and focus management
 export function initNav() {
   const nav = document.querySelector(".nav");
   const toggle = nav?.querySelector(".nav__toggle");
   const panel = nav?.querySelector(".nav__panel");
+  const headerActions = document.querySelector(".header-actions");
+  const cta = headerActions?.querySelector(".nav__cta");
+  const linksGroup = panel?.querySelector(".nav__links");
   if (!nav || !toggle || !panel) return;
 
-  const closeTriggers = panel.querySelectorAll(".nav__links a, .nav__cta");
   const mq = window.matchMedia("(min-width: 900px)");
   const isMobile = () => !mq.matches;
 
@@ -19,7 +20,6 @@ export function initNav() {
   panel.setAttribute("aria-label", panel.getAttribute("aria-label") || "Główne menu");
   panel.setAttribute("aria-hidden", "true");
 
-  // Close dropdown and reset a11y state
   const closeMenu = () => {
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Otwórz menu");
@@ -30,7 +30,6 @@ export function initNav() {
     }
   };
 
-  // Open dropdown and lock body scroll on mobile
   const openMenu = () => {
     panel.classList.add("nav__panel--open", "is-open");
     toggle.setAttribute("aria-expanded", "true");
@@ -46,16 +45,14 @@ export function initNav() {
     isOpen ? closeMenu() : openMenu();
   });
 
-  // Close menu when selecting a link on mobile
-  closeTriggers.forEach((link) =>
-    link.addEventListener("click", () => {
-      if (toggle.getAttribute("aria-expanded") === "true") {
-        closeMenu();
-      }
-    })
-  );
+  panel.addEventListener("click", (event) => {
+    const trigger = event.target.closest(".nav__links a, .nav__cta");
+    if (!trigger) return;
+    if (toggle.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+    }
+  });
 
-  // Close when clicking outside of the nav area
   document.addEventListener("click", (event) => {
     const isOpen = toggle.getAttribute("aria-expanded") === "true";
     if (!isOpen) return;
@@ -72,9 +69,19 @@ export function initNav() {
     }
   });
 
-  // Sync state when resizing across the breakpoint
+  const placeCtaInPanel = () => {
+    if (!cta || !linksGroup || panel.contains(cta)) return;
+    linksGroup.insertAdjacentElement("afterend", cta);
+  };
+
+  const placeCtaInHeader = () => {
+    if (!cta || !headerActions || headerActions.contains(cta)) return;
+    headerActions.appendChild(cta);
+  };
+
   const handleBreakpointChange = () => {
     if (mq.matches) {
+      placeCtaInHeader();
       panel.classList.remove("nav__panel--open", "is-open");
       panel.setAttribute("aria-hidden", "false");
       toggle.setAttribute("aria-expanded", "false");
@@ -82,6 +89,7 @@ export function initNav() {
       document.body.classList.remove("no-scroll");
       return;
     }
+    placeCtaInPanel();
     panel.classList.remove("nav__panel--open", "is-open");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Otwórz menu");

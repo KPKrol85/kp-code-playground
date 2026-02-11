@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html lang="pl" class="theme-light">
+<!doctype html>
+<html lang="pl" class="no-js">
   <head>
-    <!-- Podstawowe metadane -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-    <script src="assets/js/boot.js" defer></script>
-    <title>Usługi transportowe | TransLogix – KP_Code_ Demo</title>
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("translogix-theme") === "dark") {
+            document.documentElement.classList.add("theme-dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="assets/js/boot.js"></script>
+    <title>Usługi transportowe | TransLogix</title>
     <meta name="description" content="Pełna oferta usług transportowych TransLogix. Transport krajowy i międzynarodowy, przewozy ekspresowe, ładunki specjalne i rozwiązania logistyczne dla firm." />
     <meta name="author" content="KP_Code_" />
     <meta name="robots" content="index,follow" />
@@ -14,11 +21,7 @@
     <meta name="theme-color" content="#020617" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://transport-project-01.netlify.app/services.html" />
-
-    <!-- Ikony i manifest -->
+    <link rel="canonical" href="https://transport-pr01-translogix.netlify.app/services.html" />
     <link rel="icon" type="image/png" href="/assets/icons/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
     <link rel="shortcut icon" href="/assets/icons/favicon.ico" />
@@ -26,38 +29,29 @@
     <meta name="apple-mobile-web-app-title" content="TransLogix" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="/assets/icons/site.webmanifest" />
-
-    <!-- Preload + CSS -->
-    <link rel="preload" href="/assets/css/style.min.css" as="style" />
-    <link rel="stylesheet" href="/assets/css/style.css" />
-
-    <!-- Open Graph -->
+<link rel="stylesheet" href="/assets/css/style.css" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Usługi transportowe | TransLogix" />
     <meta property="og:description" content="Sprawdź ofertę usług transportowych TransLogix: przewozy drogowe, transport ekspresowy, ładunki specjalne i rozwiązania logistyczne dla firm." />
-    <meta property="og:url" content="https://transport-project-01.netlify.app/services.html" />
+    <meta property="og:url" content="https://transport-pr01-translogix.netlify.app/services.html" />
     <meta property="og:site_name" content="TransLogix" />
     <meta property="og:locale" content="pl_PL" />
-    <meta property="og:image" content="https://transport-project-01.netlify.app/assets/img/og-img/og-1200x630.jpg" />
+    <meta property="og:image" content="https://transport-pr01-translogix.netlify.app/assets/img/og-img/og-1200x630.jpg" />
     <meta property="og:image:alt" content="TransLogix – transport and logistics B2B" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Usługi transportowe | TransLogix" />
     <meta name="twitter:description" content="Lista usług transportowych TransLogix: transport krajowy, międzynarodowy i usługi ekspresowe." />
-    <meta name="twitter:image" content="https://transport-project-01.netlify.app/assets/img/og-img/og-1200x630.jpg" />
-
-    <!-- JSON-LD – CollectionPage (lista usług) -->
+    <meta name="twitter:image" content="https://transport-pr01-translogix.netlify.app/assets/img/og-img/og-1200x630.jpg" />
     <script type="application/ld+json" src="assets/data/jsonld/services.json"></script>
   </head>
 
-  <!-- BODY -->
+  <!-- Body -->
   <body>
     <a class="skip-link" href="#main">Przejdź do treści głównej</a>
 
-    <!-- HEADER -->
+    <!-- Header -->
     <header>
       <div class="header-inner">
         <a href="index.html" class="brand">
@@ -77,7 +71,6 @@
               <a href="pricing.html">Cennik</a>
               <a href="contact.html">Kontakt</a>
             </div>
-            <a class="btn nav__cta nav__order-btn" href="contact.html#quote">Zamów</a>
           </div>
         </nav>
         <div class="header-actions">
@@ -85,14 +78,13 @@
             <img src="assets/img/svg/sun.svg" alt="" class="icon-sun" aria-hidden="true" />
             <img src="assets/img/svg/moon.svg" alt="" class="icon-moon" aria-hidden="true" />
           </button>
-          <a class="btn" href="contact.html#quote">Zamów</a>
+          <a class="btn nav__cta" href="contact.html#quote">Zamów</a>
         </div>
       </div>
     </header>
 
-    <!-- MAIN -->
+    <!-- Main -->
     <main id="main">
-      <!--SECTION SERVICES-->
       <section class="section">
         <div class="container stack reveal">
           <p class="eyebrow">Oferta</p>
@@ -106,7 +98,6 @@
             <button class="filter-chip" data-filter="adr">ADR</button>
             <button class="filter-chip" data-filter="chlodnia">Chłodnia</button>
           </div>
-
           <label for="priceRange">Maksymalna cena (PLN)</label>
           <input type="range" id="priceRange" min="1000" max="10000" step="500" value="10000" />
 
@@ -117,7 +108,6 @@
               PLN
             </strong>
           </p>
-
           <div class="filters">
             <label for="sort">Sortowanie</label>
             <select id="sort">
@@ -131,8 +121,6 @@
           <div id="services-list" class="grid grid-3" aria-live="polite"></div>
         </div>
       </section>
-
-      <!--SECTION TABS-->
       <section class="section">
         <div class="container reveal">
           <div class="tabs" data-tabs>
@@ -163,7 +151,7 @@
       </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="footer section">
       <div class="container footer__inner">
         <section class="footer__stats" aria-label="Kluczowe liczby TransLogix">
@@ -182,7 +170,6 @@
             </li>
           </ul>
         </section>
-
         <nav class="footer__nav" aria-label="Nawigacja w stopce">
           <div class="footer__grid">
             <div class="footer__column footer__brand">
@@ -194,7 +181,6 @@
                 TransLogix dostarcza nowoczesne rozwiązania transportowe 24/7 — real-time monitoring floty, przewozy krajowe i międzynarodowe oraz pełną transparentność operacyjną.
               </p>
             </div>
-
             <div class="footer__column">
               <h2 class="footer__title">Oferta</h2>
               <ul class="footer__list">
@@ -204,7 +190,6 @@
                 <li><a href="pricing.html">Cennik</a></li>
               </ul>
             </div>
-
             <div class="footer__column">
               <h2 class="footer__title">Wsparcie</h2>
               <ul class="footer__list">
@@ -213,7 +198,6 @@
                 <li><a href="contact.html#faq">FAQ</a></li>
               </ul>
             </div>
-
             <div class="footer__column">
               <h2 class="footer__title">Dane firmy</h2>
               <ul class="footer__list footer__list--meta">
@@ -225,31 +209,25 @@
             </div>
           </div>
         </nav>
-
         <div class="footer__social">
           <h2 class="footer__title">Social Media</h2>
-
           <nav class="footer__social-row" aria-label="Social media">
             <a href="#" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <img src="assets/img/svg/fb.svg" alt="" />
             </a>
-
             <a href="#" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <img src="assets/img/svg/insta.svg" alt="" />
             </a>
-
             <a href="#" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <img src="assets/img/svg/linktin.svg" alt="" />
             </a>
-
             <a href="#" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
               <img src="assets/img/svg/github.svg" alt="" />
             </a>
           </nav>
         </div>
-
         <div class="footer__bottom">
-          <p class="footer__bottom-text">© 2025 TransLogix – KP_Code_ Demo. Wszystkie prawa zastrzeżone.</p>
+          <p class="footer__bottom-text">© 2026 KP_Code Digital Studio. Wszelkie prawa zastrzeżone.</p>
           <ul class="footer__bottom-links">
             <li><a href="privacy.html">Polityka prywatności</a></li>
             <li><a href="terms.html">Regulamin serwisu</a></li>
@@ -258,7 +236,8 @@
         </div>
       </div>
     </footer>
-    <!--SCRIPT-->
+
+    <!-- Script -->
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

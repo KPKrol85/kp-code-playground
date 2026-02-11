@@ -4,12 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  background: var(--color-bg);
+}
+
 body {
   margin: 0;
   font-family: var(--font-base);
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
@@ -32,8 +37,8 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: none;
+  box-shadow: var(--ring);
 }
 
 .no-scroll {
@@ -51,48 +56,56 @@ textarea {
   z-index: 999;
   transition: left var(--transition);
 }
-
 .skip-link:focus {
   left: var(--space-2);
 }
 
-/* ===== 01 – TYPOGRAPHY ===== */
-
 @font-face {
   font-family: "Manrope";
-  src: local("Manrope Regular"), local("Manrope-Regular"), url("../fonts/manrope/Manrope-Regular.woff2") format("woff2");
+  src:
+    local("Manrope Regular"),
+    local("Manrope-Regular"),
+    url("../../fonts/manrope/Manrope-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Manrope";
-  src: local("Manrope Medium"), local("Manrope-Medium"), url("../fonts/manrope/Manrope-Medium.woff2") format("woff2");
+  src:
+    local("Manrope Medium"),
+    local("Manrope-Medium"),
+    url("../../fonts/manrope/Manrope-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Manrope";
-  src: local("Manrope SemiBold"), local("Manrope-SemiBold"), url("../fonts/manrope/Manrope-SemiBold.woff2") format("woff2");
+  src:
+    local("Manrope SemiBold"),
+    local("Manrope-SemiBold"),
+    url("../../fonts/manrope/Manrope-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Space Grotesk";
-  src: local("Space Grotesk SemiBold"), local("SpaceGrotesk-SemiBold"), url("../fonts/space-grotesk/SpaceGrotesk-SemiBold.woff2") format("woff2");
+  src:
+    local("Space Grotesk SemiBold"),
+    local("SpaceGrotesk-SemiBold"),
+    url("../../fonts/space-grotesk/SpaceGrotesk-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Space Grotesk";
-  src: local("Space Grotesk Bold"), local("SpaceGrotesk-Bold"), url("../fonts/space-grotesk/SpaceGrotesk-Bold.woff2") format("woff2");
+  src:
+    local("Space Grotesk Bold"),
+    local("SpaceGrotesk-Bold"),
+    url("../../fonts/space-grotesk/SpaceGrotesk-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -125,6 +138,6 @@ p {
 }
 
 .lead {
-  font-size: 1.1rem;
+  font-size: var(--fs-md);
   color: var(--color-muted);
 }
