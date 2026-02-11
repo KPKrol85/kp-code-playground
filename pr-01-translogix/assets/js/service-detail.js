@@ -17,7 +17,7 @@ export async function initServiceDetail() {
   const wrapper = document.getElementById("service-detail");
   if (!wrapper) return;
 
-  const titleEl = document.getElementById("service-title");
+  const titleEl = document.querySelector("[data-role=\"service-title\"]") || document.getElementById("service-title");
   const breadcrumbCurrentEl = document.getElementById("service-breadcrumb-current");
   const descriptionEl = document.getElementById("service-description");
   const routeEl = document.getElementById("service-route");
