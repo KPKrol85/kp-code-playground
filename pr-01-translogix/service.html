@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <script>document.documentElement.classList.add("js");</script>
+    <script src="assets/js/boot.js" defer></script>
     <title>Szczegóły usługi transportowej | TransLogix – KP_Code_ Demo</title>
     <meta name="description" content="Szczegółowe informacje o usłudze transportowej TransLogix. Zakres realizacji, parametry przewozu, czas dostawy, dostępne opcje i szybka wycena online." />
     <meta name="author" content="KP_Code_" />
@@ -48,26 +48,7 @@
     <meta name="twitter:image" content="https://transport-project-01.netlify.app/assets/img/og-img/og-1200x630.jpg" />
 
     <!-- JSON-LD – ServicePage -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Usługa transportowa – TransLogix",
-        "description": "Strona szczegółów usługi transportowej TransLogix: zakres, opcje realizacji i parametry przewozu.",
-        "provider": {
-          "@type": "Organization",
-          "name": "TransLogix",
-          "url": "https://transport-project-01.netlify.app/",
-          "logo": "https://transport-project-01.netlify.app/assets/img/brand/logo-translogix.svg"
-        },
-        "areaServed": "EU",
-        "availableChannel": {
-          "@type": "ServiceChannel",
-          "servicePhone": "+48-500-000-000",
-          "serviceUrl": "https://transport-project-01.netlify.app/contact.html"
-        }
-      }
-    </script>
+    <script type="application/ld+json" src="assets/data/jsonld/service.json"></script>
   </head>
 
   <!-- BODY -->
