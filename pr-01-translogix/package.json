@@ -8,7 +8,8 @@
   "scripts": {
     "css:min": "postcss assets/css/style.css -o assets/css/style.min.css",
     "css:watch": "postcss assets/css/style.css -o assets/css/style.min.css --watch",
-    "build": "npm run css:min"
+    "build": "npm run css:min",
+    "verify:assets": "node scripts/verify-assets.js"
   },
   "devDependencies": {
     "cssnano": "^7.1.2",
