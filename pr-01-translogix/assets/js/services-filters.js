@@ -13,6 +13,19 @@ function saveState(state) {
   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  try {
+    return await response.json();
+  } catch {
+    throw new Error("Invalid JSON");
+  }
+}
+
 function renderServices(services, container) {
   container.innerHTML = "";
   services.forEach((service) => {
@@ -63,8 +76,15 @@ export async function initServicesFilters() {
   const countEl = document.getElementById("results-count");
   if (!container || !chips.length) return;
 
-  const response = await fetch("assets/data/services.json");
-  const allServices = await response.json();
+  let allServices = [];
+  try {
+    allServices = await fetchJson("assets/data/services.json");
+  } catch (error) {
+    console.error("Failed to load services list.", error);
+    container.innerHTML = '<p class="text-muted">Unable to load services. Please try again.</p>';
+    if (countEl) countEl.textContent = "Unable to load services.";
+    return;
+  }
   const params = new URLSearchParams(window.location.search);
   const urlFilter = params.get("filter");
   let state = { filter: "all", price: Number(priceRange?.value) || 10000, sort: "none", ...loadState() };

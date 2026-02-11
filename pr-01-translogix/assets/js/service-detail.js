@@ -1,4 +1,18 @@
 // Enhances static service detail fallback with data from JSON based on URL params
+
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  try {
+    return await response.json();
+  } catch {
+    throw new Error("Invalid JSON");
+  }
+}
+
 export async function initServiceDetail() {
   const wrapper = document.getElementById("service-detail");
   if (!wrapper) return;
@@ -25,10 +39,7 @@ export async function initServiceDetail() {
   if (!slugParam && !idParamRaw) return;
 
   try {
-    const response = await fetch("assets/data/services.json");
-    if (!response.ok) return;
-
-    const services = await response.json();
+    const services = await fetchJson("assets/data/services.json");
     const service = services.find((item) => {
       if (slugParam) return item.slug === slugParam;
       return Number.isFinite(idParam) && item.id === idParam;
@@ -68,7 +79,15 @@ export async function initServiceDetail() {
         audienceEl.appendChild(li);
       });
     }
-  } catch {
-    // Keep static fallback visible when data cannot be loaded.
+  } catch (error) {
+    console.error("Failed to enhance service detail.", error);
+
+    if (!wrapper.querySelector("[data-service-error]")) {
+      const errorEl = document.createElement("p");
+      errorEl.className = "text-muted";
+      errorEl.dataset.serviceError = "true";
+      errorEl.textContent = "Unable to load service details. Showing fallback content.";
+      wrapper.appendChild(errorEl);
+    }
   }
 }
