@@ -2,9 +2,17 @@
 const validators = {
   required: (value) => value.trim().length > 0,
   email: (value) => /\S+@\S+\.\S+/.test(value),
-  tel: (value) => /^[\\d+()\\s-]{6,}$/.test(value),
+  tel: (value) => /^\+[1-9]\d{1,14}$/.test(normalizePhone(value)),
   number: (value) => !Number.isNaN(Number(value)) && Number(value) > 0,
 };
+
+function normalizePhone(value) {
+  return value
+    .trim()
+    .replace(/[\s().-]/g, "")
+    .replace(/(?!^)\+/g, "")
+    .replace(/[^\d+]/g, "");
+}
 
 const quoteHistory = [];
 
@@ -41,7 +49,7 @@ function validateField(input) {
 
   // 3. Telefon
   if (type === "tel" && value && !validators.tel(value)) {
-    showError(input, "Podaj prawidłowy numer telefonu.");
+    showError(input, "Use international format, e.g. +48123456789");
     return false;
   }
 
