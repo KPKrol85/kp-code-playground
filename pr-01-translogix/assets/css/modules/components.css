@@ -103,6 +103,16 @@ html.theme-dark .nav__links a[aria-current="page"] {
   background: var(--color-surface);
   cursor: pointer;
 }
+
+.nav__toggle:focus-visible,
+.nav__links a:focus-visible,
+.theme-toggle:focus-visible,
+.header-actions .btn:focus-visible,
+.fleet-card__icon .lightbox-trigger:focus-visible {
+  outline: 2px solid var(--color-accent-strong);
+  outline-offset: 3px;
+}
+
 .nav__toggle span {
   width: 20px;
   height: 2px;
