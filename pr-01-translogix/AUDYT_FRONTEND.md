@@ -95,7 +95,7 @@
    - **Wartość:** kontrola regresji funkcjonalnych przed wdrożeniem.
 
 5. **Uspójnić nazewnictwo i literówki w assetach SVG/tekście.**
-   - **Miejsce:** np. `assets/img/svg/linktin.svg`.
+   - **Miejsce:** np. `assets/img/svg/linkedin.svg`.
    - **Wartość:** czytelność i mniejsze ryzyko pomyłek w utrzymaniu.
 
 ---
