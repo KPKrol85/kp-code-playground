@@ -125,17 +125,17 @@ export function initLightbox() {
       .map((item) => {
         if (item.avif && item.webp && item.jpg) {
           return `
-          <picture class="lightbox__thumb">
+          <button type="button" class="lightbox__thumb" aria-label="Powiększ zdjęcie"><picture>
             <source srcset="${item.avif}" type="image/avif">
             <source srcset="${item.webp}" type="image/webp">
             <img src="${item.jpg}" alt="${item.alt || ""}" title="Powiększ zdjęcie" loading="lazy">
-          </picture>
+          </picture></button>
         `;
         }
         return `
-        <picture class="lightbox__thumb">
+        <button type="button" class="lightbox__thumb" aria-label="Powiększ zdjęcie"><picture>
           <img src="${item.src}" alt="${item.alt || ""}" title="Powiększ zdjęcie" loading="lazy">
-        </picture>
+        </picture></button>
       `;
       })
       .join("");
@@ -202,6 +202,15 @@ export function initLightbox() {
     if (!thumb) return null;
     return thumb.querySelector("img");
   };
+
+
+  grid.addEventListener("click", (e) => {
+    const trigger = e.target.closest(".lightbox__thumb");
+    if (!trigger) return;
+    const img = trigger.querySelector("img");
+    if (!img) return;
+    openZoom(img.currentSrc || img.src, img.alt || "");
+  });
 
   grid.addEventListener("dblclick", (e) => {
     const img = getThumbImg(e.target);
