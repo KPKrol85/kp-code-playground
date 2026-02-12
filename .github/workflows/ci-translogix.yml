@@ -1,0 +1,115 @@
+name: CI TransLogix
+
+on:
+  push:
+    paths:
+      - 'pr-01-translogix/**'
+      - '.github/workflows/ci-translogix.yml'
+  pull_request:
+    paths:
+      - 'pr-01-translogix/**'
+      - '.github/workflows/ci-translogix.yml'
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pr-01-translogix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: pr-01-translogix/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+
+  build:
+    runs-on: ubuntu-latest
+    needs: install
+    defaults:
+      run:
+        working-directory: pr-01-translogix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: pr-01-translogix/package-lock.json
+      - run: npm ci
+      - name: Build CSS + HTML
+        run: npm run build
+
+  html_validation:
+    runs-on: ubuntu-latest
+    needs: build
+    defaults:
+      run:
+        working-directory: pr-01-translogix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: pr-01-translogix/package-lock.json
+      - run: npm ci
+      - name: Validate HTML
+        run: npm run check:html
+
+  links_assets_smoke:
+    runs-on: ubuntu-latest
+    needs: html_validation
+    defaults:
+      run:
+        working-directory: pr-01-translogix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: pr-01-translogix/package-lock.json
+      - run: npm ci
+      - name: Link/asset smoke check (internal only)
+        run: npm run check:links
+
+  e2e_smoke:
+    runs-on: ubuntu-latest
+    needs: links_assets_smoke
+    defaults:
+      run:
+        working-directory: pr-01-translogix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: pr-01-translogix/package-lock.json
+      - run: npm ci
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: Run E2E smoke
+        run: npm run test:e2e
+
+  lhci_mobile:
+    runs-on: ubuntu-latest
+    needs: e2e_smoke
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: pr-01-translogix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: pr-01-translogix/package-lock.json
+      - run: npm ci
+      - name: Lighthouse CI (soft gate)
+        run: npm run lhci
