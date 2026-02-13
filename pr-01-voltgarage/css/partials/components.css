@@ -473,6 +473,75 @@ main p,
 .products {
   position: relative;
   z-index: 1;
+  min-height: clamp(720px, 100vh, 980px);
+}
+
+.products--loading {
+  align-content: start;
+}
+
+.card--skeleton {
+  pointer-events: none;
+}
+
+.card--skeleton :is(.card-skeleton__media, .card-skeleton__badge, .card-skeleton__title, .card-skeleton__text, .card-skeleton__meta, .card-skeleton__actions) {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-surface-alt) 72%, var(--color-border)) 25%,
+    color-mix(in srgb, var(--color-surface) 84%, white) 50%,
+    color-mix(in srgb, var(--color-surface-alt) 72%, var(--color-border)) 75%
+  );
+  background-size: 220% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.card-skeleton__media {
+  aspect-ratio: 4 / 3;
+}
+
+.card-skeleton__badge {
+  width: 46%;
+  height: 24px;
+  margin: 0 auto;
+  border-radius: var(--radius-pill);
+}
+
+.card-skeleton__title {
+  height: 20px;
+  width: 76%;
+  margin: 0 auto;
+}
+
+.card-skeleton__text {
+  height: 16px;
+  width: 100%;
+}
+
+.card-skeleton__meta {
+  height: 16px;
+  width: 65%;
+}
+
+.card-skeleton__actions {
+  height: 40px;
+  width: 100%;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .products {
+    min-height: clamp(1320px, 210vh, 1680px);
+  }
 }
 
 .search-input {
