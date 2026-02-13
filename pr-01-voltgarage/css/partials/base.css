@@ -136,6 +136,25 @@ html.reveal-ready [data-reveal].is-visible {
   html {
     scroll-behavior: auto;
   }
+
+  :where(
+      button,
+      [type='button'],
+      [type='submit'],
+      [type='reset'],
+      .btn,
+      .cart-link,
+      .category-pill,
+      .theme-toggle,
+      .search-option,
+      .search-clear,
+      a
+    ) {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+
   [data-reveal] {
     transition: none;
     transform: none;
