@@ -245,13 +245,8 @@
                   id="filter-search"
                   name="search"
                   placeholder="Szukaj produktu&hellip;"
+                  list="search-suggestions"
                   autocomplete="off"
-                  role="combobox"
-                  aria-controls="search-suggestions"
-                  aria-expanded="false"
-                  aria-autocomplete="list"
-                  aria-haspopup="listbox"
-                  
                   data-search-input
                 />
                 <button
@@ -264,14 +259,12 @@
                   ×
                 </button>
               </div>
-              <div
+              <datalist
                 class="search-suggestions"
                 id="search-suggestions"
                 data-search-suggestions
-                hidden
                 aria-live="polite"
-                role="listbox"
-              ></div>
+              ></datalist>
             </div>
             <div class="input-group">
               <label for="filter-category">Kategoria</label>

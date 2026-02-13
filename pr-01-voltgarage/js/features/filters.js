@@ -57,48 +57,10 @@ export const initFilters = async () => {
     return folded.replace(/\s+/g, ' ').trim();
   };
 
-  const buildFoldedMap = (value = '') => {
-    let folded = '';
-    const map = [];
-    for (let i = 0; i < value.length; i += 1) {
-      const foldedChar = foldChar(value[i]);
-      if (!foldedChar) continue;
-      if (foldedChar === ' ') {
-        if (folded.endsWith(' ')) continue;
-        folded += ' ';
-        map.push(i);
-        continue;
-      }
-      folded += foldedChar;
-      map.push(i);
-    }
-    while (folded.startsWith(' ')) {
-      folded = folded.slice(1);
-      map.shift();
-    }
-    while (folded.endsWith(' ')) {
-      folded = folded.slice(0, -1);
-      map.pop();
-    }
-    return { folded, map };
-  };
 
   const escapeHtml = (value) =>
     value.replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[char]);
 
-  const highlightMatch = (value, query) => {
-    const foldedQuery = foldText(query);
-    if (!foldedQuery) return escapeHtml(value);
-    const { folded, map } = buildFoldedMap(value);
-    const index = folded.indexOf(foldedQuery);
-    if (index === -1 || !map.length) return escapeHtml(value);
-    const start = map[index];
-    const end = map[index + foldedQuery.length - 1] + 1;
-    const before = escapeHtml(value.slice(0, start));
-    const match = escapeHtml(value.slice(start, end));
-    const after = escapeHtml(value.slice(end));
-    return `${before}<mark>${match}</mark>${after}`;
-  };
 
   const buildSearchText = (product) =>
     [product.name, product.category, product.badge, ...(product.tags || [])].filter(Boolean).join(' ');
@@ -142,35 +104,12 @@ export const initFilters = async () => {
   };
 
   const state = {
-    query: '',
-    activeIndex: -1,
-    suggestions: []
+    query: ''
   };
 
   const clearSuggestions = () => {
-    if (!suggestions || !searchInput) return;
+    if (!suggestions) return;
     suggestions.innerHTML = '';
-    suggestions.hidden = true;
-    searchInput.setAttribute('aria-expanded', 'false');
-    searchInput.removeAttribute('aria-activedescendant');
-    state.activeIndex = -1;
-  };
-
-  const setActiveIndex = (nextIndex) => {
-    if (!suggestions || !searchInput) return;
-    const options = Array.from(suggestions.querySelectorAll('[data-search-option]'));
-    if (!options.length) return;
-    const maxIndex = options.length - 1;
-    const safeIndex = Math.max(0, Math.min(nextIndex, maxIndex));
-    state.activeIndex = safeIndex;
-    options.forEach((option, index) => {
-      const isActive = index === safeIndex;
-      option.classList.toggle('is-active', isActive);
-      option.setAttribute('aria-selected', String(isActive));
-      if (isActive) {
-        searchInput.setAttribute('aria-activedescendant', option.id);
-      }
-    });
   };
 
   const renderSuggestions = (query) => {
@@ -189,8 +128,6 @@ export const initFilters = async () => {
       .sort((a, b) => b.score - a.score || a.product.name.localeCompare(b.product.name))
       .slice(0, 8);
 
-    state.suggestions = scored;
-    state.activeIndex = -1;
 
     if (!scored.length) {
       clearSuggestions();
@@ -198,17 +135,8 @@ export const initFilters = async () => {
     }
 
     suggestions.innerHTML = scored
-      .map((entry, index) => {
-        const name = entry.product.name;
-        return `<div class="search-option" role="option" id="search-option-${index}" data-search-option data-index="${index}" aria-selected="false" tabindex="-1">${highlightMatch(
-          name,
-          query
-        )}</div>`;
-      })
+      .map((entry) => `<option value="${escapeHtml(entry.product.name)}"></option>` )
       .join('');
-
-    suggestions.hidden = false;
-    searchInput.setAttribute('aria-expanded', 'true');
   };
 
   const applyFilters = () => {
@@ -264,58 +192,15 @@ export const initFilters = async () => {
       renderSuggestions(state.query);
       applyFiltersDebounced();
     });
-
-    searchInput.addEventListener('keydown', (event) => {
-      if (!state.suggestions.length) return;
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        setActiveIndex(state.activeIndex + 1);
-      }
-      if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        setActiveIndex(state.activeIndex - 1);
-      }
-      if (event.key === 'Enter' && state.activeIndex >= 0) {
-        event.preventDefault();
-        const selected = state.suggestions[state.activeIndex];
-        if (selected) {
-          searchInput.value = selected.product.name;
-          state.query = searchInput.value;
-          if (searchClear) {
-            searchClear.hidden = false;
-          }
-          clearSuggestions();
-          applyFilters();
-        }
-      }
-      if (event.key === 'Escape') {
-        clearSuggestions();
-      }
-    });
   }
 
-  if (suggestions) {
-    suggestions.addEventListener('click', (event) => {
-      const option = event.target.closest('[data-search-option]');
-      if (!option || !searchInput) return;
-      const index = Number(option.dataset.index);
-      const selected = state.suggestions[index];
-      if (!selected) return;
-      searchInput.value = selected.product.name;
+  if (searchInput) {
+    searchInput.addEventListener('change', () => {
       state.query = searchInput.value;
       if (searchClear) {
-        searchClear.hidden = false;
+        searchClear.hidden = !state.query;
       }
-      clearSuggestions();
       applyFilters();
-    });
-
-    suggestions.addEventListener('mousemove', (event) => {
-      const option = event.target.closest('[data-search-option]');
-      if (!option) return;
-      const index = Number(option.dataset.index);
-      if (Number.isNaN(index)) return;
-      setActiveIndex(index);
     });
   }
 
