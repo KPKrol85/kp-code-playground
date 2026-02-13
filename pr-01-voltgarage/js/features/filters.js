@@ -1,5 +1,5 @@
 import { fetchProducts } from '../services/products.js';
-import { renderGrid } from './products.js';
+import { renderGrid, renderProductsLoading } from './products.js';
 import { renderState } from '../ui/state.js';
 import { logError } from '../core/errors.js';
 
@@ -17,7 +17,7 @@ export const initFilters = async () => {
   const suggestions = document.querySelector('[data-search-suggestions]');
   const searchField = document.querySelector('[data-search]');
 
-  renderState(container, 'loading', 'Ładowanie produktów...');
+  renderProductsLoading(container, 'Ładowanie produktów...');
 
   let products = [];
   try {
