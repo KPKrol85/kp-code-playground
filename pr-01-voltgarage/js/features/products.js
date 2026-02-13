@@ -56,12 +56,14 @@ const renderCard = (product) => `
     <h3 class="card-title">${product.name}</h3>
     <p>${product.description}</p>
     <div class="card-meta">
-      <span class="price">${formatPrice(product.price)}</span>
-      <span>${product.category}</span>
+      <span class="card-category">${product.category}</span>
     </div>
-    <div class="tag-list">
-      <a class="btn btn-outline" href="${productLink(product.id)}">Szczegóły</a>
-      <button class="btn btn-accent" type="button" data-add-to-cart data-product-id="${product.id}">Dodaj</button>
+    <div class="card-purchase">
+      <span class="price">${formatPrice(product.price)}</span>
+      <div class="tag-list">
+        <button class="btn btn-accent" type="button" data-add-to-cart data-product-id="${product.id}">Dodaj do koszyka</button>
+        <a class="btn btn-outline" href="${productLink(product.id)}">Szczegóły</a>
+      </div>
     </div>
   </article>
 `;
@@ -76,13 +78,17 @@ const renderSaleCard = (product) => {
     <h3 class="card-title">${product.name}</h3>
     <p>${product.description}</p>
     <div class="card-meta">
-      <span class="price price-old">${formatPrice(oldPrice)}</span>
-      <span class="price price-new">${formatPrice(product.price)}</span>
-      <span>${product.category}</span>
+      <span class="card-category">${product.category}</span>
     </div>
-    <div class="tag-list">
-      <a class="btn btn-outline" href="${productLink(product.id)}">Szczegóły</a>
-      <button class="btn btn-accent" type="button" data-add-to-cart data-product-id="${product.id}">Dodaj</button>
+    <div class="card-purchase">
+      <div class="card-price-stack">
+        <span class="price price-old">${formatPrice(oldPrice)}</span>
+        <span class="price price-new">${formatPrice(product.price)}</span>
+      </div>
+      <div class="tag-list">
+        <button class="btn btn-accent" type="button" data-add-to-cart data-product-id="${product.id}">Dodaj do koszyka</button>
+        <a class="btn btn-outline" href="${productLink(product.id)}">Szczegóły</a>
+      </div>
     </div>
   </article>
 `;
