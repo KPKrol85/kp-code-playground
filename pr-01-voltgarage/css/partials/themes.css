@@ -70,33 +70,35 @@
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Manrope', sans-serif;
 
-  --fs-0: 0.625rem;
-  --fs-1: 0.75rem;
-  --fs-2: 0.875rem;
-  --fs-3: 1rem;
-  --fs-4: 1.125rem;
-  --fs-5: 1.25rem;
-  --fs-6: 1.5rem;
-  --fs-7: 2rem;
-  --fs-8: 3rem;
+  --fs-01: clamp(0.625rem, 0.6rem + 0.1vw, 0.75rem);
+  --fs-02: clamp(0.75rem, 0.72rem + 0.15vw, 0.875rem);
+  --fs-03: clamp(0.875rem, 0.84rem + 0.2vw, 1rem);
+  --fs-04: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+  --fs-05: clamp(1.125rem, 1.06rem + 0.35vw, 1.25rem);
+  --fs-06: clamp(1.25rem, 1.14rem + 0.5vw, 1.5rem);
+  --fs-07: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --fs-08: clamp(2rem, 1.5rem + 2vw, 3rem);
 
   --fs-display: clamp(2.5rem, 5vw, 3rem);
   --fs-h1: clamp(2rem, 4vw, 2.5rem);
   --fs-h2: clamp(1.5rem, 3vw, 2rem);
 
-  --space-1: 0.25rem; /* 4px  */
-  --space-2: 0.5rem; /* 8px  */
-  --space-3: 0.75rem; /* 12px */
-  --space-4: 1rem; /* 16px */
-  --space-5: 1.5rem; /* 24px */
-  --space-6: 2rem; /* 32px */
-  --space-7: 3rem; /* 48px */
-  --space-8: 4rem; /* 64px */
+  --space-01: 0.25rem;
+  --space-02: 0.5rem;
+  --space-03: 0.75rem;
+  --space-04: 1rem;
+  --space-05: 1.25rem;
+  --space-06: 1.5rem;
+  --space-07: 2rem;
+  --space-08: 2.5rem;
+  --space-09: 3rem;
+  --space-10: 4rem;
 
-  --radius-xs: 8px;
   --radius-sm: 12px;
   --radius-md: 18px;
   --radius-lg: 28px;
+  --radius-xl: 40px;
+  --radius-pill: 999px;
 
   --shadow-sm: 0 8px 24px rgba(14, 19, 28, 0.08);
   --shadow-md: 0 16px 48px rgba(14, 19, 28, 0.14);
@@ -116,18 +118,23 @@
 
 :root,
 [data-theme='light'] {
+  --color-text: #10131a;
   --color-bg: #f4f6f8;
   --color-surface: #ffffff;
   --color-surface-alt: #e9edf1;
 
-  --color-ink: #10131a;
-  --color-ink-muted: #4b5565;
+  --color-muted: #4b5565;
+  --color-primary: #ff5d2d;
+
+  --color-ink: var(--color-text);
+  --color-ink-muted: var(--color-muted);
 
   --color-border: #d5dbe4;
   --color-border-strong: color-mix(in srgb, var(--color-border) 60%, var(--color-ink));
 
-  --color-accent: #ff5d2d;
+  --color-accent: var(--color-primary);
   --color-accent-2: #ffb347;
+  --color-danger: #f87171;
 
   --color-card: #fdfdfd;
 
@@ -155,18 +162,23 @@
 /* === 04 - Dark theme tokens === */
 
 [data-theme='dark'] {
+  --color-text: #f5f7fb;
   --color-bg: #0c0f14;
   --color-surface: #151a22;
   --color-surface-alt: #1d2330;
 
-  --color-ink: #f5f7fb;
-  --color-ink-muted: #9aa7bb;
+  --color-muted: #9aa7bb;
+  --color-primary: #ff6a3d;
+
+  --color-ink: var(--color-text);
+  --color-ink-muted: var(--color-muted);
 
   --color-border: #2a3242;
   --color-border-strong: color-mix(in srgb, var(--color-border) 65%, var(--color-ink));
 
-  --color-accent: #ff6a3d;
+  --color-accent: var(--color-primary);
   --color-accent-2: #ffb347;
+  --color-danger: #f87171;
 
   --color-card: #131821;
 
