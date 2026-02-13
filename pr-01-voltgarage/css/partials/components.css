@@ -267,6 +267,16 @@
   margin-right: var(--space-02);
 }
 
+.card .product-info__trust-list {
+  list-style: disc;
+  margin: var(--space-03) 0 0;
+  padding-left: var(--space-05);
+  color: var(--color-ink-muted);
+  font-size: var(--fs-01);
+  display: grid;
+  gap: var(--space-02);
+}
+
 @media (hover: hover) {
   .card {
     transition:

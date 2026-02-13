@@ -273,6 +273,11 @@ export const initProductDetails = async () => {
             </select>
           </label>
           <button class="btn btn-accent" type="button" data-add-to-cart data-product-id="${product.id}">Dodaj do koszyka</button>
+          <ul class="product-info__trust-list" aria-label="Informacje zakupowe">
+            <li>Wysyłka 24–48h</li>
+            <li>Zwrot 14 dni</li>
+            <li>Pomoc w dopasowaniu</li>
+          </ul>
         </div>
       </div>
     `;
