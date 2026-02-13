@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Interactive Hero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero__bg" aria-hidden="true">
+        <span class="hero__gradient hero__gradient--one"></span>
+        <span class="hero__gradient hero__gradient--two"></span>
+        <span class="hero__grid"></span>
+      </div>
+
+      <div class="hero__parallax" aria-hidden="true">
+        <div class="hero__layer hero__layer--front" data-depth="18"></div>
+        <div class="hero__layer hero__layer--middle" data-depth="12"></div>
+        <div class="hero__layer hero__layer--back" data-depth="8"></div>
+      </div>
+
+      <section class="hero__content">
+        <p class="hero__eyebrow">Built with vanilla JavaScript</p>
+        <h1 class="hero__title" id="hero-title">Create immersive experiences that feel alive.</h1>
+        <p class="hero__description">
+          High-performance parallax, cinematic gradients, and accessible motion preferences — delivered in a clean BEM architecture.
+        </p>
+        <div class="hero__actions">
+          <a class="hero__button hero__button--primary" href="#">Start Building</a>
+          <a class="hero__button hero__button--ghost" href="#">See Demo</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
