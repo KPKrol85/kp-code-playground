@@ -51,9 +51,6 @@ main {
   display: block;
 }
 
-section {
-  padding: 72px 0;
-}
 
 /* === 03 - Typography === */
 
@@ -66,10 +63,6 @@ h4 {
   margin: 0 0 var(--space-03);
 }
 
-p {
-  margin: 0 0 var(--space-04);
-  color: var(--color-ink-muted);
-}
 
 ul {
   margin: 0;
