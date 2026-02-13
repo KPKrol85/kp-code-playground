@@ -1137,3 +1137,15 @@ main p,
     grid-template-columns: 1fr;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn-outline:hover,
+  .btn-accent:hover,
+  [data-checkout-form] .btn-accent:hover,
+  .card:hover picture img,
+  .category-pill:hover,
+  .cart-link:active {
+    transform: none;
+  }
+}
