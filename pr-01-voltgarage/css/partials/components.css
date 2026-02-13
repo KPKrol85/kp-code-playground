@@ -129,9 +129,7 @@
   box-shadow: var(--shadow-sm);
   display: grid;
   gap: 14px;
-  .card {
-    height: 100%;
-  }
+  height: 100%;
 }
 
 .card .tag-list {

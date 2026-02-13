@@ -517,15 +517,17 @@
 
 /* === 04 - Grid layouts === */
 
-.grid-3 {
+.grid,
+:is(.grid-3, .grid-4) {
   display: grid;
   gap: var(--space-05);
+}
+
+.grid-3 {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .grid-4 {
-  display: grid;
-  gap: var(--space-05);
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
