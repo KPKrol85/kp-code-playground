@@ -109,58 +109,60 @@
 
           <span class="brand-text">VOLT GARAGE</span>
         </a>
-        <nav class="nav" id="primary-nav" role="navigation" aria-label="Główne">
-          <a href="../index.html">Strona główna</a>
-          <div class="nav-item" data-dropdown>
-            <button
-              class="nav-button"
-              type="button"
-              aria-haspopup="menu"
-              aria-expanded="false"
-              data-dropdown-toggle
-            >
-              Sklep
-            </button>
-            <div class="dropdown-menu" role="menu" data-dropdown-menu>
-              <a role="menuitem" href="shop.html">Wszystkie produkty</a>
-              <a role="menuitem" href="nowosci.html">Nowości</a>
-              <a role="menuitem" href="product.html">Produkt</a>
-              <a role="menuitem" href="kolekcje.html">Kolekcje / Kategorie</a>
-              <a role="menuitem" href="promocje.html">Promocje</a>
-            </div>
-          </div>
-                    <div class="nav-item" data-dropdown>
-            <button
-              class="nav-button"
-              type="button"
-              aria-haspopup="menu"
-              aria-expanded="false"
-              data-dropdown-toggle
-            >
-              Kontakt
-            </button>
-            <div class="dropdown-menu" role="menu" data-dropdown-menu>
-              <a role="menuitem" href="contact.html">Formularz</a>
-              <a role="menuitem" href="checkout.html" aria-current="page">Dostawa</a>
-              <a role="menuitem" href="cart.html">Zwroty</a>
-            </div>
-          </div>
-          <div class="nav-item" data-dropdown>
-            <button
-              class="nav-button"
-              type="button"
-              aria-haspopup="menu"
-              aria-expanded="false"
-              data-dropdown-toggle
-            >
-              Informacje
-            </button>
-            <div class="dropdown-menu" role="menu" data-dropdown-menu>
-              <a role="menuitem" href="polityka-prywatnosci.html">Polityka prywatności</a>
-              <a role="menuitem" href="cookies.html">Cookies</a>
-              <a role="menuitem" href="regulamin.html">Regulamin</a>
-            </div>
-          </div>
+        <nav aria-label="Główne">
+          <ul class="nav" id="primary-nav">
+            <li class="nav-item"><a href="../index.html">Strona główna</a></li>
+            <li class="nav-item" data-dropdown>
+              <button
+                class="nav-button"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-dropdown-toggle
+              >
+                Sklep
+              </button>
+              <ul class="dropdown-menu" data-dropdown-menu>
+                <li><a class="dropdown-subitem" href="shop.html">Wszystkie produkty</a></li>
+                <li><a class="dropdown-subitem" href="nowosci.html">Nowości</a></li>
+                <li><a class="dropdown-subitem" href="product.html">Produkt</a></li>
+                <li><a class="dropdown-subitem" href="kolekcje.html">Kolekcje / Kategorie</a></li>
+                <li><a class="dropdown-subitem" href="promocje.html">Promocje</a></li>
+              </ul>
+            </li>
+            <li class="nav-item" data-dropdown>
+              <button
+                class="nav-button"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-dropdown-toggle
+              >
+                Kontakt
+              </button>
+              <ul class="dropdown-menu" data-dropdown-menu>
+                <li><a class="dropdown-subitem" href="contact.html">Formularz</a></li>
+                <li><a class="dropdown-subitem" href="checkout.html">Dostawa</a></li>
+                <li><a class="dropdown-subitem" href="cart.html">Zwroty</a></li>
+              </ul>
+            </li>
+            <li class="nav-item" data-dropdown>
+              <button
+                class="nav-button"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-dropdown-toggle
+              >
+                Informacje
+              </button>
+              <ul class="dropdown-menu" data-dropdown-menu>
+                <li><a class="dropdown-subitem" href="polityka-prywatnosci.html">Polityka prywatności</a></li>
+                <li><a class="dropdown-subitem" href="cookies.html">Cookies</a></li>
+                <li><a class="dropdown-subitem" href="regulamin.html">Regulamin</a></li>
+              </ul>
+            </li>
+          </ul>
         </nav>
         <div class="header-actions">
           <button
