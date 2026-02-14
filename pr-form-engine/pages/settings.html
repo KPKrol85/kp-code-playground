@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings Demo | PR Form Engine</title>
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/components.css" />
+    <link rel="stylesheet" href="../assets/css/forms.css" />
+  </head>
+  <body>
+    <main>
+      <header class="site-header">
+        <h1>Settings Demo</h1>
+        <nav class="page-nav" aria-label="Demo pages">
+          <a href="../index.html">Overview</a>
+          <a href="contact.html">Contact</a>
+          <a href="subscription.html">Subscription</a>
+          <a href="settings.html" aria-current="page">Settings</a>
+        </nav>
+      </header>
+
+      <form id="settingsForm" class="form-shell form-layout" data-form-engine novalidate>
+        <div class="error-summary" data-error-summary hidden tabindex="-1"></div>
+
+        <div class="field-group">
+          <label class="field-label" for="displayName">Display name <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="displayName" name="displayName" type="text" required />
+          <p class="field-hint">Type “error” to simulate server failure.</p>
+          <p class="field-error" data-error-for="displayName"></p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="bio">Bio</label>
+          <textarea id="bio" name="bio"></textarea>
+          <p class="field-hint">Optional, up to 160 characters.</p>
+          <p class="field-error" data-error-for="bio"></p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="theme">Theme</label>
+          <select id="theme" name="theme">
+            <option value="dark">Dark</option>
+            <option value="system">System</option>
+            <option value="light">Light</option>
+          </select>
+          <p class="field-hint">Token-driven styles adapt this selection in real products.</p>
+          <p class="field-error" data-error-for="theme"></p>
+        </div>
+
+        <fieldset class="form-fieldset field-group">
+          <legend class="field-label">Profile visibility <span class="required-indicator" aria-hidden="true">*</span></legend>
+          <div class="radio-group" role="radiogroup" aria-label="Profile visibility">
+            <label class="radio-row"><input id="visibility-public" type="radio" name="visibility" value="public" /> Public</label>
+            <label class="radio-row"><input id="visibility-team" type="radio" name="visibility" value="team" /> Team only</label>
+            <label class="radio-row"><input id="visibility-private" type="radio" name="visibility" value="private" /> Private</label>
+          </div>
+          <p class="field-hint">Exactly one option must be selected.</p>
+          <p class="field-error" data-error-for="visibility"></p>
+        </fieldset>
+
+        <div class="status-region" data-form-status aria-live="polite"></div>
+        <div class="form-actions">
+          <button type="submit">Save settings</button>
+          <button type="button" class="secondary" data-retry hidden>Retry</button>
+        </div>
+      </form>
+    </main>
+
+    <script type="module" src="../assets/js/app.js"></script>
+  </body>
+</html>

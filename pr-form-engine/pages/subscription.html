@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscription Demo | PR Form Engine</title>
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/components.css" />
+    <link rel="stylesheet" href="../assets/css/forms.css" />
+  </head>
+  <body>
+    <main>
+      <header class="site-header">
+        <h1>Subscription Demo</h1>
+        <nav class="page-nav" aria-label="Demo pages">
+          <a href="../index.html">Overview</a>
+          <a href="contact.html">Contact</a>
+          <a href="subscription.html" aria-current="page">Subscription</a>
+          <a href="settings.html">Settings</a>
+        </nav>
+      </header>
+
+      <form id="subscriptionForm" class="form-shell form-layout" data-form-engine novalidate>
+        <div class="error-summary" data-error-summary hidden tabindex="-1"></div>
+
+        <div class="field-group">
+          <label class="field-label" for="email">Email <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" required />
+          <p class="field-hint">Primary destination for product updates.</p>
+          <p class="field-error" data-error-for="email"></p>
+        </div>
+
+        <fieldset class="form-fieldset field-group">
+          <legend class="field-label">Plan tier <span class="required-indicator" aria-hidden="true">*</span></legend>
+          <div class="radio-group" role="radiogroup" aria-label="Plan tier">
+            <label class="radio-row radio-option"><input id="plan-starter" type="radio" name="plan" value="starter" /> Starter</label>
+            <label class="radio-row radio-option"><input id="plan-growth" type="radio" name="plan" value="growth" /> Growth</label>
+            <label class="radio-row radio-option"><input id="plan-scale" type="radio" name="plan" value="scale" /> Scale</label>
+          </div>
+          <p class="field-hint">Choose one option.</p>
+          <p class="field-error" data-error-for="plan"></p>
+        </fieldset>
+
+        <div class="field-group">
+          <div class="toggle-row">
+            <input id="updates" class="toggle" name="updates" type="checkbox" />
+            <label class="field-label" for="updates">Enable release digest</label>
+          </div>
+          <p class="field-hint">Used here to demo custom validator hooks.</p>
+          <p class="field-error" data-error-for="updates"></p>
+        </div>
+
+        <div class="status-region" data-form-status aria-live="polite"></div>
+        <div class="form-actions">
+          <button type="submit">Save subscription</button>
+          <button type="button" class="secondary" data-retry hidden>Retry</button>
+        </div>
+      </form>
+    </main>
+
+    <script type="module" src="../assets/js/app.js"></script>
+  </body>
+</html>
