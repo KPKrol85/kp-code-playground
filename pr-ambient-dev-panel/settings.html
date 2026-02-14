@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings · Night Dev Panel</title>
+  <link rel="stylesheet" href="./assets/css/tokens.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/pages.css">
+</head>
+<body data-page="settings">
+<a class="skip-link" href="#main">Skip to main content</a>
+<main id="main" class="app">
+  <nav class="nav" aria-label="Primary">
+    <a data-nav class="nav__link" href="./index.html">Dashboard</a>
+    <a data-nav class="nav__link" href="./settings.html">Settings</a>
+    <a data-nav class="nav__link" href="./about.html">About</a>
+  </nav>
+  <section class="card">
+    <h1>Settings</h1>
+    <form id="settings-form">
+      <h2>Durations (minutes)</h2>
+      <label class="field">Focus <input id="duration-focus" type="number" min="1" max="120" required></label>
+      <label class="field">Short Break <input id="duration-short" type="number" min="1" max="30" required></label>
+      <label class="field">Long Break <input id="duration-long" type="number" min="1" max="60" required></label>
+
+      <h2>Preferences</h2>
+      <label class="field">Theme
+        <select id="setting-theme"><option value="system">System</option><option value="dark">Dark</option><option value="light">Light</option></select>
+      </label>
+      <label class="field">Reduced Motion
+        <select id="setting-motion"><option value="system">System</option><option value="reduce">Reduce</option><option value="normal">Normal</option></select>
+      </label>
+      <label class="field"><input id="setting-shortcuts" type="checkbox"> Enable keyboard shortcuts</label>
+      <label class="field"><input id="setting-notifications" type="checkbox"> Enable web notifications</label>
+
+      <div class="row">
+        <button class="button" type="submit">Save Settings</button>
+        <button class="button button--danger" id="reset-storage" type="button">Clear Local Data</button>
+      </div>
+    </form>
+  </section>
+</main>
+<p id="toast" class="toast" hidden></p>
+<script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>

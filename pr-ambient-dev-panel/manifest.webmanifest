@@ -1,0 +1,12 @@
+{
+  "name": "Night Dev Panel",
+  "short_name": "Dev Panel",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d1221",
+  "theme_color": "#0d1221",
+  "description": "Ambient coding mode with focus timer, audio, and local streak tracking.",
+  "icons": [
+    { "src": "./assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

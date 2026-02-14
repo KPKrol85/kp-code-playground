@@ -1,0 +1,4 @@
+.hero { margin-bottom: var(--space-4); }
+.hint { color: var(--muted); font-size: 0.9rem; }
+.footer { margin-top: var(--space-6); color: var(--muted); font-size: 0.9rem; }
+.list { line-height: 1.6; }

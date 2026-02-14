@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1221">
+  <title>Night Dev Panel</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/css/tokens.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/pages.css">
+</head>
+<body data-page="dashboard">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="aria-live" class="visually-hidden" aria-live="polite"></div>
+  <main id="main" class="app">
+    <nav class="nav" aria-label="Primary">
+      <a data-nav class="nav__link" href="./index.html">Dashboard</a>
+      <a data-nav class="nav__link" href="./settings.html">Settings</a>
+      <a data-nav class="nav__link" href="./about.html">About</a>
+    </nav>
+
+    <section class="hero card">
+      <h1>Night Dev Panel</h1>
+      <p class="hint">Ambient coding mode for focused deep-work sessions.</p>
+    </section>
+
+    <section class="grid grid--2">
+      <article class="card timer">
+        <p id="timer-mode">Focus</p>
+        <p id="timer-display" class="timer__display">25:00</p>
+        <div class="progress" aria-hidden="true"><div id="progress-bar" class="progress__bar"></div></div>
+        <div id="mode-buttons" class="row" aria-label="Session modes"></div>
+        <div class="row">
+          <button id="toggle-timer" class="button">Start / Pause</button>
+          <button id="reset-timer" class="button button--ghost">Reset</button>
+          <button id="toggle-focus" class="button button--ghost">Focus Mode</button>
+          <button id="toggle-fullscreen" class="button button--ghost">Fullscreen</button>
+        </div>
+        <div class="row focus-hide">
+          <button id="enable-notifications" class="button button--ghost">Enable Notifications</button>
+          <button id="open-shortcuts" class="button button--ghost">Shortcuts</button>
+        </div>
+      </article>
+
+      <aside class="card focus-hide">
+        <h2>Ambient Audio</h2>
+        <label class="field">Sound Profile
+          <select id="sound-profile" aria-label="Sound profile"></select>
+        </label>
+        <label class="field">Master Volume
+          <input id="master-volume" type="range" min="0" max="1" step="0.05" aria-label="Master volume">
+        </label>
+        <div class="row">
+          <button id="toggle-mute" class="button button--ghost">Mute / Unmute</button>
+        </div>
+        <p id="audio-hint" class="hint" hidden>Tap Start once to allow audio playback in this browser.</p>
+      </aside>
+    </section>
+
+    <section class="grid grid--2 focus-hide" style="margin-top:1rem;">
+      <article class="card">
+        <h2>Session Stats</h2>
+        <div class="stats">
+          <div class="stats__item"><strong id="stats-total-sessions">0</strong><div>Total Sessions</div></div>
+          <div class="stats__item"><strong id="stats-today-sessions">0</strong><div>Today Sessions</div></div>
+          <div class="stats__item"><strong id="stats-total-focus">0 min</strong><div>Total Focus</div></div>
+          <div class="stats__item"><strong id="stats-today-focus">0 min</strong><div>Today Focus</div></div>
+          <div class="stats__item"><strong id="stats-streak">0 days</strong><div>Daily Streak</div></div>
+        </div>
+        <div class="row" style="margin-top:.75rem;">
+          <button id="reset-today" class="button button--ghost">Reset Today</button>
+          <button id="reset-all" class="button button--danger">Reset All</button>
+        </div>
+      </article>
+      <article class="card">
+        <h2>History</h2>
+        <ul id="session-history" class="history"></ul>
+        <div class="row">
+          <button id="export-data" class="button button--ghost">Export JSON</button>
+          <label class="button button--ghost" for="import-data">Import JSON</label>
+          <input id="import-data" type="file" accept="application/json" class="visually-hidden">
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">All data stays in your browser. No tracking. No backend.</footer>
+  </main>
+
+  <dialog id="shortcuts-dialog" class="modal" aria-labelledby="shortcuts-title">
+    <h2 id="shortcuts-title">Keyboard shortcuts</h2>
+    <ul class="list">
+      <li>Space: Start / Pause timer</li><li>R: Reset timer</li><li>F: Toggle focus mode</li>
+      <li>M: Mute / unmute audio</li><li>T: Toggle theme</li><li>S: Open settings</li><li>?: Open this panel</li><li>Esc: Exit focus mode / close modal</li>
+    </ul>
+    <button id="close-shortcuts" class="button">Close</button>
+  </dialog>
+
+  <p id="toast" class="toast" hidden></p>
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>
