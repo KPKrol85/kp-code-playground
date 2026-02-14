@@ -19,7 +19,7 @@ Największe ryzyko operacyjne dotyczy integralności assetów: HTML oczekuje `as
 
 ## 4. P1 — 5 improvements worth doing next (exactly five)
 1. **Ujednolicić semantykę nagłówków** — na wybranych stronach po `h1` pojawiają się od razu `h3`/`h4` (np. `fleet.html`, `services.html`, `service.html`), co pogarsza strukturę dokumentu dla AT i SEO.
-2. **Naprawić niedziałające CTA do nieistniejącej podstrony** — w `fleet.html` występują odnośniki do `order.html`, którego nie wykryto w repo.
+2. **Naprawić niedziałające CTA do nieistniejącej podstrony** — w `fleet.html` występowały odnośniki do nieistniejącej podstrony wyceny.
 3. **Skorygować błędne ścieżki SEO assets** — `fleet.html` ma `twitter:image` wskazujące `assets/img/og/translogix-og.jpg` (plik niewykryty); część JSON-LD wskazuje logo w `assets/img/brand/...` (katalog niewykryty).
 4. **Domknąć reduced-motion w CSS dla `.reveal`** — JS respektuje `prefers-reduced-motion`, ale CSS nadal deklaruje transition dla `.reveal`; warto dodać pełny CSS fallback, by uniknąć niespójności.
 5. **Dodać defensywną obsługę błędów fetch** — `service-detail.js` i `services-filters.js` nie mają warstwy `try/catch` oraz fallbacku UI przy błędzie sieci/parsingu.
