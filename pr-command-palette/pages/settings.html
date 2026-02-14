@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP Command Palette — Settings</title>
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/components.css" />
+    <link rel="stylesheet" href="../assets/css/pages.css" />
+  </head>
+  <body data-page="settings">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="app-shell__header">
+      <div class="app-shell__brand">KP_Code Playground</div>
+      <nav class="top-nav" aria-label="Primary">
+        <a class="top-nav__link" href="../index.html">Dashboard</a>
+        <a class="top-nav__link" href="projects.html">Projects</a>
+        <a class="top-nav__link" href="components.html">Components</a>
+        <a class="top-nav__link" href="settings.html" aria-current="page">Settings</a>
+      </nav>
+      <button class="button button--ghost" type="button" data-command-trigger>
+        Open command palette <span class="kbd">Ctrl/Cmd + K</span>
+      </button>
+    </header>
+
+    <main id="main-content" class="page page--settings">
+      <section class="page-hero">
+        <h1 class="page-hero__title">Settings</h1>
+        <p class="page-hero__subtitle">Use the command palette to adjust app-level preferences.</p>
+      </section>
+      <section class="card info-panel" aria-label="Stored preferences">
+        <h2 class="info-panel__title">Stored state</h2>
+        <p class="info-panel__text">Theme and compact mode are persisted to localStorage.</p>
+      </section>
+    </main>
+
+    <div id="app-live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <script type="module" src="../assets/js/app.js"></script>
+  </body>
+</html>
