@@ -6,13 +6,16 @@
   "author": "KP_Code_",
   "license": "UNLICENSED",
   "scripts": {
-    "css:min": "postcss assets/css/style.css -o assets/css/style.min.css",
-    "css:watch": "postcss assets/css/style.css -o assets/css/style.min.css --watch",
-    "build": "npm run css:min"
-    "check:budget": "node -e \"console.log('budget check placeholder');\""
+    "check:budget": "node -e \"console.log('budget check placeholder');\"",
+    "build:css": "postcss assets/css/style.css -o css/style.min.css && node scripts/verify-css-build.mjs",
+    "build:js": "esbuild assets/js/main.js --bundle --minify --target=es2018 --outfile=js/script.min.js && node scripts/verify-js-build.mjs",
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "postcss assets/css/style.css -o css/style.min.css --watch",
+    "watch:js": "esbuild assets/js/main.js --bundle --minify --target=es2018 --outfile=js/script.min.js --watch"
   },
   "devDependencies": {
     "cssnano": "^7.1.2",
+    "esbuild": "^0.25.10",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1"
   }
