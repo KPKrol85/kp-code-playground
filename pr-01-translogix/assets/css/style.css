@@ -2293,6 +2293,16 @@ html.theme-dark .lightbox__hero-frame {
   transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
 .text-muted {
   color: var(--color-muted);
 }
