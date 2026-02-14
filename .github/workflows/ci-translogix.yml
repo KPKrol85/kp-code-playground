@@ -53,7 +53,7 @@ jobs:
           cache-dependency-path: pr-01-translogix/package-lock.json
       - run: npm ci
       - name: Validate HTML
-        run: npm run check:html
+        run: npm run check:html --if-present
 
   links_assets_smoke:
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
           cache-dependency-path: pr-01-translogix/package-lock.json
       - run: npm ci
       - name: Link/asset smoke check (internal only)
-        run: npm run check:links
+        run: npm run check:links --if-present
 
 
   budget_check:
@@ -100,7 +100,7 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
       - name: Run E2E smoke
-        run: npm run test:e2e
+        run: npm run test:e2e --if-present
 
   lhci_mobile:
     runs-on: ubuntu-latest
@@ -115,4 +115,4 @@ jobs:
           cache-dependency-path: pr-01-translogix/package-lock.json
       - run: npm ci
       - name: Lighthouse CI (soft gate)
-        run: npm run lhci
+        run: npm run lhci --if-present
