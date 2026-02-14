@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-labelledby="title desc">
+  <title id="title">Rain ambience placeholder</title>
+  <desc id="desc">Abstract rain drops over dark gradient background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#bg)" rx="16"/>
+  <g stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" opacity="0.8">
+    <line x1="50" y1="30" x2="42" y2="54"/>
+    <line x1="105" y1="52" x2="97" y2="76"/>
+    <line x1="160" y1="20" x2="152" y2="44"/>
+    <line x1="215" y1="58" x2="207" y2="82"/>
+    <line x1="270" y1="34" x2="262" y2="58"/>
+  </g>
+  <text x="20" y="160" fill="#cbd5e1" font-family="Inter, Arial" font-size="18">Rain</text>
+</svg>
