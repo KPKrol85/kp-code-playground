@@ -1,267 +1,197 @@
-# SolidCraft — strona firmy remontowo-budowlanej (demo)
+# SolidCraft — portfolio front-end (audytowana wersja)
 
-Responsywny serwis demonstracyjny dla firmy remontowo-budowlanej. Projekt pokazuje kompletną stronę ofertową z sekcjami usług, realizacji, opinii, FAQ i formularzem wyceny, z naciskiem na semantykę HTML, dostępność oraz wydajność.
+## PL
 
-## Live demo
+### Przegląd projektu
 
-https://construction-project-01.netlify.app
+SolidCraft to wielostronicowy serwis front-end dla firmy remontowo-budowlanej, oparty na statycznych plikach HTML/CSS/JS z konfiguracją pod hosting Netlify. Projekt zawiera stronę główną, podstrony ofertowe, dokumenty prawne, stronę 404, widok offline i stronę podziękowania po formularzu.
 
-## Funkcjonalności
+### Kluczowe funkcje (potwierdzone w kodzie)
 
-- Wielosekcyjny landing page (oferta, realizacje, opinie, FAQ, kontakt).
-- Podstrony ofertowe (łazienki, malowanie, kafelkowanie, elektryka, hydraulika, remonty).
-- Przełączanie motywu (jasny/ciemny).
+- Strona główna z sekcjami: oferta, realizacje, opinie, FAQ i kontakt.
+- Podstrony usług: łazienki, malowanie, kafelkowanie, elektryka, hydraulika, remonty.
+- Przełącznik motywu jasny/ciemny.
 - Nawigacja z dropdownem i obsługą klawiatury.
-- Formularz kontaktowy z walidacją po stronie klienta.
-- Cookie banner.
-- PWA (manifest + service worker).
+- Walidacja formularza po stronie klienta oraz flow „thank-you”.
+- Banner cookies.
+- PWA: `manifest.webmanifest`, rejestracja service workera i strona offline.
 
-## Stack technologiczny
+### Tech stack
 
-- HTML5
-- CSS3 (custom properties, responsywne layouty)
-- JavaScript (Vanilla, ES6)
-- Netlify (hosting/deployment)
+- HTML5 (wielostronicowy serwis statyczny).
+- CSS3 (custom properties / design tokens, media queries, komponenty).
+- JavaScript (vanilla, bez wykrytego frameworka).
+- Node.js tooling: PostCSS, Terser, Prettier, Sharp, live-server.
+- Netlify (`_headers`, `_redirects`).
 
-## Struktura projektu
+### Struktura projektu
 
-```
-construction/html-css-js/pr-01-solidcraft/
+```text
+pr-01-solidcraft/
+├── index.html
+├── 404.html
+├── offline.html
+├── thank-you/index.html
+├── oferta/*.html
+├── doc/*.html
+├── css/style.css
+├── js/script.js
+├── js/theme-init.js
+├── js/sw-register.js
+├── sw.js
 ├── assets/
 │   ├── fonts/
 │   ├── img/
-│   └── img-src/
-├── css/
-│   ├── style.css
-│   └── style.min.css
-├── js/
-│   ├── script.js
-│   ├── script.min.js
-│   └── sw-register.js
-├── doc/
-│   ├── cookies.html
-│   ├── polityka-prywatnosci.html
-│   └── regulamin.html
-├── oferta/
-│   ├── elektryka.html
-│   ├── hydraulika.html
-│   ├── kafelkowanie.html
-│   ├── lazienki.html
-│   ├── malowanie.html
-│   └── remonty.html
-├── index.html
+│   └── jsonld/
 ├── manifest.webmanifest
-├── sw.js
 ├── robots.txt
 ├── sitemap.xml
 ├── _headers
-└── _redirects
+├── _redirects
+└── package.json
 ```
 
-## Uruchomienie lokalne
+### Setup i uruchomienie
 
-Opcja 1: bez serwera
-- Otwórz plik `index.html` bezpośrednio w przeglądarce.
+```bash
+npm install
+npm run dev
+```
 
-Opcja 2: lokalny serwer
-- Python:
-  ```bash
-  python -m http.server 8080
-  ```
-- Node (live-server):
-  ```bash
-  npm install
-  npm run dev
-  ```
+Aplikacja uruchamia się przez `live-server` na porcie `15500`.
 
-## Dostępność
+### Build i wdrożenie
 
-Wdrożone:
-- Semantyczne landmarki (header, main, footer).
-- Skip link do sekcji głównej.
-- Widoczne stany focus i obsługa klawiatury dla nawigacji.
-- Opisy pól formularza i podstawowa walidacja.
+```bash
+npm run build
+```
 
-Jak testować:
-- Przejście po stronie tylko klawiaturą (Tab / Shift+Tab / Enter / Esc).
-- Audyt Lighthouse (Accessibility).
-- Sprawdzenie kontrastu w trybie jasnym/ciemnym.
+Build generuje minifikację CSS i JS (`build:css`, `build:js`) oraz formatuje repozytorium.
 
-## Performance i SEO
+Uwaga wdrożeniowa: pliki `css/style.min.css`, `js/script.min.js` i `js/theme-init.min.js` nie są obecnie obecne w repozytorium, mimo że są referencjonowane przez HTML. Przed publikacją trzeba wygenerować i/lub dołączyć komplet assetów produkcyjnych.
 
-Wdrożone:
-- Obrazy w wielu formatach (AVIF/WEBP/JPG) i `srcset`.
-- Lazy loading obrazów poza hero.
-- Preload kluczowych fontów.
-- Meta title/description + OpenGraph + Twitter Cards.
-- Sitemap i robots.txt.
-- Structured data (schema.org).
+### Dostępność (a11y)
 
-Jak sprawdzić:
-- Lighthouse (Performance + SEO).
-- WebPageTest lub Chrome DevTools Performance.
+- Wdrożone: skip link, landmarki, widoczne focus states (`:focus-visible`), obsługa `aria-expanded` i `aria-current`, wsparcie `prefers-reduced-motion`.
+- Ryzyko: brak plików `*.min.*` blokuje wykonanie głównego JS, co ogranicza działanie kluczowych interakcji nawigacji i części ścieżek klawiaturowych.
 
-## PWA
+### SEO
 
-Wdrożone:
-- `manifest.webmanifest` z ikonami i shortcutami.
-- Service worker z cache’owaniem zasobów.
-- Praca offline dla podstawowych zasobów (shell).
+- Wdrożone: `title`, `description`, canonicale, OpenGraph, Twitter Cards, `sitemap.xml`, JSON-LD.
+- Ryzyko krytyczne: `robots.txt` ma globalne `Disallow: /`, więc indeksacja jest zablokowana.
 
-Ograniczenia:
-- Strategia cache wymaga przeglądu dla pełnej obsługi podstron i aktualizacji.
+### Performance
 
-## Roadmap
+- Wdrożone: obrazy AVIF/WEBP/JPG + `srcset`, lazy loading poza hero, preload fontów WOFF2, preload obrazu hero.
+- Obszar do poprawy: pojedynczy CSS (`style.css`, ~72 KB) i pojedynczy JS (`script.js`, ~56 KB) są duże jak na statyczny serwis i warto je dalej modularnie optymalizować.
 
-- Dodać realny backend do formularza (np. Netlify Forms / endpoint API).
-- Ujednolicić i wersjonować cache w service worker.
-- Zmniejszyć zależność od inline script/style w celu zaostrzenia CSP.
-- Dodać pełne testy a11y (np. axe) i kontrastów.
-- Wprowadzić automatyczny build (npm scripts) w CI.
+### Roadmap
 
-## Disclaimer
+- Dodać stabilny proces generowania i wersjonowania assetów `*.min.*` przed deployem.
+- Ujednolicić naming klas do pełnej, konsekwentnej konwencji BEM.
+- Rozdzielić CSS na warstwy (tokens/base/components/utilities) z pipeline scalającym.
+- Dodać automatyczny audyt a11y/performance w CI.
+- Uporządkować strategię SEO dla środowisk demo vs production.
 
-Projekt demonstracyjny. Wszystkie nazwy firm, dane adresowe i treści są fikcyjne i służą wyłącznie celom portfolio.
+### Licencja
 
-## Autor
-
-Kamil Król (KP_Code_)
-
-## License
-
-Not specified
+`UNLICENSED` (zgodnie z `package.json`).
 
 ---
 
-# SolidCraft — construction & renovation company website (demo)
+## EN
 
-Responsive demo website for a construction and renovation company. The project delivers a full marketing site with services, testimonials, FAQ, and a contact form, focusing on semantic HTML, accessibility, and performance.
+### Project overview
 
-## Live demo
+SolidCraft is a multi-page front-end website for a construction/renovation company, implemented as static HTML/CSS/JS with Netlify deployment configuration. It includes a homepage, service subpages, legal pages, a 404 page, an offline page, and a thank-you page.
 
-https://construction-project-01.netlify.app
+### Key features (verified in code)
 
-## Features
-
-- Multi-section landing page (services, portfolio/logos, testimonials, FAQ, contact).
-- Service subpages (bathrooms, painting, tiling, electrical, plumbing, renovations).
+- Homepage sections: services, portfolio, testimonials, FAQ, and contact.
+- Service subpages: bathrooms, painting, tiling, electrical, plumbing, renovations.
 - Light/dark theme switch.
-- Keyboard-friendly navigation with dropdown.
-- Client-side validated contact form.
+- Navigation with dropdown and keyboard handling.
+- Client-side form validation and “thank-you” flow.
 - Cookie banner.
-- PWA (manifest + service worker).
+- PWA setup: `manifest.webmanifest`, service worker registration, offline page.
 
-## Tech stack
+### Tech stack
 
-- HTML5
-- CSS3 (custom properties, responsive layouts)
-- JavaScript (Vanilla, ES6)
-- Netlify (hosting/deployment)
+- HTML5 (static multi-page website).
+- CSS3 (custom properties / design tokens, media queries, components).
+- JavaScript (vanilla, no framework detected in project).
+- Node.js tooling: PostCSS, Terser, Prettier, Sharp, live-server.
+- Netlify (`_headers`, `_redirects`).
 
-## Project structure
+### Project structure
 
-```
-construction/html-css-js/pr-01-solidcraft/
+```text
+pr-01-solidcraft/
+├── index.html
+├── 404.html
+├── offline.html
+├── thank-you/index.html
+├── oferta/*.html
+├── doc/*.html
+├── css/style.css
+├── js/script.js
+├── js/theme-init.js
+├── js/sw-register.js
+├── sw.js
 ├── assets/
 │   ├── fonts/
 │   ├── img/
-│   └── img-src/
-├── css/
-│   ├── style.css
-│   └── style.min.css
-├── js/
-│   ├── script.js
-│   ├── script.min.js
-│   └── sw-register.js
-├── doc/
-│   ├── cookies.html
-│   ├── polityka-prywatnosci.html
-│   └── regulamin.html
-├── oferta/
-│   ├── elektryka.html
-│   ├── hydraulika.html
-│   ├── kafelkowanie.html
-│   ├── lazienki.html
-│   ├── malowanie.html
-│   └── remonty.html
-├── index.html
+│   └── jsonld/
 ├── manifest.webmanifest
-├── sw.js
 ├── robots.txt
 ├── sitemap.xml
 ├── _headers
-└── _redirects
+├── _redirects
+└── package.json
 ```
 
-## Local setup
+### Setup & run
 
-Option 1: no local server
-- Open `index.html` directly in the browser.
+```bash
+npm install
+npm run dev
+```
 
-Option 2: local server
-- Python:
-  ```bash
-  python -m http.server 8080
-  ```
-- Node (live-server):
-  ```bash
-  npm install
-  npm run dev
-  ```
+The site runs via `live-server` on port `15500`.
 
-## Accessibility
+### Build & deployment notes
 
-Implemented:
-- Semantic landmarks (header, main, footer).
-- Skip link to main content.
-- Visible focus states and keyboard-friendly navigation.
-- Labeled form fields with basic validation.
+```bash
+npm run build
+```
 
-How to test:
-- Navigate using keyboard only (Tab / Shift+Tab / Enter / Esc).
-- Lighthouse Accessibility audit.
-- Contrast checks in light/dark modes.
+Build runs CSS and JS minification (`build:css`, `build:js`) and then formatting.
 
-## Performance & SEO
+Deployment note: `css/style.min.css`, `js/script.min.js`, and `js/theme-init.min.js` are currently not present in the repository, even though HTML files reference them. Production deployment requires generating and/or committing those assets.
 
-Implemented:
-- Multi-format responsive images (AVIF/WEBP/JPG) with `srcset`.
-- Lazy loading for non-hero images.
-- Preload of critical fonts.
-- Meta title/description + OpenGraph + Twitter Cards.
-- Sitemap and robots.txt.
-- Structured data (schema.org).
+### Accessibility notes
 
-How to verify:
-- Lighthouse (Performance + SEO).
-- WebPageTest or Chrome DevTools Performance.
+- Implemented: skip link, semantic landmarks, visible focus states (`:focus-visible`), `aria-expanded` and `aria-current` handling, `prefers-reduced-motion` support.
+- Risk: missing `*.min.*` assets prevents main JS execution, which degrades key navigation interactions and keyboard paths.
 
-## PWA
+### SEO notes
 
-Implemented:
-- `manifest.webmanifest` with icons and shortcuts.
-- Service worker caching core assets.
-- Offline support for basic shell assets.
+- Implemented: `title`, `description`, canonicals, OpenGraph, Twitter Cards, `sitemap.xml`, JSON-LD.
+- Critical risk: `robots.txt` has global `Disallow: /`, so indexing is blocked.
 
-Limitations:
-- Cache strategy should be reviewed for full offline coverage and update flow.
+### Performance notes
 
-## Roadmap
+- Implemented: AVIF/WEBP/JPG responsive images with `srcset`, lazy loading outside hero, WOFF2 font preload, hero image preload.
+- Improvement area: single large CSS (`style.css`, ~72 KB) and JS (`script.js`, ~56 KB) bundles should be further modularized/optimized.
 
-- Add a real contact form backend (e.g., Netlify Forms / API endpoint).
-- Unify and version caches in the service worker.
-- Remove reliance on inline script/style to tighten CSP.
-- Add full a11y testing (e.g., axe) and contrast checks.
-- Add automated build steps in CI.
+### Roadmap
 
-## Disclaimer
+- Add a stable process to generate and version `*.min.*` assets before deployment.
+- Align class naming toward strict BEM consistency.
+- Split CSS into explicit layers (tokens/base/components/utilities) with a bundling pipeline.
+- Add automated accessibility/performance audits in CI.
+- Separate SEO policy for demo vs production environments.
 
-Demo project only. Company names, addresses, and content are fictitious and used for portfolio purposes.
+### License
 
-## Author
-
-Kamil Król (KP_Code_)
-
-## License
-
-Not specified
+`UNLICENSED` (as declared in `package.json`).
