@@ -1,127 +1,196 @@
-# Gastronomy 02 — Fine Dining Restaurant Demo Website
+# Atelier No.02 — Review-ready project documentation
 
-A fully responsive and accessible demo website for the gastronomy industry, built to demonstrate professional front-end practices in HTML, CSS, and JavaScript.
+## PL 🇵🇱
 
-Live Demo:
-→ https://gastronomy-project-02.netlify.app/
+### Przegląd projektu
+Atelier No.02 to wielostronicowy front-end restauracji fine dining (strona główna + podstrony: menu, galeria, o nas, strony prawne), z naciskiem na responsywność, semantyczny HTML, PWA i podstawowe mechanizmy offline.
 
-1. **Overview**
-   - Part of the _KP_Code Professional Learning Plan_.
-   - Achieved Lighthouse score: **100 / 100 / 100 / 100**.
-   - Strong focus on performance, accessibility, SEO, and PWA best practices.
+### Kluczowe funkcje (potwierdzone w repo)
+- Wielostronicowy serwis statyczny: `index.html`, `about.html`, `menu.html`, `gallery.html`, `cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`, `404.html`, `offline.html`.
+- Dynamiczne renderowanie sekcji menu z `data/menu.json` oraz filtrowanie kategorii po stronie klienta.
+- Galeria z lightboxem, obsługą klawiatury i trybem pełnoekranowym.
+- Przełączanie motywu (light/dark) z utrwaleniem wyboru w `localStorage`.
+- Service Worker (`sw.js`) oraz manifest PWA (`manifest.webmanifest`).
+- Pipeline build dla CSS/JS i optymalizacji obrazów (`postcss`, `esbuild`, `sharp`).
 
-2. **Features**
-   - Responsive layout (mobile-first grid/flex, fluid typography).
-   - Semantic HTML with proper headings and landmarks.
-   - Accessibility: `aria-labels`, focus styles, high contrast, skip links.
-   - Images: modern formats (WebP/JPG), `loading="lazy"`, width/height set to avoid layout shift.
-   - Performance: `theme-color`, preconnects, critical assets preload (fonts/hero), minified CSS/JS.
-   - SEO: descriptive titles, meta descriptions, structured headings, canonical URL.
-   - PWA: Web App Manifest (`manifest.webmanifest`) and Service Worker (`sw.js`).
-   - Offline mode: cache-first strategy with a fallback `404.html` for offline navigation.
-   - Netlify headers: caching, security headers, and file-specific rules via `_headers`.
-   - Build optimizations: CSSNano and Terser minification pipelines.
+### Tech stack
+- HTML5
+- CSS3 (modułowa struktura plików + PostCSS/CSSNano)
+- JavaScript (modułowy ES)
+- Node.js tooling: `esbuild`, `postcss-cli`, `sharp`, `fast-glob`, `http-server`
 
-3. **Manual Build (final step only)**
-   - Dev source: `css/style.css`, `js/script.js`, and `assets/img/**/*.{jpg,png}`.
-   - Run `npm run build` to generate optimized images (WebP/AVIF) and minified CSS/JS (`style.min.css`, `script.min.js`).
-   - Add new images by placing JPG/PNG files under `assets/img/` and rerun `npm run optimize:images`.
-   - Switch HTML asset links:
-     - `npm run dev` or `npm run dev:assets` (use `style.css` / `script.js`)
-     - `npm run prod` or `npm run prod:assets` (use `style.min.css` / `script.min.js`)
-
-4. **Tech Stack**
-   - HTML5, CSS3, JavaScript (ES6)
-   - Netlify (hosting & headers)
-   - CSSNano, Terser (minification)
-   - Lighthouse, Chrome DevTools (audits)
-   - VS Code (editor)
-
-5. **Folder Structure**
-
-```text
-gastronomy-html-css-js-project-02/
-├── index.html
-├── about.html
-├── menu.html
-├── gallery.html
-├── cookies.html
-├── polityka-prywatnosci.html
-├── 404.html
+### Struktura projektu (skrót)
+```txt
+pr-02-atelier/
+├── *.html
 ├── css/
-│   ├── style.css
+│   ├── base/
+│   ├── components/
+│   ├── layout/
+│   ├── pages/
+│   ├── utilities/
 │   └── style.css
 ├── js/
-│   ├── script.js
+│   ├── app/
+│   ├── core/
+│   ├── features/
 │   └── script.js
 ├── assets/
 │   ├── fonts/
-│   │   ├── lato-400-latin.woff2
-│   │   ├── lato-700-latin.woff2
-│   │   ├── montserrat-400-latin.woff2
-│   │   └── montserrat-700-latin.woff2
 │   ├── icons/
-│   │   ├── fav-icon/
-│   │   │   ├── android-chrome-192x192.png
-│   │   │   ├── android-chrome-512x512.png
-│   │   │   ├── apple-touch-icon.png
-│   │   │   ├── favicon-16x16.png
-│   │   │   ├── favicon-32x32.png
-│   │   │   ├── favicon-96x96.png
-│   │   │   ├── favicon-1024x1024.png
-│   │   │   ├── favicon.ico
-│   │   │   ├── favicon.svg
-│   │   │   └── web-app-manifest-512x512.png
-│   │   └── svg-icon/
-│   │       ├── github-icon.svg
-│   │       ├── facebook-icon.svg
-│   │       ├── instagram-icon.svg
-│   │       ├── mail-icon.svg
-│   │       ├── phone-icon.svg
-│   │       ├── home-icon.svg
-│   │       ├── icon-moon.svg
-│   │       └── icon-sun.svg
-│   └── img/
-│       ├── menu/
-│       │   ├── risotto-800x534.webp
-│       │   └── risotto-800x534.jpg
-│       └── …
-├── manifest.webmanifest
-├── sw.js
-├── sitemap.xml
-├── robots.txt
-├── _headers
-├── _redirects.txt
+│   └── img-optimized/
+├── data/menu.json
+├── scripts/images/build-images.js
 ├── package.json
-├── package-lock.json
-└── postcss.config.js
+├── postcss.config.js
+├── sw.js
+└── manifest.webmanifest
 ```
 
-6. **Performance & Accessibility**
-   - Performance: 100
-     Accessibility: 100
-     Best Practices: 100
-     SEO: 100
+### Setup i uruchomienie
+1. Instalacja zależności:
+   ```bash
+   npm ci
+   ```
+2. Lokalny serwer statyczny:
+   ```bash
+   npm run dev:server
+   ```
+3. Build CSS + JS:
+   ```bash
+   npm run build
+   ```
+4. Generowanie obrazów:
+   ```bash
+   npm run images:build
+   ```
 
-   | Metric        | Value |
-   | ------------- | -----:|
-   | FCP           | 0.8s  |
-   | LCP           | 1.1s  |
-   | TBT           | 0ms   |
-   | CLS           | 0.00  |
-   | Speed Index   | 1.0s  |
+### Build i wdrożenie
+- Projekt jest przygotowany do hostingu statycznego (np. Netlify) z plikami `_headers`, `robots.txt`, `sitemap.xml` i `manifest.webmanifest`.
+- Ważne: HTML odwołuje się do `css/style.min.css` i `js/script.min.js`; przed wdrożeniem należy wykonać build, aby te pliki istniały.
+- W repo występuje `_redirects.txt`; na Netlify standardowo oczekiwany jest plik `_redirects` (bez rozszerzenia).
 
-7. **SEO & PWA**
-   - Meta Open Graph & Twitter Cards for rich sharing.
-   - `robots.txt` configured for crawl directives.
-   - `sitemap.xml` for search engine indexing.
-   - `manifest.webmanifest` with icons and display properties.
-   - Netlify `_headers` for cache and security policies.
-   - Offline support via Service Worker and `404.html` fallback.
+### Dostępność (A11y)
+**Zaimplementowane:**
+- Skip link, landmarki (`header`, `nav`, `main`, `footer`), etykiety formularza, stany `aria-*` dla elementów interaktywnych.
+- Komunikaty live (`aria-live`) dla statusów sieci i formularza.
+- Lightbox z obsługą klawiatury (Esc, strzałki, Home/End).
 
-8. **Author**
-   - **KP_Code**
-     Front-End Developer focused on clean code, accessibility, and performance.
-     © 2025 KP_Code — For educational and portfolio use only.
+**Luki / ryzyka:**
+- Link „Pobierz menu PDF” wskazuje na brakujący plik `assets/docs/menu.pdf`, co pogarsza UX i dostępność zadania użytkownika.
+- Brak automatycznej walidacji kontrastu w pipeline (warto dodać narzędziowy check).
 
-> This project is part of the KP_Code portfolio series — Gastronomy Demo 02.
+### SEO
+**Zaimplementowane:**
+- `title`, `meta description`, `canonical`, OpenGraph/Twitter oraz JSON-LD na stronach.
+- `robots.txt` i `sitemap.xml`.
+
+**Luki / ryzyka:**
+- `gallery.html` ma błędne metadane SEO skopiowane z `about.html` (canonical i `og:url` kierują do `about.html`, a treści OG/Twitter są „O nas”).
+- `offline.html` nie ma canonical/robots (nie musi, ale warto jawnie ustawić `noindex`).
+
+### Wydajność
+- Plusy: wiele obrazów w AVIF/WebP/JPG, preloading fontów, minifikacja w skryptach build.
+- Ryzyka: jeśli build nie został uruchomiony, strona ładuje nieistniejące pliki minifikowane (twarda regresja wydajności i funkcjonalności).
+
+### Roadmap
+1. Naprawić i zautomatyzować kontrolę poprawności ścieżek assetów (404 check w CI).
+2. Dodać test linków i metadanych SEO per podstrona.
+3. Dodać pipeline lint/test (np. ESLint + HTML validator + Lighthouse CI).
+4. Uporządkować konfigurację Netlify (`_redirects`, walidacja `_headers`).
+5. Ograniczyć wstrzykiwanie HTML z JSON (bezpieczne escapowanie danych).
+
+### Licencja
+Projekt używa licencji MIT (zgodnie z `package.json`) oraz repo zawiera `LICENSE` na poziomie głównym.
+
+---
+
+## EN 🇬🇧
+
+### Project overview
+Atelier No.02 is a multi-page fine-dining restaurant front-end (home + menu, gallery, about, legal pages) focused on responsiveness, semantic HTML, PWA basics, and offline support.
+
+### Key features (verified in repository)
+- Static multi-page site: `index.html`, `about.html`, `menu.html`, `gallery.html`, `cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`, `404.html`, `offline.html`.
+- Client-side menu rendering from `data/menu.json` with category filtering.
+- Gallery lightbox with keyboard support and fullscreen mode.
+- Light/dark theme switching persisted in `localStorage`.
+- Service Worker (`sw.js`) and PWA manifest (`manifest.webmanifest`).
+- Build pipeline for CSS/JS and image optimization (`postcss`, `esbuild`, `sharp`).
+
+### Tech stack
+- HTML5
+- CSS3 (modular stylesheet architecture + PostCSS/CSSNano)
+- JavaScript (modular ES)
+- Node.js tooling: `esbuild`, `postcss-cli`, `sharp`, `fast-glob`, `http-server`
+
+### Project structure (brief)
+```txt
+pr-02-atelier/
+├── *.html
+├── css/
+├── js/
+├── assets/
+├── data/menu.json
+├── scripts/images/build-images.js
+├── package.json
+├── postcss.config.js
+├── sw.js
+└── manifest.webmanifest
+```
+
+### Setup & run
+1. Install dependencies:
+   ```bash
+   npm ci
+   ```
+2. Start local static server:
+   ```bash
+   npm run dev:server
+   ```
+3. Build CSS + JS:
+   ```bash
+   npm run build
+   ```
+4. Generate optimized images:
+   ```bash
+   npm run images:build
+   ```
+
+### Build & deployment notes
+- This is deployable as a static site (e.g., Netlify) with `_headers`, `robots.txt`, `sitemap.xml`, and `manifest.webmanifest`.
+- Important: HTML references `css/style.min.css` and `js/script.min.js`; run build before deployment.
+- Repository contains `_redirects.txt`; Netlify expects `_redirects` (without extension).
+
+### Accessibility notes
+**Implemented:**
+- Skip link, semantic landmarks (`header`, `nav`, `main`, `footer`), labeled form fields, `aria-*` states for interactive UI.
+- `aria-live` status announcements for network and form feedback.
+- Keyboard-enabled lightbox navigation.
+
+**Missing / risk areas:**
+- “Download menu PDF” points to a missing `assets/docs/menu.pdf`, breaking a key user flow.
+- No automated contrast/accessibility auditing in the current build pipeline.
+
+### SEO notes
+**Implemented:**
+- `title`, `meta description`, `canonical`, OpenGraph/Twitter metadata, and JSON-LD across pages.
+- `robots.txt` and `sitemap.xml`.
+
+**Missing / risk areas:**
+- `gallery.html` has copied metadata from `about.html` (canonical and `og:url` point to `about.html`, OG/Twitter content mismatch).
+- `offline.html` has no explicit canonical/robots directives (optional but recommended to set `noindex`).
+
+### Performance notes
+- Strengths: AVIF/WebP/JPG image variants, font preloading, minification scripts.
+- Risk: without build output files present, referenced minified assets are missing (hard runtime/deployment failure).
+
+### Roadmap
+1. Add automated asset path validation (404 checks in CI).
+2. Add SEO metadata checks per page.
+3. Add lint/test pipeline (ESLint + HTML validation + Lighthouse CI).
+4. Normalize Netlify config (`_redirects`, validate `_headers` syntax).
+5. Replace unsafe string-based HTML rendering with escaped templating.
+
+### License
+MIT license (declared in `package.json`), with `LICENSE` available at repository root.
