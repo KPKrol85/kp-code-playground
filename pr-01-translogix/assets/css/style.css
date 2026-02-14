@@ -1,34 +1,4 @@
-/* ====================================================
-   = Project: transport-html-css-js-project-01
-   = Author: KP_Code
-   = Updated: 2025-12-05
-   ====================================================
-   = CSS Stylesheet
-   = Structure Overview
-   ====================================================
-   = 00 - RESET & GLOBAL
-   = 01 - TYPOGRAPHY
-   = 02 - LAYOUT
-   = 03 - HEADER & NAV
-   = 04 - HERO
-   = 05 - SECTIONS
-   = 06 - SECTION WHY US
-   = 07 - SECTION TOP SERVICES
-   = 08 - SECTION FLEET
-   = 09 - SECTION QUOTE
-   = 10 - FOOTER
-   = 11 - SUBPAGE FLEET
-   = 12 - SUBPAGE SERVICES
-   = 13 - SUBPAGE CONTACT
-   = 14 - SUBPAGE PRICING
-   = 15 - SUBPAGE LEGAL
-   = 16 - LIGHTBOX / MODAL
-   = 17 - UTILITIES
-   = 18 - BUTTONS
-   = 19 - UI COMPONENTS
-   ==================================================== */
 
-/* ===== 00 - RESET & GLOBAL ===== */
 
 :root {
   --font-base: "Manrope", system-ui, -apple-system, sans-serif;
@@ -1835,7 +1805,7 @@ html.theme-dark .accordion__item.is-open {
 /* ===== 15 -SUBPAGE SERVICE ===== */
 
 .section__header {
-  top: 0.75rem; 
+  top: 0.75rem;
   padding: clamp(1.25rem, 3vw, 2rem);
   padding-bottom: 1rem;
   border-radius: var(--radius-lg);
