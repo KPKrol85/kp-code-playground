@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Demo | PR Form Engine</title>
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/components.css" />
+    <link rel="stylesheet" href="../assets/css/forms.css" />
+  </head>
+  <body>
+    <main>
+      <header class="site-header">
+        <h1>Contact Demo</h1>
+        <nav class="page-nav" aria-label="Demo pages">
+          <a href="../index.html">Overview</a>
+          <a href="contact.html" aria-current="page">Contact</a>
+          <a href="subscription.html">Subscription</a>
+          <a href="settings.html">Settings</a>
+        </nav>
+      </header>
+
+      <form id="contactForm" class="form-shell form-layout" data-form-engine novalidate>
+        <div class="error-summary" data-error-summary hidden tabindex="-1"></div>
+
+        <div class="field-group">
+          <label class="field-label" for="name">Full name <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="name" name="name" type="text" required />
+          <p class="field-hint">Used for personalized follow-up.</p>
+          <p class="field-error" data-error-for="name"></p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="email">Work email <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" required />
+          <p class="field-hint">We only send your requested response.</p>
+          <p class="field-error" data-error-for="email"></p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="topic">Topic <span class="required-indicator" aria-hidden="true">*</span></label>
+          <select id="topic" name="topic" required>
+            <option value="">Select a topic</option>
+            <option>Partnership</option>
+            <option>Support</option>
+            <option>Enterprise plan</option>
+          </select>
+          <p class="field-hint">Helps route your request quickly.</p>
+          <p class="field-error" data-error-for="topic"></p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="message">Message <span class="required-indicator" aria-hidden="true">*</span></label>
+          <textarea id="message" name="message" required></textarea>
+          <p class="field-hint">Minimum 12 characters.</p>
+          <p class="field-error" data-error-for="message"></p>
+        </div>
+
+        <div class="field-group">
+          <div class="checkbox-row">
+            <input id="consent" name="consent" type="checkbox" required />
+            <label class="field-label" for="consent">I consent to being contacted</label>
+          </div>
+          <p class="field-hint">Required to process this form.</p>
+          <p class="field-error" data-error-for="consent"></p>
+        </div>
+
+        <div class="status-region" data-form-status aria-live="polite"></div>
+        <div class="form-actions">
+          <button type="submit">Send request</button>
+          <button type="button" class="secondary" data-retry hidden>Retry</button>
+        </div>
+      </form>
+    </main>
+
+    <script type="module" src="../assets/js/app.js"></script>
+  </body>
+</html>

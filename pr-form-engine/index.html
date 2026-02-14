@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PR Form Engine</title>
+    <link rel="stylesheet" href="assets/css/tokens.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+  </head>
+  <body>
+    <main>
+      <header class="site-header">
+        <h1>Universal Form Engine</h1>
+        <p class="muted">Reusable, accessible, and product-ready form foundation for KP_Code projects.</p>
+        <nav class="page-nav" aria-label="Demo pages">
+          <a href="index.html" aria-current="page">Overview</a>
+          <a href="pages/contact.html">Contact</a>
+          <a href="pages/subscription.html">Subscription</a>
+          <a href="pages/settings.html">Settings</a>
+        </nav>
+      </header>
+
+      <section class="card grid">
+        <h2>MVP highlights</h2>
+        <ul>
+          <li>Modular field system with hints, errors, required indicators, and inline a11y wiring.</li>
+          <li>Validation engine with required/email/length/custom hooks and top-level error summary.</li>
+          <li>State model: idle, loading, success, and error with retry pathway.</li>
+          <li>Progressive enhancement: semantic HTML works before JS; JavaScript upgrades behavior.</li>
+        </ul>
+        <p data-last-state class="muted" aria-live="polite"></p>
+      </section>
+
+      <section class="card">
+        <h2>Quick start API</h2>
+<pre><code>import { FormEngine } from './assets/js/modules/form-engine.js';
+
+FormEngine.init(formElement, {
+  validationRules: {
+    email: { required: true, type: 'email' }
+  },
+  onSubmit: async (values) =&gt; ({ ok: true }),
+  successMessage: 'Saved!',
+  errorMessage: 'Please try again.'
+});</code></pre>
+      </section>
+    </main>
+
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>
