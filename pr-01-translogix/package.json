@@ -9,6 +9,7 @@
     "css:min": "postcss assets/css/style.css -o assets/css/style.min.css",
     "css:watch": "postcss assets/css/style.css -o assets/css/style.min.css --watch",
     "build": "npm run css:min"
+    "check:budget": "node -e \"console.log('budget check placeholder');\""
   },
   "devDependencies": {
     "cssnano": "^7.1.2",
