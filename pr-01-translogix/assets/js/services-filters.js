@@ -63,8 +63,20 @@ export async function initServicesFilters() {
   const countEl = document.getElementById("results-count");
   if (!container || !chips.length) return;
 
-  const response = await fetch("assets/data/services.json");
-  const allServices = await response.json();
+  let allServices;
+  try {
+    const response = await fetch("assets/data/services.json");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    allServices = await response.json();
+  } catch (error) {
+    console.error("[services-filters] Failed to load services data", error);
+    container.innerHTML = "<p>Data unavailable. Please try again later.</p>";
+    if (countEl) countEl.textContent = "";
+    return;
+  }
+
   const params = new URLSearchParams(window.location.search);
   const urlFilter = params.get("filter");
   let state = { filter: "all", price: Number(priceRange?.value) || 10000, sort: "none", ...loadState() };

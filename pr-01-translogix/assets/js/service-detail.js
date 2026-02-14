@@ -7,18 +7,23 @@ export async function initServiceDetail() {
   const slugParam = params.get("service");
   const idParam = Number(params.get("id"));
 
-  const response = await fetch("assets/data/services.json");
-  const services = await response.json();
-  const service = services.find((s) => (slugParam && s.slug === slugParam) || (!slugParam && s.id === idParam));
-  if (!service) {
-    wrapper.innerHTML = `<p>Nie znaleziono usługi. <a href="services.html">Wróć do listy usług</a>.</p>`;
-    return;
-  }
+  try {
+    const response = await fetch("assets/data/services.json");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-  document.title = `${service.name} | TransLogix`;
-  const iconSrc = service.icon || service.image;
+    const services = await response.json();
+    const service = services.find((s) => (slugParam && s.slug === slugParam) || (!slugParam && s.id === idParam));
+    if (!service) {
+      wrapper.innerHTML = `<p>Nie znaleziono usługi. <a href="services.html">Wróć do listy usług</a>.</p>`;
+      return;
+    }
 
-  wrapper.innerHTML = `
+    document.title = `${service.name} | TransLogix`;
+    const iconSrc = service.icon || service.image;
+
+    wrapper.innerHTML = `
     <nav aria-label="Okruszki">
       <a href="services.html">Usługi</a> > <span aria-current="page">${service.name}</span>
     </nav>
@@ -51,4 +56,8 @@ export async function initServiceDetail() {
       </div>
     </div>
   `;
+  } catch (error) {
+    console.error("[service-detail] Failed to load service data", error);
+    wrapper.innerHTML = "<p>Data unavailable. Please try again later.</p>";
+  }
 }
