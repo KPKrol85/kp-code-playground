@@ -1,0 +1,279 @@
+/* Layout */
+.container {
+  width: var(--container);
+  margin: 0 auto;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  padding: var(--space-3) 0;
+  transition:
+    padding 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.site-header.is-compact {
+  padding: var(--space-2) 0;
+  border-color: var(--border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  position: relative;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+.logo,
+.logo:hover,
+.logo:focus-visible {
+  text-decoration: none;
+}
+.logo__icon {
+  width: 52px;
+  height: 52px;
+  display: block;
+}
+.logo__text {
+  color: inherit;
+  transition: color 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  font-size: var(--fs-2);
+}
+.logo:hover .logo__text,
+.logo:focus-visible .logo__text {
+  color: #0cc0df;
+}
+.nav__toggle {
+  border: none;
+  background: transparent;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text-muted);
+  appearance: none;
+  -webkit-appearance: none;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    transform 0.12s ease,
+    box-shadow 0.18s ease;
+}
+.nav__toggle:active {
+  transform: scale(0.97);
+}
+.nav__toggle:focus {
+  outline: none;
+}
+.nav__toggle:focus-visible {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.nav__toggle-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+[data-theme="light"] .nav__toggle {
+  color: #0c1b33;
+}
+[data-theme="dark"] .nav__toggle {
+  color: #ffffff;
+}
+.nav {
+  position: fixed;
+  top: calc(var(--header-h, 64px) + 0.28rem);
+  left: 0;
+  right: 0;
+  z-index: 850;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(18px);
+  color: inherit;
+}
+.nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+.nav a {
+  color: inherit;
+  font-size: var(--fs-2);
+  font-weight: 400;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    color 0.2s ease,
+    transform 0.16s ease;
+}
+.nav a:hover,
+.nav a:focus-visible {
+  background: var(--bg-elev);
+  border-color: rgba(12, 27, 51, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+.nav li.is-active > a,
+.nav a.is-active,
+.nav a[aria-current="page"] {
+  background: var(--bg-elev);
+  border-color: rgba(12, 27, 51, 0.12);
+  box-shadow: none;
+}
+[data-theme="light"] .nav {
+  background: rgba(var(--bg-rgb), 0.85);
+  color: #0c1b33;
+}
+[data-theme="light"] .nav a {
+  color: #0c1b33;
+}
+[data-theme="dark"] .nav {
+  background: rgba(var(--bg-dark-rgb), 0.85);
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+[data-theme="dark"] .nav a {
+  color: rgba(255, 255, 255, 0.88);
+}
+[data-theme="dark"] .nav li.is-active > a,
+[data-theme="dark"] .nav a.is-active,
+[data-theme="dark"] .nav a[aria-current="page"] {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+[data-theme="dark"] .nav a:hover,
+[data-theme="dark"] .nav a:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+.theme-toggle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    transform 150ms ease;
+}
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+.theme-toggle:focus {
+  outline: none;
+}
+.theme-toggle:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.theme-toggle:focus-visible {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.theme-toggle__icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  transform-origin: 50% 50%;
+  transition:
+    opacity 140ms ease,
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+[data-theme="light"] .theme-toggle__icon--sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1.02);
+}
+[data-theme="light"] .theme-toggle__icon--moon {
+  opacity: 0;
+  transform: rotate(-25deg) scale(0.9);
+}
+[data-theme="dark"] .theme-toggle__icon--sun {
+  opacity: 0;
+  transform: rotate(25deg) scale(0.9);
+}
+[data-theme="dark"] .theme-toggle__icon--moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1.02);
+}
+@media (min-width: 900px) {
+  [data-theme] .nav {
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .nav {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: var(--space-4);
+    min-width: 0;
+    margin-left: auto;
+  }
+  .nav ul {
+    flex-direction: row;
+  }
+  .nav a {
+    color: var(--text);
+    font-size: 1rem;
+  }
+  .nav__toggle {
+    display: none;
+  }
+  .theme-toggle {
+    align-self: center;
+    margin-left: var(--space-2);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-toggle:hover {
+    color: var(--text);
+    background-color: color-mix(in srgb, var(--text) 8%, transparent);
+  }
+}

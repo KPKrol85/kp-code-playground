@@ -1,0 +1,23 @@
+{
+  "name": "turystyka-html-css-js-projekt-02",
+  "version": "1.0.0",
+  "main": "service-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "postcss css/style.css -o css/style.min.css",
+    "check:css-assets": "node scripts/check-css-assets.js",
+    "build": "npm run build:css && npm run check:css-assets && npm run check:assets",
+    "check:assets": "node scripts/check-asset-integrity.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "cssnano": "^7.1.2",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.1"
+  }
+}
