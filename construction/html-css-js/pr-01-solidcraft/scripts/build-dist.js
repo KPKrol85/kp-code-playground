@@ -2,9 +2,6 @@
 
 const fs = require('fs/promises');
 const path = require('path');
-const postcss = require('postcss');
-const cssnano = require('cssnano');
-const { minify } = require('terser');
 
 const rootDir = process.cwd();
 const distDir = path.join(rootDir, 'dist');
@@ -14,49 +11,86 @@ const EXCLUDED_PATHS = new Set(['.git', 'node_modules', 'dist']);
 async function copyProjectToDist() {
   await fs.rm(distDir, { recursive: true, force: true });
 
-  await fs.cp(rootDir, distDir, {
-    recursive: true,
-    filter: (src) => {
-      const relPath = path.relative(rootDir, src);
+  async function copyDir(src, dest) {
+    await fs.mkdir(dest, { recursive: true });
+    const entries = await fs.readdir(src, { withFileTypes: true });
 
-      if (!relPath) return true;
-
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const relPath = path.relative(rootDir, srcPath);
       const topLevel = relPath.split(path.sep)[0];
-      return !EXCLUDED_PATHS.has(topLevel);
-    },
-  });
+
+      if (EXCLUDED_PATHS.has(topLevel)) {
+        continue;
+      }
+
+      const destPath = path.join(dest, entry.name);
+
+      if (entry.isDirectory()) {
+        await copyDir(srcPath, destPath);
+        continue;
+      }
+
+      if (entry.isFile()) {
+        await fs.copyFile(srcPath, destPath);
+      }
+    }
+  }
+
+  await copyDir(rootDir, distDir);
 }
 
 async function minifyAssets() {
-  const cssInputPath = path.join(rootDir, 'css', 'style.css');
-  const cssOutputPath = path.join(distDir, 'css', 'style.min.css');
-  const cssInput = await fs.readFile(cssInputPath, 'utf8');
-  const cssResult = await postcss([cssnano({ preset: 'default' })]).process(cssInput, {
-    from: cssInputPath,
-    to: cssOutputPath,
-    map: false,
-  });
-  await fs.mkdir(path.dirname(cssOutputPath), { recursive: true });
-  await fs.writeFile(cssOutputPath, cssResult.css, 'utf8');
+  try {
+    const postcss = require('postcss');
+    const cssnano = require('cssnano');
+    const { minify } = require('terser');
 
-  const jsFiles = [
-    { input: path.join(rootDir, 'js', 'script.js'), output: path.join(distDir, 'js', 'script.min.js') },
-    {
-      input: path.join(rootDir, 'js', 'theme-init.js'),
-      output: path.join(distDir, 'js', 'theme-init.min.js'),
-    },
-  ];
+    const cssInputPath = path.join(rootDir, 'css', 'style.css');
+    const cssOutputPath = path.join(distDir, 'css', 'style.min.css');
+    const cssInput = await fs.readFile(cssInputPath, 'utf8');
+    const cssResult = await postcss([cssnano({ preset: 'default' })]).process(cssInput, {
+      from: cssInputPath,
+      to: cssOutputPath,
+      map: false,
+    });
+    await fs.mkdir(path.dirname(cssOutputPath), { recursive: true });
+    await fs.writeFile(cssOutputPath, cssResult.css, 'utf8');
 
-  for (const file of jsFiles) {
-    const inputCode = await fs.readFile(file.input, 'utf8');
-    const minified = await minify(inputCode, { compress: true, mangle: true });
+    const jsFiles = [
+      { input: path.join(rootDir, 'js', 'script.js'), output: path.join(distDir, 'js', 'script.min.js') },
+      {
+        input: path.join(rootDir, 'js', 'theme-init.js'),
+        output: path.join(distDir, 'js', 'theme-init.min.js'),
+      },
+    ];
 
-    if (!minified.code) {
-      throw new Error(`Minification failed for ${file.input}`);
+    for (const file of jsFiles) {
+      const inputCode = await fs.readFile(file.input, 'utf8');
+      const minified = await minify(inputCode, { compress: true, mangle: true });
+
+      if (!minified.code) {
+        throw new Error(`Minification failed for ${file.input}`);
+      }
+
+      await fs.mkdir(path.dirname(file.output), { recursive: true });
+      await fs.writeFile(file.output, minified.code, 'utf8');
+    }
+  } catch (error) {
+    if (error.code !== 'MODULE_NOT_FOUND') {
+      throw error;
     }
 
-    await fs.mkdir(path.dirname(file.output), { recursive: true });
-    await fs.writeFile(file.output, minified.code, 'utf8');
+    const fallbackFiles = [
+      { src: path.join(rootDir, 'css', 'style.min.css'), dest: path.join(distDir, 'css', 'style.min.css') },
+      { src: path.join(rootDir, 'js', 'script.min.js'), dest: path.join(distDir, 'js', 'script.min.js') },
+      { src: path.join(rootDir, 'js', 'theme-init.min.js'), dest: path.join(distDir, 'js', 'theme-init.min.js') },
+    ];
+
+    for (const file of fallbackFiles) {
+      await fs.mkdir(path.dirname(file.dest), { recursive: true });
+      await fs.copyFile(file.src, file.dest);
+    }
   }
 }
 
