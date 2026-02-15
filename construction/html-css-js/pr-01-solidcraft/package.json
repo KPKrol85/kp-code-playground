@@ -2,13 +2,13 @@
   "name": "solidcraft-construction-website",
   "version": "1.0.0",
   "private": true,
-  "description": "SolidCraft — statyczna strona internetowa firmy budowlano-remontowej. Oferta, realizacje, opinie, FAQ oraz formularz kontaktowy.",
+"description": "SolidCraft — static front-end implementation of a construction company website (HTML, CSS, JavaScript, PostCSS).",
   "author": {
-    "name": "Kamil Król",
+     "name": "Kamil Król (KP_Code)",
     "email": "kontakt@kp-code.pl"
   },
   "homepage": "https://construction-pr-01-solidcraft.netlify.app/",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "start": "npm run dev",
     "dev": "live-server --port=15500 --open=index.html --quiet",
