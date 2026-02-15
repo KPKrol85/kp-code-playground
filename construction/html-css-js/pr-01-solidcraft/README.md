@@ -3,7 +3,7 @@
 ## Wersja polska
 
 ### Przegląd projektu
-SolidCraft to statyczny serwis portfolio firmy remontowo-budowlanej, zbudowany w HTML/CSS/JS, obejmujący stronę główną, podstrony ofertowe, dokumenty prawne, stronę 404, stronę offline i stronę potwierdzenia wysłania formularza.
+SolidCraft to statyczna implementacja front-end strony internetowej firmy remontowo-budowlanej, zrealizowana jako projekt portfolio w technologii HTML/CSS/JavaScript. Projekt obejmuje stronę główną, podstrony ofertowe, dokumenty prawne, stronę 404, stronę offline oraz stronę potwierdzenia wysłania formularza.
 
 ### Kluczowe funkcje (wyłącznie wykryte w kodzie)
 - Sekcje landing page: hero, oferta, realizacje, opinie, FAQ, kontakt.
@@ -82,7 +82,7 @@ Skrypty generują/czyszczą warianty obrazów na podstawie `scripts/images.js`.
 ## English version
 
 ### Project overview
-SolidCraft is a static portfolio website for a construction/renovation company, built in HTML/CSS/JS, including a homepage, service subpages, legal pages, a 404 page, an offline page, and a thank-you page.
+SolidCraft is a static front-end implementation of a construction/renovation company website, created as a portfolio project using HTML, CSS, and JavaScript. The project includes a homepage, service subpages, legal documents, a 404 page, an offline page, and a form confirmation page.
 
 ### Key features (only detected in code)
 - Landing sections: hero, offer, projects, testimonials, FAQ, contact.
@@ -154,4 +154,4 @@ Scripts generate/clean image variants via `scripts/images.js`.
 5. Reduce source/minified file duplication risk through release automation.
 
 ### License
-`UNLICENSED` (as declared in `package.json`).
+This project is released under the MIT License. See the `LICENSE` file for details.
