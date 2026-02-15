@@ -1,247 +1,159 @@
-# Axiom Construction — landing page firmy budowlanej (PWA)
+# Axiom Construction — dokumentacja projektu
 
-Profesjonalny landing page dla fikcyjnej firmy budowlanej, przygotowany jako projekt portfolio z naciskiem na wydajność, dostępność i produkcyjną jakość front-endu.
+## Wersja polska
 
-## Najważniejsze funkcje / highlights
+### Przegląd projektu
+Axiom Construction to wielostronicowy serwis portfolio (HTML/CSS/JS) dla firmy budowlano-remontowej. Projekt zawiera stronę główną, podstrony usług, podstrony prawne, manifest PWA, service worker oraz konfigurację deployu pod Netlify.
 
-- Responsywny layout i sekcje usług dopasowane do oferty firmy.
-- Modularny CSS i JS z osobnymi entrypointami dla DEV i PROD.
-- PWA z Service Workerem: precache zasobów, runtime caching HTML, offline fallback.
-- Security headers i CSP bez `unsafe-inline`.
-- SEO: semantyka, sitemap, robots, oraz structured data (LocalBusiness + FAQPage; bez Review).
-- Automatyczne QA (Lighthouse + Pa11y) z raportami w `reports/`.
+### Kluczowe funkcje (potwierdzone w kodzie)
+- Wielostronicowa architektura: `index.html`, podstrony `services/*.html`, `legal/*.html`, `404.html`, `offline.html`.
+- Modularny CSS z podziałem na tokeny, bazę, layout, komponenty i sekcje.
+- Modularny JavaScript (entrypoint `js/main.js`) z inicjalizacją nawigacji mobilnej, lightboxa, formularza kontaktowego, FAQ, cookies, trybu jasny/ciemny, przycisku „powrót na górę”.
+- Formularz kontaktowy Netlify (`data-netlify="true"`) z honeypotem i walidacją po stronie klienta.
+- SEO/PWA: canonicale, OpenGraph/Twitter meta, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `sw.js`.
+- Dane strukturalne JSON-LD utrzymywane jako pliki w `js/structured-data/*.json` i dołączane na stronach.
 
-## Tech stack
-
+### Stack technologiczny
 - HTML5
-- CSS3 (modularna architektura, CSS custom properties, build przez cssnano)
-- JavaScript (ES6, vanilla, build przez terser)
-- PWA (manifest + Service Worker)
-- Narzędzia QA: Lighthouse (LHCI), Pa11y
-- Netlify (deploy + headers)
+- CSS3 (Custom Properties + modularna struktura plików)
+- JavaScript ES Modules (vanilla JS)
+- Node.js tooling (build CSS/JS/obrazów, QA Lighthouse/Pa11y)
+- Netlify (`_headers`, `_redirects`)
 
-## Lokalny start (install + serve)
+### Struktura projektu (skrót)
+- `assets/` — obrazy, fonty, favicon
+- `css/` — tokeny, baza, layout, komponenty, sekcje
+- `js/` — core, components, sections, utils, structured-data
+- `dist/` — wynikowe pliki produkcyjne (`style.min.css`, `script.min.js`)
+- `services/`, `legal/` — podstrony
+- `tools/` — skrypty build
+- `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`, `_headers`, `_redirects`
 
+### Setup i uruchomienie
 1. Instalacja zależności:
    ```bash
    npm install
    ```
-2. Uruchomienie lokalnego serwera (port 8080):
-   ```bash
-   npm run serve
-   ```
-3. Otwórz w przeglądarce:
-   ```
-   http://localhost:8080
-   ```
-
-## Development vs Production
-
-**DEV entrypoints** (praca lokalna / edycja źródeł):
-- `css/main.css`
-- `js/main.js`
-
-**PROD assets** (wczytywane przez HTML):
-- `dist/style.min.css`
-- `dist/script.min.js`
-
-**Build komendy:**
-```bash
-npm run build:css
-npm run build:js
-npm run build
-```
-
-## PWA / Service Worker
-
-- **Precache**: kluczowe zasoby i shell aplikacji (CSS/JS, favicon, offline.html).
-- **Runtime caching HTML**: żądania dokumentów HTML są cachowane po udanym fetchu.
-- **Fallback offline**: w przypadku błędu sieci zwracany jest `offline.html`.
-- **Cache-first** dla CSS/JS oraz obrazów z aktualizacją w tle.
-
-Service Worker: `sw.js`.
-
-## SEO / Structured data
-
-- Dane strukturalne w `js/structured-data/`.
-- Typy: **LocalBusiness (HomeAndConstructionBusiness)** oraz **FAQPage**.
-- Brak danych typu **Review** (świadomie pominięte).
-
-## QA (Lighthouse / Pa11y)
-
-1. Uruchom lokalny serwer:
-   ```bash
-   npm run serve
-   ```
-2. Odpal QA:
-   ```bash
-   npm run qa
-   ```
-
-Dostępne komendy:
-```bash
-npm run qa:lighthouse
-npm run qa:a11y
-```
-
-Raporty zapisują się w:
-- `reports/lighthouse/`
-- `reports/pa11y/`
-
-## Deploy (Netlify)
-
-1. Build projektu:
+2. Build zasobów:
    ```bash
    npm run build
    ```
-2. Publish directory: repozytorium projektu (root).
-3. Netlify wykorzystuje pliki `_headers` i `_redirects` do konfiguracji nagłówków oraz routingu.
+3. Uruchomienie serwera lokalnego:
+   ```bash
+   npm run serve
+   ```
+4. Aplikacja lokalnie: `http://localhost:8080`
 
-## Struktura katalogów
+### Build i deployment
+- Główne artefakty produkcyjne: `dist/style.min.css`, `dist/script.min.js`.
+- Cache/security i CSP: `_headers`.
+- Reguły redirect/rewrite + custom 404: `_redirects`.
+- Routing jest oparty o statyczne ścieżki `.html`.
 
-```
-pr-02-axiom/
-├── assets/               # obrazy, fonty, ikony
-├── css/                  # modularny CSS (DEV entry)
-├── dist/                 # zminifikowane zasoby (PROD)
-├── js/                   # modularny JS (DEV entry)
-├── legal/                # podstrony prawne
-├── services/             # podstrony usług
-├── tools/                # skrypty build/opt
-├── reports/              # raporty QA (generowane)
-├── _headers              # security headers + CSP
-├── _redirects            # reguły routingu
-├── sw.js                 # Service Worker
-├── manifest.webmanifest  # PWA manifest
-├── offline.html          # offline fallback
-└── index.html            # strona główna
-```
+### Dostępność (stan aktualny)
+- Obecne: skip-link, semantyczne nagłówki, focus-visible, aria dla menu mobilnego i elementów interaktywnych, obsługa `prefers-reduced-motion`.
+- Ograniczenia wykryte w audycie:
+  - niedziałający anchor `#polityka` w sekcji zgody formularza,
+  - formularz kontaktowy zależny od JS/reCAPTCHA (bez JS wysyłka jest ograniczona).
 
-## Autor
+### SEO (stan aktualny)
+- Obecne: `meta description`, canonical, OG/Twitter, `robots.txt`, `sitemap.xml`, JSON-LD (pliki JSON).
+- Ograniczenia wykryte w audycie:
+  - JSON-LD jest osadzany przez `script type="application/ld+json" src="..."` zamiast inline,
+  - część treści „demo” (np. certyfikaty) zawiera placeholdery.
 
-Kamil Król — **KP_Code**
+### Wydajność (stan aktualny)
+- Obecne: obrazy AVIF/WEBP/JPG z `srcset`, lazy-loading, wymiary obrazów dla większości grafik, preloading fontów i CSS, service worker.
+- Ograniczenia wykryte w audycie:
+  - pojedyncze obrazy pomocnicze bez `width`/`height` (np. obraz w lightboxie),
+  - service worker cache nazwany wersją stałą (brak automatycznej strategii wersjonowania z builda).
+
+### Roadmapa
+- Naprawa krytycznych linków do certyfikatów i anchora zgody formularza.
+- Przeniesienie JSON-LD do inline `<script>`.
+- Ujednolicenie nazewnictwa CSS do pełnej konwencji BEM.
+- Dopracowanie fallbacku formularza bez JavaScript.
+- Automatyzacja walidacji linków i dostępności w CI.
+
+### Licencja
+ISC (zgodnie z `package.json`).
 
 ---
 
-# Axiom Construction — construction company landing page (PWA)
+## English version
 
-A professional landing page for a fictional construction company, built as a portfolio project with a focus on performance, accessibility, and production-ready front-end quality.
+### Project overview
+Axiom Construction is a multi-page portfolio website (HTML/CSS/JS) for a construction/renovation company. The project includes a homepage, service pages, legal pages, PWA manifest, service worker, and Netlify deployment configuration.
 
-## Key features / highlights
+### Key features (verified in code)
+- Multi-page structure: `index.html`, `services/*.html`, `legal/*.html`, `404.html`, `offline.html`.
+- Modular CSS architecture split into tokens, base, layout, components, and sections.
+- Modular JavaScript (`js/main.js`) initializing mobile navigation, lightbox, contact form, FAQ, cookies, theme toggle, and back-to-top button.
+- Netlify contact form (`data-netlify="true"`) with honeypot and client-side validation.
+- SEO/PWA: canonical tags, OpenGraph/Twitter meta, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `sw.js`.
+- JSON-LD structured data stored in `js/structured-data/*.json` and referenced by pages.
 
-- Responsive layout and service sections tailored to the company offer.
-- Modular CSS and JS with dedicated DEV and PROD entrypoints.
-- PWA with Service Worker: asset precache, runtime HTML caching, offline fallback.
-- Security headers and CSP without `unsafe-inline`.
-- SEO: semantic structure, sitemap, robots, and structured data (LocalBusiness + FAQPage; no Review).
-- Automated QA (Lighthouse + Pa11y) with reports in `reports/`.
-
-## Tech stack
-
+### Tech stack
 - HTML5
-- CSS3 (modular architecture, CSS custom properties, built with cssnano)
-- JavaScript (ES6, vanilla, built with terser)
-- PWA (manifest + Service Worker)
-- QA tooling: Lighthouse (LHCI), Pa11y
-- Netlify (deploy + headers)
+- CSS3 (Custom Properties + modular file structure)
+- JavaScript ES Modules (vanilla JS)
+- Node.js tooling (CSS/JS/images build, Lighthouse/Pa11y QA)
+- Netlify (`_headers`, `_redirects`)
 
-## Local start (install + serve)
+### Project structure (short)
+- `assets/` — images, fonts, favicon
+- `css/` — tokens, base, layout, components, sections
+- `js/` — core, components, sections, utils, structured-data
+- `dist/` — production assets (`style.min.css`, `script.min.js`)
+- `services/`, `legal/` — subpages
+- `tools/` — build scripts
+- `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`, `_headers`, `_redirects`
 
+### Setup & run
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Start local server (port 8080):
-   ```bash
-   npm run serve
-   ```
-3. Open in browser:
-   ```
-   http://localhost:8080
-   ```
-
-## Development vs Production
-
-**DEV entrypoints** (local work / source editing):
-- `css/main.css`
-- `js/main.js`
-
-**PROD assets** (loaded by HTML):
-- `dist/style.min.css`
-- `dist/script.min.js`
-
-**Build commands:**
-```bash
-npm run build:css
-npm run build:js
-npm run build
-```
-
-## PWA / Service Worker
-
-- **Precache**: core assets and app shell (CSS/JS, favicon, offline.html).
-- **Runtime HTML caching**: HTML documents are cached after a successful fetch.
-- **Offline fallback**: `offline.html` is served on network errors.
-- **Cache-first** for CSS/JS and images with background update.
-
-Service Worker: `sw.js`.
-
-## SEO / Structured data
-
-- Structured data lives in `js/structured-data/`.
-- Types: **LocalBusiness (HomeAndConstructionBusiness)** and **FAQPage**.
-- **No Review** schema is included (intentionally omitted).
-
-## QA (Lighthouse / Pa11y)
-
-1. Start a local server:
-   ```bash
-   npm run serve
-   ```
-2. Run QA:
-   ```bash
-   npm run qa
-   ```
-
-Available commands:
-```bash
-npm run qa:lighthouse
-npm run qa:a11y
-```
-
-Reports are stored in:
-- `reports/lighthouse/`
-- `reports/pa11y/`
-
-## Deploy (Netlify)
-
-1. Build the project:
+2. Build assets:
    ```bash
    npm run build
    ```
-2. Publish directory: project root.
-3. Netlify uses `_headers` and `_redirects` to configure headers and routing.
+3. Start local server:
+   ```bash
+   npm run serve
+   ```
+4. Open: `http://localhost:8080`
 
-## Directory structure
+### Build & deployment notes
+- Production artifacts: `dist/style.min.css`, `dist/script.min.js`.
+- Cache/security + CSP: `_headers`.
+- Redirect/rewrite rules + custom 404: `_redirects`.
+- Routing uses static `.html` paths.
 
-```
-pr-02-axiom/
-├── assets/               # images, fonts, icons
-├── css/                  # modular CSS (DEV entry)
-├── dist/                 # minified assets (PROD)
-├── js/                   # modular JS (DEV entry)
-├── legal/                # legal subpages
-├── services/             # service subpages
-├── tools/                # build/opt scripts
-├── reports/              # QA reports (generated)
-├── _headers              # security headers + CSP
-├── _redirects            # routing rules
-├── sw.js                 # Service Worker
-├── manifest.webmanifest  # PWA manifest
-├── offline.html          # offline fallback
-└── index.html            # home page
-```
+### Accessibility notes (current state)
+- Present: skip link, semantic heading hierarchy, focus-visible styles, ARIA for mobile menu and interactive controls, `prefers-reduced-motion` support.
+- Audit-detected limitations:
+  - broken `#polityka` anchor in form consent text,
+  - contact form flow is JS/reCAPTCHA dependent (limited no-JS submission path).
 
-## Author
+### SEO notes (current state)
+- Present: `meta description`, canonical, OG/Twitter, `robots.txt`, `sitemap.xml`, JSON-LD files.
+- Audit-detected limitations:
+  - JSON-LD is linked via `script type="application/ld+json" src="..."` instead of inline,
+  - some demo content (e.g., certificates) still contains placeholders.
 
-Kamil Król — **KP_Code**
+### Performance notes (current state)
+- Present: AVIF/WEBP/JPG responsive images with `srcset`, lazy loading, dimensions for most images, font/CSS preload, service worker.
+- Audit-detected limitations:
+  - selected utility images are missing explicit `width`/`height` (e.g., lightbox image),
+  - service worker uses static cache naming (no automatic cache versioning from build metadata).
+
+### Roadmap
+- Fix critical certificate links and consent anchor.
+- Move JSON-LD to inline `<script>` blocks.
+- Align CSS naming with stricter BEM consistency.
+- Improve no-JS contact-form fallback.
+- Add automated link and accessibility checks in CI.
+
+### License
+ISC (as declared in `package.json`).
