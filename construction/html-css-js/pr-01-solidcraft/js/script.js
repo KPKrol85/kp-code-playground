@@ -6,7 +6,7 @@
    = Last Update: 2026-01-01
    = Version: 1.00
    ================================
-   = CSS Stylesheet
+   = Main JavaScript for SolidCraft interactions
    = Structure overview
    ================================
    = 00 - Header height

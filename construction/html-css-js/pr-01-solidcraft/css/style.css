@@ -6,7 +6,7 @@
    = Last Update: 2026-01-01
    = Version: 1.00
    ==================================
-   = CSS Stylesheet
+   = Main stylesheet for the SolidCraft website
    = Structure overview
    ==================================
    = 00 - Global variables
@@ -22,11 +22,11 @@
    = 10 - Footer
    = 11 - Subpages
    = 12 - Subpages doc
-   = 13 - Aanimations & Motion
+   = 13 - Animations & Motion
    = 14 - Lightbox
    = 15 - Global buttons
    = 16 - Theme overrides
-   = 98 - Print sytyles
+   = 98 - Print styles
    = 99 - Feature support & fallbacks
    ================================== */
 
