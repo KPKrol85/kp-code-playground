@@ -1,157 +1,135 @@
-# SolidCraft — Portfolio Front-End (Audyt techniczny)
+# SolidCraft — Portfolio Front-End
 
 ## Wersja polska
 
 ### Przegląd projektu
-SolidCraft to statyczna implementacja front-end strony internetowej firmy remontowo-budowlanej, zrealizowana jako projekt portfolio w technologii HTML/CSS/JavaScript. Projekt obejmuje stronę główną, podstrony ofertowe, dokumenty prawne, stronę 404, stronę offline oraz stronę potwierdzenia wysłania formularza.
+SolidCraft to statyczny serwis portfolio firmy remontowo-budowlanej oparty o HTML, CSS i JavaScript. Projekt zawiera stronę główną, podstrony usługowe, strony dokumentów, stronę 404, stronę offline oraz stronę potwierdzenia wysłania formularza.
 
-### Kluczowe funkcje (wyłącznie wykryte w kodzie)
-- Sekcje landing page: hero, oferta, realizacje, opinie, FAQ, kontakt.
+### Kluczowe funkcje (potwierdzone w kodzie)
+- Strona główna z sekcjami: hero, oferta, realizacje, opinie, FAQ i kontakt.
 - Podstrony usług: łazienki, malowanie, kafelkowanie, elektryka, hydraulika, remonty.
-- Formularz kontaktowy Netlify (`netlify`, `netlify-honeypot`) z walidacją HTML + walidacją JS i honeypotem.
-- Obsługa motywu jasny/ciemny z inicjalizacją motywu przed renderem (`theme-init.min.js`) i ręcznym przełącznikiem.
-- Skip link, focus styles, nawigacja mobilna z `aria-expanded`, dropdown „Oferta”, lightbox galerii.
-- Progressive Web App: `manifest.webmanifest`, service worker (`sw.js`) i rejestracja (`js/sw-register.js`).
-- SEO meta i Open Graph na stronach publicznych, pliki JSON-LD w `assets/jsonld/*.json`, `sitemap.xml` i `robots.txt`.
+- Formularz kontaktowy Netlify (`netlify`, `netlify-honeypot`) z natywną walidacją HTML oraz walidacją JS.
+- Przełączanie motywu jasny/ciemny z inicjalizacją motywu przed renderem (`theme-init.js`).
+- Komponenty dostępności: skip link, focus styles, `aria-expanded` dla menu, obsługa klawiatury w menu/dropdown.
+- PWA: `manifest.webmanifest`, `sw.js`, rejestracja SW przez `js/sw-register.js`.
+- SEO i dane strukturalne: canonical, OpenGraph/Twitter, inline JSON-LD, `robots.txt`, `sitemap.xml`.
 
-### Stack technologiczny
+### Tech stack
 - HTML5
-- CSS3 + PostCSS (autoprefixer, cssnano, postcss-preset-env)
+- CSS3 (tokeny design systemu, BEM, warstwa layout/components/utilities)
 - Vanilla JavaScript
-- Narzędzia deweloperskie: live-server, prettier, terser, sharp
-- Hosting/deploy: Netlify-style pliki `_headers` i `_redirects`
+- Node.js tooling: PostCSS, cssnano, terser, sharp, live-server, prettier
+- Konfiguracja deploy: Netlify (`netlify.toml`, `_headers`, `_redirects`)
 
 ### Struktura projektu (skrót)
 - `index.html` — strona główna.
-- `oferta/*.html` — podstrony oferty.
-- `doc/*.html` — polityka prywatności, regulamin, cookies.
-- `css/style.css`, `css/style.min.css` — style źródłowe i zminifikowane.
-- `js/script.js`, `js/script.min.js`, `js/theme-init.js`, `js/sw-register.js`.
-- `assets/` — obrazy, fonty, favicony, JSON-LD.
-- `sw.js`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `_headers`, `_redirects`.
+- `oferta/*.html` — podstrony usługowe.
+- `doc/*.html` — dokumenty prawne.
+- `thank-you/index.html`, `404.html`, `offline.html` — strony systemowe.
+- `css/style.css`, `css/style.min.css` — style.
+- `js/script.js`, `js/theme-init.js`, `js/sw-register.js` — logika UI i PWA.
+- `sw.js`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml` — warstwa SEO/PWA.
 
 ### Setup i uruchomienie
 ```bash
 npm install
 npm run dev
 ```
-Domyślnie uruchamiany jest `live-server` na porcie `15500`.
 
 ### Build i deployment
 ```bash
 npm run build
 ```
-Buduje minifikaty CSS/JS i uruchamia formatowanie.
+Build tworzy katalog `dist`, kopiuje projekt i podmienia referencje HTML na pliki zminifikowane (`style.min.css`, `script.min.js`, `theme-init.min.js`).
 
-Dodatkowo:
-```bash
-npm run images:build
-npm run images:clean
-```
-Skrypty generują/czyszczą warianty obrazów na podstawie `scripts/images.js`.
+### Accessibility notes
+- Zaimplementowane: skip link, focus-visible, obsługa `prefers-reduced-motion`, aria dla menu i dropdownów, fallback mapy przez `noscript`.
+- Ograniczenie wykryte w audycie: przy szerokości mobilnej i wyłączonym JS menu główne pozostaje ukryte (`display: none`), co obniża użyteczność nawigacji.
 
-### Notatki dostępności (stan aktualny)
-- Zaimplementowano skip link (`.skip`) i focus-visible.
-- W kodzie są media queries `prefers-reduced-motion` oraz fallbacki JS respektujące redukcję ruchu.
-- Nawigacja mobilna i dropdown mają obsługę `aria-expanded` oraz zachowanie klawiaturowe (Escape/Tab).
-- Formularz ma etykiety, `required`, komunikaty błędów i aria-live.
-- Istnieją jednak wykryte odchylenia (szczegóły w `AUDIT.md`), m.in. martwe kotwice w `404.html`.
+### SEO notes
+- Canonical i `og:url` są spójne na analizowanych stronach.
+- JSON-LD jest osadzony inline i składniowo poprawny.
+- `robots.txt` i `sitemap.xml` są obecne i wskazują domenę produkcyjną Netlify.
 
-### Notatki SEO (stan aktualny)
-- Canonical i `og:url` są spójne na stronach, które je deklarują.
-- Występuje krytyczna niespójność indeksowania: `robots.txt` blokuje crawl (`Disallow: /`), a HTML ma meta `index, follow`.
-- JSON-LD jest podłączone przez `<script type="application/ld+json" src="...">`, co nie jest standardowo przetwarzane jako dane strukturalne przez wyszukiwarki.
-
-### Notatki wydajnościowe (stan aktualny)
-- Obrazy mają warianty AVIF/WebP/JPG i szeroko używają `loading="lazy"`.
-- Preloadowane są fonty `.woff2`; `font-display: swap` jest ustawione.
-- Service Worker stosuje strategię cache-first dla wielu zasobów, bez ograniczeń typu zasobu i bez walidacji odpowiedzi (`res.ok`, status), co może utrwalać błędne odpowiedzi.
+### Performance notes
+- Obrazy mają warianty AVIF/WebP/JPG oraz `loading="lazy"` poza krytycznymi zasobami.
+- Fonty WOFF2 są preloadowane, a `font-display: swap` ustawione.
+- Service Worker używa cache (network-first dla HTML, cache-first dla assetów), ale rejestracja SW wymaga korekty ścieżki, by działała stabilnie na podstronach.
 
 ### Roadmapa
-1. Uspójnić politykę indeksowania (`robots.txt`, `_headers`, meta robots) zgodnie z celem produkcyjnym.
-2. Przenieść JSON-LD inline do dokumentów HTML.
-3. Naprawić błędne ścieżki i kotwice (404 + cookie banner na homepage).
-4. Utwardzić SW (filtrowanie requestów, cache policy per typ, guards dla nieudanych odpowiedzi).
-5. Ograniczyć duplikację między plikami źródłowymi i zminifikowanymi przez automatyzację release.
+1. Naprawić rejestrację Service Workera na wszystkich ścieżkach.
+2. Dodać fallback no-JS dla mobilnej nawigacji.
+3. Zautomatyzować test linków/anchorów i walidację JSON-LD w CI.
+4. Dodać `noindex` dla strony 404.
+5. Ograniczyć ręczne utrzymywanie plików minifikowanych przez pełny pipeline release.
 
 ### Licencja
-`UNLICENSED` (zgodnie z `package.json`).
+MIT (`package.json`).
 
 ---
 
 ## English version
 
 ### Project overview
-SolidCraft is a static front-end implementation of a construction/renovation company website, created as a portfolio project using HTML, CSS, and JavaScript. The project includes a homepage, service subpages, legal documents, a 404 page, an offline page, and a form confirmation page.
+SolidCraft is a static portfolio website for a construction/renovation company built with HTML, CSS, and JavaScript. The project includes a homepage, service subpages, legal pages, a 404 page, an offline page, and a thank-you page for form submission.
 
-### Key features (only detected in code)
-- Landing sections: hero, offer, projects, testimonials, FAQ, contact.
-- Service subpages: bathrooms, painting, tiling, electrical, plumbing, renovations.
-- Netlify contact form (`netlify`, `netlify-honeypot`) with HTML validation + JS validation and honeypot.
-- Light/dark theme with pre-render theme initialization (`theme-init.min.js`) and manual toggle.
-- Skip link, visible focus styles, mobile nav with `aria-expanded`, “Offer” dropdown, gallery lightbox.
-- Progressive Web App: `manifest.webmanifest`, service worker (`sw.js`) and registration (`js/sw-register.js`).
-- SEO metadata and Open Graph on public pages, JSON-LD files in `assets/jsonld/*.json`, `sitemap.xml`, and `robots.txt`.
+### Key features (confirmed in code)
+- Homepage sections: hero, services, projects, testimonials, FAQ, contact.
+- Service pages: bathrooms, painting, tiling, electrical, plumbing, renovations.
+- Netlify contact form (`netlify`, `netlify-honeypot`) with native HTML validation and JS validation.
+- Light/dark theme switching with pre-render theme init (`theme-init.js`).
+- Accessibility features: skip link, visible focus, `aria-expanded` menu states, keyboard interactions.
+- PWA layer: `manifest.webmanifest`, `sw.js`, SW registration via `js/sw-register.js`.
+- SEO and structured data: canonical, OpenGraph/Twitter tags, inline JSON-LD, `robots.txt`, `sitemap.xml`.
 
 ### Tech stack
 - HTML5
-- CSS3 + PostCSS (autoprefixer, cssnano, postcss-preset-env)
+- CSS3 (design tokens, BEM, layout/components/utilities separation)
 - Vanilla JavaScript
-- Dev tooling: live-server, prettier, terser, sharp
-- Hosting/deploy: Netlify-style `_headers` and `_redirects`
+- Node.js tooling: PostCSS, cssnano, terser, sharp, live-server, prettier
+- Deploy config: Netlify (`netlify.toml`, `_headers`, `_redirects`)
 
 ### Project structure (short)
 - `index.html` — homepage.
-- `oferta/*.html` — service pages.
-- `doc/*.html` — privacy policy, terms, cookies.
-- `css/style.css`, `css/style.min.css` — source and minified styles.
-- `js/script.js`, `js/script.min.js`, `js/theme-init.js`, `js/sw-register.js`.
-- `assets/` — images, fonts, favicons, JSON-LD.
-- `sw.js`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `_headers`, `_redirects`.
+- `oferta/*.html` — service subpages.
+- `doc/*.html` — legal pages.
+- `thank-you/index.html`, `404.html`, `offline.html` — system pages.
+- `css/style.css`, `css/style.min.css` — styles.
+- `js/script.js`, `js/theme-init.js`, `js/sw-register.js` — UI and PWA logic.
+- `sw.js`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml` — SEO/PWA layer.
 
 ### Setup & run
 ```bash
 npm install
 npm run dev
 ```
-Default dev server uses `live-server` on port `15500`.
 
-### Build & deployment
+### Build & deployment notes
 ```bash
 npm run build
 ```
-Builds minified CSS/JS and runs formatting.
+The build creates `dist`, copies project files, and rewrites HTML references to minified assets (`style.min.css`, `script.min.js`, `theme-init.min.js`).
 
-Additional image workflows:
-```bash
-npm run images:build
-npm run images:clean
-```
-Scripts generate/clean image variants via `scripts/images.js`.
+### Accessibility notes
+- Implemented: skip link, focus-visible, `prefers-reduced-motion`, ARIA menu/dropdown states, `noscript` map fallback.
+- Known limitation from audit: on mobile width with JavaScript disabled, the main navigation remains hidden (`display: none`), reducing navigation usability.
 
-### Accessibility notes (current state)
-- Skip link (`.skip`) and focus-visible styles are implemented.
-- `prefers-reduced-motion` support exists in CSS and JS behavior fallbacks.
-- Mobile navigation and dropdown include `aria-expanded` and keyboard behavior (Escape/Tab).
-- Contact form includes labels, `required`, error messaging, and aria-live feedback.
-- There are still identified deviations (see `AUDIT.md`), including dead anchors in `404.html`.
+### SEO notes
+- Canonical and `og:url` are aligned across reviewed pages.
+- JSON-LD is embedded inline and syntactically valid.
+- `robots.txt` and `sitemap.xml` are present and point to the production Netlify domain.
 
-### SEO notes (current state)
-- Canonical and `og:url` are aligned on pages that declare both.
-- There is a critical indexing conflict: `robots.txt` blocks crawling (`Disallow: /`) while HTML uses `index, follow` meta directives.
-- JSON-LD is referenced via `<script type="application/ld+json" src="...">`, which is not standard for structured-data parsing.
-
-### Performance notes (current state)
-- Images provide AVIF/WebP/JPG variants and broadly use `loading="lazy"`.
-- `.woff2` fonts are preloaded; `font-display: swap` is configured.
-- Service Worker uses broad cache-first behavior without robust response guards (`res.ok`, status), which can preserve invalid responses.
+### Performance notes
+- Images use AVIF/WebP/JPG variants and `loading="lazy"` outside critical resources.
+- WOFF2 fonts are preloaded and `font-display: swap` is configured.
+- Service Worker caching strategy is present (network-first for HTML, cache-first for static assets), but SW registration path should be corrected for stable subpage behavior.
 
 ### Roadmap
-1. Align indexing policy (`robots.txt`, `_headers`, robots meta) with production intent.
-2. Move JSON-LD into inline blocks in HTML.
-3. Fix broken paths and anchors (404 + homepage cookie banner).
-4. Harden SW strategy (request filtering, cache policy by type, failed-response guards).
-5. Reduce source/minified file duplication risk through release automation.
+1. Fix Service Worker registration path across all routes.
+2. Add no-JS fallback for mobile navigation.
+3. Automate link/anchor checks and JSON-LD validation in CI.
+4. Add `noindex` for the 404 page.
+5. Reduce manual minified file maintenance via a full release pipeline.
 
 ### License
-This project is released under the MIT License. See the `LICENSE` file for details.
+MIT (`package.json`).
