@@ -1,7 +1,8 @@
 /* ===== Service Worker — SolidCraft ===== */
 
 const CACHE_PREFIX = "solidcraft-";
-const CACHE_NAME = `${CACHE_PREFIX}v1.5.4`;
+const CACHE_VERSION = "v2";
+const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 const ASSETS = [
   "/",
@@ -30,6 +31,16 @@ const ASSETS = [
   "/assets/img/favicon/web-app-manifest-512x512.png",
 ];
 
+const STATIC_DESTINATIONS = new Set([
+  "style",
+  "script",
+  "font",
+  "image",
+  "manifest",
+]);
+
+const isCacheableResponse = (response) => response && response.ok;
+
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS)));
   self.skipWaiting();
@@ -50,31 +61,57 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
+  const url = new URL(req.url);
+  const isSameOrigin = url.origin === self.location.origin;
+
+  // Do not cache non-GET or non-critical cross-origin requests.
+  if (req.method !== "GET") return;
+  if (!isSameOrigin) return;
+
   const isHTML =
     req.mode === "navigate" || req.headers.get("accept")?.includes("text/html");
+  const isStaticAsset =
+    STATIC_DESTINATIONS.has(req.destination) ||
+    /\.(?:css|js|mjs|png|jpg|jpeg|gif|svg|webp|avif|ico|woff2?|ttf|otf|eot|webmanifest)$/i.test(
+      url.pathname
+    );
 
+  // HTML: network-first, then cache, then offline fallback.
   if (isHTML) {
     event.respondWith(
-      caches.match(req, { ignoreSearch: true }).then((cached) => {
-        if (cached) return cached;
-        return fetch(req)
-          .then((res) => {
+      fetch(req)
+        .then((res) => {
+          if (isCacheableResponse(res)) {
             caches.open(CACHE_NAME).then((c) => c.put(req, res.clone()));
-            return res;
-          })
-          .catch(() => caches.match("/offline.html"));
+          }
+          return res;
+        })
+        .catch(() =>
+          caches
+            .match(req, { ignoreSearch: true })
+            .then((cached) => cached || caches.match("/offline.html"))
+        )
+    );
+    return;
+  }
+
+  // Static assets: cache-first, then network.
+  if (isStaticAsset) {
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        if (cached) return cached;
+
+        return fetch(req).then((res) => {
+          if (isCacheableResponse(res)) {
+            caches.open(CACHE_NAME).then((c) => c.put(req, res.clone()));
+          }
+          return res;
+        });
       })
     );
     return;
   }
 
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((res) => {
-        caches.open(CACHE_NAME).then((c) => c.put(req, res.clone()));
-        return res;
-      });
-    })
-  );
+  // Same-origin non-static GET requests: network only.
+  event.respondWith(fetch(req));
 });
