@@ -75,7 +75,7 @@ Skrypty generują/czyszczą warianty obrazów na podstawie `scripts/images.js`.
 5. Ograniczyć duplikację między plikami źródłowymi i zminifikowanymi przez automatyzację release.
 
 ### Licencja
-Projekt udostępniony na licencji MIT. Zobacz plik `LICENSE`.
+`UNLICENSED` (zgodnie z `package.json`).
 
 ---
 
