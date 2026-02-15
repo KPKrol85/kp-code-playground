@@ -882,6 +882,12 @@ h2 + .lead {
     display: flex;
     animation: menuIn 0.18s ease both;
   }
+  .no-js .nav-menu {
+    display: flex;
+  }
+  .no-js .nav-toggle {
+    display: none;
+  }
   .nav-menu > li {
     width: 100%;
     align-items: stretch;

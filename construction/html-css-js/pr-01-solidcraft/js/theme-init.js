@@ -1,6 +1,9 @@
 (() => {
+  const root = document.documentElement;
+  root.classList.remove("no-js");
+  root.classList.add("js");
+
   try {
-    const root = document.documentElement;
     const stored = localStorage.getItem("theme");
 
     const theme =
