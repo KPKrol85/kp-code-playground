@@ -1,0 +1,30 @@
+name: Local Link Check (SolidCraft)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'construction/html-css-js/pr-01-solidcraft/**'
+      - 'scripts/check-links-local.mjs'
+      - '.github/workflows/link-check.yml'
+  pull_request:
+    paths:
+      - 'construction/html-css-js/pr-01-solidcraft/**'
+      - 'scripts/check-links-local.mjs'
+      - '.github/workflows/link-check.yml'
+
+jobs:
+  link_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate local links, assets, and fragments
+        run: node scripts/check-links-local.mjs --root "construction/html-css-js/pr-01-solidcraft"
