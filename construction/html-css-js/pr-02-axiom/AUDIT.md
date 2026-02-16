@@ -1,96 +1,69 @@
-# AUDIT — Axiom Construction (senior front-end review)
+# AUDIT — Axiom Construction (Senior Front-End Review)
 
 ## 1. Executive summary
-Projekt ma dojrzałą bazę techniczną: modularny CSS/JS, wielostronicową strukturę, poprawne podstawy SEO/PWA, sensowną semantykę oraz rozbudowane mechanizmy UI (menu mobilne, lightbox, formularz, cookies, theme toggle).
+Projekt ma dojrzałą bazę front-endową: modularny CSS/JS, poprawne wykorzystanie tokenów i wielostronicową strukturę gotową do statycznego deploymentu. Audyt nie wykrył aktywnych błędów klasy P0 w aktualnym stanie kodu. Najważniejsze obszary do dopracowania dotyczą spójności SEO między wszystkimi podstronami, strategii cache SW dla dokumentów HTML oraz dalszego porządkowania architektury utrzymaniowej.
 
-W obecnym stanie do naprawy wymagane są dwa realne problemy klasy P0: niedziałające linki do dokumentów certyfikatów oraz błędny anchor w formularzu kontaktowym. Dodatkowo występują istotne obszary P1 dotyczące jakości SEO (JSON-LD), no-JS baseline formularza i spójności architektonicznej.
-
----
-
-## 2. P0 — Critical risks
-
-### P0-1: Niedziałające linki do plików certyfikatów
-- **Impact:** użytkownik trafia na 404 z podstrony legalnej; spadek wiarygodności i jakości UX; ryzyko odrzucenia portfolio w review produkcyjnym.
-- **Evidence:** `legal/certyfikaty.html` odwołuje się do `../assets/certyfikaty/*.pdf|*.jpg`, ale katalog `assets/certyfikaty` nie istnieje w repozytorium. Przykładowe odwołania: `sep-e.pdf`, `sep-d.pdf`, `f-gazy.pdf`, `bhp.pdf`, `etics.pdf`. 
-- **Fix:** dodać brakujące pliki do `assets/certyfikaty/` **albo** usunąć linki i zastąpić je neutralnym komunikatem (`Dokument na życzenie`) do czasu dostarczenia zasobów.
-- **Effort:** **S**
-
-### P0-2: Uszkodzony link kotwicy w zgodzie formularza
-- **Impact:** nawigacja kontekstowa w formularzu jest błędna (klik w „Polityka prywatności” nie prowadzi do celu), co obniża czytelność zgody i może być traktowane jako błąd dostępności/UX.
-- **Evidence:** w `index.html` użyto `href="#polityka"`, ale w dokumencie nie ma elementu o `id="polityka"`.
-- **Fix:** podmienić link na realny adres dokumentu, np. `legal/polityka-prywatnosci.html` (lub dodać rzeczywisty anchor, jeśli intencją była nawigacja wewnętrzna).
-- **Effort:** **S**
-
----
+## 2. P0 — Critical risks (real issues only)
+Brak aktywnych ryzyk klasy **P0** wykrytych w analizowanym katalogu.
 
 ## 3. Strengths
-- Dobra separacja warstw CSS: tokeny, baza, layout, komponenty, sekcje.
-- Rozsądny podział JS na `core/components/sections/utils`.
-- Responsywne obrazy z AVIF/WEBP/JPG i `srcset`.
-- Obecny skip-link, focus-visible, aria-expanded/aria-current, obsługa `Escape` i fokusu w menu/lightbox.
-- Obecne elementy deployment/PWA: `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`.
-
----
+- Spójna, warstwowa architektura CSS (`tokens`, `base`, `layout`, `components`, `sections`) i centralny punkt wejścia `css/main.css`.
+- Dobre podstawy dostępności: skip link, semantyczne nagłówki, `aria-expanded`/`aria-current`, focus-visible, obsługa `prefers-reduced-motion`.
+- Rozsądny podział kodu JS na domeny odpowiedzialności (`core/components/sections/utils`) i prosty bootstrap (`initApp`).
+- Dobrze przygotowane media: formaty AVIF/WEBP/JPG, `srcset/sizes`, lazy loading i atrybuty wymiarów dla większości grafik.
+- Kompletna baza SEO/deploy/PWA: canonicale, robots, sitemap, JSON-LD, `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`.
 
 ## 4. P1 — 5 improvements worth doing next
 
-### 1) JSON-LD inline zamiast `src` w tagu `application/ld+json`
-- **Reason:** obecnie dane strukturalne są referowane zewnętrznie (`<script type="application/ld+json" src="...">`), co bywa mniej niezawodne dla parserów SEO.
-- **Suggested improvement:** wstrzykiwać JSON-LD inline na każdej stronie (build-time include lub statyczne osadzenie treści).
+### 1) Ujednolicenie OpenGraph na `success.html`
+- **Reason:** `success.html` ma canonical i JSON-LD, ale brak `og:url`, co obniża spójność udostępnień social względem pozostałych podstron.
+- **Suggested improvement:** dodać `meta property="og:url"` zgodny z canonical i utrzymywać checklistę meta dla wszystkich szablonów.
 
-### 2) No-JS baseline formularza kontaktowego
-- **Reason:** formularz jest zależny od walidacji JS i reCAPTCHA; przy wyłączonym JS ścieżka wysyłki jest ograniczona.
-- **Suggested improvement:** zapewnić pełny fallback bez JS (np. serwerowa walidacja + honeypot + alternatywna ochrona antyspamowa).
+### 2) Wersjonowanie cache dokumentów HTML w service workerze
+- **Reason:** SW wersjonuje cache statyczny (`CACHE_NAME` z rewizją), ale `HTML_CACHE` ma stałą nazwę (`html-pages-v1`), co utrudnia pełne unieważnianie starego HTML po deployu.
+- **Suggested improvement:** włączyć rewizję również dla cache HTML i czyścić starsze warianty analogicznie do cache statycznego.
 
-### 3) Spójność architektury nazw klas (BEM)
-- **Reason:** struktura jest modularna, ale nazewnictwo klas jest mieszane (BEM + klasy ogólne), co utrudnia utrzymanie konsekwencji na większą skalę.
-- **Suggested improvement:** dodać jawny standard naming convention i doprowadzić nowe/kluczowe komponenty do jednego wzorca.
+### 3) Redukcja duplikacji sekcji `<head>` między podstronami
+- **Reason:** metadane są utrzymywane ręcznie na wielu stronach, co zwiększa koszt zmian i ryzyko niespójności (przykład: różnice OG między stronami).
+- **Suggested improvement:** zastosować build-time generator/templating dla powtarzalnych fragmentów head.
 
-### 4) Uporządkowanie treści demo na stronach legal
-- **Reason:** sekcja certyfikatów zawiera placeholdery (`[NR-DOKUMENTU]`, `[DD.MM.RRRR]`), co osłabia produkcyjny charakter portfolio.
-- **Suggested improvement:** zastąpić placeholdery realistycznym contentem lub oznaczyć sekcję jako „przykładową” bez martwych odwołań.
+### 4) Doprecyzowanie konwencji BEM vs utility classes
+- **Reason:** architektura jest poprawna, ale widoczne jest mieszanie klas blokowych i utility bez formalnej reguły granicznej.
+- **Suggested improvement:** dodać krótki standard nazewnictwa (co jest utility, co jest blokiem BEM, jak oznaczać modyfikatory).
 
-### 5) Precyzyjniejsza polityka cachowania SW
-- **Reason:** cache naming oparty o stałą wersję wymaga ręcznej aktualizacji; łatwo o niekontrolowane stany cache po deployu.
-- **Suggested improvement:** dodać wersjonowanie cache generowane w buildzie (hash/revision) oraz regułę czyszczenia wszystkich cache poprzednich wersji.
-
----
+### 5) Uzupełnienie wymiarów dla dynamicznego obrazu lightboxa
+- **Reason:** `img.lb__img` tworzony dla lightboxa nie ma stałych `width/height`; może powodować lokalne CLS podczas otwarcia podglądu.
+- **Suggested improvement:** ustawić domyślny ratio kontenera i/lub dynamicznie przypisywać `width`/`height` na podstawie metadanych obrazu.
 
 ## 5. Future enhancements — 5 realistic ideas
-1. Dodać automatyczne testy linków/anchorów w CI (np. html-validate + custom checker).
-2. Wprowadzić visual regression dla kluczowych podstron (homepage + 2 podstrony usługowe).
-3. Dodać `WebPage`/`BreadcrumbList` schema dla wszystkich podstron usług i legal.
-4. Rozszerzyć analitykę o event taxonomy dla CTA (kontakt, call, mapa, formularz).
-5. Dodać audyt bundle size do pipeline (`build budget`) i alarm przy regresji.
-
----
+1. Dodać automatyczny check linków lokalnych i anchorów do CI.
+2. Dodać regresję wizualną dla strony głównej + minimum 2 podstron usług.
+3. Rozszerzyć structured data o `Organization`/`WebSite` z centralnym `@id` współdzielonym między stronami.
+4. Dodać testy smoke dla krytycznych ścieżek klawiaturowych (menu mobilne, formularz, lightbox).
+5. Dodać budżety wydajności (CSS/JS/obrazy) z progiem fail w pipeline.
 
 ## 6. Compliance checklist (pass / fail)
 - **headings valid:** **PASS**
-- **no broken links:** **FAIL** (linki do `assets/certyfikaty/*` nie istnieją; anchor `#polityka` nie istnieje)
-- **no console.log:** **FAIL** (`console.log` w skrypcie narzędziowym `tools/images/build-images.mjs`)
+- **no broken links:** **PASS**
+- **no console.log:** **FAIL** (wykryte `console.log` w skryptach narzędziowych builda)
 - **aria attributes valid:** **PASS**
-- **images have width/height:** **FAIL** (np. `img.lb__img` w lightboxie bez wymiarów)
-- **no-JS baseline usable:** **FAIL** (formularz kontaktowy ma ograniczoną ścieżkę bez JS/reCAPTCHA)
+- **images have width/height:** **FAIL** (`img.lb__img` bez jawnych wymiarów)
+- **no-JS baseline usable:** **PASS** (formularz zachowuje natywny `POST` i komunikaty `<noscript>`)
 - **sitemap present (if expected):** **PASS**
 - **robots present:** **PASS**
 - **OG image exists:** **PASS**
-- **JSON-LD valid:** **PASS** (pliki JSON poprawne składniowo)
-
----
+- **JSON-LD valid:** **PASS**
 
 ## 7. Architecture Score (0–10)
-- **BEM consistency:** 7.0/10
-- **token usage:** 8.5/10
-- **accessibility:** 7.5/10
-- **performance:** 8.0/10
-- **maintainability:** 7.5/10
+- **BEM consistency:** 8.0/10
+- **token usage:** 8.8/10
+- **accessibility:** 8.4/10
+- **performance:** 8.2/10
+- **maintainability:** 8.0/10
 
-**Overall Architecture Score: 7.7 / 10**
-
----
+**Overall Architecture Score: 8.3 / 10**
 
 ## 8. Senior rating (1–10)
-**Senior rating: 7.5 / 10**
+**Senior rating: 8.2 / 10**
 
-Projekt jest technicznie solidny i ma dobrą bazę pod portfolio produkcyjne, ale wymaga domknięcia krytycznych detali jakościowych (broken links/anchor) oraz dopracowania warstwy SEO/no-JS, aby spełnić standard „production-grade without caveats”.
+Projekt prezentuje poziom profesjonalny i jest przekonującym portfolio piece dla front-endu statycznego. Aktualne braki mają charakter głównie porządkujący (spójność SEO i utrzymaniowość), a nie blokujący produkcyjnie.
