@@ -1,7 +1,8 @@
 const REVISION = "64c6e7ec003fdb92";
 const CACHE_PREFIX = "axiom-static-";
 const CACHE_NAME = `${CACHE_PREFIX}${REVISION}`;
-const HTML_CACHE = "html-pages-v1";
+const HTML_CACHE_PREFIX = "html-pages-";
+const HTML_CACHE_NAME = `${HTML_CACHE_PREFIX}${REVISION}`;
 const ASSETS = ["/","/offline.html","/dist/style.min.css","/dist/script.min.js","/manifest.webmanifest","/assets/img/favicon/favicon.svg","/assets/img/favicon/favicon-96x96.png","/assets/img/favicon/web-app-manifest-192x192.png","/assets/img/favicon/web-app-manifest-512x512.png","/assets/img/favicon/web-app-manifest-1024x1024.png","/assets/img/favicon/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {
@@ -15,6 +16,7 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         keys
           .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+          .concat(keys.filter((key) => key.startsWith(HTML_CACHE_PREFIX) && key !== HTML_CACHE_NAME))
           .map((key) => caches.delete(key))
       )
     )
@@ -31,7 +33,7 @@ self.addEventListener("fetch", (event) => {
         .then((res) => {
           if (res && res.status === 200) {
             const copy = res.clone();
-            caches.open(HTML_CACHE).then((c) => c.put(req, copy));
+            caches.open(HTML_CACHE_NAME).then((c) => c.put(req, copy));
           }
           return res;
         })
