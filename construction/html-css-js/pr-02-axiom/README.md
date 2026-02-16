@@ -3,52 +3,39 @@
 ## Wersja polska
 
 ### Przegląd projektu
-Axiom Construction to wielostronicowy serwis portfolio (HTML/CSS/JS) dla firmy budowlano-remontowej. Projekt zawiera stronę główną, podstrony usługowe i prawne, stronę sukcesu formularza, obsługę offline, manifest PWA, service worker oraz konfigurację deploymentu statycznego.
+Axiom Construction to wielostronicowy serwis portfolio (HTML/CSS/JS) dla firmy budowlano-remontowej. Projekt obejmuje stronę główną, podstrony usługowe i prawne, stronę offline, stronę 404, stronę sukcesu formularza oraz konfigurację deployu statycznego (Netlify-compatible).
 
-### Kluczowe funkcje (potwierdzone w repozytorium)
+### Kluczowe funkcje
 - Wielostronicowa struktura: `index.html`, `services/*.html`, `legal/*.html`, `404.html`, `offline.html`, `success.html`.
-- Modularny CSS: tokeny + base + layout + components + sections (`css/main.css` + katalogi warstw).
-- Modularny JavaScript (ES modules): `js/core`, `js/components`, `js/sections`, `js/utils`.
-- Formularz kontaktowy z Netlify Forms (`data-netlify="true"`), honeypotem i walidacją po stronie klienta.
-- SEO i social metadata: canonical, robots meta, OpenGraph, Twitter cards.
-- Structured data JSON-LD osadzane inline na stronach.
-- PWA i deploy: `manifest.webmanifest`, `sw.js`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`.
+- Architektura CSS warstwowa: tokeny (`css/tokens`), baza (`css/base`), layout (`css/layout`), komponenty (`css/components`), sekcje (`css/sections`) i agregacja przez `css/main.css`.
+- Nazewnictwo BEM + utility classes (`.u-*`, `.visually-hidden`, `.sr-only`) oraz tokeny design systemu (`--space-*`, `--primary-*`, `--surface-*`).
+- Formularz kontaktowy z Netlify Forms (`data-netlify="true"`), honeypotem (`netlify-honeypot="trap"`) i walidacją po stronie klienta.
+- PWA: `manifest.webmanifest`, service worker (`sw.js`) i strona `offline.html`.
+- SEO: canonical, robots meta, OpenGraph/Twitter oraz `robots.txt` i `sitemap.xml`.
+- Structured data JSON-LD osadzone inline w stronach HTML.
 
 ### Tech stack
 - HTML5
-- CSS3 (custom properties + modułowa architektura)
-- Vanilla JavaScript (ES Modules)
-- Node.js tooling (build CSS/JS/SW, obrazy, audyty Lighthouse/Pa11y)
-- Netlify-compatible statyczny deployment
+- CSS3 (Custom Properties + modularna architektura)
+- Vanilla JavaScript (ES Modules + bundling do `dist/script.min.js`)
+- Node.js tooling (`tools/`): build head/CSS/JS/SW, pipeline obrazów
+- Netlify (pliki `_headers`, `_redirects`)
 
+### Structure overview
+- `assets/` — obrazy, fonty, favicony, ikony
+- `css/` — tokeny, base, layout, components, sections
+- `js/` — core/components/sections/utils + JSON dla structured data
+- `dist/` — zminifikowane artefakty (`style.min.css`, `script.min.js`)
+- `services/`, `legal/` — podstrony treściowe
+- `tools/` — narzędzia buildowe
+- pliki deploy/PWA/SEO: `_headers`, `_redirects`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `sw.js`
 
-### Standard nazewnictwa CSS (BEM vs utilities)
-- **BEM** (`.block`, `.block__element`, `.block--modifier`) służy do opisu struktury i wariantów komponentu/sekcji.
-- **Utilities** to wyłącznie klasy jednofunkcyjne z prefiksem **`.u-`** (np. widoczność, motion, helpery a11y).
-- Utilities mogą być łączone z klasami BEM w HTML, ale nie zastępują block/element.
-- Modyfikatory `--modifier` stosujemy tylko dla wariantów tego samego bloku/elementu (np. `.icon-button__icon--menu`), nie dla zachowań utility.
-- Nie tworzymy „utility-like” modyfikatorów typu `.card--hidden`; do tego używamy utility (`.u-hidden`).
-
-**Przykłady**
-- ✅ `<article class="service u-hidden">…</article>`
-- ✅ `<h2 class="section__title u-no-motion">…</h2>`
-- ❌ `<article class="service service--hidden">…</article>`
-
-### Struktura projektu (skrót)
-- `assets/` — obrazy, ikony, fonty
-- `css/` — tokeny, baza, layout, komponenty, sekcje
-- `js/` — core, components, sections, utils, structured-data
-- `dist/` — artefakty produkcyjne (`style.min.css`, `script.min.js`)
-- `services/`, `legal/` — podstrony
-- `tools/` — skrypty buildowe
-- pliki deploy/SEO/PWA: `_headers`, `_redirects`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `sw.js`
-
-### Setup i uruchomienie
+### Setup & run
 1. Instalacja zależności:
    ```bash
    npm install
    ```
-2. Build assetów:
+2. Build projektu:
    ```bash
    npm run build
    ```
@@ -58,124 +45,111 @@ Axiom Construction to wielostronicowy serwis portfolio (HTML/CSS/JS) dla firmy b
    ```
 4. Podgląd: `http://localhost:8080`
 
-### Build i deployment
-- Produkcyjny CSS/JS trafia do `dist/`.
-- Service worker jest generowany przez `npm run build:sw`.
-- Nagłówki bezpieczeństwa/cache są utrzymywane w `_headers`.
-- Redirecty i fallback 404 są utrzymywane w `_redirects`.
-- Projekt używa ścieżek kompatybilnych z hostingiem statycznym (w tym Netlify).
+### Build/deployment notes
+- Główny build uruchamia: `build:head`, `build:css`, `build:js`, `build:sw`.
+- `dist/style.min.css` i `dist/script.min.js` są artefaktami produkcyjnymi.
+- `_headers` definiuje CSP, polityki bezpieczeństwa i cache.
+- `_redirects` zawiera przekierowania canonical host/HTTPS i fallback 404.
 
-### Dostępność (stan aktualny)
-- Obecne: skip link, poprawna hierarchia nagłówków H1–H3, `aria-expanded` dla menu mobilnego, `aria-current` w breadcrumb/nav, focus styles (`:focus-visible`), obsługa `prefers-reduced-motion`.
-- Formularz: powiązane etykiety, `aria-live` dla statusu i licznika znaków, fokus na pierwszym błędzie.
-- No-JS: obecne komunikaty `<noscript>`, formularz ma klasyczny `POST` + `action="/success.html"`.
+### Accessibility notes
+- Obecne: skip link do treści, jedna sekcja `<main>`, poprawna hierarchia nagłówków (1x H1 na stronę), style `:focus-visible`, obsługa `prefers-reduced-motion`, atrybuty `aria-expanded` i `aria-current`.
+- Formularz: etykiety `for`, `aria-live` dla statusu, fokus na pierwszym błędzie, komunikaty `<noscript>`.
+- No-JS baseline dla formularza jest zachowany (`method="POST"`, `action="/success.html"`), jednak mobilna nawigacja zależy od JS (audit w `AUDIT.md`).
 
-### SEO (stan aktualny)
-- Obecne: meta description, canonical, robots meta, OG image, twitter metadata, `robots.txt`, `sitemap.xml`, JSON-LD inline.
-- Uwaga: `success.html` ma canonical i JSON-LD, ale nie ma `og:url` (pozostałe strony mają).
+### SEO notes
+- Każda strona ma canonical, robots i `og:url` zgodne z canonical.
+- `robots.txt` wskazuje `sitemap.xml`.
+- JSON-LD jest osadzane inline i składniowo poprawne.
 
-### Wydajność (stan aktualny)
-- Obecne: AVIF/WEBP/JPG, `srcset/sizes`, lazy-loading dla treści poza pierwszym viewportem, preload fontów i CSS.
-- Service worker obsługuje cache static assets i fallback offline.
-- Uwaga: element `img.lb__img` (lightbox) nie ma stałych `width/height` (obraz dynamiczny), co może generować pojedyncze przesunięcia layoutu po otwarciu lightboxa.
+### Performance notes
+- Obrazy mają AVIF/WEBP/JPG i szerokie użycie `srcset`/`sizes`.
+- W większości przypadków ustawione są `width`/`height` i `loading="lazy"` dla treści poza above-the-fold.
+- Fonty są preloadowane jako WOFF2 i mają `font-display: swap`.
 
-### Roadmapa
-- Uzupełnić social metadata na `success.html` o `og:url`.
-- Wersjonować także cache dokumentów HTML w SW (spójnie z cache statycznym).
-- Dodać automatyczną walidację SEO/A11y/linków w CI.
-- Ograniczyć duplikację metadanych poprzez prosty generator head (build-time).
-- Ujednolicić konwencję nazw utility/BEM i opisać ją w krótkim standardzie projektu.
+### Roadmap
+- Ujednolicić strategię ładowania JS (jedna ścieżka runtime dla wszystkich stron).
+- Ujednolicić rejestrację service workera ścieżką absolutną.
+- Dodać automatyczną walidację A11y/SEO/linków do CI.
+- Ograniczyć duplikację danych SEO/JSON-LD przez jeden generator źródeł.
+- Dodać budżety wydajności dla CSS/JS/obrazów.
 
 ### Licencja
-ISC (zgodnie z `package.json`).
+ISC (wg `package.json`).
 
 ---
 
 ## English version
 
 ### Project overview
-Axiom Construction is a multi-page portfolio website (HTML/CSS/JS) for a construction/renovation company. The project includes a homepage, service and legal subpages, form success page, offline page, PWA manifest, service worker, and static deployment configuration.
+Axiom Construction is a multi-page portfolio website (HTML/CSS/JS) for a construction/renovation company. The project includes a homepage, service/legal subpages, an offline page, a 404 page, a form success page, and static hosting deployment configuration (Netlify-compatible).
 
-### Key features (verified in repository)
+### Key features
 - Multi-page structure: `index.html`, `services/*.html`, `legal/*.html`, `404.html`, `offline.html`, `success.html`.
-- Modular CSS architecture: tokens + base + layout + components + sections (`css/main.css` and layer folders).
-- Modular JavaScript (ES modules): `js/core`, `js/components`, `js/sections`, `js/utils`.
-- Contact form integrated with Netlify Forms (`data-netlify="true"`), honeypot, and client-side validation.
-- SEO/social metadata: canonical, robots meta, OpenGraph, Twitter cards.
-- Structured data JSON-LD embedded inline in pages.
-- PWA/deployment files: `manifest.webmanifest`, `sw.js`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`.
+- Layered CSS architecture: tokens (`css/tokens`), base (`css/base`), layout (`css/layout`), components (`css/components`), sections (`css/sections`), aggregated via `css/main.css`.
+- BEM naming + utility classes (`.u-*`, `.visually-hidden`, `.sr-only`) and design tokens (`--space-*`, `--primary-*`, `--surface-*`).
+- Contact form integrated with Netlify Forms (`data-netlify="true"`), honeypot (`netlify-honeypot="trap"`), and client-side validation.
+- PWA support: `manifest.webmanifest`, service worker (`sw.js`), and `offline.html`.
+- SEO metadata: canonical, robots meta, OpenGraph/Twitter, plus `robots.txt` and `sitemap.xml`.
+- Inline JSON-LD structured data in HTML pages.
 
 ### Tech stack
 - HTML5
-- CSS3 (custom properties + modular architecture)
-- Vanilla JavaScript (ES Modules)
-- Node.js tooling (CSS/JS/SW build, images, Lighthouse/Pa11y audits)
-- Netlify-compatible static deployment
+- CSS3 (Custom Properties + modular architecture)
+- Vanilla JavaScript (ES Modules + bundling to `dist/script.min.js`)
+- Node.js tooling (`tools/`): head/CSS/JS/SW build, image pipeline
+- Netlify (via `_headers`, `_redirects`)
 
-
-### CSS naming standard (BEM vs utilities)
-- **BEM** (`.block`, `.block__element`, `.block--modifier`) defines component/section structure and variants.
-- **Utilities** are single-purpose classes with the **`.u-`** prefix only (e.g., visibility, motion, a11y helpers).
-- Utilities can be composed with BEM classes in markup, but they must not replace block/element naming.
-- `--modifier` is only for variants of the same block/element (e.g., `.icon-button__icon--menu`), never for utility-like behavior.
-- Avoid utility-like modifiers such as `.card--hidden`; use a utility instead (`.u-hidden`).
-
-**Examples**
-- ✅ `<article class="service u-hidden">…</article>`
-- ✅ `<h2 class="section__title u-no-motion">…</h2>`
-- ❌ `<article class="service service--hidden">…</article>`
-
-### Project structure (short)
-- `assets/` — images, icons, fonts
+### Structure overview
+- `assets/` — images, fonts, favicons, icons
 - `css/` — tokens, base, layout, components, sections
-- `js/` — core, components, sections, utils, structured-data
-- `dist/` — production artifacts (`style.min.css`, `script.min.js`)
-- `services/`, `legal/` — subpages
-- `tools/` — build scripts
-- deploy/SEO/PWA files: `_headers`, `_redirects`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `sw.js`
+- `js/` — core/components/sections/utils + structured data JSON files
+- `dist/` — minified artifacts (`style.min.css`, `script.min.js`)
+- `services/`, `legal/` — content subpages
+- `tools/` — build tooling
+- deploy/PWA/SEO files: `_headers`, `_redirects`, `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, `sw.js`
 
 ### Setup & run
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Build assets:
+2. Build project:
    ```bash
    npm run build
    ```
-3. Start local server:
+3. Start local static server:
    ```bash
    npm run serve
    ```
-4. Open: `http://localhost:8080`
+4. Preview: `http://localhost:8080`
 
-### Build & deployment notes
-- Production CSS/JS are generated in `dist/`.
-- Service worker is generated via `npm run build:sw`.
-- Security/cache headers are managed in `_headers`.
-- Redirects and 404 fallback are managed in `_redirects`.
-- Paths are compatible with static hosting (including Netlify).
+### Build/deployment notes
+- Main build runs: `build:head`, `build:css`, `build:js`, `build:sw`.
+- `dist/style.min.css` and `dist/script.min.js` are production artifacts.
+- `_headers` defines CSP, security policies, and caching behavior.
+- `_redirects` defines canonical host/HTTPS redirects and custom 404 fallback.
 
-### Accessibility notes (current state)
-- Present: skip link, consistent H1–H3 hierarchy, `aria-expanded` for mobile nav, `aria-current` in breadcrumb/nav, focus styles (`:focus-visible`), `prefers-reduced-motion` handling.
-- Form: explicit labels, `aria-live` status/counter, focus move to first invalid control.
-- No-JS: `<noscript>` notices are provided, and form keeps a native `POST` path via `action="/success.html"`.
+### Accessibility notes
+- Implemented: skip link to content, one `<main>` landmark, valid heading hierarchy (single H1 per page), `:focus-visible` styling, `prefers-reduced-motion` handling, `aria-expanded` and `aria-current` usage.
+- Form: proper `label for`, `aria-live` status updates, first-invalid focus, `<noscript>` fallbacks.
+- No-JS form baseline is preserved (`method="POST"`, `action="/success.html"`), but mobile navigation still depends on JS (see `AUDIT.md`).
 
-### SEO notes (current state)
-- Present: meta description, canonical, robots meta, OG image, twitter metadata, `robots.txt`, `sitemap.xml`, inline JSON-LD.
-- Note: `success.html` contains canonical and JSON-LD but does not include `og:url` (other pages do).
+### SEO notes
+- Pages include canonical, robots, and `og:url` aligned with canonical.
+- `robots.txt` points to `sitemap.xml`.
+- Inline JSON-LD is syntactically valid.
 
-### Performance notes (current state)
-- Present: AVIF/WEBP/JPG, `srcset/sizes`, lazy-loading for non-critical media, font and CSS preload.
-- Service worker provides static cache and offline fallback behavior.
-- Note: the dynamic `img.lb__img` (lightbox) has no fixed `width/height`, which may create localized layout shifts when opening the lightbox.
+### Performance notes
+- Images are delivered as AVIF/WEBP/JPG with broad `srcset`/`sizes` usage.
+- Most images include explicit `width`/`height` and `loading="lazy"` outside above-the-fold.
+- Fonts are preloaded as WOFF2 and use `font-display: swap`.
 
 ### Roadmap
-- Add `og:url` on `success.html` for social metadata consistency.
-- Version HTML cache in service worker (aligned with static asset cache strategy).
-- Add automated SEO/A11y/link validation in CI.
-- Reduce duplicated head metadata via a lightweight build-time head generator.
-- Formalize and document utility/BEM naming conventions.
+- Unify runtime JS delivery strategy (single path across all pages).
+- Register service worker with an absolute path.
+- Add automated A11y/SEO/link validation in CI.
+- Reduce duplicated SEO/JSON-LD by generating from a single source.
+- Add CSS/JS/image performance budgets.
 
 ### License
-ISC (as declared in `package.json`).
+ISC (as defined in `package.json`).
