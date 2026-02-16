@@ -203,19 +203,23 @@ body.dark-mode .gallery__item {
   backdrop-filter: saturate(110%) blur(2px);
 }
 .lb__figure {
+  --lb-aspect-ratio: 16 / 9;
   position: relative;
   margin: 0;
+  width: min(96vw, calc(96vh * var(--lb-aspect-ratio)));
   max-width: 96vw;
   max-height: 96vh;
+  aspect-ratio: var(--lb-aspect-ratio);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .lb__img {
+  display: block;
   max-width: 100%;
   max-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
@@ -244,6 +248,7 @@ body.lb-open {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: min(96vw, calc(92vh * var(--lb-aspect-ratio)));
     max-height: 92vh;
   }
   .lb__img {
