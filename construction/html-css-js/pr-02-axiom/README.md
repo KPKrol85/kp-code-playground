@@ -3,7 +3,7 @@
 ## Wersja polska
 
 ### Przegląd projektu
-Axiom Construction to wielostronicowy serwis portfolio (HTML/CSS/JS) dla firmy budowlano-remontowej. Projekt zawiera stronę główną, podstrony usług, podstrony prawne, manifest PWA, service worker oraz konfigurację deployu pod Netlify.
+Axiom Construction to wielostronicowy serwis internetowy (HTML/CSS/JS) dla firmy budowlano-remontowej. Strona obejmuje rozbudowaną stronę główną, podstrony usług, podstrony prawne, manifest PWA, service worker oraz konfigurację deployu pod Netlify, tworząc kompletną i gotową do wdrożenia platformę online dla przedsiębiorstwa z branży budowlanej
 
 ### Kluczowe funkcje (potwierdzone w kodzie)
 - Wielostronicowa architektura: `index.html`, podstrony `services/*.html`, `legal/*.html`, `404.html`, `offline.html`.
@@ -83,7 +83,7 @@ ISC (zgodnie z `package.json`).
 ## English version
 
 ### Project overview
-Axiom Construction is a multi-page portfolio website (HTML/CSS/JS) for a construction/renovation company. The project includes a homepage, service pages, legal pages, PWA manifest, service worker, and Netlify deployment configuration.
+Axiom Construction is a multi-page website (HTML/CSS/JS) designed for a construction and renovation company. The site includes a comprehensive homepage, dedicated service pages, legal subpages, a PWA manifest, a service worker, and Netlify deployment configuration, forming a complete and production-ready online platform for a business in the construction industry.
 
 ### Key features (verified in code)
 - Multi-page structure: `index.html`, `services/*.html`, `legal/*.html`, `404.html`, `offline.html`.
