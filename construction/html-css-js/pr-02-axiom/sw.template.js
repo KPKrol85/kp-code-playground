@@ -1,8 +1,8 @@
-const REVISION = "64c6e7ec003fdb92";
+const REVISION = "__SW_REVISION__";
 const CACHE_PREFIX = "axiom-static-";
 const CACHE_NAME = `${CACHE_PREFIX}${REVISION}`;
 const HTML_CACHE = "html-pages-v1";
-const ASSETS = ["/","/offline.html","/dist/style.min.css","/dist/script.min.js","/manifest.webmanifest","/assets/img/favicon/favicon.svg","/assets/img/favicon/favicon-96x96.png","/assets/img/favicon/web-app-manifest-192x192.png","/assets/img/favicon/web-app-manifest-512x512.png","/assets/img/favicon/web-app-manifest-1024x1024.png","/assets/img/favicon/apple-touch-icon.png"];
+const ASSETS = __PRECACHE_ASSETS__;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
