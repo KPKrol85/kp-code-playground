@@ -565,7 +565,8 @@
             <h2 id="booking-title">Rezerwacja</h2>
             <p class="muted">Wypełnij formularz. Oddzwonimy z potwierdzeniem.</p>
 
-            <form id="booking-form" class="form" data-testid="booking-form" novalidate>
+            <form id="booking-form" class="form" data-testid="booking-form" name="reservation" method="POST" data-netlify="true" novalidate>
+              <input type="hidden" name="form-name" value="reservation" />
               <input type="text" name="company" class="hp" aria-hidden="true" tabindex="-1" autocomplete="off" />
 
               <div class="f-row">
