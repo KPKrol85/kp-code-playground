@@ -1,5 +1,7 @@
 
+.u-visually-hidden,
 .visually-hidden,
+.u-visually-hidden-focusable,
 .visually-hidden-focusable {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px);
@@ -12,6 +14,8 @@
   padding: 0;
   margin: -1px;
 }
+.u-visually-hidden-focusable:active,
+.u-visually-hidden-focusable:focus,
 .visually-hidden-focusable:active,
 .visually-hidden-focusable:focus {
   position: static !important;
@@ -29,6 +33,7 @@
   background: var(--surface-1, #fff);
   color: var(--text-dark, #1c1c1c);
 }
+.u-sr-only,
 .sr-only {
   position: absolute;
   width: 1px;
@@ -128,6 +133,7 @@ section {
   html {
     scroll-behavior: auto;
   }
+  .u-no-motion,
   .no-motion {
     transition: none !important;
     animation: none !important;

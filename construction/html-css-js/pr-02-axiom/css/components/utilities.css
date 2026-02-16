@@ -127,11 +127,13 @@ body.menu-open {
 #main {
   scroll-margin-top: 80px;
 }
+.u-hidden,
 .hidden {
   opacity: 0;
   transform: translateY(50px);
   transition: all 0.6s ease;
 }
+.u-show,
 .show {
   opacity: 1;
   transform: translateY(0);
