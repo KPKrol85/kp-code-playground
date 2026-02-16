@@ -21,6 +21,19 @@ Axiom Construction to wielostronicowy serwis portfolio (HTML/CSS/JS) dla firmy b
 - Node.js tooling (build CSS/JS/SW, obrazy, audyty Lighthouse/Pa11y)
 - Netlify-compatible statyczny deployment
 
+
+### Standard nazewnictwa CSS (BEM vs utilities)
+- **BEM** (`.block`, `.block__element`, `.block--modifier`) służy do opisu struktury i wariantów komponentu/sekcji.
+- **Utilities** to wyłącznie klasy jednofunkcyjne z prefiksem **`.u-`** (np. widoczność, motion, helpery a11y).
+- Utilities mogą być łączone z klasami BEM w HTML, ale nie zastępują block/element.
+- Modyfikatory `--modifier` stosujemy tylko dla wariantów tego samego bloku/elementu (np. `.icon-button__icon--menu`), nie dla zachowań utility.
+- Nie tworzymy „utility-like” modyfikatorów typu `.card--hidden`; do tego używamy utility (`.u-hidden`).
+
+**Przykłady**
+- ✅ `<article class="service u-hidden">…</article>`
+- ✅ `<h2 class="section__title u-no-motion">…</h2>`
+- ❌ `<article class="service service--hidden">…</article>`
+
 ### Struktura projektu (skrót)
 - `assets/` — obrazy, ikony, fonty
 - `css/` — tokeny, baza, layout, komponenty, sekcje
@@ -98,6 +111,19 @@ Axiom Construction is a multi-page portfolio website (HTML/CSS/JS) for a constru
 - Vanilla JavaScript (ES Modules)
 - Node.js tooling (CSS/JS/SW build, images, Lighthouse/Pa11y audits)
 - Netlify-compatible static deployment
+
+
+### CSS naming standard (BEM vs utilities)
+- **BEM** (`.block`, `.block__element`, `.block--modifier`) defines component/section structure and variants.
+- **Utilities** are single-purpose classes with the **`.u-`** prefix only (e.g., visibility, motion, a11y helpers).
+- Utilities can be composed with BEM classes in markup, but they must not replace block/element naming.
+- `--modifier` is only for variants of the same block/element (e.g., `.icon-button__icon--menu`), never for utility-like behavior.
+- Avoid utility-like modifiers such as `.card--hidden`; use a utility instead (`.u-hidden`).
+
+**Examples**
+- ✅ `<article class="service u-hidden">…</article>`
+- ✅ `<h2 class="section__title u-no-motion">…</h2>`
+- ❌ `<article class="service service--hidden">…</article>`
 
 ### Project structure (short)
 - `assets/` — images, icons, fonts
