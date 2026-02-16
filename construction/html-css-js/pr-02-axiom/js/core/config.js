@@ -1,5 +1,5 @@
 export const SELECTORS = {
-  hidden: ".hidden",
+  hidden: ".u-hidden, .hidden",
   themeToggleDesktop: "#themeToggleDesktop",
   themeToggleMobile: "#themeToggleMobile",
   hamburgerIcon: "#hamburgerIcon",
