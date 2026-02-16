@@ -218,10 +218,10 @@ body.dark-mode .theme-toggle .theme-toggle__icon--moon {
     height: auto;
     display: block;
   }
-  #primaryNav {
+  html.js #primaryNav {
     display: none;
   }
-  #primaryNav.mobile-open {
+  html.js #primaryNav.mobile-open {
     display: block;
     position: fixed;
     top: calc(var(--header-h) + var(--nav-drop-gap) + var(--nav-mobile-offset) + env(safe-area-inset-top));
