@@ -7,7 +7,7 @@ export const initContactForm = () => {
   if (!form) return;
   const IS_LOCAL = /localhost|127\.0\.0\.1/.test(location.hostname);
   const statusBox = form.querySelector(SELECTORS.contactStatus);
-  const submitBtn = form.querySelector(".submit-btn");
+  const submitBtn = form.querySelector(".form__submit-btn");
   const supportsNativeValidation = typeof form.reportValidity === "function";
   let useNativeFallback = false;
   const originalBtnText = submitBtn ? submitBtn.textContent : "Wyślij wiadomość";

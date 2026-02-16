@@ -80,14 +80,14 @@ export const initLightbox = () => {
     return Promise.resolve();
   };
   document.addEventListener("click", (e) => {
-    const link = e.target.closest(".gallery-link");
-    if (!link || !link.closest(".gallery-container")) return;
+    const link = e.target.closest(".gallery__link");
+    if (!link || !link.closest(".gallery__container")) return;
     e.preventDefault();
     const href = link.getAttribute("href");
     const thumbImg = link.querySelector("img");
     const alt = thumbImg ? thumbImg.alt : "";
-    currentContainer = link.closest(".gallery-container");
-    const links = currentContainer ? Array.from(currentContainer.querySelectorAll(".gallery-link")) : [link];
+    currentContainer = link.closest(".gallery__container");
+    const links = currentContainer ? Array.from(currentContainer.querySelectorAll(".gallery__link")) : [link];
     items = links
       .map((a) => {
         const timg = a.querySelector("img");
@@ -317,8 +317,8 @@ export const initLightbox = () => {
       (e) => {
         const el = e.target;
         if (!el || el.nodeType !== 1 || typeof el.closest !== "function") return;
-        const link = el.closest(".gallery-link");
-        if (!link || !link.closest(".gallery-container")) return;
+        const link = el.closest(".gallery__link");
+        if (!link || !link.closest(".gallery__container")) return;
         const href = link.getAttribute("href");
         if (!href) return;
         const pre = new Image();

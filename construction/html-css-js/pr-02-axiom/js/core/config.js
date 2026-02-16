@@ -3,7 +3,7 @@ export const SELECTORS = {
   themeToggleDesktop: "#themeToggleDesktop",
   themeToggleMobile: "#themeToggleMobile",
   hamburgerIcon: "#hamburgerIcon",
-  hamburger: "#hamburger",
+  navToggle: "#nav-toggle",
   primaryNav: "#primaryNav",
   scrollTopButton: "#powrot-na-gore, .powrot-na-gore",
   contactForm: "#contactForm",
