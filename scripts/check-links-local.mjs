@@ -44,6 +44,9 @@ async function readHtmlFiles(dir) {
     const absPath = path.join(dir, entry.name);
 
     if (entry.isDirectory()) {
+      if (entry.name === 'node_modules') {
+        continue;
+      }
       result.push(...(await readHtmlFiles(absPath)));
       continue;
     }
