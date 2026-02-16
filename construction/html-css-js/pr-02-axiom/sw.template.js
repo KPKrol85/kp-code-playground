@@ -1,7 +1,8 @@
 const REVISION = "__SW_REVISION__";
 const CACHE_PREFIX = "axiom-static-";
 const CACHE_NAME = `${CACHE_PREFIX}${REVISION}`;
-const HTML_CACHE = "html-pages-v1";
+const HTML_CACHE_PREFIX = "html-pages-";
+const HTML_CACHE_NAME = `${HTML_CACHE_PREFIX}${REVISION}`;
 const ASSETS = __PRECACHE_ASSETS__;
 
 self.addEventListener("install", (event) => {
@@ -15,6 +16,7 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         keys
           .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+          .concat(keys.filter((key) => key.startsWith(HTML_CACHE_PREFIX) && key !== HTML_CACHE_NAME))
           .map((key) => caches.delete(key))
       )
     )
@@ -31,7 +33,7 @@ self.addEventListener("fetch", (event) => {
         .then((res) => {
           if (res && res.status === 200) {
             const copy = res.clone();
-            caches.open(HTML_CACHE).then((c) => c.put(req, copy));
+            caches.open(HTML_CACHE_NAME).then((c) => c.put(req, copy));
           }
           return res;
         })
