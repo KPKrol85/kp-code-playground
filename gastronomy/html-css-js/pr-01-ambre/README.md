@@ -3,7 +3,7 @@
 ## 🇵🇱 Wersja polska
 
 ## Przegląd projektu
-Ambre to wielostronicowy projekt portfolio restauracji (HTML + modularny CSS + Vanilla JS) z wdrożonymi elementami PWA (manifest, Service Worker, strona offline) i konfiguracją pod Netlify.
+Ambre to wielostronicowy serwis internetowy dla restauracji (HTML + modularny CSS + Vanilla JS) z wdrożonymi elementami PWA (manifest, Service Worker, strona offline) oraz konfiguracją pod wdrożenie na Netlify.
 
 ## Kluczowe funkcje (wyłącznie wykryte w kodzie)
 - Wielostronicowa struktura: `index.html`, `menu.html`, `galeria.html`, strony prawne i `404.html`.
@@ -68,7 +68,7 @@ MIT (zgodnie z `package.json`).
 ## 🇬🇧 English version
 
 ## Project overview
-Ambre is a multi-page restaurant portfolio project (HTML + modular CSS + Vanilla JS) with PWA elements (manifest, Service Worker, offline page) and Netlify deployment configuration.
+Ambre is a multi-page website for a restaurant (HTML + modular CSS + Vanilla JS) enhanced with PWA features (manifest, Service Worker, offline page) and configured for Netlify deployment.
 
 ## Key features (only detected in code)
 - Multi-page structure: `index.html`, `menu.html`, `galeria.html`, legal pages, and `404.html`.
