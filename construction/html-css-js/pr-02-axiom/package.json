@@ -37,6 +37,7 @@
     "qa:lighthouse": "mkdir -p reports/lighthouse && lhci collect --url=http://localhost:8080/ --url=http://localhost:8080/services/budowa-domow.html --url=http://localhost:8080/legal/regulamin.html --outputDir=reports/lighthouse",
     "qa:a11y": "mkdir -p reports/pa11y && pa11y http://localhost:8080/ --reporter json --output reports/pa11y/index.json && pa11y http://localhost:8080/services/budowa-domow.html --reporter json --output reports/pa11y/budowa-domow.json && pa11y http://localhost:8080/legal/regulamin.html --reporter json --output reports/pa11y/regulamin.json",
     "qa": "npm run qa:lighthouse && npm run qa:a11y",
-    "build:head": "node tools/html/build-head.mjs"
+    "build:head": "node tools/html/build-head.mjs",
+    "qa:links": "node ../../../scripts/check-links-local.mjs --root \"construction/html-css-js/pr-02-axiom\""
   }
 }

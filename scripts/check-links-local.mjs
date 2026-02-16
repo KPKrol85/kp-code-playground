@@ -2,6 +2,7 @@
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const args = process.argv.slice(2);
 
@@ -21,7 +22,9 @@ if (!rootArg) {
   process.exit(2);
 }
 
-const repoRoot = process.cwd();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const repoRoot = path.resolve(__dirname, '..');
 const targetRoot = path.resolve(repoRoot, rootArg);
 
 async function pathExists(targetPath) {
@@ -35,7 +38,7 @@ async function pathExists(targetPath) {
 
 async function readHtmlFiles(dir) {
   const result = [];
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const entries = (await fs.readdir(dir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name));
 
   for (const entry of entries) {
     const absPath = path.join(dir, entry.name);
@@ -54,11 +57,15 @@ async function readHtmlFiles(dir) {
 }
 
 function isExternalReference(value) {
-  return /^(?:[a-z]+:)?\/\//i.test(value) || /^(?:mailto|tel|javascript):/i.test(value);
+  return /^(?:[a-z]+:)?\/\//i.test(value) || /^(?:mailto|tel|javascript|data):/i.test(value);
 }
 
 function normalizeReference(value) {
   return value.trim();
+}
+
+function hasTemplateToken(value) {
+  return /{{[^}]+}}/.test(value);
 }
 
 function splitPathAndFragment(value) {
@@ -179,7 +186,7 @@ async function main() {
 
     for (const hrefRaw of hrefs) {
       const href = normalizeReference(hrefRaw);
-      if (!href || isExternalReference(href)) {
+      if (!href || isExternalReference(href) || hasTemplateToken(href)) {
         continue;
       }
 
@@ -228,7 +235,7 @@ async function main() {
 
     for (const srcRaw of srcs) {
       const src = normalizeReference(srcRaw);
-      if (!src || isExternalReference(src)) {
+      if (!src || isExternalReference(src) || hasTemplateToken(src)) {
         continue;
       }
 
@@ -248,7 +255,7 @@ async function main() {
 
     for (const srcsetRaw of srcsets) {
       const srcsetEntry = normalizeReference(srcsetRaw);
-      if (!srcsetEntry || isExternalReference(srcsetEntry)) {
+      if (!srcsetEntry || isExternalReference(srcsetEntry) || hasTemplateToken(srcsetEntry)) {
         continue;
       }
 
@@ -268,6 +275,7 @@ async function main() {
   }
 
   if (failures.length > 0) {
+    failures.sort();
     console.error(`✖ Local link check failed: ${failures.length} issue(s)`);
     for (const failure of failures) {
       console.error(`- ${failure}`);
