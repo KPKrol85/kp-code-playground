@@ -51,6 +51,13 @@ async function readHtmlFiles(dir) {
       continue;
     }
 
+   if (entry.isDirectory()) {
+  if (entry.name === 'node_modules') {
+    continue;
+  }
+  result.push(...(await readHtmlFiles(absPath)));
+  continue;
+}
     if (entry.isFile() && entry.name.toLowerCase().endsWith('.html')) {
       result.push(absPath);
     }
