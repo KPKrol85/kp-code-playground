@@ -1090,7 +1090,7 @@
       <section id="kontakt" class="contact-form-section bg-surface-3 section--divider" aria-labelledby="contact-heading">
         <h2 id="contact-heading" class="section-title">Skontaktuj się z nami!</h2>
         <div class="contact-form-container">
-          <form id="contactForm" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="trap" class="contact-form" novalidate aria-describedby="formNote formStatus">
+          <form id="contactForm" name="contact" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="trap" class="contact-form" aria-describedby="formNote formStatus">
             <div id="errorSummary" class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true"></div>
             <a id="skipToError" class="visually-hidden-focusable" href="#errorSummary">Przejdź do pierwszego błędu</a>
             <input type="hidden" name="form-name" value="contact" />
@@ -1156,11 +1156,14 @@
               <legend class="sr-only">Weryfikacja reCAPTCHA</legend>
               <div data-netlify-recaptcha="true"></div>
               <noscript>
-                <p class="form-note">Aby wysłać formularz, włącz JavaScript (reCAPTCHA).</p>
+                <p class="form-note">Weryfikacja reCAPTCHA jest niedostępna bez JavaScript. Formularz nadal można wysłać z podstawowym filtrowaniem spamu.</p>
               </noscript>
             </fieldset>
             <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
-            <button type="submit" class="btn btn-primary">Wyślij wiadomość</button>
+            <noscript>
+              <p class="form-note">Formularz działa bez JavaScript. Po wysłaniu zostaniesz przekierowany(-a) na stronę z potwierdzeniem.</p>
+            </noscript>
+            <button type="submit" class="btn btn-primary submit-btn">Wyślij wiadomość</button>
           </form>
         </div>
       </section>
@@ -1292,6 +1295,6 @@
     </div>
 
     <!-- Script -->
-    <script src="dist/script.min.js" defer></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>
