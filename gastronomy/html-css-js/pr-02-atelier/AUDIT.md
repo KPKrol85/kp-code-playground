@@ -34,7 +34,7 @@
 - **Suggested improvement:** zaktualizować `og:url` w `gallery.html` do `https://gastronomy-project-02.netlify.app/gallery.html`.
 
 ### P1-2: Brakujący asset PDF w menu
-- **Reason:** odnośnik do `assets/docs/menu.pdf` prowadzi do nieistniejącego pliku.
+- **Reason:** odnośnik w sekcji menu wskazuje istniejący placeholder `assets/docs/menu.svg`.
 - **Suggested improvement:** dodać brakujący plik lub usunąć link/zmienić target na istniejący zasób.
 
 ### P1-3: Produkcyjne logi debugowe w stronach HTML
@@ -58,7 +58,7 @@
 
 ## 6. Compliance checklist
 - **headings valid:** pass
-- **no broken links:** fail (brak `assets/docs/menu.pdf`)
+- **no broken links:** pass (link menu wskazuje istniejący `assets/docs/menu.svg`)
 - **no console.log:** fail (`console.log` w snippetach SW registration)
 - **aria attributes valid:** pass (sprawdzone m.in. `aria-controls` do istniejących `id`)
 - **images have width/height:** pass
