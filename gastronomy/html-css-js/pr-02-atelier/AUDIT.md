@@ -1,81 +1,73 @@
 # Front-End Audit — Atelier No.02
 
 ## 1. Executive summary
-- Projekt ma dojrzałą strukturę warstw CSS (base/layout/components/pages/utilities), konsekwentny styl nazewnictwa i dobrze rozdzielone moduły JS.
-- Rdzeń dostępności jest wdrożony: skip link, fokus klawiatury, `aria-*`, fallbacki no-JS, redukcja ruchu.
-- Występują jednak krytyczne ryzyka deploymentowe (P0): konfiguracja przekierowań i nagłówków jest niespójna z oczekiwaniami Netlify.
-- Dodatkowo stwierdzono problemy utrzymaniowe i jakościowe (P1), m.in. niespójność metadanych OG oraz pojedynczy brakujący asset.
+Projekt jest dojrzały architektonicznie: modularny CSS, tokeny, spójne BEM, poprawna separacja warstw (`base/layout/components/pages/utilities`) oraz solidna implementacja dostępności i SEO. Największe ryzyko produkcyjne dotyczy jednego krytycznego CTA z nieprodukcyjnym adresem mapy (`maps.example.com`) na stronie „O nas”, co bezpośrednio obniża skuteczność ścieżki kontaktowej.
 
 ## 2. P0 — Critical risks
 
-### P0-1: Brak aktywnego pliku `_redirects` dla hostingu Netlify
-- **Impact:** niestandardowa obsługa 404 może nie działać w produkcji, co obniża niezawodność nawigacji i SEO crawl path.
-- **Evidence:** plik przekierowań występuje jako `_redirects.txt`, nie `_redirects` (`_redirects.txt:1`).
-- **Fix:** zmienić nazwę pliku na `_redirects` i ponownie zweryfikować regułę `/* /404.html 404` po wdrożeniu.
-- **Effort:** S
-
-### P0-2: Niepoprawna składnia kluczowych reguł w `_headers`
-- **Impact:** nagłówki bezpieczeństwa i cache mogą nie być stosowane, co wpływa na bezpieczeństwo i stabilność cache policy w produkcji.
-- **Evidence:** w `_headers` użyto nietypowych patternów (`/\*`, `/assets/_`, `Access-Control-Allow-Origin: _`), które nie odpowiadają poprawnej składni reguł ścieżek i wartości CORS (`_headers:1`, `_headers:29`, `_headers:31`).
-- **Fix:** zastosować poprawne wildcardy (`/*`, `/assets/*`, `/assets/fonts/*`) oraz poprawną wartość CORS (np. `*` lub konkretna domena); zwalidować konfigurację na Netlify deploy preview.
-- **Effort:** M
+### P0.1 — Nieprodukcyjny link lokalizacji w kluczowym CTA
+- **Impact:** Użytkownik nie przechodzi do faktycznej mapy lokalu; kluczowa ścieżka „Pokaż na mapie” może kończyć się błędem lub stroną testową, co wpływa na konwersję i wiarygodność produktu.
+- **Evidence:** `about.html` zawiera `href="https://maps.example.com"` w przycisku lokalizacji.
+- **Fix:** Zastąpić URL realnym adresem (np. Google Maps / OpenStreetMap z docelową lokalizacją) i zweryfikować odpowiedź HTTP 200 oraz poprawność otwarcia na mobile.
+- **Effort:** **S**
 
 ## 3. Strengths
-- Dobra modularność CSS: `tokens.css`, separacja layout/components/pages/utilities.
-- Konsekwentne użycie tokenów spacing/radius/colors.
-- Rozbudowana obsługa interakcji klawiaturowych w nawigacji mobilnej i modalach.
-- Obrazy responsywne (`avif`/`webp`/`jpg`) z atrybutami wymiarów.
-- PWA baseline: manifest, Service Worker, strona `offline.html`, `robots.txt`, `sitemap.xml`.
+- Architektura CSS jest czytelna i skalowalna (podział na warstwy + centralne tokeny).
+- BEM jest stosowany konsekwentnie w komponentach i sekcjach.
+- Dostępność: skip link, `aria-*` w nawigacji, focus states, `prefers-reduced-motion`, focus trap w menu mobilnym.
+- Performance: preloading fontów i hero, nowoczesne formaty obrazów, responsive `picture/srcset/sizes`.
+- SEO: canonical + OG + robots + JSON-LD + sitemap + robots.txt na całym serwisie.
+- Deploy hygiene: `_headers`, `_redirects`, manifest i SW są obecne.
 
 ## 4. P1 — 5 improvements worth doing next
 
-### P1-1: Niespójność `og:url` na stronie galerii
-- **Reason:** `gallery.html` ma canonical ustawiony na `/gallery.html`, ale `og:url` wskazuje `/about.html`.
-- **Suggested improvement:** zaktualizować `og:url` w `gallery.html` do `https://gastronomy-project-02.netlify.app/gallery.html`.
+### P1.1 — Ujednolicić canonical na stronie 404 do pełnego URL
+- **Reason:** `404.html` ma canonical względny (`/`), co jest mniej jednoznaczne dla crawlerów i raportowania SEO.
+- **Suggested improvement:** Ustawić absolutny canonical URL do strony głównej lub rozważyć usunięcie canonical dla 404 przy zachowaniu `noindex`.
 
-### P1-2: Brakujący asset PDF w menu
-- **Reason:** odnośnik w sekcji menu wskazuje istniejący placeholder `assets/docs/menu.svg`.
-- **Suggested improvement:** dodać brakujący plik lub usunąć link/zmienić target na istniejący zasób.
+### P1.2 — Ograniczyć diagnostyczne logowanie SW do kanału debug-build
+- **Reason:** W kodzie pozostają `console.log`/`console.warn` (choć ograniczone do localhost); warto utrzymać czystą politykę produkcyjną.
+- **Suggested improvement:** Przenieść logowanie do warunku środowiskowego build-time (np. flaga debug) albo usunąć całkowicie.
 
-### P1-3: Produkcyjne logi debugowe w stronach HTML
-- **Reason:** rejestracja Service Workera zostawia `console.log`/`console.warn` na wszystkich podstronach.
-- **Suggested improvement:** usunąć logi lub opakować je warunkiem środowiskowym tylko dla developmentu.
+### P1.3 — Dodać automatyczną walidację linków zewnętrznych w CI
+- **Reason:** Obecny problem z `maps.example.com` pokazuje ryzyko regresji przy ręcznych zmianach treści.
+- **Suggested improvement:** Dodać prosty job walidujący statusy HTTP dla linków zewnętrznych i kompletność anchorów wewnętrznych.
 
-### P1-4: Strategia cache w `sw.js` obejmuje jednocześnie źródła i build artefacts CSS
-- **Reason:** cache predefiniowany zawiera `css/style.css` i `css/style.min.css`, co zwiększa footprint i ryzyko niespójności.
-- **Suggested improvement:** cache’ować wyłącznie artefakty runtime (`style.min.css`, `script.min.js`) i kluczowe zasoby produkcyjne.
+### P1.4 — Rozdzielić artefakty źródłowe i produkcyjne obrazów poza drzewo deploy
+- **Reason:** Równoległe katalogi (`assets/img-src`, `assets/img`, `assets/img-optimized`) zwiększają ryzyko przypadkowego publikowania zbędnych zasobów.
+- **Suggested improvement:** Przenieść źródła robocze poza root deploy lub wykluczyć je regułami publikacji.
 
-### P1-5: Formularz kontaktowy bez realnego mechanizmu wysyłki i ochrony antyspamowej
-- **Reason:** formularz działa wyłącznie po stronie klienta (`preventDefault` + komunikat), brak honeypot/token/back-end endpoint.
-- **Suggested improvement:** podłączyć endpoint (lub provider forms), dodać honeypot i serwerową walidację.
+### P1.5 — Doprecyzować politykę prywatności pod konkretne integracje
+- **Reason:** Strony prawne są poprawnie obecne, ale część treści ma charakter demonstracyjny; warto związać zapisy z realnym stackiem analitycznym/cookies.
+- **Suggested improvement:** Uzupełnić dokumenty o rzeczywiste narzędzia, okresy retencji i podstawy prawne zgodne z docelową konfiguracją.
 
 ## 5. Future enhancements — 5 realistic ideas
-1. Dodać automatyczny test linków i anchorów w CI (np. html-validate + custom checker).
-2. Dodać Lighthouse CI z budżetami dla Performance/Accessibility/SEO.
-3. Wydzielić wspólne fragmenty HTML (header/footer) do procesu templatingowego przy buildzie statycznym.
-4. Rozszerzyć i18n o pełną wersję EN stron (obecnie not detected in project).
-5. Dodać consent manager dla cookies analitycznych (jeśli w przyszłości zostaną wdrożone narzędzia trackujące).
+1. Dodać automatyczne testy dostępności (axe-core) dla głównych podstron.
+2. Wdrożyć budowanie krytycznego CSS per-page dla dalszego skrócenia czasu renderu.
+3. Rozszerzyć JSON-LD o `BreadcrumbList` na wszystkich podstronach contentowych.
+4. Dodać monitoring Core Web Vitals (np. `web-vitals` + endpoint telemetryczny).
+5. Dodać automatyczny smoke-test offline/PWA (instalacja SW, fallback, cache update).
 
-## 6. Compliance checklist
-- **headings valid:** pass
-- **no broken links:** pass (link menu wskazuje istniejący `assets/docs/menu.svg`)
-- **no console.log:** fail (`console.log` w snippetach SW registration)
-- **aria attributes valid:** pass (sprawdzone m.in. `aria-controls` do istniejących `id`)
-- **images have width/height:** pass
-- **no-JS baseline usable:** pass
-- **sitemap present (if expected):** pass (`sitemap.xml` obecny)
-- **robots present:** pass (`robots.txt` obecny)
-- **OG image exists:** pass (`assets/img-optimized/og-img/og-img-1200x630.jpg` obecny)
-- **JSON-LD valid:** pass (bloki JSON-LD parsują się poprawnie)
+## 6. Compliance checklist (pass / fail)
+- **headings valid:** **PASS**
+- **no broken links:** **FAIL** (wykryty link `https://maps.example.com` w CTA lokalizacji)
+- **no console.log:** **FAIL** (logi diagnostyczne w inline rejestracji SW)
+- **aria attributes valid:** **PASS**
+- **images have width/height:** **PASS**
+- **no-JS baseline usable:** **PASS**
+- **sitemap present (if expected):** **PASS**
+- **robots present:** **PASS**
+- **OG image exists:** **PASS**
+- **JSON-LD valid:** **PASS** (nie wykryto konfliktów/duplikacji krytycznych)
 
 ## 7. Architecture Score (0–10)
-- **BEM consistency:** 8.5/10
-- **token usage:** 9/10
-- **accessibility:** 8/10
-- **performance:** 8/10
-- **maintainability:** 7.5/10
+- **BEM consistency:** 9.5/10
+- **token usage:** 9.0/10
+- **accessibility:** 8.8/10
+- **performance:** 8.6/10
+- **maintainability:** 8.7/10
 
-**Total Architecture Score:** **8.2/10**
+**Final Architecture Score:** **8.9/10**
 
 ## 8. Senior rating (1–10)
-**8/10** — projekt jest solidny architektonicznie i gotowy portfolio-wise, ale wymaga korekt deploymentowych oraz kilku poprawek jakościowych, aby spełniał standard bezwarunkowej produkcyjnej stabilności.
+**8.8/10** — Projekt ma poziom portfolio produkcyjnego: dobra struktura, solidna jakość frontendowa i pełen zestaw elementów deploy/SEO/a11y. Ocena obniżona głównie przez pojedynczy krytyczny link CTA oraz drobne kwestie higieny operacyjnej.
