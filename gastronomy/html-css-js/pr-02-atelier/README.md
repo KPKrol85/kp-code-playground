@@ -1,109 +1,159 @@
-# Atelier No.02 — demonstracyjna strona restauracji fine dining
+# Atelier No.02 — dokumentacja projektu
 
-Statyczny projekt front-end (HTML/CSS/JS) prezentujący stronę restauracji Atelier No.02 z podstronami, trybem ciemnym, dynamicznym renderowaniem menu, galerią lightbox oraz wsparciem PWA/offline.
+## PL
 
-## Tech stack
-- HTML5 (wiele stron statycznych)
-- CSS3 (architektura modułowa: base/layout/components/pages/utilities)
-- JavaScript (ES modules + bundling przez esbuild)
-- PostCSS (`postcss-import` + `cssnano`)
-- Service Worker + `manifest.webmanifest`
+### Przegląd projektu
+Atelier No.02 to wielostronicowy serwis portfolio restauracji (HTML/CSS/JS) z architekturą CSS opartą o warstwy `base`, `layout`, `components`, `pages` i `utilities`, dynamicznymi modułami JS oraz wsparciem PWA (`manifest.webmanifest`, `sw.js`).
 
-## Struktura projektu
-```text
-pr-02-atelier/
-├── index.html
-├── about.html
-├── menu.html
-├── gallery.html
-├── cookies.html
-├── polityka-prywatnosci.html
-├── regulamin.html
-├── offline.html
-├── 404.html
-├── css/
-│   ├── style.css
-│   ├── style.min.css
-│   ├── base/
-│   ├── layout/
-│   ├── components/
-│   ├── pages/
-│   └── utilities/
-├── js/
-│   ├── script.js
-│   ├── script.min.js
-│   ├── app/
-│   ├── core/
-│   └── features/
-├── data/
-│   └── menu.json
-├── assets/
-│   ├── fonts/
-│   ├── icons/
-│   ├── img/
-│   ├── img-src/
-│   └── img-optimized/
-├── scripts/
-│   └── images/build-images.js
-├── manifest.webmanifest
-├── sw.js
-├── robots.txt
-├── sitemap.xml
-├── _headers
-├── package.json
-├── package-lock.json
-└── postcss.config.js
-```
+### Kluczowe funkcje
+- Wielostronicowa struktura: `index.html`, `about.html`, `menu.html`, `gallery.html` oraz podstrony prawne.
+- Responsywna nawigacja z dropdownami i obsługą klawiatury.
+- Tryb jasny/ciemny z zapisem preferencji w `localStorage`.
+- Dynamiczne renderowanie sekcji menu z `data/menu.json`.
+- Galeria z lightboxem i fallbackami obrazów.
+- Tryb offline oparty o Service Worker oraz stronę `offline.html`.
 
-## Uruchomienie lokalne
-Wymagany jest Node.js oraz npm (wersja Node nie jest jawnie zadeklarowana w plikach projektu).
+### Tech stack
+- HTML5
+- CSS3 + PostCSS (`postcss-import`, `cssnano`)
+- JavaScript (ES modules, bundling przez `esbuild`)
+- Node.js tooling (`sharp`, `fast-glob`, `http-server`)
 
+### Struktura projektu
+- `css/` — tokeny, style bazowe, layout, komponenty, style stron i utilities.
+- `js/` — inicjalizacja aplikacji, moduły core i features.
+- `assets/` — fonty, ikony i obrazy (w tym wersje zoptymalizowane).
+- `data/menu.json` — źródło danych dla dynamicznego menu.
+- `scripts/images/build-images.js` — pipeline optymalizacji obrazów.
+- `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`, `_headers`, `_redirects.txt`.
+
+### Setup i uruchomienie
 1. Instalacja zależności:
    ```bash
    npm install
    ```
-2. Serwer deweloperski:
+2. Uruchomienie lokalnego serwera statycznego:
    ```bash
    npm run dev:server
    ```
-   Domyślnie aplikacja działa na `http://localhost:5173`.
-3. Build assetów CSS/JS:
+3. Build assetów CSS i JS:
    ```bash
    npm run build
    ```
-4. Generowanie zoptymalizowanych obrazów:
+4. Generowanie wariantów obrazów:
    ```bash
    npm run images:build
    ```
 
-## Skrypty npm
-- `build:css` — minifikacja `css/style.css` do `css/style.min.css`.
-- `build:js` — bundling + minifikacja `js/script.js` do `js/script.min.js`.
-- `build` — uruchamia `build:css` i `build:js`.
-- `images:build` — generuje obrazy do `assets/img-optimized`.
-- `dev:server` — uruchamia statyczny serwer HTTP.
+### Build i deployment — uwagi
+- Produkcyjny CSS i JS są serwowane z `css/style.min.css` oraz `js/script.min.js`.
+- Projekt zawiera pliki deploy (`_headers`, `_redirects.txt`), ale wymagają walidacji pod docelowy hosting.
+- Manifest i Service Worker używają ścieżek absolutnych (`/`), co jest poprawne dla wdrożenia w katalogu głównym domeny.
 
-## Dostępność
-- Skip linki do treści głównej.
-- Nawigacja mobilna z obsługą klawiatury i pułapką fokusa.
-- Modal i lightbox z obsługą ESC, fokusowaniem i atrybutami ARIA.
-- Widoczne style `:focus-visible`.
+### Dostępność
+- Implementacja skip link (`.skip-link`) do przejścia do głównej treści.
+- Widoczne style `:focus-visible` dla kluczowych elementów interaktywnych.
+- Obsługa `aria-expanded`, `aria-current`, `aria-controls` i dialogów (`aria-modal`).
 - Obsługa `prefers-reduced-motion` dla animacji reveal.
+- Bazowa używalność bez JS: treść i nawigacja pozostają dostępne.
 
-## Wydajność
-- Fonty lokalne (`woff2`) z `font-display: swap`.
-- `preload` dla kluczowych fontów.
-- Responsywne obrazy (`avif/webp/jpg`, `srcset`, `sizes`, `loading="lazy"`).
-- Minifikowane bundle CSS/JS (`*.min.*`).
+### SEO
+- Implementacja `canonical`, `meta description`, Open Graph, Twitter Cards i JSON-LD.
+- Obecne `robots.txt` i `sitemap.xml`.
+- Wymagana korekta spójności `og:url` na stronie galerii względem canonical.
 
-## PWA / offline
-- `manifest.webmanifest` z ikonami i ustawieniami instalowalnej aplikacji.
-- `sw.js` cache’uje kluczowe zasoby i posiada fallback do `offline.html` dla nawigacji.
-- Rejestracja Service Workera wykonywana po `load` na stronach HTML.
+### Wydajność
+- Responsywne obrazy (`avif/webp/jpg`) z `srcset`/`sizes`.
+- Atrybuty `width`/`height` na obrazach.
+- `loading="lazy"` i `decoding="async"` na obrazach niekrytycznych.
+- Preload kluczowych fontów i obrazu hero.
 
-## Deployment
-- W repo znajduje się plik `_headers` sugerujący konfigurację dla Netlify (cache + security headers).
+### Roadmap
+- Korekta konfiguracji deployment (`_headers`, `_redirects`).
+- Uzupełnienie brakującego zasobu PDF wskazanego w `menu.html`.
+- Usunięcie logów debugowych z produkcyjnych skryptów rejestracji SW.
+- Uporządkowanie cache strategy w `sw.js` (cache tylko artefaktów produkcyjnych).
+- Doprecyzowanie polityki prywatności dla zewnętrznych odnośników map.
 
-## Licencja i autor
-- Licencja: MIT.
-- Autor: Kamil Król | KP_Code.
+### Licencja
+MIT (zgodnie z `package.json`).
+
+---
+
+## EN
+
+### Project overview
+Atelier No.02 is a multi-page restaurant portfolio website (HTML/CSS/JS) with a layered CSS architecture (`base`, `layout`, `components`, `pages`, `utilities`), modular JavaScript features, and PWA support (`manifest.webmanifest`, `sw.js`).
+
+### Key features
+- Multi-page structure: `index.html`, `about.html`, `menu.html`, `gallery.html`, plus legal pages.
+- Responsive navigation with dropdowns and keyboard support.
+- Light/dark mode with preference persistence in `localStorage`.
+- Dynamic menu section rendering from `data/menu.json`.
+- Gallery with lightbox and image fallback handling.
+- Offline mode powered by Service Worker and `offline.html` fallback page.
+
+### Tech stack
+- HTML5
+- CSS3 + PostCSS (`postcss-import`, `cssnano`)
+- JavaScript (ES modules, bundled with `esbuild`)
+- Node.js tooling (`sharp`, `fast-glob`, `http-server`)
+
+### Project structure
+- `css/` — design tokens, base styles, layout, components, page styles, and utilities.
+- `js/` — app initialization, core modules, and feature modules.
+- `assets/` — fonts, icons, and images (including optimized variants).
+- `data/menu.json` — data source for dynamic menu rendering.
+- `scripts/images/build-images.js` — image optimization pipeline.
+- `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`, `_headers`, `_redirects.txt`.
+
+### Setup and run
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start a local static server:
+   ```bash
+   npm run dev:server
+   ```
+3. Build CSS and JS assets:
+   ```bash
+   npm run build
+   ```
+4. Generate optimized image variants:
+   ```bash
+   npm run images:build
+   ```
+
+### Build and deployment notes
+- Production CSS and JS are served from `css/style.min.css` and `js/script.min.js`.
+- Deployment config files are present (`_headers`, `_redirects.txt`) and should be validated for the target hosting platform.
+- Manifest and Service Worker use absolute paths (`/`), suitable for root-domain deployment.
+
+### Accessibility notes
+- Skip link (`.skip-link`) is implemented for quick jump to main content.
+- Visible `:focus-visible` styles are present for key interactive controls.
+- `aria-expanded`, `aria-current`, `aria-controls`, and modal/dialog ARIA patterns are used.
+- `prefers-reduced-motion` is handled for reveal animations.
+- No-JS baseline remains usable for core content and navigation.
+
+### SEO notes
+- `canonical`, `meta description`, Open Graph, Twitter Cards, and JSON-LD are implemented.
+- `robots.txt` and `sitemap.xml` are present.
+- `og:url` on the gallery page should be aligned with its canonical URL.
+
+### Performance notes
+- Responsive images (`avif/webp/jpg`) with `srcset`/`sizes` are implemented.
+- Images include `width`/`height` attributes.
+- Non-critical images use `loading="lazy"` and `decoding="async"`.
+- Key fonts and hero image are preloaded.
+
+### Roadmap
+- Fix deployment config issues in `_headers` and `_redirects` handling.
+- Add the missing PDF resource currently referenced in `menu.html`.
+- Remove debug logs from production Service Worker registration snippets.
+- Refine `sw.js` cache strategy to keep only production runtime assets.
+- Clarify privacy notes for external map links.
+
+### License
+MIT (as declared in `package.json`).
