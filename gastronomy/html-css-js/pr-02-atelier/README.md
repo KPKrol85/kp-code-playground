@@ -1,127 +1,109 @@
-# Gastronomy 02 — Fine Dining Restaurant Demo Website
+# Atelier No.02 — demonstracyjna strona restauracji fine dining
 
-A fully responsive and accessible demo website for the gastronomy industry, built to demonstrate professional front-end practices in HTML, CSS, and JavaScript.
+Statyczny projekt front-end (HTML/CSS/JS) prezentujący stronę restauracji Atelier No.02 z podstronami, trybem ciemnym, dynamicznym renderowaniem menu, galerią lightbox oraz wsparciem PWA/offline.
 
-Live Demo:
-→ https://gastronomy-project-02.netlify.app/
+## Tech stack
+- HTML5 (wiele stron statycznych)
+- CSS3 (architektura modułowa: base/layout/components/pages/utilities)
+- JavaScript (ES modules + bundling przez esbuild)
+- PostCSS (`postcss-import` + `cssnano`)
+- Service Worker + `manifest.webmanifest`
 
-1. **Overview**
-   - Part of the _KP_Code Professional Learning Plan_.
-   - Achieved Lighthouse score: **100 / 100 / 100 / 100**.
-   - Strong focus on performance, accessibility, SEO, and PWA best practices.
-
-2. **Features**
-   - Responsive layout (mobile-first grid/flex, fluid typography).
-   - Semantic HTML with proper headings and landmarks.
-   - Accessibility: `aria-labels`, focus styles, high contrast, skip links.
-   - Images: modern formats (WebP/JPG), `loading="lazy"`, width/height set to avoid layout shift.
-   - Performance: `theme-color`, preconnects, critical assets preload (fonts/hero), minified CSS/JS.
-   - SEO: descriptive titles, meta descriptions, structured headings, canonical URL.
-   - PWA: Web App Manifest (`manifest.webmanifest`) and Service Worker (`sw.js`).
-   - Offline mode: cache-first strategy with a fallback `404.html` for offline navigation.
-   - Netlify headers: caching, security headers, and file-specific rules via `_headers`.
-   - Build optimizations: CSSNano and Terser minification pipelines.
-
-3. **Manual Build (final step only)**
-   - Dev source: `css/style.css`, `js/script.js`, and `assets/img/**/*.{jpg,png}`.
-   - Run `npm run build` to generate optimized images (WebP/AVIF) and minified CSS/JS (`style.min.css`, `script.min.js`).
-   - Add new images by placing JPG/PNG files under `assets/img/` and rerun `npm run optimize:images`.
-   - Switch HTML asset links:
-     - `npm run dev` or `npm run dev:assets` (use `style.css` / `script.js`)
-     - `npm run prod` or `npm run prod:assets` (use `style.min.css` / `script.min.js`)
-
-4. **Tech Stack**
-   - HTML5, CSS3, JavaScript (ES6)
-   - Netlify (hosting & headers)
-   - CSSNano, Terser (minification)
-   - Lighthouse, Chrome DevTools (audits)
-   - VS Code (editor)
-
-5. **Folder Structure**
-
+## Struktura projektu
 ```text
-gastronomy-html-css-js-project-02/
+pr-02-atelier/
 ├── index.html
 ├── about.html
 ├── menu.html
 ├── gallery.html
 ├── cookies.html
 ├── polityka-prywatnosci.html
+├── regulamin.html
+├── offline.html
 ├── 404.html
 ├── css/
 │   ├── style.css
-│   └── style.css
+│   ├── style.min.css
+│   ├── base/
+│   ├── layout/
+│   ├── components/
+│   ├── pages/
+│   └── utilities/
 ├── js/
 │   ├── script.js
-│   └── script.js
+│   ├── script.min.js
+│   ├── app/
+│   ├── core/
+│   └── features/
+├── data/
+│   └── menu.json
 ├── assets/
 │   ├── fonts/
-│   │   ├── lato-400-latin.woff2
-│   │   ├── lato-700-latin.woff2
-│   │   ├── montserrat-400-latin.woff2
-│   │   └── montserrat-700-latin.woff2
 │   ├── icons/
-│   │   ├── fav-icon/
-│   │   │   ├── android-chrome-192x192.png
-│   │   │   ├── android-chrome-512x512.png
-│   │   │   ├── apple-touch-icon.png
-│   │   │   ├── favicon-16x16.png
-│   │   │   ├── favicon-32x32.png
-│   │   │   ├── favicon-96x96.png
-│   │   │   ├── favicon-1024x1024.png
-│   │   │   ├── favicon.ico
-│   │   │   ├── favicon.svg
-│   │   │   └── web-app-manifest-512x512.png
-│   │   └── svg-icon/
-│   │       ├── github-icon.svg
-│   │       ├── facebook-icon.svg
-│   │       ├── instagram-icon.svg
-│   │       ├── mail-icon.svg
-│   │       ├── phone-icon.svg
-│   │       ├── home-icon.svg
-│   │       ├── icon-moon.svg
-│   │       └── icon-sun.svg
-│   └── img/
-│       ├── menu/
-│       │   ├── risotto-800x534.webp
-│       │   └── risotto-800x534.jpg
-│       └── …
+│   ├── img/
+│   ├── img-src/
+│   └── img-optimized/
+├── scripts/
+│   └── images/build-images.js
 ├── manifest.webmanifest
 ├── sw.js
-├── sitemap.xml
 ├── robots.txt
+├── sitemap.xml
 ├── _headers
-├── _redirects.txt
 ├── package.json
 ├── package-lock.json
 └── postcss.config.js
 ```
 
-6. **Performance & Accessibility**
-   - Performance: 100
-     Accessibility: 100
-     Best Practices: 100
-     SEO: 100
+## Uruchomienie lokalne
+Wymagany jest Node.js oraz npm (wersja Node nie jest jawnie zadeklarowana w plikach projektu).
 
-   | Metric        | Value |
-   | ------------- | -----:|
-   | FCP           | 0.8s  |
-   | LCP           | 1.1s  |
-   | TBT           | 0ms   |
-   | CLS           | 0.00  |
-   | Speed Index   | 1.0s  |
+1. Instalacja zależności:
+   ```bash
+   npm install
+   ```
+2. Serwer deweloperski:
+   ```bash
+   npm run dev:server
+   ```
+   Domyślnie aplikacja działa na `http://localhost:5173`.
+3. Build assetów CSS/JS:
+   ```bash
+   npm run build
+   ```
+4. Generowanie zoptymalizowanych obrazów:
+   ```bash
+   npm run images:build
+   ```
 
-7. **SEO & PWA**
-   - Meta Open Graph & Twitter Cards for rich sharing.
-   - `robots.txt` configured for crawl directives.
-   - `sitemap.xml` for search engine indexing.
-   - `manifest.webmanifest` with icons and display properties.
-   - Netlify `_headers` for cache and security policies.
-   - Offline support via Service Worker and `404.html` fallback.
+## Skrypty npm
+- `build:css` — minifikacja `css/style.css` do `css/style.min.css`.
+- `build:js` — bundling + minifikacja `js/script.js` do `js/script.min.js`.
+- `build` — uruchamia `build:css` i `build:js`.
+- `images:build` — generuje obrazy do `assets/img-optimized`.
+- `dev:server` — uruchamia statyczny serwer HTTP.
 
-8. **Author**
-   - **KP_Code**
-     Front-End Developer focused on clean code, accessibility, and performance.
-     © 2025 KP_Code — For educational and portfolio use only.
+## Dostępność
+- Skip linki do treści głównej.
+- Nawigacja mobilna z obsługą klawiatury i pułapką fokusa.
+- Modal i lightbox z obsługą ESC, fokusowaniem i atrybutami ARIA.
+- Widoczne style `:focus-visible`.
+- Obsługa `prefers-reduced-motion` dla animacji reveal.
 
-> This project is part of the KP_Code portfolio series — Gastronomy Demo 02.
+## Wydajność
+- Fonty lokalne (`woff2`) z `font-display: swap`.
+- `preload` dla kluczowych fontów.
+- Responsywne obrazy (`avif/webp/jpg`, `srcset`, `sizes`, `loading="lazy"`).
+- Minifikowane bundle CSS/JS (`*.min.*`).
+
+## PWA / offline
+- `manifest.webmanifest` z ikonami i ustawieniami instalowalnej aplikacji.
+- `sw.js` cache’uje kluczowe zasoby i posiada fallback do `offline.html` dla nawigacji.
+- Rejestracja Service Workera wykonywana po `load` na stronach HTML.
+
+## Deployment
+- W repo znajduje się plik `_headers` sugerujący konfigurację dla Netlify (cache + security headers).
+
+## Licencja i autor
+- Licencja: MIT.
+- Autor: Kamil Król | KP_Code.
