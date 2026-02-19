@@ -3,7 +3,7 @@
 ## PL
 
 ### Przegląd projektu
-Atelier No.02 to wielostronicowy serwis portfolio restauracji (HTML/CSS/JS) z architekturą CSS opartą o warstwy `base`, `layout`, `components`, `pages` i `utilities`, dynamicznymi modułami JS oraz wsparciem PWA (`manifest.webmanifest`, `sw.js`).
+Atelier No.02 to wielostronicowa aplikacja webowa dla restauracji fine dining (HTML/CSS/JS), oparta na warstwowej architekturze CSS oraz modularnym JavaScript, z implementacją standardów PWA.
 
 ### Kluczowe funkcje
 - Wielostronicowa struktura: `index.html`, `about.html`, `menu.html`, `gallery.html` oraz podstrony prawne.
@@ -83,7 +83,7 @@ MIT (zgodnie z `package.json`).
 ## EN
 
 ### Project overview
-Atelier No.02 is a multi-page restaurant portfolio website (HTML/CSS/JS) with a layered CSS architecture (`base`, `layout`, `components`, `pages`, `utilities`), modular JavaScript features, and PWA support (`manifest.webmanifest`, `sw.js`).
+Atelier No.02 is a multi-page web application for a fine dining restaurant (HTML/CSS/JS), structured with a layered CSS architecture and modular JavaScript, including PWA capabilities.
 
 ### Key features
 - Multi-page structure: `index.html`, `about.html`, `menu.html`, `gallery.html`, plus legal pages.
