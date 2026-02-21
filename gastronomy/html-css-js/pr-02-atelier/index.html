@@ -59,35 +59,8 @@
       imagesrcset="assets/img-optimized/hero/hero-640x512.avif 640w, assets/img-optimized/hero/hero-768x614.avif 768w, assets/img-optimized/hero/hero-960x768.avif 960w, assets/img-optimized/hero/hero-1200x960.avif 1200w"
       imagesizes="(max-width: 768px) 100vw, 45vw"
       fetchpriority="high" />
-
-    <!-- Theme preload  -->
-    <script>
-      (function () {
-        var storageKey = "kp-theme";
-        var root = document.documentElement;
-        var theme = null;
-
-        try {
-          var stored = localStorage.getItem(storageKey);
-          if (stored === "light" || stored === "dark") theme = stored;
-        } catch (err) {}
-
-        if (!theme) {
-          var preset = root.getAttribute("data-theme");
-          if (preset === "light" || preset === "dark") theme = preset;
-        }
-
-        if (!theme) {
-          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          theme = prefersDark ? "dark" : "light";
-        }
-
-        root.setAttribute("data-theme", theme);
-
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute("content", theme === "dark" ? "#181210" : "#f8f1e7");
-      })();
-    </script>
+    <!-- Theme preload -->
+    <script src="js/bootstrap.js"></script>
 
     <!-- JSON-LD -->
     <script type="application/ld+json">
@@ -826,23 +799,6 @@
     </noscript>
     <!-- Script -->
     <script type="module" src="js/script.js" defer></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        const isLocalhost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
-
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then((reg) => {
-            })
-            .catch((err) => {
-              if (isLocalhost) {
-                console.warn("❌ Błąd rejestracji Service Workera:", err);
-              }
-            });
-        });
-      }
-    </script>
 
     <div class="demo-legal-modal" id="demo-legal-modal" aria-hidden="true" hidden inert>
       <div class="demo-legal-modal__backdrop" data-demo-legal-close></div>
