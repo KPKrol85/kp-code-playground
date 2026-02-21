@@ -162,6 +162,7 @@
         }
       }
     </style>
+    <script src="js/bootstrap.js"></script>
   </head>
 
   <!-- Body -->
@@ -325,23 +326,6 @@
     </noscript>
     <!-- Script -->
     <script type="module" src="js/core.js" defer></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        const isLocalhost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
-
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then((reg) => {
-            })
-            .catch((err) => {
-              if (isLocalhost) {
-                console.warn("❌ Błąd rejestracji Service Workera:", err);
-              }
-            });
-        });
-      }
-    </script>
   
     <div class="demo-legal-modal" id="demo-legal-modal" aria-hidden="true" hidden>
       <div class="demo-legal-modal__backdrop" data-demo-legal-close></div>
