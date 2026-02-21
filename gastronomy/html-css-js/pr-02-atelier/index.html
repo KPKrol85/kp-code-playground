@@ -834,9 +834,6 @@
           navigator.serviceWorker
             .register("/sw.js")
             .then((reg) => {
-              if (isLocalhost) {
-                console.log("✅ Service Worker zarejestrowany:", reg.scope);
-              }
             })
             .catch((err) => {
               if (isLocalhost) {
