@@ -1,50 +1,49 @@
-# npm scripts — usage guide
+# settings.md
 
-Źródło: `package.json`
+## npm scripts (na podstawie `package.json`)
 
-## 1) `build:css`
+### 1) `build:css`
 - **Command:** `postcss css/style.css -o css/style.min.css --no-map`
-- **What it does:**
-  - składa modułowe importy CSS do jednego pliku,
-  - uruchamia pipeline PostCSS,
-  - generuje wynikowy plik produkcyjny `css/style.min.css` bez source map.
-- **When to use:**
-  - po zmianach w plikach `css/**`,
-  - przed publikacją lub testem finalnego bundle CSS.
+- **Co robi:**
+  - Kompiluje główny entry CSS (`css/style.css`) z importami modułów.
+  - Uruchamia pipeline PostCSS (m.in. `postcss-import`, `cssnano`) i zapisuje wynik do `css/style.min.css`.
+  - Wyłącza source mapy (`--no-map`).
+- **Kiedy używać:**
+  - Przy każdej zmianie w stylach przed commitem/release.
+  - Gdy chcesz odświeżyć produkcyjny plik CSS.
 
-## 2) `build:js`
+### 2) `build:js`
 - **Command:** `esbuild js/script.js --bundle --minify --outfile=js/script.min.js --target=es2018`
-- **What it does:**
-  - bundluje moduły JavaScript z punktu wejścia `js/script.js`,
-  - minifikuje output,
-  - zapisuje produkcyjny plik `js/script.min.js`,
-  - targetuje kompatybilność `es2018`.
-- **When to use:**
-  - po zmianach w `js/**`,
-  - przed wdrożeniem.
+- **Co robi:**
+  - Bundle’uje moduły JS od wejścia `js/script.js`.
+  - Minifikuje kod i zapisuje do `js/script.min.js`.
+  - Ustawia target kompatybilności na `es2018`.
+- **Kiedy używać:**
+  - Po zmianach w plikach `js/core`, `js/features`, `js/app`.
+  - Przed wdrożeniem, aby wygenerować finalny bundle.
 
-## 3) `build`
+### 3) `build`
 - **Command:** `npm run build:css && npm run build:js`
-- **What it does:**
-  - wykonuje pełny build frontendu (najpierw CSS, potem JS).
-- **When to use:**
-  - jako standardowy krok release,
-  - lokalnie do szybkiej weryfikacji artefaktów produkcyjnych.
+- **Co robi:**
+  - Wykonuje pełny build front-end: najpierw CSS, potem JS.
+- **Kiedy używać:**
+  - Przed publikacją/preview produkcyjnym.
+  - Jako standardowy krok walidacji artefaktów statycznych.
 
-## 4) `images:build`
+### 4) `images:build`
 - **Command:** `node scripts/images/build-images.js`
-- **What it does:**
-  - uruchamia skrypt optymalizacji/generowania obrazów,
-  - przygotowuje warianty formatów i rozdzielczości używane przez `picture/srcset`.
-- **When to use:**
-  - po dodaniu nowych obrazów źródłowych,
-  - gdy zmienia się strategia formatów lub rozmiarów assetów.
+- **Co robi:**
+  - Uruchamia skrypt Node do przetwarzania obrazów (pipeline oparty o `sharp` i `fast-glob` z `devDependencies`).
+  - Generuje/aktualizuje zoptymalizowane warianty obrazów.
+- **Kiedy używać:**
+  - Po dodaniu nowych obrazów źródłowych.
+  - Przy regeneracji wariantów AVIF/WebP/JPEG.
 
-## 5) `dev:server`
+### 5) `dev:server`
 - **Command:** `http-server -p 5173 -c-1`
-- **What it does:**
-  - uruchamia statyczny serwer developerski na porcie `5173`,
-  - wyłącza cache (`-c-1`) dla wygodniejszego debugowania zmian.
-- **When to use:**
-  - podczas lokalnego podglądu i ręcznych testów UI,
-  - do szybkiej walidacji builda bez pełnego środowiska CI/CD.
+- **Co robi:**
+  - Uruchamia lokalny serwer statyczny na porcie `5173`.
+  - Wyłącza cache (`-c-1`) dla wygodniejszego developmentu.
+- **Kiedy używać:**
+  - Do ręcznego testowania stron lokalnie.
+  - Do sprawdzania działania nawigacji, layoutu i skryptów bez procesu bundlera dev-server.
