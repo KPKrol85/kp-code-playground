@@ -1,78 +1,67 @@
-# FRONTEND AUDIT — Ambre (pr-01-ambre)
+# FRONTEND AUDIT — Ambre (`pr-01-ambre`)
 
 ## 1. Executive summary
-Projekt ma dojrzałą bazę front-endową: modularny CSS z tokenami, semantyczny HTML, wielostronicową strukturę, elementy PWA i zestaw skryptów QA/build. Największe ryzyka produkcyjne dotyczą integralności ścieżek oraz jakości danych kontaktowych (linkowanie + schema). Dodatkowo, część interakcji nie ma pełnego fallbacku bez JavaScript, co osłabia progressive enhancement.
+Projekt prezentuje dojrzałą strukturę portfolio front-end: modularny CSS oparty o tokeny, spójny podział warstw (`base/layout/components/pages`), sensowne moduły JS i konfigurację deploymentu pod Netlify. Wymagane obszary (a11y, SEO, performance, link integrity, deployment, hygiene) są w większości zaadresowane. Najważniejsze obszary do dopracowania dotyczą utrzymania spójności architektonicznej i drobnych braków jakościowych, a nie krytycznej stabilności produkcyjnej.
 
-## 2. P0 — Critical risks
-
-### P0-1. Błędny `href` arkusza CSS w `404.html`
-- **Impact:** Strona 404 nie ładuje stylów, co obniża jakość UX i wiarygodność strony błędu w produkcji.
-- **Evidence:** `404.html:50` → `href=/css/style.min.css"` (niedomknięty/nieprawidłowy atrybut). Potwierdzone przez skrypt: `npm run qa:links` (`Missing file "/css/style.min.css""`).
-- **Fix:** Zmienić na poprawny zapis: `<link rel="stylesheet" href="/css/style.min.css" />`.
-- **Effort:** S
-
-### P0-2. Nieprawidłowy adres e-mail w `mailto:` i JSON-LD
-- **Impact:** Kontakt e-mail jest funkcjonalnie błędny (kliknięcie `mailto:` nie tworzy poprawnego odbiorcy), a dane strukturalne zawierają nieprawidłowe pole `email`.
-- **Evidence:** `index.html:79`, `menu.html:76`, `galeria.html:75`, `cookies.html:77`, `polityka-prywatnosci.html:75`, `regulamin.html:77` (`"email": "kontakt-kp-code.pl"` bez `@`), oraz wielokrotne `mailto:kontakt-kp-code.pl` (np. `index.html:775`).
-- **Fix:** Ustalić prawidłowy adres i zunifikować: `mailto:adres@domena.tld` oraz `"email": "adres@domena.tld"` we wszystkich stronach.
-- **Effort:** S
+## 2. P0 — Critical risks (real issues only)
+Brak wykrytych P0 w aktualnym stanie kodu (na podstawie przeglądu statycznego oraz uruchomionych kontroli linków).
 
 ## 3. Strengths
-- Spójna organizacja CSS (`base/layout/components/pages`) oraz centralne tokeny (`css/base/tokens.css`).
-- Dobra baza a11y: skip link, `:focus-visible`, logiczna hierarchia nagłówków, `aria-current` i `aria-expanded`.
-- Użycie nowoczesnych formatów obrazów (AVIF/WebP) z fallbackami JPEG i lazy loadingiem.
-- Rozsądny zestaw metadanych SEO: canonical, OpenGraph, Twitter Card, sitemap, robots.
-- Praktyczne skrypty QA i build (`qa-links`, linting, bundling CSS/JS).
+- Dobra architektura CSS z wyraźnym podziałem na warstwy i centralizacją tokenów (`css/base/tokens.css`, importy w `css/style.css`).
+- Implementacja dostępności obejmuje skip link, focus styles, semantyczną strukturę nagłówków i obsługę klawiatury w nawigacji mobilnej.
+- SEO techniczne jest kompletne na poziomie statycznym: canonical, OG, Twitter, robots i sitemap.
+- Obecne są mechanizmy performance: obrazy AVIF/WebP/JPEG, preload fontów, `font-display: swap`, lazy loading.
+- Projekt zawiera działające skrypty QA i build scripts (`qa:links`, `build:*`, linting).
 
 ## 4. P1 — 5 improvements worth doing next
 
-### P1-1. Progressive enhancement formularza rezerwacji
-- **Reason:** Formularz działa wyłącznie JS (`event.preventDefault()`), bez `action` i bez fallbacku serwerowego.
-- **Suggested improvement:** Dodać `action` + endpoint (lub Netlify Forms) i pozostawić JS jako warstwę ulepszenia UX.
+### P1-1. Ujednolicić politykę ścieżek assetów
+- **Reason:** Występuje mieszanie ścieżek absolutnych i względnych dla tych samych typów zasobów (np. CSS).
+- **Suggested improvement:** Przyjąć jeden standard (preferencyjnie absolutny od root dla Netlify) i ujednolicić wszystkie strony.
 
-### P1-2. Usunięcie produkcyjnego `console.log` w lightboxie
-- **Reason:** `js/modules/lightbox.js` zawiera jawny log debugowy.
-- **Suggested improvement:** Usunąć `console.log("lightbox ready ✨", ...)` lub opakować przez warunek debug.
+### P1-2. Dodać `width`/`height` do dekoracyjnych SVG `<img>`
+- **Reason:** Część obrazów (logotypy SVG) nie ma atrybutów wymiarów, co utrudnia pełną kontrolę CLS.
+- **Suggested improvement:** Uzupełnić brakujące wymiary lub zastąpić elementy dekoracyjne przez inline SVG/CSS background.
 
-### P1-3. Poprawa obsługi reduced motion w `scrollIntoView`
-- **Reason:** `initScrollTargets()` wymusza `behavior: "smooth"` bez sprawdzenia `prefers-reduced-motion`.
-- **Suggested improvement:** Ustalić `behavior` analogicznie jak w `initScrollButtons()` (`auto` dla reduce).
+### P1-3. Wzmocnić kontrolę „production hygiene” dla logowania w JS
+- **Reason:** W kodzie źródłowym nadal występuje `console.log` w helperze debug (`utils.js`), choć kontrolowany flagą.
+- **Suggested improvement:** Dodać regułę lint/CI blokującą produkcyjny `console.*` poza skryptami narzędziowymi.
 
-### P1-4. Ujednolicenie relacji zewnętrznych linków
-- **Reason:** Część linków z `target="_blank"` używa `noopener`, ale nie wszędzie `noreferrer`.
-- **Suggested improvement:** Standaryzować na `rel="noopener noreferrer"` dla wszystkich linków otwieranych w nowej karcie.
+### P1-4. Rozszerzyć automatyczne QA o walidację JSON-LD i metadanych SEO
+- **Reason:** JSON-LD jest obecny, ale brak dedykowanego kroku walidacyjnego w skryptach QA.
+- **Suggested improvement:** Dodać etap CI sprawdzający poprawność schematów, canonical/og:url i obecność OG image.
 
-### P1-5. Dopracowanie spójności nazewnictwa klas
-- **Reason:** Architektura deklaruje BEM, ale w kodzie współistnieją klasy utility/legacy i niespójne konwencje.
-- **Suggested improvement:** Wprowadzić reguły lint/konwencję nazewnictwa (np. stylelint selector pattern) i stopniową normalizację.
+### P1-5. Ujednolicić politykę ładowania artefaktów buildowych
+- **Reason:** HTML ładuje obecnie źródłowe `style.css` i `script.js`, mimo dostępnych skryptów bundlowania/minifikacji.
+- **Suggested improvement:** Zdecydować i opisać jeden tryb produkcyjny (źródłowy vs minifikowany), a następnie egzekwować go w README i release checklist.
 
 ## 5. Future enhancements — 5 realistic ideas
-1. Dodać testy automatyczne dostępności (np. axe) do pipeline QA.
-2. Włączyć automatyczną walidację JSON-LD i metadanych w CI.
-3. Rozbudować politykę cache SW o strategię aktualizacji assets z wersjonowaniem builda.
-4. Dodać obraz OG w nowoczesnych formatach z fallbackiem + walidację wymiarów przy buildzie.
-5. Przygotować i opublikować changelog/release notes dla wersji portfolio.
+1. Dodać automatyczne testy dostępności (axe-core) dla kluczowych podstron.
+2. Wprowadzić Lighthouse CI z progami dla Performance/SEO/Best Practices.
+3. Dodać wizualne testy regresji UI dla nawigacji, menu i lightboxa.
+4. Dodać wersjonowanie cache SW oparte o hash builda zamiast ręcznego `CACHE_VERSION`.
+5. Rozszerzyć i18n o wersję EN dla treści stron (nie tylko dokumentacji).
 
 ## 6. Compliance checklist (pass / fail)
 - **headings valid:** PASS
-- **no broken links:** FAIL
+- **no broken links:** PASS
 - **no console.log:** FAIL
 - **aria attributes valid:** PASS
 - **images have width/height:** FAIL
-- **no-JS baseline usable:** FAIL
+- **no-JS baseline usable:** PASS
 - **sitemap present (if expected):** PASS
 - **robots present:** PASS
 - **OG image exists:** PASS
-- **JSON-LD valid:** FAIL
+- **JSON-LD valid:** PASS
 
 ## 7. Architecture Score (0–10)
-- **BEM consistency:** 7/10
-- **token usage:** 9/10
-- **accessibility:** 7/10
-- **performance:** 8/10
-- **maintainability:** 8/10
+- **BEM consistency:** 8.5/10
+- **token usage:** 9.5/10
+- **accessibility:** 8.5/10
+- **performance:** 8.5/10
+- **maintainability:** 8.5/10
 
-**Total architecture score:** **7.8/10**
+**Total architecture score:** **8.7/10**
 
 ## 8. Senior rating (1–10)
-**8/10** — Projekt jest technicznie solidny i czytelnie zorganizowany, z dobrą bazą jakościową pod portfolio produkcyjne. Ocena jest obniżona przez krytyczny błąd ścieżki w 404, niespójność danych kontaktowych oraz niepełny fallback bez JavaScript.
+**8.8/10** — Projekt spełnia standard portfolio produkcyjnego: ma dobrą strukturę, rozsądne zabezpieczenia wdrożeniowe i wysoki poziom jakości front-end. Obszary do poprawy mają charakter utrzymaniowy i standaryzacyjny, bez krytycznego ryzyka produkcyjnego.
