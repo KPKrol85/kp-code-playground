@@ -1,47 +1,47 @@
 # AUDIT.md — Atelier No.02
 
 ## 1. Executive summary
-Projekt prezentuje dobrą jakość architektury front-endowej: modularny CSS zgodny z podejściem token-first, sensowny podział JS na moduły funkcjonalne oraz kompletną podstawę SEO/PWA. W audycie nie wykryto ryzyk P0. Najważniejsze obszary do poprawy dotyczą spójności produkcyjnych assetów (minified vs source), duplikacji inline skryptów i drobnych usprawnień maintainability.
+Projekt jest dobrze zorganizowany architektonicznie: modułowy CSS (base/layout/components/pages/utilities), tokeny design systemu i podział JS na moduły funkcjonalne. Implementacja dostępności i SEO jest szeroka jak na portfolio statyczne. W tym przeglądzie nie wykryto ryzyk klasy P0.
 
 ## 2. P0 — Critical risks (real issues only)
-Brak krytycznych ryzyk P0 wykrytych w przeanalizowanych plikach.
+Nie wykryto krytycznych ryzyk P0 w analizowanych plikach.
 
 ## 3. Strengths
-- Spójna, profesjonalna struktura CSS (`base`, `layout`, `components`, `pages`, `utilities`) oraz centralne tokeny.
-- BEM-like naming i konsekwentne rozdzielenie odpowiedzialności między komponentami.
-- Dostępność interakcji: skip link, zarządzanie ARIA, focus trap i obsługa klawiatury w elementach interaktywnych.
-- Dobrze przygotowana warstwa SEO: canonical, OpenGraph, Twitter, JSON-LD na kluczowych stronach.
-- Dobre podstawy performance: formaty AVIF/WebP/JPEG, lazy loading, width/height, preload fontów.
-- Gotowe artefakty deploymentowe: `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`.
+- Spójna architektura CSS z centralnymi tokenami i czytelną separacją warstw (`style.css` + importy modułów).
+- Implementacja nawigacji mobilnej zawiera kontrolę ARIA, `inert`, focus trap i obsługę klawisza ESC.
+- Obsługa preferencji ruchu (`prefers-reduced-motion`) jest zaadresowana po stronie JS i CSS.
+- Warstwa obrazów jest zoptymalizowana: `picture` + AVIF/WebP/JPG fallback, `loading="lazy"`, `width`/`height`.
+- Warstwa SEO jest kompletna na głównych podstronach (canonical, OG, Twitter, JSON-LD).
+- Wdrożone artefakty deploy/PWA: `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`.
 
 ## 4. P1 — 5 improvements worth doing next
 
-### 1) Ujednolicić produkcyjne ładowanie CSS/JS
-- **Reason:** Główne strony ładują `css/style.css` i `js/script.js`, podczas gdy build i service worker bazują na `style.min.css` / `script.min.js`.
-- **Suggested improvement:** Ustawić spójnie produkcyjne referencje w HTML na pliki `.min` albo zmienić strategię cache/SW tak, by obejmowała realnie ładowane entry.
+### 1) Niespójność entrypointów runtime vs cache SW
+- **Reason:** HTML ładuje niezminifikowane pliki (`css/style.css`, `js/script.js`), a pre-cache SW opiera się na `style.min.css` i `script.min.js`.
+- **Suggested improvement:** Albo przełączyć HTML na pliki `.min`, albo zmienić listę pre-cache na rzeczywiście używane entrypointy.
 
-### 2) Zredukować duplikację inline bootstrap scripts
-- **Reason:** Ten sam blok inicjalizacji motywu i rejestracji SW jest powielony na wielu podstronach, co zwiększa koszt utrzymania.
-- **Suggested improvement:** Wydzielić wspólny bootstrap do jednego pliku JS ładowanego globalnie.
+### 2) Zależność od ścieżek absolutnych ogranicza deploy poza root domeny
+- **Reason:** W kodzie są liczne odwołania absolutne (`/about.html`, `/#contact`, rejestracja `/sw.js`, `start_url: "/"`), co utrudnia hostowanie pod subpath.
+- **Suggested improvement:** Ujednolicić routing/assety do ścieżek relatywnych lub jawnie dodać konfigurację base path.
 
-### 3) Dodać `action`/fallback UX dla formularza
-- **Reason:** Formularz polega na konfiguracji Netlify; bez odpowiedniego środowiska hostingowego ścieżka wysyłki nie jest jawna.
-- **Suggested improvement:** Dodać jawne `action` (lub komentarz integracyjny) i komunikat fallback dla środowisk bez Netlify Forms.
+### 3) Canonical w 404 nie jest kanonicznym adresem absolutnym
+- **Reason:** `404.html` używa `href="/"`, co wskazuje stronę główną zamiast URL strony błędu i utrudnia jednoznaczną interpretację sygnału kanonicznego.
+- **Suggested improvement:** Dla 404 zostawić `noindex` i ustawić absolutny canonical do `/404.html` lub usunąć canonical z 404.
 
-### 4) Doprecyzować politykę cache dla HTML vs assetów
-- **Reason:** `_headers` ustawia restrykcyjny cache dla HTML i revalidation dla CSS/JS, ale wersjonowanie plików nie jest oparte o hash nazw.
-- **Suggested improvement:** Wdrożyć fingerprinting buildów lub spójne wersjonowanie query/hash przy zmianach release.
+### 4) Globalny bootstrap JS inicjuje wszystkie feature moduły na każdej stronie
+- **Reason:** `initApp()` uruchamia pełną listę inicjalizatorów niezależnie od typu podstrony; moduły same się wyłączają po braku targetów.
+- **Suggested improvement:** Wprowadzić selektywne ładowanie/entry per template (home/menu/gallery/legal), żeby uprościć utrzymanie i ograniczyć koszt runtime.
 
-### 5) Rozszerzyć automatyczne kontrole jakości
-- **Reason:** W projekcie nie wykryto konfiguracji automatycznych testów a11y/link-check/lint w CI.
-- **Suggested improvement:** Dodać pipeline CI z walidacją HTML, sprawdzaniem linków, i podstawowym audytem dostępności.
+### 5) Brak skryptów jakościowych (lint/test/link-check) w npm scripts
+- **Reason:** `package.json` definiuje tylko build/dev/image pipeline; brak skryptów automatycznej walidacji jakości.
+- **Suggested improvement:** Dodać skrypty `lint`, `check:links`, `check:a11y`, `validate:html` i spiąć je z CI.
 
 ## 5. Future enhancements — 5 realistic ideas
-1. Dodać budowanie critical CSS dla hero i above-the-fold.
-2. Rozdzielić bundle JS per typ strony (home/menu/gallery/legal).
-3. Wdrożyć automatyczną walidację JSON-LD i meta SEO w CI.
-4. Dodać monitorowanie Core Web Vitals dla środowiska produkcyjnego.
-5. Rozszerzyć SW o strategię stale-while-revalidate dla wybranych obrazów.
+1. Dodać fingerprinting assetów (`style.[hash].css`, `script.[hash].js`) i dostosować politykę cache.
+2. Dodać automatyczny crawl linków i anchorów jako krok CI.
+3. Rozszerzyć testy dostępności o automatyczne audyty axe/pa11y.
+4. Wdrożyć monitoring Core Web Vitals dla produkcji (LCP/CLS/INP).
+5. Wydzielić policy/legal bundle jako osobny, lżejszy entry JS.
 
 ## 6. Compliance checklist (pass / fail)
 - **headings valid:** pass
@@ -57,12 +57,22 @@ Brak krytycznych ryzyk P0 wykrytych w przeanalizowanych plikach.
 
 ## 7. Architecture Score (0–10)
 - **BEM consistency:** 8.8/10
-- **token usage:** 9.3/10
+- **token usage:** 9.2/10
 - **accessibility:** 8.9/10
 - **performance:** 8.6/10
-- **maintainability:** 8.5/10
+- **maintainability:** 8.4/10
 
 **Overall Architecture Score:** **8.8/10**
 
 ## 8. Senior rating (1–10)
-**8.7/10** — Solidny, portfolio-grade front-end z właściwą strukturą i dobrą jakością implementacji. Projekt zyska najwięcej po domknięciu spójności produkcyjnych assetów i redukcji powielonej logiki bootstrapującej.
+**8.7/10** — Projekt ma poziom portfolio produkcyjnego, z dobrą jakością struktury i dostępności. Największy potencjał poprawy to spójność strategii build/runtime oraz gotowość do automatycznych kontroli jakości.
+
+---
+
+## Evidence map (file references)
+- Runtime assets: `index.html` (`css/style.css`, `js/script.js`) oraz analogicznie podstrony. (`index.html`: linie 97, 814)
+- SW pre-cache minified assets: `sw.js` linie 12–13.
+- Ścieżki absolutne: `index.html` linie 180–181, `404.html` linie 189–193, `js/bootstrap.js` linia 30, `manifest.webmanifest` linie 7–8.
+- Canonical 404: `404.html` linia 8.
+- Globalna inicjalizacja feature modułów: `js/app/init.js` linie 14–31.
+- Brak skryptów jakościowych: `package.json` linie 24–30.
