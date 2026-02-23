@@ -39,6 +39,9 @@ Atelier No.02 to wielostronicowy serwis portfolio restauracji fine dining zbudow
 - Konfiguracja hostingu: `_headers`, `_redirects`.
 - SEO crawl: `robots.txt`, `sitemap.xml`.
 - PWA: `manifest.webmanifest`, `sw.js`, `offline.html`.
+- Na Netlify `publish directory` musi wskazywać na `gastronomy/html-css-js/pr-02-atelier`.
+- Serwis jest wdrażany z root (`/`) domeny Netlify, więc ścieżki absolutne (`/...`) są oczekiwane i poprawne.
+- Hosting pod subpath nie jest wspierany bez wdrożenia dedykowanej strategii base-path (routing, manifest, scope/ścieżki Service Workera, canonical/OG URL).
 
 #### Dev vs Deploy assets
 - Development/local runtime domyślnie korzysta z niezminifikowanych entrypointów: `css/style.css` oraz `js/script.js`.
@@ -124,6 +127,9 @@ Atelier No.02 is a multi-page fine-dining portfolio website built with static HT
 - Hosting config: `_headers`, `_redirects`.
 - SEO crawl files: `robots.txt`, `sitemap.xml`.
 - PWA files: `manifest.webmanifest`, `sw.js`, `offline.html`.
+- On Netlify, the `publish directory` must point to `gastronomy/html-css-js/pr-02-atelier`.
+- The site is deployed from the Netlify domain root (`/`), so absolute paths (`/...`) are expected and correct.
+- Subpath hosting is not supported unless a dedicated base-path strategy is implemented (routing, manifest, Service Worker scope/paths, canonical/OG URLs).
 
 #### Dev vs Deploy assets
 - Development/local runtime intentionally uses the non-minified entrypoints: `css/style.css` and `js/script.js`.
