@@ -16,12 +16,13 @@
     "img:avif": "node scripts/optimize-images.mjs --avif",
     "img:clean": "node -e \"require('fs').rmSync('assets/img/_optimized', { recursive: true, force: true })\"",
     "img:verify": "node scripts/img-verify.mjs",
-    "qa": "npm run qa:links && npm run qa:seo && npm run qa:html && npm run qa:js && npm run qa:css",
+    "qa": "npm run qa:links && npm run qa:seo && npm run qa:a11y && npm run qa:html && npm run qa:js && npm run qa:css",
     "qa:links": "node scripts/qa-links.mjs",
     "qa:seo": "node scripts/qa-seo.mjs",
     "qa:html": "html-validate index.html menu.html galeria.html cookies.html polityka-prywatnosci.html regulamin.html 404.html offline.html",
     "qa:js": "eslint --max-warnings 0 \"js/**/*.js\" \"scripts/**/*.mjs\"",
-    "qa:css": "stylelint --max-warnings 0 \"css/**/*.css\""
+    "qa:css": "stylelint --max-warnings 0 \"css/**/*.css\"",
+    "qa:a11y": "node scripts/qa-a11y.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.24",
@@ -35,6 +36,8 @@
     "sharp": "^0.33.5",
     "stylelint": "^16.7.0",
     "stylelint-config-recommended": "^14.0.0",
-    "terser": "^5.44.0"
+    "terser": "^5.44.0",
+    "@axe-core/playwright": "^4.10.2",
+    "playwright": "^1.55.0"
   }
 }
