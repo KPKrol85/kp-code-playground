@@ -39,7 +39,20 @@ Atelier No.02 to wielostronicowy serwis portfolio restauracji fine dining zbudow
 - Konfiguracja hostingu: `_headers`, `_redirects`.
 - SEO crawl: `robots.txt`, `sitemap.xml`.
 - PWA: `manifest.webmanifest`, `sw.js`, `offline.html`.
-- Obecnie HTML używa głównie `css/style.css` i `js/script.js`, mimo że build generuje `style.min.css` i `script.min.js`.
+
+#### Dev vs Deploy assets
+- Development/local runtime domyślnie korzysta z niezminifikowanych entrypointów: `css/style.css` oraz `js/script.js`.
+- Przed finalnym wdrożeniem na Netlify należy ręcznie wygenerować artefakty produkcyjne: `css/style.min.css` oraz `js/script.min.js`.
+- Komendy build:
+  - `npm run build` (uruchamia całość),
+  - lub osobno: `npm run build:css` i `npm run build:js`.
+- Wynik builda:
+  - `npm run build:css` -> `css/style.min.css`,
+  - `npm run build:js` -> `js/script.min.js`.
+
+#### Uwaga o Service Worker pre-cache
+- Referencje do zminifikowanych plików w pre-cache Service Workera są celowe i zgodne z workflow deployu.
+- Podczas developmentu/lokalnych testów runtime może ładować `css/style.css` i `js/script.js` — to zamierzone i nie oznacza błędu konfiguracji.
 
 ### Dostępność
 - Skip link jest wdrożony na stronach.
@@ -111,7 +124,20 @@ Atelier No.02 is a multi-page fine-dining portfolio website built with static HT
 - Hosting config: `_headers`, `_redirects`.
 - SEO crawl files: `robots.txt`, `sitemap.xml`.
 - PWA files: `manifest.webmanifest`, `sw.js`, `offline.html`.
-- HTML currently loads mostly `css/style.css` and `js/script.js`, while build output is `style.min.css` and `script.min.js`.
+
+#### Dev vs Deploy assets
+- Development/local runtime intentionally uses the non-minified entrypoints: `css/style.css` and `js/script.js`.
+- Before final Netlify deployment, minified production artifacts must be generated manually: `css/style.min.css` and `js/script.min.js`.
+- Build commands:
+  - `npm run build` (full build),
+  - or separately: `npm run build:css` and `npm run build:js`.
+- Build outputs:
+  - `npm run build:css` -> `css/style.min.css`,
+  - `npm run build:js` -> `js/script.min.js`.
+
+#### Service Worker pre-cache note
+- Service Worker pre-cache references to minified assets are intentional and aligned with the deploy workflow.
+- During development/local testing, runtime may load `css/style.css` and `js/script.js` by design; this is not a configuration error.
 
 ### Accessibility notes
 - Skip link is present on pages.
