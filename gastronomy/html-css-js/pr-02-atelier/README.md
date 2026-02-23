@@ -38,9 +38,9 @@ Atelier No.02 to wielostronicowy serwis portfolio restauracji fine dining zbudow
 ### Quality checks
 - `npm run lint` — linting JavaScript (`js/**/*.js`).
 - `npm run validate:html` — walidacja plików HTML w katalogu projektu.
-- `npm run check:links` — crawl linków pod lokalnym adresem `http://127.0.0.1:5173`.
+- `npm run check:links` — deterministyczny crawl linków pod lokalnym adresem `http://127.0.0.1:5173` (tylko lokalny origin, explicit entry points dla wszystkich podstron, walidacja fragmentów `#id`).
 - `npm run check:a11y` — smoke testy a11y dla kluczowych podstron (konfiguracja w `.pa11yci`).
-- `npm run check` — pełny pakiet QA (lint + HTML + linki + a11y, z automatycznym uruchomieniem serwera lokalnego dla link/a11y).
+- `npm run check` — pełny pakiet QA (lint + HTML + linki + a11y, z automatycznym uruchomieniem serwera lokalnego, retry/wait i walidacją linków + anchorów).
 
 ### Build i wdrożenie
 - Konfiguracja hostingu: `_headers`, `_redirects`.
@@ -133,9 +133,9 @@ Atelier No.02 is a multi-page fine-dining portfolio website built with static HT
 ### Quality checks
 - `npm run lint` — JavaScript linting (`js/**/*.js`).
 - `npm run validate:html` — validate HTML files in the project root.
-- `npm run check:links` — crawl links at `http://127.0.0.1:5173`.
+- `npm run check:links` — deterministic local-origin crawl at `http://127.0.0.1:5173` (explicit entry points for all pages, plus fragment/anchor `#id` validation).
 - `npm run check:a11y` — accessibility smoke checks for key pages (configured in `.pa11yci`).
-- `npm run check` — full QA suite (lint + HTML + links + a11y, with local server lifecycle handled automatically for link/a11y).
+- `npm run check` — full QA suite (lint + HTML + links + a11y, with automatic local server lifecycle, wait/retry stability, and link + fragment checks).
 
 ### Build & deployment notes
 - Hosting config: `_headers`, `_redirects`.
