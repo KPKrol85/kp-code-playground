@@ -25,7 +25,7 @@ W aktualnym stanie kodu **nie wykryto problemów P0**.
 - **Suggested improvement:** Wprowadzić jeden jawny tryb release (minified albo source), opisać go w checklist release i egzekwować skryptem QA.
 
 ### P1-2. Uspójnić semantykę `aria-current` w nawigacji
-- **Reason:** W kodzie nawigacji używane są dwa warianty wartości: `aria-current="true"` (scrollspy) i `aria-current="page"` (page routing), co utrudnia utrzymanie spójności.
+- **Reason:** W kodzie nawigacji używane są dwa warianty wartości: `aria-current="location"` (scrollspy) i `aria-current="page"` (page routing), co utrudnia utrzymanie spójności.
 - **Suggested improvement:** Przyjąć jednolitą konwencję dla wszystkich scenariuszy (np. `page` dla podstron, `location` dla sekcji) i opisać ją jako standard.
 
 ### P1-3. Ograniczyć duplikację logiki aktywnej nawigacji
