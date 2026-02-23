@@ -1,139 +1,147 @@
-# Ambre — Front-End Portfolio Project
+# Ambre — front-end portfolio project
 
 ## 🇵🇱 Wersja polska
 
-## Przegląd projektu
-Ambre to wielostronicowa strona restauracji fine dining oparta o HTML, modularny CSS i Vanilla JS. Projekt zawiera konfigurację PWA (manifest, Service Worker, strona offline), walidację jakości przez skrypty QA oraz konfigurację wdrożeniową Netlify.
+### Przegląd projektu
+Ambre to wielostronicowa strona portfolio restauracji fine dining. Projekt działa w oparciu o statyczne HTML + modularny CSS + Vanilla JS (ES Modules), z dodatkowymi elementami PWA (`manifest.webmanifest`, `sw.js`, `offline.html`) i konfiguracją pod deployment na Netlify (`_headers`, `_redirects`).
 
-## Kluczowe funkcje
-- Wielostronicowy serwis: `index.html`, `menu.html`, `galeria.html`, strony prawne, `404.html` i `offline.html`.
-- Nawigacja responsywna z menu mobilnym, focus trap i synchronizacją atrybutów `aria-expanded`.
-- Przełącznik motywu (light/dark) oparty o `localStorage` i `prefers-color-scheme`.
-- Interaktywne moduły: filtrowanie i „load more” w menu/galerii, FAQ (`details/summary`), lightbox, CTA i scroll utilities.
-- Formularz rezerwacji z walidacją klienta, honeypotem, wsparciem dla Netlify Forms i fallbackiem submit.
-- PWA: `manifest.webmanifest`, `sw.js`, `js/sw-register.js`, `offline.html`.
+### Kluczowe funkcje
+- Wielostronicowa struktura: `index.html`, `menu.html`, `galeria.html`, strony prawne (`cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`), `404.html`, `offline.html`.
+- Responsywna nawigacja z drawerem mobilnym, trapem focusu, obsługą `Escape` i synchronizacją `aria-expanded`.
+- Dynamiczne `aria-current` dla nawigacji oraz scrollspy dla sekcji na stronie głównej.
+- Przełącznik motywu light/dark (z `localStorage` i fallbackiem do `prefers-color-scheme`).
+- Interaktywne moduły: sekcje FAQ, filtrowanie galerii, „load more”, lightbox, przewijanie do sekcji i przycisk powrotu do góry.
+- Formularz rezerwacji z walidacją, honeypotem (`company`), komunikatami ARIA i wysyłką zgodną z Netlify Forms.
+- PWA: manifest, Service Worker z cache app-shell i fallbackiem offline.
 
-## Tech stack
+### Tech stack
 - HTML5
 - CSS3 (architektura: `base/`, `layout/`, `components/`, `pages/`)
 - JavaScript ES Modules (Vanilla JS)
-- Tooling: PostCSS, esbuild, ESLint, Stylelint, html-validate
-- Deployment: Netlify (`_headers`, `_redirects`)
+- Narzędzia: PostCSS, esbuild, ESLint, Stylelint, html-validate, Lighthouse CI
+- Deployment: Netlify
 
-## Struktura projektu
-- `css/base/` — tokeny, reset i typografia.
-- `css/layout/` — struktura header/footer.
-- `css/components/` — komponenty i utility.
-- `css/pages/` — style stron specyficznych.
-- `js/modules/` — moduły funkcjonalne.
-- `scripts/` — QA linków i optymalizacja obrazów.
+### Struktura projektu
+- `css/base/` — tokeny, bazowe reguły, typografia
+- `css/layout/` — layout header/footer
+- `css/components/` — komponenty i utilities
+- `css/pages/` — style specyficzne dla podstron
+- `js/modules/` — moduły funkcjonalne UI/UX
+- `scripts/` — skrypty QA (linki, SEO, a11y, obrazy)
 
-## Setup i uruchomienie
+### Setup i uruchomienie
 ```bash
 npm install
 npm run build
 ```
 
-Dodatkowo dostępne są skrypty watch (`watch:css`, `watch:js`) oraz zestaw QA (`npm run qa`).
+Dodatkowo:
+- tryb obserwacji: `npm run watch:css`, `npm run watch:js`
+- pełny pakiet QA: `npm run qa`
 
-## Build i deployment
-- HTML ładuje aktualnie pliki źródłowe: `/css/style.css` i `/js/script.js`.
-- `_headers` definiuje m.in. CSP, HSTS, COOP i polityki uprawnień.
-- `_redirects` obsługuje skrócone ścieżki i fallback 404.
-- `sw-register.js` nie rejestruje SW lokalnie (localhost/LAN), a w środowisku produkcyjnym rejestruje `sw.js`.
+### Build i deployment
+- Build assetów: `npm run build:css`, `npm run build:js`, `npm run build`.
+- Netlify:
+  - `_headers`: security headers + CSP.
+  - `_redirects`: mapowanie krótkich URL i fallback `404.html`.
+- Service Worker rejestrowany tylko poza środowiskami lokalnymi (`localhost`, LAN), co ogranicza problemy developerskie przy cache.
 
-## Dostępność
-- Zaimplementowano skip link, `:focus-visible`, semantyczne nagłówki i strukturę `main`.
-- Nawigacja mobilna ma obsługę klawiatury (Escape + trap focus).
-- Projekt zawiera reguły `prefers-reduced-motion` w CSS oraz warunkowe zachowania w JS.
-- Wersja no-JS pozostaje używalna (klasy `.no-js`, formularz HTML POST).
+### Dostępność
+- Obecne: skip link, semantyczna struktura nagłówków, landmarks (`header/main/footer`), fokus przez `:focus-visible`.
+- Nawigacja mobilna: trap focusu, zamykanie klawiszem `Escape`, kontrola `aria-expanded`.
+- `prefers-reduced-motion` obsłużone w CSS i części interakcji JS.
+- Bazowa używalność bez JS jest utrzymana (struktura HTML + fallback formularza).
 
-## SEO
-- Strony mają `title`, `description`, `canonical`, Open Graph i Twitter Card.
-- `robots.txt` oraz `sitemap.xml` są obecne i wskazują docelową domenę.
-- JSON-LD jest obecny na stronach głównych i prawnych (`WebSite`, `Restaurant`, `WebPage`).
+### SEO
+- Meta SEO: `title`, `description`, `canonical`, OpenGraph, Twitter Cards.
+- `robots.txt` i `sitemap.xml` obecne i spójne domenowo.
+- JSON-LD obecny na stronach (m.in. `WebSite`, `Restaurant`, `WebPage`).
 
-## Wydajność
-- Obrazy wykorzystują AVIF/WebP z fallbackiem JPEG (picture + srcset).
-- Dla kluczowych obrazów stosowane są `width/height`, `decoding`, `loading` i `fetchpriority`.
-- Fonty `.woff2` są preloadowane i mają `font-display: swap`.
-- Service Worker cache’uje app shell i runtime images.
+### Wydajność
+- Obrazy: `picture` z AVIF/WebP + fallback JPG.
+- Atrybuty stabilizujące layout: `width`/`height` dla obrazów.
+- Lazy-loading i `decoding="async"` dla zasobów poza LCP.
+- Fonty WOFF2 z preloadem i `font-display: swap`.
 
-## Roadmap
-- Ujednolicić sposób podpinania assetów (konsekwentne ścieżki absolutne względne).
-- Dodać automatyczną walidację JSON-LD/SEO w CI.
-- Rozszerzyć testy a11y o automatyczne skany (np. axe + Playwright).
-- Uzupełnić brakujące `width/height` dla dekoracyjnych SVG w stopce/hero.
+### Roadmap
+- Dodać automatyczną walidację JSON-LD do pipeline QA.
+- Uzupełnić automatyczne testy a11y (Playwright + axe) w CI z progami błędów.
+- Ustalić jedną politykę użycia artefaktów minifikowanych (`style.min.css` / `script.min.js`) na produkcji.
+- Dodać testy regresji wizualnej dla kluczowych komponentów (header, menu, lightbox).
 
-## Licencja
-MIT (zgodnie z `package.json`).
+### Licencja
+MIT (na podstawie `package.json`).
 
 ---
 
 ## 🇬🇧 English version
 
-## Project overview
-Ambre is a multi-page fine-dining restaurant website built with HTML, modular CSS, and Vanilla JS. It includes PWA capabilities (manifest, Service Worker, offline page), QA scripts, and Netlify deployment configuration.
+### Project overview
+Ambre is a multi-page fine-dining restaurant portfolio website built with static HTML, modular CSS, and Vanilla JS (ES Modules). The project includes PWA elements (`manifest.webmanifest`, `sw.js`, `offline.html`) and Netlify deployment configuration (`_headers`, `_redirects`).
 
-## Key features
-- Multi-page setup: `index.html`, `menu.html`, `galeria.html`, legal pages, `404.html`, and `offline.html`.
-- Responsive navigation with mobile drawer, focus trap, and synchronized `aria-expanded` states.
-- Theme switcher (light/dark) based on `localStorage` and `prefers-color-scheme`.
-- Interactive modules: menu/gallery filtering and load-more, FAQ (`details/summary`), lightbox, CTA, and scroll utilities.
-- Reservation form with client-side validation, honeypot anti-spam, Netlify Forms support, and submit fallback.
-- PWA: `manifest.webmanifest`, `sw.js`, `js/sw-register.js`, `offline.html`.
+### Key features
+- Multi-page structure: `index.html`, `menu.html`, `galeria.html`, legal pages (`cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`), `404.html`, `offline.html`.
+- Responsive navigation with mobile drawer, focus trap, `Escape` handling, and synchronized `aria-expanded`.
+- Dynamic `aria-current` handling and scrollspy for homepage sections.
+- Light/dark theme switcher (`localStorage` with `prefers-color-scheme` fallback).
+- Interactive modules: FAQ, gallery filtering, “load more”, lightbox, scroll-to-section, and back-to-top.
+- Reservation form with validation, honeypot (`company`), ARIA feedback, and Netlify-compatible submission.
+- PWA layer: manifest, Service Worker app-shell caching, and offline fallback.
 
-## Tech stack
+### Tech stack
 - HTML5
 - CSS3 (architecture: `base/`, `layout/`, `components/`, `pages/`)
 - JavaScript ES Modules (Vanilla JS)
-- Tooling: PostCSS, esbuild, ESLint, Stylelint, html-validate
-- Deployment: Netlify (`_headers`, `_redirects`)
+- Tooling: PostCSS, esbuild, ESLint, Stylelint, html-validate, Lighthouse CI
+- Deployment: Netlify
 
-## Structure overview
-- `css/base/` — tokens, reset, typography.
-- `css/layout/` — header/footer layout.
-- `css/components/` — UI components and utilities.
-- `css/pages/` — page-specific styles.
-- `js/modules/` — feature modules.
-- `scripts/` — link QA and image optimization.
+### Structure overview
+- `css/base/` — tokens, base rules, typography
+- `css/layout/` — header/footer layout
+- `css/components/` — UI components and utilities
+- `css/pages/` — page-specific styles
+- `js/modules/` — feature modules
+- `scripts/` — QA scripts (links, SEO, a11y, images)
 
-## Setup & run
+### Setup & run
 ```bash
 npm install
 npm run build
 ```
 
-Watch scripts (`watch:css`, `watch:js`) and QA bundle (`npm run qa`) are also available.
+Additionally:
+- watch mode: `npm run watch:css`, `npm run watch:js`
+- full QA suite: `npm run qa`
 
-## Build/deployment notes
-- HTML currently loads source assets: `/css/style.css` and `/js/script.js`.
-- `_headers` defines CSP, HSTS, COOP, and additional hardening headers.
-- `_redirects` maps short routes and provides a 404 fallback.
-- `sw-register.js` avoids SW registration on localhost/LAN and registers `sw.js` in production-like hosts.
+### Build & deployment notes
+- Asset build: `npm run build:css`, `npm run build:js`, `npm run build`.
+- Netlify:
+  - `_headers`: security headers + CSP.
+  - `_redirects`: short URL mapping and `404.html` fallback.
+- Service Worker is only registered outside local environments (`localhost`, LAN), reducing dev-cache issues.
 
-## Accessibility notes
-- Implemented: skip link, `:focus-visible`, semantic heading structure, and `main` landmarks.
-- Mobile navigation supports keyboard control (Escape + focus trap).
+### Accessibility notes
+- Implemented: skip link, semantic heading hierarchy, landmarks (`header/main/footer`), and visible focus states.
+- Mobile navigation supports focus trap, `Escape` closing, and `aria-expanded` control.
 - `prefers-reduced-motion` is handled in CSS and selected JS interactions.
-- No-JS baseline remains usable (`.no-js` behavior and HTML form POST).
+- No-JS baseline remains usable (HTML-first structure + form fallback).
 
-## SEO notes
-- Pages include `title`, `description`, `canonical`, Open Graph, and Twitter metadata.
-- `robots.txt` and `sitemap.xml` are present and aligned to the public domain.
-- JSON-LD is implemented on main/legal pages (`WebSite`, `Restaurant`, `WebPage`).
+### SEO notes
+- SEO metadata implemented: `title`, `description`, `canonical`, OpenGraph, Twitter Cards.
+- `robots.txt` and `sitemap.xml` are present and domain-aligned.
+- JSON-LD is present across pages (including `WebSite`, `Restaurant`, `WebPage`).
 
-## Performance notes
-- Images use AVIF/WebP with JPEG fallback via `picture`/`srcset`.
-- Main images include `width/height`, `decoding`, `loading`, and `fetchpriority`.
-- `.woff2` fonts are preloaded and use `font-display: swap`.
-- Service Worker caches the app shell and runtime image requests.
+### Performance notes
+- Images use `picture` with AVIF/WebP and JPG fallback.
+- `width`/`height` attributes are set for layout stability.
+- Lazy loading and `decoding="async"` are used for non-LCP assets.
+- WOFF2 fonts are preloaded and use `font-display: swap`.
 
-## Roadmap
-- Standardize asset linking strategy (consistent absolute/relative URL policy).
-- Add automated JSON-LD/SEO checks in CI.
-- Add automated a11y scans (e.g., axe + Playwright).
-- Add missing `width/height` attributes for decorative SVG logos.
+### Roadmap
+- Add JSON-LD validation to QA pipeline.
+- Add automated accessibility checks in CI (Playwright + axe) with fail thresholds.
+- Standardize production use of minified bundles (`style.min.css` / `script.min.js`).
+- Add visual regression checks for core components (header, menu, lightbox).
 
-## License
+### License
 MIT (as declared in `package.json`).
