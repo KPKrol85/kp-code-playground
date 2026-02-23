@@ -1,67 +1,72 @@
 # FRONTEND AUDIT — Ambre (`pr-01-ambre`)
 
 ## 1. Executive summary
-Projekt prezentuje dojrzałą strukturę portfolio front-end: modularny CSS oparty o tokeny, spójny podział warstw (`base/layout/components/pages`), sensowne moduły JS i konfigurację deploymentu pod Netlify. Wymagane obszary (a11y, SEO, performance, link integrity, deployment, hygiene) są w większości zaadresowane. Najważniejsze obszary do dopracowania dotyczą utrzymania spójności architektonicznej i drobnych braków jakościowych, a nie krytycznej stabilności produkcyjnej.
+Projekt spełnia standard portfolio produkcyjnego dla statycznego front-endu: ma spójną modularną architekturę CSS, sensowny podział funkcji JS, poprawną bazę SEO technicznego, konfigurację PWA oraz deployment pod Netlify. W aktualnym przeglądzie statycznym nie wykryto błędów klasy P0.
+
+Najważniejsze dalsze prace dotyczą standaryzacji (jedna polityka assetów produkcyjnych), uproszczenia części logiki nawigacji i rozszerzenia automatycznej walidacji jakości.
 
 ## 2. P0 — Critical risks (real issues only)
-Brak wykrytych P0 w aktualnym stanie kodu (na podstawie przeglądu statycznego oraz uruchomionych kontroli linków).
+W aktualnym stanie kodu **nie wykryto problemów P0**.
+
+- Zakres sprawdzony statycznie: linki/anchory/asset paths, meta SEO i sitemap/robots, podstawowe reguły a11y, konfiguracja SW/manifest/Netlify, hygiene (`TODO/FIXME`, `console.log` w kodzie aplikacyjnym).
+- Dowody: `node scripts/qa-links.mjs` → PASS, `node scripts/qa-seo.mjs` → PASS.
 
 ## 3. Strengths
-- Dobra architektura CSS z wyraźnym podziałem na warstwy i centralizacją tokenów (`css/base/tokens.css`, importy w `css/style.css`).
-- Implementacja dostępności obejmuje skip link, focus styles, semantyczną strukturę nagłówków i obsługę klawiatury w nawigacji mobilnej.
-- SEO techniczne jest kompletne na poziomie statycznym: canonical, OG, Twitter, robots i sitemap.
-- Obecne są mechanizmy performance: obrazy AVIF/WebP/JPEG, preload fontów, `font-display: swap`, lazy loading.
-- Projekt zawiera działające skrypty QA i build scripts (`qa:links`, `build:*`, linting).
+- Dobra separacja warstw CSS (`base`, `layout`, `components`, `pages`) i centralizacja tokenów (kolory, spacing, typography, motion, radius). 
+- A11y: skip link, spójna hierarchia nagłówków, focus trap w nawigacji mobilnej, obsługa `Escape`, `aria-expanded`, `aria-current` oraz fallback no-JS.
+- Performance: obrazy AVIF/WebP/JPG przez `picture`, `srcset`, `loading="lazy"`, preload fontów WOFF2 i `font-display: swap`.
+- SEO: canonical + OG + Twitter + JSON-LD + robots + sitemap.
+- Deployment/security: obecne `_headers` z CSP/politykami bezpieczeństwa oraz `_redirects` z czytelnym mapowaniem.
 
 ## 4. P1 — 5 improvements worth doing next
 
-### P1-1. Ujednolicić politykę ścieżek assetów
-- **Reason:** Występuje mieszanie ścieżek absolutnych i względnych dla tych samych typów zasobów (np. CSS).
-- **Suggested improvement:** Przyjąć jeden standard (preferencyjnie absolutny od root dla Netlify) i ujednolicić wszystkie strony.
+### P1-1. Ujednolicić strategię assetów produkcyjnych
+- **Reason:** W projekcie istnieją skrypty budujące pliki minifikowane (`css/style.min.css`, `js/script.min.js`), ale strony ładują warianty źródłowe (`/css/style.css`, `/js/script.js`).
+- **Suggested improvement:** Wprowadzić jeden jawny tryb release (minified albo source), opisać go w checklist release i egzekwować skryptem QA.
 
-### P1-2. Dodać `width`/`height` do dekoracyjnych SVG `<img>`
-- **Reason:** Część obrazów (logotypy SVG) nie ma atrybutów wymiarów, co utrudnia pełną kontrolę CLS.
-- **Suggested improvement:** Uzupełnić brakujące wymiary lub zastąpić elementy dekoracyjne przez inline SVG/CSS background.
+### P1-2. Uspójnić semantykę `aria-current` w nawigacji
+- **Reason:** W kodzie nawigacji używane są dwa warianty wartości: `aria-current="true"` (scrollspy) i `aria-current="page"` (page routing), co utrudnia utrzymanie spójności.
+- **Suggested improvement:** Przyjąć jednolitą konwencję dla wszystkich scenariuszy (np. `page` dla podstron, `location` dla sekcji) i opisać ją jako standard.
 
-### P1-3. Wzmocnić kontrolę „production hygiene” dla logowania w JS
-- **Reason:** W kodzie źródłowym nadal występuje `console.log` w helperze debug (`utils.js`), choć kontrolowany flagą.
-- **Suggested improvement:** Dodać regułę lint/CI blokującą produkcyjny `console.*` poza skryptami narzędziowymi.
+### P1-3. Ograniczyć duplikację logiki aktywnej nawigacji
+- **Reason:** Aktywacja linków jest realizowana przez kilka funkcji (`initScrollspy`, `initAriaCurrent`, `initSmartNav`), co zwiększa ryzyko kolizji przy dalszej rozbudowie.
+- **Suggested improvement:** Zrefaktoryzować do jednego modułu stanu aktywnego linku (jedno źródło prawdy, rozdzielone adaptery dla podstron i hashy).
 
-### P1-4. Rozszerzyć automatyczne QA o walidację JSON-LD i metadanych SEO
-- **Reason:** JSON-LD jest obecny, ale brak dedykowanego kroku walidacyjnego w skryptach QA.
-- **Suggested improvement:** Dodać etap CI sprawdzający poprawność schematów, canonical/og:url i obecność OG image.
+### P1-4. Rozszerzyć QA o walidację JSON-LD i manifestu
+- **Reason:** QA SEO jest obecne, ale nie ma dedykowanego kroku walidującego strukturę JSON-LD i manifest według schematów.
+- **Suggested improvement:** Dodać krok CI, który sprawdza parse JSON-LD, wymagane pola schema.org oraz poprawność ikon/ścieżek manifestu.
 
-### P1-5. Ujednolicić politykę ładowania artefaktów buildowych
-- **Reason:** HTML ładuje obecnie źródłowe `style.css` i `script.js`, mimo dostępnych skryptów bundlowania/minifikacji.
-- **Suggested improvement:** Zdecydować i opisać jeden tryb produkcyjny (źródłowy vs minifikowany), a następnie egzekwować go w README i release checklist.
+### P1-5. Dodać formalny gate dla testów a11y w CI
+- **Reason:** Skrypt `qa:a11y` istnieje, ale wymaga środowiska Playwright; bez tego etap może być pomijany lokalnie.
+- **Suggested improvement:** Dodać pipeline CI z preinstalowanym Playwright i progami akceptacji (blokada merge przy regresji krytycznej).
 
 ## 5. Future enhancements — 5 realistic ideas
-1. Dodać automatyczne testy dostępności (axe-core) dla kluczowych podstron.
-2. Wprowadzić Lighthouse CI z progami dla Performance/SEO/Best Practices.
-3. Dodać wizualne testy regresji UI dla nawigacji, menu i lightboxa.
-4. Dodać wersjonowanie cache SW oparte o hash builda zamiast ręcznego `CACHE_VERSION`.
-5. Rozszerzyć i18n o wersję EN dla treści stron (nie tylko dokumentacji).
+1. Dodać testy regresji wizualnej (np. Playwright screenshot diff) dla headera, menu i lightboxa.
+2. Dodać automatyczny report Web Vitals (LCP/CLS/INP) dla deployment preview.
+3. Rozszerzyć strategię cache SW o precyzyjne TTL/runtime cache invalidation dla obrazów.
+4. Wprowadzić tokens documentation (living style reference) generowaną z `tokens.css`.
+5. Dodać wersję EN treści stron HTML (nie tylko dokumentacji).
 
 ## 6. Compliance checklist (pass / fail)
 - **headings valid:** PASS
 - **no broken links:** PASS
-- **no console.log:** FAIL
+- **no console.log:** PASS (w kodzie aplikacyjnym front-end; logi wykryte tylko w skryptach narzędziowych)
 - **aria attributes valid:** PASS
-- **images have width/height:** FAIL
+- **images have width/height:** PASS
 - **no-JS baseline usable:** PASS
 - **sitemap present (if expected):** PASS
 - **robots present:** PASS
 - **OG image exists:** PASS
-- **JSON-LD valid:** PASS
+- **JSON-LD valid:** PASS (statyczna walidacja projektu)
 
 ## 7. Architecture Score (0–10)
-- **BEM consistency:** 8.5/10
+- **BEM consistency:** 8.8/10
 - **token usage:** 9.5/10
-- **accessibility:** 8.5/10
-- **performance:** 8.5/10
-- **maintainability:** 8.5/10
+- **accessibility:** 8.8/10
+- **performance:** 8.7/10
+- **maintainability:** 8.6/10
 
-**Total architecture score:** **8.7/10**
+**Total architecture score:** **8.9/10**
 
-## 8. Senior rating (1–10)
-**8.8/10** — Projekt spełnia standard portfolio produkcyjnego: ma dobrą strukturę, rozsądne zabezpieczenia wdrożeniowe i wysoki poziom jakości front-end. Obszary do poprawy mają charakter utrzymaniowy i standaryzacyjny, bez krytycznego ryzyka produkcyjnego.
+## 8. Senior rating (1–10) with short professional justification
+**9.0/10** — Projekt jest technicznie dojrzały i gotowy jako portfolio front-end: ma stabilną strukturę, dobrze pokryte obszary SEO/a11y/performance i poprawną konfigurację deploymentową. Dalsze prace są głównie optymalizacją maintainability i standaryzacją procesu release.
