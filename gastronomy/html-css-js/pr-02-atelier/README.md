@@ -1,33 +1,34 @@
-# Atelier No.02 — Portfolio Front-End Audit Summary
+# Atelier No.02
 
 ## PL
 
 ### Przegląd projektu
-Atelier No.02 to wielostronicowy projekt portfolio restauracji fine dining oparty o statyczne HTML, modularny CSS i JavaScript ES Modules. W repozytorium występują strony: główna, o nas, menu, galeria, strony prawne, strona offline i 404.
+Atelier No.02 to wielostronicowy serwis portfolio restauracji fine dining zbudowany w oparciu o statyczne HTML, modularny CSS i JavaScript ES Modules. Projekt zawiera stronę główną, podstrony: O nas, Menu, Galeria, strony prawne, stronę offline, stronę 404 i stronę potwierdzenia formularza.
 
-### Kluczowe funkcje (potwierdzone implementacją)
-- Nawigacja responsywna z menu mobilnym, dropdownami i zarządzaniem atrybutami ARIA (`aria-expanded`, `aria-hidden`, `inert`).
-- Przełącznik motywu light/dark z zapisem preferencji w `localStorage`.
-- Sekcje reveal i animacje kontrolowane przez `prefers-reduced-motion`.
-- Dynamiczne renderowanie menu z `data/menu.json`.
-- Galeria z lightboxem i obsługą klawiatury.
-- Formularz kontaktowy Netlify z honeypotem i walidacją po stronie klienta.
-- Service Worker + `offline.html` + manifest PWA.
+### Kluczowe funkcje (potwierdzone w kodzie)
+- Responsywna nawigacja z menu mobilnym, dropdownami oraz obsługą stanów ARIA (`aria-expanded`, `aria-hidden`, `inert`).
+- Przełącznik motywu light/dark z persistencją preferencji w `localStorage`.
+- Sekcje reveal i animacje z obsługą preferencji `prefers-reduced-motion`.
+- Dynamiczne renderowanie pozycji menu z `data/menu.json`.
+- Galeria zdjęć z lightboxem i obsługą klawiatury.
+- Formularz kontaktowy Netlify (`data-netlify`, honeypot `bot-field`) z walidacją po stronie klienta.
+- PWA baseline: `manifest.webmanifest`, `sw.js`, `offline.html`.
 
 ### Tech stack
-- HTML5 (wielostronicowy serwis statyczny).
-- CSS3 z architekturą modułową (`base/layout/components/pages/utilities`) i tokenami.
+- HTML5 (architektura wielostronicowa).
+- CSS3 z podziałem na: `base`, `layout`, `components`, `pages`, `utilities`.
 - JavaScript ES Modules.
-- Tooling: PostCSS, esbuild, sharp, fast-glob, http-server.
+- Narzędzia: PostCSS, esbuild, sharp, fast-glob, http-server.
 
 ### Struktura projektu
-- `css/base` — reset, typografia, tokeny, reguły globalne.
-- `css/layout` — layout i grid.
-- `css/components` — komponenty UI.
-- `css/pages` — style per podstrona.
-- `css/utilities` — helpery, stany, animacje.
-- `js/core`, `js/features`, `js/app` — podział logiki JS na moduły funkcjonalne.
-- `assets/`, `assets/img-optimized` — obrazy, fonty i ikony.
+- `css/base/` — tokeny, reset, typografia, style globalne.
+- `css/layout/` — układ i siatka.
+- `css/components/` — komponenty UI (header/nav/cards/forms/buttons/footer/lightbox/modal/sections).
+- `css/pages/` — style specyficzne dla podstron.
+- `css/utilities/` — helpery, stany, animacje.
+- `js/app/`, `js/features/`, `js/core/` — warstwa aplikacyjna i moduły funkcjonalne.
+- `assets/` — fonty, ikony i obrazy.
+- `data/` — dane źródłowe dla menu.
 
 ### Setup i uruchomienie
 1. `npm install`
@@ -38,67 +39,68 @@ Atelier No.02 to wielostronicowy projekt portfolio restauracji fine dining opart
 - Konfiguracja hostingu: `_headers`, `_redirects`.
 - SEO crawl: `robots.txt`, `sitemap.xml`.
 - PWA: `manifest.webmanifest`, `sw.js`, `offline.html`.
-- Uwaga: strony HTML ładują głównie nieminifikowane entry (`css/style.css`, `js/script.js` lub `js/core.js`), mimo obecności buildów `.min`.
+- Obecnie HTML używa głównie `css/style.css` i `js/script.js`, mimo że build generuje `style.min.css` i `script.min.js`.
 
-### Dostępność (stan obecny)
-- Skip link jest wdrożony.
-- Hierarchia nagłówków semantycznie spójna (brak skoków poziomu).
-- Obsługa klawiatury: focus trap i ESC dla menu mobilnego i modalu.
-- Widoczny fokus dla linków, przycisków i pól formularza.
-- No-JS baseline: nawigacja pozostaje dostępna bez JS.
+### Dostępność
+- Skip link jest wdrożony na stronach.
+- Hierarchia nagłówków jest zachowana (brak wykrytych przeskoków poziomów).
+- Interaktywne komponenty (menu mobilne, lightbox, modal) obsługują klawiaturę i ESC.
+- Widoczny focus dla kluczowych elementów interaktywnych (`:focus-visible`).
+- Baseline bez JavaScript pozostaje używalny (nawigacja i treści są dostępne).
 
-### SEO (stan obecny)
-- Wykryto: `title`, `meta description`, canonical, OpenGraph, Twitter Cards na stronach głównych i prawnych.
-- `og:url` jest spójny z canonical na podstronach, gdzie oba występują.
-- JSON-LD występuje na kluczowych podstronach i jest poprawny składniowo.
-- `offline.html`: JSON-LD not detected in project.
+### SEO
+- Obecne: `title`, `meta description`, canonical, OpenGraph, Twitter tags na głównych podstronach.
+- `og:url` jest spójny z canonical na stronach, które zawierają oba pola.
+- JSON-LD występuje na głównych podstronach i jest poprawny składniowo.
+- JSON-LD nie wykryto na: `404.html`, `offline.html`, `thank-you.html`.
 
-### Wydajność (stan obecny)
-- Obrazy dostarczane przez `<picture>` (AVIF/WebP/JPEG fallback).
+### Wydajność
+- Obrazy dostarczane przez `<picture>` (AVIF/WebP/JPG fallback).
 - Obrazy mają atrybuty `width`/`height`.
-- Szerokie użycie `loading="lazy"` dla zasobów niekrytycznych.
-- Strategia fontów obejmuje preload + `font-display` w CSS.
+- Lazy loading jest używany dla zasobów niekrytycznych.
+- Fonty są preloadowane, a definicje fontów używają `font-display: swap`.
 
 ### Roadmap
-- Ujednolicić produkcyjne ładowanie assetów do plików `.min`.
-- Ograniczyć duplikację inline skryptów inicjalizacji motywu/SW między podstronami.
-- Dodać automatyczny lint linków i anchorów w CI.
-- Dodać automatyczne testy a11y (np. axe/pa11y).
-- Dodać per-page podział JS dla redukcji transferu na stronach prawnych.
+- Ujednolicić referencje produkcyjne do zminifikowanych assetów albo spójnie zmienić strategię build/runtime.
+- Ograniczyć zależność od ścieżek absolutnych (`/`) dla łatwiejszego wdrożenia pod subpath.
+- Dodać automatyczne testy CI (link-check, walidacja HTML, a11y smoke tests).
+- Rozdzielić JS per typ strony, aby zmniejszyć payload na podstronach prawnych.
+- Uspójnić politykę cache z wersjonowaniem assetów (hash/fingerprint).
 
 ### Licencja
-MIT (`package.json`).
+MIT (zgodnie z `package.json`).
 
 ---
 
 ## EN
 
 ### Project overview
-Atelier No.02 is a multi-page fine-dining portfolio website built with static HTML, modular CSS, and JavaScript ES Modules. The repository includes home, about, menu, gallery, legal pages, offline page, and 404 page.
+Atelier No.02 is a multi-page fine-dining portfolio website built with static HTML, modular CSS, and JavaScript ES Modules. The project includes home, About, Menu, Gallery, legal pages, an offline page, a 404 page, and a thank-you page.
 
-### Key features (implementation-confirmed)
-- Responsive navigation with mobile menu, dropdowns, and ARIA state management (`aria-expanded`, `aria-hidden`, `inert`).
-- Light/dark theme switch persisted in `localStorage`.
-- Reveal sections and animations controlled by `prefers-reduced-motion`.
+### Key features (code-verified)
+- Responsive navigation with mobile menu, dropdowns, and ARIA state handling (`aria-expanded`, `aria-hidden`, `inert`).
+- Light/dark theme switch with preference persisted in `localStorage`.
+- Reveal sections and motion handling with `prefers-reduced-motion` support.
 - Dynamic menu rendering from `data/menu.json`.
 - Gallery with keyboard-accessible lightbox.
-- Netlify contact form with honeypot and client-side validation.
-- Service Worker + `offline.html` + web app manifest.
+- Netlify contact form (`data-netlify`, `bot-field` honeypot) with client-side validation.
+- PWA baseline: `manifest.webmanifest`, `sw.js`, `offline.html`.
 
 ### Tech stack
-- HTML5 (static multi-page site).
-- CSS3 with modular architecture (`base/layout/components/pages/utilities`) and design tokens.
+- HTML5 (multi-page architecture).
+- CSS3 split into: `base`, `layout`, `components`, `pages`, `utilities`.
 - JavaScript ES Modules.
 - Tooling: PostCSS, esbuild, sharp, fast-glob, http-server.
 
 ### Structure overview
-- `css/base` — reset, typography, tokens, global rules.
-- `css/layout` — layout and grid.
-- `css/components` — UI components.
-- `css/pages` — page-specific styles.
-- `css/utilities` — helpers, states, animations.
-- `js/core`, `js/features`, `js/app` — functional module split.
-- `assets/`, `assets/img-optimized` — images, fonts, icons.
+- `css/base/` — tokens, reset, typography, global styles.
+- `css/layout/` — layout and grid.
+- `css/components/` — UI components (header/nav/cards/forms/buttons/footer/lightbox/modal/sections).
+- `css/pages/` — page-specific styles.
+- `css/utilities/` — helpers, states, animations.
+- `js/app/`, `js/features/`, `js/core/` — app layer and feature modules.
+- `assets/` — fonts, icons, and images.
+- `data/` — source data for menu content.
 
 ### Setup & run
 1. `npm install`
@@ -107,35 +109,35 @@ Atelier No.02 is a multi-page fine-dining portfolio website built with static HT
 
 ### Build & deployment notes
 - Hosting config: `_headers`, `_redirects`.
-- Crawl artifacts: `robots.txt`, `sitemap.xml`.
+- SEO crawl files: `robots.txt`, `sitemap.xml`.
 - PWA files: `manifest.webmanifest`, `sw.js`, `offline.html`.
-- Note: most HTML pages currently load non-minified entries (`css/style.css`, `js/script.js` or `js/core.js`) although `.min` builds exist.
+- HTML currently loads mostly `css/style.css` and `js/script.js`, while build output is `style.min.css` and `script.min.js`.
 
-### Accessibility notes (current state)
-- Skip link is implemented.
-- Heading hierarchy is structurally consistent (no skipped heading levels detected).
-- Keyboard support includes focus trap and ESC handling for mobile nav and modal.
-- Visible focus states are present for links, buttons, and form controls.
-- No-JS baseline remains usable (navigation is still accessible without JS).
+### Accessibility notes
+- Skip link is present on pages.
+- Heading hierarchy is consistent (no skipped heading levels detected).
+- Interactive components (mobile nav, lightbox, modal) support keyboard and ESC behavior.
+- Visible focus styling is present for key interactive elements (`:focus-visible`).
+- No-JS baseline remains usable (navigation and core content are still accessible).
 
-### SEO notes (current state)
-- Detected: `title`, `meta description`, canonical, OpenGraph, and Twitter Cards on primary and legal pages.
+### SEO notes
+- Present: `title`, `meta description`, canonical, OpenGraph, and Twitter tags on primary pages.
 - `og:url` aligns with canonical on pages where both are present.
-- JSON-LD is present on key pages and syntactically valid.
-- `offline.html`: JSON-LD not detected in project.
+- JSON-LD is present on primary pages and syntactically valid.
+- JSON-LD not detected on: `404.html`, `offline.html`, `thank-you.html`.
 
-### Performance notes (current state)
-- Images are served with `<picture>` (AVIF/WebP/JPEG fallback).
-- Images include explicit `width`/`height` attributes.
-- `loading="lazy"` is broadly used on non-critical media.
-- Font strategy includes preload and `font-display` usage.
+### Performance notes
+- Images are served through `<picture>` with AVIF/WebP/JPG fallback.
+- Images include explicit `width` and `height`.
+- Lazy loading is used for non-critical media.
+- Fonts are preloaded and configured with `font-display: swap`.
 
 ### Roadmap
-- Standardize production HTML to load `.min` assets.
-- Reduce duplicated inline scripts for theme and SW registration.
-- Add automated link/anchor validation in CI.
-- Add automated accessibility checks (e.g., axe/pa11y).
-- Introduce per-page JS splitting to reduce legal-page payload.
+- Standardize production references to minified assets or align build/runtime strategy.
+- Reduce reliance on absolute root paths (`/`) to support subpath deployments.
+- Add CI automation (link checks, HTML validation, a11y smoke tests).
+- Split JS by page type to reduce payload on legal/static pages.
+- Align cache policy with asset versioning (hash/fingerprint).
 
 ### License
-MIT (`package.json`).
+MIT (as declared in `package.json`).
