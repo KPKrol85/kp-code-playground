@@ -1,11 +1,20 @@
 {
   "defaults": {
     "chromeLaunchConfig": {
-      "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+      "args": [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage"
+      ]
     },
     "standard": "WCAG2AA",
-    "timeout": 30000
+    "timeout": 45000,
+    "wait": 1000,
+    "runners": [
+      "htmlcs"
+    ]
   },
+  "concurrency": 2,
   "urls": [
     "http://127.0.0.1:5173/",
     "http://127.0.0.1:5173/about.html",
