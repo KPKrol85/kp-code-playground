@@ -39,8 +39,8 @@ Atelier No.02 to wielostronicowy serwis portfolio restauracji fine dining zbudow
 - `npm run lint` — linting JavaScript (`js/**/*.js`).
 - `npm run validate:html` — walidacja plików HTML w katalogu projektu.
 - `npm run check:links` — deterministyczny crawl linków pod lokalnym adresem `http://127.0.0.1:5173` (tylko lokalny origin, explicit entry points dla wszystkich podstron, walidacja fragmentów `#id`).
-- `npm run check:a11y` — smoke testy a11y dla kluczowych podstron (konfiguracja w `.pa11yci`).
-- `npm run check` — pełny pakiet QA (lint + HTML + linki + a11y, z automatycznym uruchomieniem serwera lokalnego, retry/wait i walidacją linków + anchorów).
+- `npm run check:a11y` — smoke testy a11y (baseline WCAG2AA) dla kluczowych szablonów i powierzchni interaktywnych w stanie spoczynku (konfiguracja w `.pa11yci`).
+- `npm run check` — pełny pakiet QA (lint + HTML + linki + a11y smoke tests uruchamiane automatycznie z lokalnym serwerem, retry/wait i walidacją linków + anchorów).
 
 ### Build i wdrożenie
 - Konfiguracja hostingu: `_headers`, `_redirects`.
@@ -134,8 +134,8 @@ Atelier No.02 is a multi-page fine-dining portfolio website built with static HT
 - `npm run lint` — JavaScript linting (`js/**/*.js`).
 - `npm run validate:html` — validate HTML files in the project root.
 - `npm run check:links` — deterministic local-origin crawl at `http://127.0.0.1:5173` (explicit entry points for all pages, plus fragment/anchor `#id` validation).
-- `npm run check:a11y` — accessibility smoke checks for key pages (configured in `.pa11yci`).
-- `npm run check` — full QA suite (lint + HTML + links + a11y, with automatic local server lifecycle, wait/retry stability, and link + fragment checks).
+- `npm run check:a11y` — accessibility smoke checks (WCAG2AA baseline) for key templates and interactive surfaces in their default loaded state (configured in `.pa11yci`).
+- `npm run check` — full QA suite (lint + HTML + links + a11y smoke checks, with automatic local server lifecycle, wait/retry stability, and link + fragment checks).
 
 ### Build & deployment notes
 - Hosting config: `_headers`, `_redirects`.
