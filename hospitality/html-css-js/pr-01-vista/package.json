@@ -9,7 +9,8 @@
     "img:opt": "node scripts/optimize-images.mjs",
     "img:clean": "node scripts/optimize-images.mjs --clean",
     "img:watch": "node scripts/optimize-images.mjs --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check:links": "node scripts/check-link-integrity.mjs"
   },
   "keywords": [
     "frontend",

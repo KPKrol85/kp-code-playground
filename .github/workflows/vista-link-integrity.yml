@@ -1,0 +1,35 @@
+name: Vista Link Integrity
+
+on:
+  push:
+    paths:
+      - 'hospitality/html-css-js/pr-01-vista/**'
+      - '.github/workflows/vista-link-integrity.yml'
+  pull_request:
+    paths:
+      - 'hospitality/html-css-js/pr-01-vista/**'
+      - '.github/workflows/vista-link-integrity.yml'
+
+jobs:
+  check_links:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hospitality/html-css-js/pr-01-vista
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hospitality/html-css-js/pr-01-vista/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check local links and sitemap
+        run: npm run check:links
