@@ -259,6 +259,11 @@ fieldset.form__field legend {
   inline-size: 100%;
   max-width: calc(100% - var(--space-md) * 2);
 }
+.map__frame {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+}
 .map :is(img, iframe) {
   display: block;
   inline-size: 100%;
@@ -271,6 +276,20 @@ fieldset.form__field legend {
 .map iframe {
   border: 0;
   border-radius: var(--radius-md);
+}
+.map__fallback[hidden] {
+  display: none;
+}
+.map--embed iframe[hidden] {
+  display: none;
+}
+.map__caption {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--fs-200);
+  color: var(--muted);
+}
+.map__caption a {
+  font-weight: 500;
 }
 .map figcaption {
   margin: var(--space-xs) 0 0 0;
