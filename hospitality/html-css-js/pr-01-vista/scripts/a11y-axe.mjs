@@ -40,7 +40,14 @@ function resolveModule(specifier) {
 
 const playwrightModulePath = resolveModule('playwright');
 const axeMinPath = resolveModule('axe-core/axe.min.js');
-const { chromium } = await import(pathToFileURL(playwrightModulePath).href);
+const playwrightModule = await import(pathToFileURL(playwrightModulePath).href);
+const playwright = playwrightModule.default ?? playwrightModule;
+const chromium = playwright.chromium;
+
+if (!chromium?.launch) {
+  throw new Error('Playwright chromium launcher is unavailable. Check module resolution/runtime export shape.');
+}
+
 const axeSource = await readFile(axeMinPath, 'utf8');
 
 const MIME_TYPES = {
