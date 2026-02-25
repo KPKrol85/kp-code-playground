@@ -23,7 +23,7 @@
     "portfolio"
   ],
   "author": "Kamil Król",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^10.4.22",
     "chokidar": "^4.0.3",
