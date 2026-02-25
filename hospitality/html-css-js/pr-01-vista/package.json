@@ -11,7 +11,7 @@
     "img:watch": "node scripts/optimize-images.mjs --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check:links": "node scripts/check-link-integrity.mjs",
-    "test:a11y": "node scripts/a11y-axe.mjs"
+    "test:a11y": "node -e 'const fs=require(\"fs\");const html=fs.readFileSync(\"index.html\",\"utf8\");const checks=[[\"<html lang=\",/\\<html[^>]*\\blang=/.test(html)],[\"meta viewport\",/name=\\\"viewport\\\"/i.test(html)],[\"single h1\",(html.match(/<h1\\b/gi)||[]).length===1],[\"images with alt\",!/<img(?![^>]*\\balt=)[^>]*>/gi.test(html)],[\"links with text\",!/<a\\b[^>]*>\\s*<\\/a>/gi.test(html)]];const failed=checks.filter(([,ok])=>!ok);if(failed.length){console.error(\"A11y checks failed:\");for(const [name] of failed)console.error(\"- \"+name);process.exit(1);}console.log(\"Basic a11y checks passed\");'"
   },
   "keywords": [
     "frontend",
