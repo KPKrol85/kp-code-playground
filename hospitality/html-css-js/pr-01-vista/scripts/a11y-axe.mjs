@@ -1,11 +1,47 @@
 import http from 'node:http';
 import path from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { chromium } from 'playwright';
-import axeSource from 'axe-core/axe.min.js';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 
 const host = '127.0.0.1';
 const rootDir = process.cwd();
+
+function getModuleBaseCandidates() {
+  const candidates = new Set([rootDir]);
+  const pathEntries = (process.env.PATH || '').split(path.delimiter).filter(Boolean);
+
+  for (const entry of pathEntries) {
+    const normalized = path.normalize(entry);
+    const suffix = `${path.sep}node_modules${path.sep}.bin`;
+    if (normalized.endsWith(suffix)) {
+      candidates.add(normalized.slice(0, -suffix.length));
+    }
+  }
+
+  return [...candidates];
+}
+
+function resolveModule(specifier) {
+  const candidates = getModuleBaseCandidates();
+
+  for (const base of candidates) {
+    try {
+      const req = createRequire(path.join(base, 'package.json'));
+      return req.resolve(specifier);
+    } catch {
+      // try next base
+    }
+  }
+
+  const bases = candidates.join(', ');
+  throw new Error(`Cannot resolve module "${specifier}" from candidates: ${bases}`);
+}
+
+const playwrightModulePath = resolveModule('playwright');
+const axeMinPath = resolveModule('axe-core/axe.min.js');
+const { chromium } = await import(pathToFileURL(playwrightModulePath).href);
+const axeSource = await readFile(axeMinPath, 'utf8');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -59,7 +95,7 @@ function summarizeViolations(label, violations) {
   }
 }
 
-async function runAxe(page, label) {
+async function runAxe(page) {
   await page.addScriptTag({ content: axeSource });
   return page.evaluate(async () => {
     return window.axe.run(document, {
@@ -81,7 +117,7 @@ async function runScenario(page, baseUrl, spec) {
     await spec.setup(page);
   }
 
-  const result = await runAxe(page, spec.label);
+  const result = await runAxe(page);
   return { ...spec, result };
 }
 
