@@ -75,7 +75,7 @@ Profesjonalny projekt portfolio front-end dla branży hospitality, zrealizowany 
 - Wzmocnienie strategii cache PWA dla obrazów o wysokiej wadze.
 
 ### Licencja
-ISC (zgodnie z `package.json`).
+MIT
 
 ---
 
@@ -154,4 +154,4 @@ Production-oriented front-end portfolio project for the hospitality domain, impl
 - Improve PWA caching strategy for heavy visual assets.
 
 ### License
-ISC (as defined in `package.json`).
+MIT
