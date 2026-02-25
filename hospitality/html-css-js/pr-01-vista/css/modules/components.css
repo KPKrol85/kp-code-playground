@@ -449,7 +449,7 @@ fieldset.form__field legend {
   right: 1.4rem;
   border: none;
   background: transparent;
-  color: var(--muted);
+  color: var(--text);
   font-size: 1.4rem;
   line-height: 1;
   padding: var(--space-2xs);
@@ -465,7 +465,7 @@ fieldset.form__field legend {
 }
 .lightbox__caption {
   font-size: 0.85rem;
-  color: var(--muted);
+  color: color-mix(in oklab, var(--text) 80%, var(--muted) 20%);
   text-align: center;
   margin-top: var(--space-2xs);
   max-width: 90%;
@@ -583,7 +583,7 @@ fieldset.form__field legend {
   margin: 0;
   margin-top: var(--space-xs);
   font-size: var(--fs-200);
-  color: var(--muted);
+  color: color-mix(in oklab, var(--text) 80%, var(--muted) 20%);
   text-align: center;
 }
 .not-found__actions {

@@ -129,10 +129,7 @@ async function runScenario(page, baseUrl, spec) {
 }
 
 const scenarios = [
-  {
-    label: 'index.html (baseline)',
-    path: 'index.html'
-  },
+  { label: 'index.html (baseline)', path: 'index.html' },
   {
     label: 'index.html (mobile nav open)',
     path: 'index.html',
@@ -142,10 +139,7 @@ const scenarios = [
       await page.locator('#site-nav.is-open').waitFor({ state: 'visible' });
     }
   },
-  {
-    label: 'rooms.html (baseline)',
-    path: 'rooms.html'
-  },
+  { label: 'rooms.html (baseline)', path: 'rooms.html' },
   {
     label: 'rooms.html (non-default tab)',
     path: 'rooms.html',
@@ -154,10 +148,7 @@ const scenarios = [
       await page.locator('#rooms-panel-deluxe:not([hidden])').waitFor({ state: 'visible' });
     }
   },
-  {
-    label: 'gallery.html (baseline)',
-    path: 'gallery.html'
-  },
+  { label: 'gallery.html (baseline)', path: 'gallery.html' },
   {
     label: 'gallery.html (lightbox open)',
     path: 'gallery.html',
@@ -166,14 +157,8 @@ const scenarios = [
       await page.locator('.lightbox:not([hidden])').waitFor({ state: 'visible' });
     }
   },
-  {
-    label: 'contact.html (baseline)',
-    path: 'contact.html'
-  },
-  {
-    label: 'regulamin.html (baseline)',
-    path: 'regulamin.html'
-  }
+  { label: 'contact.html (baseline)', path: 'contact.html' },
+  { label: 'regulamin.html (baseline)', path: 'regulamin.html' }
 ];
 
 const server = createStaticServer();
