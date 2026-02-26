@@ -33,7 +33,7 @@ Ambre to wielostronicowa strona internetowa restauracji fine dining, zbudowana w
    - `npm run qa:links`
    - `npm run qa:seo`
   
-###Strategia assetów (development vs production)
+### Strategia assetów (development vs production)
 
 W trybie developerskim projekt korzysta z nieminizowanych plików źródłowych:
 -/css/style.css
@@ -113,7 +113,7 @@ The project includes a homepage, menu page, gallery page, legal pages, an offlin
    - `npm run qa:links`
    - `npm run qa:seo`
   
-###Asset Strategy (development vs production)
+### Asset Strategy (development vs production)
 During development, the project uses non-minified source files:
 - /css/style.css
 - /js/script.js
