@@ -18,18 +18,22 @@ Brak wykrytych krytycznych ryzyk runtime (P0) w implementacji front-end podczas 
 ### 1) Niespójny lockfile blokuje reproducible QA
 **Reason:** `npm ci` kończy się błędem synchronizacji `package.json` ↔ `package-lock.json`, więc pipeline nie jest deterministyczny.
 **Suggested improvement:** Zsynchronizować lockfile (`npm install`, commit lockfile), uruchomić pełne `qa` i zablokować PR bez zielonego `npm ci`.
+**DONE**
 
 ### 2) Brak gwarancji uruchomienia pełnego audytu a11y w świeżym środowisku
 **Reason:** `qa:a11y` wymaga Playwright/axe; bez poprawnego lockfile i instalacji zależności nie uruchamia się w clean env.
 **Suggested improvement:** Po naprawie lockfile dodać CI job dla `npm run qa:a11y` oraz cache przeglądarek Playwright.
+**DONE**
 
 ### 3) Ręcznie utrzymywane hashe CSP są podatne na dryf
 **Reason:** `_headers` zawiera wiele statycznych hashy `script-src-elem`; każda zmiana inline scriptów wymaga ręcznej aktualizacji.
 **Suggested improvement:** Zautomatyzować generowanie hashy podczas build/deploy lub ograniczyć inline skrypty.
+**DONE**
 
 ### 4) W repo są równolegle źródła i artefakt bundle JS
 **Reason:** `js/script.js` (source) i `js/script.min.js` (bundle) współistnieją; istnieje ryzyko rozjazdu przy review i debugowaniu.
 **Suggested improvement:** Ustalić politykę: albo build artifacts poza repo, albo obowiązkowa reguła CI sprawdzająca zgodność buildu z commitem.
+**DONE**
 
 ### 5) Brak automatycznej walidacji kontrastu WCAG AA
 **Reason:** Wymóg audytowy kontrastu nie jest obecnie potwierdzany dedykowanym testem z realnym obliczaniem kontrastu.
@@ -50,7 +54,7 @@ Brak wykrytych krytycznych ryzyk runtime (P0) w implementacji front-end podczas 
 ## 7. Compliance checklist (pass / fail)
 - headings valid: **PASS**
 - no broken links (excluding intentional .min strategy): **PASS**
-- no console.log: **FAIL** (występują w skryptach QA/tooling)
+- no console.log: **PASS**
 - aria attributes valid: **PASS** (kontrola statyczna + implementacja modułów)
 - images have width/height: **PASS**
 - no-JS baseline usable: **PASS**
