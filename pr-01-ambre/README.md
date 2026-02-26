@@ -3,7 +3,7 @@
 ## PL
 
 ### Przegląd projektu
-Ambre to wielostronicowy projekt portfolio restauracji fine dining, zbudowany w oparciu o HTML, modularny CSS i Vanilla JavaScript. Projekt zawiera stronę główną, podstronę menu, podstronę galerii, strony prawne, stronę offline i obsługę błędu 404.
+Ambre to wielostronicowa strona internetowa restauracji fine dining, zbudowana w oparciu o HTML, modularny CSS i Vanilla JavaScript. Projekt zawiera stronę główną, podstronę menu, podstronę galerii, strony prawne, stronę offline oraz obsługę błędu 404.
 
 ### Kluczowe funkcje
 - Wielostronicowa architektura: `index.html`, `menu.html`, `galeria.html`, strony prawne, `offline.html`, `404.html`.
@@ -32,6 +32,17 @@ Ambre to wielostronicowy projekt portfolio restauracji fine dining, zbudowany w 
    - `npm run build`
    - `npm run qa:links`
    - `npm run qa:seo`
+  
+###Strategia assetów (development vs production)
+
+W trybie developerskim projekt korzysta z nieminizowanych plików źródłowych:
+-/css/style.css
+-/js/script.js
+- Pliki minifikowane (style.min.css, script.min.js) są traktowane wyłącznie jako artefakty buildu i nie są używane podczas pracy developerskiej.
+- Minifikacja wykonywana jest ręcznie przed wdrożeniem (np. npm run build) i służy wyłącznie do przygotowania wersji produkcyjnej (np. deploy na Netlify).
+Zasada projektu:
+- development → pliki źródłowe (czytelność, debugowanie, review)
+- production → build + minifikacja
 
 ### Build i wdrożenie
 - W development używane są nieminizowane assety (`/css/style.css`, `/js/script.js`).
@@ -64,14 +75,15 @@ Ambre to wielostronicowy projekt portfolio restauracji fine dining, zbudowany w 
 - Rozbudować testy regresji a11y i keyboard-flow na podstronach.
 
 ### Licencja
-MIT (zgodnie z `package.json`).
+MIT.
 
 ---
 
 ## EN
 
 ### Project overview
-Ambre is a multi-page fine-dining portfolio website built with HTML, modular CSS, and Vanilla JavaScript. It includes a home page, menu page, gallery page, legal pages, an offline page, and a 404 page.
+Ambre is a multi-page fine dining restaurant website built using HTML, modular CSS, and Vanilla JavaScript.
+The project includes a homepage, menu page, gallery page, legal pages, an offline page, and a custom 404 error page.
 
 ### Key features
 - Multi-page setup: `index.html`, `menu.html`, `galeria.html`, legal pages, `offline.html`, `404.html`.
@@ -100,6 +112,16 @@ Ambre is a multi-page fine-dining portfolio website built with HTML, modular CSS
    - `npm run build`
    - `npm run qa:links`
    - `npm run qa:seo`
+  
+###Asset Strategy (development vs production)
+During development, the project uses non-minified source files:
+- /css/style.css
+- /js/script.js
+- Minified files (style.min.css, script.min.js) are treated strictly as build artifacts and are not used during development.
+- Minification is performed manually before deployment (e.g. npm run build) and is intended solely for preparing the production version (e.g. deployment to Netlify).
+Project policy:
+- development → source files (readability, debugging, code review)
+- production → build + minification
 
 ### Build & deployment notes
 - Development uses non-minified runtime assets (`/css/style.css`, `/js/script.js`).
@@ -132,4 +154,4 @@ Ambre is a multi-page fine-dining portfolio website built with HTML, modular CSS
 - Expand regression tests for a11y and keyboard flows.
 
 ### License
-MIT (as defined in `package.json`).
+MIT.
