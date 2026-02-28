@@ -1,0 +1,120 @@
+:root {
+  /* ==============================
+     TOKENS 03 — Premium / Luxury
+     ============================== */
+
+  /* 1) Color tokens */
+  --color-bg: #0f0f10;
+  --color-surface: #171719;
+  --color-surface-alt: #232326;
+  --color-text: #f4f1e8;
+  --color-text-muted: #beb7a6;
+  --color-border: #34343a;
+  --color-primary: #c9a96b;
+  --color-primary-hover: #b79253;
+  --color-secondary: #7f688f;
+  --color-accent: #d5bc87;
+  --color-success: #4ea872;
+  --color-warning: #d09a47;
+  --color-danger: #c86060;
+
+  /* 2) Typography tokens */
+  --font-sans: 'Inter', 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-heading: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', Consolas, monospace;
+
+  --fs-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.82rem);
+  --fs-sm: clamp(0.88rem, 0.84rem + 0.18vw, 0.98rem);
+  --fs-md: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --fs-lg: clamp(1.15rem, 1.06rem + 0.45vw, 1.38rem);
+  --fs-xl: clamp(1.5rem, 1.24rem + 1vw, 2rem);
+  --fs-2xl: clamp(2rem, 1.58rem + 1.7vw, 2.85rem);
+  --fs-3xl: clamp(2.5rem, 1.9rem + 2.5vw, 3.75rem);
+
+  --lh-tight: 1.15;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.8;
+
+  --ls-tight: -0.02em;
+  --ls-normal: 0.01em;
+  --ls-wide: 0.08em;
+
+  /* 3) Spacing system */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.25rem;
+  --space-7: 3.25rem;
+  --space-8: 4.75rem;
+
+  /* 4) Border radius */
+  --radius-sm: 0.2rem;
+  --radius-md: 0.4rem;
+  --radius-lg: 0.7rem;
+  --radius-xl: 1rem;
+  --radius-round: 9999px;
+
+  /* 5) Shadow system */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 16px 34px rgb(0 0 0 / 0.46);
+  --shadow-xl: 0 28px 56px rgb(0 0 0 / 0.6);
+
+  /* 6) Layout tokens */
+  --container-sm: 38rem;
+  --container-md: 52rem;
+  --container-lg: 68rem;
+  --container-xl: 84rem;
+
+  /* 7) Transitions */
+  --transition-fast: 140ms ease-out;
+  --transition-normal: 260ms ease-out;
+  --transition-slow: 420ms ease-out;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--color-text);
+  background: linear-gradient(170deg, #121216, var(--color-bg));
+}
+.demo-wrap { max-width: var(--container-md); margin: 0 auto; padding: var(--space-6); }
+h1, h2 {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-normal);
+}
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+p { margin: 0 0 var(--space-5); color: var(--color-text-muted); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
+.btn {
+  border: 1px solid transparent;
+  border-radius: var(--radius-round);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+.btn-primary { background: var(--color-primary); color: #1c1a17; }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-secondary { background: transparent; border-color: var(--color-border); color: var(--color-text); }
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-5);
+}
+.spacing-row { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: var(--space-2); }
+.block { height: var(--space-6); background: linear-gradient(90deg, #5f4b29, var(--color-primary)); border-radius: var(--radius-sm); opacity: 0.85; }

@@ -1,0 +1,169 @@
+:root {
+  /* ==============================
+     TOKENS 01 — Minimal Neutral
+     ============================== */
+
+  /* 1) Color tokens */
+  --color-bg: #f6f6f4;
+  --color-surface: #ffffff;
+  --color-surface-alt: #efefeb;
+  --color-text: #1f1f1c;
+  --color-text-muted: #63635d;
+  --color-border: #dadad4;
+  --color-primary: #3f5a74;
+  --color-primary-hover: #334a5f;
+  --color-secondary: #7f8f7f;
+  --color-accent: #8a6f4d;
+  --color-success: #2f7a48;
+  --color-warning: #b07927;
+  --color-danger: #ad3e3e;
+
+  /* 2) Typography tokens */
+  --font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
+
+  --fs-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.83rem);
+  --fs-sm: clamp(0.88rem, 0.84rem + 0.2vw, 0.98rem);
+  --fs-md: clamp(1rem, 0.96rem + 0.25vw, 1.12rem);
+  --fs-lg: clamp(1.13rem, 1.06rem + 0.35vw, 1.3rem);
+  --fs-xl: clamp(1.35rem, 1.2rem + 0.7vw, 1.7rem);
+  --fs-2xl: clamp(1.7rem, 1.45rem + 1.2vw, 2.3rem);
+  --fs-3xl: clamp(2.1rem, 1.7rem + 2vw, 3rem);
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.75;
+
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.04em;
+
+  /* 3) Spacing system */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* 4) Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-round: 9999px;
+
+  /* 5) Shadow system */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 6px 16px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 12px 28px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 18px 38px rgb(0 0 0 / 0.14);
+
+  /* 6) Layout tokens */
+  --container-sm: 36rem;
+  --container-md: 48rem;
+  --container-lg: 64rem;
+  --container-xl: 80rem;
+
+  /* 7) Transitions */
+  --transition-fast: 120ms ease;
+  --transition-normal: 220ms ease;
+  --transition-slow: 360ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.demo-wrap {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: var(--space-6);
+}
+
+h1,
+h2 {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-heading);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+}
+
+h1 {
+  font-size: var(--fs-2xl);
+}
+
+h2 {
+  font-size: var(--fs-xl);
+}
+
+p {
+  margin: 0 0 var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: var(--radius-round);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background: var(--color-surface-alt);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-5);
+}
+
+.spacing-row {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.block {
+  height: var(--space-6);
+  background: var(--color-secondary);
+  border-radius: var(--radius-sm);
+  opacity: 0.7;
+}

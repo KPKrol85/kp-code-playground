@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Token Systems Demo</title>
+    <style>
+      :root {
+        --page-bg: #0f172a;
+        --page-surface: #111827;
+        --page-surface-alt: #1f2937;
+        --page-text: #e5e7eb;
+        --page-muted: #94a3b8;
+        --page-border: #334155;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: radial-gradient(circle at top, #172554, var(--page-bg) 40%);
+        color: var(--page-text);
+      }
+
+      .container {
+        width: min(1120px, 100% - 2rem);
+        margin: 0 auto;
+        padding: 2rem 0 4rem;
+      }
+
+      h1 {
+        margin: 0 0 0.75rem;
+        font-size: clamp(1.8rem, 1.4rem + 1.5vw, 2.8rem);
+      }
+
+      .intro {
+        margin: 0 0 2rem;
+        color: var(--page-muted);
+        max-width: 72ch;
+      }
+
+      .system-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .system {
+        border: 1px solid var(--page-border);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background: color-mix(in oklab, var(--page-surface) 75%, black);
+      }
+
+      .system header {
+        padding: 0.9rem 1rem;
+        background: var(--page-surface-alt);
+        border-bottom: 1px solid var(--page-border);
+      }
+
+      .system h2 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .system p {
+        margin: 0.35rem 0 0;
+        color: var(--page-muted);
+        font-size: 0.93rem;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 380px;
+        border: 0;
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Reusable CSS Design Token Systems</h1>
+      <p class="intro">
+        Each preview below loads a separate token file and renders the same set of sample components:
+        headings, paragraph text, buttons, card, and spacing scale blocks.
+      </p>
+
+      <section class="system-grid">
+        <article class="system">
+          <header>
+            <h2>Tokens 01 — Minimal Neutral</h2>
+            <p>Editorial-friendly neutral foundation.</p>
+          </header>
+          <iframe title="Minimal Neutral" srcdoc='<!doctype html><html><head><link rel="stylesheet" href="tokens-01.css"></head><body><main class="demo-wrap"><h1>Minimal Neutral</h1><p>A restrained palette that supports content-first websites and editorial interfaces.</p><div class="actions"><button class="btn btn-primary">Primary Action</button><button class="btn btn-secondary">Secondary</button></div><section class="card"><h2>Card Example</h2><p>Surface, border, and shadow tokens are balanced for subtle hierarchy.</p></section><div class="spacing-row"><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span></div></main></body></html>'></iframe>
+        </article>
+
+        <article class="system">
+          <header>
+            <h2>Tokens 02 — Modern SaaS</h2>
+            <p>Bright, product-focused tokens for app UI.</p>
+          </header>
+          <iframe title="Modern SaaS" srcdoc='<!doctype html><html><head><link rel="stylesheet" href="tokens-02.css"></head><body><main class="demo-wrap"><h1>Modern SaaS</h1><p>Clear surfaces and energetic accents suited to dashboards and growth products.</p><div class="actions"><button class="btn btn-primary">Start Free Trial</button><button class="btn btn-secondary">Watch Demo</button></div><section class="card"><h2>Card Example</h2><p>UI-focused spacing and elevation create clear product hierarchy.</p></section><div class="spacing-row"><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span></div></main></body></html>'></iframe>
+        </article>
+
+        <article class="system">
+          <header>
+            <h2>Tokens 03 — Premium / Luxury</h2>
+            <p>Dark elevated surfaces with rich accents.</p>
+          </header>
+          <iframe title="Premium Luxury" srcdoc='<!doctype html><html><head><link rel="stylesheet" href="tokens-03.css"></head><body><main class="demo-wrap"><h1>Premium Collection</h1><p>Designed for refined brands that need cinematic contrast and elegant typography.</p><div class="actions"><button class="btn btn-primary">Reserve Access</button><button class="btn btn-secondary">Learn More</button></div><section class="card"><h2>Card Example</h2><p>Layered dark surfaces with premium gold accents and controlled depth.</p></section><div class="spacing-row"><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span></div></main></body></html>'></iframe>
+        </article>
+
+        <article class="system">
+          <header>
+            <h2>Tokens 04 — Soft / Friendly</h2>
+            <p>Warm and approachable style for friendly products.</p>
+          </header>
+          <iframe title="Soft Friendly" srcdoc='<!doctype html><html><head><link rel="stylesheet" href="tokens-04.css"></head><body><main class="demo-wrap"><h1>Soft Friendly</h1><p>Rounded forms and playful tones for community tools, wellness, and consumer apps.</p><div class="actions"><button class="btn btn-primary">Get Started</button><button class="btn btn-secondary">See Features</button></div><section class="card"><h2>Card Example</h2><p>Gentle shadows and comfortable spacing provide a welcoming visual tone.</p></section><div class="spacing-row"><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span></div></main></body></html>'></iframe>
+        </article>
+
+        <article class="system">
+          <header>
+            <h2>Tokens 05 — High Contrast</h2>
+            <p>Accessibility-forward token set with robust contrast.</p>
+          </header>
+          <iframe title="High Contrast" srcdoc='<!doctype html><html><head><link rel="stylesheet" href="tokens-05.css"></head><body><main class="demo-wrap"><h1>High Contrast</h1><p>Built for strong readability in diverse visual environments and assistive contexts.</p><div class="actions"><button class="btn btn-primary">Continue</button><button class="btn btn-secondary">Secondary Action</button></div><section class="card"><h2>Card Example</h2><p>Heavy borders and high-clarity typography prioritize legibility.</p></section><div class="spacing-row"><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span><span class="block"></span></div></main></body></html>'></iframe>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
