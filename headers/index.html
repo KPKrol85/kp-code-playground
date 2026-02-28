@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Header Pattern Library</title>
+  <link rel="stylesheet" href="./headers.css">
+</head>
+<body>
+  <main class="container stack headers-index">
+    <section class="flow" aria-labelledby="h01-title">
+      <h2 id="h01-title">Header 01 — Minimal Centered</h2>
+      <header class="hdr hdr--01" aria-label="Minimal centered header">
+        <div class="container">
+          <div class="hdr__inner">
+            <div class="hdr__brand">
+              <a class="hdr__logo" href="#" aria-label="Maison Atelier home">
+                <span class="hdr__logo-mark" aria-hidden="true">M</span>
+                Maison Atelier
+              </a>
+              <p class="hdr__tagline">Curated living, crafted simply.</p>
+            </div>
+            <nav class="hdr__nav" aria-label="Primary navigation">
+              <ul>
+                <li><a href="#" aria-current="page">Home</a></li>
+                <li><a href="#">Collection</a></li>
+                <li><a href="#">Journal</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </nav>
+            <div class="hdr__actions">
+              <a class="btn btn--primary" href="#">Book a Visit</a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <section class="flow" aria-labelledby="h02-title">
+      <h2 id="h02-title">Header 02 — Classic Business</h2>
+      <header class="hdr hdr--02" aria-label="Classic business header">
+        <div class="hdr__utility" aria-label="Utility contact information">
+          <div class="container">
+            <span>📞 +1 (555) 900-1188</span>
+            <a href="mailto:contact@northbridge.example">contact@northbridge.example</a>
+          </div>
+        </div>
+        <div class="container">
+          <div class="hdr__inner">
+            <div class="hdr__brand">
+              <a class="hdr__logo" href="#" aria-label="Northbridge Consulting home">
+                <span class="hdr__logo-mark" aria-hidden="true">N</span>
+                Northbridge Consulting
+              </a>
+              <p class="hdr__tagline">Strategic support for growing teams.</p>
+            </div>
+            <nav class="hdr__nav" aria-label="Primary navigation">
+              <ul>
+                <li><a href="#" aria-current="page">Services</a></li>
+                <li><a href="#">Industries</a></li>
+                <li><a href="#">Case Studies</a></li>
+                <li><a href="#">Insights</a></li>
+                <li><a href="#">Company</a></li>
+              </ul>
+            </nav>
+            <div class="hdr__actions">
+              <a class="btn btn--ghost" href="#">Client Portal</a>
+              <a class="btn btn--primary" href="#">Get a Proposal</a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <section class="flow" aria-labelledby="h03-title">
+      <h2 id="h03-title">Header 03 — Split Navigation (Premium)</h2>
+      <header class="hdr hdr--03" aria-label="Split navigation premium header">
+        <div class="container">
+          <div class="hdr__inner">
+            <div class="hdr__split">
+              <nav class="hdr__nav hdr__nav--left" aria-label="Primary navigation left">
+                <ul>
+                  <li><a href="#" aria-current="page">Destinations</a></li>
+                  <li><a href="#">Villas</a></li>
+                  <li><a href="#">Experiences</a></li>
+                </ul>
+              </nav>
+              <div class="hdr__brand">
+                <a class="hdr__logo" href="#" aria-label="Lunora Reserve home">
+                  <span class="hdr__logo-mark" aria-hidden="true">L</span>
+                  Lunora Reserve
+                </a>
+                <p class="hdr__tagline">Private escapes, elevated service.</p>
+              </div>
+              <nav class="hdr__nav hdr__nav--right" aria-label="Primary navigation right">
+                <ul>
+                  <li><a href="#">Membership</a></li>
+                  <li><a href="#">Journal</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="hdr__actions">
+              <a class="btn btn--primary" href="#">Plan Your Stay</a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <section class="flow" aria-labelledby="h04-title">
+      <h2 id="h04-title">Header 04 — Hero Header (Marketing)</h2>
+      <header class="hdr hdr--04" aria-label="Marketing header with hero">
+        <div class="hdr__bar">
+          <div class="container">
+            <div class="hdr__inner">
+              <div class="hdr__brand">
+                <a class="hdr__logo" href="#" aria-label="Clario Cloud home">
+                  <span class="hdr__logo-mark" aria-hidden="true">C</span>
+                  Clario Cloud
+                </a>
+                <p class="hdr__tagline">Campaign analytics for fast-moving teams.</p>
+              </div>
+              <nav class="hdr__nav" aria-label="Primary navigation">
+                <ul>
+                  <li><a href="#" aria-current="page">Platform</a></li>
+                  <li><a href="#">Solutions</a></li>
+                  <li><a href="#">Pricing</a></li>
+                  <li><a href="#">Resources</a></li>
+                  <li><a href="#">Company</a></li>
+                </ul>
+              </nav>
+              <div class="hdr__actions">
+                <a class="btn btn--ghost" href="#">Sign In</a>
+                <a class="btn btn--primary" href="#">Start Free Trial</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hdr__hero">
+          <div class="container">
+            <div class="hdr__hero-grid">
+              <div class="flow">
+                <h3 class="hdr__headline">Launch better campaigns with one clear command center.</h3>
+                <p class="hdr__subtext">Track engagement, sync performance channels, and ship experiments faster with dashboards your whole team actually understands.</p>
+                <div class="hdr__hero-actions">
+                  <a class="btn btn--primary" href="#">Get Started</a>
+                  <a class="btn btn--ghost" href="#">Explore Docs</a>
+                </div>
+              </div>
+              <aside class="hdr__feature-box" aria-label="Platform highlights">
+                <div class="flow">
+                  <h3>Why teams choose Clario</h3>
+                  <p>Build reports in minutes, automate updates, and keep every stakeholder aligned from strategy to revenue impact.</p>
+                  <a class="btn btn--ghost" href="#">View customer stories</a>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <section class="flow" aria-labelledby="h05-title">
+      <h2 id="h05-title">Header 05 — App / SaaS Header</h2>
+      <header class="hdr hdr--05" aria-label="SaaS application header">
+        <div class="container">
+          <div class="hdr__inner">
+            <div class="hdr__brand">
+              <a class="hdr__logo" href="#" aria-label="Pulseboard app home">
+                <span class="hdr__logo-mark" aria-hidden="true">P</span>
+                Pulseboard
+              </a>
+              <p class="hdr__tagline">Product analytics workspace</p>
+            </div>
+            <nav class="hdr__nav" aria-label="Primary navigation">
+              <ul>
+                <li><a href="#" aria-current="page">Overview</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Funnels</a></li>
+                <li><a href="#">Alerts</a></li>
+                <li><a href="#">Settings</a></li>
+              </ul>
+            </nav>
+            <div class="hdr__actions">
+              <a class="btn btn--ghost" href="#">Sign In</a>
+              <a class="btn btn--primary" href="#">Get Started</a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+  </main>
+</body>
+</html>
