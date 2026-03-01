@@ -26,3 +26,29 @@ Use this as a quick lookup when changing markup so module hooks are not broken.
 | Lightbox (gallery + dish thumbs) | pages with lightbox root and clickable media | `.site-lightbox` / `#lb`; `#lb-avif`; `#lb-webp`; `.site-lightbox__image` / `#lb-img`; `.site-lightbox__close`; `.site-lightbox__overlay`; `.gallery__item`; `.dish__thumb`; optional `.site-lightbox__counter` | `js/modules/lightbox.js` | `initLightbox()` | Opens from `.gallery__item` / `.dish__thumb`; adds keyboard, swipe, nav, zoom/fullscreen behaviors. |
 | FAQ ARIA sync | page with FAQ section (currently `index.html`) | `#faq` (fallback `.faq`); `details`; `summary`; `.faq__content` | `js/modules/faq.js` | `initFaqAria()` | Adds `aria-controls` and syncs `aria-expanded` on toggle. |
 
+
+## JSON-LD policy (core vs special pages)
+
+### Scope and rationale
+- JSON-LD (`<script type="application/ld+json">`) is required only on core/indexable pages that already include it by design.
+- Operational/special pages are intentionally excluded from JSON-LD.
+- `offline.html` and `404.html` are **not SEO landing targets**; keeping JSON-LD absent on these pages reduces unnecessary CSP hash maintenance for inline scripts.
+
+### Deterministic page classification
+- **Core pages (JSON-LD required):**
+  - `index.html`
+  - `menu.html`
+  - `galeria.html`
+  - `cookies.html`
+  - `polityka-prywatnosci.html`
+  - `regulamin.html`
+- **Special operational pages (JSON-LD forbidden):**
+  - `offline.html`
+  - `404.html`
+
+### QA enforcement
+- Policy is enforced by `scripts/schema-policy-check.mjs`.
+- The check recursively scans `*.html` files and fails when:
+  - `offline.html` or `404.html` contains `type="application/ld+json"`, or
+  - any required core page listed above no longer contains `type="application/ld+json"`.
+- Violations are reported as `file:line:column: message` with non-zero exit code.
