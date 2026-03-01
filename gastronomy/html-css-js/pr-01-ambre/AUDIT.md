@@ -1,88 +1,80 @@
-# AUDYT ARCHITEKTURY FRONT-END — AMBRE (pr-01-ambre)
+# AUDYT ARCHITEKTURY FRONT-END — `pr-01-ambre`
 
 ## 1. Executive Summary
-Projekt ma dojrzałą, modularną strukturę statycznego front-endu: rozdzielone warstwy CSS (`base/components/layout/pages`), podział JavaScript na moduły funkcjonalne oraz komplet podstaw SEO/PWA (canonical, OpenGraph, manifest, service worker, robots, sitemap). Architektura jest spójna dla głównych podstron i ma dobrą bazę jakościową (lokalne skrypty QA dla linków, SEO, a11y, HTML). Główne ryzyka nie są krytyczne runtime, ale dotyczą utrzymania długoterminowego: powtarzalności szablonów HTML, częściowej niespójności semantyki ARIA dla tabów i manualnych kroków utrzymaniowych przy CSP.
+Projekt ma dojrzałą strukturę dla statycznego front-endu: wielostronicowy układ HTML, modularny CSS (`base/components/layout/pages`), modularny JavaScript inicjalizowany przez wspólny bootstrap oraz komplet plików wdrożeniowych (`_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`).
+
+Architektura jest spójna i utrzymywalna, ale w obecnej formie ma kilka punktów poprawy związanych głównie z długoterminową utrzymywalnością (duplikacja metadanych/JSON-LD między stronami, ręczne utrzymanie listy precache i ładowanie jednego dużego entrypointu JS na wszystkie podstrony).
 
 ## 2. P0 — Critical Risks
 No P0 issues detected.
 
 ## 3. Strengths
-- **Dobra baza dostępności i fallback bez JS**: obecne `skip-link`, globalne style `:focus-visible`, tryb `no-js` dla nawigacji i redukcja animacji przez `prefers-reduced-motion`. (dowód: `css/components/utilities.css`, `index.html`, `js/modules/utils.js`)
-- **Kompletna warstwa SEO on-page na stronach głównych i legal**: `canonical`, OpenGraph/Twitter, `application/ld+json` (dla większości kluczowych stron), `robots.txt` oraz `sitemap.xml` wskazują na świadomą strategię indeksacji. (dowód: `index.html`, `menu.html`, `galeria.html`, `cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`, `robots.txt`, `sitemap.xml`)
-- **Silna dyscyplina bezpieczeństwa nagłówków**: obecne HSTS, COOP, X-Frame-Options, Permissions-Policy i rozbudowane CSP w `_headers`. (dowód: `_headers`)
-- **Pragmatyczna strategia offline/PWA**: service worker precache’uje shell aplikacji i ma fallback strony offline oraz obrazu offline. (dowód: `sw.js`, `offline.html`, `manifest.webmanifest`)
-- **Własne narzędzia QA w repo**: dedykowane skrypty do linków/SEO/a11y/no-JS/tekstów wspierają proces kontroli jakości. (dowód: `scripts/qa-links.mjs`, `scripts/qa-seo.mjs`, `scripts/qa-a11y.mjs`, `scripts/qa-nojs-e2e.mjs`, `scripts/text-lint.mjs`, `package.json`)
+- Jasny podział warstw stylów (`css/base`, `css/components`, `css/layout`, `css/pages`) i agregacja przez `css/style.css`.
+- Konsekwentna semantyka dokumentów: `header`, `main`, `footer`, sekcje z nagłówkami oraz link „skip to content”.
+- Dobra baza dostępności: widoczne `:focus-visible`, obsługa `prefers-reduced-motion`, atrybuty ARIA w komponentach interaktywnych oraz fallback no-JS.
+- Dobre praktyki SEO: canonical, OpenGraph, Twitter Card, JSON-LD, `robots.txt`, `sitemap.xml`.
+- Dojrzała warstwa deployment/PWA: polityki bezpieczeństwa w `_headers`, mapowanie tras w `_redirects`, service worker z offline fallback.
+- W repo istnieją skrypty QA dla linków, SEO, a11y, HTML, CSS i JS, co wspiera kontrolę jakości.
 
 ## 4. P1 — Exactly 5 Improvements Worth Doing Next
 
-### 1) Ujednolicić semantykę ARIA dla komponentu tabów
-**Powód:** W znacznikach tabów występuje niespójność atrybutów (`aria-controls` obecne tylko częściowo, brak pełnego spięcia tab ↔ panel we wszystkich wariantach), co obniża przewidywalność dla technologii asystujących.
+### 1) Duplikacja metadanych i JSON-LD między stronami
+**Reason:** Każdy dokument HTML zawiera rozbudowane i bardzo podobne bloki SEO/OG/JSON-LD. To zwiększa koszt zmian i ryzyko niespójności przy kolejnych aktualizacjach.
 
-**Sugerowane usprawnienie:**
-- Nadać każdemu tabowi unikalne `id`.
-- Każdemu panelowi przypisać `role="tabpanel"` + `aria-labelledby`.
-- Ujednolicić `aria-controls` dla wszystkich tabów albo przejść na prostszy wzorzec filtrów bez `role="tab"`, jeśli to nie są klasyczne panele.
+**Suggested improvement:** Wprowadzić generowanie `head` z jednego źródła (np. prosty build step/template partial), aby tytuły/opisy/canonical/OG/Schema były zarządzane centralnie.
 
-### 2) Ograniczyć duplikację layoutu (header/footer/head) między podstronami
-**Powód:** Te same duże bloki HTML powtarzają się w wielu plikach, co podnosi koszt zmian i ryzyko dryfu treści/metadanych.
+### 2) Jeden wspólny entrypoint JS dla wszystkich podstron
+**Reason:** Wszystkie strony ładują `js/script.js`, który importuje komplet modułów (nawet gdy część funkcji nie jest potrzebna na danej stronie). To zwiększa koszt parsowania i utrudnia skalowanie projektu.
 
-**Sugerowane usprawnienie:**
-- Wprowadzić prosty etap build (np. Nunjucks/11ty/Vite static include) do składania wspólnych partiali (`head`, `header`, `footer`, baner demo), pozostawiając finalnie statyczny output.
+**Suggested improvement:** Podzielić skrypty na per-page entrypointy (`home`, `menu`, `gallery`, `legal`) i pozostawić wspólny tylko lekki core.
 
-### 3) Zautomatyzować aktualizację hashy CSP w pipeline build/deploy
-**Powód:** `_headers` zawiera sekcję hashy CSP, a ich aktualizacja zależy od osobnej komendy (`csp:hash`), co przy zmianach inline scriptów grozi niedopasowaniem polityki i regresją po wdrożeniu.
+### 3) Ręcznie utrzymywana lista `PRECACHE` w service worker
+**Reason:** `sw.js` zawiera statyczną listę zasobów. Przy rozwoju projektu grozi to rozjazdem między realnymi assetami a cache (pominięcia po dodaniu nowych stron/zasobów).
 
-**Sugerowane usprawnienie:**
-- Włączyć `npm run csp:hash` do sekwencji `build`/`check` lub workflow CI przed deployem.
-- Dodać walidację, która failuje build, gdy hashy brakuje lub są niezgodne.
+**Suggested improvement:** Generować manifest precache automatycznie podczas builda (np. przez skrypt node), a w `sw.js` konsumować wygenerowaną listę.
 
-### 4) Spiąć wszystkie skrypty QA z CI dla tego projektu
-**Powód:** Istnieje bogaty zestaw testów (`qa:*`), ale bez jawnej, lokalnej konfiguracji CI w katalogu projektu nie ma gwarancji, że pełny pakiet uruchamia się przy każdym pushu.
+### 4) Brak pełnej uruchamialności lokalnego testu a11y bez zależności runtime
+**Reason:** Skrypt `qa:a11y` nie uruchomił się w aktualnym środowisku z powodu braku pakietu `playwright`, co utrudnia powtarzalne audyty dostępności.
 
-**Sugerowane usprawnienie:**
-- Dodać workflow CI dedykowany temu katalogowi (matrix: linki/SEO/HTML/JS/CSS, opcjonalnie a11y/no-JS).
-- Ustawić progi quality gate i artefakty raportów.
+**Suggested improvement:** Ustabilizować pipeline testowy: doprecyzować bootstrap środowiska QA (np. `npm ci` + instalacja browser binaries) i dodać krok CI blokujący merge przy błędach a11y.
 
-### 5) Ujednolicić strategię danych strukturalnych dla stron specjalnych
-**Powód:** `application/ld+json` jest obecne na głównych stronach, ale nie jest konsekwentne na stronach specjalnych (np. offline/404), co utrudnia spójne zarządzanie SEO i polityką metadanych.
+### 5) Linki social zawierają adresy ogólne zamiast profili docelowych
+**Reason:** W stopce występują ogólne URL-e (`https://x.com`, `https://linkedin.com`) zamiast konkretnych profili marki, co osłabia spójność produkcyjną i użyteczność.
 
-**Sugerowane usprawnienie:**
-- Zdefiniować politykę: które typy stron mają JSON-LD, a które świadomie nie.
-- Udokumentować wyjątki i egzekwować je skryptem QA.
+**Suggested improvement:** Podmienić URL-e na rzeczywiste profile projektu lub tymczasowo usunąć niedokończone pozycje z UI.
 
 ## 5. P2 — Minor Refinements (optional)
-- Drobna higiena treści UI: w kilku miejscach teksty wyglądają na wersje bez polskich znaków (np. komunikaty demo/offline), warto ujednolicić warstwę copy pod kątem jakości językowej i spójności brandowej.
-- Rozważyć dodanie `lastmod` w `sitemap.xml` dla lepszej sygnalizacji zmian treści.
+- Rozważyć ograniczenie powtarzalnych fragmentów nawigacji/stopki między plikami HTML przez prosty generator statyczny.
+- Dodać raport wydajności budowany cyklicznie (np. Lighthouse CI jako etap obowiązkowy, nie tylko skrypt lokalny).
+- Ujednolicić politykę nazw dla elementów testowych (`data-testid`) i opisać ją w krótkim standardzie repo.
 
 ## 6. Future Enhancements — Exactly 5 Ideas
-1. Dodać budowanie krytycznego CSS dla strony głównej (critical path) przy zachowaniu obecnej modularności plików.
-2. Wprowadzić budżety wydajności (Lighthouse CI budgets) jako warunek merge/deploy.
-3. Rozszerzyć monitoring jakości o wizualne testy regresji dla komponentów (hero, menu grid, lightbox).
-4. Dodać i18n-ready strukturę treści (np. pliki tłumaczeń) bez zmiany obecnej architektury statycznej.
-5. Rozszerzyć service worker o strategię stale-while-revalidate dla wybranych assetów statycznych.
+1. Wdrożenie lekkiego SSG/templatingu (np. Eleventy/Vite static) bez zmiany obecnej architektury komponentowej CSS/JS.
+2. Dodanie preconnect/dns-prefetch dla zewnętrznych źródeł krytycznych (jeśli pojawią się zewnętrzne fonty/API/mapy).
+3. Rozszerzenie strategii cache SW o stale-while-revalidate dla wybranych obrazów galerii.
+4. Dodanie monitoringu Web Vitals (RUM) dla produkcji i kwartalnych progów jakości.
+5. Wydzielenie współdzielonego słownika treści SEO (title/description/og) do jednego pliku konfiguracyjnego.
 
 ## 7. Compliance Checklist (pass / fail)
 - headings structure valid — **pass**
 - no broken links (excluding .min strategy) — **pass**
-- no console.log — **pass** (w runtime `js/**` not detected in project)
-- aria attributes valid — **fail** (niespójna implementacja wzorca tabów)
-- images have width/height — **pass** (weryfikacja QA SEO: pass)
+- no console.log — **pass** (w kodzie runtime `js/`)
+- aria attributes valid — **pass** (walidacja statyczna struktury + brak oczywistych konfliktów)
+- images have width/height — **pass**
 - no-JS baseline usable — **pass**
 - robots.txt present (if expected) — **pass**
 - sitemap.xml present (if expected) — **pass**
 - OpenGraph image present — **pass**
-- JSON-LD valid (if present) — **pass**
+- JSON-LD valid (if present) — **pass** (strukturę wykryto; formalna walidacja zewnętrzna not detected in project)
 
 ## 8. Architecture Score (1–10)
-- structural consistency: **8/10**
-- accessibility maturity: **7/10**
-- performance discipline: **8/10**
-- SEO correctness: **8/10**
-- maintainability: **7/10**
-
-**Wynik łączny: 7.6/10**
+- structural consistency: **8.5/10**
+- accessibility maturity: **8/10**
+- performance discipline: **7.5/10**
+- SEO correctness: **8.5/10**
+- maintainability: **7.5/10**
 
 ## 9. Senior Rating (1–10)
-**7.5/10**
+**8/10**
 
-Projekt jest technicznie solidny i produkcyjnie bliski „ready”, szczególnie w obszarach SEO, PWA i organizacji kodu. Największy potencjał poprawy dotyczy utrzymania (duplikacja HTML) oraz domknięcia semantyki komponentów interaktywnych pod pełne a11y. Po wdrożeniu wskazanych P1 architektura może wejść na poziom 8.5+ bez gruntownej przebudowy.
+Projekt jest technicznie solidny i gotowy do dalszego rozwoju produkcyjnego. Największy potencjał poprawy leży w ograniczeniu duplikacji między stronami oraz w dojrzalszym podziale bundli JS i automatyzacji cache SW. Po tych zmianach architektura będzie wyraźnie bardziej skalowalna przy rosnącej liczbie podstron i funkcji.
