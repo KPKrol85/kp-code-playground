@@ -1,75 +1,72 @@
-# AUDIT — KP_CODE Digital Studio / Ambre (pr-01-ambre)
+# 1. Podsumowanie wykonawcze
+Projekt **pr-01-ambre** jest dojrzałym, statycznym front-endem z modularnym podziałem CSS i JS, poprawnie skonfigurowanym SEO technicznym (canonical, OG, sitemap, robots) oraz wdrożonym PWA (manifest, service worker, offline page). Architektura jest czytelna i utrzymywalna, ale w kilku miejscach występuje dryf strukturalny (duplikacje styli, centralny bootstrap wszystkich modułów, ręczne utrzymanie hashy CSP), który przy dalszej rozbudowie będzie podnosił koszt utrzymania.
 
-## 1. Executive Summary
-The project shows a strong front-end baseline: modular CSS layers (`base/layout/components/pages`), split JavaScript modules, consistent SEO metadata, working static link integrity checks, and PWA deployment artifacts (`manifest`, `sw.js`, `_headers`, `_redirects`). The implementation is production-oriented, but there is architectural drift around runtime asset strategy and modal accessibility details that should be tightened next.
+# 2. P0 — Ryzyka krytyczne
+**No P0 issues detected.**
 
-## 2. P0 — Critical Risks
-No P0 issues detected.
+# 3. Mocne strony
+- Spójna, wielostronicowa struktura HTML z konsekwentnymi metadanymi SEO: canonical + `og:url` per strona oraz obecność JSON-LD na głównych podstronach (`index.html`, `menu.html`, `galeria.html`, `regulamin.html`, `polityka-prywatnosci.html`, `cookies.html`).
+- Dostępność bazowa jest zaadresowana: skip link (`href="#main"`), logiczne landmarki (`header/main/footer/nav`), aria dla elementów interaktywnych, obsługa focus trap i klawisza Escape w menu mobilnym (`js/modules/nav.js`).
+- Strategia obrazów jest nowoczesna: `picture` + AVIF/WebP + fallback JPG/PNG, lazy loading dla obrazów niekrytycznych, jawne `width/height` na obrazach.
+- Podział CSS jest modułowy (`base/layout/components/pages`) i oparty o tokeny (`css/base/tokens.css`), co tworzy sensowny fundament systemu designu.
+- Konfiguracja deploymentu jest obecna i sensowna: `_headers` (HSTS, CSP, Referrer-Policy itd.), `_redirects`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`.
+- W repo istnieją skrypty QA dla linków i SEO (`scripts/qa-links.mjs`, `scripts/qa-seo.mjs`), co ogranicza ryzyko regresji w obszarach technicznych.
 
-## 3. Strengths
-- Clear CSS architecture with separation of concerns (`css/base`, `css/layout`, `css/components`, `css/pages`) and central token file (`css/base/tokens.css`).
-- JavaScript is modularized by feature (`js/modules/*`) and bootstrapped from one entry (`js/script.js`).
-- SEO baseline is implemented across pages: `meta description`, `canonical`, OpenGraph tags, and JSON-LD blocks are present in primary pages.
-- Link/path validation script exists and passes in local checks (`scripts/qa-links.mjs` + `npm run qa:links`).
-- Core accessibility primitives are present: skip link, semantic headings, ARIA states (`aria-current`, `aria-expanded`, `aria-busy`, `aria-live`), and reduced-motion media queries.
-- Deployment and PWA files are present and internally coherent: `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`.
+# 4. P1 — Dokładnie 5 usprawnień do wdrożenia w następnym kroku
 
-## 4. P1 — Exactly 5 Improvements Worth Doing Next
+## 4.1. Duplikacja i konflikt reguł `.skip-link`
+**Powód:** Reguły `.skip-link` są zdefiniowane równolegle w `css/base/base.css` i `css/components/utilities.css`, z różnymi wariantami focus (`:focus-visible` vs `:focus`). To zwiększa niejednoznaczność kaskady i utrudnia przewidywalność a11y przy refaktorach.
+**Sugerowane usprawnienie:** Utrzymać jedną definicję źródłową (np. w `base`), a w drugim miejscu pozostawić tylko rozszerzenia specyficzne dla kontekstu lub usunąć duplikat.
 
-### 1) Unify runtime asset strategy (source vs minified)
-**Reason:** HTML pages load `/js/script.js` and `/css/style.css`, while minified artifacts are also versioned (`js/script.min.js`, build scripts for `css/style.min.css`). This increases maintenance overhead and can create source/build drift.
-**Suggested improvement:** Define one production path: either (a) load minified bundles in production and keep source for development only, or (b) remove minified artifacts from repo and build them only in deployment.
+## 4.2. Monolityczny bootstrap JS na wszystkich stronach
+**Powód:** `js/script.js` importuje i inicjalizuje wszystkie moduły dla każdej strony (`FEATURES`), a moduły same kończą działanie guardami. To działa poprawnie, ale skaluje się słabo i zwiększa koszt parsowania/utrzymania.
+**Sugerowane usprawnienie:** Wprowadzić page-level entrypoints (np. `script-home.js`, `script-menu.js`, `script-legal.js`) albo lazy init po detekcji selektorów, by ograniczyć zakres inicjalizacji per widok.
 
-### 2) Deliver modern image formats in markup, not only via tooling
-**Reason:** Runtime HTML image references are predominantly JPEG; AVIF/WebP generation exists only as scripts (`scripts/optimize-images.mjs`) and lightbox dynamic handling.
-**Suggested improvement:** Add `<picture>` with AVIF/WebP/JPEG fallback for key above-the-fold and gallery images, then keep current JPEG fallback for compatibility.
+## 4.3. Wysoka kruchość CSP przez ręcznie utrzymywane hashe inline scriptów
+**Powód:** `_headers` zawiera ręcznie wpisane hashe `script-src-elem` dla inline skryptów. Każda zmiana inline JSON-LD/metadanych może wymagać ręcznej aktualizacji hashy i grozi cichym zablokowaniem skryptów po deployu.
+**Sugerowane usprawnienie:** Ograniczyć inline skrypty do minimum i przenieść JSON-LD do plików zewnętrznych (lub zautomatyzować generowanie hashy w buildzie).
 
-### 3) Strengthen non-`<dialog>` lightbox focus management
-**Reason:** Lightbox is implemented as `div[role="dialog"]` in HTML and opened/closed via JS, but there is no explicit focus trap for this modal path.
-**Suggested improvement:** Add full focus trap and focus cycling for the lightbox container when open (or migrate to native `<dialog>` consistently), and ensure background content is inert while modal is active.
+## 4.4. Niespójność zakresu offline cache względem nawigacji stopki
+**Powód:** `sw.js` pre-cache’uje część podstron (`/`, `menu.html`, `galeria.html`, `cookies.html`, `polityka-prywatnosci.html`), ale pomija np. `regulamin.html`, mimo że jest to linkowana strona legalna.
+**Sugerowane usprawnienie:** Ujednolicić listę `PRECACHE` z rzeczywistą mapą nawigacji/stron legalnych (minimum: dodać `regulamin.html` albo udokumentować intencjonalne wykluczenie).
 
-### 4) Reduce CSP hash maintenance risk
-**Reason:** `_headers` contains multiple hard-coded `script-src-elem` hashes, which are fragile when inline scripts change.
-**Suggested improvement:** Minimize inline scripts and move logic to external files; if inline scripts remain required, automate CSP hash generation in build/deploy.
+## 4.5. Brak jednolitej strategii warstwowania CSS (cascade governance)
+**Powód:** Importy w `css/style.css` mieszają warstwy bazowe, komponentowe i utilities bez jawnych `@layer`, a utilities są importowane na końcu i nadpisują wcześniejsze reguły. Przy rosnącej bazie kodu zwiększa to ryzyko side-effectów.
+**Sugerowane usprawnienie:** Wprowadzić `@layer` (base/layout/components/utilities/pages) i określić stałą kolejność priorytetów, by zredukować przypadkowe nadpisania.
 
-### 5) Add automated QA execution in CI (not detected in project)
-**Reason:** Local QA scripts exist (`qa:links`, `qa:seo`, `qa:a11y`, linters), but CI/CD pipeline configuration is not detected in project.
-**Suggested improvement:** Add a CI workflow that runs the existing QA commands on each PR to keep quality gates deterministic.
+# 5. P2 — Drobne usprawnienia
+- `offline.html` ma minimalny zestaw metadanych i brak `meta description`/pełnego OG (prawdopodobnie intencjonalne, ale można ujednolicić z resztą stron).
+- W repo utrzymywane są równolegle wersje `script.js` i `script.min.js`; runtime korzysta z `script.js`. Warto doprecyzować strategię produkcyjną w dokumentacji build/deploy.
+- W wielu miejscach występują długie, powtarzalne fragmenty markupu stopki/nawigacji pomiędzy stronami statycznymi; warto rozważyć partiale w etapie build (bez zmiany stacku runtime).
 
-## 5. P2 — Minor Refinements (optional)
-- Fix malformed inline SVG string in `js/modules/load-more.js` (`...focusable="false">><path...`) to avoid invalid markup injection in status icon output.
-- Consider reducing font preloads on low-content pages (legal pages) to limit initial transfer on non-core routes.
-- Consider adding explicit `aria-label`/`title` consistency pass for all social links so naming style is uniform (`Github` vs `Linkedin` casing).
+# 6. Przyszłe rozszerzenia — Dokładnie 5 realistycznych kierunków
+1. Dodać automatyczną walidację a11y/SEO/linków w CI (uruchamianie istniejących skryptów `qa:*` przy każdym PR).
+2. Wprowadzić generowanie nagłówka/stopki z jednego źródła (templating build-time), by wyeliminować duplikację HTML.
+3. Rozszerzyć service worker o politykę aktualizacji cache opartą o manifest zasobów builda, aby ograniczyć ręczne zarządzanie `CACHE_VERSION`.
+4. Uzupełnić monitorowanie jakości o budżety performance (np. limity wielkości CSS/JS i obrazów) oraz automatyczną regresję Lighthouse.
+5. Ujednolicić architekturę JS wokół „feature flags” per widok (mapowanie modułów do stron) i odciążyć inicjalizację globalną.
 
-## 6. Future Enhancements — Exactly 5 Realistic Ideas
-1. Add visual regression snapshots for key routes (`index`, `menu`, `galeria`) to protect component consistency.
-2. Add route-level JS loading (or feature flags per page) so legal pages do not initialize all interactive modules.
-3. Extend SEO QA script to assert one unique `<h1>` per page and enforce metadata consistency checks in one command.
-4. Add offline UX enhancement by caching a small subset of critical hero/gallery assets for faster repeat visits.
-5. Add a structured content map for legal pages (shared templates/partials) to reduce duplicated markup across `cookies`, `regulamin`, `polityka-prywatnosci`.
+# 7. Checklista zgodności (pass / fail)
+- **headings valid:** **PASS**
+- **no broken links (excluding .min strategy):** **PASS** (potwierdzone lokalnym `qa:links`)
+- **no console.log:** **PASS** dla kodu runtime (`js/`, `sw.js`, HTML); logi występują tylko w skryptach QA
+- **aria attributes valid:** **PASS** (brak wykrytych błędów statycznych w kodzie)
+- **images have width/height:** **PASS** dla znaczników `<img>` w stronach HTML
+- **no-JS baseline usable:** **PASS** (klasa `.no-js` i działająca nawigacja/linki bazowe)
+- **robots present (if expected):** **PASS** (`robots.txt` obecny)
+- **sitemap present (if expected):** **PASS** (`sitemap.xml` obecny)
+- **OG image exists:** **PASS** (`assets/img/og-img/og-1200x630.jpg` obecny)
+- **JSON-LD valid (if present):** **PASS (statycznie)** — JSON-LD obecny na głównych podstronach; brak błędów wykrytych przez `qa:seo`
 
-## 7. Compliance Checklist (pass / fail)
-- headings valid: **PASS**
-- no broken links (excluding .min strategy): **PASS**
-- no console.log: **PASS** (runtime JS modules)
-- aria attributes valid: **PASS** (static reference checks)
-- images have width/height: **PASS**
-- no-JS baseline usable: **PASS**
-- robots present (if expected): **PASS**
-- sitemap present (if expected): **PASS**
-- OG image exists: **PASS**
-- JSON-LD valid (if present): **PASS** (project SEO QA script)
+# 8. Wynik architektury (0–10)
+- **Spójność strukturalna:** 8.5/10
+- **Dojrzałość dostępności:** 8.0/10
+- **Dyscyplina wydajnościowa:** 8.0/10
+- **Poprawność SEO:** 9.0/10
+- **Utrzymywalność:** 7.5/10
 
-## 8. Architecture Score (0–10)
-- structural consistency: **8.8/10**
-- accessibility maturity: **8.2/10**
-- performance discipline: **7.9/10**
-- SEO correctness: **9.0/10**
-- maintainability: **8.1/10**
+**Łączny wynik architektury: 8.2/10**
 
-**Overall Architecture Score: 8.4/10**
-
-## 9. Senior Rating (1–10)
-**8.3/10**
-
-The codebase is clearly above junior portfolio quality and already includes many production-minded elements (modularization, QA scripts, SEO/PWA assets, deploy headers/redirects). The next step is not a stack rewrite, but tightening operational consistency: one asset strategy, stronger modal accessibility guarantees, and CI-backed enforcement of the existing quality checks.
+# 9. Senior rating (1–10)
+**8/10**
+Projekt jest technicznie solidny i gotowy do stabilnego użycia produkcyjnego w obecnym zakresie: ma sensowne SEO, dostępność bazową, PWA i porządną strukturę plików. Główne ryzyka nie są krytyczne, ale dotyczą rosnącego długu utrzymaniowego (CSP/hash workflow, bootstrap JS, duplikacje CSS/HTML), które warto uporządkować przed dalszą skalą zmian.
