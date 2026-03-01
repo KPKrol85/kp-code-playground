@@ -75,6 +75,11 @@ Szczegóły:
 - `build:js` bundluje i minifikuje `js/script.js` do `js/script.min.js`.
 - W skryptach build występują kontrole poprawności wygenerowanych artefaktów (m.in. weryfikacja braku `@import` w CSS bundle i importów modułowych w JS bundle).
 
+Zasada pracy z assetami:
+- `*.min.*` to wyłącznie artefakty generowane przez build.
+- Nie edytuj `css/style.min.css` ani `js/script.min.js` ręcznie.
+- W development wprowadzaj zmiany tylko w `css/style.css` i `js/script.js`.
+
 ### 8. Deployment
 Repozytorium zawiera konfigurację typową dla statycznego deployu:
 - `_redirects` — mapowanie tras i obsługa 404.
@@ -198,6 +203,11 @@ Details:
 - `build:css` generates `css/style.min.css` from `css/style.css`.
 - `build:js` bundles and minifies `js/script.js` into `js/script.min.js`.
 - Build scripts include artifact integrity checks (e.g., no `@import` in CSS bundle and no module import syntax in JS bundle).
+
+Asset workflow rule:
+- `*.min.*` files are build-generated artifacts only.
+- Do not manually edit `css/style.min.css` or `js/script.min.js`.
+- During development, make changes only in `css/style.css` and `js/script.js`.
 
 ### 8. Deployment
 The repository includes static deployment configuration:
