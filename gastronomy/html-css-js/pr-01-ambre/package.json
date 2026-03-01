@@ -14,7 +14,7 @@
     "check:links": "npm run qa:links",
     "check:a11y": "npm run qa:a11y",
     "check:server:prod": "node scripts/check-server-prod.mjs",
-    "check": "npm run lint && npm run validate:html && npm run check:links && npm run check:a11y",
+    "check": "npm run csp:check && npm run lint && npm run validate:html && npm run check:links && npm run check:a11y",
     "watch:css": "postcss css/style.css -o css/style.min.css --watch --no-map",
     "watch:js": "esbuild js/script.js --bundle --minify --target=es2018 --outfile=js/script.min.js --watch",
     "img:opt": "node scripts/optimize-images.mjs",
@@ -33,7 +33,8 @@
     "csp:hash": "node scripts/update-csp-hashes.mjs",
     "lint:text": "node scripts/text-lint.mjs",
     "qa:text": "npm run lint:text",
-    "qa:nojs": "node scripts/qa-nojs-e2e.mjs"
+    "qa:nojs": "node scripts/qa-nojs-e2e.mjs",
+    "csp:check": "node scripts/update-csp-hashes.mjs --check"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
