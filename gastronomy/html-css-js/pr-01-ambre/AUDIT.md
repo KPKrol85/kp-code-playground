@@ -36,11 +36,6 @@ No P0 issues detected.
 
 **Suggested improvement:** Generować manifest precache automatycznie podczas builda i konsumować go w SW (z wersjonowaniem opartym o hash/revizję plików).
 
-### 5) Pozostawione wywołania `console.*` w kodzie runtime
-**Reason:** W kodzie aplikacyjnym występują `console.log` i `console.error` (`js/modules/utils.js`), co jest sygnałem debugowym/technicznym i obniża higienę produkcyjną.
-
-**Suggested improvement:** Wyczyścić logowanie runtime lub przepiąć je pod warstwę telemetryczną/flagę build-time, tak aby produkcja nie emitowała logów konsolowych.
-
 ## 5. P2 — Minor Refinements (optional)
 - W `js/modules/load-more.js` stała `DONE_STATUS_ICON` zawiera nadmiarowy znak `>` po otwarciu `<svg>`, co nie musi powodować błędu runtime, ale jest nieczystością markupu i warto to skorygować.
 - Warto dopisać jawny dokument „Definition of Done” dla QA (które skrypty są krytyczne przed deployem), aby proces był jednoznaczny dla nowych contributorów.
