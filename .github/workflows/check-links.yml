@@ -1,0 +1,30 @@
+name: Check Links and Anchors
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gastronomy/html-css-js/pr-02-atelier
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: gastronomy/html-css-js/pr-02-atelier/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run link and anchor checks
+        run: npm run check:server:prod
