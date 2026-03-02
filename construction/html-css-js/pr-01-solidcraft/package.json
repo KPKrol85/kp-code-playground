@@ -17,7 +17,7 @@
     "build": "npm run build:css && npm run build:js",
     "watch:css": "postcss css/style.css --watch --no-map -o css/style.min.css",
     "watch:js": "esbuild js/script.js --bundle --minify --target=es2018 --format=iife --outfile=js/script.min.js --watch=forever",
-    "build:dist": "node scripts/build-dist.js",
+    "build:dist": "node scripts/build-dist.js && npm run build:sitemap",
     "format": "prettier -w \"**/*.{html,css,js,json,md}\"",
     "format:check": "prettier -c \"**/*.{html,css,js,json,md}\"",
     "images:build": "node scripts/images.js build",
@@ -26,7 +26,8 @@
     "check:assets": "node scripts/check-html-assets.mjs",
     "check:html": "npm run check:links && npm run check:assets",
     "check:predeploy": "npm run check:html && npm run qa:a11y",
-    "qa:a11y": "node scripts/qa-a11y.mjs"
+    "qa:a11y": "node scripts/qa-a11y.mjs",
+    "build:sitemap": "node scripts/generate-sitemap.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",

@@ -20,9 +20,10 @@ This file is the canonical source of truth for the Solidcraft build/development 
 - `build:css`: builds `css/style.min.css` and verifies no `@import` remains.
 - `build:js`: builds `js/script.min.js` and verifies no `import`/`export` remains.
 - `build`: runs `build:css` and `build:js`.
+- `build:sitemap`: scans real HTML pages and generates `dist/sitemap.xml`.
 - `watch:css`: watches `css/style.css` and rebuilds `css/style.min.css`.
 - `watch:js`: watches `js/script.js` and rebuilds `js/script.min.js`.
-- `build:dist`: creates `dist/`, copies runtime files, and rewrites HTML references to minified assets.
+- `build:dist`: creates `dist/`, copies runtime files, rewrites HTML references to minified assets, then runs `build:sitemap` to generate `dist/sitemap.xml`.
 - `images:build`: generates production images from `assets/img-src` into `assets/img`.
 - `images:clean`: removes generated image outputs.
 - `check:links`: validates broken internal/external links and missing anchors across all HTML files.
@@ -59,6 +60,9 @@ This file is the canonical source of truth for the Solidcraft build/development 
 ## Deployment Notes
 
 - Deployment artifact is `dist/`, produced by `npm run build:dist`.
+- Sitemap generation is part of deploy build (`npm run build:dist`) via `npm run build:sitemap`.
+- `build:sitemap` requires `SITE_URL` (for example: `SITE_URL=https://example.com npm run build:sitemap`) and exits non-zero if missing.
+- `build:sitemap` includes real `.html` pages discovered from source and excludes non-indexable pages by default: `404.html`, `offline.html`, `thank-you/**`.
 - `build:dist` copies all HTML files plus required runtime assets and selected optional files (`_headers`, `_redirects`, `netlify.toml`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`, `js/sw-register.js`, `assets/`).
 - During `dist` build, HTML references are rewritten from source assets to minified assets.
 
