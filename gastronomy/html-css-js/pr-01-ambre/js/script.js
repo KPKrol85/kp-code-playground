@@ -10,7 +10,7 @@ import { initPageMenuPanel } from "./modules/page-menu.js";
 import { initReservationForm } from "./modules/form.js";
 import { initLightbox } from "./modules/lightbox.js";
 import { initFaqAria } from "./modules/faq.js";
-import { initDemoBanner } from "./modules/demo-banner.js";
+import { initDemoLegalModal } from "./modules/demo-legal.js";
 
 const FEATURES = [
   { name: "HELPERS", init: initHelpers },
@@ -31,7 +31,7 @@ const FEATURES = [
 
   { name: "CTA", init: initCtaPulse },
 
-  { name: "DEMO BANNER", init: initDemoBanner },
+  { name: "DEMO LEGAL MODAL", init: initDemoLegalModal },
   { name: "LOAD MORE MENU", init: initLoadMoreMenu },
   { name: "TABS", init: initTabs },
   { name: "PAGE MENU", init: initPageMenuPanel },
