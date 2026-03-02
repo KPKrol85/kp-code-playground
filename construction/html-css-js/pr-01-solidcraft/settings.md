@@ -28,7 +28,8 @@ This file is the canonical source of truth for the Solidcraft build/development 
 - `check:links`: validates broken internal/external links and missing anchors across all HTML files.
 - `check:assets`: validates local asset references in HTML (`img/src`, `script/src`, `link[href]`, `source/srcset`, `img/srcset`).
 - `check:html`: runs `check:links` and `check:assets`.
-- `check:predeploy`: pre-deploy alias for `check:html`.
+- `qa:a11y`: runs axe-based accessibility scans in a headless browser on key pages.
+- `check:predeploy`: runs `check:html` and `qa:a11y` as the local pre-deploy gate.
 - `format`: applies Prettier writes.
 - `format:check`: validates formatting without writes.
 
@@ -52,6 +53,7 @@ This file is the canonical source of truth for the Solidcraft build/development 
 - JS validation is embedded in `build:js` through `scripts/verify-js-build.js`.
 - `build:dist` fails if required production assets are missing (`css/style.min.css`, `js/script.min.js`, `js/theme-init.min.js`).
 - `format:check` is the formatting gate.
+- A11y validation: `npm run qa:a11y` fails on `serious`/`critical` axe impacts, while `minor`/`moderate` are reported only.
 - Run local pre-deploy regressions with `npm run check:predeploy`.
 
 ## Deployment Notes
