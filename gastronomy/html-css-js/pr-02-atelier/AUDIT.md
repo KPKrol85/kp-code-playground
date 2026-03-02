@@ -1,77 +1,85 @@
-# Atelier No.02 — Front-end Architecture Audit
+# AUDYT ARCHITEKTURY FRONT-END — Atelier No.02
 
 ## 1. Executive Summary
-Projekt jest dojrzałą statyczną architekturą front-end: modułowy podział CSS (base/layout/components/pages), podział logiki JS na feature modules, spójne metadane SEO dla kluczowych podstron i działające linkowanie wewnętrzne. Najważniejsze ryzyka produkcyjne klasy P0 nie zostały wykryte. Główne obszary do poprawy dotyczą utrzymania spójności semantycznej na stronach systemowych, redukcji duplikacji szablonowej oraz wzmocnienia strategii cache/service worker pod kątem długoterminowej maintainability.
+Projekt ma dojrzałą strukturę statycznego front-endu: wielostronicowe HTML, warstwowy CSS (base/layout/components/pages), modułowy JavaScript oraz konfigurację deploymentu dla Netlify (`_headers`, `_redirects`, `sw.js`). Implementacja zawiera solidne podstawy dostępności (skip-link, ARIA, fallback `noscript`), SEO (canonical, OpenGraph, JSON-LD, robots, sitemap) i optymalizacji obrazów (`picture`, `srcset`, nowoczesne formaty). Największe ryzyka nie są krytyczne runtime, ale dotyczą spójności architektury uruchomieniowej i utrzymania.
 
 ## 2. P0 — Critical Risks
 No P0 issues detected.
 
 ## 3. Strengths
-- Modularna architektura CSS jest czytelnie warstwowa (base/layout/components/pages) i oparta o pojedynczy punkt kompozycji `css/style.css` przez `@import`.【css/style.css:1】【css/style.css:33】
-- System tokenów designu jest centralny i szeroki (kolory, spacing, typografia, breakpoints, theme vars), co wspiera spójność UI i theme switching.【css/base/tokens.css:1】【css/base/tokens.css:150】
-- Nawigacja i komponenty interaktywne implementują atrybuty ARIA (`aria-expanded`, `aria-controls`, `aria-current`) oraz mechanizmy nawigacji klawiaturą/focus trap w modalu demo legalnym.【menu.html:583】【js/features/demo-modal.js:58】
-- Strategia obrazów jest produkcyjna: `<picture>` + AVIF/WebP/JPG fallback, `srcset/sizes`, `width/height`, `loading` i `decoding` na obrazach runtime.【index.html:180】【index.html:213】【gallery.html:380】
-- SEO technical baseline jest obecny na kluczowych stronach (canonical, OpenGraph, Twitter, JSON-LD, robots, sitemap).【index.html:9】【index.html:25】【index.html:58】【robots.txt:1】【sitemap.xml:1】
-- Walidacja linków wewnętrznych przeszła bez błędów (483 linki, check fragments aktywny, z wykluczeniem strategii `.min`).【package.json:30】
+- Spójny podział warstw CSS oraz centralny punkt kompozycji stylów przez `@import` w `css/style.css`.
+  - Evidence: `css/style.css` (importy base/layout/components/pages).
+- Dobrze wdrożona semantyka i dostępność bazowa: skip-link, etykiety ARIA, obsługa `noscript`, logiczne sekcje `main`/`nav`/`footer`.
+  - Evidence: `index.html:93`, `index.html:96`, `index.html:162`, `index.html:849`.
+- Poprawna strategia obrazów responsywnych: AVIF/WebP/JPG fallback, `srcset`, `sizes`, `loading`, `decoding`, oraz atrybuty rozmiaru.
+  - Evidence: `index.html:180-214`, `menu.html` (powtarzalne obrazki kart z `loading="lazy"` i wymiarami), brak wykrytych `<img>` bez `width/height`.
+- Dobre pokrycie SEO na stronach głównych i podstronach treściowych: canonical, robots, OpenGraph, Twitter i JSON-LD.
+  - Evidence: `index.html:9-43`, `about.html:11-54`, `contact.html:9-52`, `menu.html:9-52`, `gallery.html:11-54`.
+- Obecna konfiguracja publikacji i indeksowania (`robots.txt`, `sitemap.xml`, `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`).
+  - Evidence: `robots.txt`, `sitemap.xml`, `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`.
 
 ## 4. P1 — Exactly 5 Improvements Worth Doing Next
 
-### 1) Uporządkowanie hierarchii nagłówków na stronach systemowych
-- **Reason:** Na `404.html` i `thank-you.html` po `h1` pojawiają się od razu `h3` w sekcji footer, co tworzy przeskok poziomów i obniża spójność semantyczną.
-- **Suggested improvement:** Wprowadzić `h2` jako nagłówek grupy sekcji footer (lub zmienić bieżące `h3` na `h2` w tych widokach), utrzymując sekwencję `h1 → h2 → h3`.
-- **Evidence:** `404.html` (`h1` + wiele `h3`) i `thank-you.html` (`h1` + wiele `h3`).【404.html:98】【404.html:126】【thank-you.html:99】【thank-you.html:134】
+### 1) Ujednolicenie strategii ścieżek URL (portable deployment)
+- **Reason:** W HTML dominują ścieżki absolutne od root (`/about.html`, `/#hero`), co utrudnia poprawne działanie przy hostingu w podkatalogu (np. `/portfolio/atelier/`).
+- **Suggested improvement:** Przyjąć jedną politykę: względne ścieżki dla nawigacji statycznej albo jawny `base` + test deployu w subpath.
+- **Evidence:** `index.html:98`, `index.html:147-149`, `contact.html:294`, `contact.html:304-318`.
 
-### 2) Korekta błędnej etykiety dostępności w linku LinkedIn
-- **Reason:** W wielu stronach przy linku LinkedIn występuje ukryty tekst „Facebook”, co jest błędem utrzymaniowym i może wprowadzać niespójności nazewnictwa dostępnościowego.
-- **Suggested improvement:** Zastąpić ukryty tekst przy ikonie LinkedIn na „LinkedIn” oraz zredukować powielanie tego bloku do wspólnego include/template (jeśli workflow na to pozwala).
-- **Evidence:** Powtarzalny wzorzec w wielu HTML-ach (np. `index.html`, `about.html`, `menu.html`).【index.html:825】【index.html:831】【about.html:1032】【menu.html:1828】
+### 2) Uspójnienie entrypointów JS między typami stron
+- **Reason:** Część stron ładuje `js/script.min.js`, a część `js/core.js`, co zwiększa ryzyko dryfu funkcjonalnego i utrudnia utrzymanie jednej matrycy inicjalizacji.
+- **Suggested improvement:** Zdefiniować jedną strategię runtime (np. jeden bundle z inicjalizacją per `data-page`) i konsekwentnie stosować na wszystkich stronach.
+- **Evidence:** `index.html:853`, `about.html:1060`, `contact.html:420`, `menu.html:1856`, `gallery.html:974` vs `cookies.html:543`, `polityka-prywatnosci.html:580`, `regulamin.html:598`, `404.html:242`.
 
-### 3) Unifikacja strategii bundli JS między stronami
-- **Reason:** Część stron ładuje `js/script.min.js`, a część `js/core.js`, co zwiększa ryzyko driftu funkcjonalnego i utrudnia utrzymanie jednego kontraktu runtime.
-- **Suggested improvement:** Ustalić jedną strategię ładowania (np. jeden entrypoint z page-based init i tree-shaking) oraz opisać regułę w dokumentacji build/deploy.
-- **Evidence:** Równoległe użycie `script.min.js` i `core.js` na różnych podstronach.【index.html:853】【menu.html:1856】【cookies.html:543】【404.html:242】
+### 3) Ograniczenie duplikacji assetów w cache Service Workera
+- **Reason:** Precache zawiera równolegle wersje źródłowe i zminifikowane (`style.css` + `style.min.css`, `script.js` + `script.min.js`), co zwiększa koszt cache i złożoność invalidacji.
+- **Suggested improvement:** Cache’ować wyłącznie faktyczny zestaw runtime dla produkcji i powiązać wersjonowanie `CACHE_NAME` z procesem build.
+- **Evidence:** `sw.js:12-15`.
 
-### 4) Wzmocnienie strategii cache Service Workera
-- **Reason:** SW cache’uje jednocześnie pliki źródłowe i minifikowane (`/css/style.css` + `/css/style.min.css`, `/js/script.js` + `/js/script.min.js`), co zwiększa powierzchnię niespójności cache i utrudnia kontrolę wersji.
-- **Suggested improvement:** Cache’ować tylko rzeczywisty runtime production set, a wersję cache (`CACHE_NAME`) aktualizować automatycznie w buildzie.
-- **Evidence:** Lista `FILES_TO_CACHE` zawiera duplikujące warianty assetów runtime/source.【sw.js:1】【sw.js:12】【sw.js:15】
+### 4) Redukcja render-blocking dla bootstrapu motywu
+- **Reason:** `bootstrap.js` jest ładowany synchronicznie w `<head>` na każdej stronie; mimo małego rozmiaru to nadal blokuje parser HTML.
+- **Suggested improvement:** Zostawić minimalny inline snippet tylko do ustawienia `data-theme`, a rejestrację SW i logikę poboczną przenieść do `defer`/module.
+- **Evidence:** `index.html:56`, `about.html:50`, `contact.html:48`, `menu.html:48`, `gallery.html:50`; logika w `js/bootstrap.js:1-38`.
 
-### 5) Ograniczenie powielania dużych bloków layoutu między plikami HTML
-- **Reason:** Header/footer i sekcje legal/social są ręcznie powielone w wielu dokumentach, co już skutkuje błędami copy-paste i podnosi koszt zmian globalnych.
-- **Suggested improvement:** Wprowadzić prostą warstwę templatingu na etapie build (np. partials) bez zmiany stacku runtime.
-- **Evidence:** Identyczne sekcje nawigacji i stopki powtarzają się w wielu stronach (`index.html`, `about.html`, `contact.html`, `menu.html`, `gallery.html`, legal/system pages).【index.html:96】【about.html:129】【contact.html:81】【menu.html:578】【gallery.html:136】
+### 5) Refaktoryzacja powtarzalnych bloków layoutu (header/footer/legal)
+- **Reason:** Duże sekcje nawigacji i stopki są kopiowane między wieloma plikami HTML, co podnosi koszt zmian i ryzyko niespójności.
+- **Suggested improvement:** Wprowadzić prosty etap generowania partials (np. include w build step) bez zmiany runtime na kliencie.
+- **Evidence:** Powtarzalne bloki w `index.html`, `about.html`, `contact.html`, `menu.html`, `gallery.html`, `cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`.
 
 ## 5. P2 — Minor Refinements (optional)
-- Ujednolicić metadane OG/Twitter dla stron technicznych (`offline.html`, `404.html`, `thank-you.html`) zgodnie z decyzją SEO (np. explicite `noindex` + minimal OG dla share preview), aby zmniejszyć rozjazdy między szablonami head.
-- Rozważyć usunięcie pustego handlera `.then()` po rejestracji service workera i zastąpienie go telemetry hookiem (lub usunięcie całkowite), aby kod bootstrap był bardziej jednoznaczny.
+- W `js/bootstrap.js` użyty jest `console.warn` przy błędzie rejestracji SW; w produkcji warto przełączyć to na kontrolowany logger lub telemetry event.
+  - Evidence: `js/bootstrap.js:33-35`.
+- Część polityk bezpieczeństwa w `_headers` bazuje na starszym nagłówku `X-XSS-Protection`; można uprościć zestaw i oprzeć go głównie na nowoczesnym CSP (not detected in project).
+  - Evidence: `_headers:4`, `_headers:23`.
 
-## 6. Future Enhancements — Exactly 5 Realistic Ideas
-1. Dodać automatyczny test regresji linków + fragmentów jako obowiązkowy krok CI (używając już istniejących skryptów `check:links:*`).
-2. Dodać testy semantyczne nagłówków i ARIA (statyczne reguły lint dla HTML) jako gate dla commitów.
-3. Wprowadzić prosty generator layout partials (header/footer/meta) dla redukcji driftu między 11 stronami HTML.
-4. Rozszerzyć monitoring web-vitals (LCP/CLS/INP) przez lekki skrypt telemetryczny tylko w produkcji.
-5. Dodać automatyczne versioning/hash dla build assets i zsynchronizować z polityką cache `_headers` + `sw.js`.
+## 6. Future Enhancements — Exactly 5 Ideas
+1. Dodać automatyczny test linków i anchorów jako stały gate CI/CD na bazie istniejących skryptów npm (`check:links:*`).
+2. Dodać testy regresji a11y (klawiatura/focus/kontrast) uruchamiane per page template.
+3. Wdrożyć automatyczne generowanie i walidację sitemap przy zmianach listy podstron.
+4. Rozszerzyć monitoring wydajności o pomiar Web Vitals w środowisku produkcyjnym.
+5. Dodać automatyczne versioning/hash assetów i zgrać je z polityką cache SW + `_headers`.
 
 ## 7. Compliance Checklist (pass / fail)
-- headings valid: **FAIL** (przeskok `h1 → h3` na `404.html` i `thank-you.html`).
-- no broken links (excluding .min strategy): **PASS** (linkinator: 483 links scanned, sukces).
-- no console.log: **PASS** (`console.log` not detected in project source runtime files).
-- aria attributes valid: **PASS** (statyczna inspekcja atrybutów i relacji `aria-controls`/`aria-expanded`/`aria-current`).
-- images have width/height: **PASS** (w plikach HTML atrybuty wykryte dla obrazów runtime).
-- no-JS baseline usable: **PASS** (skip-link, statyczna nawigacja, treści bazowe i `<noscript>` komunikaty obecne).
-- robots present (if expected): **PASS** (`robots.txt` present).
-- sitemap present (if expected): **PASS** (`sitemap.xml` present).
-- OG image exists: **PASS** (referencje do `assets/img-optimized/og-img/og-img-1200x630.jpg` obecne i dostępne w link check).
-- JSON-LD valid (if present): **PASS (syntax-level)** (bloki JSON-LD obecne; walidacja zewnętrznym rich-result testerem not detected in project).
+- headings structure valid: **PASS**
+- no broken links (excluding .min strategy): **PASS**
+- no console.log: **PASS**
+- aria attributes valid: **PASS**
+- images have width/height: **PASS**
+- no-JS baseline usable: **PASS**
+- robots.txt present (if expected): **PASS**
+- sitemap.xml present (if expected): **PASS**
+- OpenGraph image present: **PASS**
+- JSON-LD valid (if present): **not detected in project**
 
-## 8. Architecture Score (0–10)
-**8.2 / 10**
-- structural consistency: **8.5/10**
-- accessibility maturity: **7.9/10**
-- performance discipline: **8.4/10**
-- SEO correctness: **8.1/10**
-- maintainability: **7.9/10**
+## 8. Architecture Score (1–10)
+- structural consistency: **8/10**
+- accessibility maturity: **8/10**
+- performance discipline: **7/10**
+- SEO correctness: **8/10**
+- maintainability: **7/10**
+
+**Architecture Score (overall): 7.6/10**
 
 ## 9. Senior Rating (1–10)
-**8.3 / 10**
-Projekt jest technicznie solidny, z dobrą bazą produkcyjną dla statycznego front-endu: modularny CSS, uporządkowany JS feature-based i szeroki zakres metadanych SEO. Największy dług dotyczy utrzymania spójności między wieloma ręcznie utrzymywanymi stronami HTML oraz detali semantycznych. Po wdrożeniu wskazanych P1 architektura będzie bliżej poziomu „production-hardened”.
+**7.8/10**
+
+Projekt jest technicznie solidny i gotowy do produkcyjnego utrzymania dla skali małego/średniego serwisu marketingowego. Największy dług nie dotyczy krytycznych błędów użytkownika końcowego, tylko konsekwencji architektonicznych (duplikacja szablonów, różne entrypointy JS, polityka cache). Po wdrożeniu wskazanych P1 serwis osiągnie wyraźnie lepszą spójność i niższy koszt zmian.
