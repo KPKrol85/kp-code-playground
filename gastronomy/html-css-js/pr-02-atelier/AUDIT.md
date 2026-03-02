@@ -11,27 +11,19 @@ No P0 issues detected.
 - Modularny pipeline developerski i quality-gates w `package.json` (lint, walidacja HTML, link-check, a11y-check).
 - Konfiguracja deploymentowa zawiera polityki bezpieczeństwa i cache-control oraz wydzielone zasoby statyczne o długim TTL.
 
-# 4. P1 — Exactly 5 Improvements Worth Doing Next
+# 4. P1 — Exactly 3 Improvements Worth Doing Next
 
 ## 1) Duplikacja krytycznych fragmentów HTML między stronami
 **Reason:** Ten sam inline skrypt motywu i duże bloki header/footer/modal są kopiowane między wieloma dokumentami (`index.html`, `404.html`, `thank-you.html`, `offline.html`). To zwiększa koszt zmian i ryzyko dryfu implementacyjnego.
 **Suggested improvement:** Wydzielić wspólne layouty do procesu templatingu (np. partiale w build-stepie) albo minimum: przenieść skrypt motywu do jednego pliku i używać jednego include.
 
-## 2) Niespójność językowa i etykiet dostępnościowych w UI
-**Reason:** W polskojęzycznym serwisie widoczny jest tekst pomocniczy po angielsku (`Toggle dark mode`), a ikona LinkedIn ma ukryty tekst `Facebook`, co pogarsza jakość dla czytników ekranowych.
-**Suggested improvement:** Ujednolicić wszystkie teksty SR-only i aria-label do języka `pl` oraz poprawić etykiety per ikona (LinkedIn ≠ Facebook) we wszystkich szablonach.
-
-## 3) Niespójna polityka COEP w `_headers`
+## 2) Niespójna polityka COEP w `_headers`
 **Reason:** Dla `/contact.html` ustawiono `Cross-Origin-Embedder-Policy: unsafe-none`, a globalnie `/*` ma `require-corp`. Taki wyjątek zwiększa złożoność operacyjną i utrudnia przewidywalność zachowania produkcyjnego.
 **Suggested improvement:** Udokumentować techniczny powód wyjątku albo zunifikować politykę COEP, jeśli brak realnej zależności wymagającej odstępstwa.
 
-## 4) Service Worker oparty na ręcznie utrzymywanej liście cache
+## 3) Service Worker oparty na ręcznie utrzymywanej liście cache
 **Reason:** `FILES_TO_CACHE` jest statyczne i nie obejmuje wszystkich stron HTML projektu (np. `contact.html`, `thank-you.html`, `404.html`), co utrudnia utrzymanie i przewidywalność offline po rozbudowie serwisu.
 **Suggested improvement:** Generować listę precache automatycznie w buildzie albo jasno rozdzielić: „app shell” vs „offline-only pages” z opisanym kryterium.
-
-## 5) Globalny preload obrazów OG w nagłówkach HTTP
-**Reason:** `_headers` wymusza preload obrazów OpenGraph dla każdej ścieżki. Te zasoby nie są potrzebne do pierwszego renderu UI, więc mogą niepotrzebnie zwiększać transfer.
-**Suggested improvement:** Usunąć globalny preload OG lub ograniczyć go do ścieżek, gdzie obraz jest realnie renderowany above-the-fold.
 
 # 5. P2 — Minor Refinements (optional)
 - Dodać automatyczny test spójności `sitemap.xml` vs lista stron publicznych (bez `noindex`) w CI.
