@@ -16,7 +16,31 @@
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.min.css" />
     <!-- Theme preload -->
-    <script src="js/bootstrap.js"></script>
+    <script>
+      (function () {
+        var storageKey = "kp-theme";
+        var root = document.documentElement;
+        var theme = null;
+
+        try {
+          var stored = localStorage.getItem(storageKey);
+          if (stored === "light" || stored === "dark") theme = stored;
+        } catch (err) {}
+
+        if (!theme) {
+          var preset = root.getAttribute("data-theme");
+          if (preset === "light" || preset === "dark") theme = preset;
+        }
+
+        if (!theme) {
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          theme = prefersDark ? "dark" : "light";
+        }
+
+        root.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <script src="js/bootstrap.js" defer></script>
   </head>
 
   <!-- Body -->
