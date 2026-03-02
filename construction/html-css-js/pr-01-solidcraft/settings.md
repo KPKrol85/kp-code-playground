@@ -25,6 +25,10 @@ This file is the canonical source of truth for the Solidcraft build/development 
 - `build:dist`: creates `dist/`, copies runtime files, and rewrites HTML references to minified assets.
 - `images:build`: generates production images from `assets/img-src` into `assets/img`.
 - `images:clean`: removes generated image outputs.
+- `check:links`: validates broken internal/external links and missing anchors across all HTML files.
+- `check:assets`: validates local asset references in HTML (`img/src`, `script/src`, `link[href]`, `source/srcset`, `img/srcset`).
+- `check:html`: runs `check:links` and `check:assets`.
+- `check:predeploy`: pre-deploy alias for `check:html`.
 - `format`: applies Prettier writes.
 - `format:check`: validates formatting without writes.
 
@@ -48,6 +52,7 @@ This file is the canonical source of truth for the Solidcraft build/development 
 - JS validation is embedded in `build:js` through `scripts/verify-js-build.js`.
 - `build:dist` fails if required production assets are missing (`css/style.min.css`, `js/script.min.js`, `js/theme-init.min.js`).
 - `format:check` is the formatting gate.
+- Run local pre-deploy regressions with `npm run check:predeploy`.
 
 ## Deployment Notes
 
