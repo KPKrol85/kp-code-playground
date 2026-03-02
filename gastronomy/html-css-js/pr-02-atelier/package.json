@@ -22,7 +22,7 @@
     "PWA"
   ],
   "scripts": {
-    "build:css": "postcss css/style.css -o css/style.min.css --no-map && powershell -command \"(Get-Item css/style.min.css).Length / 1kb\"",
+    "build:css": "postcss css/style.css -o css/style.min.css --no-map",
     "build:js:script": "esbuild js/script.js --bundle --minify --outfile=js/script.min.js --target=es2018",
     "build:js:core": "esbuild js/core.js --bundle --minify --outfile=js/core.min.js --target=es2018",
     "build:js": "npm run build:js:script && npm run build:js:core",
