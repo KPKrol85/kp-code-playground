@@ -1,50 +1,55 @@
-# Atelier No.02
+# Atelier
 
-## PL — Dokumentacja projektu
+## PL
 
 ### 1. Przegląd projektu
-Atelier No.02 to statyczny, wielostronicowy front-end restauracji fine dining. Projekt dostarcza kompletny serwis informacyjny (strona główna, podstrony funkcjonalne, strony prawne i systemowe) z naciskiem na dostępność, SEO, wydajność i gotowość do wdrożenia na hostingu statycznym.
+Atelier to statyczny, wielostronicowy serwis WWW restauracji fine dining. Projekt obejmuje stronę główną, podstrony tematyczne, strony prawne i systemowe oraz warstwę front-end opartą o modularny CSS i JavaScript.
 
 ### 2. Kluczowe funkcje
-- Wielostronicowa architektura HTML: `index.html`, `about.html`, `menu.html`, `gallery.html`, `contact.html`, strony prawne (`cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`) oraz systemowe (`offline.html`, `404.html`, `thank-you.html`).
-- Responsywna nawigacja z menu mobilnym, dropdownami, obsługą klawiatury, focus trap i kontrolą stanu ARIA.
-- Przełącznik motywu jasny/ciemny z zapisem w `localStorage` i aktualizacją meta `theme-color`.
-- Dynamiczne renderowanie kart menu z `data/menu.json` (sekcja featured + kategorie), wraz z wyszukiwaniem i filtrowaniem po tagach.
-- Galeria ze wsparciem lightboxa oraz zakładkami sekcji (scrollspy).
-- Formularz kontaktowy przygotowany pod Netlify Forms (`data-netlify`, `netlify-honeypot`) z walidacją po stronie klienta.
-- Banner statusu sieci online/offline oraz komunikaty offline dla wybranych podstron.
-- Podstawy PWA: `manifest.webmanifest`, `sw.js`, cache zasobów i fallback na `offline.html`.
+- Wielostronicowa architektura HTML: `index.html`, `about.html`, `menu.html`, `gallery.html`, `contact.html`, `cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`, `offline.html`, `thank-you.html`, `404.html`.
+- Responsywna nawigacja z menu mobilnym, dropdownami, zarządzaniem fokusowaniem i obsługą klawiatury.
+- Przełącznik motywu (light/dark) z persystencją ustawień w `localStorage`.
+- Dynamiczne renderowanie sekcji menu na podstawie `data/menu.json`.
+- Filtry i wyszukiwarka w sekcji menu.
+- Galeria zdjęć ze wsparciem lightboxa.
+- Formularz kontaktowy z walidacją po stronie klienta oraz integracją z Netlify Forms.
+- Banner statusu sieci online/offline.
+- Implementacja PWA: `manifest.webmanifest`, `sw.js`, cache zasobów i fallback do `offline.html`.
 
 ### 3. Tech Stack
-- HTML5 (serwis statyczny).
-- CSS z architekturą modułową (`base`, `layout`, `components`, `pages`) i scalaniem przez PostCSS.
-- Vanilla JavaScript (ES Modules) z podziałem na `app`, `features`, `core`.
-- Narzędzia i QA: PostCSS, cssnano, esbuild, ESLint, html-validate, linkinator, pa11y-ci, http-server, start-server-and-test.
-- Pipeline obrazów: Node.js + `sharp` + `fast-glob` (`scripts/images/build-images.js`).
+- HTML5.
+- CSS (architektura: `base`, `layout`, `components`, `pages`).
+- JavaScript (Vanilla JS, ES Modules).
+- Node.js + npm (narzędzia deweloperskie).
+- PostCSS (`postcss-import`, `cssnano`) do przetwarzania CSS.
+- esbuild do bundlingu i minifikacji JS.
+- ESLint, html-validate, linkinator, pa11y-ci do kontroli jakości.
+- sharp + fast-glob do pipeline'u obrazów.
 
 ### 4. Struktura projektu
-- `assets/` — fonty, ikony i zasoby graficzne (`img-src`, `img`, `img-optimized`).
-- `css/` — style bazowe, layout, komponenty i style stron.
-- `js/` — bootstrap, inicjalizacja aplikacji, moduły funkcjonalne i narzędzia core.
-- `data/menu.json` — źródło danych menu renderowanego dynamicznie.
-- `scripts/images/build-images.js` — generowanie wariantów obrazów (AVIF/WEBP + format bazowy).
-- `_headers`, `_redirects` — konfiguracja nagłówków i przekierowań pod hosting statyczny.
-- `manifest.webmanifest`, `sw.js` — konfiguracja PWA i Service Workera.
+- `assets/` — ikony, fonty, obrazy źródłowe i zoptymalizowane zasoby.
+- `css/` — style globalne, layout, komponenty i style per strona.
+- `js/` — bootstrap aplikacji, moduły `app/`, `core/`, `features/`.
+- `data/menu.json` — dane menu wykorzystywane przez warstwę JS.
+- `scripts/images/build-images.js` — generowanie wariantów obrazów.
+- `_headers`, `_redirects` — konfiguracja wdrożeniowa dla hostingu statycznego.
+- `manifest.webmanifest`, `sw.js` — konfiguracja PWA.
 
 ### 5. Setup i instalacja
-Wymagany jest Node.js oraz npm.
+Wymagane: Node.js i npm.
 
 ```bash
 npm install
 ```
 
 ### 6. Lokalny development
+Uruchomienie lokalnego serwera:
+
 ```bash
 npm run dev:server
 ```
-Uruchamia lokalny serwer HTTP na porcie `5173`.
 
-Dodatkowe komendy używane lokalnie:
+Najważniejsze komendy deweloperskie:
 
 ```bash
 npm run lint
@@ -55,120 +60,122 @@ npm run check:server:prod
 ```
 
 ### 7. Build produkcyjny
-Build produkcyjny assetów:
+Budowa assetów produkcyjnych:
 
 ```bash
 npm run build
 ```
 
-Skrypt generuje:
-- `css/style.min.css` (PostCSS + cssnano),
-- `js/script.min.js` (esbuild, bundle + minify).
+Składa się z:
+- `npm run build:css` → `css/style.min.css`,
+- `npm run build:js` → `js/script.min.js`.
 
-Build obrazów:
+Budowa obrazów:
 
 ```bash
 npm run images:build
 ```
 
-### 8. Deployment
-Repozytorium zawiera konfigurację wdrożeniową dla hostingu statycznego:
-- `_headers` — security headers, cache policy i deklaracje preload/manifest,
-- `_redirects` — mapowanie do strony `404.html` dla nieobsłużonych tras,
-- `contact.html` — formularz zgodny z Netlify Forms.
+### 8. Wdrożenie
+Repozytorium zawiera konfigurację wdrożenia dla hostingu statycznego:
+- `_headers` — nagłówki bezpieczeństwa i polityki cache,
+- `_redirects` — przekierowanie nieobsłużonych tras do `404.html`,
+- `contact.html` — formularz z atrybutami Netlify Forms.
 
 ### 9. Dostępność
-Zaobserwowane implementacje a11y:
+Zaobserwowane elementy dostępności:
 - skip link do treści głównej,
-- semantyczne landmarki i atrybuty ARIA w nawigacji i komponentach interaktywnych,
-- obsługa klawiatury (nawigacja mobilna, dropdowny, lightbox),
-- focus trap dla menu mobilnego,
-- komunikaty `aria-live` (status sieci, komunikaty formularza),
-- fallback `noscript` na stronach HTML,
-- automatyczne testy dostępności przez `pa11y-ci` (`WCAG2AA`).
+- semantyczne landmarki i ARIA dla komponentów interaktywnych,
+- obsługa klawiatury w nawigacji i lightboxie,
+- komunikaty `aria-live` (formularz, status sieci),
+- fallback `noscript`,
+- automatyczne testy a11y przez `pa11y-ci` (`WCAG2AA`).
 
 ### 10. SEO
 Zaimplementowane elementy SEO:
 - `meta description`, `canonical`, `robots`,
 - Open Graph i Twitter Cards,
-- dane strukturalne JSON-LD (`application/ld+json`) na stronach,
+- dane strukturalne JSON-LD (`application/ld+json`),
 - `robots.txt` i `sitemap.xml`.
 
 ### 11. Wydajność
-Zastosowane optymalizacje:
-- obrazy responsywne (`srcset`, `sizes`) w wielu formatach (AVIF/WEBP/JPG),
-- explicit `width`/`height` dla obrazów,
-- `loading="lazy"` dla mediów niekrytycznych,
-- preload wybranych fontów i zasobów hero,
-- minifikacja CSS/JS i bundling JS,
-- cache statycznych zasobów w Service Worker.
+Zaimplementowane optymalizacje:
+- responsywne obrazy (`picture`, `srcset`, `sizes`) w formatach AVIF/WEBP/JPG,
+- preload fontów i wybranych zasobów,
+- lazy loading obrazów poza krytycznym viewportem,
+- minifikacja CSS i JS,
+- cache zasobów przez Service Worker.
 
 ### 12. Utrzymanie projektu
-Najważniejsze miejsca dla dalszego rozwoju:
-- logika startowa i orkiestracja: `js/bootstrap.js`, `js/app/init.js`,
-- funkcje domenowe: `js/features/*.js` (nawigacja, formularz, menu, galeria, lightbox, sieć),
-- stylowanie i skala UI: `css/style.css` + moduły `css/**`,
-- dane menu: `data/menu.json`,
-- jakość i walidacja: skrypty npm z `package.json`, konfiguracje `.pa11yci`, `.htmlvalidate.json`, `eslint.config.mjs`,
-- konfiguracja wdrożeniowa/PWA: `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`.
+Kluczowe miejsca utrzymaniowe:
+- inicjalizacja aplikacji: `js/bootstrap.js`, `js/app/init.js`,
+- logika funkcjonalna: `js/features/*.js`,
+- warstwa UI: `css/style.css` i moduły `css/**`,
+- konfiguracja quality gates: `package.json`, `.pa11yci`, `.htmlvalidate.json`, `eslint.config.mjs`,
+- konfiguracja PWA i deploy: `manifest.webmanifest`, `sw.js`, `_headers`, `_redirects`.
 
 ### 13. Roadmap
-- Przenieść krok raportowania rozmiaru CSS z `powershell` do rozwiązania neutralnego systemowo, aby build działał identycznie na Linux/macOS/Windows.
-- Uzupełnić `check:server:prod` o automatyczne testy a11y (obecnie obejmuje link-check po buildzie).
-- Rozszerzyć testy integracyjne front-endu o scenariusze krytyczne (nawigacja mobilna, filtry menu, walidacja formularza).
-- Wydzielić parametry cache/versioning Service Workera do centralnej konfiguracji release.
-- Dodać automatyczną walidację spójności `sitemap.xml` względem listy stron HTML.
+- Dodać testy E2E dla krytycznych przepływów UI (nawigacja mobilna, formularz, filtry menu).
+- Rozszerzyć kontrolę jakości po buildzie produkcyjnym o automatyczny audyt a11y.
+- Ujednolicić raportowanie metryk builda tak, aby było niezależne od powłoki systemowej.
+- Wprowadzić wersjonowanie cache Service Workera powiązane z wersją release.
+- Dodać automatyczną weryfikację spójności `sitemap.xml` z listą stron HTML.
 
 ### 14. Licencja
 MIT.
 
 ---
 
-## EN — Project documentation
+## EN
 
 ### 1. Project Overview
-Atelier No.02 is a static multi-page front-end for a fine-dining restaurant. The project provides a complete informational website (home page, functional subpages, legal pages, and system pages) with focus on accessibility, SEO, performance, and static-hosting deployment readiness.
+Atelier is a static multi-page website for a fine-dining restaurant. The project includes a home page, functional subpages, legal/system pages, and a front-end layer based on modular CSS and JavaScript.
 
 ### 2. Key Features
-- Multi-page HTML architecture: `index.html`, `about.html`, `menu.html`, `gallery.html`, `contact.html`, legal pages (`cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`), and system pages (`offline.html`, `404.html`, `thank-you.html`).
-- Responsive navigation with mobile menu, dropdowns, keyboard support, focus trap, and ARIA state management.
-- Light/dark theme switch with `localStorage` persistence and dynamic `theme-color` meta update.
-- Dynamic menu card rendering from `data/menu.json` (featured section + categories), including search and tag filtering.
-- Gallery with lightbox support and section tabs (scrollspy).
-- Contact form prepared for Netlify Forms (`data-netlify`, `netlify-honeypot`) with client-side validation.
-- Online/offline network status banner and offline notices for selected pages.
-- PWA baseline: `manifest.webmanifest`, `sw.js`, asset caching, and `offline.html` fallback.
+- Multi-page HTML architecture: `index.html`, `about.html`, `menu.html`, `gallery.html`, `contact.html`, `cookies.html`, `polityka-prywatnosci.html`, `regulamin.html`, `offline.html`, `thank-you.html`, `404.html`.
+- Responsive navigation with mobile menu, dropdowns, focus handling, and keyboard support.
+- Light/dark theme toggle with `localStorage` persistence.
+- Dynamic menu rendering based on `data/menu.json`.
+- Menu filtering and search.
+- Image gallery with lightbox support.
+- Contact form with client-side validation and Netlify Forms integration.
+- Online/offline network status banner.
+- PWA implementation: `manifest.webmanifest`, `sw.js`, asset caching, and `offline.html` fallback.
 
 ### 3. Tech Stack
-- HTML5 (static website).
-- CSS with modular architecture (`base`, `layout`, `components`, `pages`) and PostCSS processing.
-- Vanilla JavaScript (ES Modules) organized into `app`, `features`, and `core`.
-- Tooling and QA: PostCSS, cssnano, esbuild, ESLint, html-validate, linkinator, pa11y-ci, http-server, start-server-and-test.
-- Image pipeline: Node.js + `sharp` + `fast-glob` (`scripts/images/build-images.js`).
+- HTML5.
+- CSS (architecture: `base`, `layout`, `components`, `pages`).
+- JavaScript (Vanilla JS, ES Modules).
+- Node.js + npm (development tooling).
+- PostCSS (`postcss-import`, `cssnano`) for CSS processing.
+- esbuild for JS bundling and minification.
+- ESLint, html-validate, linkinator, pa11y-ci for quality checks.
+- sharp + fast-glob for image pipeline automation.
 
 ### 4. Project Structure
-- `assets/` — fonts, icons, and graphic assets (`img-src`, `img`, `img-optimized`).
-- `css/` — base styles, layout, components, and page-specific styles.
-- `js/` — bootstrap, app initialization, feature modules, and core utilities.
-- `data/menu.json` — data source for dynamically rendered menu content.
-- `scripts/images/build-images.js` — image variant generation (AVIF/WEBP + base format).
-- `_headers`, `_redirects` — headers and redirects configuration for static hosting.
-- `manifest.webmanifest`, `sw.js` — PWA and Service Worker configuration.
+- `assets/` — icons, fonts, source images, and optimized assets.
+- `css/` — global styles, layout, components, and page-specific styles.
+- `js/` — app bootstrap and `app/`, `core/`, `features/` modules.
+- `data/menu.json` — menu data consumed by JavaScript.
+- `scripts/images/build-images.js` — image variant generation.
+- `_headers`, `_redirects` — static hosting deployment configuration.
+- `manifest.webmanifest`, `sw.js` — PWA configuration.
 
 ### 5. Setup and Installation
-Node.js and npm are required.
+Requirements: Node.js and npm.
 
 ```bash
 npm install
 ```
 
 ### 6. Local Development
+Run local server:
+
 ```bash
 npm run dev:server
 ```
-Runs a local HTTP server on port `5173`.
 
-Additional locally used commands:
+Main development commands:
 
 ```bash
 npm run lint
@@ -179,69 +186,66 @@ npm run check:server:prod
 ```
 
 ### 7. Production Build
-Production asset build:
+Build production assets:
 
 ```bash
 npm run build
 ```
 
-The build generates:
-- `css/style.min.css` (PostCSS + cssnano),
-- `js/script.min.js` (esbuild, bundle + minify).
+This includes:
+- `npm run build:css` → `css/style.min.css`,
+- `npm run build:js` → `js/script.min.js`.
 
-Image build:
+Build images:
 
 ```bash
 npm run images:build
 ```
 
 ### 8. Deployment
-The repository includes deployment configuration for static hosting:
-- `_headers` — security headers, cache policy, and preload/manifest declarations,
-- `_redirects` — mapping to `404.html` for unmatched routes,
-- `contact.html` — Netlify Forms-compatible form.
+The repository includes static-hosting deployment configuration:
+- `_headers` — security headers and cache policies,
+- `_redirects` — unmatched routes redirected to `404.html`,
+- `contact.html` — form configured with Netlify Forms attributes.
 
 ### 9. Accessibility
-Observed accessibility implementation:
+Implemented accessibility elements:
 - skip link to main content,
-- semantic landmarks and ARIA attributes in navigation and interactive components,
-- keyboard support (mobile nav, dropdowns, lightbox),
-- focus trap for mobile navigation,
-- `aria-live` announcements (network status, form feedback),
-- `noscript` fallback across HTML pages,
-- automated accessibility checks via `pa11y-ci` (`WCAG2AA`).
+- semantic landmarks and ARIA attributes for interactive components,
+- keyboard support in navigation and lightbox,
+- `aria-live` announcements (form and network status),
+- `noscript` fallback,
+- automated a11y checks via `pa11y-ci` (`WCAG2AA`).
 
 ### 10. SEO
 Implemented SEO elements:
 - `meta description`, `canonical`, `robots`,
 - Open Graph and Twitter Cards,
-- JSON-LD structured data (`application/ld+json`) on pages,
+- JSON-LD structured data (`application/ld+json`),
 - `robots.txt` and `sitemap.xml`.
 
 ### 11. Performance
-Implemented optimizations:
-- responsive images (`srcset`, `sizes`) in multiple formats (AVIF/WEBP/JPG),
-- explicit image `width`/`height`,
-- `loading="lazy"` for non-critical media,
-- preload for selected fonts and hero assets,
-- CSS/JS minification and JS bundling,
-- static asset caching through the Service Worker.
+Implemented performance optimizations:
+- responsive images (`picture`, `srcset`, `sizes`) in AVIF/WEBP/JPG,
+- preloading for fonts and selected assets,
+- lazy loading for non-critical images,
+- CSS/JS minification,
+- Service Worker asset caching.
 
 ### 12. Project Maintenance
-Primary locations for ongoing maintenance:
-- startup and orchestration logic: `js/bootstrap.js`, `js/app/init.js`,
-- domain features: `js/features/*.js` (navigation, form, menu, gallery, lightbox, network),
-- styling and UI scale: `css/style.css` + `css/**` modules,
-- menu data: `data/menu.json`,
-- quality and validation: npm scripts in `package.json`, plus `.pa11yci`, `.htmlvalidate.json`, `eslint.config.mjs`,
-- deployment/PWA config: `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`.
+Core maintenance locations:
+- app initialization: `js/bootstrap.js`, `js/app/init.js`,
+- feature logic: `js/features/*.js`,
+- UI layer: `css/style.css` and `css/**` modules,
+- quality-gate configuration: `package.json`, `.pa11yci`, `.htmlvalidate.json`, `eslint.config.mjs`,
+- PWA and deployment configuration: `manifest.webmanifest`, `sw.js`, `_headers`, `_redirects`.
 
 ### 13. Roadmap
-- Replace the `powershell` CSS-size reporting step with a cross-platform solution so the build behaves consistently on Linux/macOS/Windows.
-- Extend `check:server:prod` with automated accessibility checks (it currently focuses on post-build link validation).
-- Add front-end integration tests for critical flows (mobile navigation, menu filtering, form validation).
-- Extract Service Worker cache/version parameters into centralized release configuration.
-- Add automatic `sitemap.xml` consistency validation against the HTML page set.
+- Add E2E tests for critical UI flows (mobile navigation, form, menu filters).
+- Extend post-build quality checks with automated accessibility audit.
+- Make build metrics reporting shell-agnostic across environments.
+- Introduce Service Worker cache versioning tied to release version.
+- Add automated validation for `sitemap.xml` consistency against HTML pages.
 
 ### 14. License
 MIT.
