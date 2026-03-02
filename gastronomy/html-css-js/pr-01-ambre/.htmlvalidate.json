@@ -1,6 +1,0 @@
-{
-  "extends": ["html-validate:document"],
-  "rules": {
-    "require-sri": "off"
-  }
-}
