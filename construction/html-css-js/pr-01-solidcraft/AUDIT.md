@@ -1,82 +1,83 @@
-# AUDIT — SolidCraft (Senior Front-End Review)
+# 1. Executive Summary
+Architektura projektu jest spójna dla statycznego serwisu multi-page: wspólna warstwa stylów modułowych (`css/modules/*` + `css/style.css`), jeden punkt wejścia JS (`js/script.js`) oraz komplet konfiguracji pod Netlify (`netlify.toml`, `_headers`, `_redirects`). Implementacja zawiera dojrzałe elementy dostępności (skip link, focus styles, fallback no-JS dla części funkcji), SEO (canonical, OpenGraph, JSON-LD, sitemap, robots) i PWA (manifest + service worker).
 
-## 1) Executive summary
-Projekt ma solidną bazę produkcyjną: spójne meta SEO, konsekwentny układ stron, rozbudowane dane strukturalne, poprawne formaty obrazów i modularny CSS oparty na tokenach. Architektura jest czytelna i utrzymywalna.
+Największe ryzyka nie są krytyczne runtime’owo (brak P0), ale dotyczą utrzymania: wysoka duplikacja HTML między podstronami, częściowa degradacja nawigacji bez JS na mobile oraz drobne błędy jakościowe w atrybutach ARIA i logach narzędziowych.
 
-Wykryto jednak dwa ryzyka krytyczne:
-1. rejestracja Service Workera zależna od bieżącej ścieżki (nie działa poprawnie na podstronach),
-2. brak baseline no-JS dla mobilnej nawigacji (menu pozostaje ukryte).
+# 2. P0 — Critical Risks
+No P0 issues detected.
 
-## 2) P0 — Critical risks (real issues only)
+# 3. Strengths
+- Dobra baza semantyczna i a11y na stronie głównej: skip link, semantyczne sekcje, focus management i ARIA w nawigacji oraz formularzu.  
+  **Dowód:** `index.html` (np. skip link, nav ARIA, formularz).  
+- Świadoma obsługa preferencji użytkownika i stanów interakcji w CSS (`:focus-visible`, `prefers-reduced-motion`).  
+  **Dowód:** `css/modules/utilities.css`, `css/modules/components.css`, `css/modules/sections.css`.  
+- Rozdzielona architektura JS na moduły domenowe (nav, forms, lightbox, map-consent, cookie-banner) z jednym entrypointem.  
+  **Dowód:** `js/script.js`, `js/modules/*.js`.  
+- Spójna warstwa SEO technicznego: canonical, OG/Twitter, JSON-LD, `robots.txt`, `sitemap.xml`.  
+  **Dowód:** `index.html`, `oferta/*.html`, `doc/*.html`, `robots.txt`, `sitemap.xml`.  
+- Gotowość pod deployment produkcyjny: build pipeline, redirecty i nagłówki bezpieczeństwa.  
+  **Dowód:** `package.json`, `netlify.toml`, `_headers`, `_redirects`, `scripts/build-dist.js`.
 
-### P0.1 — Service Worker registration fails on nested routes
-- **Impact:** Funkcje PWA/offline działają niestabilnie zależnie od punktu wejścia. Użytkownik otwierający serwis od podstrony (`/oferta/...`, `/doc/...`) może nie mieć aktywnego SW.
-- **Evidence:** `js/sw-register.js` rejestruje `navigator.serviceWorker.register("sw.js")` (ścieżka względna). Podstrony ładują ten sam plik przez `../js/sw-register.js`, więc przeglądarka próbuje rejestracji pod `/oferta/sw.js` lub `/doc/sw.js`.
-- **Fix:** Zmienić rejestrację na ścieżkę absolutną: `navigator.serviceWorker.register('/sw.js', { scope: '/' })`.
-- **Effort:** S
+# 4. P1 — Exactly 5 Improvements Worth Doing Next
 
-### P0.2 — Mobile navigation is inaccessible without JavaScript
-- **Impact:** Przy wyłączonym JS na mobile (≤1024px) użytkownik traci dostęp do głównej nawigacji, co pogarsza dostępność i baseline progressive enhancement.
-- **Evidence:** `css/style.css` ustawia `.nav-menu { display: none; }` w `@media (max-width: 1024px)` i pokazuje menu wyłącznie klasą `.nav-menu.open`. Klasa `open` jest dodawana tylko przez JS (`js/script.js`, `initNav`).
-- **Fix:** Wprowadzić fallback no-JS (np. klasa `no-js` na `<html>` usuwana przez JS; dla `no-js` ustawić `.nav-menu{display:flex}` i ukryć `.nav-toggle`).
-- **Effort:** M
+### P1.1 — Zmniejszenie duplikacji layoutu i sekcji wspólnych
+**Reason:** Powtarzalne bloki nagłówka, stopki i nawigacji występują w wielu plikach (`index.html`, `oferta/*.html`, `doc/*.html`, `404.html`), co zwiększa koszt każdej zmiany i ryzyko niespójności.
 
-## 3) Strengths
-- Spójna struktura dokumentów: canonical, OpenGraph, Twitter Cards i metadata na stronach publicznych.
-- Inline JSON-LD jest składniowo poprawny (22 bloki, bez błędów parsowania).
-- Obrazy mają poprawne ścieżki i zadeklarowane `width`/`height` dla `<img>`.
-- Formularz kontaktowy ma etykiety, `required`, `aria-live`, honeypot i dedykowaną stronę potwierdzenia.
-- Architektura CSS wykorzystuje tokeny (`:root`), sekcje i nomenklaturę komponentową z czytelnym podziałem odpowiedzialności.
+**Suggested improvement:** Wprowadzić generator statyczny/templating na etapie build (np. partiale dla header/footer/head), aby utrzymywać jeden kanoniczny wariant komponentów wspólnych.
 
-## 4) P1 — 5 improvements worth doing next (exactly five)
+### P1.2 — Lepszy fallback no-JS dla submenu „Oferta” na mobile
+**Reason:** W breakpointach mobilnych dropdown jest domyślnie ukryty (`.has-dropdown > .dropdown { display: none !important; }`), a brak dedykowanego override dla `.no-js` powoduje, że bez JS użytkownik nie rozwinie submenu.
 
-### P1.1 — Add `noindex` for utility pages (404/offline/thank-you)
-- **Reason:** Strony narzędziowe nie powinny konkurować z docelowymi URL-ami w indeksie.
-- **Suggested improvement:** Ustawić `meta robots="noindex, follow"` dla `404.html`, `offline.html`, `thank-you/index.html`.
+**Suggested improvement:** Dodać regułę no-JS dla mobile (np. `.no-js .has-dropdown > .dropdown { display: block !important; ... }`) lub uprościć strukturę menu tak, aby linki oferty były zawsze osiągalne bez skryptów.
 
-### P1.2 — Remove stale comments and typos in source headers
-- **Reason:** Nagłówki plików zawierają literówki (`Aanimations`, `sytyles`) i mylące opisy (`CSS Stylesheet` w `js/script.js`).
-- **Suggested improvement:** Ujednolicić komentarze nagłówkowe oraz metadata plików źródłowych.
+### P1.3 — Naprawa uszkodzonego tekstu w `aria-label`
+**Reason:** W wielu plikach występuje `aria-label="Zadzwoä: ..."` (błąd kodowania), co obniża jakość odczytu przez technologie asystujące.
 
-### P1.3 — Tighten CSP for long-term hardening
-- **Reason:** Aktualna polityka CSP jest poprawna bazowo, ale można doprecyzować ją pod konkretne źródła i typy zasobów.
-- **Suggested improvement:** Rozważyć nonce/hash policy dla skryptów oraz doprecyzowanie `connect-src`/`img-src` wg realnego użycia.
+**Suggested improvement:** Ujednolicić etykietę do poprawnej formy („Zadzwoń: ...”) we wszystkich wystąpieniach w plikach `oferta/*.html`, `doc/*.html`, `404.html`, `index.html`.
 
-### P1.4 — Move repetitive per-page SEO/JSON-LD into generation step
-- **Reason:** Duplikacja bloków SEO i JSON-LD na wielu stronach zwiększa koszt utrzymania.
-- **Suggested improvement:** Wprowadzić generator/templating na etapie build (np. skrypt Node) dla wspólnych sekcji head.
+### P1.4 — Ograniczenie globalnej inicjalizacji JS do funkcji potrzebnych na danej stronie
+**Reason:** `js/script.js` uruchamia pełny zestaw inicjalizatorów na każdej stronie, mimo że część funkcji jest kontekstowa (np. formularz, lightbox, helpery home). To niepotrzebnie zwiększa koszt startu i sprzęga moduły.
 
-### P1.5 — Remove non-essential `console.log` from project tooling output
-- **Reason:** Wymóg higieny statycznej (`no console.log`) formalnie nie jest spełniony (`scripts/images.js`).
-- **Suggested improvement:** Zastąpić logi opcjonalnym verbose mode (`--verbose`) albo `console.info` pod flagą środowiskową.
+**Suggested improvement:** Zastosować inicjalizację warunkową opartą o selektory/data-atrybuty lub podzielić entrypointy per typ strony.
 
-## 5) Future enhancements — 5 realistic ideas (exactly five)
-1. Dodać automatyczny link checker (href/src/srcset + anchors) uruchamiany w CI.
-2. Dodać automatyczną walidację JSON-LD i raport schematów podczas build.
-3. Wprowadzić Lighthouse CI z progami dla Performance/Accessibility/SEO.
-4. Rozszerzyć strategię SW o pre-cache krytycznych obrazów hero dla szybszego LCP.
-5. Dodać mechanizm `lastmod` do `sitemap.xml` generowany z git metadata.
+### P1.5 — Uporządkowanie higieny logowania w kodzie narzędziowym
+**Reason:** W repozytorium są `console.log` (np. `scripts/images.js`, `scripts/verify-*.js`), co formalnie narusza przyjętą kontrolkę higieny statycznej.
 
-## 6) Compliance checklist (pass / fail)
-- **headings valid:** **PASS**
-- **no broken links:** **PASS**
-- **no console.log:** **FAIL**
-- **aria attributes valid:** **PASS**
-- **images have width/height:** **PASS**
-- **no-JS baseline usable:** **FAIL**
-- **sitemap present (if expected):** **PASS**
-- **robots present:** **PASS**
-- **OG image exists:** **PASS**
-- **JSON-LD valid:** **PASS**
+**Suggested improvement:** Dodać poziomy logowania (verbose/quiet), domyślnie wyciszyć logi albo zastąpić je raportem końcowym wyświetlanym tylko przy trybie developerskim.
 
-## 7) Architecture Score (0–10)
-- **BEM consistency:** 8.0/10
-- **token usage:** 8.5/10
-- **accessibility:** 7.2/10
-- **performance:** 8.0/10
-- **maintainability:** 7.8/10
+# 5. P2 — Minor Refinements (optional)
+- Rozważyć dodanie `loading="lazy"` dla iframe mapy po załadowaniu (obecnie jest ustawiane dynamicznie, co jest poprawne, ale można dodać też fallback tekstowy bliżej komponentu CTA).  
+- Ujednolicić nazewnictwo i dokumentację pipeline (`pipeline-notes.md`, `settings.md`) do jednego źródła prawdy.
 
-**Overall architecture score:** **7.9/10**
+# 6. Future Enhancements — Exactly 5 Ideas
+1. Dodać automatyczne testy regresji linków i zasobów HTML (np. w CI) dla wszystkich plików `*.html` przed deployem.
+2. Wdrożyć walidację a11y (axe/lighthouse-ci) jako gate jakości dla kluczowych podstron.
+3. Wydzielić komponent formularza do osobnego modułu z kontraktem walidacji i testami jednostkowymi regexów/komunikatów.
+4. Rozbudować strategię cache SW o precyzyjne wersjonowanie assetów i osobne polityki dla HTML vs. statics.
+5. Dodać automatyczne generowanie `sitemap.xml` w buildzie na podstawie realnej listy stron, aby unikać ręcznej aktualizacji.
 
-## 8) Senior rating (1–10)
-**7.8/10** — Projekt jest dojrzały wizualnie i architektonicznie, z poprawną bazą SEO/performance, ale wymaga usunięcia krytycznych luk w progressive enhancement i stabilności rejestracji SW, aby spełnić standard production-grade portfolio.
+# 7. Compliance Checklist (pass / fail)
+- headings structure valid — **pass**
+- no broken links (excluding .min strategy) — **pass**
+- no console.log — **fail**
+- aria attributes valid — **pass**
+- images have width/height — **pass**
+- no-JS baseline usable — **fail**
+- robots.txt present (if expected) — **pass**
+- sitemap.xml present (if expected) — **pass**
+- OpenGraph image present — **pass**
+- JSON-LD valid (if present) — **pass**
+
+# 8. Architecture Score (1–10)
+- structural consistency: **8/10**
+- accessibility maturity: **7/10**
+- performance discipline: **8/10**
+- SEO correctness: **8/10**
+- maintainability: **6/10**
+
+**Wynik łączny: 7.4/10**
+
+# 9. Senior Rating (1–10)
+**7/10**
+
+Projekt jest technicznie dojrzały jak na statyczny front-end i ma solidne fundamenty SEO/a11y/performance. Największy dług nie dotyczy krytycznych błędów, lecz kosztu utrzymania (duplikacja stron) i konsekwencji degradacji bez JS na mobile. Po uporządkowaniu tych dwóch obszarów architektura będzie gotowa na bezpieczne skalowanie.
