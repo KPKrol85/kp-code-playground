@@ -25,7 +25,8 @@
     "check:links": "node scripts/check-links.mjs",
     "check:assets": "node scripts/check-html-assets.mjs",
     "check:html": "npm run check:links && npm run check:assets",
-    "check:predeploy": "npm run check:html"
+    "check:predeploy": "npm run check:html && npm run qa:a11y",
+    "qa:a11y": "node scripts/qa-a11y.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
@@ -38,7 +39,9 @@
     "postcss-preset-env": "^10.4.0",
     "prettier": "3.3.3",
     "sharp": "^0.34.5",
-    "terser": "^5.31.0"
+    "terser": "^5.31.0",
+    "axe-core": "^4.10.3",
+    "playwright": "^1.54.2"
   },
   "engines": {
     "node": ">=18"
