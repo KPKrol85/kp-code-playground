@@ -1,5 +1,8 @@
 const fs = require("fs/promises");
 const path = require("path");
+const { createLogger } = require("./utils/logger");
+
+const logger = createLogger();
 
 const rootDir = process.cwd();
 const distDir = path.join(rootDir, "dist");
@@ -102,6 +105,7 @@ async function copyRuntimeFilesToDist() {
   await ensureRequiredFilesExist();
 
   const htmlFiles = await listHtmlFilesRecursively(rootDir);
+  logger.debug(`build-dist: discovered ${htmlFiles.length} HTML file(s)`);
   for (const relPath of htmlFiles) {
     await copyFileByRelativePath(relPath);
   }
@@ -131,11 +135,13 @@ async function rewriteHtmlReferencesInDist(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   entries.sort((a, b) => a.name.localeCompare(b.name));
 
+  let rewrittenCount = 0;
+
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      await rewriteHtmlReferencesInDist(fullPath);
+      rewrittenCount += await rewriteHtmlReferencesInDist(fullPath);
       continue;
     }
 
@@ -151,16 +157,22 @@ async function rewriteHtmlReferencesInDist(dir) {
 
     if (updatedHtml !== html) {
       await fs.writeFile(fullPath, updatedHtml, "utf8");
+      rewrittenCount += 1;
     }
   }
+
+  return rewrittenCount;
 }
 
 async function build() {
+  logger.debug("build-dist: start");
   await copyRuntimeFilesToDist();
-  await rewriteHtmlReferencesInDist(distDir);
+  const rewrittenCount = await rewriteHtmlReferencesInDist(distDir);
+  logger.summary(`OK: dist build completed (rewrote ${rewrittenCount} HTML file(s)).`);
 }
 
 build().catch((error) => {
-  console.error(error);
+  logger.error("FAIL: dist build failed.");
+  logger.error(error.stack || String(error));
   process.exit(1);
 });
