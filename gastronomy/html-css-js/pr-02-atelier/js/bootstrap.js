@@ -13,6 +13,11 @@
   if ("serviceWorker" in navigator) {
     var hostname = window.location.hostname;
     var isLocalhost = hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+    var logWarn = function () {
+      if (isLocalhost) {
+        console.warn.apply(console, arguments);
+      }
+    };
 
     if (!isLocalhost) {
       window.addEventListener("load", function () {
@@ -21,7 +26,7 @@
           .then(function () {
           })
           .catch(function (err) {
-            console.warn("❌ Błąd rejestracji Service Workera:", err);
+            logWarn("❌ Błąd rejestracji Service Workera:", err);
           });
       });
     }
