@@ -35,7 +35,7 @@ Projekt `pr-01-solidcraft` ma architekturę statycznego serwisu wielostronicoweg
 
 ## P1.2 — Naprawić niespójny host w generatorze sitemap
 
-- **Reason:** `package.json` ma `build:sitemap` z `SITE_URL=https://construction-pr01-solidcraft.netlify.app` (bez `-`), podczas gdy canonical/robots/sitemap używają `construction-pr-01-solidcraft.netlify.app`.
+- **Reason:** `package.json` ma `build:sitemap` z `SITE_URL=https://construction-pr01-solidcraft.netlify.app` (bez `-`), podczas gdy canonical/robots/sitemap używają `construction-pr01-solidcraft.netlify.app`.
 - **Suggested improvement:** ujednolicić `SITE_URL` do produkcyjnego hosta we wszystkich skryptach build.
 
 ## P1.3 — Ograniczyć duplikację `head`/`header`/`footer` między stronami
