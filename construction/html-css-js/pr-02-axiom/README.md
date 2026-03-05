@@ -1,133 +1,145 @@
-# Axiom Construction — portfolio front-end (PL)
+# Axiom Construction — dokumentacja projektu
 
-## Przegląd projektu
-Axiom Construction to wielostronicowy serwis portfolio firmy budowlano-remontowej przygotowany w HTML/CSS/JS (vanilla), z naciskiem na dostępność, SEO techniczne, modularną architekturę CSS i gotowość wdrożeniową (Netlify + PWA). Strona obejmuje landing page, podstrony usług, podstrony prawne, stronę sukcesu formularza, offline fallback i 404. 
+## Wersja polska
 
-## Kluczowe funkcje (potwierdzone w kodzie)
-- Responsywna nawigacja z mobilnym menu, sterowaniem klawiaturą i obsługą `aria-expanded`. 
-- Sekcje usług i galerie z obrazami responsywnymi (`avif/webp/jpg`) oraz lightboxem. 
-- Formularz kontaktowy zgodny z Netlify Forms (honeypot, walidacja HTML + JS, statusy ARIA, fallback no-JS). 
-- Przełączanie motywu jasny/ciemny z zapisem preferencji i wsparciem `prefers-color-scheme`. 
-- PWA: `manifest.webmanifest`, `sw.js`, strona `offline.html`, polityki cache i pliki deploy (`_headers`, `_redirects`).
-- Rozszerzone metadane SEO: canonical, OpenGraph, Twitter cards, JSON-LD dla stron i FAQ.
+### Przegląd projektu
+Axiom Construction to wielostronicowy serwis firmowy (HTML/CSS/JS) dla firmy budowlano-remontowej. Projekt zawiera stronę główną, podstrony usług, podstrony prawne, formularz kontaktowy Netlify oraz konfigurację PWA (manifest + service worker).
 
-## Stack technologiczny
-- HTML5 (wielostronicowy serwis statyczny)
-- CSS (architektura modularna: tokens/base/layout/components/sections)
-- JavaScript ES Modules (komponenty + sekcje)
-- Narzędzia Node.js do budowania zasobów (`tools/*`)
-- Netlify (formularze, deploy, redirecty, headery)
+### Kluczowe funkcje
+- Strona główna z sekcjami: hero, o nas, usługi, galeria, FAQ, kontakt.
+- Podstrony usług: budowa domów, remonty mieszkań, wykończenia wnętrz, adaptacje poddaszy, instalacje sanitarne, instalacje elektryczne.
+- Podstrony prawne: regulamin, polityka prywatności, polityka cookies, certyfikaty, kariera.
+- Formularz kontaktowy z walidacją klienta, honeypotem, reCAPTCHA Netlify i trybem fallback.
+- Tryb jasny/ciemny z zapisem preferencji.
+- Lightbox galerii i mobilne menu z obsługą klawiatury.
+- SEO: canonicale, OpenGraph, Twitter cards, JSON-LD, robots.txt i sitemap.xml.
+- PWA: manifest.webmanifest, offline page oraz service worker.
 
-## Struktura projektu
-- `index.html`, `services/*.html`, `legal/*.html`, `404.html`, `offline.html`, `success.html`
-- `css/` → `tokens/`, `base/`, `layout/`, `components/`, `sections/`, `main.css`
-- `js/` → `core/`, `components/`, `sections/`, `utils/`, dane structured-data
-- `dist/` → zbudowane assety CSS/JS
-- `tools/` → skrypty build (CSS/JS/SW/head/images)
-- Pliki deploy/PWA: `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`
+### Tech stack
+- HTML5
+- CSS (modułowy podział: tokens/base/layout/components/sections)
+- Vanilla JavaScript (modułowy podział: core/components/sections/utils)
+- Narzędzia Node.js (build CSS/JS/SW, obrazki, QA links/lighthouse/pa11y)
 
-## Setup i uruchomienie
-Wymagania: Node.js + npm.
+### Struktura projektu (skrót)
+- `index.html` — strona główna.
+- `services/*.html` — podstrony usług.
+- `legal/*.html` — podstrony prawne.
+- `css/main.css` + moduły `css/tokens`, `css/base`, `css/layout`, `css/components`, `css/sections`.
+- `js/main.js` + moduły `js/core`, `js/components`, `js/sections`, `js/utils`.
+- `manifest.webmanifest`, `sw.js`, `offline.html`.
+- `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`.
 
-```bash
-npm install
-npm run build
-npm run serve
-```
+### Setup i uruchomienie
+1. Zainstaluj zależności:
+   - `npm install`
+2. Uruchom lokalny serwer:
+   - `npm run serve`
+3. (Opcjonalnie) uruchom build assetów:
+   - `npm run build`
 
-Serwis lokalny uruchamia się na `http://localhost:8080`.
+### Notatki build/deployment
+- Projekt ma gotowe skrypty do budowy CSS/JS/SW oraz head metadata.
+- Konfiguracja deploymentu opiera się o pliki `_headers` i `_redirects` (Netlify).
+- Strategia minifikacji (`dist/style.min.css`, `dist/script.min.js`) jest częścią pipeline’u build.
 
-## Build i wdrożenie
-- Podstawowy pipeline: `build:head` → `build:css` → `build:js` → `build:sw`.
-- Minifikowane assety w `dist/` są artefaktem etapu build/deploy.
-- Brak dodatkowych wariantów `.min.*` poza aktualnie linkowanymi plikami nie jest traktowany jako błąd architektoniczny, o ile runtime działa na istniejących zasobach.
+### Notatki dostępności
+- Dostępny skip link do `<main>`.
+- Widoczne style `:focus-visible` i ARIA dla kluczowych kontrolek nawigacji.
+- FAQ oparte o natywne `<details>/<summary>`.
+- Formularz zawiera etykiety, statusy live region i komunikaty błędów.
+- Występuje fallback bez JavaScript dla formularza (POST + strona sukcesu).
 
-## Dostępność (stan obecny)
-- Obecne: skip link, semantyczne nagłówki, focus styles (`:focus-visible`), obsługa `prefers-reduced-motion`, fallback no-JS dla kluczowych ścieżek i formularza.
-- Do dopracowania: `aria-current` na podstronach (nawigacja globalna), pełny automatyczny raport kontrastu WCAG AA oparty o render.
+### Notatki SEO
+- Meta description, canonical, OpenGraph i Twitter Cards obecne na stronach.
+- JSON-LD osadzone inline (m.in. LocalBusiness/WebSite/Breadcrumb/FAQ).
+- robots.txt i sitemap.xml obecne.
 
-## SEO (stan obecny)
-- Obecne: canonical, `og:*`, Twitter cards, robots meta, `robots.txt`, `sitemap.xml`, JSON-LD na stronach.
-- Do dopracowania: usunięcie niespójnego anchora `/#oferta` w `manifest.webmanifest` (sekcja na stronie głównej ma `id="uslugi"`).
+### Notatki wydajności
+- Obrazy responsywne (`<picture>`, AVIF/WebP/JPG fallback).
+- W większości obrazów ustawione `width`/`height`, `loading="lazy"`, `decoding="async"`.
+- Fonty preload + `font-display: swap`.
+- Skrypt główny ładowany z `defer`.
 
-## Wydajność (stan obecny)
-- Obecne: preload fontów i CSS, obrazy responsywne z nowoczesnymi formatami, lazy loading na obrazach treści.
-- Do dopracowania: jawna polityka cache dla `dist/*` w `_headers` (obecnie brak dedykowanego bloku dla tej ścieżki).
+### Roadmapa
+- Spójność danych kontaktowych na wszystkich CTA usług.
+- Korekta skrótu PWA „Oferta” (`/#oferta` → istniejący identyfikator sekcji).
+- Ujednolicenie polityki redukcji ruchu dla wszystkich animacji/przejść.
+- Rozszerzenie automatycznych testów QA (np. regularne uruchamianie pa11y/lighthouse).
+- Dalsze porządkowanie współdzielonych fragmentów HTML pod kątem utrzymania.
 
-## Roadmap
-1. Ujednolicenie aktywnego stanu nawigacji (`aria-current`) na wszystkich podstronach.
-2. Korekta skrótu PWA `/#oferta` → `/#uslugi`.
-3. Dodanie dedykowanego cache-control dla `dist/*`.
-4. Automatyzacja walidacji kontrastu WCAG AA w CI.
-5. Rozszerzenie testów QA (a11y + SEO smoke) przy każdym buildzie.
-
-## Licencja
+### Licencja
 ISC (zgodnie z `package.json`).
 
 ---
 
-# Axiom Construction — portfolio front-end (EN)
+## English version
 
-## Project overview
-Axiom Construction is a multi-page construction portfolio website built with vanilla HTML/CSS/JS, focused on accessibility, technical SEO, modular CSS architecture, and deployment readiness (Netlify + PWA). The site includes the home page, service subpages, legal pages, a form success page, offline fallback, and a 404 page.
+### Project overview
+Axiom Construction is a multi-page company website (HTML/CSS/JS) for a construction and renovation business. The project includes a homepage, service subpages, legal subpages, a Netlify contact form, and PWA configuration (manifest + service worker).
 
-## Key features (verified in code)
-- Responsive navigation with mobile menu, keyboard handling, and `aria-expanded` support.
-- Service sections and galleries using responsive image pipelines (`avif/webp/jpg`) and a lightbox.
-- Contact form integrated with Netlify Forms (honeypot, HTML + JS validation, ARIA status messaging, no-JS fallback).
-- Light/dark theme switch with persisted preference and `prefers-color-scheme` support.
-- PWA setup: `manifest.webmanifest`, `sw.js`, `offline.html`, cache policy headers, deploy files (`_headers`, `_redirects`).
-- Extended SEO metadata: canonical, OpenGraph, Twitter cards, JSON-LD for pages and FAQ.
+### Key features
+- Homepage sections: hero, about, services, gallery, FAQ, contact.
+- Service pages: home construction, apartment renovations, interior finishing, attic adaptations, sanitary installations, electrical installations.
+- Legal pages: terms, privacy policy, cookies policy, certificates, careers.
+- Contact form with client-side validation, honeypot, Netlify reCAPTCHA, and fallback mode.
+- Light/dark theme with persisted preference.
+- Gallery lightbox and keyboard-capable mobile navigation.
+- SEO: canonical tags, OpenGraph, Twitter cards, JSON-LD, robots.txt, sitemap.xml.
+- PWA: manifest.webmanifest, offline page, and service worker.
 
-## Tech stack
-- HTML5 (static multi-page site)
-- CSS (modular architecture: tokens/base/layout/components/sections)
-- JavaScript ES Modules (components + section modules)
-- Node.js tooling scripts for asset generation (`tools/*`)
-- Netlify (forms, deploy, redirects, headers)
+### Tech stack
+- HTML5
+- CSS (modular split: tokens/base/layout/components/sections)
+- Vanilla JavaScript (modular split: core/components/sections/utils)
+- Node.js tooling (CSS/JS/SW build, image tasks, QA links/lighthouse/pa11y)
 
-## Project structure
-- `index.html`, `services/*.html`, `legal/*.html`, `404.html`, `offline.html`, `success.html`
-- `css/` → `tokens/`, `base/`, `layout/`, `components/`, `sections/`, `main.css`
-- `js/` → `core/`, `components/`, `sections/`, `utils/`, structured-data files
-- `dist/` → built CSS/JS assets
-- `tools/` → build scripts (CSS/JS/SW/head/images)
-- Deploy/PWA files: `_headers`, `_redirects`, `manifest.webmanifest`, `sw.js`, `robots.txt`, `sitemap.xml`
+### Structure overview (short)
+- `index.html` — homepage.
+- `services/*.html` — service pages.
+- `legal/*.html` — legal pages.
+- `css/main.css` + modules in `css/tokens`, `css/base`, `css/layout`, `css/components`, `css/sections`.
+- `js/main.js` + modules in `js/core`, `js/components`, `js/sections`, `js/utils`.
+- `manifest.webmanifest`, `sw.js`, `offline.html`.
+- `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`.
 
-## Setup & run
-Requirements: Node.js + npm.
+### Setup & run
+1. Install dependencies:
+   - `npm install`
+2. Start local server:
+   - `npm run serve`
+3. (Optional) run full asset build:
+   - `npm run build`
 
-```bash
-npm install
-npm run build
-npm run serve
-```
+### Build/deployment notes
+- The project has dedicated scripts for CSS/JS/SW and head metadata generation.
+- Deployment configuration is handled via `_headers` and `_redirects` (Netlify).
+- Minified asset strategy (`dist/style.min.css`, `dist/script.min.js`) is part of the build pipeline.
 
-Local server runs on `http://localhost:8080`.
+### Accessibility notes
+- Skip link to `<main>` is implemented.
+- Visible `:focus-visible` styles and ARIA states for key navigation controls.
+- FAQ uses native `<details>/<summary>`.
+- Form includes labels, live regions, and validation feedback.
+- No-JS form fallback is present (POST + success page).
 
-## Build & deployment notes
-- Main pipeline: `build:head` → `build:css` → `build:js` → `build:sw`.
-- Minified assets in `dist/` are build/deploy artifacts.
-- Missing additional `.min.*` variants is not treated as an architecture issue when non-minified runtime behavior is not broken.
+### SEO notes
+- Meta description, canonical, OpenGraph, and Twitter Cards are implemented.
+- Inline JSON-LD is present (including LocalBusiness/WebSite/Breadcrumb/FAQ).
+- robots.txt and sitemap.xml are included.
 
-## Accessibility notes (current state)
-- Present: skip link, semantic heading structure, focus styles (`:focus-visible`), `prefers-reduced-motion`, no-JS baseline for critical paths and form.
-- Pending improvements: `aria-current` on subpages in global navigation; full automated WCAG AA contrast report from rendered pages.
+### Performance notes
+- Responsive images (`<picture>`, AVIF/WebP/JPG fallback).
+- Most images include `width`/`height`, `loading="lazy"`, and `decoding="async"`.
+- Font preloads + `font-display: swap`.
+- Main script is loaded with `defer`.
 
-## SEO notes (current state)
-- Present: canonical, `og:*`, Twitter cards, robots meta, `robots.txt`, `sitemap.xml`, JSON-LD.
-- Pending fix: inconsistent PWA shortcut anchor `/#oferta` in `manifest.webmanifest` while homepage section uses `id="uslugi"`.
+### Roadmap
+- Normalize contact data across all service-page CTAs.
+- Fix PWA shortcut target for “Oferta” (`/#oferta` → existing section id).
+- Expand reduced-motion coverage across all animations/transitions.
+- Extend repeatable QA runs (pa11y/lighthouse in routine workflow).
+- Further reduce duplicated HTML fragments for long-term maintainability.
 
-## Performance notes (current state)
-- Present: font/CSS preload, responsive modern image formats, lazy loading on content images.
-- Pending improvement: explicit cache-control policy for `dist/*` in `_headers`.
-
-## Roadmap
-1. Normalize active navigation state (`aria-current`) across all subpages.
-2. Fix PWA shortcut `/#oferta` → `/#uslugi`.
-3. Add dedicated cache-control block for `dist/*`.
-4. Add automated WCAG AA contrast checks in CI.
-5. Expand QA automation (a11y + SEO smoke checks) per build.
-
-## License
+### License
 ISC (as declared in `package.json`).
