@@ -1,70 +1,71 @@
 # 1. Executive Summary
-Projekt ma dojrzałą, konsekwentną strukturę statycznego front-endu (wspólny layout, modułowy CSS, podział JS na moduły, konfiguracja PWA/SW i deployment na Netlify). Implementacja pokazuje dobrą dyscyplinę semantyki, responsywności i podstaw SEO technicznego. Największe ryzyka nie są krytyczne runtime (brak P0), ale dotyczą utrzymania (duplikacja warstwy `<head>` i danych strukturalnych), strategii ładowania JS/CSS na wszystkich podstronach oraz spójności polityki cache/SW z aktualnym runtime developmentowym.
+Projekt ma dojrzałą strukturę statycznego front-endu: modułowy CSS (`css/modules/*`), modułowy JS (`js/modules/*`), spójną siatkę podstron i komplet plików wdrożeniowych (Netlify, PWA, SW, sitemap, robots). Implementacja jest semantyczna i konsekwentna, bez krytycznych błędów runtime wykrytych w audycie repozytorium. Główne obszary do poprawy dotyczą utrzymania (duplikacja sekcji `<head>`), spójności strategii runtime vs cache offline oraz ergonomii ładowania kodu JS per typ strony.
 
 # 2. P0 — Critical Risks
 No P0 issues detected.
 
 # 3. Strengths
-- Spójna architektura informacji i nawigacji na wszystkich stronach (powtarzalny header/footer, konsekwentne linkowanie do sekcji i podstron oferty).
-- Dobre podstawy dostępności: skip-link, semantyczne sekcje, poprawne etykiety `aria-*`, focus states, obsługa `prefers-reduced-motion`, fallback `noscript` dla mapy.
-- Silna baza SEO: canonicale, meta description, OpenGraph, Twitter Card i JSON-LD obecne na stronach głównych/ofertowych/dokumentach.
-- Dobra strategia assetów obrazkowych: `picture` + AVIF/WebP/JPG, `loading="lazy"`, jawne `width/height`.
-- Konfiguracja deploymentowa i bezpieczeństwa jest obecna (`_headers`, `_redirects`, `netlify.toml`, manifest, service worker, robots.txt, sitemap.xml).
+- Spójna architektura plików i przewidywalny podział odpowiedzialności: HTML (widoki), CSS modułowy (tokens/base/layout/components/sections/utilities), JS modułowy z centralnym entrypointem.  
+- Dobra baza dostępności: skip link, semantyczne sekcje (`header`, `main`, `section`, `nav`, `footer`), widoczne style focus, obsługa `prefers-reduced-motion`, fallback `noscript` dla mapy.  
+- Dobra dyscyplina obrazów: `picture` + AVIF/WebP/JPG, lazy-loading poza krytycznymi zasobami, ustawione `width/height` dla obrazów.  
+- SEO techniczne jest obecne: canonical, OpenGraph, Twitter Card, JSON-LD, robots.txt oraz sitemap.xml.  
+- Wdrożenie ma podstawowe zabezpieczenia i routing: `_headers`, `_redirects`, `netlify.toml`, service worker oraz manifest.
 
 # 4. P1 — Exactly 5 Improvements Worth Doing Next
 
-## 1) Ograniczyć duplikację sekcji `<head>` i JSON-LD między stronami
-**Reason:** Te same bloki SEO/PWA/OG/JSON-LD są ręcznie kopiowane między wieloma plikami HTML (index/oferta/doc/404), co zwiększa koszt zmian i ryzyko rozjazdu danych.
-**Suggested improvement:** Wprowadzić lekki etap templatingu/build-time (np. partiale HTML lub generator) dla wspólnych fragmentów `<head>` i schematów JSON-LD, pozostawiając tylko per-page override (title/description/canonical).
+## 1) Ograniczyć duplikację `<head>` i bloków SEO/JSON-LD między stronami
+**Reason:** Te same bloki meta/OG/Twitter/JSON-LD są powielane ręcznie na stronie głównej, podstronach oferty i dokumentach, co zwiększa koszt utrzymania oraz ryzyko rozjazdów treści.  
+**Suggested improvement:** Wprowadzić części wspólne (partials) lub prosty etap generowania HTML, gdzie wspólne elementy `<head>` są centralne, a per-strona nadpisywane są tylko `title`, `description`, `canonical`, `og:url`.
 
-## 2) Urealnić strategię Service Workera względem runtime source assets
-**Reason:** `sw.js` pre-cache’uje `/css/style.min.css` i `/js/script.min.js`, podczas gdy strony runtime ładują `css/style.css` i `js/script.js`.
-**Suggested improvement:** Ujednolicić: albo pre-cache’ować dokładnie pliki runtime (`style.css`, `script.js`), albo przełączyć HTML na build output w pipeline produkcyjnym i versioning cache oparty o realny manifest assetów.
+## 2) Uspójnić strategię assetów runtime z Service Workerem
+**Reason:** Runtime ładuje `css/style.css` i `js/script.js`, natomiast pre-cache SW zawiera wersje minifikowane (`/css/style.min.css`, `/js/script.min.js`). To utrudnia przewidywalność zachowania offline i utrzymanie cache.  
+**Suggested improvement:** Wariant A: pre-cache dokładnie te pliki, które są faktycznie ładowane przez HTML. Wariant B: przełączyć HTML produkcyjny na artefakty build i utrzymywać listę cache na podstawie kroku buildowego.
 
-## 3) Zredukować koszt ładowania jednego, dużego modułu JS na wszystkich podstronach
-**Reason:** Każda strona ładuje `js/script.js` (moduł importujący wszystkie podmoduły), mimo że część funkcji dotyczy tylko konkretnych sekcji (np. lightbox/oferta/home helpers).
-**Suggested improvement:** Rozbić entrypointy per-typ strony (home, oferta, docs/status) lub zastosować dynamiczne importy warunkowe dla cięższych modułów.
+## 3) Rozdzielić entrypoint JS per typ podstrony
+**Reason:** `js/script.js` importuje wszystkie moduły i jest ładowany globalnie, mimo że część funkcji jest warunkowo potrzebna tylko na wybranych stronach/sekcjach.  
+**Suggested improvement:** Przygotować osobne entrypointy (np. home/oferta/docs/status) albo dynamiczne importy dla modułów cięższych funkcjonalnie (np. lightbox, mapa, prefetch).
 
-## 4) Zaostrzyć politykę CSP
-**Reason:** W `_headers` występuje `script-src 'unsafe-inline'`, co osłabia politykę bezpieczeństwa przy rosnącej bazie skryptów.
-**Suggested improvement:** Przejść na nonce/hash dla inline (lub przenieść inline do plików), ograniczyć źródła do niezbędnych domen i utrzymywać CSP jako część testów predeploy.
+## 4) Doprecyzować politykę CSP pod kątem inline JSON-LD
+**Reason:** Projekt używa inline `<script type="application/ld+json">`, a polityka CSP jest zdefiniowana globalnie w `_headers`; ten układ wymaga jawnej weryfikacji zgodności, aby nie osłabić indeksacji danych strukturalnych.  
+**Suggested improvement:** Potwierdzić w testach przeglądarkowych, że JSON-LD jest akceptowany pod obecną CSP; jeśli nie, dodać bezpieczny mechanizm (hash/nonce dla konkretnych bloków lub inna kompatybilna strategia).
 
-## 5) Ujednolicić tryb utrzymania mapy strony
-**Reason:** W repo jest statyczny `sitemap.xml`, ale równolegle istnieje skrypt `build:sitemap` generujący sitemapę — to potencjalny punkt rozjazdu dat/URL przy ręcznych zmianach treści.
-**Suggested improvement:** Ustalić jeden source-of-truth: automatyczna generacja w buildzie + walidacja w CI, żeby wyeliminować ręczne aktualizacje.
+## 5) Ujednolicić proces walidacji jakości (lokalne i CI)
+**Reason:** Repo zawiera skrypty QA (`check:links`, `check:assets`, `qa:a11y`), ale uruchomienie części z nich zależy od lokalnych zależności i środowiska.  
+**Suggested improvement:** Ustalić jeden standard predeploy (np. obowiązkowy zestaw komend + pipeline CI), tak by wynik audytów był deterministyczny i powtarzalny.
 
 # 5. P2 — Minor Refinements (optional)
-- W logice QA linków zewnętrznych występują ostrzeżenia typu `external URL could not be validated (TypeError)`; warto dodać stabilniejszy fallback (timeout/retry/mode offline) i czytelne rozróżnienie między „niezweryfikowano” a „uszkodzone”.
-- Rozważyć wyłączenie niektórych preloadów fontów na stronach statusowych/dokumentowych, gdzie LCP i typografia krytyczna mogą być mniej wymagające niż na stronie głównej.
+- Rozważyć `defer` dla `theme-init.js` tylko jeśli nie pogorszy to migotania motywu; obecnie skrypt jest mały i uruchamiany wcześnie celowo.  
+- W skryptach QA dodać czytelniejsze oznaczenie: „link zewnętrzny niezweryfikowany” vs „link uszkodzony”, aby raporty były bardziej precyzyjne.  
+- Rozważyć audyt rozmiarów preloadowanych fontów na podstronach dokumentowych i statusowych (potencjalna optymalizacja transferu).
 
 # 6. Future Enhancements — Exactly 5 Ideas
-1. Dodać lekki pipeline audytowy Lighthouse CI (performance + SEO + a11y) uruchamiany przed deployem.
-2. Wprowadzić automatyczne testy regresji wizualnej dla kluczowych widoków (home, oferta, dokumenty, 404/offline).
-3. Rozbudować structured data o dedykowane obiekty `Service`/`LocalBusiness` per podstrona oferty.
-4. Dodać budżety wydajności (max rozmiar CSS/JS/image) z twardym progiem fail w CI.
-5. Ustandaryzować design tokens i dokumentację komponentów (mini „front-end system notes”) dla szybszego onboardingu.
+1. Dodać automatyczny Lighthouse CI dla kluczowych szablonów (home, oferta, dokumenty, 404/offline).  
+2. Wprowadzić regresję wizualną (snapshoty) dla komponentów krytycznych: header/nav, hero, formularz, stopka.  
+3. Rozbudować structured data o dedykowane obiekty `Service` dla każdej podstrony oferty.  
+4. Dodać budżety wydajności (max KB CSS/JS/obrazy) egzekwowane w CI.  
+5. Wydzielić mini dokumentację architektury front-end (konwencje modułów CSS/JS, zasady SEO, checklista release).
 
 # 7. Compliance Checklist (pass / fail)
-- headings structure valid — **pass**
-- no broken links (excluding .min strategy) — **pass**
-- no console.log — **fail**
-- aria attributes valid — **pass**
-- images have width/height — **pass**
-- no-JS baseline usable — **pass**
-- robots.txt present (if expected) — **pass**
-- sitemap.xml present (if expected) — **pass**
-- OpenGraph image present — **pass**
-- JSON-LD valid (if present) — **pass**
+- headings structure valid — **pass**  
+- no broken links (excluding .min strategy) — **pass** (lokalne linki HTML/assety przechodzą walidację; linki zewnętrzne częściowo not detected in project pod kątem dostępności runtime)  
+- no console.log — **fail** (wykryte w skryptach narzędziowych repo)  
+- aria attributes valid — **pass**  
+- images have width/height — **pass**  
+- no-JS baseline usable — **pass**  
+- robots.txt present (if expected) — **pass**  
+- sitemap.xml present (if expected) — **pass**  
+- OpenGraph image present — **pass**  
+- JSON-LD valid (if present) — **pass** (składnia obecna; pełna walidacja runtime not detected in project)
 
 # 8. Architecture Score (1–10)
-- structural consistency: **8/10**
-- accessibility maturity: **8/10**
-- performance discipline: **7/10**
-- SEO correctness: **8/10**
-- maintainability: **7/10**
+- structural consistency: **8.5/10**  
+- accessibility maturity: **8.5/10**  
+- performance discipline: **8.0/10**  
+- SEO correctness: **8.0/10**  
+- maintainability: **7.5/10**
 
-**Overall architecture score: 7.6/10**
+**Overall architecture score: 8.1/10**
 
 # 9. Senior Rating (1–10)
-**8/10**
-Projekt jest technicznie solidny i gotowy do produkcyjnego hostingu statycznego, bez krytycznych defektów runtime. Największy obszar usprawnień to utrzymanie i skalowanie (duplikacja warstwy SEO/JSON-LD, ujednolicenie strategii SW/assetów, modularizacja entrypointów JS). Po tych korektach architektura będzie bardziej odporna na rozwój i zmiany treści.
+**8/10**  
+Projekt jest produkcyjnie sensowny i nie wykazuje krytycznych ryzyk P0. Warstwa semantyczna, a11y i SEO jest solidna, a konfiguracja wdrożeniowa kompletna. Największy potencjał poprawy leży w zmniejszeniu duplikacji HTML/SEO, uspójnieniu cache/runtime oraz dalszej segmentacji kodu JS dla utrzymania i skalowania.
