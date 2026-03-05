@@ -1,74 +1,80 @@
-# AUDIT — Axiom Construction (pr-02-axiom)
+# AUDIT — Axiom Construction (kp-code-playground/construction/html-css-js/pr-02-axiom)
 
 ## 1) Executive summary
-Projekt prezentuje dojrzały poziom wykonania front-endu dla portfolio komercyjnego: modularny CSS, spójna struktura HTML, dobra implementacja formularza Netlify, rozsądna strategia obrazów oraz poprawna baza SEO/PWA. Nie wykryto krytycznych błędów runtime blokujących użytkownika.
+Projekt ma dojrzałą, modułową strukturę front-end (BEM-like naming, tokeny, podział CSS/JS na warstwy), poprawnie wdrożone podstawy SEO i PWA oraz dobrze przygotowaną warstwę formularza kontaktowego. Nie wykryto błędów klasy P0 (runtime/accessibility blockers). Wykryto kilka istotnych obszarów utrzymaniowych (P1), głównie spójność ścieżek i konfiguracji oraz doprecyzowanie polityki motion/accessibility.
 
-Najważniejsze ryzyka dotyczą spójności architektury i utrzymania: brak `aria-current` na podstronach, niespójny skrót w manifeście (`/#oferta`), brak dedykowanego cache dla `dist/*`, cichy fallback błędów SW oraz brak automatycznej walidacji kontrastu.
+**Uwaga dot. kontrastu:** contrast compliance cannot be verified without computed style analysis.
 
-## 2) P0 — Critical risks (real issues only)
-**Brak wykrytych problemów P0 w aktualnym zakresie audytu.**
+## 2) P0 — Critical risks
+Brak potwierdzonych ryzyk P0 w analizowanym kodzie źródłowym.
 
 ## 3) Strengths
-- Modularna architektura CSS (`tokens/base/layout/components/sections`) i czytelny podział odpowiedzialności.  
-- Dostępność: skip-link, focus states, obsługa `aria-expanded`, `prefers-reduced-motion`, fallback no-JS.  
-- Formularz: Netlify forms + honeypot + walidacja semantyczna i JS + komunikaty ARIA.  
-- SEO: canonical + OpenGraph + Twitter + JSON-LD + robots + sitemap.  
-- Performance: responsive images (`avif/webp/jpg`), lazy loading i rozmiary obrazów deklarowane w większości przypadków.
+- Spójna architektura CSS oparta o tokeny i warstwy (`tokens/base/layout/components/sections`).
+- Dobra progresywna degradacja: nawigacja mobilna ukrywana tylko dla `html.js`, więc bez JS menu pozostaje dostępne.
+- Formularz kontaktowy: walidacja, `aria-invalid`, live region, honeypot, fallback natywny.
+- SEO baseline: canonical + OG + Twitter + JSON-LD na stronach.
+- PWA baseline: manifest, offline page, service worker z wersjonowaniem cache.
+- Link-check lokalny przechodzi bez błędów (z wyłączeniem strategii minifikacji jako decyzji build/deploy).
 
-## 4) P1 — 5 improvements worth doing next
+## 4) P1 — Improvements worth doing next (exactly 5)
 
-1. **Uzupełnić `aria-current` na podstronach**  
-   - **Reason:** Tylko strona główna oznacza aktywną pozycję (`aria-current="page"`); na podstronach brak analogicznego markera kontekstowego.  
-   - **Suggested improvement:** Wprowadzić mapowanie aktywnej sekcji/page type i ustawiać `aria-current="page"` dla linku odpowiadającego bieżącej podstronie.
+1. **PWA shortcut points to non-existing anchor**  
+   **Reason:** W manifeście shortcut „Oferta” prowadzi do `/#oferta`, ale sekcja na stronie głównej ma id `uslugi`. To obniża jakość deep-linkingu z poziomu PWA.  
+   **Suggested improvement:** Zmień `"url": "/#oferta"` na `"url": "/#uslugi"` albo dodaj aliasowy identyfikator sekcji.
+   **Evidence:** `manifest.webmanifest:58-58`, `index.html:427-427`.
 
-2. **Naprawić niespójny anchor w `manifest.webmanifest`**  
-   - **Reason:** Shortcut `Oferta` prowadzi do `/#oferta`, ale na stronie głównej sekcja ma `id="uslugi"`.  
-   - **Suggested improvement:** Zmienić URL skrótu na `/#uslugi` i ponownie zweryfikować skróty PWA.
+2. **Inconsistent service CTA phone numbers**  
+   **Reason:** Część podstron usług ma CTA z numerem `+48 123 456 789`, podczas gdy globalnie używany jest `+48 533 537 091`. To osłabia wiarygodność i spójność danych kontaktowych.  
+   **Suggested improvement:** Ujednolić numery w CTA i stopkach do jednego, rzeczywistego numeru.
+   **Evidence:** `services/budowa-domow.html:461-461`, `services/adaptacje-poddaszy.html:389-389`, `services/instalacje-elektryczne.html:463-463`, `index.html:1258-1258`.
 
-3. **Dodać dedykowaną politykę cache dla `dist/*`**  
-   - **Reason:** Runtime ładuje `dist/style.min.css` i `dist/script.min.js`, a `_headers` nie definiuje osobnej reguły cache dla `/dist/*`.  
-   - **Suggested improvement:** Dodać blok `/dist/*` z `Cache-Control: public, max-age=31536000, immutable` dla wersjonowanych buildów.
+3. **Reduced-motion coverage is partial**  
+   **Reason:** Istnieje media query `prefers-reduced-motion`, ale wyłącza animacje tylko dla klas `.u-no-motion/.no-motion`; nie obejmuje globalnie wszystkich animowanych komponentów i przejść.  
+   **Suggested improvement:** Rozszerzyć regułę reduce-motion na globalne animacje/przejścia (np. `*`, `*::before`, `*::after` albo dedykowane klasy w komponentach z animacją).
+   **Evidence:** `css/base/base.css:132-140`, `js/sections/hero.js:15-20`.
 
-4. **Ograniczyć „silent fail” przy rejestracji SW**  
-   - **Reason:** Rejestracja SW kończy się `.catch(() => {})`, co utrudnia obserwowalność awarii i diagnozę środowiskową.  
-   - **Suggested improvement:** Zastąpić pusty catch raportem diagnostycznym (np. telemetry/debug flag) bez zakłócania UX.
+4. **Service worker install has no cache-addAll fallback handling**  
+   **Reason:** `cache.addAll(ASSETS)` w `install` nie ma obsługi błędu; pojedynczy brak assetu może przerwać instalację SW.  
+   **Suggested improvement:** Dodać bezpieczną obsługę błędów dla pre-cache (np. `Promise.allSettled`/segmentacja listy krytycznej i opcjonalnej).
+   **Evidence:** `sw.js:6-10`.
 
-5. **Zautomatyzować test kontrastu WCAG AA w pipeline QA**  
-   - **Reason:** Bieżąca implementacja a11y jest dobra, ale brak automatycznego, renderowanego raportu kontrastu dla trybu jasnego/ciemnego.  
-   - **Suggested improvement:** Dodać etap CI (np. pa11y/lighthouse + custom contrast assertions) dla kluczowych podstron.
+5. **High duplication across static service/legal pages**  
+   **Reason:** Nagłówki, stopki i meta bloki są powielane w wielu plikach HTML, co zwiększa koszt utrzymania i ryzyko niespójności.  
+   **Suggested improvement:** Wzmocnić proces generowania wspólnych fragmentów (np. utrzymanie jednego źródła layoutu/head i kompilacja do stron wynikowych).
+   **Evidence:** `services/budowa-domow.html:5-47`, `services/remonty-mieszkan.html:5-47`, `legal/regulamin.html:5-47`.
 
-## 5) P2 — Minor refinements
-- Ujednolicić dokumentację, aby odróżnić artefakty runtime (`dist/*`) od źródeł (`css/*`, `js/*`) w sekcjach build/deploy.  
-- Rozważyć dodanie krótkiej tabeli „support matrix” (przeglądarki/feature policy) do README.
+## 5) P2 — Minor refinements (optional)
+- Rozważyć jawne `width`/`height` dla obrazu lightboxa (placeholder w dialogu) w celu pełnej spójności polityki CLS. (`index.html:1067-1067`)
+- Ujednolicić komentarze i opisy deploy (np. nazewnictwo „demo” w `_redirects`) do dokumentacyjnego tonu produkcyjnego. (`_redirects:2-4`)
+- Drobne uporządkowanie aliasów utility (`u-visually-hidden` / `visually-hidden`) i dokumentacji konwencji klas dla zespołu.
 
-## 6) Future enhancements — 5 realistic ideas
-1. Wdrożyć automatyczne generowanie i walidację JSON-LD z jednego źródła danych (single source of truth).  
-2. Dodać wizualne testy regresji (snapshot) dla kluczowych widoków: home, usługa, legal, offline, 404.  
-3. Rozszerzyć analytics consent mode o granularne kategorie zgód (analityczne/marketingowe/funkcjonalne).  
-4. Dodać mechanizm image placeholders (LQIP/blur-up) dla cięższych galerii.  
-5. Uzupełnić quality gates o automatyczny check nawigacji klawiaturą (tab order + focus trap scenariusze).
+## 6) Future enhancements (exactly 5)
+1. Dodać automatyczny pipeline CI uruchamiający `qa:links`, `qa:a11y`, `qa:lighthouse` przy każdym PR.
+2. Wprowadzić automatyczne porównanie spójności danych kontaktowych (telefon/e-mail) między wszystkimi stronami.
+3. Rozszerzyć structured data o `Service`/`Offer` z centralnego generatora, by ograniczyć ręczne duplikacje.
+4. Dodać testy regresji dostępności (keyboard flow + aria states) dla menu, lightboxa i formularza.
+5. Dodać monitorowanie wersji cache SW i rejestrowanie metryk hit/miss w trybie debug build.
 
-## 7) Compliance checklist (pass / fail)
-- **headings valid:** **PASS**
-- **no broken links (excluding intentional .min strategy):** **PASS**
-- **no console.log:** **FAIL** (występują w skryptach narzędziowych `tools/*`, nie w runtime front-end)
-- **aria attributes valid:** **PASS**
-- **images have width/height:** **FAIL** (placeholdery obrazów lightboxa bez stałych wymiarów)
-- **no-JS baseline usable:** **PASS**
-- **sitemap present (if expected):** **PASS**
-- **robots present:** **PASS**
-- **OG image exists:** **PASS**
-- **JSON-LD valid:** **PASS**
+## 7) Compliance checklist
+- **headings valid:** PASS
+- **no broken links (excluding .min strategy):** PASS
+- **no console.log:** PASS
+- **aria attributes valid:** PASS (statycznie; bez runtime AT testów)
+- **images have width/height:** FAIL (placeholder lightbox `<img>` bez wymiarów)
+- **no-JS baseline usable:** PASS
+- **sitemap present (if expected):** PASS
+- **robots present:** PASS
+- **OG image exists:** PASS
+- **JSON-LD valid:** PASS
 
-## 8) Architecture Score (0–10)
-- **BEM consistency:** 8.5/10  
-- **token usage:** 9.0/10  
-- **accessibility:** 8.5/10  
-- **performance:** 8.0/10  
-- **maintainability:** 8.5/10  
-
-**Overall Architecture Score: 8.5/10**
+## 8) Architecture score (0–10)
+**8.6 / 10**
+- **BEM consistency:** 8.5/10
+- **token usage:** 9.0/10
+- **accessibility:** 8.5/10
+- **performance:** 8.5/10
+- **maintainability:** 8.5/10
 
 ## 9) Senior rating (1–10)
-**Senior rating: 8.6/10**  
-Projekt jest bliski poziomu produkcyjnego portfolio: mocna baza architektoniczna, dobre SEO i dostępność, brak błędów krytycznych. Do pełnej dojrzałości brakuje kilku usprawnień operacyjnych (cache polityka `dist/*`, aktywny stan nawigacji na podstronach, pełna automatyzacja kontrastu i telemetrii SW).
+**8.7 / 10**  
+Profesjonalny poziom implementacji front-end dla portfolio produkcyjnego: dobre fundamenty architektoniczne, SEO i a11y. Obszary do dopracowania dotyczą głównie spójności konfiguracji i dalszej automatyzacji jakości, a nie krytycznych błędów runtime.
