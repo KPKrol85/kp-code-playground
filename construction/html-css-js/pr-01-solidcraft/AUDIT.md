@@ -11,27 +11,15 @@ No P0 issues detected.
 - SEO techniczne jest obecne: canonical, OpenGraph, Twitter Card, JSON-LD, robots.txt oraz sitemap.xml.  
 - Wdrożenie ma podstawowe zabezpieczenia i routing: `_headers`, `_redirects`, `netlify.toml`, service worker oraz manifest.
 
-# 4. P1 — Exactly 5 Improvements Worth Doing Next
+# 4. P1 —  Improvements Worth Doing Next
 
 ## 1) Ograniczyć duplikację `<head>` i bloków SEO/JSON-LD między stronami
 **Reason:** Te same bloki meta/OG/Twitter/JSON-LD są powielane ręcznie na stronie głównej, podstronach oferty i dokumentach, co zwiększa koszt utrzymania oraz ryzyko rozjazdów treści.  
 **Suggested improvement:** Wprowadzić części wspólne (partials) lub prosty etap generowania HTML, gdzie wspólne elementy `<head>` są centralne, a per-strona nadpisywane są tylko `title`, `description`, `canonical`, `og:url`.
 
-## 2) Uspójnić strategię assetów runtime z Service Workerem
-**Reason:** Runtime ładuje `css/style.css` i `js/script.js`, natomiast pre-cache SW zawiera wersje minifikowane (`/css/style.min.css`, `/js/script.min.js`). To utrudnia przewidywalność zachowania offline i utrzymanie cache.  
-**Suggested improvement:** Wariant A: pre-cache dokładnie te pliki, które są faktycznie ładowane przez HTML. Wariant B: przełączyć HTML produkcyjny na artefakty build i utrzymywać listę cache na podstawie kroku buildowego.
-
-## 3) Rozdzielić entrypoint JS per typ podstrony
+## 2) Rozdzielić entrypoint JS per typ podstrony
 **Reason:** `js/script.js` importuje wszystkie moduły i jest ładowany globalnie, mimo że część funkcji jest warunkowo potrzebna tylko na wybranych stronach/sekcjach.  
 **Suggested improvement:** Przygotować osobne entrypointy (np. home/oferta/docs/status) albo dynamiczne importy dla modułów cięższych funkcjonalnie (np. lightbox, mapa, prefetch).
-
-## 4) Doprecyzować politykę CSP pod kątem inline JSON-LD
-**Reason:** Projekt używa inline `<script type="application/ld+json">`, a polityka CSP jest zdefiniowana globalnie w `_headers`; ten układ wymaga jawnej weryfikacji zgodności, aby nie osłabić indeksacji danych strukturalnych.  
-**Suggested improvement:** Potwierdzić w testach przeglądarkowych, że JSON-LD jest akceptowany pod obecną CSP; jeśli nie, dodać bezpieczny mechanizm (hash/nonce dla konkretnych bloków lub inna kompatybilna strategia).
-
-## 5) Ujednolicić proces walidacji jakości (lokalne i CI)
-**Reason:** Repo zawiera skrypty QA (`check:links`, `check:assets`, `qa:a11y`), ale uruchomienie części z nich zależy od lokalnych zależności i środowiska.  
-**Suggested improvement:** Ustalić jeden standard predeploy (np. obowiązkowy zestaw komend + pipeline CI), tak by wynik audytów był deterministyczny i powtarzalny.
 
 # 5. P2 — Minor Refinements (optional)
 - Rozważyć `defer` dla `theme-init.js` tylko jeśli nie pogorszy to migotania motywu; obecnie skrypt jest mały i uruchamiany wcześnie celowo.  
