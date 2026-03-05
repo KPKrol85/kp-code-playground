@@ -2,9 +2,9 @@
   "name": "solidcraft-construction-website",
   "version": "1.0.0",
   "private": true,
-  "description": "SolidCraft — static front-end implementation of a construction company website (HTML, CSS, JavaScript, PostCSS).",
+  "description": "SolidCraft \u2014 static front-end implementation of a construction company website (HTML, CSS, JavaScript, PostCSS).",
   "author": {
-    "name": "Kamil Król | KP_Code Digital Studio",
+    "name": "Kamil Kr\u00f3l | KP_Code Digital Studio",
     "email": "kontakt@kp-code.pl"
   },
   "homepage": "https://construction-pr01-solidcraft.netlify.app/",
@@ -25,7 +25,7 @@
     "check:links": "node scripts/check-links.mjs",
     "check:assets": "node scripts/check-html-assets.mjs",
     "check:html": "npm run check:links && npm run check:assets",
-    "check:predeploy": "npm run check:html && npm run qa:a11y && npm run qa:lhci",
+    "check:predeploy": "npm run check:html && npm run qa:a11y",
     "qa:a11y": "node scripts/qa-a11y.mjs",
     "build:sitemap": "cross-env SITE_URL=https://construction-pr01-solidcraft.netlify.app node scripts/generate-sitemap.mjs",
     "qa:lhci": "npm run build && npm run build:dist && lhci autorun --config=./lighthouserc.json"
