@@ -24,7 +24,7 @@ Brak potwierdzonych ryzyk P0 w analizowanym kodzie źródłowym.
    **Evidence:** `manifest.webmanifest:58-58`, `index.html:427-427`.
 
 2. **Inconsistent service CTA phone numbers**  
-   **Reason:** Część podstron usług ma CTA z numerem `+48 123 456 789`, podczas gdy globalnie używany jest `+48 533 537 091`. To osłabia wiarygodność i spójność danych kontaktowych.  
+   **Reason:** Część podstron usług zawierała wcześniej inny numer telefonu niż numer globalny, co osłabiało wiarygodność i spójność danych kontaktowych.  
    **Suggested improvement:** Ujednolić numery w CTA i stopkach do jednego, rzeczywistego numeru.
    **Evidence:** `services/budowa-domow.html:461-461`, `services/adaptacje-poddaszy.html:389-389`, `services/instalacje-elektryczne.html:463-463`, `index.html:1258-1258`.
 
