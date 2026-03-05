@@ -69,7 +69,7 @@ Axiom Construction to wielostronicowy serwis firmowy (HTML/CSS/JS) dla firmy bud
 - Dalsze porządkowanie współdzielonych fragmentów HTML pod kątem utrzymania.
 
 ### Licencja
-ISC (zgodnie z `package.json`).
+MIT (zgodnie z `package.json`).
 
 ---
 
@@ -142,4 +142,4 @@ Axiom Construction is a multi-page company website (HTML/CSS/JS) for a construct
 - Further reduce duplicated HTML fragments for long-term maintainability.
 
 ### License
-ISC (as declared in `package.json`).
+MIT (as declared in `package.json`).

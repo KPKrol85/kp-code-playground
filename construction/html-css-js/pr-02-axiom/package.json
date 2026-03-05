@@ -4,7 +4,7 @@
   "private": true,
   "description": "Responsive construction company website (HTML/CSS/JS) with PWA, SEO, and accessibility — KP_Code.",
   "author": "KP_Code <kontakt@kp-code.pl>",
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
     "frontend",
     "construction",
