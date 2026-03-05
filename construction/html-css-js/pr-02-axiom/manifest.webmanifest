@@ -55,7 +55,7 @@
       "name": "Oferta",
       "short_name": "Oferta",
       "description": "Przejdź do sekcji Oferta na stronie głównej",
-      "url": "/#oferta",
+      "url": "/#uslugi",
       "icons": [
         {
           "src": "/assets/img/shortcuts/offer.png",
