@@ -13,7 +13,7 @@
 - **When to use:** Przed pełnym, czystym przebiegiem przetwarzania obrazów.
 
 ### build:clean
-- **Command:** `node tools/build/clean-dist.mjs`
+- **Command:** `node tools/release/clean-dist.mjs`
 - **What it does:** Czyści katalog `dist`.
 - **When to use:** Na początku pełnego builda.
 
@@ -38,7 +38,7 @@
 - **When to use:** Po zmianach w `sw.template.js` lub assetach cache pre-load.
 
 ### build:dist
-- **Command:** `node tools/build/build-dist.mjs`
+- **Command:** `node tools/release/build-dist.mjs`
 - **What it does:** Składa finalną strukturę artefaktów dystrybucyjnych.
 - **When to use:** Po `build:css`, `build:js`, `build:sw`, przed wdrożeniem.
 
