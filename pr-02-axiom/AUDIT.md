@@ -14,11 +14,9 @@ Brak wykrytych potwierdzonych problemów klasy P0 na podstawie statycznej analiz
 - Bezpieczniejsza polityka nagłówków dla hostingu (`CSP`, `X-Frame-Options`, `HSTS`, cache policy). Dowód: `_headers:1-40`.
 
 ## 4) P1 — Improvements worth doing next (exactly 5)
-1. **Błędne ścieżki względne w linkach modalu na stronach `legal/*`** — linki typu `href="legal/..."` wewnątrz katalogu `legal/` kierują do nieistniejącego `legal/legal/...`. Dowód: `legal/regulamin.html:545-550`, `legal/polityka-prywatnosci.html:531-536`, `legal/certyfikaty.html:451-456`.
-2. **Niespójność listy precache SW względem faktycznie ładowanych assetów** — SW precachuje `/style.min.css` i `/script.min.js`, podczas gdy HTML ładuje `dist/style.min.css` i `js/main.js` (module). To osłabia skuteczność offline cache. Dowód: `sw.js:6`, `index.html:54`, `index.html:1417`.
-3. **Silna zależność runtime od artefaktów build (`dist/style.min.css`)** — bez kroku build strony uruchamiane lokalnie pozostają bez stylów. Dowód: `index.html:52-54`, `404.html:52-54`, `offline.html` (analogicznie), plus lokalny check linków zgłasza brak pliku.
-4. **Skrypty QA są platformowo zależne (Windows syntax)** — `if not exist` w `qa:lighthouse` i `qa:a11y` ogranicza przenośność automatyzacji w środowiskach Unix/Linux CI. Dowód: `package.json:40-42`.
-5. **Nadmiarowe/globalne reguły focus mogą utrudniać przewidywalność stylów** — jednocześnie istnieją globalne i komponentowe definicje `:focus-visible`, co zwiększa ryzyko konfliktów utrzymaniowych. Dowód: `css/base/base.css:65-68`, `css/components/utilities.css:182-185`, `css/components/utilities.css:205-208`.
+1. **Silna zależność runtime od artefaktów build (`dist/style.min.css`)** — bez kroku build strony uruchamiane lokalnie pozostają bez stylów. Dowód: `index.html:52-54`, `404.html:52-54`, `offline.html` (analogicznie), plus lokalny check linków zgłasza brak pliku.
+2. **Skrypty QA są platformowo zależne (Windows syntax)** — `if not exist` w `qa:lighthouse` i `qa:a11y` ogranicza przenośność automatyzacji w środowiskach Unix/Linux CI. Dowód: `package.json:40-42`.
+3. **Nadmiarowe/globalne reguły focus mogą utrudniać przewidywalność stylów** — jednocześnie istnieją globalne i komponentowe definicje `:focus-visible`, co zwiększa ryzyko konfliktów utrzymaniowych. Dowód: `css/base/base.css:65-68`, `css/components/utilities.css:182-185`, `css/components/utilities.css:205-208`.
 
 ## 5) P2 — Minor refinements
 - Ujednolicić opisy komentarzy (np. komentarz „LinkedIn” przy linku do Reddita) dla lepszej czytelności kodu. Dowód: `index.html:1330-1332`.
