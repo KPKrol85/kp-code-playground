@@ -3,58 +3,61 @@
 ## PL
 
 ### Przegląd projektu
-Axiom Construction to statyczny serwis front-end (HTML/CSS/JS) dla firmy budowlano-remontowej, z wieloma podstronami usługowymi i prawnymi, formularzem kontaktowym oraz elementami PWA (manifest + service worker).
+Axiom Construction to statyczny serwis typu MPA (wiele plików HTML) dla branży budowlano-remontowej. Repozytorium zawiera stronę główną, podstrony usług i dokumentów, warstwę PWA (manifest + service worker), oraz formularz kontaktowy z integracją Netlify Forms.
 
-### Kluczowe funkcje (wykryte w repozytorium)
-- Strona główna + dedykowane podstrony usług (`services/*.html`) i dokumentów (`legal/*.html`).
-- Formularz kontaktowy Netlify (`data-netlify="true"`) z honeypotem, komunikatami błędów i fallbackiem no-JS.
-- Lightbox galerii, przełącznik motywu, menu mobilne, przycisk „powrót na górę”.
-- SEO: canonical, Open Graph, Twitter cards, robots meta, `sitemap.xml`, `robots.txt`, JSON-LD.
-- PWA: `manifest.webmanifest`, `sw.js`, `offline.html`, nagłówki cache/security w `_headers`.
+### Kluczowe funkcje (potwierdzone w kodzie)
+- Strona główna + podstrony usług (`services/*.html`) i stron informacyjno-prawnych (`legal/*.html`).
+- Formularz kontaktowy Netlify (`data-netlify="true"`, honeypot, komunikaty `aria-live`, fallback no-JS).
+- Moduły interaktywne: mobilna nawigacja, przełącznik motywu, lightbox galerii, przycisk „powrót na górę”.
+- SEO: `canonical`, Open Graph, Twitter Card, JSON-LD, `robots.txt`, `sitemap.xml`.
+- PWA: `manifest.webmanifest`, `sw.js`, `offline.html`, polityki nagłówków w `_headers`.
 
 ### Tech stack
-- HTML5 (wiele stron statycznych)
-- CSS modularny przez `@import` (`css/main.css` + tokens/base/layout/components/sections)
-- Vanilla JS modułowy (`js/core`, `js/components`, `js/sections`, `js/utils`)
-- Narzędzia build/QA przez npm scripts (Node, Lighthouse CI, pa11y)
+- HTML5 (wielostronicowy serwis statyczny).
+- CSS modularny przez `@import` (`css/main.css` + warstwy tokens/base/layout/components/sections).
+- Vanilla JavaScript (moduły `js/core`, `js/components`, `js/sections`, `js/utils`).
+- Narzędzia Node/npm do build i QA (`tools/*`, Lighthouse CI, pa11y).
 
 ### Struktura projektu (skrót)
-- `index.html`, `404.html`, `success.html`, `offline.html`
-- `services/` — podstrony usług
-- `legal/` — podstrony prawne/informacyjne
-- `css/` — tokeny + warstwy stylów
-- `js/` — logika aplikacji
-- `manifest.webmanifest`, `sw.js`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`
+- Widoki: `index.html`, `404.html`, `offline.html`, `success.html`
+- Podstrony: `services/`, `legal/`
+- Style: `css/`
+- Skrypty: `js/`
+- SEO/deploy/PWA: `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`
+- Narzędzia build: `tools/`
 
-### Instalacja i uruchomienie
+### Setup i uruchomienie
 1. `npm install`
-2. Build produkcyjny: `npm run build`
-3. Podgląd katalogu wynikowego: `npm run serve:dist`
-4. Alternatywnie serwowanie katalogu roboczego: `npm run serve`
+2. `npm run build`
+3. `npm run serve:dist` (podgląd builda)
+4. Opcjonalnie: `npm run serve` (serwowanie katalogu roboczego)
 
-### Build i wdrożenie
-- Projekt zakłada pipeline budujący zasoby do `dist/` (m.in. `dist/style.min.css`).
-- Reguły cache i security są zdefiniowane dla hostingu Netlify w `_headers`.
-- Trasy fallback/404 są opisane w `_redirects` (plik zawiera głównie komentarze).
+### Build i deployment
+- Projekt jest oparty o pipeline, który przygotowuje artefakty w `dist/` (`build:css`, `build:js`, `build:sw`, `build:dist`).
+- `_headers` zawiera polityki bezpieczeństwa i cache.
+- `_redirects` w aktualnym stanie zawiera tylko komentarze (brak aktywnych reguł przekierowań).
 
 ### Dostępność (A11y)
-- Obecne: skip-link, semantyczne nagłówki, `aria-current`, `aria-expanded`, widoczne style focus, `prefers-reduced-motion`, komunikaty formularza (`aria-live`), no-JS fallback formularza.
-- Do poprawy: część linków w modalu na podstronach `legal/*` używa błędnych ścieżek względnych (`legal/...` zamiast lokalnych względem katalogu `legal`).
+- Obecne: skip link, semantyczne sekcje i nagłówki, `aria-current`, `aria-expanded`, widoczny focus (`:focus-visible`), pułapki focusu w komponentach modalnych, fallback no-JS formularza.
+- `prefers-reduced-motion` jest obsłużone zarówno w CSS, jak i przy scroll-to-top.
+- Kontrast: częściowo oparty o tokeny; pełna walidacja kontrastu wymaga obliczeń runtime.
 
 ### SEO
-- Implementacja obejmuje `meta description`, `canonical`, Open Graph, Twitter card, JSON-LD, `robots.txt` i `sitemap.xml`.
-- `og:url` jest zgodny z canonical na analizowanych stronach.
+- Wdrożono metadane SEO i social (`canonical`, `robots`, OG/Twitter).
+- `robots.txt` wskazuje `sitemap.xml`.
+- JSON-LD jest obecny na wielu podstronach (statycznie parsowalny).
 
 ### Wydajność
-- Obecne: obrazy responsywne (`srcset`), nowoczesne formaty (AVIF/WebP), `loading="lazy"` dla większości obrazów, `font-display: swap`, preload fontów.
-- Ryzyko: w drzewie roboczym brakuje `dist/style.min.css`, więc uruchomienie bez kroku build powoduje brak stylów.
+- Obrazy korzystają z `picture`, formatów AVIF/WebP/JPEG, a większość zasobów ma `loading="lazy"` i jawne `width/height`.
+- Fonty są preloadowane, a cache statyków jest definiowany przez `_headers`.
+- W katalogu repozytorium (bez builda) nie ma `dist/style.min.css`; to decyzja build/deploy, nie błąd logiki runtime po poprawnym procesie build.
 
-### Roadmap (techniczna)
-- Uporządkować spójność ścieżek względnych w modalu `legal/*`.
-- Ujednolicić strategię cachowania SW z faktycznymi ścieżkami zasobów runtime.
-- Dodać cross-platformowe skrypty QA (obecnie składnia `if not exist` jest windowsowa).
-- Rozważyć redukcję globalnych nadpisań stylów focus i uporządkowanie warstw utility/base.
-- Dodać automatyczny test integralności linków do CI dla katalogu `pr-02-axiom`.
+### Roadmap
+- Poprawa błędnych ścieżek względnych w cookie-modal na części podstron `legal/*`.
+- Uzupełnienie `_redirects` o rzeczywiste reguły kanoniczne/HTTPS.
+- Ujednolicenie skryptów QA do składni cross-platform.
+- Wydzielenie spójnej strategii source-of-truth dla JSON-LD (`js/structured-data/*.json` vs inline w HTML).
+- Dodanie automatycznego checkera linków lokalnych do domyślnego CI.
 
 ### Licencja
 MIT (`LICENSE`).
@@ -64,58 +67,61 @@ MIT (`LICENSE`).
 ## EN
 
 ### Project overview
-Axiom Construction is a static front-end website (HTML/CSS/JS) for a construction/remodeling business, with multiple service/legal subpages, a contact form, and PWA elements (manifest + service worker).
+Axiom Construction is a static multi-page front-end website for a construction/remodeling business. The repository includes a homepage, service/legal subpages, PWA pieces (manifest + service worker), and a Netlify-ready contact form.
 
-### Key features (verified in repository)
-- Home page + dedicated service pages (`services/*.html`) and legal pages (`legal/*.html`).
-- Netlify contact form (`data-netlify="true"`) with honeypot, validation messaging, and no-JS fallback.
-- Gallery lightbox, theme switcher, mobile navigation, “back to top” control.
-- SEO coverage: canonical, Open Graph, Twitter cards, robots meta, `sitemap.xml`, `robots.txt`, JSON-LD.
-- PWA coverage: `manifest.webmanifest`, `sw.js`, `offline.html`, caching/security headers in `_headers`.
+### Key features (repository-verified)
+- Homepage plus dedicated service (`services/*.html`) and legal/informational (`legal/*.html`) pages.
+- Netlify contact form (`data-netlify="true"`) with honeypot, `aria-live` status messaging, and no-JS fallback.
+- Interactive modules: mobile navigation, theme switcher, gallery lightbox, back-to-top button.
+- SEO coverage: `canonical`, Open Graph, Twitter Card, JSON-LD, `robots.txt`, `sitemap.xml`.
+- PWA coverage: `manifest.webmanifest`, `sw.js`, `offline.html`, and deployment headers in `_headers`.
 
 ### Tech stack
-- HTML5 (multi-page static setup)
-- Modular CSS via `@import` (`css/main.css` + tokens/base/layout/components/sections)
-- Modular vanilla JS (`js/core`, `js/components`, `js/sections`, `js/utils`)
-- Build/QA tooling via npm scripts (Node, Lighthouse CI, pa11y)
+- HTML5 static MPA.
+- Modular CSS via `@import` (`css/main.css` + tokens/base/layout/components/sections).
+- Vanilla JavaScript modules (`js/core`, `js/components`, `js/sections`, `js/utils`).
+- Node/npm tooling for build and QA (`tools/*`, Lighthouse CI, pa11y).
 
 ### Structure overview
-- `index.html`, `404.html`, `success.html`, `offline.html`
-- `services/` — service subpages
-- `legal/` — legal/informational subpages
-- `css/` — tokens + style layers
-- `js/` — application logic
-- `manifest.webmanifest`, `sw.js`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`
+- Pages: `index.html`, `404.html`, `offline.html`, `success.html`
+- Subpages: `services/`, `legal/`
+- Styling: `css/`
+- Scripts: `js/`
+- SEO/deploy/PWA files: `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `sw.js`
+- Build tooling: `tools/`
 
 ### Setup & run
 1. `npm install`
-2. Production build: `npm run build`
-3. Serve build output: `npm run serve:dist`
-4. Optional dev/static serving from project root: `npm run serve`
+2. `npm run build`
+3. `npm run serve:dist` (serve build output)
+4. Optional: `npm run serve` (serve working tree)
 
 ### Build/deployment notes
-- The project expects a build pipeline that outputs assets to `dist/` (including `dist/style.min.css`).
-- Netlify cache/security policies are declared in `_headers`.
-- Fallback/404 behavior is documented in `_redirects` (currently mostly comments).
+- The project expects a build pipeline that outputs artifacts into `dist/`.
+- `_headers` defines security and caching policies.
+- `_redirects` currently contains comments only (no active redirect rules).
 
 ### Accessibility notes
-- Present: skip-link, semantic heading flow, `aria-current`, `aria-expanded`, visible focus styles, `prefers-reduced-motion`, form live-region messaging, no-JS form fallback.
-- Improvement needed: some modal links on `legal/*` pages use incorrect relative paths (`legal/...`) from inside the `legal` directory.
+- Present: skip link, semantic landmarks/headings, `aria-current`, `aria-expanded`, visible focus styling, focus handling in modal-like components, no-JS form baseline.
+- `prefers-reduced-motion` is implemented in CSS and in JS scroll behavior.
+- Contrast compliance cannot be fully verified statically without computed-style analysis.
 
 ### SEO notes
-- Includes `meta description`, `canonical`, Open Graph, Twitter card, JSON-LD, `robots.txt`, and `sitemap.xml`.
-- `og:url` and canonical values are aligned on audited pages.
+- SEO and social metadata are implemented (`canonical`, `robots`, OG/Twitter).
+- `robots.txt` references `sitemap.xml`.
+- JSON-LD appears across pages and is statically parseable.
 
 ### Performance notes
-- Present: responsive images (`srcset`), AVIF/WebP sources, widespread `loading="lazy"`, `font-display: swap`, font preloads.
-- Risk: `dist/style.min.css` is missing in the working tree, so running without build leads to unstyled pages.
+- Images use `picture`, modern formats (AVIF/WebP/JPEG), lazy loading, and explicit dimensions.
+- Font preloads and cache rules are present.
+- Missing `dist/style.min.css` in the source tree is a build-stage artifact expectation rather than an automatic production blocker.
 
 ### Roadmap
-- Fix inconsistent relative paths in `legal/*` modal links.
-- Align service-worker precache asset list with actual runtime asset paths.
-- Make QA scripts cross-platform (current `if not exist` syntax is Windows-oriented).
-- Simplify global focus-style overrides and utility/base layering.
-- Add automated local link-integrity checks in CI for `pr-02-axiom`.
+- Fix incorrect relative cookie-modal links on some `legal/*` pages.
+- Add real canonical/HTTPS redirects in `_redirects`.
+- Make QA scripts cross-platform (currently Windows shell syntax).
+- Align JSON-LD source strategy (`js/structured-data/*.json` vs inline HTML blocks).
+- Add local link-integrity check to default CI flow.
 
 ### License
 MIT (`LICENSE`).
