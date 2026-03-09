@@ -13,10 +13,7 @@ Brak wykrytych potwierdzonych problemów klasy P0 na podstawie statycznej analiz
 - Tokenizacja i warstwowość CSS są czytelne (`tokens/base/layout/components/sections`). Dowód: `css/main.css:1-19`, `css/tokens/tokens.css:1-124`.
 - Bezpieczniejsza polityka nagłówków dla hostingu (`CSP`, `X-Frame-Options`, `HSTS`, cache policy). Dowód: `_headers:1-40`.
 
-## 4) P1 — Improvements worth doing next (exactly 5)
-1. **Silna zależność runtime od artefaktów build (`dist/style.min.css`)** — bez kroku build strony uruchamiane lokalnie pozostają bez stylów. Dowód: `index.html:52-54`, `404.html:52-54`, `offline.html` (analogicznie), plus lokalny check linków zgłasza brak pliku.
-2. **Skrypty QA są platformowo zależne (Windows syntax)** — `if not exist` w `qa:lighthouse` i `qa:a11y` ogranicza przenośność automatyzacji w środowiskach Unix/Linux CI. Dowód: `package.json:40-42`.
-3. **Nadmiarowe/globalne reguły focus mogą utrudniać przewidywalność stylów** — jednocześnie istnieją globalne i komponentowe definicje `:focus-visible`, co zwiększa ryzyko konfliktów utrzymaniowych. Dowód: `css/base/base.css:65-68`, `css/components/utilities.css:182-185`, `css/components/utilities.css:205-208`.
+## 4) P1 — Improvements worth doing next (DONE)
 
 ## 5) P2 — Minor refinements
 - Ujednolicić opisy komentarzy (np. komentarz „LinkedIn” przy linku do Reddita) dla lepszej czytelności kodu. Dowód: `index.html:1330-1332`.
