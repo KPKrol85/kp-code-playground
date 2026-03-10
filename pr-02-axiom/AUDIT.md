@@ -14,12 +14,12 @@ Brak potwierdzonych problemów P0 w analizie statycznej (brak dowodu na runtime 
 - SEO i crawlability są obecne: canonical, OG/Twitter, robots, sitemap, JSON-LD. Dowód: `index.html:11-33`, `robots.txt:4-17`, `sitemap.xml:5-78`, `index.html:56-257`.
 
 ## 4. P1 — Improvements worth doing next
-1. **Brak aktywnych reguł przekierowań mimo deklarowanych celów canonical/HTTPS.**  
-   Dowód: `_redirects:1-4` (same komentarze, brak mapowań).
-2. **Rozproszone źródło prawdy dla structured data (inline JSON-LD + osobne pliki JSON).**  
-   Dowód: inline bloki np. `index.html:56-257`; równoległe pliki `js/structured-data/index.json`, `js/structured-data/service-budowa-domow.json`.
-3. **Łańcuch `@import` w `css/main.css` zwiększa ryzyko render-blockingu w trybie źródłowym.**  
-   Dowód: `css/main.css:1-19` (19 importów warstw CSS).
+1. **Reguły przekierowań produkcyjnych pozostają na etapie przygotowania, więc warstwa canonical/HTTPS nie jest jeszcze finalnie skonfigurowana.**
+   Dowód: _redirects:1-4 (same komentarze, brak mapowań).
+2. **Structured data jest utrzymywane częściowo inline w HTML i częściowo w pomocniczych plikach JSON, co jest akceptowalne w obecnym projekcie portfolio, ale pozostawia lekko rozproszone miejsce zarządzania danymi schema.**
+   Dowód: inline bloki np. `index.html`:56-257; równoległe pliki `js/structured-data/index.json, js/structured-data/service-budowa-domow.json`.
+3. **Łańcuch @import w css/main.css dotyczy wyłącznie warstwy source/dev i jest zgodny z obecną organizacją projektu, choć przed buildem pozostaje mniej optymalny niż pojedynczy arkusz wynikowy.**
+   Dowód: `css/main.css`:1-19 (19 importów warstw CSS).
 4. **Nieużywany hook FAQ zwiększa powierzchnię martwego kodu.**  
    Dowód: `js/sections/faq.js:1` oraz wywołanie `js/core/init.js:9`, `js/core/init.js:21`.
 5. **W repozytorium występują `console.log` w narzędziach build/QA, co obniża czystość logowania pipeline.**  
