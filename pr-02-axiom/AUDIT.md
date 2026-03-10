@@ -14,16 +14,16 @@ Brak potwierdzonych problemów P0 w analizie statycznej (brak dowodu na runtime 
 - SEO i crawlability są obecne: canonical, OG/Twitter, robots, sitemap, JSON-LD. Dowód: `index.html:11-33`, `robots.txt:4-17`, `sitemap.xml:5-78`, `index.html:56-257`.
 
 ## 4. P1 — Improvements worth doing next
-1. **Reguły przekierowań produkcyjnych pozostają na etapie przygotowania, więc warstwa canonical/HTTPS nie jest jeszcze finalnie skonfigurowana.**
+1. Reguły przekierowań produkcyjnych pozostają na etapie przygotowania, więc warstwa canonical/HTTPS nie jest jeszcze finalnie skonfigurowana.
    Dowód: _redirects:1-4 (same komentarze, brak mapowań).
-2. **Structured data jest utrzymywane częściowo inline w HTML i częściowo w pomocniczych plikach JSON, co jest akceptowalne w obecnym projekcie portfolio, ale pozostawia lekko rozproszone miejsce zarządzania danymi schema.**
-   Dowód: inline bloki np. `index.html`:56-257; równoległe pliki `js/structured-data/index.json, js/structured-data/service-budowa-domow.json`.
-3. **Łańcuch @import w css/main.css dotyczy wyłącznie warstwy source/dev i jest zgodny z obecną organizacją projektu, choć przed buildem pozostaje mniej optymalny niż pojedynczy arkusz wynikowy.**
-   Dowód: `css/main.css`:1-19 (19 importów warstw CSS).
+2. Structured data jest utrzymywane częściowo inline w HTML i częściowo w pomocniczych plikach JSON, co jest akceptowalne w obecnym projekcie portfolio, ale pozostawia lekko rozproszone miejsce zarządzania danymi schema.
+   Dowód: inline bloki np. index.html:56-257; równoległe pliki js/structured-data/index.json, js/structured-data/service-budowa-domow.json.
+3. Łańcuch @import w css/main.css dotyczy wyłącznie warstwy source/dev i jest zgodny z obecną organizacją projektu, choć przed buildem pozostaje mniej optymalny niż pojedynczy arkusz wynikowy.
+   Dowód: css/main.css:1-19 (19 importów warstw CSS).
 4. **Nieużywany hook FAQ zwiększa powierzchnię martwego kodu.**  
    Dowód: `js/sections/faq.js:1` oraz wywołanie `js/core/init.js:9`, `js/core/init.js:21`.
-5. **W repozytorium występują `console.log` w narzędziach build/QA, co obniża czystość logowania pipeline.**  
-   Dowód: `tools/images/build-images.mjs:56`, `tools/release/build-dist.mjs:104`, `tools/sw/build-sw.mjs:74`, `tools/qa/run-pa11y.mjs:62`.
+5. Logowanie w skryptach build/QA opiera się na prostych console.log, co jest funkcjonalne w obecnym workflow, ale nie stanowi jeszcze w pełni uporządkowanego standardu outputu pipeline.
+   Dowód: tools/images/build-images.mjs:56, tools/release/build-dist.mjs:104, tools/sw/build-sw.mjs:74, tools/qa/run-pa11y.mjs:62.
 
 ## 5. P2 — Minor refinements
 - Ujednolicić nazewnictwo stanu menu (`menu-open` vs `nav-open`) dla pełnej spójności semantycznej stylów i JS. Dowód: `css/components/utilities.css:70`, `css/layout/layout.css:297`, `js/components/navigation.js:13-14`.
