@@ -24,7 +24,6 @@ Brak potwierdzonych problemów P0 w analizie statycznej (brak dowodu na runtime 
    Dowód: tools/images/build-images.mjs:56, tools/release/build-dist.mjs:104, tools/sw/build-sw.mjs:74, tools/qa/run-pa11y.mjs:62.
 
 ## 5. P2 — Minor refinements
-- Ujednolicić nazewnictwo stanu menu (`menu-open` vs `nav-open`) dla pełnej spójności semantycznej stylów i JS. Dowód: `css/components/utilities.css:70`, `css/layout/layout.css:297`, `js/components/navigation.js:13-14`.
 - Wyrównać strategię cache dla `manifest.webmanifest` (`immutable` + krótki max-age bywa operacyjnie mylący przy częstych zmianach ikon). Dowód: `_headers:27-29`.
 - Rozważyć ograniczenie liczby preloadów fontów do faktycznie krytycznych wariantów na każdej podstronie. Dowód: `index.html:49-50`, `services/budowa-domow.html:49-50`.
 
