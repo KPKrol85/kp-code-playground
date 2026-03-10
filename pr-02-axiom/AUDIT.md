@@ -20,9 +20,7 @@ Brak potwierdzonych problemów P0 w analizie statycznej (brak dowodu na runtime 
    Dowód: inline bloki np. index.html:56-257; równoległe pliki js/structured-data/index.json, js/structured-data/service-budowa-domow.json.
 3. Łańcuch @import w css/main.css dotyczy wyłącznie warstwy source/dev i jest zgodny z obecną organizacją projektu, choć przed buildem pozostaje mniej optymalny niż pojedynczy arkusz wynikowy.
    Dowód: css/main.css:1-19 (19 importów warstw CSS).
-4. **Nieużywany hook FAQ zwiększa powierzchnię martwego kodu.**  
-   Dowód: `js/sections/faq.js:1` oraz wywołanie `js/core/init.js:9`, `js/core/init.js:21`.
-5. Logowanie w skryptach build/QA opiera się na prostych console.log, co jest funkcjonalne w obecnym workflow, ale nie stanowi jeszcze w pełni uporządkowanego standardu outputu pipeline.
+4. Logowanie w skryptach build/QA opiera się na prostych console.log, co jest funkcjonalne w obecnym workflow, ale nie stanowi jeszcze w pełni uporządkowanego standardu outputu pipeline.
    Dowód: tools/images/build-images.mjs:56, tools/release/build-dist.mjs:104, tools/sw/build-sw.mjs:74, tools/qa/run-pa11y.mjs:62.
 
 ## 5. P2 — Minor refinements
