@@ -1,66 +1,62 @@
 # AUDIT — pr-02-axiom
 
 ## 1. Executive summary
-Projekt ma solidną architekturę statycznego MPA: modularny CSS, modułowy JS, wdrożone SEO/PWA i dobre fundamenty a11y. Największe ryzyka dotyczą spójności operacyjnej (brak aktywnych reguł w `_redirects`, błędne ścieżki części linków wewnętrznych na podstronach legal, niespójność źródła JSON-LD względem plików `js/structured-data`).
+Projekt ma dojrzałą bazę dla statycznego serwisu produkcyjnego: modularną strukturę CSS/JS, szerokie pokrycie SEO, formularz z progressive enhancement i warstwę PWA. Największe ryzyka dotyczą utrzymania i operacyjnej spójności deploymentu, a nie krytycznej stabilności runtime.
 
 ## 2. P0 — Critical risks
-Brak potwierdzonych problemów klasy P0 na podstawie statycznej analizy repozytorium.
+Brak potwierdzonych problemów P0 w analizie statycznej (brak dowodu na runtime breakage, blocker a11y lub blocker deploymentu).
 
 ## 3. Strengths
-- Spójna baza SEO: canonical + OG + robots + sitemap + JSON-LD na stronach głównych i podstronach. (np. `index.html`, `legal/regulamin.html`).
-- Dobre fundamenty dostępności: skip link, `aria-current`, `aria-expanded`, live regiony formularza, focus management w menu/lightbox/cookie modal.
-- Responsywne obrazowanie (`picture`, AVIF/WebP/JPEG, `srcset`) i jawne wymiary obrazów.
-- Modularna organizacja CSS i JS (`css/*`, `js/*`) poprawiająca utrzymanie.
-- Obecna warstwa PWA i polityki nagłówków (`manifest.webmanifest`, `sw.js`, `_headers`).
+- Semantyczna struktura dokumentu i nawigacji (skip link, `header/nav/main/footer`, logiczne sekcje). Dowód: `index.html:263-317`, `index.html:1222-1230`.
+- Formularz kontaktowy ma no-JS baseline, walidację klienta, statusy `aria-live`, podsumowanie błędów i focus management. Dowód: `index.html:1143-1217`, `js/components/forms.js:45-50`, `js/components/forms.js:128-145`.
+- Obsługa `prefers-reduced-motion` w CSS i JS. Dowód: `css/base/base.css:165-180`, `js/components/scroll-top.js:36-37`.
+- Obrazy są dostarczane responsywnie (`picture`, AVIF/WebP/JPEG, `srcset/sizes`) i z wymiarami. Dowód: `index.html:320-350`, `index.html:449-458`, `services/budowa-domow.html:156-167`.
+- SEO i crawlability są obecne: canonical, OG/Twitter, robots, sitemap, JSON-LD. Dowód: `index.html:11-33`, `robots.txt:4-17`, `sitemap.xml:5-78`, `index.html:56-257`.
 
-## 4. P1 — Improvements worth doing next (exactly 5)
-1. **Błędne linki względne na podstronach legal (integralność nawigacji).**  
-   Dowód: `legal/kariera.html:384`, `legal/kariera.html:388-389`, `legal/polityka-cookies.html:526`, `legal/polityka-cookies.html:530-531` zawierają odwołania `href="legal/..."` będąc już w katalogu `legal/`.
-
-2. **Brak aktywnych reguł przekierowań w `_redirects` mimo komentarzy o WWW/HTTPS/trailing slash.**  
-   Dowód: `_redirects:1-4` zawiera tylko komentarze, bez realnych mapowań.
-
-3. **Skrypty QA są shellowo windowsowe (`if not exist`) i nie są przenośne na bash/Linux.**  
-   Dowód: `package.json:40-42`.
-
-4. **Dublowanie / rozjazd źródła JSON-LD (inline w HTML + osobne pliki `js/structured-data/*.json`).**  
-   Dowód: inline bloki np. `index.html:56-257`, `index.html:228-257`; osobne pliki danych np. `js/structured-data/index.json`, `js/structured-data/legal-regulamin.json`.
-
-5. **Service worker używa fallbacku `./index.html`, który nie jest pre-cache'owany w tablicy `ASSETS` (możliwy niespójny fallback offline).**  
-   Dowód: `sw.js:6` (ASSETS bez `index.html`) oraz `sw.js:40` (`caches.match("./index.html")`).
+## 4. P1 — Improvements worth doing next
+1. **Brak aktywnych reguł przekierowań mimo deklarowanych celów canonical/HTTPS.**  
+   Dowód: `_redirects:1-4` (same komentarze, brak mapowań).
+2. **Rozproszone źródło prawdy dla structured data (inline JSON-LD + osobne pliki JSON).**  
+   Dowód: inline bloki np. `index.html:56-257`; równoległe pliki `js/structured-data/index.json`, `js/structured-data/service-budowa-domow.json`.
+3. **Łańcuch `@import` w `css/main.css` zwiększa ryzyko render-blockingu w trybie źródłowym.**  
+   Dowód: `css/main.css:1-19` (19 importów warstw CSS).
+4. **Nieużywany hook FAQ zwiększa powierzchnię martwego kodu.**  
+   Dowód: `js/sections/faq.js:1` oraz wywołanie `js/core/init.js:9`, `js/core/init.js:21`.
+5. **W repozytorium występują `console.log` w narzędziach build/QA, co obniża czystość logowania pipeline.**  
+   Dowód: `tools/images/build-images.mjs:56`, `tools/release/build-dist.mjs:104`, `tools/sw/build-sw.mjs:74`, `tools/qa/run-pa11y.mjs:62`.
 
 ## 5. P2 — Minor refinements
-- Ujednolicić konwencję nazw klas body dla stanu menu (`menu-open` pojawia się w utility, runtime używa `nav-open`), aby ograniczyć ryzyko regresji stylistycznych. Dowód: `css/components/utilities.css:70,161`, `js/components/navigation.js:13-14`, `css/layout/layout.css:297,381`.
-- Rozważyć doprecyzowanie komentarzy/implementacji `Cache-Control` dla `manifest.webmanifest` (immutable + 1 dzień), by uprościć operacyjne aktualizacje PWA. Dowód: `_headers:27-29`.
-- `initFaqSection` jest pustą implementacją; warto albo usunąć hook, albo dodać docelową logikę. Dowód: `js/sections/faq.js:1` i `js/core/init.js:9,21`.
+- Ujednolicić nazewnictwo stanu menu (`menu-open` vs `nav-open`) dla pełnej spójności semantycznej stylów i JS. Dowód: `css/components/utilities.css:70`, `css/layout/layout.css:297`, `js/components/navigation.js:13-14`.
+- Wyrównać strategię cache dla `manifest.webmanifest` (`immutable` + krótki max-age bywa operacyjnie mylący przy częstych zmianach ikon). Dowód: `_headers:27-29`.
+- Rozważyć ograniczenie liczby preloadów fontów do faktycznie krytycznych wariantów na każdej podstronie. Dowód: `index.html:49-50`, `services/budowa-domow.html:49-50`.
 
-## 6. Future enhancements (exactly 5)
-1. Dodać automatyczny test integralności linków lokalnych do stałego pipeline QA (nie tylko workflow repo-level).
-2. Znormalizować generację `<head>` i JSON-LD tak, aby HTML był budowany z jednego źródła danych.
-3. Rozszerzyć statyczne testy a11y o keyboard-flow smoke tests dla menu/lightbox/modal.
-4. Dodać walidację zgodności metadanych SEO (canonical ↔ og:url ↔ sitemap) jako check CI.
-5. Dodać raport pokrycia obrazów (lazy loading + dimension attributes) na wszystkich stronach jako quality gate.
+## 6. Future enhancements
+1. Dodać automatyczny checker linków lokalnych i kotwic do domyślnego CI.
+2. Dodać automatyczny test zgodności SEO: `canonical` ↔ `og:url` ↔ `sitemap.xml`.
+3. Zautomatyzować walidację JSON-LD per strona w QA build.
+4. Dodać smoke-testy klawiaturowe dla menu mobilnego, lightboxa i modala.
+5. Dodać raport pokrycia obrazów (`loading`, `width/height`, formaty) jako quality gate.
 
 ## 7. Compliance checklist
-- **Headings valid:** **PASS** — każda z 15 stron HTML ma pojedynczy `h1` (kontrola skryptem: `for f in *.html legal/*.html services/*.html; do rg -o "<h1" "$f" | wc -l; done`).
-- **No broken links (excluding intentional minification/build strategy):** **FAIL** — wykryte błędne ścieżki `legal/legal/...` w dwóch podstronach legal (patrz P1.1).
-- **No console.log:** **FAIL** — `console.log` występuje w skryptach narzędziowych (`tools/images/build-images.mjs:56,143-146,149,151`, `tools/sw/build-sw.mjs:73`, `tools/html/build-head.mjs:104`).
-- **ARIA attributes valid:** **PASS (statycznie)** — poprawne użycia `aria-current`, `aria-expanded`, `aria-live`, `aria-hidden` w głównych komponentach (`index.html:285`, `index.html:306`, `index.html:1144`, `js/components/navigation.js:33-37,43-47,66-70`).
-- **Images have width/height:** **PASS (sampled + main templates)** — obrazy treści mają jawne wymiary (`index.html:346-347`, `index.html:453-454`, `index.html:668-669`, `index.html:1235-1236`).
-- **No-JS baseline usable:** **PASS** — nawigacja bez JS pozostaje widoczna (`css/layout/layout.css:202-207`), formularz ma noscript fallback (`index.html:1213-1215`).
-- **Sitemap present if expected:** **PASS** — `sitemap.xml` obecny i wskazany w robots (`sitemap.xml:1-80`, `robots.txt:17`).
-- **Robots present:** **PASS** — `robots.txt` obecny (`robots.txt:4-17`) + meta robots w stronach (`index.html:12`).
-- **OG image exists:** **PASS** — meta OG image ustawione (`index.html:20`) i plik istnieje (`assets/img/og/og-1200x630.jpg`).
-- **JSON-LD valid:** **PASS (statyczny parse)** — 15 bloków JSON-LD parsuje się bez błędów (komenda node wykonana podczas audytu).
+- **Headings valid:** **PASS** — na 15 stronach HTML wykryto po jednym `h1` (skrypt walidacyjny).
+- **No broken links excluding intentional minification strategy:** **PASS** — skan lokalnych `href/src` nie wykrył brakujących plików.
+- **No console.log:** **FAIL** — `console.log` występuje w narzędziach (`tools/images/build-images.mjs:56`, `tools/release/clean-dist.mjs:10`, `tools/sw/build-sw.mjs:74`).
+- **ARIA attributes valid:** **PASS (statycznie)** — `aria-controls` ma odpowiadające cele, a `aria-expanded` jest zarządzane w kodzie. Dowód: `index.html:283-307`, `js/components/navigation.js:33-37`, `js/components/navigation.js:66-70`.
+- **Images have width/height:** **PASS (przegląd stron głównych i reprezentatywnych podstron)**. Dowód: `index.html:346-347`, `index.html:453-454`, `services/budowa-domow.html:162-163`.
+- **No-JS baseline usable:** **PASS** — nawigacja jest widoczna bez klasy `js`, formularz ma fallback bez JS. Dowód: `css/layout/layout.css:202-207`, `index.html:1213-1215`.
+- **Sitemap present if expected:** **PASS** — `sitemap.xml` obecny i wskazany w `robots.txt`. Dowód: `sitemap.xml:1-80`, `robots.txt:17`.
+- **Robots present:** **PASS** — `robots.txt` istnieje oraz meta robots obecne w HTML. Dowód: `robots.txt:4-17`, `index.html:12`.
+- **OG image exists:** **PASS** — wskazany obraz OG ma plik w repozytorium. Dowód: `index.html:20`, `assets/img/og/og-1200x630.jpg`.
+- **JSON-LD valid:** **PASS (statyczny parse)** — 15 bloków JSON-LD parsuje się poprawnie (skrypt walidacyjny Python).
 
 ## 8. Architecture score (0–10)
-**8.2 / 10**
-- **BEM consistency: 8.4/10** — konwencja `block__element` jest dominująca (`site-nav__item`, `project-modal__content`, `footer__section`).
-- **Token usage: 8.6/10** — warstwa tokenów i motywowania (light/dark) jest spójna (`css/tokens/tokens.css`, `css/main.css:1-19`).
-- **Accessibility: 8.3/10** — mocne fundamenty semantyki/focus/no-JS + reduced-motion; do poprawy link integrity i dalsza automatyzacja testów.
-- **Performance: 8.0/10** — nowoczesne formaty obrazów, lazy loading, font preload, cache policy; drobne niespójności SW/deploy.
-- **Maintainability: 7.8/10** — dobra modularność, ale rozjazdy w JSON-LD oraz nieprzenośne skrypty QA obniżają ocenę.
+**8.3 / 10**
+- **BEM consistency: 8.4/10** — dominują spójne klasy `block__element` w layout/components (`site-nav__*`, `footer__*`, `project-modal__*`).
+- **Token usage: 8.7/10** — silna warstwa tokenów i motywów light/dark. Dowód: `css/tokens/tokens.css:1-124`.
+- **Accessibility: 8.5/10** — dobra semantyka, focus, no-JS baseline, reduced-motion; bez pełnej walidacji kontrastu runtime.
+- **Performance: 8.1/10** — nowoczesna strategia obrazów, lazy loading, SW, preload fontów; do poprawy źródłowe `@import` chain.
+- **Maintainability: 7.8/10** — dobra modularność, ale są sygnały martwego kodu i rozproszonego source-of-truth.
 
 ## 9. Senior rating (1–10)
-**8.1 / 10**  
-Projekt jest technicznie dojrzały jak na statyczny front-end: ma przemyślaną strukturę, SEO/PWA/a11y i rozsądny podział kodu. Ocena jest obniżona głównie przez kwestie operacyjno-utrzymaniowe (linking na części podstron, `_redirects` bez aktywnych reguł, cross-platform QA scripts), a nie przez błędy architektury bazowej.
+**8.2 / 10**  
+To solidna implementacja front-endowa z dobrym poziomem inżynierii dla statycznego serwisu (SEO + A11y + PWA + modularność). Ocena obniżona głównie za kwestie utrzymaniowo-operacyjne (redirect policy, spójność danych strukturalnych, porządek pipeline), nie za krytyczne błędy użytkowe.
