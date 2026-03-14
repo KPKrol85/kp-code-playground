@@ -1,62 +1,68 @@
 # AUDIT.md
 
-## 1. Executive Summary
+## 1. Executive summary
+Repository shows a well-structured static front-end with modular CSS/JS, multi-page IA, and visible accessibility patterns (skip link, focus styles, keyboard support for menu/tabs/lightbox, reduced-motion handling). Evidence: `css/style.css:2-10`, `js/script.js:3-15`, `js/features/nav.js:74-98`, `css/modules/utilities.css:22-54`, `css/modules/motion.css:1-17`.
 
-Projekt ma solidną bazę front-endową: modularny CSS i JS, spójną strukturę wielostronicową, poprawnie wdrożone kluczowe wzorce dostępności oraz działające lokalne skrypty QA. `npm run check:links` przechodzi bez błędów, a `npm run test:a11y` zwraca wynik pozytywny dla zdefiniowanych scenariuszy.
+Main production risks are not P0-level site outages, but deployment/runtime consistency problems around offline/PWA paths and asset linking. Evidence: `pwa/service-worker.js:18-21`, `contact.html:214-221`, `netlify/_headers:1-31`.
 
-Najważniejszy problem dotyczy PWA: service worker jest rejestrowany z pliku w katalogu `pwa/`, ale bez jawnego rozszerzenia zakresu na `/`, więc nie będzie kontrolował stron w katalogu głównym. Poza tym repozytorium zawiera kilka problemów klasy P1 związanych z utrzymaniem i spójnością SEO.
+## 2. P0 — Critical risks
+No confirmed P0 issues detected in static repository evidence.
 
-## 2. Strengths
+## 3. Strengths
+- Strong modular architecture for both styles and behavior (`css/modules/*`, `js/features/*`). Evidence: `css/style.css:2-10`, `js/script.js:3-15`.
+- Progressive enhancement baseline exists (`<html class="no-js">` + runtime switch to `.js` + no-JS nav fallback CSS). Evidence: `index.html:2`, `js/script.js:1`, `css/modules/layout.css:139-153`.
+- Accessibility foundations are implemented in code, not only documented: skip link, `:focus-visible`, keyboard/focus handling in menu and lightbox. Evidence: `index.html:138`, `css/modules/utilities.css:22-54`, `js/features/nav.js:20-45`, `js/features/lightbox.js:127-145`.
+- SEO baseline is broadly present: meta description, canonical, OG/Twitter, robots, sitemap, JSON-LD fallback. Evidence: `index.html:9-37`, `robots.txt:1-4`, `sitemap.xml:1-30`, `index.html:50-122`.
+- Performance-oriented image strategy is visible (`picture`, AVIF/WebP/JPG variants, dimensions, lazy loading). Evidence: `index.html:185-217`, `gallery.html:188-210`, `rooms.html:231-235`.
 
-- **Spójna semantyka i hierarchia nagłówków.** Każda publiczna strona ma pojedynczy `h1`, a sekcje używają kolejnych poziomów nagłówków, np. [index.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/index.html#L180), [contact.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/contact.html#L140), [rooms.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/rooms.html#L141), [gallery.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/gallery.html#L141).
-- **Dostępność klawiaturowa jest widoczna w kodzie, nie tylko deklarowana.** Menu mobilne ma `aria-expanded`, pułapkę fokusu i obsługę `Escape` w [js/features/nav.js](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/js/features/nav.js#L20); zakładki mają poprawny model `role="tablist"` / `role="tab"` / `aria-selected` w [rooms.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/rooms.html#L145) i [js/features/tabs.js](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/js/features/tabs.js#L1); lightbox zarządza fokusem i klawiaturą w [js/features/lightbox.js](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/js/features/lightbox.js#L47).
-- **No-JS baseline i progressive enhancement są obecne.** HTML startuje z klasą `no-js` na [index.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/index.html#L2), JS przełącza ją na `js` w [js/script.js](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/js/script.js#L1), a CSS odsłania nawigację przy braku JS w [css/modules/layout.css](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/css/modules/layout.css#L139).
-- **Dostępność wizualna i motion są przemyślane.** Skip link i globalne `:focus-visible` są zdefiniowane w [css/modules/utilities.css](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/css/modules/utilities.css#L22), a tryb redukcji ruchu istnieje w [css/modules/motion.css](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/css/modules/motion.css#L1).
-- **Obrazy i fonty są obsłużone nowocześnie.** Fonty lokalne mają `font-display: swap` w [css/modules/tokens.css](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/css/modules/tokens.css#L150). Obrazy w głównych szablonach mają `srcset`, nowoczesne formaty i wymiary, np. [index.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/index.html#L147) oraz [gallery.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/gallery.html#L167).
-- **Repo ma działające automaty QA.** `scripts/check-link-integrity.mjs` sprawdza linki i sitemapę, a `scripts/a11y-axe.mjs` uruchamia scenariusze axe na lokalnym serwerze. W tej audytowanej kopii `npm run check:links` oraz `npm run test:a11y` zakończyły się powodzeniem.
+## 4. P1 — Improvements worth doing next (exactly 5)
+1. **Broken map fallback image path on contact page** (runtime content defect).  
+   Evidence: `contact.html:216` points to `assets/img/optimized/contact/map-fallback.svg`; link checker reports file missing.
+2. **Service worker precache entry typo prevents expected JS precache** (`script.minjs` instead of `script.min.js`).  
+   Evidence: `pwa/service-worker.js:20`.
+3. **Runtime asset references and SW precache list are inconsistent** (HTML loads non-minified runtime, SW static list expects minified assets).  
+   Evidence: `index.html:48`, `index.html:951`, `pwa/service-worker.js:18-20`, `doc/dist-notes.md:19-23`.
+4. **Netlify headers file appears fully wrapped in comment block syntax, so security headers may not be applied by platform parser.**  
+   Evidence: `netlify/_headers:1-31`.
+5. **Design token naming inconsistency (`--radius-pill` used but not defined in token set).**  
+   Evidence: `css/modules/utilities.css:30`, while tokens define `--radius-full` in `css/modules/tokens.css:69`.
 
+## 5. P2 — Minor refinements
+- Add machine-readable CI checks for heading outline and ARIA state regressions to complement existing scripts.
+- Consider reducing duplicated inline JSON-LD fallback payload size across pages to simplify maintenance.
+- Standardize internal naming language (PL/EN terms mixed in some labels and link text).
+- Add explicit `lastmod` entries in sitemap URLs for better crawler freshness signaling.
+- Contrast compliance cannot be verified with certainty from static tokens alone; computed-style/runtime audit is still needed.
 
-## 4. P2 — Minor Refinements
+## 6. Future enhancements (exactly 5)
+1. Introduce CI workflow to run `check:links`, build verification, and accessibility checks on every push.
+2. Generate service worker precache manifest from build output to avoid manual drift.
+3. Add automated schema validation for all `assets/seo/*.json` against selected schema rules.
+4. Add visual regression screenshots for key breakpoints (home, gallery, contact, legal pages).
+5. Add a dedicated content governance checklist for legal/privacy pages (update cadence + ownership).
 
-
-
-
-- **Zgodność kontrastu nie może zostać jednoznacznie potwierdzona statycznie.** Tokeny i motywy są obecne, ale bez computed styles i testu runtime nie da się odpowiedzialnie potwierdzić pełnej zgodności WCAG kontrastu.
-
-
-
-## 6. Compliance Checklist
-
-| Obszar | Status | Evidence |
+## 7. Compliance checklist
+| Check | Status | Evidence |
 |---|---|---|
-| headings valid | Pass | Jedno `h1` na każdej publicznej stronie; potwierdzone skanem repo oraz np. [index.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/index.html#L180), [contact.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/contact.html#L140), [rooms.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/rooms.html#L141) |
-| no broken links excluding intentional minification strategy | Pass | `npm run check:links` zakończył się komunikatem `Link integrity check passed (11 HTML file(s) + sitemap.xml).` |
-| no console.log | Pass | Brak dopasowań `console.log`; obecne są jedynie debug wrappers w [js/features/logger.js](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/js/features/logger.js#L1) |
-| aria attributes valid | Pass | Kod używa spójnych wzorców `aria-expanded`, `aria-selected`, `aria-invalid`, `aria-current`; dodatkowo `npm run test:a11y` przeszedł bez naruszeń |
-| images have width/height | Pass | Skrypt kontrolny nad wszystkimi root HTML nie wykazał żadnego `<img>` bez `width` i `height`; przykłady: [index.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/index.html#L163), [contact.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/contact.html#L178), [gallery.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/gallery.html#L183) |
-| no-JS baseline usable | Pass | HTML startuje z `.no-js` i CSS odsłania menu bez JS w [css/modules/layout.css](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/css/modules/layout.css#L139); upgrade do `.js` w [js/script.js](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/js/script.js#L1) |
-| sitemap present if expected | Pass | [sitemap.xml](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/sitemap.xml#L1) istnieje i jest uwzględniona w `robots.txt` |
-| robots present | Pass | [robots.txt](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/robots.txt#L1) istnieje |
-| OG image exists | Pass | Meta OG wskazuje na `assets/img/og/og-1200x630.jpg`, a plik jest obecny w repo; przykład w [index.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/index.html#L26) |
-| JSON-LD valid | Fail | Pliki `assets/seo/*.json` są poprawnym JSON, ale coverage na stronach publicznych jest niespójny, bo [onas.html](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/onas.html#L1) nie zawiera ani `ld-json`, ani fallbackowego JSON-LD |
+| headings valid | PASS | Single page-level `h1` pattern visible across pages (examples: `index.html:222-225`, `contact.html:178`, `rooms.html:167`). |
+| no broken links excluding intentional minification strategy | FAIL | `npm run check:links` reports missing `assets/img/optimized/contact/map-fallback.svg` referenced by `contact.html`. |
+| no console.log | PASS | No `console.log` found in runtime page JS modules (`js/script.js`, `js/features/*`); logs only in tooling scripts. |
+| aria attributes valid | PASS | ARIA states and roles are consistently used in menu/tabs/lightbox/form code (`js/features/nav.js:27-41`, `js/features/tabs.js:12-52`, `js/features/lightbox.js:80-90`, `contact.html:284-329`). |
+| images have width/height | PASS | Static check across root HTML found 0 `<img>` missing width/height; examples in `index.html:214-215`, `contact.html:220-221`, `gallery.html:219-220`. |
+| no-JS baseline usable | PASS | `no-js` bootstrap and CSS fallback navigation are implemented (`index.html:2`, `css/modules/layout.css:139-148`, `js/script.js:1`). |
+| sitemap present if expected | PASS | `sitemap.xml` present and listed in robots (`robots.txt:4`, `sitemap.xml:1-30`). |
+| robots present | PASS | `robots.txt` exists with crawl and sitemap directives (`robots.txt:1-4`). |
+| OG image exists | PASS | OG image metadata points to existing assets (`index.html:28-32`; files present under `assets/img/og/`). |
+| JSON-LD valid | PASS | JSON files in `assets/seo/*.json` parse successfully and fallback script is embedded in pages (`index.html:50-122`, `onas.html:50-106`). |
 
-## 7. Architecture Score (0–10)
+## 8. Architecture score (0–10)
+- **BEM consistency:** 8.6/10
+- **Token usage:** 8.2/10
+- **Accessibility:** 8.7/10
+- **Performance:** 7.9/10
+- **Maintainability:** 7.8/10
 
-- **BEM consistency:** 8.5/10
-  Klasy są w większości spójne z blokami i elementami (`site-header__*`, `room-card__*`, `gallery-cats__*`), choć powielony markup obniża ergonomię zmian.
-- **Token usage:** 9/10
-  Design tokens i fonty są zebrane centralnie w [css/modules/tokens.css](/c:/Users/KPKro/MY%20FILES/active-work/pr-01-vista/css/modules/tokens.css#L1).
-- **Accessibility:** 8.5/10
-  Mocna baza: skip link, focus styles, reduced motion, focus management, tabs, form messaging. Główny minus to brak runtime potwierdzenia kontrastu.
-- **Performance:** 7.5/10
-  Obrazy i fonty są obsłużone dobrze, ale lightbox usuwa intrinsic size, a PWA/cache strategy wymaga korekty.
-- **Maintainability:** 7/10
-  Modułowość jest dobra, ale powielenia w `rooms.html` i `gallery.html` oraz ręcznie utrzymywana lista cache service workera zwiększają koszt utrzymania.
+**Overall architecture score:** **8.2/10**
 
-**Overall architecture score:** 8.1/10
-
-## 8. Senior Rating (1–10)
-
-**8/10**
-
-Technicznie to dojrzały, uporządkowany front-end statyczny z realną dbałością o semantykę, dostępność i proces QA. Ocena nie jest wyższa przez krytyczny błąd zakresu service workera oraz kilka miejsc, gdzie utrzymanie zależy od ręcznego synchronizowania powielonego markupu i konfiguracji cache.
+## 9. Senior rating (1–10)
+**8.1/10** — Strong engineering baseline for a static front-end product (modularity, a11y patterns, SEO/PWA primitives). Score is reduced by repository-evident consistency defects in offline/deploy paths and a real broken asset reference that escaped QA.
