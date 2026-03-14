@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://hospitality-pr-01-vista.netlify.app/sitemap.xml
