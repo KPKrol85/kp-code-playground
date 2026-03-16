@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Tabs Component</title>
+    <link rel="stylesheet" href="tabs.css" />
+  </head>
+  <body>
+    <main class="tabs-demo" aria-labelledby="tabs-demo-title">
+      <section class="tabs" data-tabs>
+        <header class="tabs__header">
+          <h1 class="tabs__title" id="tabs-demo-title">Advanced Tabs</h1>
+          <p class="tabs__subtitle">
+            A reusable, mobile-first tabs pattern with keyboard support and smooth indicator motion.
+          </p>
+        </header>
+
+        <div class="tabs__nav-wrap">
+          <div
+            class="tabs__nav"
+            role="tablist"
+            aria-label="Product insights"
+            data-tabs-list
+          >
+            <span class="tabs__indicator" aria-hidden="true" data-tabs-indicator></span>
+
+            <button
+              class="tabs__button"
+              id="tabs-01-tab-overview"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="tabs-01-panel-overview"
+              tabindex="0"
+              data-tabs-tab
+            >
+              Overview
+            </button>
+
+            <button
+              class="tabs__button"
+              id="tabs-01-tab-analytics"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tabs-01-panel-analytics"
+              tabindex="-1"
+              data-tabs-tab
+            >
+              Analytics
+            </button>
+
+            <button
+              class="tabs__button"
+              id="tabs-01-tab-reports"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tabs-01-panel-reports"
+              tabindex="-1"
+              data-tabs-tab
+            >
+              Reports
+            </button>
+
+            <button
+              class="tabs__button"
+              id="tabs-01-tab-settings"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tabs-01-panel-settings"
+              tabindex="-1"
+              data-tabs-tab
+            >
+              Settings
+            </button>
+          </div>
+        </div>
+
+        <div class="tabs__panels">
+          <section
+            class="tabs__panel"
+            id="tabs-01-panel-overview"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs-01-tab-overview"
+            data-tabs-panel
+          >
+            <h2 class="tabs__panel-title">Performance at a glance</h2>
+            <p class="tabs__panel-text">
+              Track active users, conversion trends, and campaign health in a single focused workspace.
+              The overview panel is designed to surface top-level metrics quickly.
+            </p>
+          </section>
+
+          <section
+            class="tabs__panel"
+            id="tabs-01-panel-analytics"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs-01-tab-analytics"
+            data-tabs-panel
+            hidden
+          >
+            <h2 class="tabs__panel-title">Deeper analytics</h2>
+            <p class="tabs__panel-text">
+              Explore segmented user behavior and engagement patterns. Compare cohorts and identify
+              where the highest growth opportunities appear.
+            </p>
+          </section>
+
+          <section
+            class="tabs__panel"
+            id="tabs-01-panel-reports"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs-01-tab-reports"
+            data-tabs-panel
+            hidden
+          >
+            <h2 class="tabs__panel-title">Ready-to-share reports</h2>
+            <p class="tabs__panel-text">
+              Build clean stakeholder updates with export-friendly sections. Present KPI snapshots,
+              historical context, and actionable summaries.
+            </p>
+          </section>
+
+          <section
+            class="tabs__panel"
+            id="tabs-01-panel-settings"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs-01-tab-settings"
+            data-tabs-panel
+            hidden
+          >
+            <h2 class="tabs__panel-title">Workspace settings</h2>
+            <p class="tabs__panel-text">
+              Configure visual preferences, notification rules, and data refresh intervals to match
+              your team's workflow.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="tabs.js"></script>
+  </body>
+</html>
