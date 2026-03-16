@@ -1,0 +1,15 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+  <defs>
+    <radialGradient id="glint-core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(80 80) rotate(90) scale(80)">
+      <stop stop-color="#E4FFF7" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#E4FFF7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glint-star" x1="24" y1="80" x2="136" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8AF8D6" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#8AF8D6"/>
+      <stop offset="1" stop-color="#8AF8D6" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="80" fill="url(#glint-core)"/>
+  <path d="M80 20L87 73L140 80L87 87L80 140L73 87L20 80L73 73L80 20Z" fill="url(#glint-star)"/>
+</svg>

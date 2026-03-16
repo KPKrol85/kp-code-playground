@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Hero Component</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="premium-hero" aria-labelledby="premium-hero-title">
+        <div class="premium-hero__backdrop" aria-hidden="true"></div>
+
+        <div class="premium-hero__container">
+          <div class="premium-hero__content">
+            <p class="premium-hero__eyebrow">Elevated Product Narrative</p>
+
+            <h1 class="premium-hero__title" id="premium-hero-title">
+              Build standout digital moments with editorial precision.
+            </h1>
+
+            <p class="premium-hero__description">
+              The Aurora kit combines strategic UX layers, elegant interface systems, and
+              responsive storytelling blocks so teams can launch sophisticated experiences
+              in days, not quarters.
+            </p>
+
+            <div class="premium-hero__actions">
+              <a class="premium-hero__button premium-hero__button--primary" href="#">
+                Start your build
+              </a>
+              <a class="premium-hero__button premium-hero__button--ghost" href="#">
+                Explore components
+              </a>
+            </div>
+
+            <ul class="premium-hero__meta" aria-label="Key platform stats">
+              <li class="premium-hero__meta-item">
+                <span class="premium-hero__meta-value">98%</span>
+                <span class="premium-hero__meta-label">Accessibility score</span>
+              </li>
+              <li class="premium-hero__meta-item">
+                <span class="premium-hero__meta-value">3.1x</span>
+                <span class="premium-hero__meta-label">Faster delivery velocity</span>
+              </li>
+              <li class="premium-hero__meta-item">
+                <span class="premium-hero__meta-value">24h</span>
+                <span class="premium-hero__meta-label">Average prototype cycle</span>
+              </li>
+            </ul>
+          </div>
+
+          <figure class="premium-hero__media" aria-label="Aurora product showcase">
+            <img
+              class="premium-hero__media-image"
+              src="assets/hero-orbit-visual.svg"
+              alt="Abstract dashboard orbiting around a central product card"
+              width="860"
+              height="640"
+            />
+            <img
+              class="premium-hero__media-glint"
+              src="assets/hero-glint.svg"
+              alt=""
+              aria-hidden="true"
+              width="160"
+              height="160"
+            />
+            <figcaption class="premium-hero__media-caption">
+              <span class="premium-hero__media-chip">Live Component Preview</span>
+              Multi-surface design language with adaptive depth and tonal contrast.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
