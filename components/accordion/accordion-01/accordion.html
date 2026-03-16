@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium FAQ Accordion</title>
+    <link rel="stylesheet" href="accordion.css" />
+  </head>
+  <body>
+    <section class="accordion" aria-labelledby="accordion-title">
+      <div class="accordion__shell">
+        <header class="accordion__header">
+          <p class="accordion__eyebrow">Guest Experience · FAQ</p>
+          <h1 class="accordion__title" id="accordion-title">
+            Answers designed to feel as clear as the stay itself.
+          </h1>
+          <p class="accordion__intro">
+            A reusable, editorial-style FAQ module made for premium websites. Use
+            it to explain policies, workflows, or service details with calm visual
+            hierarchy and accessible interactions.
+          </p>
+        </header>
+
+        <div class="accordion__list" data-accordion role="list">
+          <article class="accordion__item" role="listitem">
+            <h2 class="accordion__item-heading">
+              <button
+                class="accordion__trigger"
+                type="button"
+                aria-expanded="true"
+                aria-controls="faq-panel-01"
+                id="faq-trigger-01"
+              >
+                <span class="accordion__trigger-text"
+                  >What time is check-in and can arrivals be flexible?</span
+                >
+                <span class="accordion__icon" aria-hidden="true">
+                  <svg
+                    class="accordion__icon-svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      class="accordion__icon-line accordion__icon-line--horizontal"
+                      d="M5 12H19"
+                    />
+                    <path
+                      class="accordion__icon-line accordion__icon-line--vertical"
+                      d="M12 5V19"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h2>
+            <div
+              class="accordion__panel"
+              id="faq-panel-01"
+              role="region"
+              aria-labelledby="faq-trigger-01"
+            >
+              <div class="accordion__panel-inner">
+                <p class="accordion__answer">
+                  Standard check-in opens at 3:00 PM, though we do our best to
+                  accommodate earlier arrivals when availability allows. If your
+                  plans are time-sensitive, add your expected arrival to your
+                  booking notes and our team will prepare the smoothest handoff.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion__item" role="listitem">
+            <h2 class="accordion__item-heading">
+              <button
+                class="accordion__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="faq-panel-02"
+                id="faq-trigger-02"
+              >
+                <span class="accordion__trigger-text"
+                  >Do you support dietary preferences for in-room dining?</span
+                >
+                <span class="accordion__icon" aria-hidden="true">
+                  <svg
+                    class="accordion__icon-svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      class="accordion__icon-line accordion__icon-line--horizontal"
+                      d="M5 12H19"
+                    />
+                    <path
+                      class="accordion__icon-line accordion__icon-line--vertical"
+                      d="M12 5V19"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h2>
+            <div
+              class="accordion__panel"
+              id="faq-panel-02"
+              role="region"
+              aria-labelledby="faq-trigger-02"
+              hidden
+            >
+              <div class="accordion__panel-inner">
+                <p class="accordion__answer">
+                  Yes. Our menu includes vegetarian, vegan, gluten-aware, and
+                  dairy-free options, and our culinary team can usually adapt
+                  signature dishes with prior notice. We recommend sharing
+                  preferences at least 24 hours before arrival for the most
+                  tailored experience.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion__item" role="listitem">
+            <h2 class="accordion__item-heading">
+              <button
+                class="accordion__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="faq-panel-03"
+                id="faq-trigger-03"
+              >
+                <span class="accordion__trigger-text"
+                  >Is airport transfer available for late-night flights?</span
+                >
+                <span class="accordion__icon" aria-hidden="true">
+                  <svg
+                    class="accordion__icon-svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      class="accordion__icon-line accordion__icon-line--horizontal"
+                      d="M5 12H19"
+                    />
+                    <path
+                      class="accordion__icon-line accordion__icon-line--vertical"
+                      d="M12 5V19"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h2>
+            <div
+              class="accordion__panel"
+              id="faq-panel-03"
+              role="region"
+              aria-labelledby="faq-trigger-03"
+              hidden
+            >
+              <div class="accordion__panel-inner">
+                <p class="accordion__answer">
+                  Private transfer service runs 24/7 with advance booking.
+                  Arrival details are monitored in real time, so your driver can
+                  adjust for delays automatically. You can request a transfer
+                  during booking or by contacting concierge any time before your
+                  departure.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion__item" role="listitem">
+            <h2 class="accordion__item-heading">
+              <button
+                class="accordion__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="faq-panel-04"
+                id="faq-trigger-04"
+              >
+                <span class="accordion__trigger-text"
+                  >Can I reserve spa sessions before my stay begins?</span
+                >
+                <span class="accordion__icon" aria-hidden="true">
+                  <svg
+                    class="accordion__icon-svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      class="accordion__icon-line accordion__icon-line--horizontal"
+                      d="M5 12H19"
+                    />
+                    <path
+                      class="accordion__icon-line accordion__icon-line--vertical"
+                      d="M12 5V19"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h2>
+            <div
+              class="accordion__panel"
+              id="faq-panel-04"
+              role="region"
+              aria-labelledby="faq-trigger-04"
+              hidden
+            >
+              <div class="accordion__panel-inner">
+                <p class="accordion__answer">
+                  Absolutely. Pre-arrival bookings open up to 45 days in advance
+                  and are encouraged for weekends and holiday periods. Once your
+                  reservation is confirmed, our team can suggest treatment pacing
+                  around dining and local experiences for a balanced itinerary.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <script src="accordion.js"></script>
+  </body>
+</html>
