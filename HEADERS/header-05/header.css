@@ -1,0 +1,354 @@
+.header-05 {
+  --header-05-bg: #f5f1ea;
+  --header-05-surface: #fffcf8;
+  --header-05-surface-strong: #1f1d1a;
+  --header-05-text: #161412;
+  --header-05-muted: #6c6358;
+  --header-05-border: #d9cfc2;
+  --header-05-accent: #8a5a3f;
+  --header-05-accent-contrast: #fff8f2;
+  --header-05-shadow: 0 18px 44px rgba(26, 18, 10, 0.12);
+  --header-05-radius: 1.1rem;
+  --header-05-focus: #3268c8;
+
+  position: relative;
+  padding: 1rem;
+  border: 1px solid var(--header-05-border);
+  border-radius: calc(var(--header-05-radius) + 0.2rem);
+  background: linear-gradient(145deg, #f9f6f1 0%, var(--header-05-bg) 52%, #f2ece4 100%);
+  color: var(--header-05-text);
+  box-shadow: var(--header-05-shadow);
+  font-family: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.header-05--theme-dark {
+  --header-05-bg: #1b1917;
+  --header-05-surface: #22201d;
+  --header-05-surface-strong: #f6f1e9;
+  --header-05-text: #ece5d9;
+  --header-05-muted: #b2aa9f;
+  --header-05-border: #3a342d;
+  --header-05-accent: #c89373;
+  --header-05-accent-contrast: #111;
+  --header-05-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(140deg, #171513 0%, #1d1a17 50%, #151311 100%);
+}
+
+.header-05__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.95rem;
+  border-bottom: 1px solid var(--header-05-border);
+}
+
+.header-05__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.header-05__brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--header-05-border);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  background: var(--header-05-surface);
+}
+
+.header-05__brand-name {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.header-05__brand-tag {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  color: var(--header-05-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header-05__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.header-05__theme-toggle,
+.header-05__menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--header-05-border);
+  border-radius: 999px;
+  background: var(--header-05-surface);
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 200ms ease, background-color 200ms ease, transform 220ms ease;
+}
+
+.header-05__theme-toggle {
+  padding: 0.55rem 0.8rem;
+}
+
+.header-05__theme-toggle-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.header-05__menu-toggle {
+  padding: 0.55rem 0.72rem;
+}
+
+.header-05__menu-toggle-lines {
+  position: relative;
+  width: 0.95rem;
+  height: 0.7rem;
+}
+
+.header-05__menu-toggle-lines::before,
+.header-05__menu-toggle-lines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0.11rem;
+  background: currentColor;
+  border-radius: 99px;
+  transition: transform 220ms ease;
+}
+
+.header-05__menu-toggle-lines::before {
+  top: 0.12rem;
+}
+
+.header-05__menu-toggle-lines::after {
+  bottom: 0.12rem;
+}
+
+.header-05__menu-toggle[aria-expanded="true"] .header-05__menu-toggle-lines::before {
+  transform: translateY(0.19rem) rotate(38deg);
+}
+
+.header-05__menu-toggle[aria-expanded="true"] .header-05__menu-toggle-lines::after {
+  transform: translateY(-0.19rem) rotate(-38deg);
+}
+
+.header-05__menu-toggle-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.header-05__main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.header-05__nav {
+  display: none;
+}
+
+.header-05__showcase {
+  padding: 1rem;
+  border-radius: var(--header-05-radius);
+  border: 1px solid var(--header-05-border);
+  background: color-mix(in srgb, var(--header-05-surface) 78%, transparent);
+}
+
+.header-05__showcase-label {
+  margin: 0;
+  font-size: 0.67rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--header-05-muted);
+}
+
+.header-05__showcase-title {
+  margin: 0.42rem 0 0;
+  font-size: clamp(1.02rem, 2vw, 1.18rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.header-05__showcase-copy {
+  margin: 0.55rem 0 0;
+  max-width: 38ch;
+  color: var(--header-05-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.header-05__actions {
+  display: none;
+}
+
+.header-05__action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0.58rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--header-05-border);
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--header-05-surface);
+  transition: background-color 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.header-05__action-link--accent {
+  border-color: color-mix(in srgb, var(--header-05-accent) 58%, var(--header-05-border));
+  background: var(--header-05-accent);
+  color: var(--header-05-accent-contrast);
+}
+
+.header-05__mobile-panel {
+  margin-top: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--header-05-border);
+  border-radius: var(--header-05-radius);
+  background: color-mix(in srgb, var(--header-05-surface) 88%, transparent);
+}
+
+.header-05__mobile-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header-05__mobile-item + .header-05__mobile-item {
+  margin-top: 0.2rem;
+}
+
+.header-05__mobile-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header-05__mobile-actions {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.header-05 :where(a, button):focus-visible {
+  outline: 2px solid var(--header-05-focus);
+  outline-offset: 2px;
+}
+
+.header-05 :where(a, button):hover {
+  border-color: color-mix(in srgb, var(--header-05-accent) 48%, var(--header-05-border));
+}
+
+.header-05 :where(.header-05__theme-toggle, .header-05__menu-toggle, .header-05__action-link):hover {
+  transform: translateY(-1px);
+}
+
+@media (min-width: 900px) {
+  .header-05 {
+    padding: 1.25rem 1.35rem;
+  }
+
+  .header-05__menu-toggle,
+  .header-05__mobile-panel {
+    display: none;
+  }
+
+  .header-05__main {
+    grid-template-columns: minmax(7rem, 1fr) minmax(18rem, 1.2fr) minmax(7rem, 1fr) auto;
+    align-items: center;
+    column-gap: 1rem;
+    padding-top: 1.15rem;
+  }
+
+  .header-05__nav {
+    display: block;
+  }
+
+  .header-05__nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: clamp(0.5rem, 1.1vw, 0.95rem);
+  }
+
+  .header-05__nav--right .header-05__nav-list {
+    justify-content: flex-end;
+  }
+
+  .header-05__nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.4rem;
+    padding-inline: 0.15rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.73rem;
+    letter-spacing: 0.095em;
+    text-transform: uppercase;
+  }
+
+  .header-05__showcase {
+    position: relative;
+    min-height: 4.9rem;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .header-05__showcase::before {
+    content: "";
+    position: absolute;
+    inset: -0.7rem 10% auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--header-05-border), transparent);
+  }
+
+  .header-05__showcase-copy {
+    font-size: 0.76rem;
+  }
+
+  .header-05__actions {
+    display: inline-flex;
+    gap: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-05 *,
+  .header-05 *::before,
+  .header-05 *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
