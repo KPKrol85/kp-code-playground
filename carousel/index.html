@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reusable Carousel Component</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="component-demo">
+      <section
+        class="carousel"
+        id="carousel-example"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Featured gallery"
+      >
+        <div class="carousel__viewport" aria-live="polite">
+          <div class="carousel__track" id="carousel-track">
+            <article class="carousel__slide is-active" data-slide aria-hidden="false">
+              <div class="carousel__media">
+                <img
+                  src="assets/placeholder-01.svg"
+                  alt="Soft gradient placeholder illustration one"
+                  width="1200"
+                  height="800"
+                  loading="eager"
+                />
+              </div>
+              <div class="carousel__content">
+                <p class="carousel__eyebrow">Collection</p>
+                <h2>Editorial Visual Placeholder</h2>
+                <p>Use this slide region for product highlights, campaigns, or feature storytelling.</p>
+              </div>
+            </article>
+
+            <article class="carousel__slide" data-slide aria-hidden="true">
+              <div class="carousel__media">
+                <img
+                  src="assets/placeholder-02.svg"
+                  alt="Soft gradient placeholder illustration two"
+                  width="1200"
+                  height="800"
+                  loading="lazy"
+                />
+              </div>
+              <div class="carousel__content">
+                <p class="carousel__eyebrow">Showcase</p>
+                <h2>Reusable Card-Like Layout</h2>
+                <p>The component scales from mobile to desktop and can be dropped into most layouts.</p>
+              </div>
+            </article>
+
+            <article class="carousel__slide" data-slide aria-hidden="true">
+              <div class="carousel__media">
+                <img
+                  src="assets/placeholder-03.svg"
+                  alt="Soft gradient placeholder illustration three"
+                  width="1200"
+                  height="800"
+                  loading="lazy"
+                />
+              </div>
+              <div class="carousel__content">
+                <p class="carousel__eyebrow">Flexible</p>
+                <h2>Simple Vanilla JavaScript API</h2>
+                <p>Navigation, keyboard support, and pagination are all implemented without dependencies.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="carousel__controls">
+          <button type="button" class="carousel__button" data-action="prev" aria-label="Show previous slide">
+            <span aria-hidden="true">←</span>
+          </button>
+
+          <div class="carousel__pagination" role="tablist" aria-label="Select slide"></div>
+
+          <button type="button" class="carousel__button" data-action="next" aria-label="Show next slide">
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
