@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion 02 | Premium Product Accordion</title>
+    <link rel="stylesheet" href="./accordion.css" />
+  </head>
+  <body>
+    <section class="kp-accordion" aria-labelledby="accordion-title">
+      <div class="kp-accordion__intro">
+        <p class="kp-accordion__eyebrow">Service Blueprint</p>
+        <h2 class="kp-accordion__title" id="accordion-title">
+          What’s included in your rollout package
+        </h2>
+        <p class="kp-accordion__lead">
+          Explore each delivery stream to understand scope, timing, and optional add-ons. Expand one or
+          multiple items to compare details side by side.
+        </p>
+      </div>
+
+      <div class="kp-accordion__list" data-accordion-root>
+        <article class="kp-accordion__item" data-accordion-item>
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              id="acc-trigger-01"
+              type="button"
+              aria-expanded="true"
+              aria-controls="acc-panel-01"
+            >
+              <span class="kp-accordion__trigger-main">
+                <span class="kp-accordion__icon" aria-hidden="true">
+                  <span class="kp-accordion__icon-line kp-accordion__icon-line--horizontal"></span>
+                  <span class="kp-accordion__icon-line kp-accordion__icon-line--vertical"></span>
+                </span>
+                <span class="kp-accordion__text-wrap">
+                  <span class="kp-accordion__item-title">Discovery & Architecture</span>
+                  <span class="kp-accordion__item-meta">Step 01</span>
+                </span>
+              </span>
+              <span class="kp-accordion__badge" data-tone="included">Included</span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="acc-panel-01"
+            role="region"
+            aria-labelledby="acc-trigger-01"
+          >
+            <div class="kp-accordion__panel-inner">
+              <p>
+                We map user journeys, align stakeholders, and produce a technical blueprint with platform
+                constraints, milestones, and risk controls for implementation.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="kp-accordion__item" data-accordion-item>
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              id="acc-trigger-02"
+              type="button"
+              aria-expanded="false"
+              aria-controls="acc-panel-02"
+            >
+              <span class="kp-accordion__trigger-main">
+                <span class="kp-accordion__icon" aria-hidden="true">
+                  <span class="kp-accordion__icon-line kp-accordion__icon-line--horizontal"></span>
+                  <span class="kp-accordion__icon-line kp-accordion__icon-line--vertical"></span>
+                </span>
+                <span class="kp-accordion__text-wrap">
+                  <span class="kp-accordion__item-title">UI System & Component Build</span>
+                  <span class="kp-accordion__item-meta">Updated</span>
+                </span>
+              </span>
+              <span class="kp-accordion__badge" data-tone="updated">Updated</span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="acc-panel-02"
+            role="region"
+            aria-labelledby="acc-trigger-02"
+          >
+            <div class="kp-accordion__panel-inner">
+              <p>
+                Includes tokenized styles, reusable primitives, and production-ready states to keep quality
+                consistent across growth features and future modules.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="kp-accordion__item" data-accordion-item>
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              id="acc-trigger-03"
+              type="button"
+              aria-expanded="false"
+              aria-controls="acc-panel-03"
+            >
+              <span class="kp-accordion__trigger-main">
+                <span class="kp-accordion__icon" aria-hidden="true">
+                  <span class="kp-accordion__icon-line kp-accordion__icon-line--horizontal"></span>
+                  <span class="kp-accordion__icon-line kp-accordion__icon-line--vertical"></span>
+                </span>
+                <span class="kp-accordion__text-wrap">
+                  <span class="kp-accordion__item-title">Enablement Workshops</span>
+                  <span class="kp-accordion__item-meta">Optional</span>
+                </span>
+              </span>
+              <span class="kp-accordion__badge" data-tone="optional">Optional</span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="acc-panel-03"
+            role="region"
+            aria-labelledby="acc-trigger-03"
+          >
+            <div class="kp-accordion__panel-inner">
+              <p>
+                Team training sessions cover implementation standards, handoff workflow, and rollout
+                operations so your internal teams can ship with confidence after launch.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <script src="./accordion.js"></script>
+  </body>
+</html>
