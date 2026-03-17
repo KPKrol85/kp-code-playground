@@ -1,65 +1,38 @@
-(function () {
-  var root = document.querySelector('[data-pricing-toggle]');
-  if (!root) {
+(function initPricingPremium() {
+  var component = document.querySelector('[data-component="pricing-01"]');
+
+  if (!component) {
     return;
   }
 
-  var toggle = root.querySelector('[data-pricing-toggle-button]');
-  var savings = root.querySelector('[data-pricing-savings]');
-  var priceValues = document.querySelectorAll('.pricing__price-value');
-  var periodValues = document.querySelectorAll('[data-pricing-period]');
-  var metaValues = document.querySelectorAll('[data-pricing-meta]');
-  var labels = root.querySelectorAll('.pricing__billing-label');
+  var toggle = component.querySelector('[data-billing-toggle]');
+  var valueNodes = component.querySelectorAll('[data-price], [data-period], [data-savings], [data-meta]');
 
-  var metaContent = {
-    monthly: [
-      'Billed monthly, cancel anytime.',
-      'Billed monthly, includes premium onboarding.',
-      'Billed monthly, annual contract available.'
-    ],
-    yearly: [
-      'Billed yearly at $288, two months included.',
-      'Billed yearly at $780, save $168 annually.',
-      'Billed yearly at $1464, includes strategic reviews.'
-    ]
-  };
-
-  function setLabelState(isYearly) {
-    labels.forEach(function (label, index) {
-      var shouldBeActive = isYearly ? index === 1 : index === 0;
-      label.classList.toggle('pricing__billing-label--active', shouldBeActive);
-    });
+  if (!toggle || !valueNodes.length) {
+    return;
   }
 
-  function updatePrices(isYearly) {
-    priceValues.forEach(function (valueEl, index) {
-      var nextValue = isYearly ? valueEl.dataset.yearly : valueEl.dataset.monthly;
-      valueEl.textContent = '$' + nextValue;
+  function updateValues(isYearly) {
+    var billingState = isYearly ? 'yearly' : 'monthly';
 
-      if (metaValues[index]) {
-        metaValues[index].textContent = isYearly ? metaContent.yearly[index] : metaContent.monthly[index];
+    valueNodes.forEach(function (node) {
+      var nextValue = node.dataset[billingState];
+
+      if (typeof nextValue !== 'string') {
+        return;
       }
+
+      node.textContent = nextValue;
     });
 
-    periodValues.forEach(function (periodEl) {
-      periodEl.textContent = isYearly ? '/month, billed yearly' : '/month';
-    });
-
-    if (savings) {
-      savings.textContent = isYearly ? '18% saved annually' : 'Save up to 18%';
-    }
-  }
-
-  function applyState(isYearly) {
-    toggle.setAttribute('aria-checked', isYearly ? 'true' : 'false');
-    updatePrices(isYearly);
-    setLabelState(isYearly);
+    toggle.setAttribute('aria-checked', String(isYearly));
+    component.setAttribute('data-billing', billingState);
   }
 
   toggle.addEventListener('click', function () {
     var isYearly = toggle.getAttribute('aria-checked') !== 'true';
-    applyState(isYearly);
+    updateValues(isYearly);
   });
 
-  applyState(false);
+  updateValues(false);
 })();
