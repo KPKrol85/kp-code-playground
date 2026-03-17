@@ -1,0 +1,15 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder two</title>
+  <desc id="desc">Gradient card with angled abstract bars</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1200" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2EEFF"/>
+      <stop offset="1" stop-color="#D9D2FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="32" fill="url(#bg2)"/>
+  <rect x="84" y="112" width="420" height="320" rx="34" fill="#8666FF" fill-opacity="0.24"/>
+  <rect x="558" y="192" width="548" height="116" rx="58" fill="#5A43D6" fill-opacity="0.35"/>
+  <rect x="558" y="336" width="400" height="84" rx="42" fill="#5A43D6" fill-opacity="0.22"/>
+  <path d="M204 616L386 442L524 590L694 402L864 606" stroke="#4A34BB" stroke-opacity="0.58" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
