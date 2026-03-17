@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP Code • Editorial Accordion</title>
+    <link rel="stylesheet" href="./accordion.css" />
+  </head>
+  <body>
+    <section class="kp-accordion" data-kp-accordion aria-label="Service information and frequently asked questions">
+      <div class="kp-accordion__intro">
+        <p class="kp-accordion__eyebrow">Service details</p>
+        <h2 class="kp-accordion__title">Everything you need before launch day</h2>
+        <p class="kp-accordion__supporting">
+          Review rollout timing, onboarding expectations, and support workflows. Open one or several sections depending on what you need.
+        </p>
+      </div>
+
+      <div class="kp-accordion__list">
+        <article class="kp-accordion__item">
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              type="button"
+              id="kp-accordion-trigger-01"
+              aria-expanded="false"
+              aria-controls="kp-accordion-panel-01"
+            >
+              <span class="kp-accordion__label-wrap">
+                <span class="kp-accordion__label">What is included in onboarding?</span>
+                <span class="kp-accordion__badge" aria-label="Updated">Updated</span>
+              </span>
+              <span class="kp-accordion__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="kp-accordion-panel-01"
+            role="region"
+            aria-labelledby="kp-accordion-trigger-01"
+          >
+            <div class="kp-accordion__content">
+              <p>
+                Your onboarding includes a kickoff workshop, information architecture review, and a shared implementation checklist. We also align success metrics and timelines with your internal stakeholders.
+              </p>
+              <p>
+                Most teams complete onboarding in two working sessions, with asynchronous feedback in between.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="kp-accordion__item">
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              type="button"
+              id="kp-accordion-trigger-02"
+              aria-expanded="false"
+              aria-controls="kp-accordion-panel-02"
+            >
+              <span class="kp-accordion__label-wrap">
+                <span class="kp-accordion__label">How quickly can we publish updates?</span>
+                <span class="kp-accordion__badge" aria-label="New">New</span>
+              </span>
+              <span class="kp-accordion__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="kp-accordion-panel-02"
+            role="region"
+            aria-labelledby="kp-accordion-trigger-02"
+          >
+            <div class="kp-accordion__content">
+              <p>
+                Publishing cycles are designed for rapid iteration. Content-only updates can typically go live the same day after approval, while structural changes are reviewed in the next sprint window.
+              </p>
+              <ul>
+                <li>Content amendments: same-day review path.</li>
+                <li>Layout adjustments: 2–3 business days.</li>
+                <li>Major workflow changes: planned release milestones.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="kp-accordion__item">
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              type="button"
+              id="kp-accordion-trigger-03"
+              aria-expanded="false"
+              aria-controls="kp-accordion-panel-03"
+            >
+              <span class="kp-accordion__label-wrap">
+                <span class="kp-accordion__label">What support is available after launch?</span>
+                <span class="kp-accordion__badge kp-accordion__badge--count" aria-label="Three support tiers">3 tiers</span>
+              </span>
+              <span class="kp-accordion__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="kp-accordion-panel-03"
+            role="region"
+            aria-labelledby="kp-accordion-trigger-03"
+          >
+            <div class="kp-accordion__content">
+              <p>
+                We provide three support levels: Essential for maintenance, Growth for ongoing enhancements, and Enterprise for embedded strategic support.
+              </p>
+              <p>
+                Each level includes dedicated response-time commitments, reporting cadence, and escalation pathways.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="kp-accordion__item">
+          <h3 class="kp-accordion__heading">
+            <button
+              class="kp-accordion__trigger"
+              type="button"
+              id="kp-accordion-trigger-04"
+              aria-expanded="false"
+              aria-controls="kp-accordion-panel-04"
+            >
+              <span class="kp-accordion__label-wrap">
+                <span class="kp-accordion__label">How do we handle compliance and approvals?</span>
+              </span>
+              <span class="kp-accordion__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div
+            class="kp-accordion__panel"
+            id="kp-accordion-panel-04"
+            role="region"
+            aria-labelledby="kp-accordion-trigger-04"
+          >
+            <div class="kp-accordion__content">
+              <p>
+                Approval steps are built into the editorial flow with role-based sign-off points. For regulated teams, we can map legal and compliance checkpoints directly to your content lifecycle.
+              </p>
+              <p>
+                This keeps governance predictable while still allowing teams to move quickly where policy permits.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <script src="./accordion.js"></script>
+  </body>
+</html>
