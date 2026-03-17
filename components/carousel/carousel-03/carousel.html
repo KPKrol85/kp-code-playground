@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel 03 - Premium Showcase Hero</title>
+    <link rel="stylesheet" href="carousel.css" />
+  </head>
+  <body>
+    <section class="showcase-carousel" aria-roledescription="carousel" aria-label="Featured showcases" data-carousel>
+      <div class="showcase-carousel__shell">
+        <header class="showcase-carousel__header">
+          <p class="showcase-carousel__eyebrow">Curated Collection 2026</p>
+          <h1 class="showcase-carousel__title">Premium Showcase Hero Carousel</h1>
+          <p class="showcase-carousel__intro">
+            A cinematic hero format for destinations, product stories, luxury campaigns, and editorial highlights.
+          </p>
+        </header>
+
+        <div class="showcase-carousel__viewport" aria-live="polite">
+          <div class="showcase-carousel__track" data-carousel-track>
+            <article class="showcase-carousel__slide is-active" data-carousel-slide aria-roledescription="slide" aria-label="1 of 4">
+              <div class="showcase-carousel__slide-surface">
+                <div class="showcase-carousel__content">
+                  <p class="showcase-carousel__meta">Aurora Retreat · Nordic Fjords</p>
+                  <h2 class="showcase-carousel__headline">A winter residence sculpted by silence and glass.</h2>
+                  <p class="showcase-carousel__description">
+                    Editorial suite experiences with private heli transfers, thermal suites, and architecture framed for the midnight sky.
+                  </p>
+                  <div class="showcase-carousel__actions">
+                    <a class="showcase-carousel__button showcase-carousel__button--primary" href="#">Reserve experience</a>
+                    <a class="showcase-carousel__button showcase-carousel__button--ghost" href="#">View itinerary</a>
+                  </div>
+                  <ul class="showcase-carousel__tags" aria-label="Slide highlights">
+                    <li class="showcase-carousel__tag">Private Guide</li>
+                    <li class="showcase-carousel__tag">5-Night Program</li>
+                    <li class="showcase-carousel__tag">Limited Access</li>
+                  </ul>
+                </div>
+                <figure class="showcase-carousel__media">
+                  <svg class="showcase-carousel__artwork" viewBox="0 0 960 760" role="img" aria-label="Nordic lodge under aurora">
+                    <defs>
+                      <linearGradient id="glow-a" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#6ef5d4" stop-opacity="0.82" />
+                        <stop offset="55%" stop-color="#74a9ff" stop-opacity="0.38" />
+                        <stop offset="100%" stop-color="#1b1c39" stop-opacity="0" />
+                      </linearGradient>
+                      <linearGradient id="night-a" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0d1231" />
+                        <stop offset="100%" stop-color="#1a1f46" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="960" height="760" fill="url(#night-a)" rx="36" />
+                    <ellipse cx="750" cy="102" rx="300" ry="128" fill="url(#glow-a)" />
+                    <path d="M0 562L148 499L286 548L424 458L562 530L700 466L836 541L960 486V760H0Z" fill="#252f66" />
+                    <path d="M118 542H486V658H118Z" fill="#1e2654" />
+                    <path d="M152 520H450V566H152Z" fill="#2e3977" />
+                    <rect x="174" y="579" width="64" height="55" fill="#f7d69f" opacity="0.85" />
+                    <rect x="272" y="579" width="64" height="55" fill="#f7d69f" opacity="0.72" />
+                    <rect x="370" y="579" width="64" height="55" fill="#f7d69f" opacity="0.64" />
+                    <circle cx="782" cy="564" r="88" fill="#5cb6e5" opacity="0.2" />
+                  </svg>
+                </figure>
+              </div>
+            </article>
+
+            <article class="showcase-carousel__slide" data-carousel-slide aria-roledescription="slide" aria-label="2 of 4">
+              <div class="showcase-carousel__slide-surface">
+                <div class="showcase-carousel__content">
+                  <p class="showcase-carousel__meta">Desert Pavilion · Atlas Horizon</p>
+                  <h2 class="showcase-carousel__headline">Golden-hour suites suspended between earth and sky.</h2>
+                  <p class="showcase-carousel__description">
+                    Multi-sensory hospitality concept with stargazing decks, chef-led tastings, and sculptural canopy lounges.
+                  </p>
+                  <div class="showcase-carousel__actions">
+                    <a class="showcase-carousel__button showcase-carousel__button--primary" href="#">Plan your stay</a>
+                    <a class="showcase-carousel__button showcase-carousel__button--ghost" href="#">Explore spaces</a>
+                  </div>
+                  <ul class="showcase-carousel__tags" aria-label="Slide highlights">
+                    <li class="showcase-carousel__tag">Sky Dining</li>
+                    <li class="showcase-carousel__tag">Sunset Deck</li>
+                    <li class="showcase-carousel__tag">24/7 Concierge</li>
+                  </ul>
+                </div>
+                <figure class="showcase-carousel__media">
+                  <svg class="showcase-carousel__artwork" viewBox="0 0 960 760" role="img" aria-label="Luxury desert pavilion">
+                    <defs>
+                      <linearGradient id="sky-b" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#f8b07a" />
+                        <stop offset="55%" stop-color="#de7246" />
+                        <stop offset="100%" stop-color="#7a2f3d" />
+                      </linearGradient>
+                      <linearGradient id="sand-b" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#f6cf96" />
+                        <stop offset="100%" stop-color="#bf6a49" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="960" height="760" fill="url(#sky-b)" rx="36" />
+                    <circle cx="734" cy="170" r="90" fill="#ffe5b6" opacity="0.7" />
+                    <path d="M0 538C94 518 176 501 286 507C396 513 466 553 571 558C674 563 783 523 960 495V760H0Z" fill="url(#sand-b)" />
+                    <path d="M254 462H696V628H254Z" fill="#6a2d36" opacity="0.86" />
+                    <path d="M286 426H664V486H286Z" fill="#8b4550" />
+                    <rect x="336" y="526" width="84" height="74" fill="#ffe3a8" opacity="0.78" />
+                    <rect x="538" y="526" width="84" height="74" fill="#ffe3a8" opacity="0.66" />
+                    <ellipse cx="478" cy="666" rx="280" ry="42" fill="#381f2d" opacity="0.35" />
+                  </svg>
+                </figure>
+              </div>
+            </article>
+
+            <article class="showcase-carousel__slide" data-carousel-slide aria-roledescription="slide" aria-label="3 of 4">
+              <div class="showcase-carousel__slide-surface">
+                <div class="showcase-carousel__content">
+                  <p class="showcase-carousel__meta">Maison Lumière · Paris Edition</p>
+                  <h2 class="showcase-carousel__headline">A fashion-week residence with private salon access.</h2>
+                  <p class="showcase-carousel__description">
+                    Heritage interiors reimagined for modern campaigns with atelier appointments, chauffeur routes, and collector previews.
+                  </p>
+                  <div class="showcase-carousel__actions">
+                    <a class="showcase-carousel__button showcase-carousel__button--primary" href="#">Request invitation</a>
+                    <a class="showcase-carousel__button showcase-carousel__button--ghost" href="#">See details</a>
+                  </div>
+                  <ul class="showcase-carousel__tags" aria-label="Slide highlights">
+                    <li class="showcase-carousel__tag">Front Row Access</li>
+                    <li class="showcase-carousel__tag">Signature Suites</li>
+                    <li class="showcase-carousel__tag">Collectors Program</li>
+                  </ul>
+                </div>
+                <figure class="showcase-carousel__media">
+                  <svg class="showcase-carousel__artwork" viewBox="0 0 960 760" role="img" aria-label="Parisian editorial mansion">
+                    <defs>
+                      <linearGradient id="sky-c" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#202440" />
+                        <stop offset="100%" stop-color="#3f2f4d" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="960" height="760" fill="url(#sky-c)" rx="36" />
+                    <path d="M0 572L178 520L354 545L510 507L664 542L816 498L960 520V760H0Z" fill="#4f3f66" />
+                    <path d="M218 356H742V642H218Z" fill="#2c2746" />
+                    <path d="M236 316H724V378H236Z" fill="#41355f" />
+                    <rect x="292" y="434" width="72" height="176" fill="#f5c9a2" opacity="0.83" />
+                    <rect x="444" y="434" width="72" height="176" fill="#f5c9a2" opacity="0.71" />
+                    <rect x="596" y="434" width="72" height="176" fill="#f5c9a2" opacity="0.64" />
+                    <path d="M290 300L480 197L670 300Z" fill="#5f4f7e" opacity="0.86" />
+                  </svg>
+                </figure>
+              </div>
+            </article>
+
+            <article class="showcase-carousel__slide" data-carousel-slide aria-roledescription="slide" aria-label="4 of 4">
+              <div class="showcase-carousel__slide-surface">
+                <div class="showcase-carousel__content">
+                  <p class="showcase-carousel__meta">Ocean Atelier · Amalfi Coast</p>
+                  <h2 class="showcase-carousel__headline">Cliffside villas for collectors of light and sea.</h2>
+                  <p class="showcase-carousel__description">
+                    Bespoke coastal residences with private moorings, marine wellness rituals, and slow-luxury culinary curation.
+                  </p>
+                  <div class="showcase-carousel__actions">
+                    <a class="showcase-carousel__button showcase-carousel__button--primary" href="#">Schedule a viewing</a>
+                    <a class="showcase-carousel__button showcase-carousel__button--ghost" href="#">Download brief</a>
+                  </div>
+                  <ul class="showcase-carousel__tags" aria-label="Slide highlights">
+                    <li class="showcase-carousel__tag">Villa Collection</li>
+                    <li class="showcase-carousel__tag">Marina Transfer</li>
+                    <li class="showcase-carousel__tag">Wellness Retreat</li>
+                  </ul>
+                </div>
+                <figure class="showcase-carousel__media">
+                  <svg class="showcase-carousel__artwork" viewBox="0 0 960 760" role="img" aria-label="Amalfi coastal villa scene">
+                    <defs>
+                      <linearGradient id="sky-d" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#4ca6da" />
+                        <stop offset="100%" stop-color="#1f4f86" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="960" height="760" fill="url(#sky-d)" rx="36" />
+                    <path d="M0 584C106 548 178 547 293 559C410 571 502 640 628 623C747 606 818 558 960 539V760H0Z" fill="#175181" />
+                    <path d="M82 506L220 432L334 456L470 378L596 412L714 342L848 375L960 316V760H82Z" fill="#2c7c91" />
+                    <path d="M546 334H826V558H546Z" fill="#f6ebd7" opacity="0.88" />
+                    <rect x="586" y="410" width="62" height="112" fill="#4aa2b9" opacity="0.85" />
+                    <rect x="690" y="410" width="62" height="112" fill="#4aa2b9" opacity="0.67" />
+                    <path d="M528 334L686 250L844 334Z" fill="#e9d6b4" />
+                  </svg>
+                </figure>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="showcase-carousel__controls">
+          <div class="showcase-carousel__control-group" role="group" aria-label="Carousel controls">
+            <button class="showcase-carousel__control showcase-carousel__control--prev" type="button" aria-label="Previous slide" data-carousel-prev>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button class="showcase-carousel__control showcase-carousel__control--next" type="button" aria-label="Next slide" data-carousel-next>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="showcase-carousel__status">
+            <p class="showcase-carousel__counter" data-carousel-counter>01 / 04</p>
+            <div class="showcase-carousel__dots" role="tablist" aria-label="Select slide" data-carousel-dots></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="carousel.js"></script>
+  </body>
+</html>
