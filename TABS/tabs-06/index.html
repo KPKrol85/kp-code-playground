@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs 06 — Magnetic Spotlight Editorial Command Tabs</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="tabs06" data-tabs-root>
+      <section class="tabs06__shell" aria-label="Editorial command tabs demo">
+        <header class="tabs06__intro">
+          <p class="tabs06__eyebrow">KP_Code Digital Vault</p>
+          <h1>Editorial Command Tabs</h1>
+          <p>
+            A premium magnetic spotlight tabs surface for product-ready navigation and
+            nuanced content staging.
+          </p>
+        </header>
+
+        <div class="tabs06__nav-wrap" data-nav-wrap>
+          <div class="tabs06__spotlight" aria-hidden="true"></div>
+          <div
+            class="tabs06__tablist"
+            role="tablist"
+            aria-label="Content sections"
+            data-tablist
+          >
+            <button
+              id="tabs06-tab-overview"
+              class="tabs06__tab"
+              role="tab"
+              type="button"
+              aria-selected="true"
+              aria-controls="tabs06-panel-overview"
+              tabindex="0"
+              data-tab
+            >
+              Overview
+            </button>
+            <button
+              id="tabs06-tab-narrative"
+              class="tabs06__tab"
+              role="tab"
+              type="button"
+              aria-selected="false"
+              aria-controls="tabs06-panel-narrative"
+              tabindex="-1"
+              data-tab
+            >
+              Narrative
+            </button>
+            <button
+              id="tabs06-tab-evidence"
+              class="tabs06__tab"
+              role="tab"
+              type="button"
+              aria-selected="false"
+              aria-controls="tabs06-panel-evidence"
+              tabindex="-1"
+              data-tab
+            >
+              Evidence
+            </button>
+            <button
+              id="tabs06-tab-strategy"
+              class="tabs06__tab"
+              role="tab"
+              type="button"
+              aria-selected="false"
+              aria-controls="tabs06-panel-strategy"
+              tabindex="-1"
+              data-tab
+            >
+              Strategy
+            </button>
+          </div>
+        </div>
+
+        <section class="tabs06__stage" aria-live="polite">
+          <article
+            id="tabs06-panel-overview"
+            class="tabs06__panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs06-tab-overview"
+            data-panel
+          >
+            <h2>System-level clarity with premium pacing</h2>
+            <p>
+              Combine strong typographic hierarchy, confident spacing, and intentional
+              motion to frame key information with editorial precision.
+            </p>
+            <dl>
+              <div>
+                <dt>Surface profile</dt>
+                <dd>Layered matte command rail with controlled light response</dd>
+              </div>
+              <div>
+                <dt>Transition quality</dt>
+                <dd>Opacity and depth shifts tuned for low cognitive friction</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article
+            id="tabs06-panel-narrative"
+            class="tabs06__panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs06-tab-narrative"
+            data-panel
+            hidden
+          >
+            <h2>Narrative structure for product storytelling</h2>
+            <p>
+              Present sequential ideas without visual clutter. Each panel enters with a
+              calm and measured reveal so users stay oriented while context evolves.
+            </p>
+            <dl>
+              <div>
+                <dt>Copy rhythm</dt>
+                <dd>Short-leading body with elevated heading contrast</dd>
+              </div>
+              <div>
+                <dt>Interaction tone</dt>
+                <dd>Restrained hover and focus states, no decorative noise</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article
+            id="tabs06-panel-evidence"
+            class="tabs06__panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs06-tab-evidence"
+            data-panel
+            hidden
+          >
+            <h2>Evidence-first framing with concise metadata</h2>
+            <p>
+              Support claims with compact detail blocks that remain readable on every
+              breakpoint. Metadata sits in a subtle grid that preserves hierarchy.
+            </p>
+            <dl>
+              <div>
+                <dt>Signal density</dt>
+                <dd>High-value details surfaced without overwhelming the stage</dd>
+              </div>
+              <div>
+                <dt>Scan speed</dt>
+                <dd>Key facts discoverable in under three visual fixations</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article
+            id="tabs06-panel-strategy"
+            class="tabs06__panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabs06-tab-strategy"
+            data-panel
+            hidden
+          >
+            <h2>Strategic mode switching for decision workflows</h2>
+            <p>
+              Transition between themes or workflows through a consistent command
+              surface. The active spotlight anchors attention without resorting to a
+              conventional pill or underline treatment.
+            </p>
+            <dl>
+              <div>
+                <dt>Input model</dt>
+                <dd>Pointer, keyboard, and reduced-motion friendly by default</dd>
+              </div>
+              <div>
+                <dt>Component readiness</dt>
+                <dd>Drop-in architecture for design systems and product libraries</dd>
+              </div>
+            </dl>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
