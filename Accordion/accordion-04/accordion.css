@@ -1,0 +1,313 @@
+:root {
+  --fc-bg: #f4f6fb;
+  --fc-surface: #ffffff;
+  --fc-text: #121728;
+  --fc-text-soft: #5a6378;
+  --fc-border: #e4e8f2;
+  --fc-accent: #4f67ff;
+  --fc-shadow-soft: 0 10px 24px rgba(16, 24, 40, 0.08);
+  --fc-shadow-active: 0 20px 36px rgba(16, 24, 40, 0.16);
+  --fc-radius: 1.15rem;
+  --fc-max-width: 860px;
+  --fc-motion-open: 400ms;
+  --fc-motion-close: 300ms;
+  --fc-ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(circle at top right, #edf1ff 0%, var(--fc-bg) 44%, #eff2f8 100%);
+  color: var(--fc-text);
+  line-height: 1.6;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.fc-accordion {
+  width: min(100%, var(--fc-max-width));
+  margin-inline: auto;
+}
+
+.fc-accordion__intro {
+  margin-bottom: 1.1rem;
+  padding: 0.35rem 0.3rem 0.85rem;
+}
+
+.fc-accordion__eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--fc-accent);
+}
+
+.fc-accordion__heading {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.45rem, 5vw, 2rem);
+  line-height: 1.2;
+}
+
+.fc-accordion__supporting {
+  margin: 0.65rem 0 0;
+  color: var(--fc-text-soft);
+  max-width: 62ch;
+}
+
+.fc-accordion__stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fc-item {
+  background: color-mix(in oklab, var(--fc-surface) 96%, #dce4ff 4%);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius);
+  transition: transform var(--fc-motion-close) var(--fc-ease-premium),
+    box-shadow var(--fc-motion-close) var(--fc-ease-premium),
+    background-color var(--fc-motion-close) var(--fc-ease-premium),
+    opacity var(--fc-motion-close) ease;
+}
+
+.fc-item__title-wrap {
+  margin: 0;
+}
+
+.fc-item__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.2rem 1.1rem;
+  border: none;
+  background: transparent;
+  border-radius: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fc-item__head-content {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.fc-item__title {
+  font-size: 1.01rem;
+  font-weight: 570;
+  transition: font-size var(--fc-motion-open) var(--fc-ease-premium),
+    font-weight var(--fc-motion-open) var(--fc-ease-premium);
+}
+
+.fc-item__meta {
+  width: max-content;
+  font-size: 0.73rem;
+  letter-spacing: 0.01em;
+  color: #33406e;
+  background: #e8edff;
+  border-radius: 999px;
+  padding: 0.17rem 0.52rem;
+}
+
+.fc-item__icon {
+  --icon-size: 1.18rem;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.fc-item__icon span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: #33406e;
+  transform: translate(-50%, -50%);
+  transition: transform 280ms var(--fc-ease-premium), opacity 240ms ease;
+}
+
+.fc-item__icon span:last-child {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.fc-item__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--fc-motion-close) var(--fc-ease-premium);
+}
+
+.fc-item__panel-inner {
+  overflow: hidden;
+  padding-inline: 1.1rem;
+  padding-bottom: 0;
+}
+
+.fc-item__body,
+.fc-item__actions {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.fc-item__body {
+  margin: 0;
+  color: #2d3448;
+  transition: opacity 220ms ease 90ms, transform 260ms var(--fc-ease-premium) 90ms;
+}
+
+.fc-item__actions {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  transition: opacity 220ms ease 150ms, transform 260ms var(--fc-ease-premium) 150ms;
+}
+
+.fc-item__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  border-radius: 0.6rem;
+  border: 1px solid #d7dff7;
+  background: #f4f7ff;
+  color: #20306a;
+  font: inherit;
+  font-size: 0.83rem;
+  font-weight: 540;
+  padding: 0.34rem 0.62rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fc-item__action--button {
+  appearance: none;
+}
+
+.fc-item.is-open {
+  background: var(--fc-surface);
+  box-shadow: var(--fc-shadow-active);
+  transform: translateY(-2px);
+}
+
+.fc-item.is-open .fc-item__title {
+  font-size: 1.07rem;
+  font-weight: 650;
+}
+
+.fc-item.is-open .fc-item__icon span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.fc-item.is-open .fc-item__icon span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.fc-item.is-open .fc-item__panel {
+  grid-template-rows: 1fr;
+  transition-duration: var(--fc-motion-open);
+}
+
+.fc-item.is-open .fc-item__panel-inner {
+  padding-bottom: 1.05rem;
+}
+
+.fc-item.is-open .fc-item__body,
+.fc-item.is-open .fc-item__actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fc-accordion.is-dimmed .fc-item:not(.is-open) {
+  opacity: 0.68;
+  transform: translateY(1px);
+  box-shadow: var(--fc-shadow-soft);
+}
+
+.fc-item__trigger:focus-visible,
+.fc-item__action:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--fc-accent) 72%, white);
+  outline-offset: 2px;
+}
+
+.fc-item__trigger:hover .fc-item__title,
+.fc-item__action:hover {
+  color: #12236d;
+}
+
+@media (min-width: 480px) {
+  body {
+    padding: 2rem 1.2rem 3.2rem;
+  }
+
+  .fc-item__trigger {
+    padding: 1.35rem 1.35rem;
+  }
+
+  .fc-item__panel-inner {
+    padding-inline: 1.35rem;
+  }
+}
+
+@media (min-width: 760px) {
+  body {
+    padding: 2.8rem 1.8rem 4rem;
+  }
+
+  .fc-accordion__intro {
+    margin-bottom: 1.3rem;
+    padding-inline: 0.4rem;
+  }
+
+  .fc-accordion__stack {
+    gap: 0.95rem;
+  }
+
+  .fc-item__trigger {
+    padding: 1.45rem 1.55rem;
+  }
+
+  .fc-item__panel-inner {
+    padding-inline: 1.55rem;
+  }
+
+  .fc-item.is-open .fc-item__panel-inner {
+    padding-bottom: 1.35rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding: 3.5rem 2rem 4.5rem;
+  }
+
+  .fc-accordion__heading {
+    font-size: 2.2rem;
+  }
+
+  .fc-item__trigger {
+    padding: 1.65rem 1.85rem;
+  }
+
+  .fc-item__panel-inner {
+    padding-inline: 1.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
