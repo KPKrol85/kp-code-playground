@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs 06 - AI Command Tabs</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="tabs06-shell">
+      <section class="tabs06" data-ai-command-tabs aria-label="AI Command Tabs component">
+        <header class="tabs06__header">
+          <p class="tabs06__eyebrow">KP_Code Digital Vault</p>
+          <h1 class="tabs06__title">AI Command Tabs</h1>
+          <p class="tabs06__subtitle">A precision command surface for high-context workspace flows.</p>
+        </header>
+
+        <div class="tabs06__command-bar" data-command-bar>
+          <div class="tabs06__bar-highlight" aria-hidden="true" data-bar-highlight></div>
+          <div class="tabs06__tablist" role="tablist" aria-label="Workspace command modes" aria-orientation="horizontal" data-tablist>
+            <button
+              id="tabs06-tab-orchestrate"
+              class="tabs06__tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="tabs06-panel-orchestrate"
+              tabindex="0"
+              data-tab
+            >
+              <span class="tabs06__tab-primary">Orchestrate</span>
+              <span class="tabs06__tab-meta">Runbook · Live</span>
+              <span class="tabs06__tab-status" aria-hidden="true"></span>
+            </button>
+
+            <button
+              id="tabs06-tab-signals"
+              class="tabs06__tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tabs06-panel-signals"
+              tabindex="-1"
+              data-tab
+            >
+              <span class="tabs06__tab-primary">Signals</span>
+              <span class="tabs06__tab-meta">Telemetry · 12 feeds</span>
+              <span class="tabs06__tab-status tabs06__tab-status--idle" aria-hidden="true"></span>
+            </button>
+
+            <button
+              id="tabs06-tab-policies"
+              class="tabs06__tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tabs06-panel-policies"
+              tabindex="-1"
+              data-tab
+            >
+              <span class="tabs06__tab-primary">Policies</span>
+              <span class="tabs06__tab-meta">Guardrails · Strict</span>
+              <span class="tabs06__tab-status tabs06__tab-status--warn" aria-hidden="true"></span>
+            </button>
+
+            <button
+              id="tabs06-tab-memory"
+              class="tabs06__tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tabs06-panel-memory"
+              tabindex="-1"
+              data-tab
+            >
+              <span class="tabs06__tab-primary">Memory</span>
+              <span class="tabs06__tab-meta">Context · Synced</span>
+              <span class="tabs06__tab-status tabs06__tab-status--stable" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
+        <section class="tabs06__stage" data-panels>
+          <article
+            id="tabs06-panel-orchestrate"
+            class="tabs06__panel is-active"
+            role="tabpanel"
+            aria-labelledby="tabs06-tab-orchestrate"
+            tabindex="0"
+            data-panel
+          >
+            <div class="tabs06__panel-head">
+              <h2>Orchestrate workspace execution</h2>
+              <p class="tabs06__support">Command graph is stable. Last deployment synced 4 minutes ago.</p>
+            </div>
+            <dl class="tabs06__facts">
+              <div><dt>Queued jobs</dt><dd>08</dd></div>
+              <div><dt>Critical path</dt><dd>2.4 min</dd></div>
+              <div><dt>Automation health</dt><dd>98.6%</dd></div>
+            </dl>
+          </article>
+
+          <article
+            id="tabs06-panel-signals"
+            class="tabs06__panel"
+            role="tabpanel"
+            aria-labelledby="tabs06-tab-signals"
+            tabindex="0"
+            data-panel
+            hidden
+          >
+            <div class="tabs06__panel-head">
+              <h2>Signals and operator insights</h2>
+              <p class="tabs06__support">Anomaly scoring is calm. Two feeds require manual acknowledgment.</p>
+            </div>
+            <dl class="tabs06__facts">
+              <div><dt>Active streams</dt><dd>12</dd></div>
+              <div><dt>Alert confidence</dt><dd>High</dd></div>
+              <div><dt>Review window</dt><dd>30 min</dd></div>
+            </dl>
+          </article>
+
+          <article
+            id="tabs06-panel-policies"
+            class="tabs06__panel"
+            role="tabpanel"
+            aria-labelledby="tabs06-tab-policies"
+            tabindex="0"
+            data-panel
+            hidden
+          >
+            <div class="tabs06__panel-head">
+              <h2>Policy controls and guardrails</h2>
+              <p class="tabs06__support">Safety thresholds are enforced. One policy rule is pending compliance review.</p>
+            </div>
+            <dl class="tabs06__facts">
+              <div><dt>Rule sets</dt><dd>24</dd></div>
+              <div><dt>Pending reviews</dt><dd>01</dd></div>
+              <div><dt>Audit state</dt><dd>Tracked</dd></div>
+            </dl>
+          </article>
+
+          <article
+            id="tabs06-panel-memory"
+            class="tabs06__panel"
+            role="tabpanel"
+            aria-labelledby="tabs06-tab-memory"
+            tabindex="0"
+            data-panel
+            hidden
+          >
+            <div class="tabs06__panel-head">
+              <h2>Context memory architecture</h2>
+              <p class="tabs06__support">Embedding index is synchronized and retention rules are currently balanced.</p>
+            </div>
+            <dl class="tabs06__facts">
+              <div><dt>Context blocks</dt><dd>1,204</dd></div>
+              <div><dt>Recall latency</dt><dd>28 ms</dd></div>
+              <div><dt>Retention tier</dt><dd>Adaptive</dd></div>
+            </dl>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
