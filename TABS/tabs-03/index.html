@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs 03 - Premium Segmented Tabs</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="demo-shell">
+      <section class="tabs-component" aria-label="Vault content sections">
+        <h1 class="demo-title">KP Code — Segmented Tabs 03</h1>
+
+        <div class="tabs" data-tabs>
+          <div class="tabs__track" role="tablist" aria-label="Digital Vault sections">
+            <span class="tabs__glider" aria-hidden="true"></span>
+
+            <button
+              id="tab-overview"
+              class="tabs__tab is-active"
+              role="tab"
+              type="button"
+              aria-selected="true"
+              aria-controls="panel-overview"
+              tabindex="0"
+              data-tab
+            >
+              Overview
+            </button>
+            <button
+              id="tab-assets"
+              class="tabs__tab"
+              role="tab"
+              type="button"
+              aria-selected="false"
+              aria-controls="panel-assets"
+              tabindex="-1"
+              data-tab
+            >
+              Assets
+            </button>
+            <button
+              id="tab-activity"
+              class="tabs__tab"
+              role="tab"
+              type="button"
+              aria-selected="false"
+              aria-controls="panel-activity"
+              tabindex="-1"
+              data-tab
+            >
+              Activity
+            </button>
+          </div>
+
+          <div class="tabs__panels">
+            <section
+              id="panel-overview"
+              class="tabs__panel is-active"
+              role="tabpanel"
+              tabindex="0"
+              aria-labelledby="tab-overview"
+              data-panel
+            >
+              <h2>Overview</h2>
+              <p>
+                The segmented control uses one shared glider for active state emphasis while labels remain clean,
+                readable, and touch friendly.
+              </p>
+            </section>
+
+            <section
+              id="panel-assets"
+              class="tabs__panel"
+              role="tabpanel"
+              tabindex="0"
+              aria-labelledby="tab-assets"
+              hidden
+              data-panel
+            >
+              <h2>Assets</h2>
+              <p>
+                Runtime width measurement allows long and short labels to fit naturally on larger screens, while
+                mobile can switch to equal-width segmentation for easier tapping.
+              </p>
+            </section>
+
+            <section
+              id="panel-activity"
+              class="tabs__panel"
+              role="tabpanel"
+              tabindex="0"
+              aria-labelledby="tab-activity"
+              hidden
+              data-panel
+            >
+              <h2>Activity</h2>
+              <p>
+                Keyboard navigation, focus-visible styling, and synchronized ARIA attributes keep the component
+                production-ready and accessible.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
