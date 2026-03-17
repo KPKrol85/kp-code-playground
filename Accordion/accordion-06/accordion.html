@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accordion 06 - Glass Hybrid</title>
+  <link rel="stylesheet" href="accordion.css" />
+</head>
+<body>
+  <section class="kp-accordion" data-kp-accordion aria-label="Product education FAQs">
+    <div class="kp-accordion__intro">
+      <p class="kp-accordion__eyebrow">Inside the experience</p>
+      <h1 class="kp-accordion__heading">How the premium workspace keeps teams in flow</h1>
+      <p class="kp-accordion__supporting">
+        Explore how our AI-guided workspace combines secure automation, elegant onboarding,
+        and confidence-building controls for every team size.
+      </p>
+    </div>
+
+    <div class="kp-accordion__items">
+      <article class="kp-item" data-accordion-item>
+        <h2 class="kp-item__title-wrap">
+          <button
+            class="kp-item__trigger"
+            id="acc-trigger-01"
+            aria-expanded="true"
+            aria-controls="acc-panel-01"
+            type="button"
+          >
+            <span class="kp-item__visual" aria-hidden="true"></span>
+            <span class="kp-item__text-group">
+              <span class="kp-item__title">AI copilots that respect your team's boundaries</span>
+              <span class="kp-item__teaser">Private context windows keep suggestions relevant without exposing sensitive work.</span>
+            </span>
+            <span class="kp-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path class="line line--horizontal" d="M5 12h14" />
+                <path class="line line--vertical" d="M12 5v14" />
+              </svg>
+            </span>
+          </button>
+        </h2>
+        <div
+          class="kp-item__panel"
+          id="acc-panel-01"
+          role="region"
+          aria-labelledby="acc-trigger-01"
+        >
+          <div class="kp-item__panel-inner">
+            <p>
+              Copilots can be tuned to specific workflows such as onboarding, QA, and release notes.
+              Admins define scope once, and suggestions remain aligned to the right source material.
+            </p>
+            <ul>
+              <li>Role-aware recommendations by team workspace</li>
+              <li>Approval checkpoints for high-impact actions</li>
+              <li>Audit-friendly interaction logs for compliance</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="kp-item" data-accordion-item>
+        <h2 class="kp-item__title-wrap">
+          <button
+            class="kp-item__trigger"
+            id="acc-trigger-02"
+            aria-expanded="false"
+            aria-controls="acc-panel-02"
+            type="button"
+          >
+            <span class="kp-item__visual kp-item__visual--violet" aria-hidden="true"></span>
+            <span class="kp-item__text-group">
+              <span class="kp-item__title">Onboarding paths that adapt to user confidence</span>
+              <span class="kp-item__teaser">Guided milestones shorten time-to-value for new and returning members.</span>
+            </span>
+            <span class="kp-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path class="line line--horizontal" d="M5 12h14" />
+                <path class="line line--vertical" d="M12 5v14" />
+              </svg>
+            </span>
+          </button>
+        </h2>
+        <div
+          class="kp-item__panel"
+          id="acc-panel-02"
+          role="region"
+          aria-labelledby="acc-trigger-02"
+        >
+          <div class="kp-item__panel-inner">
+            <p>
+              Smart check-ins detect where people hesitate and surface context cards before friction builds.
+              Teams can launch tailored pathways by role, product tier, or lifecycle stage.
+            </p>
+            <ul>
+              <li>Milestone checklists with completion insights</li>
+              <li>Context-aware tips that fade as confidence grows</li>
+              <li>Template library for success and support teams</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="kp-item" data-accordion-item>
+        <h2 class="kp-item__title-wrap">
+          <button
+            class="kp-item__trigger"
+            id="acc-trigger-03"
+            aria-expanded="false"
+            aria-controls="acc-panel-03"
+            type="button"
+          >
+            <span class="kp-item__visual kp-item__visual--mint" aria-hidden="true"></span>
+            <span class="kp-item__text-group">
+              <span class="kp-item__title">Premium service visibility in one calm control center</span>
+              <span class="kp-item__teaser">Live health signals and SLA snapshots stay readable across devices.</span>
+            </span>
+            <span class="kp-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path class="line line--horizontal" d="M5 12h14" />
+                <path class="line line--vertical" d="M12 5v14" />
+              </svg>
+            </span>
+          </button>
+        </h2>
+        <div
+          class="kp-item__panel"
+          id="acc-panel-03"
+          role="region"
+          aria-labelledby="acc-trigger-03"
+        >
+          <div class="kp-item__panel-inner">
+            <p>
+              Operators get clear system posture, incident timelines, and escalation playbooks without
+              digging through multiple tools. Stakeholders can track progress in real time.
+            </p>
+            <ul>
+              <li>Unified status feed with incident chronology</li>
+              <li>Custom SLA cards for enterprise accounts</li>
+              <li>Digest-ready exports for leadership syncs</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <script src="accordion.js"></script>
+</body>
+</html>
