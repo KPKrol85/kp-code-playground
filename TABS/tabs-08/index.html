@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split Hero Tabs</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="split-hero-tabs" data-component="split-hero-tabs">
+      <section class="hero-shell" aria-label="Split Hero Tabs showcase">
+        <aside class="hero-nav" aria-label="Story chapters">
+          <p class="hero-kicker">Digital Vault Collection</p>
+          <h1 class="hero-heading">Split Hero Tabs</h1>
+          <p class="hero-intro">
+            Premium editorial tab navigation with a cinematic content stage for product storytelling.
+          </p>
+
+          <div class="tablist" role="tablist" aria-label="Feature chapters" aria-orientation="vertical">
+            <button
+              id="tab-orbit"
+              class="tab-button is-active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-orbit"
+              tabindex="0"
+            >
+              <span class="tab-label">Orbit Workspace</span>
+              <span class="tab-meta">01 · Narrative Systems</span>
+            </button>
+
+            <button
+              id="tab-atelier"
+              class="tab-button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-atelier"
+              tabindex="-1"
+            >
+              <span class="tab-label">Atelier Views</span>
+              <span class="tab-meta">02 · Visual Intelligence</span>
+            </button>
+
+            <button
+              id="tab-vault"
+              class="tab-button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-vault"
+              tabindex="-1"
+            >
+              <span class="tab-label">Vault Mode</span>
+              <span class="tab-meta">03 · Private Delivery</span>
+            </button>
+          </div>
+        </aside>
+
+        <div class="hero-stage" data-stage>
+          <article
+            id="panel-orbit"
+            class="tab-panel is-active"
+            role="tabpanel"
+            aria-labelledby="tab-orbit"
+            tabindex="0"
+          >
+            <p class="panel-eyebrow">Orbit Workspace</p>
+            <h2 class="panel-title">Lead with context-rich scenes, not disconnected features.</h2>
+            <p class="panel-copy">
+              Build immersive product narratives where data, content, and interactions live in one calm surface.
+              Each chapter keeps teams aligned while preserving editorial depth.
+            </p>
+            <div class="panel-meta-row" aria-label="Orbit metrics">
+              <p><strong>42%</strong> faster briefing cycles</p>
+              <p><strong>9.8/10</strong> clarity score</p>
+            </div>
+          </article>
+
+          <article
+            id="panel-atelier"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-atelier"
+            tabindex="0"
+            hidden
+          >
+            <p class="panel-eyebrow">Atelier Views</p>
+            <h2 class="panel-title">Turn complexity into elegant decision-ready composition.</h2>
+            <p class="panel-copy">
+              Layered modules reveal the right amount of detail at every moment, balancing emotional impact with
+              operational precision.
+            </p>
+            <div class="panel-meta-row" aria-label="Atelier metrics">
+              <p><strong>3x</strong> insight retention</p>
+              <p><strong>18ms</strong> interaction latency</p>
+            </div>
+          </article>
+
+          <article
+            id="panel-vault"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-vault"
+            tabindex="0"
+            hidden
+          >
+            <p class="panel-eyebrow">Vault Mode</p>
+            <h2 class="panel-title">Deliver premium collaboration with discreet, high-trust control.</h2>
+            <p class="panel-copy">
+              Govern sensitive deliverables with deliberate access layers, refined review rituals, and a visual
+              language that communicates confidence.
+            </p>
+            <div class="panel-meta-row" aria-label="Vault metrics">
+              <p><strong>99.99%</strong> protected sessions</p>
+              <p><strong>0</strong> workflow friction alerts</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
