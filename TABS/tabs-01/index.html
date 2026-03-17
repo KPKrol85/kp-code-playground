@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs 01 — Minimal Underline Tabs</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="tabs-demo" data-tabs>
+      <h1 class="tabs-demo__title">Digital Vault Navigation</h1>
+
+      <div class="tabs" data-tabs-root>
+        <div
+          class="tabs__list"
+          role="tablist"
+          aria-label="Digital vault sections"
+          data-tabs-list
+        >
+          <button
+            class="tabs__tab"
+            role="tab"
+            id="tab-overview"
+            aria-controls="panel-overview"
+            aria-selected="true"
+            tabindex="0"
+            data-tab
+          >
+            Overview
+          </button>
+          <button
+            class="tabs__tab"
+            role="tab"
+            id="tab-assets"
+            aria-controls="panel-assets"
+            aria-selected="false"
+            tabindex="-1"
+            data-tab
+          >
+            Assets
+          </button>
+          <button
+            class="tabs__tab"
+            role="tab"
+            id="tab-security"
+            aria-controls="panel-security"
+            aria-selected="false"
+            tabindex="-1"
+            data-tab
+          >
+            Security
+          </button>
+          <button
+            class="tabs__tab"
+            role="tab"
+            id="tab-audit-trail"
+            aria-controls="panel-audit-trail"
+            aria-selected="false"
+            tabindex="-1"
+            data-tab
+          >
+            Audit Trail
+          </button>
+
+          <span class="tabs__indicator" aria-hidden="true" data-tabs-indicator></span>
+        </div>
+
+        <section
+          class="tabs__panel is-active"
+          role="tabpanel"
+          id="panel-overview"
+          aria-labelledby="tab-overview"
+          tabindex="0"
+          data-panel
+        >
+          <p>
+            Track the health of your digital vault at a glance with live status snapshots,
+            storage trends, and operational signals in one focused workspace.
+          </p>
+        </section>
+
+        <section
+          class="tabs__panel"
+          role="tabpanel"
+          id="panel-assets"
+          aria-labelledby="tab-assets"
+          tabindex="0"
+          hidden
+          data-panel
+        >
+          <p>
+            Manage internal libraries, reusable snippets, and deployable assets with clean
+            version history and easy retrieval across environments.
+          </p>
+        </section>
+
+        <section
+          class="tabs__panel"
+          role="tabpanel"
+          id="panel-security"
+          aria-labelledby="tab-security"
+          tabindex="0"
+          hidden
+          data-panel
+        >
+          <p>
+            Control access using permission layers, role-specific policies, and verification
+            workflows designed for teams operating in sensitive production contexts.
+          </p>
+        </section>
+
+        <section
+          class="tabs__panel"
+          role="tabpanel"
+          id="panel-audit-trail"
+          aria-labelledby="tab-audit-trail"
+          tabindex="0"
+          hidden
+          data-panel
+        >
+          <p>
+            Review timestamped activity logs and lifecycle events so every change can be
+            traced with confidence across releases and collaborators.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
