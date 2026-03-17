@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soft UI Tabs 04 | KP Code Playground</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="tabs-page" data-soft-tabs>
+      <section class="tabs-shell" aria-label="Digital Vault feature tabs">
+        <header class="tabs-heading">
+          <p class="eyebrow">KP_Code Digital Vault</p>
+          <h1>Soft Material Tabs</h1>
+          <p class="intro">
+            Refined neumorphic navigation with tactile depth and restrained premium motion.
+          </p>
+        </header>
+
+        <div class="tabs-surface">
+          <div class="tabs-list" role="tablist" aria-label="Vault modules">
+            <button
+              id="tab-library"
+              class="tab-button"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-library"
+              tabindex="0"
+              data-tab-trigger
+            >
+              Library
+            </button>
+            <button
+              id="tab-signals"
+              class="tab-button"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-signals"
+              tabindex="-1"
+              data-tab-trigger
+            >
+              Signals
+            </button>
+            <button
+              id="tab-automations"
+              class="tab-button"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-automations"
+              tabindex="-1"
+              data-tab-trigger
+            >
+              Automations
+            </button>
+          </div>
+
+          <div class="tabs-panels">
+            <section
+              id="panel-library"
+              class="tab-panel"
+              role="tabpanel"
+              aria-labelledby="tab-library"
+              data-tab-panel
+            >
+              <h2>Library Curation</h2>
+              <p>
+                Manage premium assets with a calm, unified material language tailored for daily
+                editorial workflows.
+              </p>
+            </section>
+
+            <section
+              id="panel-signals"
+              class="tab-panel"
+              role="tabpanel"
+              aria-labelledby="tab-signals"
+              aria-hidden="true"
+              hidden
+              data-tab-panel
+            >
+              <h2>Usage Signals</h2>
+              <p>
+                Monitor engagement cues and content quality indicators in a softly prioritized
+                operational view.
+              </p>
+            </section>
+
+            <section
+              id="panel-automations"
+              class="tab-panel"
+              role="tabpanel"
+              aria-labelledby="tab-automations"
+              aria-hidden="true"
+              hidden
+              data-tab-panel
+            >
+              <h2>Automation Rules</h2>
+              <p>
+                Trigger repeatable release actions with measured confidence and predictable approval
+                pathways.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
