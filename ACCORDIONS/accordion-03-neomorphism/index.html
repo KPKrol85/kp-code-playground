@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion 03 — Neomorphism</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="neo-page">
+      <section class="neo-accordion" aria-labelledby="neo-accordion-heading" data-accordion>
+        <header class="neo-accordion__intro">
+          <p class="neo-accordion__eyebrow">Digital Vault Component</p>
+          <h1 id="neo-accordion-heading">Soft UI project checkpoints</h1>
+          <p class="neo-accordion__lead">
+            A tactile accordion for reviewing decisions, delivery milestones, and launch details with calm,
+            premium depth.
+          </p>
+        </header>
+
+        <div class="neo-accordion__items">
+          <article class="neo-item is-open" data-accordion-item>
+            <h2 class="neo-item__heading">
+              <button
+                id="neo-trigger-strategy"
+                class="neo-item__trigger"
+                type="button"
+                aria-expanded="true"
+                aria-controls="neo-panel-strategy"
+              >
+                <span class="neo-item__text">
+                  <span class="neo-item__label">Strategy review</span>
+                  <span class="neo-item__title">Design direction and material finish</span>
+                </span>
+                <span class="neo-item__icon" aria-hidden="true">
+                  <span class="neo-item__icon-bar neo-item__icon-bar--horizontal"></span>
+                  <span class="neo-item__icon-bar neo-item__icon-bar--vertical"></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="neo-panel-strategy"
+              class="neo-item__panel"
+              role="region"
+              aria-labelledby="neo-trigger-strategy"
+            >
+              <div class="neo-item__content">
+                <p>
+                  The interface uses a warm stone surface with balanced highlight and shadow layers so each
+                  item reads as a refined physical control rather than a decorative card.
+                </p>
+                <ul>
+                  <li>Raised headers signal available actions without introducing visual noise.</li>
+                  <li>Open panels switch to a gently inset treatment to imply focused engagement.</li>
+                  <li>Typography stays dark, soft, and highly legible for long-form review notes.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="neo-item" data-accordion-item>
+            <h2 class="neo-item__heading">
+              <button
+                id="neo-trigger-launch"
+                class="neo-item__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="neo-panel-launch"
+              >
+                <span class="neo-item__text">
+                  <span class="neo-item__label">Launch planning</span>
+                  <span class="neo-item__title">Rollout timeline and client handoff</span>
+                </span>
+                <span class="neo-item__icon" aria-hidden="true">
+                  <span class="neo-item__icon-bar neo-item__icon-bar--horizontal"></span>
+                  <span class="neo-item__icon-bar neo-item__icon-bar--vertical"></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="neo-panel-launch"
+              class="neo-item__panel"
+              role="region"
+              aria-labelledby="neo-trigger-launch"
+              hidden
+            >
+              <div class="neo-item__content">
+                <p>
+                  The delivery plan keeps internal review, stakeholder approval, and implementation sign-off in a
+                  single rhythm so launch preparation remains easy to scan on both desktop and mobile.
+                </p>
+                <div class="neo-item__details">
+                  <div>
+                    <span class="neo-item__detail-label">Window</span>
+                    <strong>April 8–12</strong>
+                  </div>
+                  <div>
+                    <span class="neo-item__detail-label">Owner</span>
+                    <strong>Product experience team</strong>
+                  </div>
+                  <div>
+                    <span class="neo-item__detail-label">Priority</span>
+                    <strong>High-touch release</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="neo-item" data-accordion-item>
+            <h2 class="neo-item__heading">
+              <button
+                id="neo-trigger-services"
+                class="neo-item__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="neo-panel-services"
+              >
+                <span class="neo-item__text">
+                  <span class="neo-item__label">Service layer</span>
+                  <span class="neo-item__title">Operational notes for ongoing support</span>
+                </span>
+                <span class="neo-item__icon" aria-hidden="true">
+                  <span class="neo-item__icon-bar neo-item__icon-bar--horizontal"></span>
+                  <span class="neo-item__icon-bar neo-item__icon-bar--vertical"></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="neo-panel-services"
+              class="neo-item__panel"
+              role="region"
+              aria-labelledby="neo-trigger-services"
+              hidden
+            >
+              <div class="neo-item__content">
+                <p>
+                  Support guidance is grouped into small structured blocks so implementation teams can access
+                  environment, coverage, and escalation details without leaving the component surface.
+                </p>
+                <ol>
+                  <li>Confirm accessibility verification after each style adjustment.</li>
+                  <li>Review motion preferences before enabling any haptic enhancement.</li>
+                  <li>Document future content changes with the same heading and region pairing.</li>
+                </ol>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
