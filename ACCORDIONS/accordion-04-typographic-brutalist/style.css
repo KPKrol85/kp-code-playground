@@ -1,0 +1,212 @@
+:root {
+  --tb-bg: #f4f0e8;
+  --tb-surface: #fffdf8;
+  --tb-ink: #111111;
+  --tb-rule: #111111;
+  --tb-accent: #ff4d00;
+  --tb-accent-ink: #111111;
+  --tb-muted: #5f574d;
+  --tb-read: #8b8176;
+  --tb-max-width: 76rem;
+  --tb-rule-width: 0.22rem;
+  --tb-transition: 140ms cubic-bezier(0.2, 0, 0, 1);
+  font-synthesis-weight: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--tb-bg);
+  color: var(--tb-ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.tb-page {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.tb-accordion {
+  width: min(100%, var(--tb-max-width));
+  margin: 0 auto;
+  border: var(--tb-rule-width) solid var(--tb-rule);
+  background: var(--tb-surface);
+}
+
+.tb-accordion__intro {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border-bottom: var(--tb-rule-width) solid var(--tb-rule);
+}
+
+.tb-accordion__eyebrow {
+  margin: 0;
+  color: var(--tb-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tb-accordion__title {
+  margin: 0;
+  max-width: 12ch;
+  font-size: clamp(2.2rem, 5.8vw, 5.4rem);
+  line-height: 0.93;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.tb-accordion__lede {
+  margin: 0;
+  max-width: 58ch;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.5;
+}
+
+.tb-accordion__items {
+  display: grid;
+}
+
+.tb-accordion__item {
+  border-bottom: var(--tb-rule-width) solid var(--tb-rule);
+}
+
+.tb-accordion__item:last-child {
+  border-bottom: 0;
+}
+
+.tb-accordion__item.is-read .tb-accordion__meta {
+  color: var(--tb-read);
+}
+
+.tb-accordion__heading {
+  margin: 0;
+}
+
+.tb-accordion__trigger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'meta indicator'
+    'label indicator';
+  gap: 0.5rem 1rem;
+  width: 100%;
+  padding: 1.05rem 1.15rem 1.15rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--tb-transition), color var(--tb-transition);
+}
+
+.tb-accordion__meta,
+.tb-accordion__indicator,
+.tb-accordion__label {
+  transition: transform var(--tb-transition), color var(--tb-transition);
+}
+
+.tb-accordion__meta {
+  grid-area: meta;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tb-accordion__label {
+  grid-area: label;
+  max-width: 18ch;
+  font-size: clamp(1.45rem, 3.4vw, 3rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.tb-accordion__indicator {
+  grid-area: indicator;
+  align-self: center;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.tb-accordion__trigger:hover .tb-accordion__label,
+.tb-accordion__trigger:focus-visible .tb-accordion__label {
+  transform: translateX(0.35rem);
+}
+
+.tb-accordion__trigger:hover .tb-accordion__indicator,
+.tb-accordion__trigger:focus-visible .tb-accordion__indicator {
+  transform: translateX(-0.2rem);
+}
+
+.tb-accordion__item.is-open .tb-accordion__trigger {
+  background: var(--tb-accent);
+  color: var(--tb-accent-ink);
+}
+
+.tb-accordion__trigger:focus-visible {
+  outline: 0.2rem solid var(--tb-ink);
+  outline-offset: -0.28rem;
+}
+
+.tb-accordion__panel {
+  overflow: clip;
+  background: var(--tb-surface);
+  transition: grid-template-rows var(--tb-transition), visibility var(--tb-transition);
+}
+
+.tb-accordion__content {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1.15rem 1.3rem;
+  max-width: 66ch;
+}
+
+.tb-accordion__content p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+@media (min-width: 48rem) {
+  .tb-accordion__trigger {
+    grid-template-columns: 11rem minmax(0, 1fr) auto;
+    grid-template-areas: 'meta label indicator';
+    align-items: start;
+    padding: 1.25rem 1.5rem 1.35rem;
+  }
+
+  .tb-accordion__content {
+    padding: 0 1.5rem 1.6rem 12.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
