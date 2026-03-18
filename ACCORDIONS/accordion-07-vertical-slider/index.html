@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion 07 - Vertical Slider</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="vault-page">
+      <section class="vault-accordion" aria-labelledby="vault-accordion-title">
+        <div class="vault-accordion__intro">
+          <p class="vault-accordion__eyebrow">Digital Vault / Spatial Stories</p>
+          <div class="vault-accordion__heading-group">
+            <h1 id="vault-accordion-title">Vertical slider accordion with editorial panel reveals</h1>
+            <p class="vault-accordion__lead">
+              A cinematic horizontal accordion composed as architectural rails. Each panel expands into a
+              fully readable narrative frame while neighboring rails remain compact, tactile, and always
+              accessible.
+            </p>
+          </div>
+        </div>
+
+        <div class="vault-slider" data-accordion aria-label="Project narratives" aria-orientation="horizontal">
+          <article class="vault-panel is-active" data-panel data-theme="aurora">
+            <div class="vault-panel__surface">
+              <button
+                id="vault-trigger-aurora"
+                class="vault-panel__trigger"
+                type="button"
+                aria-expanded="true"
+                aria-controls="vault-panel-aurora"
+                data-trigger
+              >
+                <span class="vault-panel__index">01</span>
+                <span class="vault-panel__rail-copy">
+                  <span class="vault-panel__rail-title">Aurora Atrium</span>
+                  <span class="vault-panel__rail-subtitle">Hospitality concept</span>
+                </span>
+              </button>
+
+              <div
+                id="vault-panel-aurora"
+                class="vault-panel__content"
+                role="region"
+                aria-labelledby="vault-trigger-aurora"
+                data-content
+              >
+                <div class="vault-panel__backdrop"></div>
+                <div class="vault-panel__overlay"></div>
+                <div class="vault-panel__body">
+                  <p class="vault-panel__meta">Flagship arrival sequence</p>
+                  <h2 class="vault-panel__title">Aurora Atrium</h2>
+                  <p class="vault-panel__text">
+                    A hospitality-facing concept with layered mineral gradients, soft illumination, and a
+                    choreographed reveal cadence designed to feel calm, elevated, and unmistakably premium.
+                  </p>
+                  <div class="vault-panel__details">
+                    <div>
+                      <span class="vault-panel__stat-value">4.8m</span>
+                      <span class="vault-panel__stat-label">Ceiling gesture span</span>
+                    </div>
+                    <div>
+                      <span class="vault-panel__stat-value">12 zones</span>
+                      <span class="vault-panel__stat-label">Programmable lighting scenes</span>
+                    </div>
+                  </div>
+                  <a class="vault-panel__cta" href="#aurora-story">Review concept narrative</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="vault-panel" data-panel data-theme="monolith">
+            <div class="vault-panel__surface">
+              <button
+                id="vault-trigger-monolith"
+                class="vault-panel__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="vault-panel-monolith"
+                data-trigger
+              >
+                <span class="vault-panel__index">02</span>
+                <span class="vault-panel__rail-copy">
+                  <span class="vault-panel__rail-title">Monolith Gallery</span>
+                  <span class="vault-panel__rail-subtitle">Exhibition layout</span>
+                </span>
+              </button>
+
+              <div
+                id="vault-panel-monolith"
+                class="vault-panel__content"
+                role="region"
+                aria-labelledby="vault-trigger-monolith"
+                data-content
+                hidden
+              >
+                <div class="vault-panel__backdrop"></div>
+                <div class="vault-panel__overlay"></div>
+                <div class="vault-panel__body">
+                  <p class="vault-panel__meta">Curated artifact procession</p>
+                  <h2 class="vault-panel__title">Monolith Gallery</h2>
+                  <p class="vault-panel__text">
+                    Dark stone surfaces, precise apertures, and measured copy blocks frame the collection as a
+                    sequence of quiet reveals with a museum-grade sense of discipline.
+                  </p>
+                  <div class="vault-panel__details">
+                    <div>
+                      <span class="vault-panel__stat-value">9 bays</span>
+                      <span class="vault-panel__stat-label">Display chambers</span>
+                    </div>
+                    <div>
+                      <span class="vault-panel__stat-value">38%</span>
+                      <span class="vault-panel__stat-label">Light attenuation target</span>
+                    </div>
+                  </div>
+                  <a class="vault-panel__cta" href="#monolith-story">Open installation brief</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="vault-panel" data-panel data-theme="horizon">
+            <div class="vault-panel__surface">
+              <button
+                id="vault-trigger-horizon"
+                class="vault-panel__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="vault-panel-horizon"
+                data-trigger
+              >
+                <span class="vault-panel__index">03</span>
+                <span class="vault-panel__rail-copy">
+                  <span class="vault-panel__rail-title">Horizon Suite</span>
+                  <span class="vault-panel__rail-subtitle">Residential view line</span>
+                </span>
+              </button>
+
+              <div
+                id="vault-panel-horizon"
+                class="vault-panel__content"
+                role="region"
+                aria-labelledby="vault-trigger-horizon"
+                data-content
+                hidden
+              >
+                <div class="vault-panel__backdrop"></div>
+                <div class="vault-panel__overlay"></div>
+                <div class="vault-panel__body">
+                  <p class="vault-panel__meta">Panoramic interior framing</p>
+                  <h2 class="vault-panel__title">Horizon Suite</h2>
+                  <p class="vault-panel__text">
+                    Brushed metallic tones and lifted sky gradients give this panel a lighter, residentially
+                    refined character with broad typographic breathing room for editorial storytelling.
+                  </p>
+                  <div class="vault-panel__details">
+                    <div>
+                      <span class="vault-panel__stat-value">180°</span>
+                      <span class="vault-panel__stat-label">Primary sightline</span>
+                    </div>
+                    <div>
+                      <span class="vault-panel__stat-value">3 layers</span>
+                      <span class="vault-panel__stat-label">Glazing composition</span>
+                    </div>
+                  </div>
+                  <a class="vault-panel__cta" href="#horizon-story">View material direction</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="vault-panel" data-panel data-theme="ember">
+            <div class="vault-panel__surface">
+              <button
+                id="vault-trigger-ember"
+                class="vault-panel__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="vault-panel-ember"
+                data-trigger
+              >
+                <span class="vault-panel__index">04</span>
+                <span class="vault-panel__rail-copy">
+                  <span class="vault-panel__rail-title">Ember Lounge</span>
+                  <span class="vault-panel__rail-subtitle">Night program</span>
+                </span>
+              </button>
+
+              <div
+                id="vault-panel-ember"
+                class="vault-panel__content"
+                role="region"
+                aria-labelledby="vault-trigger-ember"
+                data-content
+                hidden
+              >
+                <div class="vault-panel__backdrop"></div>
+                <div class="vault-panel__overlay"></div>
+                <div class="vault-panel__body">
+                  <p class="vault-panel__meta">After-hours social capsule</p>
+                  <h2 class="vault-panel__title">Ember Lounge</h2>
+                  <p class="vault-panel__text">
+                    Warm metallic reflections and restrained crimson depth deliver a moody entertainment layer
+                    that expands with softness rather than spectacle.
+                  </p>
+                  <div class="vault-panel__details">
+                    <div>
+                      <span class="vault-panel__stat-value">24 seats</span>
+                      <span class="vault-panel__stat-label">Private salon capacity</span>
+                    </div>
+                    <div>
+                      <span class="vault-panel__stat-value">6 pm</span>
+                      <span class="vault-panel__stat-label">Ambient mode shift</span>
+                    </div>
+                  </div>
+                  <a class="vault-panel__cta" href="#ember-story">Explore evening setting</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
