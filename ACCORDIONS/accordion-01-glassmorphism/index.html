@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion 01 · Glassmorphism</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="glass-demo">
+      <section class="glass-accordion" aria-labelledby="glass-accordion-title">
+        <div class="glass-accordion__intro">
+          <p class="glass-accordion__eyebrow">Digital Vault • Accordion 01</p>
+          <h1 id="glass-accordion-title">Glassmorphism support accordion</h1>
+          <p class="glass-accordion__lede">
+            A polished frosted-glass accordion for premium interfaces, designed to keep
+            dense product information readable, calm, and intentionally structured.
+          </p>
+        </div>
+
+        <div class="glass-accordion__list" data-accordion>
+          <article class="glass-accordion__item is-open" data-accordion-item>
+            <h2 class="glass-accordion__heading">
+              <button
+                id="accordion-trigger-overview"
+                class="glass-accordion__trigger"
+                type="button"
+                aria-expanded="true"
+                aria-controls="accordion-panel-overview"
+                data-accordion-trigger
+              >
+                <span class="glass-accordion__trigger-copy">
+                  <span class="glass-accordion__label">Workspace overview</span>
+                  <span class="glass-accordion__meta">What teams see first when reviewing the vault</span>
+                </span>
+                <span class="glass-accordion__indicator" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="accordion-panel-overview"
+              class="glass-accordion__panel"
+              role="region"
+              aria-labelledby="accordion-trigger-overview"
+              data-accordion-panel
+            >
+              <div class="glass-accordion__panel-inner">
+                <p>
+                  The opening state highlights a concise snapshot of current priorities,
+                  recent client uploads, and review deadlines. It is intentionally short,
+                  so the top item can anchor the layout without overwhelming the page.
+                </p>
+                <ul class="glass-accordion__details">
+                  <li>Current focus: brand film approvals and revised launch assets.</li>
+                  <li>Ideal use: dashboards, project hubs, and premium account portals.</li>
+                  <li>Layout note: one panel remains open to preserve orientation.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-accordion__item" data-accordion-item>
+            <h2 class="glass-accordion__heading">
+              <button
+                id="accordion-trigger-security"
+                class="glass-accordion__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="accordion-panel-security"
+                data-accordion-trigger
+              >
+                <span class="glass-accordion__trigger-copy">
+                  <span class="glass-accordion__label">Security and permissions</span>
+                  <span class="glass-accordion__meta">Granular access rules for high-trust collaboration</span>
+                </span>
+                <span class="glass-accordion__indicator" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="accordion-panel-security"
+              class="glass-accordion__panel"
+              role="region"
+              aria-labelledby="accordion-trigger-security"
+              data-accordion-panel
+              hidden
+            >
+              <div class="glass-accordion__panel-inner">
+                <p>
+                  Assign view-only, reviewer, or editor access without exposing unrelated
+                  collections. Temporary links can be time-boxed for stakeholders, while
+                  internal teams retain full audit visibility across every decision point.
+                </p>
+                <p>
+                  This pattern works especially well when legal, production, and client
+                  users all need clear boundaries inside the same polished interface.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-accordion__item" data-accordion-item>
+            <h2 class="glass-accordion__heading">
+              <button
+                id="accordion-trigger-delivery"
+                class="glass-accordion__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="accordion-panel-delivery"
+                data-accordion-trigger
+              >
+                <span class="glass-accordion__trigger-copy">
+                  <span class="glass-accordion__label">Delivery cadence</span>
+                  <span class="glass-accordion__meta">How polished updates move from review to release</span>
+                </span>
+                <span class="glass-accordion__indicator" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="accordion-panel-delivery"
+              class="glass-accordion__panel"
+              role="region"
+              aria-labelledby="accordion-trigger-delivery"
+              data-accordion-panel
+              hidden
+            >
+              <div class="glass-accordion__panel-inner">
+                <p>
+                  Teams can structure updates around daily check-ins, milestone reviews,
+                  or launch-week sweeps. Each panel is suited to concise operational copy,
+                  making the component effective for schedules, process notes, or service
+                  details that should be quickly scannable.
+                </p>
+                <div class="glass-accordion__note">
+                  <strong>Recommended rhythm:</strong>
+                  Ship one clear status summary per item, then reveal deeper detail only when needed.
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-accordion__item" data-accordion-item>
+            <h2 class="glass-accordion__heading">
+              <button
+                id="accordion-trigger-customization"
+                class="glass-accordion__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="accordion-panel-customization"
+                data-accordion-trigger
+              >
+                <span class="glass-accordion__trigger-copy">
+                  <span class="glass-accordion__label">Customization guidance</span>
+                  <span class="glass-accordion__meta">Refining the component without losing its calm visual language</span>
+                </span>
+                <span class="glass-accordion__indicator" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                </span>
+              </button>
+            </h2>
+            <div
+              id="accordion-panel-customization"
+              class="glass-accordion__panel"
+              role="region"
+              aria-labelledby="accordion-trigger-customization"
+              data-accordion-panel
+              hidden
+            >
+              <div class="glass-accordion__panel-inner">
+                <p>
+                  Adjust the accent hue, border transparency, and blur strength to align
+                  the component with darker dashboards or brighter editorial layouts.
+                  Typography, spacing, and indicator sizing are all scoped locally so the
+                  package can drop into a larger library with minimal risk.
+                </p>
+                <p>
+                  For denser interfaces, reduce the panel padding and meta line length
+                  while keeping the trigger hit area generous for accessibility.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
