@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Perspective Carousel</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="pc3d-page-shell">
+      <section
+        class="pc3d-carousel"
+        data-carousel="perspective-3d"
+        aria-roledescription="carousel"
+        aria-label="Concept launch perspective carousel"
+      >
+        <div class="pc3d-carousel__intro">
+          <p class="pc3d-carousel__eyebrow">KP_Code Digital Vault / Carousels</p>
+          <div class="pc3d-carousel__headline-group">
+            <div>
+              <h1>Layered reveal cards with cinematic depth and premium focus control.</h1>
+            </div>
+            <p>
+              Built for product reveals, concept launches, and advanced portfolio storytelling,
+              this carousel treats every slide like a precision-lit panel suspended within a deep
+              3D scene.
+            </p>
+          </div>
+        </div>
+
+        <p class="pc3d-sr-only" aria-live="polite" aria-atomic="true" data-carousel-live></p>
+
+        <div class="pc3d-carousel__chrome">
+          <div class="pc3d-carousel__status" aria-hidden="true">
+            <span data-carousel-current>01</span>
+            <span class="pc3d-carousel__status-divider"></span>
+            <span data-carousel-total>06</span>
+          </div>
+
+          <div class="pc3d-carousel__controls">
+            <button
+              class="pc3d-carousel__control"
+              type="button"
+              data-carousel-prev
+              aria-label="Show previous slide"
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+            <button
+              class="pc3d-carousel__control"
+              type="button"
+              data-carousel-next
+              aria-label="Show next slide"
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pc3d-carousel__stage" data-carousel-stage>
+          <div class="pc3d-carousel__track" data-carousel-track>
+            <article class="pc3d-card is-active" data-carousel-slide data-theme="aurora">
+              <div class="pc3d-card__media" aria-hidden="true">
+                <div class="pc3d-card__glow"></div>
+                <div class="pc3d-card__mesh pc3d-card__mesh--aurora"></div>
+                <div class="pc3d-card__orb"></div>
+              </div>
+              <div class="pc3d-card__content" data-carousel-content>
+                <p class="pc3d-card__meta">Concept launch / Phase 01</p>
+                <h2 class="pc3d-card__title">Astra One Console</h2>
+                <p class="pc3d-card__description">
+                  Present a flagship gaming platform with a suspended-glass UI treatment,
+                  atmospheric lighting, and detail hierarchy tuned for premium reveal moments.
+                </p>
+                <dl class="pc3d-card__stats">
+                  <div>
+                    <dt>Launch mode</dt>
+                    <dd>Reveal keynote</dd>
+                  </div>
+                  <div>
+                    <dt>Display profile</dt>
+                    <dd>4K / 144 Hz</dd>
+                  </div>
+                  <div>
+                    <dt>Focus layer</dt>
+                    <dd>Hero-first</dd>
+                  </div>
+                </dl>
+                <div class="pc3d-card__actions">
+                  <button class="pc3d-card__cta" type="button">Review launch story</button>
+                </div>
+              </div>
+              <button class="pc3d-card__focus-hit" type="button" data-carousel-focus>
+                Bring Astra One Console to center
+              </button>
+            </article>
+
+            <article class="pc3d-card" data-carousel-slide data-theme="ion">
+              <div class="pc3d-card__media" aria-hidden="true">
+                <div class="pc3d-card__glow"></div>
+                <div class="pc3d-card__mesh pc3d-card__mesh--ion"></div>
+                <div class="pc3d-card__beam"></div>
+              </div>
+              <div class="pc3d-card__content" data-carousel-content>
+                <p class="pc3d-card__meta">Mobility prototype / Vision deck</p>
+                <h2 class="pc3d-card__title">Ion Arc EV</h2>
+                <p class="pc3d-card__description">
+                  Frame an electric concept vehicle with layered telemetry, brushed-metal accents,
+                  and enough visual restraint to support high-ticket storytelling.
+                </p>
+                <dl class="pc3d-card__stats">
+                  <div>
+                    <dt>Range concept</dt>
+                    <dd>620 km</dd>
+                  </div>
+                  <div>
+                    <dt>Material voice</dt>
+                    <dd>Machined alloy</dd>
+                  </div>
+                  <div>
+                    <dt>Motion tone</dt>
+                    <dd>Calm drift</dd>
+                  </div>
+                </dl>
+                <div class="pc3d-card__actions">
+                  <button class="pc3d-card__cta" type="button">Open mobility brief</button>
+                </div>
+              </div>
+              <button class="pc3d-card__focus-hit" type="button" data-carousel-focus>
+                Bring Ion Arc EV to center
+              </button>
+            </article>
+
+            <article class="pc3d-card" data-carousel-slide data-theme="signal">
+              <div class="pc3d-card__media" aria-hidden="true">
+                <div class="pc3d-card__glow"></div>
+                <div class="pc3d-card__mesh pc3d-card__mesh--signal"></div>
+                <div class="pc3d-card__signal"></div>
+              </div>
+              <div class="pc3d-card__content" data-carousel-content>
+                <p class="pc3d-card__meta">Studio system / Portfolio chapter</p>
+                <h2 class="pc3d-card__title">Signal Frame OS</h2>
+                <p class="pc3d-card__description">
+                  Use a precise editorial card system to reveal platform layers, ambient metrics,
+                  and product language for premium software or industrial design showcases.
+                </p>
+                <dl class="pc3d-card__stats">
+                  <div>
+                    <dt>UX layer</dt>
+                    <dd>Adaptive shell</dd>
+                  </div>
+                  <div>
+                    <dt>Panel latency</dt>
+                    <dd>12 ms</dd>
+                  </div>
+                  <div>
+                    <dt>Use case</dt>
+                    <dd>Portfolio reveal</dd>
+                  </div>
+                </dl>
+                <div class="pc3d-card__actions">
+                  <button class="pc3d-card__cta" type="button">Inspect interface notes</button>
+                </div>
+              </div>
+              <button class="pc3d-card__focus-hit" type="button" data-carousel-focus>
+                Bring Signal Frame OS to center
+              </button>
+            </article>
+
+            <article class="pc3d-card" data-carousel-slide data-theme="lumen">
+              <div class="pc3d-card__media" aria-hidden="true">
+                <div class="pc3d-card__glow"></div>
+                <div class="pc3d-card__mesh pc3d-card__mesh--lumen"></div>
+                <div class="pc3d-card__flare"></div>
+              </div>
+              <div class="pc3d-card__content" data-carousel-content>
+                <p class="pc3d-card__meta">Audio hardware / Premium retail</p>
+                <h2 class="pc3d-card__title">Lumen Wave Headset</h2>
+                <p class="pc3d-card__description">
+                  Deliver a retail-ready showcase card with luminous contour lighting, polished
+                  feature copy, and a clear center-stage emphasis on the hero product.
+                </p>
+                <dl class="pc3d-card__stats">
+                  <div>
+                    <dt>Spatial profile</dt>
+                    <dd>7.1 engine</dd>
+                  </div>
+                  <div>
+                    <dt>Battery design</dt>
+                    <dd>40 hours</dd>
+                  </div>
+                  <div>
+                    <dt>Retail mode</dt>
+                    <dd>Immersive demo</dd>
+                  </div>
+                </dl>
+                <div class="pc3d-card__actions">
+                  <button class="pc3d-card__cta" type="button">See retail composition</button>
+                </div>
+              </div>
+              <button class="pc3d-card__focus-hit" type="button" data-carousel-focus>
+                Bring Lumen Wave Headset to center
+              </button>
+            </article>
+
+            <article class="pc3d-card" data-carousel-slide data-theme="helix">
+              <div class="pc3d-card__media" aria-hidden="true">
+                <div class="pc3d-card__glow"></div>
+                <div class="pc3d-card__mesh pc3d-card__mesh--helix"></div>
+                <div class="pc3d-card__helix"></div>
+              </div>
+              <div class="pc3d-card__content" data-carousel-content>
+                <p class="pc3d-card__meta">Biotech concept / Investor preview</p>
+                <h2 class="pc3d-card__title">Helix Cell Lab</h2>
+                <p class="pc3d-card__description">
+                  Showcase an advanced health-tech platform through layered glass modules that keep
+                  scientific credibility intact while elevating the emotional tone.
+                </p>
+                <dl class="pc3d-card__stats">
+                  <div>
+                    <dt>Preview type</dt>
+                    <dd>Investor brief</dd>
+                  </div>
+                  <div>
+                    <dt>Data surface</dt>
+                    <dd>Live assays</dd>
+                  </div>
+                  <div>
+                    <dt>Visual cadence</dt>
+                    <dd>Measured depth</dd>
+                  </div>
+                </dl>
+                <div class="pc3d-card__actions">
+                  <button class="pc3d-card__cta" type="button">View concept narrative</button>
+                </div>
+              </div>
+              <button class="pc3d-card__focus-hit" type="button" data-carousel-focus>
+                Bring Helix Cell Lab to center
+              </button>
+            </article>
+
+            <article class="pc3d-card" data-carousel-slide data-theme="zenith">
+              <div class="pc3d-card__media" aria-hidden="true">
+                <div class="pc3d-card__glow"></div>
+                <div class="pc3d-card__mesh pc3d-card__mesh--zenith"></div>
+                <div class="pc3d-card__horizon"></div>
+              </div>
+              <div class="pc3d-card__content" data-carousel-content>
+                <p class="pc3d-card__meta">Architecture engine / Vision platform</p>
+                <h2 class="pc3d-card__title">Zenith Habitat Grid</h2>
+                <p class="pc3d-card__description">
+                  Balance world-building and clarity with an elevated card composition suited to
+                  concept architecture, future-city presentations, and premium planning decks.
+                </p>
+                <dl class="pc3d-card__stats">
+                  <div>
+                    <dt>World scale</dt>
+                    <dd>42 sectors</dd>
+                  </div>
+                  <div>
+                    <dt>Display style</dt>
+                    <dd>Masterplan UI</dd>
+                  </div>
+                  <div>
+                    <dt>Navigation</dt>
+                    <dd>Click-to-center</dd>
+                  </div>
+                </dl>
+                <div class="pc3d-card__actions">
+                  <button class="pc3d-card__cta" type="button">Open habitat overview</button>
+                </div>
+              </div>
+              <button class="pc3d-card__focus-hit" type="button" data-carousel-focus>
+                Bring Zenith Habitat Grid to center
+              </button>
+            </article>
+          </div>
+        </div>
+
+        <div class="pc3d-carousel__pagination" data-carousel-pagination aria-label="Slide selection"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
