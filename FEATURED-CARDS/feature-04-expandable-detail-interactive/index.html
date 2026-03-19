@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expandable Detail Interactive Cards</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="fdc-shell">
+      <section
+        class="fdc-feature-set"
+        data-fdc-root
+        data-fdc-accordion="single"
+        aria-labelledby="fdc-section-title"
+      >
+        <div class="fdc-section-intro">
+          <p class="fdc-eyebrow">Expandable detail system</p>
+          <h1 id="fdc-section-title">Feature clarity that unfolds with intent.</h1>
+          <p class="fdc-lead">
+            A premium card pattern for capability breakdowns, product specs, and service details.
+            Each card stays crisp in its resting state, then opens into richer guidance only when
+            requested.
+          </p>
+        </div>
+
+        <div class="fdc-grid" role="list">
+          <article class="fdc-card" role="listitem" data-fdc-card>
+            <div class="fdc-card__surface">
+              <div class="fdc-card__topline">
+                <span class="fdc-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 3.75 19.5 7.5v9L12 20.25 4.5 16.5v-9L12 3.75Zm0 1.68-5.93 2.96L12 11.35l5.93-2.96L12 5.43Zm-6 4.14v5.99l5.25 2.63v-5.99L6 9.57Zm6.75 8.62L18 15.56V9.57l-5.25 2.63v5.99Z"/>
+                  </svg>
+                  Delivery layer
+                </span>
+                <p class="fdc-summary">Launch-ready architecture for customer-facing rollouts.</p>
+              </div>
+
+              <div class="fdc-card__header">
+                <div>
+                  <h3 class="fdc-card__title">Modular deployment paths</h3>
+                  <p class="fdc-card__excerpt">
+                    Keep implementation choices visible without cluttering the default card state.
+                  </p>
+                </div>
+
+                <button class="fdc-toggle" type="button" data-fdc-toggle>
+                  <span class="fdc-toggle__label">View detail</span>
+                  <span class="fdc-toggle__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41Z"/>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+
+              <div class="fdc-panel" data-fdc-panel hidden>
+                <div class="fdc-panel__inner">
+                  <div class="fdc-panel__content">
+                    <div class="fdc-detail-block">
+                      <h4>Benefits</h4>
+                      <ul>
+                        <li>Supports phased launches across pilot, production, and enterprise tiers.</li>
+                        <li>Separates customer-facing promises from implementation-specific notes.</li>
+                        <li>Creates a reliable handoff surface for product, engineering, and sales teams.</li>
+                      </ul>
+                    </div>
+                    <div class="fdc-detail-block">
+                      <h4>Implementation notes</h4>
+                      <p>
+                        Deployment routes can be mapped to CMS modules, SaaS plans, or internal
+                        release tracks without rewriting the card layout.
+                      </p>
+                    </div>
+                    <div class="fdc-detail-meta" aria-label="Deployment metrics">
+                      <div>
+                        <span>Configuration modes</span>
+                        <strong>03</strong>
+                      </div>
+                      <div>
+                        <span>Launch friction</span>
+                        <strong>Low</strong>
+                      </div>
+                      <div>
+                        <span>Ownership model</span>
+                        <strong>Shared</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="fdc-card" role="listitem" data-fdc-card>
+            <div class="fdc-card__surface">
+              <div class="fdc-card__topline">
+                <span class="fdc-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M5 5h14v4H5V5Zm0 5.5h14V19H5v-8.5Zm2 2V17h3v-4.5H7Zm5 0V17h5v-1.5h-5Zm0-2.5v1h5v-1h-5Z"/>
+                  </svg>
+                  Control layer
+                </span>
+                <p class="fdc-summary">Readable operational detail for complex capabilities.</p>
+              </div>
+
+              <div class="fdc-card__header">
+                <div>
+                  <h3 class="fdc-card__title">Adaptive workflow logic</h3>
+                  <p class="fdc-card__excerpt">
+                    Explain decision paths, exceptions, and fallback behavior without overwhelming the overview.
+                  </p>
+                </div>
+
+                <button class="fdc-toggle" type="button" data-fdc-toggle>
+                  <span class="fdc-toggle__label">View detail</span>
+                  <span class="fdc-toggle__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41Z"/>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+
+              <div class="fdc-panel" data-fdc-panel hidden>
+                <div class="fdc-panel__inner">
+                  <div class="fdc-panel__content">
+                    <div class="fdc-detail-block">
+                      <h4>Feature breakdown</h4>
+                      <ul>
+                        <li>Priority routing for standard, urgent, and exception states.</li>
+                        <li>Human-review checkpoint for edge-case decisions.</li>
+                        <li>Quiet failure handling with a visible fallback path.</li>
+                      </ul>
+                    </div>
+                    <div class="fdc-detail-block">
+                      <h4>Technical notes</h4>
+                      <p>
+                        Works well for service blueprints, internal tooling cards, or product features
+                        that need both a clean headline and deeper operational context.
+                      </p>
+                    </div>
+                    <div class="fdc-detail-callout">
+                      <span>Why it matters</span>
+                      <p>
+                        Buyers and stakeholders can scan the promise first, then inspect process
+                        clarity only when evaluating fit.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="fdc-card" role="listitem" data-fdc-card>
+            <div class="fdc-card__surface">
+              <div class="fdc-card__topline">
+                <span class="fdc-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 2.75a4.75 4.75 0 0 1 4.75 4.75v.58A4.99 4.99 0 0 1 19.5 12.5a5 5 0 0 1-5 5h-5A4.5 4.5 0 0 1 9 8.56a4.73 4.73 0 0 1 3-5.81Zm0 2A2.75 2.75 0 0 0 9.25 7.5v.81l-.81.07A2.5 2.5 0 0 0 8.5 13.5h6a3 3 0 0 0 .29-5.99l-1.04-.1V7.5A2.75 2.75 0 0 0 12 4.75Z"/>
+                  </svg>
+                  Reliability layer
+                </span>
+                <p class="fdc-summary">Service assurance cues that stay polished in compact layouts.</p>
+              </div>
+
+              <div class="fdc-card__header">
+                <div>
+                  <h3 class="fdc-card__title">Continuity and fallback coverage</h3>
+                  <p class="fdc-card__excerpt">
+                    Present resilience commitments with enough depth to feel credible, not crowded.
+                  </p>
+                </div>
+
+                <button class="fdc-toggle" type="button" data-fdc-toggle>
+                  <span class="fdc-toggle__label">View detail</span>
+                  <span class="fdc-toggle__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41Z"/>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+
+              <div class="fdc-panel" data-fdc-panel hidden>
+                <div class="fdc-panel__inner">
+                  <div class="fdc-panel__content">
+                    <div class="fdc-detail-block">
+                      <h4>Coverage summary</h4>
+                      <ul>
+                        <li>Primary and secondary delivery paths with controlled failover logic.</li>
+                        <li>Documented recovery windows for stakeholders and support teams.</li>
+                        <li>Structured maintenance guidance for expected service interruptions.</li>
+                      </ul>
+                    </div>
+                    <div class="fdc-detail-block">
+                      <h4>Detail view use cases</h4>
+                      <p>
+                        Suitable for uptime guarantees, warranty conditions, migration readiness, or
+                        technical support commitments in premium product interfaces.
+                      </p>
+                    </div>
+                    <div class="fdc-detail-meta" aria-label="Reliability attributes">
+                      <div>
+                        <span>Recovery path</span>
+                        <strong>Tiered</strong>
+                      </div>
+                      <div>
+                        <span>Review cadence</span>
+                        <strong>Monthly</strong>
+                      </div>
+                      <div>
+                        <span>Alert readiness</span>
+                        <strong>Active</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
