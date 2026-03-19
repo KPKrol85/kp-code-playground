@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reveal on Hover Discovery Cards</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="rohd-shell">
+      <section
+        class="rohd-discovery"
+        data-rohd-root
+        aria-labelledby="rohd-heading"
+      >
+        <div class="rohd-discovery__intro">
+          <p class="rohd-kicker">Discovery-focused featured cards</p>
+          <h1 id="rohd-heading">A fixed-frame feature system with deeper intent on reveal.</h1>
+          <p class="rohd-lead">
+            Designed for product capability highlights, service summaries, and landing-page discovery
+            moments where the card footprint remains stable while richer detail unfolds inside the
+            same polished surface.
+          </p>
+        </div>
+
+        <div class="rohd-grid" role="list">
+          <article id="adaptive-rollout" class="rohd-card rohd-card--signal" role="listitem" data-rohd-card>
+            <div class="rohd-card__frame">
+              <div class="rohd-card__accent" aria-hidden="true"></div>
+              <div class="rohd-card__stack">
+                <div class="rohd-card__primary">
+                  <div class="rohd-card__eyebrow">
+                    <span class="rohd-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M4 16.25V8.5l4.5 2.3v7.7L4 16.25Zm5.75 2.25V10.8L14.25 8v7.75l-4.5 2.75Zm5.75-3.75V7.95L20 5.5v6.75l-4.5 2.5Zm-10-7.45L10 5l4.2 2.3-4.43 2.7L5.5 7.3Zm10.05-.15L20 4.75" />
+                      </svg>
+                    </span>
+                    <span class="rohd-card__label">Capability signal</span>
+                  </div>
+
+                  <div class="rohd-card__copy">
+                    <h2 class="rohd-card__title">Adaptive rollout visibility</h2>
+                    <p class="rohd-card__summary">
+                      Show the launch promise immediately, then reveal the delivery logic only when
+                      curiosity turns into evaluation.
+                    </p>
+                  </div>
+
+                  <button class="rohd-card__toggle" type="button" data-rohd-toggle>
+                    <span>Reveal insight</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M12 5.5a1 1 0 0 1 1 1v8.09l2.8-2.8a1 1 0 1 1 1.4 1.42l-4.5 4.5a1 1 0 0 1-1.4 0l-4.5-4.5a1 1 0 1 1 1.4-1.42l2.8 2.8V6.5a1 1 0 0 1 1-1Z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="rohd-card__secondary">
+                  <p class="rohd-card__detail">
+                    Reveal phased activation notes, governance checkpoints, and rollout sequencing
+                    without changing the card’s outer geometry or disrupting the surrounding grid.
+                  </p>
+                  <a class="rohd-card__cta" href="#adaptive-rollout">Explore rollout map</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="product-explanation" class="rohd-card rohd-card--clarity" role="listitem" data-rohd-card>
+            <div class="rohd-card__frame">
+              <div class="rohd-card__accent" aria-hidden="true"></div>
+              <div class="rohd-card__stack">
+                <div class="rohd-card__primary">
+                  <div class="rohd-card__eyebrow">
+                    <span class="rohd-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M5 4.75h9.5a3.75 3.75 0 0 1 0 7.5H13v1h1.5a3.75 3.75 0 0 1 0 7.5H5v-2h9.5a1.75 1.75 0 0 0 0-3.5H5v-2h9.5a1.75 1.75 0 0 0 0-3.5H5v-5Z" />
+                      </svg>
+                    </span>
+                    <span class="rohd-card__label">Narrative control</span>
+                  </div>
+
+                  <div class="rohd-card__copy">
+                    <h2 class="rohd-card__title">Layered product explanation</h2>
+                    <p class="rohd-card__summary">
+                      Keep the first read concise while preserving room for useful nuance, caveats,
+                      and decision-ready context.
+                    </p>
+                  </div>
+
+                  <button class="rohd-card__toggle" type="button" data-rohd-toggle>
+                    <span>Reveal insight</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M12 5.5a1 1 0 0 1 1 1v8.09l2.8-2.8a1 1 0 1 1 1.4 1.42l-4.5 4.5a1 1 0 0 1-1.4 0l-4.5-4.5a1 1 0 1 1 1.4-1.42l2.8 2.8V6.5a1 1 0 0 1 1-1Z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="rohd-card__secondary">
+                  <p class="rohd-card__detail">
+                    The reveal layer is ideal for support tiers, workflow exceptions, pricing logic,
+                    or service notes that should feel present but not loud in the default state.
+                  </p>
+                  <a class="rohd-card__cta" href="#product-explanation">Review detail pattern</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="continuity-coverage" class="rohd-card rohd-card--assurance" role="listitem" data-rohd-card>
+            <div class="rohd-card__frame">
+              <div class="rohd-card__accent" aria-hidden="true"></div>
+              <div class="rohd-card__stack">
+                <div class="rohd-card__primary">
+                  <div class="rohd-card__eyebrow">
+                    <span class="rohd-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M12 3.25 5.75 5.9v5.05c0 4 2.63 7.7 6.25 8.8 3.62-1.1 6.25-4.8 6.25-8.8V5.9L12 3.25Zm0 2.17 4.25 1.8v3.73c0 2.88-1.73 5.57-4.25 6.53-2.52-.96-4.25-3.65-4.25-6.53V7.22L12 5.42Zm-.82 7.95 4.66-4.66 1.41 1.41-6.07 6.07-3.02-3.02 1.42-1.41 1.6 1.61Z" />
+                      </svg>
+                    </span>
+                    <span class="rohd-card__label">Trust surface</span>
+                  </div>
+
+                  <div class="rohd-card__copy">
+                    <h2 class="rohd-card__title">Continuity built into the story</h2>
+                    <p class="rohd-card__summary">
+                      Introduce assurance cues up front, then let resilience details emerge through a
+                      calm, clearly controlled internal transition.
+                    </p>
+                  </div>
+
+                  <button class="rohd-card__toggle" type="button" data-rohd-toggle>
+                    <span>Reveal insight</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M12 5.5a1 1 0 0 1 1 1v8.09l2.8-2.8a1 1 0 1 1 1.4 1.42l-4.5 4.5a1 1 0 0 1-1.4 0l-4.5-4.5a1 1 0 1 1 1.4-1.42l2.8 2.8V6.5a1 1 0 0 1 1-1Z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="rohd-card__secondary">
+                  <p class="rohd-card__detail">
+                    Use the secondary layer for coverage windows, fallback paths, service review
+                    cadence, or migration safeguards while keeping the overview surface composed.
+                  </p>
+                  <a class="rohd-card__cta" href="#continuity-coverage">See assurance notes</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
