@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP_Code — Frosted Tech Button System</title>
+    <meta
+      name="description"
+      content="A premium frosted tech button system with 10 reusable SaaS-inspired button variants in light and dark themes."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="vault-shell">
+      <section class="button-system" aria-labelledby="button-system-title">
+        <div class="hero-card frost-panel">
+          <div class="hero-copy">
+            <p class="eyebrow">KP_Code Digital Vault · Premium Buttons</p>
+            <h1 id="button-system-title">Frosted Tech System</h1>
+            <p class="hero-text">
+              A polished button showcase for premium dashboards, AI tools, startup
+              products, and modern software interfaces. Each variant shares a
+              cohesive frosted surface language, crisp interaction states, and
+              reusable design tokens.
+            </p>
+          </div>
+
+          <div class="hero-actions" aria-label="Theme and view controls">
+            <button
+              class="mode-switch"
+              type="button"
+              data-theme-toggle
+              aria-pressed="true"
+              aria-label="Switch to light mode"
+            >
+              <span class="mode-switch__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path
+                    d="M12 3.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V4.5a.75.75 0 0 1 .75-.75Zm0 12a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Zm8.25-4.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1 0-1.5h1.5Zm-15 0a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1 0-1.5h1.5Zm10.657-5.907a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 1 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061Zm-9.935 9.935a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 1 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061Zm11.056 1.06a.75.75 0 0 1 1.06 1.061l-1.06 1.06a.75.75 0 1 1-1.061-1.06l1.061-1.061ZM8.093 6.403a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0Z"
+                  />
+                </svg>
+              </span>
+              <span class="mode-switch__label">Dark mode</span>
+            </button>
+
+            <button
+              class="button button--ghost button--sm"
+              type="button"
+              data-copy="Design tokens copied"
+            >
+              Copy token label
+            </button>
+          </div>
+        </div>
+
+        <div class="status-bar frost-panel" aria-label="System metadata">
+          <div>
+            <span class="status-label">Collection</span>
+            <strong>Buttons / 02</strong>
+          </div>
+          <div>
+            <span class="status-label">Visual style</span>
+            <strong>Frosted tech / SaaS</strong>
+          </div>
+          <div>
+            <span class="status-label">Modes</span>
+            <strong>Light + Dark</strong>
+          </div>
+          <div>
+            <span class="status-label">Interaction</span>
+            <strong>Accessible states</strong>
+          </div>
+        </div>
+
+        <section class="button-grid" aria-label="Button variants preview">
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">01 · Primary</p>
+                <h2>Primary action</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Primary action">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              High-priority command with a crisp accent fill and restrained glow.
+            </p>
+            <div class="preview-row">
+              <button class="button button--primary" type="button">
+                Start workspace
+              </button>
+              <button class="button button--primary" type="button" disabled>
+                Disabled
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">02 · Secondary</p>
+                <h2>Secondary frosted</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Secondary frosted">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Neutral glass-layer action for balanced workflows and non-destructive paths.
+            </p>
+            <div class="preview-row">
+              <button class="button button--secondary" type="button">
+                Review plan
+              </button>
+              <button class="button button--secondary is-selected" type="button">
+                Selected state
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">03 · Outline</p>
+                <h2>Outline tech</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Outline tech">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Crisp border-first button for utility actions in dense product interfaces.
+            </p>
+            <div class="preview-row">
+              <button class="button button--outline" type="button">
+                Inspect logs
+              </button>
+              <button class="button button--outline" type="button" aria-pressed="true">
+                Pressed preview
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">04 · Ghost</p>
+                <h2>Ghost utility</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Ghost utility">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Low-emphasis command with preserved visibility for contextual actions.
+            </p>
+            <div class="preview-row">
+              <button class="button button--ghost" type="button">
+                View changelog
+              </button>
+              <button class="button button--ghost button--sm" type="button">
+                Small size
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">05 · Elevated</p>
+                <h2>Elevated CTA</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Elevated CTA">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Premium call-to-action with depth for onboarding, upgrades, or launch moments.
+            </p>
+            <div class="preview-row">
+              <button class="button button--elevated" type="button">
+                Launch assistant
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">06 · Icon</p>
+                <h2>Icon-only utility</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Icon utility">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Compact circular control for supporting actions in toolbars and panels.
+            </p>
+            <div class="preview-row">
+              <button class="button button--icon" type="button" aria-label="Refresh workspace">
+                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                  <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.1A6 6 0 1 1 12 6c1.3 0 2.5.42 3.48 1.14L13 10h7V3l-2.35 3.35Z" />
+                </svg>
+              </button>
+              <button class="button button--icon" type="button" aria-label="Open settings">
+                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                  <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.14 7.14 0 0 0-1.63-.94l-.36-2.54a.48.48 0 0 0-.49-.42h-3.84a.48.48 0 0 0-.49.42l-.36 2.54c-.58.23-1.12.54-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.7 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94L2.82 14.52a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.51.4 1.05.72 1.63.94l.36 2.54a.48.48 0 0 0 .49.42h3.84a.48.48 0 0 0 .49-.42l.36-2.54c.58-.23 1.12-.54 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">07 · Success</p>
+                <h2>Success action</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Success action">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Positive confirmation button for approvals, publishing, and resolved actions.
+            </p>
+            <div class="preview-row">
+              <button class="button button--success" type="button">
+                Approve release
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">08 · Warning</p>
+                <h2>Warning action</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Warning action">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              High-visibility but non-destructive action for cautionary product states.
+            </p>
+            <div class="preview-row">
+              <button class="button button--warning" type="button">
+                Review limits
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">09 · Danger</p>
+                <h2>Destructive action</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Danger action">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Strong destructive affordance for irreversible or security-sensitive paths.
+            </p>
+            <div class="preview-row">
+              <button class="button button--danger" type="button">
+                Delete token
+              </button>
+            </div>
+          </article>
+
+          <article class="variant-card frost-panel">
+            <header class="variant-card__header">
+              <div>
+                <p class="variant-label">10 · Controls</p>
+                <h2>Loading + segmented</h2>
+              </div>
+              <button class="chip" type="button" data-copy="Loading segmented controls">
+                Copy label
+              </button>
+            </header>
+            <p class="variant-description">
+              Product-ready state preview for asynchronous actions and selectable view modes.
+            </p>
+            <div class="preview-stack">
+              <button class="button button--secondary button--loading-demo" type="button" data-loading-button>
+                <span class="button__spinner" aria-hidden="true"></span>
+                <span class="button__label">Sync dataset</span>
+              </button>
+
+              <div class="segment-control" role="group" aria-label="Preview density selection">
+                <button class="segment-control__button is-active" type="button" aria-pressed="true">
+                  Compact
+                </button>
+                <button class="segment-control__button" type="button" aria-pressed="false">
+                  Comfortable
+                </button>
+                <button class="segment-control__button" type="button" aria-pressed="false">
+                  Spacious
+                </button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <p class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
