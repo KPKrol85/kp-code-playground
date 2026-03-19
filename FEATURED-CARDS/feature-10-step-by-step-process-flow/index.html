@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step-by-Step Process Flow Cards</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="kp-process-demo-shell">
+      <section
+        class="kp-process-flow"
+        data-process-flow
+        aria-label="Implementation process overview"
+      >
+        <div class="kp-process-flow__intro">
+          <p class="kp-process-flow__eyebrow">Operational launch sequence</p>
+          <h2 class="kp-process-flow__title">From intake to measurable rollout in one connected system</h2>
+          <p class="kp-process-flow__lede">
+            A premium process-card pattern for onboarding, implementation roadmaps, and service pipelines.
+            Each step is presented as part of the same guided path, with live progress feedback as the reader moves
+            through the sequence.
+          </p>
+        </div>
+
+        <div class="kp-process-flow__visual" data-flow-visual>
+          <svg
+            class="kp-process-flow__svg"
+            data-flow-svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="kp-process-flow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="currentColor" stop-opacity="0.18"></stop>
+                <stop offset="50%" stop-color="currentColor" stop-opacity="0.95"></stop>
+                <stop offset="100%" stop-color="currentColor" stop-opacity="0.32"></stop>
+              </linearGradient>
+            </defs>
+            <path class="kp-process-flow__path kp-process-flow__path--base" data-flow-path-base></path>
+            <path class="kp-process-flow__path kp-process-flow__path--progress" data-flow-path-progress></path>
+          </svg>
+
+          <ol class="kp-process-flow__steps" aria-label="Implementation steps">
+            <li class="kp-process-flow__item">
+              <article class="kp-process-step" data-step-card data-step-index="0">
+                <div class="kp-process-step__surface">
+                  <span class="kp-process-step__ghost-number" aria-hidden="true">01</span>
+                  <div class="kp-process-step__topline">
+                    <span class="kp-process-step__badge">Step 01</span>
+                    <span class="kp-process-step__status" data-step-status>Current focus</span>
+                  </div>
+                  <h3 class="kp-process-step__title">Discovery alignment</h3>
+                  <p class="kp-process-step__description">
+                    Audit business goals, delivery constraints, and success metrics so the implementation path is scoped
+                    before execution begins.
+                  </p>
+                  <div class="kp-process-step__meta">
+                    <span>Stakeholder brief</span>
+                    <span>Scope baseline</span>
+                  </div>
+                  <a class="kp-process-step__link" href="#" aria-label="Review discovery alignment details">
+                    Review step
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            </li>
+
+            <li class="kp-process-flow__item">
+              <article class="kp-process-step" data-step-card data-step-index="1">
+                <div class="kp-process-step__surface">
+                  <span class="kp-process-step__ghost-number" aria-hidden="true">02</span>
+                  <div class="kp-process-step__topline">
+                    <span class="kp-process-step__badge">Step 02</span>
+                    <span class="kp-process-step__status" data-step-status>Upcoming</span>
+                  </div>
+                  <h3 class="kp-process-step__title">Solution architecture</h3>
+                  <p class="kp-process-step__description">
+                    Translate requirements into a disciplined delivery model with milestones, integration checkpoints,
+                    and dependency visibility.
+                  </p>
+                  <div class="kp-process-step__meta">
+                    <span>Workflow mapping</span>
+                    <span>Risk controls</span>
+                  </div>
+                  <a class="kp-process-step__link" href="#" aria-label="Review solution architecture details">
+                    Review step
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            </li>
+
+            <li class="kp-process-flow__item">
+              <article class="kp-process-step" data-step-card data-step-index="2">
+                <div class="kp-process-step__surface">
+                  <span class="kp-process-step__ghost-number" aria-hidden="true">03</span>
+                  <div class="kp-process-step__topline">
+                    <span class="kp-process-step__badge">Step 03</span>
+                    <span class="kp-process-step__status" data-step-status>Upcoming</span>
+                  </div>
+                  <h3 class="kp-process-step__title">Build and configure</h3>
+                  <p class="kp-process-step__description">
+                    Deliver the core experience with disciplined implementation, staged verification, and structured
+                    content or data configuration.
+                  </p>
+                  <div class="kp-process-step__meta">
+                    <span>Execution sprint</span>
+                    <span>QA gates</span>
+                  </div>
+                  <a class="kp-process-step__link" href="#" aria-label="Review build and configure details">
+                    Review step
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            </li>
+
+            <li class="kp-process-flow__item">
+              <article class="kp-process-step" data-step-card data-step-index="3">
+                <div class="kp-process-step__surface">
+                  <span class="kp-process-step__ghost-number" aria-hidden="true">04</span>
+                  <div class="kp-process-step__topline">
+                    <span class="kp-process-step__badge">Step 04</span>
+                    <span class="kp-process-step__status" data-step-status>Upcoming</span>
+                  </div>
+                  <h3 class="kp-process-step__title">Launch and optimize</h3>
+                  <p class="kp-process-step__description">
+                    Activate the rollout with measured handoff, performance monitoring, and a clear optimization queue
+                    for the next cycle.
+                  </p>
+                  <div class="kp-process-step__meta">
+                    <span>Go-live checklist</span>
+                    <span>Performance review</span>
+                  </div>
+                  <a class="kp-process-step__link" href="#" aria-label="Review launch and optimize details">
+                    Review step
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
