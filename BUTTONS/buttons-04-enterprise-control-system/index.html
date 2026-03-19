@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP_Code Enterprise Control Buttons</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="enterprise-demo-shell">
+      <section
+        class="enterprise-control-system"
+        aria-labelledby="enterprise-control-system-title"
+      >
+        <header class="enterprise-control-system__header">
+          <div class="enterprise-control-system__intro">
+            <p class="enterprise-control-system__eyebrow">KP_Code Digital Vault · Buttons / 04</p>
+            <h1 id="enterprise-control-system-title" class="enterprise-control-system__title">
+              Enterprise control system button library
+            </h1>
+            <p class="enterprise-control-system__lede">
+              A reusable button suite designed for dashboards, internal tools, analytics products,
+              CRM workflows, and operational interfaces where state clarity and action hierarchy must
+              remain dependable under pressure.
+            </p>
+          </div>
+
+          <aside class="enterprise-control-system__status-panel" aria-label="Component package summary">
+            <div class="system-status-card">
+              <p class="system-status-card__label">Package posture</p>
+              <p class="system-status-card__value">Production-ready interaction states</p>
+              <ul class="system-status-card__list">
+                <li>10 scoped button variants</li>
+                <li>Accessible focus and keyboard support</li>
+                <li>Responsive preview layout</li>
+              </ul>
+            </div>
+          </aside>
+        </header>
+
+        <section class="enterprise-control-system__workspace" aria-label="Enterprise buttons preview">
+          <div class="workspace-toolbar" aria-label="Toolbar preview">
+            <div class="workspace-toolbar__group" role="group" aria-label="Quick workflow actions">
+              <button type="button" class="enterprise-button enterprise-button--primary" data-copy-label>
+                <span class="enterprise-button__label">Deploy update</span>
+              </button>
+              <button type="button" class="enterprise-button enterprise-button--secondary" data-copy-label>
+                <span class="enterprise-button__label">Schedule sync</span>
+              </button>
+              <button type="button" class="enterprise-button enterprise-button--tertiary" data-copy-label>
+                <span class="enterprise-button__label">View activity log</span>
+              </button>
+            </div>
+
+            <div class="workspace-toolbar__group" role="group" aria-label="Filter scope">
+              <div class="enterprise-segmented" role="group" aria-label="Workspace mode" data-segmented>
+                <button type="button" class="enterprise-segmented__option is-selected" data-segment="overview" aria-pressed="true">
+                  Overview
+                </button>
+                <button type="button" class="enterprise-segmented__option" data-segment="operations" aria-pressed="false">
+                  Operations
+                </button>
+                <button type="button" class="enterprise-segmented__option" data-segment="controls" aria-pressed="false">
+                  Controls
+                </button>
+              </div>
+              <button
+                type="button"
+                class="enterprise-button enterprise-button--icon"
+                aria-label="Open filter panel"
+                data-copy-label
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 7h16M7 12h10M10 17h4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="button-grid" role="list" aria-label="Button variants showcase">
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Primary</p>
+                <h2 class="button-card__title">Primary action button</h2>
+                <p class="button-card__description">High-priority command for irreversible workflow progression.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--primary" data-copy-label>
+                  <span class="enterprise-button__label">Approve release</span>
+                </button>
+                <button type="button" class="enterprise-button enterprise-button--primary" disabled>
+                  <span class="enterprise-button__label">Approve release</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Secondary</p>
+                <h2 class="button-card__title">Secondary action button</h2>
+                <p class="button-card__description">Balanced support action for adjacent workflow tasks or follow-up operations.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--secondary" data-copy-label>
+                  <span class="enterprise-button__label">Assign reviewer</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Tertiary</p>
+                <h2 class="button-card__title">Subtle utility button</h2>
+                <p class="button-card__description">Low-emphasis utility control for contextual navigation or assistance.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--tertiary" data-copy-label>
+                  <span class="enterprise-button__label">Open audit note</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Outline</p>
+                <h2 class="button-card__title">Outline button</h2>
+                <p class="button-card__description">Structured bordered action for scoped workflows and reserved alternatives.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--outline" data-copy-label>
+                  <span class="enterprise-button__label">Generate report</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Ghost</p>
+                <h2 class="button-card__title">Ghost button</h2>
+                <p class="button-card__description">Minimal chrome for dense control bars, rows, and embedded system panels.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--ghost" data-copy-label>
+                  <span class="enterprise-button__label">Dismiss alert</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Danger</p>
+                <h2 class="button-card__title">Destructive action button</h2>
+                <p class="button-card__description">Clear risk-state button for removing access, data, or system objects.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--danger" data-copy-label>
+                  <span class="enterprise-button__label">Revoke access</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Success</p>
+                <h2 class="button-card__title">Success / confirm button</h2>
+                <p class="button-card__description">Positive state action intended for approvals, confirmations, and completions.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--success" data-copy-label>
+                  <span class="enterprise-button__label">Confirm migration</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Warning</p>
+                <h2 class="button-card__title">Warning action button</h2>
+                <p class="button-card__description">Escalation control for cautionary steps that still require visible emphasis.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--warning" data-copy-label>
+                  <span class="enterprise-button__label">Escalate for review</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Icon</p>
+                <h2 class="button-card__title">Icon-only utility button</h2>
+                <p class="button-card__description">Dense utility affordance for toolbars, table actions, and compact panels.</p>
+              </div>
+              <div class="button-card__preview">
+                <button
+                  type="button"
+                  class="enterprise-button enterprise-button--icon enterprise-button--selected"
+                  aria-label="Pin this workspace"
+                  aria-pressed="true"
+                  data-toggle-selected
+                  data-copy-label
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M9 4.75h6l-.75 5 3.25 3.25v1H13.5V19.5L12 21l-1.5-1.5V14H6.5v-1l3.25-3.25-.75-5Z"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linejoin="round"
+                      stroke-width="1.7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <article class="button-card" role="listitem">
+              <div class="button-card__meta">
+                <p class="button-card__eyebrow">Loading</p>
+                <h2 class="button-card__title">Processing button</h2>
+                <p class="button-card__description">Accessible loading state for system tasks that temporarily lock an action.</p>
+              </div>
+              <div class="button-card__preview">
+                <button type="button" class="enterprise-button enterprise-button--primary" data-loading-button aria-live="polite">
+                  <span class="enterprise-button__spinner" aria-hidden="true"></span>
+                  <span class="enterprise-button__label">Run compliance sync</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <p class="enterprise-control-system__helper" data-status-message role="status" aria-live="polite">
+            Tip: activate any labeled button to copy its variant name into the status stream.
+          </p>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
