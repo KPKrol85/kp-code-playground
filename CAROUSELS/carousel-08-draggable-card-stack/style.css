@@ -1,0 +1,503 @@
+:root {
+  color-scheme: dark;
+  --dcs-bg: #0b1020;
+  --dcs-bg-alt: #131b31;
+  --dcs-surface: rgba(15, 20, 34, 0.88);
+  --dcs-surface-strong: rgba(22, 29, 47, 0.96);
+  --dcs-surface-soft: rgba(255, 255, 255, 0.06);
+  --dcs-border: rgba(255, 255, 255, 0.11);
+  --dcs-border-strong: rgba(255, 255, 255, 0.2);
+  --dcs-text: #f6f3ee;
+  --dcs-text-muted: rgba(246, 243, 238, 0.72);
+  --dcs-accent: #8bc6ff;
+  --dcs-accent-strong: #cbb1ff;
+  --dcs-shadow-rest: 0 26px 70px rgba(1, 7, 17, 0.34);
+  --dcs-shadow-active: 0 34px 96px rgba(1, 7, 17, 0.5);
+  --dcs-radius: 1.85rem;
+  --dcs-stack-offset: 1rem;
+  --dcs-stack-scale: 0.038;
+  --dcs-card-width: min(100%, 26rem);
+  --dcs-card-height: clamp(31rem, 82vw, 37rem);
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(139, 198, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 80% 15%, rgba(203, 177, 255, 0.16), transparent 22%),
+    linear-gradient(180deg, var(--dcs-bg-alt) 0%, var(--dcs-bg) 100%);
+  color: var(--dcs-text);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.dcs-page {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 3vw, 3rem);
+}
+
+.dcs-stack {
+  width: min(100%, 72rem);
+  margin: 0 auto;
+}
+
+.dcs-stack__shell {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: calc(var(--dcs-radius) + 0.4rem);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 18%),
+    rgba(7, 12, 25, 0.6);
+  box-shadow: 0 40px 120px rgba(2, 5, 14, 0.32);
+  backdrop-filter: blur(18px);
+}
+
+.dcs-stack__intro {
+  margin-bottom: 1.5rem;
+}
+
+.dcs-stack__eyebrow {
+  margin: 0 0 0.85rem;
+  color: var(--dcs-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+}
+
+.dcs-stack__intro-grid {
+  display: grid;
+  gap: 1rem 2rem;
+}
+
+.dcs-stack__title {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+  max-width: 10ch;
+}
+
+.dcs-stack__lede,
+.dcs-stack__meta {
+  margin: 1rem 0 0;
+  color: var(--dcs-text-muted);
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
+.dcs-stack__viewport {
+  position: relative;
+  min-height: var(--dcs-card-height);
+  display: grid;
+  place-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.dcs-stack__cards,
+.dcs-stack__completion {
+  width: var(--dcs-card-width);
+  min-height: var(--dcs-card-height);
+}
+
+.dcs-stack__cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.dcs-card {
+  position: absolute;
+  inset: 0;
+  z-index: calc(30 - var(--card-depth, 0));
+  display: block;
+  pointer-events: none;
+  transform-origin: 50% 88%;
+  transition:
+    transform 520ms cubic-bezier(0.2, 0.78, 0.18, 1),
+    opacity 320ms ease,
+    filter 320ms ease;
+  will-change: transform, opacity;
+}
+
+.dcs-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.6rem 0.6rem 1.6rem;
+  border-radius: calc(var(--dcs-radius) - 0.35rem);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 240ms ease;
+}
+
+.dcs-card.is-active,
+.dcs-card.is-peek,
+.dcs-card.is-under {
+  pointer-events: auto;
+}
+
+.dcs-card__surface {
+  position: relative;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 12.5rem 1fr;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 18%),
+    linear-gradient(180deg, rgba(24, 31, 49, 0.95), rgba(10, 14, 25, 0.98));
+  border: 1px solid var(--dcs-border);
+  border-radius: var(--dcs-radius);
+  overflow: hidden;
+  box-shadow: var(--dcs-shadow-rest);
+}
+
+.dcs-card__media {
+  position: relative;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 100%);
+}
+
+.dcs-card__media-art {
+  position: absolute;
+  inset: 0;
+}
+
+.dcs-card__media-art--aurora {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(139, 198, 255, 0.9), transparent 22%),
+    radial-gradient(circle at 75% 20%, rgba(203, 177, 255, 0.88), transparent 20%),
+    linear-gradient(145deg, #20355d 0%, #11182c 48%, #0d1220 100%);
+}
+
+.dcs-card__media-art--copper {
+  background:
+    radial-gradient(circle at 82% 26%, rgba(255, 188, 143, 0.95), transparent 18%),
+    radial-gradient(circle at 24% 34%, rgba(255, 226, 180, 0.52), transparent 22%),
+    linear-gradient(145deg, #57403b 0%, #241925 44%, #0d1220 100%);
+}
+
+.dcs-card__media-art--violet {
+  background:
+    radial-gradient(circle at 75% 26%, rgba(172, 133, 255, 0.94), transparent 18%),
+    radial-gradient(circle at 28% 44%, rgba(106, 210, 255, 0.6), transparent 20%),
+    linear-gradient(145deg, #34295f 0%, #1a1631 46%, #0d1220 100%);
+}
+
+.dcs-card__media-art--emerald {
+  background:
+    radial-gradient(circle at 26% 28%, rgba(113, 255, 210, 0.78), transparent 18%),
+    radial-gradient(circle at 82% 34%, rgba(143, 198, 255, 0.5), transparent 18%),
+    linear-gradient(145deg, #1a5754 0%, #14253d 54%, #0d1220 100%);
+}
+
+.dcs-card__badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(9, 14, 26, 0.55);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
+  color: rgba(246, 243, 238, 0.92);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dcs-card__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem 1.25rem 1.25rem;
+}
+
+.dcs-card__meta-row,
+.dcs-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dcs-card__tag,
+.dcs-card__count,
+.dcs-card__label {
+  color: var(--dcs-text-muted);
+}
+
+.dcs-card__tag,
+.dcs-card__count {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.dcs-card__title {
+  margin: 0;
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+
+.dcs-card__copy {
+  margin: 0;
+  color: var(--dcs-text-muted);
+  line-height: 1.7;
+}
+
+.dcs-card__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dcs-card__value {
+  margin: 0;
+  font-weight: 600;
+}
+
+.dcs-card__cta,
+.dcs-stack__button,
+.dcs-stack__restart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.875rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--dcs-border);
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.dcs-card__cta:hover,
+.dcs-stack__button:hover,
+.dcs-stack__restart:hover {
+  transform: translateY(-1px);
+  border-color: var(--dcs-border-strong);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dcs-card__cta:focus-visible,
+.dcs-stack__button:focus-visible,
+.dcs-stack__restart:focus-visible {
+  outline: 0;
+  border-color: rgba(139, 198, 255, 0.68);
+  box-shadow: 0 0 0 0.25rem rgba(139, 198, 255, 0.16);
+}
+
+.dcs-card__intent {
+  position: absolute;
+  inset: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.dcs-card__intent-chip {
+  padding: 0.4rem 0.72rem;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  background: rgba(10, 15, 25, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(246, 243, 238, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.64rem;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.dcs-card[data-intent='left'] .dcs-card__intent-chip--left,
+.dcs-card[data-intent='right'] .dcs-card__intent-chip--right {
+  opacity: var(--intent-opacity, 0);
+  transform: translateY(0);
+}
+
+.dcs-card.is-active::before {
+  opacity: 1;
+}
+
+.dcs-card.is-active .dcs-card__surface {
+  box-shadow: var(--dcs-shadow-active);
+}
+
+.dcs-card.is-dragging {
+  transition: none;
+}
+
+.dcs-card.is-dragging .dcs-card__surface {
+  box-shadow: 0 42px 110px rgba(1, 7, 17, 0.55);
+}
+
+.dcs-card.is-exiting {
+  pointer-events: none;
+}
+
+.dcs-stack__completion {
+  display: grid;
+  align-content: center;
+  gap: 0.9rem;
+  padding: 1.5rem;
+  border-radius: var(--dcs-radius);
+  border: 1px solid var(--dcs-border);
+  background:
+    radial-gradient(circle at top, rgba(139, 198, 255, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(24, 31, 49, 0.92), rgba(10, 14, 25, 0.98));
+  box-shadow: var(--dcs-shadow-rest);
+}
+
+.dcs-stack__completion-kicker {
+  margin: 0;
+  color: var(--dcs-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+}
+
+.dcs-stack__completion-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.dcs-stack__completion-copy {
+  margin: 0;
+  max-width: 35ch;
+  color: var(--dcs-text-muted);
+  line-height: 1.7;
+}
+
+.dcs-stack__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+}
+
+.dcs-stack__button {
+  min-width: 9rem;
+  color: var(--dcs-text);
+  cursor: pointer;
+}
+
+.dcs-stack__button--primary,
+.dcs-stack__restart {
+  border-color: rgba(139, 198, 255, 0.3);
+  background: linear-gradient(135deg, rgba(139, 198, 255, 0.16), rgba(203, 177, 255, 0.18));
+}
+
+.dcs-stack__button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (min-width: 50rem) {
+  .dcs-stack__intro-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.9fr);
+    align-items: end;
+  }
+
+  .dcs-stack__controls {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 39rem) {
+  :root {
+    --dcs-card-width: 100%;
+    --dcs-card-height: clamp(29rem, 118vw, 35rem);
+    --dcs-stack-offset: 0.8rem;
+    --dcs-stack-scale: 0.03;
+  }
+
+  .dcs-stack__shell {
+    padding: 1rem;
+  }
+
+  .dcs-card__surface {
+    grid-template-rows: 11.5rem 1fr;
+  }
+
+  .dcs-card__body {
+    padding: 1rem;
+  }
+
+  .dcs-card__footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dcs-stack__button {
+    flex: 1 1 10rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .dcs-card,
+  .dcs-card__intent-chip,
+  .dcs-card__cta,
+  .dcs-stack__button,
+  .dcs-stack__restart {
+    transition: none !important;
+  }
+}
