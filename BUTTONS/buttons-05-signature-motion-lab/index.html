@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Signature Motion Lab is a premium button system showcase featuring 10 polished interaction-first button variants for modern product interfaces."
+    />
+    <title>Buttons 05 — Signature Motion Lab</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="motion-page">
+      <section class="motion-lab" aria-labelledby="motion-lab-title" data-motion-lab>
+        <header class="motion-lab__hero">
+          <div class="motion-lab__intro">
+            <p class="motion-lab__eyebrow">KP_Code Digital Vault · Buttons / 05</p>
+            <h1 id="motion-lab-title">Signature Motion Lab</h1>
+            <p class="motion-lab__lead">
+              A premium motion-first button family built for digital products that value tactile confidence,
+              refined state transitions, and reusable design-system discipline.
+            </p>
+          </div>
+
+          <div class="motion-lab__meta" aria-label="Component overview">
+            <div class="motion-chip">
+              <span class="motion-chip__label">Variants</span>
+              <strong>10 production-ready controls</strong>
+            </div>
+            <div class="motion-chip">
+              <span class="motion-chip__label">Modes</span>
+              <strong>Light + dark theme support</strong>
+            </div>
+            <div class="motion-chip">
+              <span class="motion-chip__label">Focus</span>
+              <strong>Motion discipline, feedback, accessibility</strong>
+            </div>
+          </div>
+
+          <div class="motion-lab__toolbar" aria-label="Preview controls">
+            <p class="motion-lab__toolbar-copy">Preview motion with keyboard, pointer, and stateful interactions.</p>
+            <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+              <span class="theme-toggle__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path
+                    d="M12 3.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V4.5a.75.75 0 0 1 .75-.75Zm0 14.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 12 18Zm8.25-6.75a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1 0-1.5h1.5ZM5.25 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75Zm11.157-5.907a.75.75 0 0 1 1.06 0l1.06 1.06a.75.75 0 1 1-1.06 1.061l-1.06-1.06a.75.75 0 0 1 0-1.061Zm-9.874 9.874a.75.75 0 0 1 1.061 0l1.06 1.06a.75.75 0 1 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061Zm11.995 1.06a.75.75 0 0 1 0 1.061l-1.06 1.06a.75.75 0 1 1-1.06-1.06l1.06-1.061a.75.75 0 0 1 1.06 0Zm-9.874-9.874a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0ZM12 7.25A4.75 4.75 0 1 1 7.25 12 4.75 4.75 0 0 1 12 7.25Z"
+                  />
+                </svg>
+              </span>
+              <span class="theme-toggle__text">Toggle theme</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="buttons-grid" role="list" aria-label="Premium button variants">
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Primary CTA</p>
+              <h2>Lift + directional shine</h2>
+              <p>Flagship action styling with controlled elevation and a restrained surface sweep.</p>
+            </div>
+            <button class="signature-button signature-button--primary signature-button--magnetic" type="button">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__shine"></span>
+              <span class="signature-button__content">
+                <span>Start premium trial</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M7.75 12a.75.75 0 0 1 .75-.75h6.69l-2.97-2.97a.75.75 0 1 1 1.06-1.06l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06l2.97-2.97H8.5a.75.75 0 0 1-.75-.75Z" />
+                </svg>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Secondary</p>
+              <h2>Layered hover reveal</h2>
+              <p>A softer companion action that adds depth without stealing hierarchy from the primary CTA.</p>
+            </div>
+            <button class="signature-button signature-button--secondary" type="button">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span>Schedule walkthrough</span>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Outline</p>
+              <h2>Edge glow on intent</h2>
+              <p>Thin-border action with a precise, product-grade focus and hover contour.</p>
+            </div>
+            <button class="signature-button signature-button--outline" type="button">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span>View API details</span>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Ghost</p>
+              <h2>Soft text and icon shift</h2>
+              <p>Minimal chrome with subtle text travel for premium low-emphasis actions.</p>
+            </div>
+            <button class="signature-button signature-button--ghost" type="button">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span>Preview interaction notes</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M11.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06l4.22-4.22H6.5a.75.75 0 0 1 0-1.5h9.19l-4.22-4.22a.75.75 0 0 1 0-1.06Z" />
+                </svg>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Tonal</p>
+              <h2>Pointer-aware highlight</h2>
+              <p>A tonal accent surface that follows pointer presence inside safe visual limits.</p>
+            </div>
+            <button class="signature-button signature-button--tonal signature-button--pointer" type="button">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__halo"></span>
+              <span class="signature-button__content">
+                <span>Review system tokens</span>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Icon</p>
+              <h2>Compact tactile control</h2>
+              <p>Small-format action with a quiet press response suitable for dense toolbars and shells.</p>
+            </div>
+            <button class="signature-button signature-button--icon" type="button" aria-label="Open saved items">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6.75 4.75A2.75 2.75 0 0 0 4 7.5v10.75a1 1 0 0 0 1.588.809L12 14.516l6.412 4.543A1 1 0 0 0 20 18.25V7.5a2.75 2.75 0 0 0-2.75-2.75h-10.5Z" />
+                </svg>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Loading</p>
+              <h2>Stateful progress morph</h2>
+              <p>Demo loading button with accessible busy messaging and a calm, reversible transition.</p>
+            </div>
+            <button class="signature-button signature-button--loading" type="button" data-loading-button aria-live="polite">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span class="signature-button__label-default">Generate preview</span>
+                <span class="signature-button__label-loading">Generating</span>
+                <span class="signature-button__spinner" aria-hidden="true"></span>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Success</p>
+              <h2>Confirmation state settle</h2>
+              <p>Affirmation action with a gentle tone shift and stable completed feedback.</p>
+            </div>
+            <button class="signature-button signature-button--success" type="button" data-confirm-button>
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span class="signature-button__confirm-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M9.55 16.2 5.8 12.45a.75.75 0 1 1 1.06-1.06l2.69 2.69 7.59-7.58a.75.75 0 1 1 1.06 1.06L10.61 16.2a.75.75 0 0 1-1.06 0Z" />
+                  </svg>
+                </span>
+                <span class="signature-button__confirm-label">Confirm seat</span>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Danger</p>
+              <h2>Restrained alert emphasis</h2>
+              <p>Destructive control with a clear warning tone, firm focus treatment, and clean contrast.</p>
+            </div>
+            <button class="signature-button signature-button--danger" type="button">
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span>Delete environment</span>
+              </span>
+            </button>
+          </article>
+
+          <article class="button-card" role="listitem">
+            <div class="button-card__header">
+              <p class="button-card__label">Elevated toggle</p>
+              <h2>Selected-state memory</h2>
+              <p>A premium elevated button that can hold a chosen state for saved presets or pinned views.</p>
+            </div>
+            <button
+              class="signature-button signature-button--elevated"
+              type="button"
+              data-toggle-button
+              aria-pressed="false"
+            >
+              <span class="signature-button__surface"></span>
+              <span class="signature-button__content">
+                <span>Pin launch preset</span>
+                <span class="signature-button__status" aria-hidden="true">Saved</span>
+              </span>
+            </button>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
