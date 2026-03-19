@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Featured Cards — Apple-Style Bento Grid</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <section class="fc-bento" aria-labelledby="fc-bento-title">
+        <div class="fc-bento__shell">
+          <header class="fc-bento__intro">
+            <p class="fc-bento__eyebrow">Featured cards / Product storytelling</p>
+            <div class="fc-bento__intro-copy">
+              <h1 id="fc-bento-title">A quieter way to surface product value.</h1>
+              <p>
+                A premium bento composition built for launch pages, product overviews, and
+                feature storytelling where hierarchy, breathing room, and polish matter more
+                than noise.
+              </p>
+            </div>
+          </header>
+
+          <div class="fc-bento__grid" role="list">
+            <article class="fc-card fc-card--hero fc-card--large is-interactive" role="listitem">
+              <div class="fc-card__content">
+                <p class="fc-card__eyebrow">Performance architecture</p>
+                <h2 class="fc-card__title" id="hero-card-title">One surface for the metrics that move the business.</h2>
+                <p class="fc-card__desc" id="hero-card-desc">
+                  Bring revenue, activation, and operational signals into a single calm workspace
+                  with layered snapshots that stay legible at a glance.
+                </p>
+                <div class="fc-card__dashboard" aria-hidden="true">
+                  <div class="fc-stat-block">
+                    <span class="fc-stat-block__label">Pipeline lift</span>
+                    <strong class="fc-stat-block__value">+18.4%</strong>
+                    <span class="fc-stat-block__meta">Quarter over quarter</span>
+                  </div>
+                  <div class="fc-chart-fragment">
+                    <div class="fc-chart-fragment__grid"></div>
+                    <svg viewBox="0 0 320 140" focusable="false" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="fcLineGlow" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="rgba(91, 141, 255, 0.22)"></stop>
+                          <stop offset="65%" stop-color="rgba(91, 141, 255, 0.92)"></stop>
+                          <stop offset="100%" stop-color="rgba(132, 228, 255, 1)"></stop>
+                        </linearGradient>
+                      </defs>
+                      <path
+                        class="fc-chart-fragment__area"
+                        d="M0 118C34 110 48 87 79 82C110 77 128 96 158 88C188 80 202 44 232 39C262 34 282 56 320 18V140H0Z"
+                      ></path>
+                      <path
+                        class="fc-chart-fragment__line"
+                        d="M0 118C34 110 48 87 79 82C110 77 128 96 158 88C188 80 202 44 232 39C262 34 282 56 320 18"
+                        pathLength="100"
+                      ></path>
+                    </svg>
+                    <div class="fc-chart-fragment__footer">
+                      <span>Live trend</span>
+                      <span>8 regions synced</span>
+                    </div>
+                  </div>
+                </div>
+                <span class="fc-card__cta" aria-hidden="true">View product overview</span>
+              </div>
+              <a
+                class="fc-card__link"
+                href="#"
+                aria-labelledby="hero-card-title"
+                aria-describedby="hero-card-desc"
+              >
+                <span class="sr-only">Open performance architecture overview</span>
+              </a>
+            </article>
+
+            <article class="fc-card fc-card--wide fc-card--tone-soft" role="listitem">
+              <div class="fc-card__content">
+                <p class="fc-card__eyebrow">Workflow orchestration</p>
+                <h2 class="fc-card__title">Automation that behaves like a product team, not a script.</h2>
+                <p class="fc-card__desc">
+                  Hand off repetitive follow-up, routing, and approval logic while keeping every
+                  touchpoint visibly accountable.
+                </p>
+                <div class="fc-mini-flow" aria-hidden="true">
+                  <span>Capture</span>
+                  <svg viewBox="0 0 60 12" focusable="false">
+                    <path d="M1 6H59"></path>
+                    <path d="M53 1L59 6L53 11"></path>
+                  </svg>
+                  <span>Qualify</span>
+                  <svg viewBox="0 0 60 12" focusable="false">
+                    <path d="M1 6H59"></path>
+                    <path d="M53 1L59 6L53 11"></path>
+                  </svg>
+                  <span>Ship</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="fc-card fc-card--tall is-interactive" role="listitem">
+              <div class="fc-card__content">
+                <p class="fc-card__eyebrow">Customer intelligence</p>
+                <h2 class="fc-card__title" id="signal-card-title">Signal-rich profiles with context built in.</h2>
+                <p class="fc-card__desc" id="signal-card-desc">
+                  Bring lifecycle stage, fit scoring, and product intent into one profile card so
+                  teams can act with less guesswork.
+                </p>
+                <div class="fc-profile-stack" aria-hidden="true">
+                  <div class="fc-profile-stack__card">
+                    <span class="fc-dot"></span>
+                    <strong>Expansion ready</strong>
+                    <small>72% propensity score</small>
+                  </div>
+                  <div class="fc-profile-stack__card">
+                    <span class="fc-dot fc-dot--accent"></span>
+                    <strong>2 product champions</strong>
+                    <small>Last active 1h ago</small>
+                  </div>
+                  <div class="fc-profile-stack__card">
+                    <span class="fc-dot fc-dot--muted"></span>
+                    <strong>Compliance cleared</strong>
+                    <small>Renewal path in motion</small>
+                  </div>
+                </div>
+                <span class="fc-card__cta" aria-hidden="true">Explore profile model</span>
+              </div>
+              <a
+                class="fc-card__link"
+                href="#"
+                aria-labelledby="signal-card-title"
+                aria-describedby="signal-card-desc"
+              >
+                <span class="sr-only">Open customer intelligence details</span>
+              </a>
+            </article>
+
+            <article class="fc-card fc-card--small" role="listitem">
+              <div class="fc-card__content">
+                <p class="fc-card__eyebrow">Trust</p>
+                <h2 class="fc-card__title">Security posture, surfaced without friction.</h2>
+                <p class="fc-card__desc">
+                  Governance indicators stay visible inside the interface, so teams never lose the
+                  thread on readiness.
+                </p>
+                <div class="fc-badge-row" aria-hidden="true">
+                  <span>SSO</span>
+                  <span>SOC 2</span>
+                  <span>Audit log</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="fc-card fc-card--small fc-card--tone-contrast" role="listitem">
+              <div class="fc-card__content">
+                <p class="fc-card__eyebrow">Impact snapshot</p>
+                <h2 class="fc-card__title">34 hours returned to the team every week.</h2>
+                <p class="fc-card__desc">
+                  A compact metric card for editorial callouts, case studies, or launch narrative
+                  moments.
+                </p>
+                <div class="fc-metric" aria-hidden="true">
+                  <strong>34h</strong>
+                  <span>Recovered team capacity</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="fc-card fc-card--wide fc-card--media" role="listitem">
+              <div class="fc-card__content">
+                <p class="fc-card__eyebrow">Executive visibility</p>
+                <h2 class="fc-card__title">A mini control room for launch-week decision making.</h2>
+                <p class="fc-card__desc">
+                  Wider cards can shift into a split layout to hold summary copy beside a refined
+                  interface preview.
+                </p>
+                <div class="fc-ui-preview" aria-hidden="true">
+                  <div class="fc-ui-preview__sidebar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="fc-ui-preview__main">
+                    <div class="fc-ui-preview__topbar"></div>
+                    <div class="fc-ui-preview__panels">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
