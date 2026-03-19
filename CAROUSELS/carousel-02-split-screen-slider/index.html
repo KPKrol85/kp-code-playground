@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel 02 - Split-Screen Slider</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="vault-page">
+      <section
+        class="vault-split-carousel"
+        data-split-carousel
+        aria-roledescription="carousel"
+        aria-label="Editorial collection highlights"
+        data-carousel-name="Collection stories"
+      >
+        <div class="vault-sr-only" aria-live="polite" aria-atomic="true" data-carousel-status></div>
+
+        <div class="vault-split-carousel__intro">
+          <p class="vault-split-carousel__eyebrow">KP_Code Digital Vault / Carousel 02</p>
+          <div class="vault-split-carousel__headline-group">
+            <h1>Split-screen storytelling for fashion, luxury, and cinematic collection launches.</h1>
+            <p>
+              A premium editorial slider with counter-moving text and media columns, built for campaign
+              narratives, product worlds, and elevated presentation sequences.
+            </p>
+          </div>
+        </div>
+
+        <div class="vault-split-carousel__shell" data-carousel-shell>
+          <div class="vault-split-carousel__column vault-split-carousel__column--text">
+            <div class="vault-split-carousel__surface vault-split-carousel__surface--text"></div>
+            <div class="vault-split-carousel__text-viewport" data-text-viewport>
+              <div class="vault-split-carousel__track" data-text-track>
+                <article class="vault-story is-active" data-text-slide data-slide="0" data-tone="noir">
+                  <div class="vault-story__meta-row">
+                    <span class="vault-story__kicker">Chapter 01</span>
+                    <span class="vault-story__divider" aria-hidden="true"></span>
+                    <span class="vault-story__note">Autumn campaign / Ready-to-wear</span>
+                  </div>
+                  <div class="vault-story__content">
+                    <p class="vault-story__collection">Maison Atelier / After Hours</p>
+                    <h2>Sharp tailoring softened by dusk light and brushed metallic restraint.</h2>
+                    <p class="vault-story__body">
+                      Designed as an opening statement for a fashion release, this slide pairs precision-cut
+                      silhouettes with restrained copy blocks, creating a calm first impression that feels
+                      expensive rather than loud.
+                    </p>
+                    <ul class="vault-story__details" aria-label="Campaign details">
+                      <li>
+                        <span>Palette</span>
+                        <strong>Ink, pearl, oxblood</strong>
+                      </li>
+                      <li>
+                        <span>Focus</span>
+                        <strong>Tailoring direction</strong>
+                      </li>
+                    </ul>
+                    <div class="vault-story__actions">
+                      <a href="#lookbook-noir">Review lookbook</a>
+                      <button type="button">Request treatment deck</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vault-story" data-text-slide data-slide="1" data-tone="linen" aria-hidden="true" inert>
+                  <div class="vault-story__meta-row">
+                    <span class="vault-story__kicker">Chapter 02</span>
+                    <span class="vault-story__divider" aria-hidden="true"></span>
+                    <span class="vault-story__note">Resort capsule / Lifestyle</span>
+                  </div>
+                  <div class="vault-story__content">
+                    <p class="vault-story__collection">Studio Meridian / Coastal Set</p>
+                    <h2>Warm neutrals, long horizons, and a pace that invites the eye to linger.</h2>
+                    <p class="vault-story__body">
+                      The composition leans into luxury travel language, using breathable spacing and softer
+                      tonal contrast so the messaging feels relaxed, aspirational, and art-directed for premium
+                      campaign pages.
+                    </p>
+                    <ul class="vault-story__details" aria-label="Campaign details">
+                      <li>
+                        <span>Palette</span>
+                        <strong>Sand, shell, bronze</strong>
+                      </li>
+                      <li>
+                        <span>Focus</span>
+                        <strong>Resort wardrobe story</strong>
+                      </li>
+                    </ul>
+                    <div class="vault-story__actions">
+                      <a href="#resort-capsule">Open campaign layout</a>
+                      <button type="button">Download media notes</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vault-story" data-text-slide data-slide="2" data-tone="verdant" aria-hidden="true" inert>
+                  <div class="vault-story__meta-row">
+                    <span class="vault-story__kicker">Chapter 03</span>
+                    <span class="vault-story__divider" aria-hidden="true"></span>
+                    <span class="vault-story__note">Objects / Product narrative</span>
+                  </div>
+                  <div class="vault-story__content">
+                    <p class="vault-story__collection">Forme Edition / Signature Objects</p>
+                    <h2>Luxury product storytelling with a gallery-like cadence and tactile material cues.</h2>
+                    <p class="vault-story__body">
+                      Built for premium object launches, this frame layers refined serif typography against a
+                      deeper tonal surface so copy, stats, and calls to action remain controlled while the
+                      visual side carries atmosphere.
+                    </p>
+                    <ul class="vault-story__details" aria-label="Campaign details">
+                      <li>
+                        <span>Palette</span>
+                        <strong>Moss, charcoal, brass</strong>
+                      </li>
+                      <li>
+                        <span>Focus</span>
+                        <strong>Hero object reveal</strong>
+                      </li>
+                    </ul>
+                    <div class="vault-story__actions">
+                      <a href="#object-launch">View launch sequence</a>
+                      <button type="button">Share with client</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vault-story" data-text-slide data-slide="3" data-tone="rose" aria-hidden="true" inert>
+                  <div class="vault-story__meta-row">
+                    <span class="vault-story__kicker">Chapter 04</span>
+                    <span class="vault-story__divider" aria-hidden="true"></span>
+                    <span class="vault-story__note">Agency presentation / Closing frame</span>
+                  </div>
+                  <div class="vault-story__content">
+                    <p class="vault-story__collection">Northline Agency / Presentation Finale</p>
+                    <h2>Closing on gloss, confidence, and a richer color field that still feels disciplined.</h2>
+                    <p class="vault-story__body">
+                      The final slide moves toward campaign climax without losing polish. Deeper rose and plum
+                      tones elevate the handoff into proposal, portfolio, or deck contexts where the component
+                      needs to feel commercially ready.
+                    </p>
+                    <ul class="vault-story__details" aria-label="Campaign details">
+                      <li>
+                        <span>Palette</span>
+                        <strong>Rose, plum, champagne</strong>
+                      </li>
+                      <li>
+                        <span>Focus</span>
+                        <strong>Pitch-ready ending</strong>
+                      </li>
+                    </ul>
+                    <div class="vault-story__actions">
+                      <a href="#agency-finale">Present final concept</a>
+                      <button type="button">Book review session</button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="vault-split-carousel__column vault-split-carousel__column--media">
+            <div class="vault-split-carousel__media-viewport" data-media-viewport>
+              <div class="vault-split-carousel__track vault-split-carousel__track--media" data-media-track>
+                <article class="vault-media" data-media-slide data-slide="3" data-tone="rose" aria-hidden="true">
+                  <div class="vault-media__frame">
+                    <div class="vault-media__artwork vault-media__artwork--rose"></div>
+                    <div class="vault-media__overlay"></div>
+                    <div class="vault-media__caption">
+                      <span>Presentation closure</span>
+                      <strong>Glossed tailoring and evening color depth.</strong>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vault-media" data-media-slide data-slide="2" data-tone="verdant" aria-hidden="true">
+                  <div class="vault-media__frame">
+                    <div class="vault-media__artwork vault-media__artwork--verdant"></div>
+                    <div class="vault-media__overlay"></div>
+                    <div class="vault-media__caption">
+                      <span>Object world</span>
+                      <strong>Gallery-lit materials with sculptural weight.</strong>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vault-media" data-media-slide data-slide="1" data-tone="linen" aria-hidden="true">
+                  <div class="vault-media__frame">
+                    <div class="vault-media__artwork vault-media__artwork--linen"></div>
+                    <div class="vault-media__overlay"></div>
+                    <div class="vault-media__caption">
+                      <span>Resort mood</span>
+                      <strong>Open horizon composition and sun-washed contrast.</strong>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vault-media is-active" data-media-slide data-slide="0" data-tone="noir">
+                  <div class="vault-media__frame">
+                    <div class="vault-media__artwork vault-media__artwork--noir"></div>
+                    <div class="vault-media__overlay"></div>
+                    <div class="vault-media__caption">
+                      <span>Launch image</span>
+                      <strong>Editorial shadows with metallic seam highlights.</strong>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="vault-split-carousel__controls">
+            <div class="vault-split-carousel__counter" aria-label="Slide progress">
+              <div class="vault-split-carousel__counter-current">
+                <div class="vault-split-carousel__counter-reel" data-counter-reel>
+                  <span>01</span>
+                  <span>02</span>
+                  <span>03</span>
+                  <span>04</span>
+                </div>
+              </div>
+              <span class="vault-split-carousel__counter-separator" aria-hidden="true"></span>
+              <span class="vault-split-carousel__counter-total" data-counter-total>04</span>
+            </div>
+
+            <div class="vault-split-carousel__nav-buttons">
+              <button type="button" class="vault-nav-button" data-carousel-prev aria-label="Previous slide">
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" class="vault-nav-button" data-carousel-next aria-label="Next slide">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <div class="vault-split-carousel__pagination" aria-label="Choose slide">
+              <button type="button" class="vault-dot is-active" data-carousel-dot data-index="0" aria-label="Go to slide 1" aria-pressed="true">
+                <span>Night edit</span>
+              </button>
+              <button type="button" class="vault-dot" data-carousel-dot data-index="1" aria-label="Go to slide 2" aria-pressed="false">
+                <span>Resort set</span>
+              </button>
+              <button type="button" class="vault-dot" data-carousel-dot data-index="2" aria-label="Go to slide 3" aria-pressed="false">
+                <span>Object study</span>
+              </button>
+              <button type="button" class="vault-dot" data-carousel-dot data-index="3" aria-label="Go to slide 4" aria-pressed="false">
+                <span>Finale</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
