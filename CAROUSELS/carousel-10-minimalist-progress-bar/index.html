@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimalist Progress Bar Carousel</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="mpb-page-shell">
+      <section
+        class="mpb-carousel"
+        data-carousel
+        data-autoplay="true"
+        data-interval="6200"
+        aria-label="Product narrative carousel"
+      >
+        <div class="mpb-carousel__frame">
+          <div class="mpb-carousel__chrome" aria-hidden="true">
+            <span class="mpb-carousel__chrome-line"></span>
+            <span class="mpb-carousel__chrome-line"></span>
+          </div>
+
+          <div class="mpb-carousel__header">
+            <div>
+              <p class="mpb-carousel__eyebrow">Launch Sequence / Q2 Narrative</p>
+              <p class="mpb-carousel__kicker">Minimalist progress-led storytelling for premium product moments.</p>
+            </div>
+            <button
+              class="mpb-carousel__pause"
+              type="button"
+              data-carousel-toggle
+              aria-label="Pause automatic slide rotation"
+              aria-pressed="false"
+            >
+              <span class="mpb-carousel__pause-icon" aria-hidden="true"></span>
+              <span class="mpb-carousel__pause-label">Pause</span>
+            </button>
+          </div>
+
+          <div class="mpb-carousel__viewport" data-carousel-viewport>
+            <div class="mpb-carousel__track" data-carousel-track>
+              <article class="mpb-slide is-active" data-carousel-slide data-index="0" aria-roledescription="slide" aria-label="1 of 4">
+                <div class="mpb-slide__copy">
+                  <p class="mpb-slide__meta">System 01 / Product intelligence</p>
+                  <h2 class="mpb-slide__title">Turn launch messaging into a measured product signal.</h2>
+                  <p class="mpb-slide__body">
+                    Present roadmap, proof points, and release confidence in a format that feels editorial,
+                    precise, and built for high-consideration product storytelling.
+                  </p>
+                  <div class="mpb-slide__actions">
+                    <a class="mpb-slide__cta" href="#launch-story">Explore launch story</a>
+                    <button class="mpb-slide__surface-link" type="button" data-carousel-next>
+                      Advance narrative
+                    </button>
+                  </div>
+                </div>
+                <div class="mpb-slide__visual" aria-hidden="true">
+                  <div class="mpb-visual-card">
+                    <span class="mpb-visual-card__label">Release status</span>
+                    <strong class="mpb-visual-card__value">96.4%</strong>
+                    <div class="mpb-visual-card__bars">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="mpb-slide" data-carousel-slide data-index="1" aria-roledescription="slide" aria-label="2 of 4" inert>
+                <div class="mpb-slide__copy">
+                  <p class="mpb-slide__meta">System 02 / Operational clarity</p>
+                  <h2 class="mpb-slide__title">Highlight adoption momentum without crowding the interface.</h2>
+                  <p class="mpb-slide__body">
+                    A segmented progress rail keeps attention on the story arc while the layout preserves a calm,
+                    dashboard-grade reading rhythm across mobile and desktop.
+                  </p>
+                  <div class="mpb-slide__actions">
+                    <a class="mpb-slide__cta" href="#adoption-model">Review adoption model</a>
+                    <button class="mpb-slide__surface-link" type="button" data-carousel-next>
+                      Continue sequence
+                    </button>
+                  </div>
+                </div>
+                <div class="mpb-slide__visual" aria-hidden="true">
+                  <div class="mpb-visual-grid">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="mpb-slide" data-carousel-slide data-index="2" aria-roledescription="slide" aria-label="3 of 4" inert>
+                <div class="mpb-slide__copy">
+                  <p class="mpb-slide__meta">System 03 / Trust framework</p>
+                  <h2 class="mpb-slide__title">Sync timing, state, and credibility in one understated control layer.</h2>
+                  <p class="mpb-slide__body">
+                    Progress resets are clean, off-screen playback pauses automatically, and focus-aware behavior keeps
+                    the carousel usable for keyboard and assistive technology users.
+                  </p>
+                  <div class="mpb-slide__actions">
+                    <a class="mpb-slide__cta" href="#trust-framework">See trust framework</a>
+                    <button class="mpb-slide__surface-link" type="button" data-carousel-next>
+                      View final proof point
+                    </button>
+                  </div>
+                </div>
+                <div class="mpb-slide__visual" aria-hidden="true">
+                  <div class="mpb-metric-stack">
+                    <span>Visibility-aware autoplay</span>
+                    <span>Keyboard-first controls</span>
+                    <span>Reduced-motion safe</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="mpb-slide" data-carousel-slide data-index="3" aria-roledescription="slide" aria-label="4 of 4" inert>
+                <div class="mpb-slide__copy">
+                  <p class="mpb-slide__meta">System 04 / Conversion-ready finish</p>
+                  <h2 class="mpb-slide__title">Close with a premium CTA that feels timed, not rushed.</h2>
+                  <p class="mpb-slide__body">
+                    The carousel ends on a clear call to action, while direct segment selection and internal next/previous
+                    logic keep the experience resilient across touch, mouse, and keyboard interaction.
+                  </p>
+                  <div class="mpb-slide__actions">
+                    <a class="mpb-slide__cta" href="#book-demo">Book a product demo</a>
+                    <button class="mpb-slide__surface-link" type="button" data-carousel-prev>
+                      Review previous slide
+                    </button>
+                  </div>
+                </div>
+                <div class="mpb-slide__visual" aria-hidden="true">
+                  <div class="mpb-terminal-card">
+                    <span class="mpb-terminal-card__prompt">deploy.signal</span>
+                    <span class="mpb-terminal-card__line">status: prepared</span>
+                    <span class="mpb-terminal-card__line">audience: executive</span>
+                    <span class="mpb-terminal-card__line">next: conversion</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="mpb-carousel__footer">
+            <div class="mpb-carousel__indices" aria-live="off">
+              <span class="mpb-carousel__index-current" data-carousel-current>01</span>
+              <span class="mpb-carousel__index-divider">/</span>
+              <span class="mpb-carousel__index-total" data-carousel-total>04</span>
+            </div>
+
+            <div class="mpb-carousel__progress" role="group" aria-label="Slide progress navigation">
+              <button class="mpb-progress-segment is-active" type="button" data-carousel-segment aria-label="Go to slide 1" aria-current="true">
+                <span class="mpb-progress-segment__label">Signal</span>
+                <span class="mpb-progress-segment__track"><span class="mpb-progress-segment__fill" data-carousel-fill></span></span>
+              </button>
+              <button class="mpb-progress-segment" type="button" data-carousel-segment aria-label="Go to slide 2">
+                <span class="mpb-progress-segment__label">Adoption</span>
+                <span class="mpb-progress-segment__track"><span class="mpb-progress-segment__fill" data-carousel-fill></span></span>
+              </button>
+              <button class="mpb-progress-segment" type="button" data-carousel-segment aria-label="Go to slide 3">
+                <span class="mpb-progress-segment__label">Trust</span>
+                <span class="mpb-progress-segment__track"><span class="mpb-progress-segment__fill" data-carousel-fill></span></span>
+              </button>
+              <button class="mpb-progress-segment" type="button" data-carousel-segment aria-label="Go to slide 4">
+                <span class="mpb-progress-segment__label">Conversion</span>
+                <span class="mpb-progress-segment__track"><span class="mpb-progress-segment__fill" data-carousel-fill></span></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mpb-visually-hidden" data-carousel-live aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
