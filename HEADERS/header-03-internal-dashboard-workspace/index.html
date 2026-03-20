@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Dashboard Workspace Header</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="workspace-skip-link" href="#workspace-content">Skip to workspace content</a>
+
+    <div class="workspace-shell" data-theme="dark">
+      <header class="workspace-header" aria-label="Internal workspace header">
+        <div class="workspace-header__bar">
+          <div class="workspace-header__left">
+            <div class="workspace-header__context">
+              <p class="workspace-header__eyebrow">KP_Code Digital Vault • Internal Dashboard Workspace</p>
+              <div class="workspace-header__breadcrumb-row">
+                <nav class="workspace-breadcrumbs" aria-label="Breadcrumb">
+                  <ol class="workspace-breadcrumbs__list">
+                    <li class="workspace-breadcrumbs__item">
+                      <a href="#overview">Operations</a>
+                    </li>
+                    <li class="workspace-breadcrumbs__item">
+                      <a href="#portfolio">Campaigns</a>
+                    </li>
+                    <li class="workspace-breadcrumbs__item">
+                      <a href="#workspace-content">Q2 Pipeline</a>
+                    </li>
+                    <li class="workspace-breadcrumbs__item" aria-current="page">
+                      Revenue Recovery Sprint
+                    </li>
+                  </ol>
+                </nav>
+
+                <div class="workspace-record" aria-label="Current record identifier">
+                  <span class="workspace-record__label">Run ID</span>
+                  <code class="workspace-record__value" id="workspace-record-value">OPS-24-1187</code>
+                  <button
+                    class="workspace-record__copy"
+                    type="button"
+                    data-copy-record
+                    aria-describedby="workspace-live-region"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="workspace-header__center">
+            <button
+              class="workspace-command-trigger"
+              type="button"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="workspace-command-panel"
+              data-panel-trigger="command"
+            >
+              <span class="workspace-command-trigger__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                  <path
+                    d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Zm9.2 12.8-3.26-3.26"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                  />
+                </svg>
+              </span>
+              <span class="workspace-command-trigger__copy">
+                <span class="workspace-command-trigger__label">Search reports, actions, teammates</span>
+                <span class="workspace-command-trigger__meta">Command palette</span>
+              </span>
+              <span class="workspace-command-trigger__shortcut" aria-hidden="true">Ctrl K</span>
+            </button>
+          </div>
+
+          <div class="workspace-header__right">
+            <div class="workspace-status" title="All monitored services are healthy">
+              <span class="workspace-status__dot" aria-hidden="true"></span>
+              <div>
+                <span class="workspace-status__label">System status</span>
+                <span class="workspace-status__value">API, data sync, and queues healthy</span>
+              </div>
+            </div>
+
+            <button
+              class="workspace-icon-button workspace-icon-button--theme"
+              type="button"
+              data-theme-toggle
+              aria-pressed="false"
+            >
+              <span aria-hidden="true">◐</span>
+              <span>Theme</span>
+            </button>
+
+            <div class="workspace-panel-anchor">
+              <button
+                class="workspace-icon-button workspace-icon-button--notifications"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="workspace-notification-panel"
+                data-panel-trigger="notifications"
+              >
+                <span class="workspace-icon-button__badge" data-notification-count>4</span>
+                <span aria-hidden="true">🔔</span>
+                <span>Alerts</span>
+              </button>
+
+              <section
+                class="workspace-popover workspace-popover--notifications"
+                id="workspace-notification-panel"
+                aria-label="Notifications"
+                data-panel="notifications"
+                hidden
+              >
+                <div class="workspace-popover__header">
+                  <div>
+                    <p class="workspace-popover__eyebrow">Workspace events</p>
+                    <h2>Notifications</h2>
+                  </div>
+                  <button type="button" class="workspace-text-button" data-mark-read>Mark all as read</button>
+                </div>
+                <div class="workspace-notifications" data-notification-list>
+                  <article class="workspace-notification is-unread" data-notification-item data-type="warning" tabindex="-1">
+                    <span class="workspace-notification__status" aria-hidden="true"></span>
+                    <div>
+                      <h3>Budget variance needs approval</h3>
+                      <p>Paid Social • North America exceeded target by 7.8% and is waiting for finance sign-off.</p>
+                      <span>6 minutes ago</span>
+                    </div>
+                  </article>
+                  <article class="workspace-notification is-unread" data-notification-item data-type="system" tabindex="-1">
+                    <span class="workspace-notification__status" aria-hidden="true"></span>
+                    <div>
+                      <h3>Sync recovered automatically</h3>
+                      <p>The analytics ingestion worker resumed after a 42-second retry window.</p>
+                      <span>18 minutes ago</span>
+                    </div>
+                  </article>
+                  <article class="workspace-notification is-unread" data-notification-item data-type="success" tabindex="-1">
+                    <span class="workspace-notification__status" aria-hidden="true"></span>
+                    <div>
+                      <h3>Executive report exported</h3>
+                      <p>Board-ready PDF for Revenue Recovery Sprint was generated and shared to stakeholders.</p>
+                      <span>32 minutes ago</span>
+                    </div>
+                  </article>
+                  <article class="workspace-notification" data-notification-item data-type="info" tabindex="-1">
+                    <span class="workspace-notification__status" aria-hidden="true"></span>
+                    <div>
+                      <h3>Comment added by Priya Shah</h3>
+                      <p>Requested a confidence note on the churn prevention assumptions before the 15:00 review.</p>
+                      <span>1 hour ago</span>
+                    </div>
+                  </article>
+                </div>
+                <p class="workspace-empty-state" data-empty-state hidden>All caught up. New workspace events will appear here.</p>
+              </section>
+            </div>
+
+            <div class="workspace-panel-anchor workspace-profile-area">
+              <button
+                class="workspace-profile-trigger"
+                type="button"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                aria-controls="workspace-profile-menu"
+                data-panel-trigger="profile"
+              >
+                <span class="workspace-profile-trigger__avatar" aria-hidden="true">AL</span>
+                <span class="workspace-profile-trigger__copy">
+                  <span class="workspace-profile-trigger__name">Alicia Lin</span>
+                  <span class="workspace-profile-trigger__role">Ops Admin • Workspace Owner</span>
+                </span>
+                <span class="workspace-profile-trigger__caret" aria-hidden="true">▾</span>
+              </button>
+
+              <div
+                class="workspace-popover workspace-popover--menu"
+                id="workspace-profile-menu"
+                role="menu"
+                aria-label="Profile actions"
+                data-panel="profile"
+                hidden
+              >
+                <button type="button" role="menuitem" class="workspace-menu-item">Profile</button>
+                <button type="button" role="menuitem" class="workspace-menu-item">Workspace settings</button>
+                <button type="button" role="menuitem" class="workspace-menu-item" data-theme-toggle>Toggle theme</button>
+                <button type="button" role="menuitem" class="workspace-menu-item">Keyboard shortcuts</button>
+                <button type="button" role="menuitem" class="workspace-menu-item workspace-menu-item--danger">Sign out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-header__meta" data-workspace-meta>
+          <div class="workspace-metric">
+            <span>Owner</span>
+            <strong>Revenue Operations</strong>
+          </div>
+          <div class="workspace-metric">
+            <span>Review window</span>
+            <strong>Today • 15:00 UTC</strong>
+          </div>
+          <div class="workspace-metric">
+            <span>Confidence</span>
+            <strong>92% aligned</strong>
+          </div>
+          <button class="workspace-quick-action" type="button">Approve recovery plan</button>
+        </div>
+
+        <div
+          class="workspace-command-panel"
+          id="workspace-command-panel"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="workspace-command-title"
+          data-panel="command"
+          hidden
+        >
+          <div class="workspace-command-panel__header">
+            <div>
+              <p class="workspace-popover__eyebrow">Quick navigation</p>
+              <h2 id="workspace-command-title">Command and search</h2>
+            </div>
+            <button class="workspace-text-button" type="button" data-close-panel="command">Close</button>
+          </div>
+          <label class="workspace-command-panel__input-wrap">
+            <span class="sr-only">Search commands and destinations</span>
+            <input
+              class="workspace-command-panel__input"
+              type="search"
+              placeholder="Search reports, queues, teammates, or actions"
+              autocomplete="off"
+              data-command-input
+            />
+          </label>
+          <div class="workspace-command-panel__section">
+            <p class="workspace-command-panel__label">Quick actions</p>
+            <div class="workspace-command-panel__list">
+              <button type="button" class="workspace-command-item">Open anomaly digest <kbd>G</kbd></button>
+              <button type="button" class="workspace-command-item">Assign finance review <kbd>A</kbd></button>
+              <button type="button" class="workspace-command-item">Create export snapshot <kbd>E</kbd></button>
+            </div>
+          </div>
+          <div class="workspace-command-panel__section">
+            <p class="workspace-command-panel__label">Recent destinations</p>
+            <ul class="workspace-command-panel__results" data-command-results>
+              <li><button type="button" class="workspace-result-item">Campaign health • Revenue Recovery Sprint</button></li>
+              <li><button type="button" class="workspace-result-item">Approvals queue • Finance exceptions</button></li>
+              <li><button type="button" class="workspace-result-item">Reporting • Weekly board packet</button></li>
+              <li><button type="button" class="workspace-result-item">Team directory • Growth operations</button></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace-content" id="workspace-content" tabindex="-1">
+        <section class="workspace-content__hero" id="overview" aria-labelledby="workspace-content-title">
+          <div id="portfolio" hidden aria-hidden="true"></div>
+          <div>
+            <p class="workspace-content__eyebrow">Operational snapshot</p>
+            <h1 id="workspace-content-title">Revenue Recovery Sprint workspace</h1>
+            <p>
+              This standalone demo focuses on the header experience for internal products: clear orientation,
+              fast access to commands, lightweight status visibility, and refined controls built for long-session use.
+            </p>
+          </div>
+          <div class="workspace-content__card-grid">
+            <article class="workspace-card">
+              <span>Escalations</span>
+              <strong>03 active</strong>
+              <p>Two budget approvals and one delayed sync need review before executive sign-off.</p>
+            </article>
+            <article class="workspace-card">
+              <span>Forecast drift</span>
+              <strong>-1.4%</strong>
+              <p>Below alert threshold after attribution fixes and regional pacing updates.</p>
+            </article>
+            <article class="workspace-card">
+              <span>Next milestone</span>
+              <strong>Board packet review</strong>
+              <p>Attach confidence notes, approve spend variance, and lock the export before 15:00 UTC.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <div class="sr-only" aria-live="polite" id="workspace-live-region"></div>
+    </div>
+  </body>
+</html>
