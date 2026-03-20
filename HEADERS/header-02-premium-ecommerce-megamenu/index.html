@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium E-commerce Megamenu Header</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="commerce-header__skip-link" href="#header-demo-main">Skip to content</a>
+
+    <div class="commerce-header__progress" aria-hidden="true">
+      <span class="commerce-header__progress-bar" data-scroll-progress></span>
+    </div>
+
+    <header class="commerce-header" data-header-root>
+      <div class="commerce-header__topbar">
+        <div class="commerce-header__container commerce-header__topbar-inner">
+          <p class="commerce-header__promo">
+            Complimentary white-glove delivery on lounge, dining, and lighting orders over $1,500.
+          </p>
+
+          <div class="commerce-header__utility-cluster" aria-label="Store utilities">
+            <button class="commerce-header__utility-button" type="button">
+              EN / USD
+            </button>
+            <a class="commerce-header__utility-link" href="#support">Design concierge: +1 (888) 240-1974</a>
+            <a class="commerce-header__utility-link" href="#tracking">Order tracking</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="commerce-header__mainbar">
+        <div class="commerce-header__container commerce-header__mainbar-inner">
+          <div class="commerce-header__brand-row">
+            <button
+              class="commerce-header__mobile-toggle"
+              type="button"
+              data-mobile-toggle
+              aria-expanded="false"
+              aria-controls="mobile-navigation-panel"
+              aria-label="Open navigation"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+
+            <a class="commerce-header__brand" href="#" aria-label="Atelier Maison home">
+              <span class="commerce-header__brand-mark">AM</span>
+              <span class="commerce-header__brand-copy">
+                <strong>Atelier Maison</strong>
+                <span>Curated interiors &amp; elevated living</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="commerce-header__search-shell" data-search-root>
+            <form class="commerce-header__search" role="search" novalidate>
+              <label class="sr-only" for="header-search">Search Atelier Maison</label>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M10.75 4.75a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm8.5 14.5-4.04-4.04"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                />
+              </svg>
+              <input
+                id="header-search"
+                type="search"
+                autocomplete="off"
+                placeholder="Search furniture, lighting, décor, materials..."
+                data-search-input
+                aria-expanded="false"
+                aria-controls="header-search-panel"
+                aria-autocomplete="list"
+                aria-haspopup="listbox"
+              />
+              <button type="submit">Search</button>
+            </form>
+
+            <section
+              id="header-search-panel"
+              class="commerce-header__search-panel"
+              data-search-panel
+              aria-label="Search suggestions"
+              hidden
+            >
+              <div class="commerce-header__search-state" data-search-empty>
+                <div>
+                  <p class="commerce-header__panel-eyebrow">Recent searches</p>
+                  <div class="commerce-header__chip-row">
+                    <button type="button" class="commerce-header__chip">Bouclé sectional</button>
+                    <button type="button" class="commerce-header__chip">Travertine coffee table</button>
+                    <button type="button" class="commerce-header__chip">Brushed brass floor lamp</button>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="commerce-header__panel-eyebrow">Recently viewed</p>
+                  <div class="commerce-header__mini-list">
+                    <article class="commerce-header__mini-card">
+                      <div class="commerce-header__mini-swatch commerce-header__mini-swatch--stone"></div>
+                      <div>
+                        <h3>Alden Modular Sofa</h3>
+                        <p>Performance bouclé · 3-seat configuration</p>
+                      </div>
+                      <strong>$4,280</strong>
+                    </article>
+                    <article class="commerce-header__mini-card">
+                      <div class="commerce-header__mini-swatch commerce-header__mini-swatch--oak"></div>
+                      <div>
+                        <h3>Oslo Oak Console</h3>
+                        <p>Natural oak · cable-managed storage</p>
+                      </div>
+                      <strong>$1,190</strong>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <div class="commerce-header__search-state" data-search-results hidden>
+                <div class="commerce-header__search-results-head">
+                  <div>
+                    <p class="commerce-header__panel-eyebrow">Suggested products</p>
+                    <p class="commerce-header__panel-note" data-search-summary>Top matches</p>
+                  </div>
+                  <a href="#search-results">View all results</a>
+                </div>
+
+                <ul class="commerce-header__suggestion-list" role="listbox" aria-label="Suggested products" data-suggestion-list></ul>
+              </div>
+            </section>
+          </div>
+
+          <div class="commerce-header__actions" aria-label="Customer actions">
+            <div class="commerce-header__account-shell" data-account-root>
+              <button
+                class="commerce-header__icon-button"
+                type="button"
+                data-account-trigger
+                aria-expanded="false"
+                aria-controls="header-account-panel"
+              >
+                <span class="commerce-header__icon" aria-hidden="true">👤</span>
+                <span class="commerce-header__action-copy">
+                  <strong>Account</strong>
+                  <span>Sign in / Orders</span>
+                </span>
+              </button>
+
+              <section
+                id="header-account-panel"
+                class="commerce-header__account-panel"
+                data-account-panel
+                hidden
+                aria-label="Account shortcuts"
+              >
+                <p class="commerce-header__panel-eyebrow">Welcome back</p>
+                <h2>Continue your premium shopping journey.</h2>
+                <div class="commerce-header__account-links">
+                  <a href="#sign-in">Sign in to your account</a>
+                  <a href="#orders">View orders &amp; delivery updates</a>
+                  <a href="#trade">Apply for trade pricing</a>
+                </div>
+              </section>
+            </div>
+
+            <button class="commerce-header__icon-button" type="button" data-badge-bump>
+              <span class="commerce-header__icon" aria-hidden="true">♡</span>
+              <span class="commerce-header__action-copy">
+                <strong>Wishlist</strong>
+                <span>Saved pieces</span>
+              </span>
+              <span class="commerce-header__badge" aria-label="4 wishlist items">4</span>
+            </button>
+
+            <div class="commerce-header__cart-shell" data-cart-root>
+              <button
+                class="commerce-header__icon-button commerce-header__icon-button--cart"
+                type="button"
+                data-cart-trigger
+                aria-expanded="false"
+                aria-controls="header-cart-panel"
+              >
+                <span class="commerce-header__icon" aria-hidden="true">👜</span>
+                <span class="commerce-header__action-copy">
+                  <strong>Cart</strong>
+                  <span>$7,660 total</span>
+                </span>
+                <span class="commerce-header__badge commerce-header__badge--accent" aria-label="2 items in cart">2</span>
+              </button>
+
+              <section
+                id="header-cart-panel"
+                class="commerce-header__cart-panel"
+                data-cart-panel
+                hidden
+                aria-label="Cart quick view"
+              >
+                <div class="commerce-header__cart-header">
+                  <div>
+                    <p class="commerce-header__panel-eyebrow">Mini cart</p>
+                    <h2>Ready for checkout</h2>
+                  </div>
+                  <button type="button" class="commerce-header__text-button" data-cart-toggle-close>Close</button>
+                </div>
+
+                <div class="commerce-header__cart-state" data-cart-filled>
+                  <div class="commerce-header__cart-list">
+                    <article class="commerce-header__cart-item">
+                      <div class="commerce-header__product-thumb commerce-header__product-thumb--linen"></div>
+                      <div>
+                        <h3>Arc Lounge Chair</h3>
+                        <p>Sand performance linen · Qty 1</p>
+                        <span>Ships in 2–3 weeks</span>
+                      </div>
+                      <strong>$2,180</strong>
+                    </article>
+                    <article class="commerce-header__cart-item">
+                      <div class="commerce-header__product-thumb commerce-header__product-thumb--metal"></div>
+                      <div>
+                        <h3>Vanta Halo Pendant</h3>
+                        <p>Brushed brass · Qty 2</p>
+                        <span>Included premium install support</span>
+                      </div>
+                      <strong>$5,480</strong>
+                    </article>
+                  </div>
+
+                  <div class="commerce-header__cart-summary">
+                    <div>
+                      <span>Subtotal</span>
+                      <strong>$7,660</strong>
+                    </div>
+                    <p>Design concierge will confirm white-glove delivery windows after checkout.</p>
+                    <div class="commerce-header__cart-actions">
+                      <button type="button" class="commerce-header__button commerce-header__button--secondary" data-toggle-cart-state>
+                        View empty state
+                      </button>
+                      <button type="button" class="commerce-header__button commerce-header__button--primary">
+                        Checkout securely
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="commerce-header__cart-state" data-cart-empty hidden>
+                  <div class="commerce-header__empty-illustration" aria-hidden="true">🛍️</div>
+                  <h3>Your cart is currently empty.</h3>
+                  <p>Save time with curated room edits, best sellers, and concierge-recommended pairings.</p>
+                  <div class="commerce-header__cart-actions commerce-header__cart-actions--stacked">
+                    <button type="button" class="commerce-header__button commerce-header__button--primary">Browse best sellers</button>
+                    <button type="button" class="commerce-header__button commerce-header__button--secondary" data-toggle-cart-state>
+                      Restore filled state
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="commerce-header__navrow">
+        <div class="commerce-header__container commerce-header__navrow-inner">
+          <nav class="commerce-header__nav" aria-label="Primary categories">
+            <button
+              class="commerce-header__nav-link commerce-header__nav-link--trigger"
+              type="button"
+              data-mega-trigger
+              aria-expanded="false"
+              aria-controls="mega-menu-living"
+            >
+              Living Room
+            </button>
+            <a class="commerce-header__nav-link" href="#dining">Dining</a>
+            <a class="commerce-header__nav-link" href="#bedroom">Bedroom</a>
+            <a class="commerce-header__nav-link" href="#lighting">Lighting</a>
+            <a class="commerce-header__nav-link" href="#office">Office</a>
+            <a class="commerce-header__nav-link" href="#outdoor">Outdoor</a>
+            <a class="commerce-header__nav-link" href="#new-arrivals">New arrivals</a>
+          </nav>
+
+          <div class="commerce-header__service-pills" aria-label="Service highlights">
+            <span>Trade pricing available</span>
+            <span>Free material swatches</span>
+            <span>30-day returns</span>
+          </div>
+        </div>
+
+        <section
+          id="mega-menu-living"
+          class="commerce-header__mega-menu"
+          data-mega-menu
+          hidden
+          aria-label="Living room categories"
+        >
+          <div class="commerce-header__container commerce-header__mega-grid">
+            <div class="commerce-header__mega-columns">
+              <div class="commerce-header__mega-column">
+                <p class="commerce-header__panel-eyebrow">Seating</p>
+                <a href="#sectionals">Sectionals &amp; sofas</a>
+                <a href="#accent-chairs">Accent chairs</a>
+                <a href="#recliners">Recliners &amp; chaise lounges</a>
+                <a href="#benches">Benches &amp; ottomans</a>
+              </div>
+              <div class="commerce-header__mega-column">
+                <p class="commerce-header__panel-eyebrow">Tables &amp; storage</p>
+                <a href="#coffee-tables">Coffee tables</a>
+                <a href="#side-tables">Side tables</a>
+                <a href="#consoles">Consoles &amp; media units</a>
+                <a href="#bookcases">Bookcases &amp; shelving</a>
+              </div>
+              <div class="commerce-header__mega-column">
+                <p class="commerce-header__panel-eyebrow">Décor accents</p>
+                <a href="#rugs">Rugs &amp; runners</a>
+                <a href="#throws">Throws &amp; cushions</a>
+                <a href="#art">Wall art &amp; mirrors</a>
+                <a href="#objects">Objects &amp; vessels</a>
+              </div>
+            </div>
+
+            <div class="commerce-header__mega-feature-strip" aria-label="Featured collections">
+              <article class="commerce-header__feature-card">
+                <div class="commerce-header__feature-media commerce-header__feature-media--boucle"></div>
+                <div>
+                  <p class="commerce-header__panel-eyebrow">Best-selling lounge</p>
+                  <h2>Sculpted seating for layered, high-comfort living rooms.</h2>
+                  <a href="#best-selling-seating">Shop best sellers</a>
+                </div>
+              </article>
+
+              <article class="commerce-header__feature-card commerce-header__feature-card--compact">
+                <div class="commerce-header__feature-badge">Just launched</div>
+                <h3>Designer spotlight: Milan apartment edit</h3>
+                <p>Warm woods, soft curves, and stone-led accents curated for compact luxury spaces.</p>
+                <a href="#apartment-edit">Explore the edit</a>
+              </article>
+            </div>
+
+            <aside class="commerce-header__mega-promo" aria-label="Campaign highlight">
+              <p class="commerce-header__panel-eyebrow">Spring residence event</p>
+              <h2>Save up to 18% on living room layers when you bundle seating, tables, and lighting.</h2>
+              <p>
+                Pair a modular sofa with artisan side tables and statement pendants to unlock premium room-set pricing.
+              </p>
+              <div class="commerce-header__promo-products">
+                <article>
+                  <div class="commerce-header__promo-swatch commerce-header__promo-swatch--travertine"></div>
+                  <h3>Ridge Travertine Table</h3>
+                  <span>$1,420</span>
+                </article>
+                <article>
+                  <div class="commerce-header__promo-swatch commerce-header__promo-swatch--walnut"></div>
+                  <h3>Elio Walnut Media Console</h3>
+                  <span>$2,860</span>
+                </article>
+              </div>
+              <a class="commerce-header__button commerce-header__button--primary" href="#living-event">Shop the promotion</a>
+            </aside>
+          </div>
+        </section>
+      </div>
+
+      <div
+        class="commerce-header__mobile-panel"
+        id="mobile-navigation-panel"
+        data-mobile-panel
+        hidden
+      >
+        <div class="commerce-header__container commerce-header__mobile-panel-inner">
+          <div class="commerce-header__mobile-search">
+            <label class="sr-only" for="mobile-search">Search categories</label>
+            <input id="mobile-search" type="search" placeholder="Search collections" />
+          </div>
+
+          <nav class="commerce-header__mobile-nav" aria-label="Mobile categories">
+            <details open>
+              <summary>Living Room</summary>
+              <div class="commerce-header__mobile-links">
+                <a href="#sectionals">Sectionals &amp; sofas</a>
+                <a href="#accent-chairs">Accent chairs</a>
+                <a href="#coffee-tables">Coffee tables</a>
+                <a href="#rugs">Rugs &amp; runners</a>
+              </div>
+            </details>
+            <details>
+              <summary>Dining</summary>
+              <div class="commerce-header__mobile-links">
+                <a href="#dining-tables">Dining tables</a>
+                <a href="#bar-stools">Bar &amp; counter stools</a>
+                <a href="#serveware">Serveware</a>
+              </div>
+            </details>
+            <details>
+              <summary>Lighting</summary>
+              <div class="commerce-header__mobile-links">
+                <a href="#pendants">Pendants</a>
+                <a href="#wall-lights">Wall lights</a>
+                <a href="#portable-lamps">Portable lamps</a>
+              </div>
+            </details>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main id="header-demo-main" class="commerce-header-demo">
+      <section class="commerce-header-demo__hero" aria-labelledby="header-demo-title">
+        <div>
+          <p class="commerce-header-demo__eyebrow">Premium header package</p>
+          <h1 id="header-demo-title">Three-layer commerce navigation built for premium interior retail.</h1>
+          <p>
+            This standalone component demonstrates trustworthy service messaging, utility-rich shopping controls,
+            dense-yet-clear category exploration, and polished dropdown behaviors that support high-consideration
+            product discovery.
+          </p>
+        </div>
+
+        <div class="commerce-header-demo__metrics" aria-label="Component strengths">
+          <article>
+            <strong>3 layers</strong>
+            <span>Top trust bar, main controls, and structured category row</span>
+          </article>
+          <article>
+            <strong>Mega menu</strong>
+            <span>Multi-column category exploration with featured cards and campaign zone</span>
+          </article>
+          <article>
+            <strong>Search + cart</strong>
+            <span>Empty, suggestion, and quick-view cart states with keyboard-friendly behavior</span>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="sr-only" aria-live="polite" data-live-region></div>
+    <script src="script.js"></script>
+  </body>
+</html>
