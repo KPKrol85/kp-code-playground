@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ultra-Clean SaaS hero component for KPI-driven product landing pages, featuring a conversion-focused message column and layered product mockup."
+    />
+    <title>Ultra-Clean SaaS Hero</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="ucs-page">
+      <section class="ucs-hero" aria-labelledby="ucs-hero-title" data-hero>
+        <div class="ucs-hero__backdrop" aria-hidden="true"></div>
+
+        <div class="ucs-hero__layout">
+          <div class="ucs-hero__content" data-reveal-group>
+            <p class="ucs-hero__eyebrow" data-reveal>
+              <span class="ucs-hero__eyebrow-dot" aria-hidden="true"></span>
+              Trusted by revenue, ops, and product teams at 2,400+ SaaS brands
+            </p>
+
+            <div class="ucs-hero__copy" data-reveal>
+              <h1 id="ucs-hero-title">Run your customer pipeline with less noise and more proof.</h1>
+              <p>
+                Align lifecycle campaigns, pipeline analytics, and team approvals in one clean operating
+                layer so your go-to-market team moves faster without sacrificing clarity, governance, or
+                forecast confidence.
+              </p>
+            </div>
+
+            <div class="ucs-hero__actions" data-reveal>
+              <a class="ucs-button ucs-button--primary" href="#start" data-primary-cta>
+                Start free workspace
+              </a>
+              <a
+                class="ucs-button ucs-button--secondary"
+                href="#demo"
+                aria-label="Watch the three minute product demo"
+              >
+                <span class="ucs-button__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                    <path d="M8 7.5v9l8-4.5-8-4.5Z"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                  </svg>
+                </span>
+                Watch demo
+              </a>
+            </div>
+
+            <dl class="ucs-hero__proof" data-reveal>
+              <div>
+                <dt>31%</dt>
+                <dd>Lift in qualified pipeline after teams consolidate handoffs</dd>
+              </div>
+              <div>
+                <dt>4.9/5</dt>
+                <dd>Average rollout score from RevOps and lifecycle leaders</dd>
+              </div>
+              <div>
+                <dt>12 days</dt>
+                <dd>Median time to launch a production-ready workflow</dd>
+              </div>
+            </dl>
+
+            <div class="ucs-trust" data-reveal aria-label="Trust indicators">
+              <span class="ucs-trust__label">Used by teams at</span>
+              <ul class="ucs-trust__list" aria-label="Representative customer logos">
+                <li>Northstar</li>
+                <li>FoundryOS</li>
+                <li>MetricLoop</li>
+                <li>Basis Cloud</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ucs-hero__media" data-reveal>
+            <div class="ucs-mockup" data-mockup>
+              <div class="ucs-mockup__halo" aria-hidden="true"></div>
+              <div class="ucs-mockup__window" aria-label="SaaS analytics workspace showing pipeline health, campaign performance, and team approvals">
+                <div class="ucs-mockup__chrome" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <div class="ucs-mockup__toolbar">
+                  <div>
+                    <p class="ucs-mockup__product">Avenir Pipeline OS</p>
+                    <p class="ucs-mockup__subtitle">Revenue workspace · Live sync</p>
+                  </div>
+                  <button class="ucs-mockup__share" type="button">Share snapshot</button>
+                </div>
+
+                <div class="ucs-mockup__body">
+                  <aside class="ucs-mockup__sidebar" aria-label="Navigation preview">
+                    <span class="is-active">Overview</span>
+                    <span>Journeys</span>
+                    <span>Pipeline</span>
+                    <span>Approvals</span>
+                    <span>Forecasting</span>
+                  </aside>
+
+                  <div class="ucs-mockup__panel-group">
+                    <section class="ucs-panel ucs-panel--hero-metric">
+                      <div class="ucs-panel__kicker">Pipeline health</div>
+                      <div class="ucs-panel__row">
+                        <div>
+                          <strong>$4.8M</strong>
+                          <span>Qualified pipeline</span>
+                        </div>
+                        <div class="ucs-panel__badge">+18.4%</div>
+                      </div>
+                      <div class="ucs-chart" aria-hidden="true">
+                        <span style="--point: 52%"></span>
+                        <span style="--point: 68%"></span>
+                        <span style="--point: 58%"></span>
+                        <span style="--point: 79%"></span>
+                        <span style="--point: 74%"></span>
+                        <span style="--point: 88%"></span>
+                      </div>
+                    </section>
+
+                    <div class="ucs-panel-grid">
+                      <section class="ucs-panel">
+                        <div class="ucs-panel__kicker">Campaign velocity</div>
+                        <strong>14 launches</strong>
+                        <p>Three cross-functional approvals waiting, all within SLA.</p>
+                      </section>
+
+                      <section class="ucs-panel">
+                        <div class="ucs-panel__kicker">Team load</div>
+                        <ul class="ucs-panel__avatars" aria-label="Team assignments">
+                          <li>AL</li>
+                          <li>MK</li>
+                          <li>JR</li>
+                          <li>+4</li>
+                        </ul>
+                        <p>Workflows distributed automatically by region and segment.</p>
+                      </section>
+                    </div>
+
+                    <section class="ucs-panel ucs-panel--table">
+                      <div class="ucs-panel__header-row">
+                        <div>
+                          <div class="ucs-panel__kicker">Active workflows</div>
+                          <strong>Launch control board</strong>
+                        </div>
+                        <span class="ucs-panel__pill">Synced with CRM</span>
+                      </div>
+                      <ul class="ucs-table" aria-label="Workflow status summary">
+                        <li>
+                          <span>Q2 expansion nurture</span>
+                          <strong>Ready for review</strong>
+                        </li>
+                        <li>
+                          <span>Onboarding uplift sequence</span>
+                          <strong>7 blockers cleared</strong>
+                        </li>
+                        <li>
+                          <span>Mid-market reactivation</span>
+                          <strong>Forecast +12% above plan</strong>
+                        </li>
+                      </ul>
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <article class="ucs-float-card ucs-float-card--signal" aria-label="Forecast signal summary">
+                <span class="ucs-float-card__eyebrow">Forecast signal</span>
+                <strong>92% confidence</strong>
+                <p>Expansion pipeline pacing above target after approval bottlenecks were removed.</p>
+              </article>
+
+              <article class="ucs-float-card ucs-float-card--success" aria-label="Automation status update">
+                <span class="ucs-float-card__eyebrow">Automation</span>
+                <strong>Sequence published</strong>
+                <p>Lifecycle review approved. Campaign sync completed in 48 seconds.</p>
+              </article>
+
+              <article class="ucs-float-card ucs-float-card--mini-chart" aria-label="Engagement trend card">
+                <span class="ucs-float-card__eyebrow">Engagement lift</span>
+                <strong>+24% week over week</strong>
+                <div class="ucs-mini-bars" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
