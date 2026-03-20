@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Glassmorphic Landing Island — a premium standalone floating header component for modern SaaS landing pages."
+    />
+    <title>Glassmorphic Landing Island</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="gli-skip-link" href="#main-content">Skip to content</a>
+
+    <div class="gli-page-shell">
+      <header class="gli-header" data-header>
+        <div class="gli-header__surface">
+          <a class="gli-brand" href="#" aria-label="LumaForge home">
+            <span class="gli-brand__mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" focusable="false">
+                <defs>
+                  <linearGradient id="gli-brand-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="currentColor" stop-opacity="0.96"></stop>
+                    <stop offset="100%" stop-color="currentColor" stop-opacity="0.42"></stop>
+                  </linearGradient>
+                </defs>
+                <path
+                  fill="url(#gli-brand-gradient)"
+                  d="M15.82 3.5c5.79 0 11.22 3.12 14.16 8.15.38.66.38 1.49 0 2.15C27.04 18.83 21.61 22 15.82 22H8.93l-2.26 6.22c-.23.62-.83 1.03-1.49 1.03-.93 0-1.69-.75-1.69-1.69 0-.2.04-.39.1-.57L5.75 22.2C3.54 21.6 1.53 20.3.02 18.45a1.73 1.73 0 0 1 0-2.21C3.18 12.39 9.05 3.5 15.82 3.5Z"
+                ></path>
+              </svg>
+            </span>
+            <span class="gli-brand__copy">
+              <strong>LumaForge</strong>
+              <span>Revenue OS</span>
+            </span>
+          </a>
+
+          <nav class="gli-nav" aria-label="Primary navigation">
+            <ul class="gli-nav__list">
+              <li><a class="gli-nav__link gli-nav__link--current" href="#platform" aria-current="page">Platform</a></li>
+              <li><a class="gli-nav__link" href="#solutions">Solutions</a></li>
+              <li><a class="gli-nav__link" href="#customers">Customers</a></li>
+              <li><a class="gli-nav__link" href="#pricing">Pricing</a></li>
+            </ul>
+          </nav>
+
+          <div class="gli-actions">
+            <a class="gli-button gli-button--ghost" href="#docs">View brief</a>
+            <a class="gli-button gli-button--primary" href="#demo">Book demo</a>
+            <button
+              class="gli-theme-toggle"
+              type="button"
+              data-theme-toggle
+              aria-label="Switch color theme"
+              aria-pressed="false"
+              title="Switch color theme"
+            >
+              <span class="gli-theme-toggle__track" aria-hidden="true">
+                <span class="gli-theme-toggle__icon gli-theme-toggle__icon--sun">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M12 3.75v2.5M12 17.75v2.5M5.82 5.82l1.77 1.77M16.41 16.41l1.77 1.77M3.75 12h2.5M17.75 12h2.5M5.82 18.18l1.77-1.77M16.41 7.59l1.77-1.77M15.5 12A3.5 3.5 0 1 1 8.5 12a3.5 3.5 0 0 1 7 0Z"></path>
+                  </svg>
+                </span>
+                <span class="gli-theme-toggle__thumb"></span>
+                <span class="gli-theme-toggle__icon gli-theme-toggle__icon--moon">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M18.7 14.1A7.45 7.45 0 0 1 9.9 5.3 7.5 7.5 0 1 0 18.7 14.1Z"></path>
+                  </svg>
+                </span>
+              </span>
+            </button>
+            <button
+              class="gli-menu-toggle"
+              type="button"
+              data-menu-toggle
+              aria-expanded="false"
+              aria-controls="gli-mobile-menu"
+              aria-label="Open navigation menu"
+            >
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="gli-mobile-panel" id="gli-mobile-menu" data-mobile-panel>
+          <nav class="gli-mobile-nav" aria-label="Mobile navigation">
+            <a class="gli-mobile-nav__link gli-mobile-nav__link--current" href="#platform">Platform</a>
+            <a class="gli-mobile-nav__link" href="#solutions">Solutions</a>
+            <a class="gli-mobile-nav__link" href="#customers">Customers</a>
+            <a class="gli-mobile-nav__link" href="#pricing">Pricing</a>
+            <div class="gli-mobile-nav__actions">
+              <a class="gli-button gli-button--ghost gli-button--full" href="#docs">View brief</a>
+              <a class="gli-button gli-button--primary gli-button--full" href="#demo">Start free</a>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <main id="main-content" class="gli-main">
+        <section class="gli-hero" aria-labelledby="gli-hero-title">
+          <div class="gli-hero__copy">
+            <p class="gli-eyebrow">Glassmorphic Landing Island</p>
+            <h1 id="gli-hero-title">A floating navigation lens for premium SaaS launches.</h1>
+            <p class="gli-hero__lede">
+              This standalone header package demonstrates a constrained translucent island that
+              stays readable over atmospheric backgrounds, gains subtle separation on scroll, and
+              preserves the same crafted material language across desktop and mobile.
+            </p>
+          </div>
+
+          <div class="gli-hero__metrics" aria-label="Product proof points">
+            <article class="gli-stat-card">
+              <span class="gli-stat-card__label">Pipeline clarity</span>
+              <strong>+28%</strong>
+              <p>Sharper revenue visibility after consolidating forecasting, handoff, and signals.</p>
+            </article>
+            <article class="gli-stat-card">
+              <span class="gli-stat-card__label">Launch speed</span>
+              <strong>11 days</strong>
+              <p>Average time to deploy a new product motion with governance already wired in.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="gli-content-grid" aria-label="Demo content for glass readability">
+          <article class="gli-content-card" id="platform">
+            <p class="gli-content-card__eyebrow">Revenue intelligence</p>
+            <h2>Keep strategy, forecasting, and signal routing inside one calm operating surface.</h2>
+            <p>
+              The header is designed to sit above rich content without collapsing into visual noise.
+              Surface tinting, edge highlights, and fallback solids preserve contrast when the page
+              behind it gets brighter or more complex.
+            </p>
+          </article>
+
+          <article class="gli-content-card" id="solutions">
+            <p class="gli-content-card__eyebrow">Motion discipline</p>
+            <h2>Scroll states tighten the island slightly instead of overanimating it.</h2>
+            <p>
+              At the top of the page the glass is lighter and more integrated with the hero. Once
+              you scroll, the component gains definition through deeper tint, crisper border light,
+              and slightly stronger depth.
+            </p>
+          </article>
+
+          <article class="gli-content-card" id="customers">
+            <p class="gli-content-card__eyebrow">Accessibility</p>
+            <h2>Readable, keyboard-friendly, and usable before JavaScript loads.</h2>
+            <p>
+              Native controls, strong focus-visible treatment, skip navigation, reduced-motion
+              handling, and progressive enhancement ensure the package remains commercially credible.
+            </p>
+          </article>
+
+          <article class="gli-content-card" id="pricing">
+            <p class="gli-content-card__eyebrow">Responsive behavior</p>
+            <h2>Mobile keeps the floating island concept with a compact glass sheet.</h2>
+            <p>
+              The desktop navigation collapses into an accessible menu button while the mobile panel
+              preserves the same frosted lens treatment, edge definition, and action hierarchy.
+            </p>
+          </article>
+        </section>
+
+        <section class="gli-demo-band" id="demo" aria-labelledby="gli-demo-band-title">
+          <div>
+            <p class="gli-eyebrow">Demo CTA</p>
+            <h2 id="gli-demo-band-title">Built to feel product-ready, not concept-only.</h2>
+          </div>
+          <p>
+            Use this package as a premium top-of-page navigation asset for launches, pricing
+            surfaces, product reveal pages, or dark-mode brand systems that need a sophisticated
+            floating header without external dependencies.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
