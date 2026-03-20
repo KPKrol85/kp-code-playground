@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header 06 — Mobile-First App Drawer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="app-shell__skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="app-shell" data-app-shell>
+      <header class="app-header" aria-label="Application header">
+        <div class="app-header__inner">
+          <button
+            class="app-header__menu-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="app-drawer"
+            aria-label="Open navigation drawer"
+            data-drawer-toggle
+          >
+            <span class="app-header__menu-lines" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+
+          <a class="app-header__brand" href="#main-content" aria-label="Open dashboard home">
+            <span class="app-header__brand-mark" aria-hidden="true">KP</span>
+            <span class="app-header__brand-copy">
+              <strong>Vault Mobile</strong>
+              <span>Creator community</span>
+            </span>
+          </a>
+
+          <button
+            class="app-header__utility"
+            type="button"
+            aria-label="Search workspace"
+            data-haptic-trigger
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="11" cy="11" r="6.75"></circle>
+              <path d="M16.1 16.1 20 20"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="app-shell__drawer-layer">
+        <button
+          class="app-shell__overlay"
+          type="button"
+          aria-label="Close navigation drawer"
+          hidden
+          tabindex="-1"
+          data-drawer-overlay
+        ></button>
+
+        <aside
+          class="app-drawer"
+          id="app-drawer"
+          aria-label="Primary"
+          aria-hidden="true"
+          aria-modal="true"
+          role="dialog"
+          tabindex="-1"
+          data-drawer
+        >
+          <div class="app-drawer__handle" aria-hidden="true"></div>
+
+          <div class="app-drawer__profile">
+            <div class="app-drawer__avatar" aria-hidden="true">AR</div>
+            <div class="app-drawer__identity">
+              <p class="app-drawer__eyebrow">Welcome back</p>
+              <h2>Alex Rivera</h2>
+              <p>Level 4 member · Product Lab cohort</p>
+            </div>
+            <button class="app-drawer__profile-action" type="button" aria-label="Open profile settings" data-haptic-trigger>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 4.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"></path>
+                <path d="M19.5 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"></path>
+                <path d="M12 14.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"></path>
+                <path d="M9.5 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <nav class="app-drawer__nav" aria-label="Primary navigation">
+            <a class="app-drawer__nav-link app-drawer__nav-link--active" href="#today" aria-current="page">
+              <span class="app-drawer__nav-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4.75v-5.5h-4.5V21H5a1 1 0 0 1-1-1v-8.5Z"></path>
+                </svg>
+              </span>
+              <span>
+                <strong>Today</strong>
+                <small>Progress, prompts, and live community updates</small>
+              </span>
+            </a>
+
+            <a class="app-drawer__nav-link" href="#circles">
+              <span class="app-drawer__nav-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M8.25 11a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5Zm7.5 2.25a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5Z"></path>
+                  <path d="M3.75 19.5c0-2.83 2.42-5 5.5-5s5.5 2.17 5.5 5M13.25 19.5c.3-1.94 2.13-3.5 4.5-3.5 2.58 0 4.5 1.84 4.5 4"></path>
+                </svg>
+              </span>
+              <span>
+                <strong>Member circles</strong>
+                <small>Jump into private rooms and cohort lounges</small>
+              </span>
+            </a>
+
+            <a class="app-drawer__nav-link" href="#library">
+              <span class="app-drawer__nav-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21.5V5.5Z"></path>
+                  <path d="M7.5 3A2.5 2.5 0 0 0 5 5.5v13A2.5 2.5 0 0 1 7.5 16H19"></path>
+                </svg>
+              </span>
+              <span>
+                <strong>Resource library</strong>
+                <small>Guides, recordings, and launch kits in one place</small>
+              </span>
+            </a>
+
+            <a class="app-drawer__nav-link" href="#schedule">
+              <span class="app-drawer__nav-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <rect x="4" y="5" width="16" height="15" rx="3"></rect>
+                  <path d="M8 3.5v4M16 3.5v4M4 9.5h16"></path>
+                </svg>
+              </span>
+              <span>
+                <strong>Schedule</strong>
+                <small>Calls, office hours, and challenge deadlines</small>
+              </span>
+            </a>
+          </nav>
+
+          <div class="app-drawer__footer">
+            <div class="app-drawer__footer-card">
+              <div>
+                <p class="app-drawer__eyebrow">Appearance</p>
+                <strong>Adaptive theme</strong>
+              </div>
+              <button
+                class="app-drawer__theme-toggle"
+                type="button"
+                role="switch"
+                aria-checked="false"
+                aria-label="Toggle night theme preview"
+                data-theme-toggle
+              >
+                <span></span>
+              </button>
+            </div>
+
+            <div class="app-drawer__footer-row">
+              <a href="#help">Help center</a>
+              <a href="#updates">Release notes</a>
+              <a href="#community">Community</a>
+            </div>
+
+            <button class="app-drawer__signout" type="button" data-haptic-trigger>
+              <span aria-hidden="true">↗</span>
+              Sign out
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <main id="main-content" class="app-main" data-main-content tabindex="-1">
+        <section class="hero-panel" aria-labelledby="hero-title">
+          <div class="hero-panel__content">
+            <p class="hero-panel__eyebrow">Mobile-first app shell</p>
+            <h1 id="hero-title">A compact header that hands control to a premium side drawer.</h1>
+            <p class="hero-panel__lede">
+              Designed for member areas, communities, lightweight SaaS flows, and app-style product surfaces where the header stays calm and the drawer becomes the primary navigation space.
+            </p>
+            <div class="hero-panel__metrics" aria-label="Experience qualities">
+              <div>
+                <strong>44px+</strong>
+                <span>Touch-first controls</span>
+              </div>
+              <div>
+                <strong>Focus trapped</strong>
+                <span>Keyboard-safe drawer flow</span>
+              </div>
+              <div>
+                <strong>Blur + depth</strong>
+                <span>Native-feeling visual calm</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-panel__card" aria-label="Live session snapshot">
+            <div class="hero-panel__card-top">
+              <span class="status-dot"></span>
+              <span>Session in progress</span>
+            </div>
+            <h2>Product Lab Sprint Review</h2>
+            <p>Next checkpoint in 18 minutes. Your mentor notes and community thread are synced for quick mobile access.</p>
+            <ul>
+              <li>3 unread cohort replies</li>
+              <li>1 review deck ready</li>
+              <li>2 action items due today</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="content-grid" aria-label="Demo content">
+          <article class="content-card" id="today">
+            <p class="content-card__eyebrow">Now</p>
+            <h2>Daily momentum</h2>
+            <p>Review the next milestone, capture feedback from your cohort, and launch directly into your workroom without losing context.</p>
+          </article>
+
+          <article class="content-card" id="circles">
+            <p class="content-card__eyebrow">Community</p>
+            <h2>Active circles</h2>
+            <ul class="content-card__list">
+              <li>Design Systems · 19 members online</li>
+              <li>Founders Lounge · Voice room opens at 6:30 PM</li>
+              <li>Build in Public · Weekly recap collecting now</li>
+            </ul>
+          </article>
+
+          <article class="content-card" id="library">
+            <p class="content-card__eyebrow">Library</p>
+            <h2>Saved resources</h2>
+            <p>Keep recordings, launch templates, and checklists one thumb away with a structured drawer that stays consistent across breakpoints.</p>
+          </article>
+
+          <article class="content-card" id="schedule">
+            <p class="content-card__eyebrow">Schedule</p>
+            <h2>Upcoming events</h2>
+            <ul class="content-card__list content-card__list--stacked">
+              <li><strong>Tue · 10:00</strong><span>Office hours — shipping QA</span></li>
+              <li><strong>Wed · 14:30</strong><span>Creator growth roundtable</span></li>
+              <li><strong>Fri · 09:00</strong><span>Launch review with mentors</span></li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="sr-only" aria-live="polite" data-live-region></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
