@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12 Button Terminal Ops Controls</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="toc-shell" aria-labelledby="toc-title">
+      <div class="toc-frame" role="presentation">
+        <header class="toc-topbar" aria-label="Control environment header">
+          <div class="toc-window-meta">
+            <span class="toc-dot toc-dot--live"></span>
+            <span class="toc-dot"></span>
+            <span class="toc-dot"></span>
+            <span class="toc-meta-label">vault://controls/terminal-ops</span>
+          </div>
+          <div class="toc-topbar-badges" aria-hidden="true">
+            <span>Latency 23ms</span>
+            <span>Region us-east-2</span>
+          </div>
+        </header>
+
+        <div class="toc-panel-grid">
+          <header class="toc-hero">
+            <div class="toc-kicker-row">
+              <p class="toc-kicker">KP_Code Digital Vault • Premium Buttons</p>
+              <div class="toc-status-pill" aria-label="System status healthy">
+                <span class="toc-status-led"></span>
+                <span>Ops channel healthy</span>
+              </div>
+            </div>
+
+            <div class="toc-hero-copy">
+              <h1 id="toc-title">12 Button Terminal Ops Controls</h1>
+              <p>
+                A premium command-surface button pack for deployment consoles,
+                admin dashboards, developer tools, and observability workflows.
+                Precision-led states, compact hierarchy, and operational realism
+                keep every action credible under pressure.
+              </p>
+            </div>
+
+            <div class="toc-toolbar" aria-label="Demo toolbar">
+              <button class="toc-chip is-selected" type="button">Live view</button>
+              <button class="toc-chip" type="button">Audit trail</button>
+              <button class="toc-chip" type="button">Safe mode</button>
+              <button class="toc-chip" type="button">Readonly</button>
+            </div>
+          </header>
+
+          <aside class="toc-sidecard" aria-labelledby="toc-context-title">
+            <div class="toc-sidecard-head">
+              <p class="toc-sidecard-label">Execution context</p>
+              <p class="toc-sidecard-value">deployment.prod.cluster-04</p>
+            </div>
+            <div class="toc-sidecard-grid">
+              <div>
+                <span>Queue</span>
+                <strong>03 active</strong>
+              </div>
+              <div>
+                <span>Window</span>
+                <strong>05:00 UTC</strong>
+              </div>
+              <div>
+                <span>Rollback</span>
+                <strong>Ready</strong>
+              </div>
+              <div>
+                <span>Policy</span>
+                <strong>Verified</strong>
+              </div>
+            </div>
+            <p id="toc-context-title" class="toc-sidecard-note">
+              Distinctive feature: the pack is showcased inside a compact ops
+              header and status strip so the buttons feel grounded in believable
+              product workflows instead of isolated marketing demos.
+            </p>
+          </aside>
+        </div>
+
+        <div class="toc-status-strip" aria-label="System telemetry">
+          <div>
+            <span class="toc-status-title">Runbook</span>
+            <strong>Blue/green deploy</strong>
+          </div>
+          <div>
+            <span class="toc-status-title">Command</span>
+            <strong>deploy api --strategy=gradual</strong>
+          </div>
+          <div>
+            <span class="toc-status-title">Observed state</span>
+            <strong id="toc-status-text">Ready for execution</strong>
+          </div>
+          <div>
+            <span class="toc-status-title">Operator</span>
+            <strong>session:kpc_0148</strong>
+          </div>
+        </div>
+
+        <main class="toc-content">
+          <article class="toc-preview-card">
+            <div class="toc-card-heading">
+              <div>
+                <p class="toc-section-label">Primary surface</p>
+                <h2>Deployment controls</h2>
+              </div>
+              <p class="toc-card-copy">
+                Core execution buttons with clear state hierarchy for launch,
+                utility, caution, and termination paths.
+              </p>
+            </div>
+
+            <div class="toc-button-grid">
+              <button class="toc-btn toc-btn--primary" type="button" data-status="Deployment queued">
+                <span class="toc-btn__signal" aria-hidden="true"></span>
+                <span>Deploy release</span>
+              </button>
+
+              <button class="toc-btn toc-btn--secondary" type="button" data-status="Health checks requested">
+                Run diagnostics
+              </button>
+
+              <button class="toc-btn toc-btn--outline" type="button" data-status="Diff view expanded">
+                Review diff
+              </button>
+
+              <button class="toc-btn toc-btn--ghost" type="button" data-status="Logs drawer opened">
+                Expand logs
+              </button>
+
+              <button class="toc-btn toc-btn--command" type="button" data-status="Command shell attached">
+                <span class="toc-btn__prompt" aria-hidden="true">$</span>
+                <span>Run command</span>
+              </button>
+
+              <button class="toc-btn toc-btn--success" type="button" data-status="Approval recorded">
+                Approve window
+              </button>
+
+              <button class="toc-btn toc-btn--warning" type="button" data-status="Drain sequence staged">
+                Pause traffic
+              </button>
+
+              <button class="toc-btn toc-btn--danger" type="button" data-status="Termination requires confirmation">
+                Terminate job
+              </button>
+            </div>
+          </article>
+
+          <article class="toc-preview-card">
+            <div class="toc-card-heading">
+              <div>
+                <p class="toc-section-label">Utility surface</p>
+                <h2>Compact actions and sticky states</h2>
+              </div>
+              <p class="toc-card-copy">
+                Smaller controls for session tooling, mode selection, and inline
+                operational feedback.
+              </p>
+            </div>
+
+            <div class="toc-inline-layout">
+              <div class="toc-inline-group" aria-label="Icon actions">
+                <button class="toc-icon-btn" type="button" aria-label="Copy access token" data-copy-token>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 9h9v11H9z"></path>
+                    <path d="M6 4h9v2H8v9H6z"></path>
+                  </svg>
+                </button>
+                <button class="toc-icon-btn" type="button" aria-label="Connect session" data-status="Remote session handshake initiated">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7.5 8a3.5 3.5 0 1 1 0 7"></path>
+                    <path d="M16.5 8a3.5 3.5 0 1 0 0 7"></path>
+                    <path d="M10 11.5h4"></path>
+                  </svg>
+                </button>
+                <button class="toc-icon-btn" type="button" aria-label="Retry action" data-status="Retry scheduled">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 6v5h-5"></path>
+                    <path d="M20 11a8 8 0 1 0 2 5.5"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="toc-inline-group toc-inline-group--stack" aria-label="Loading and toggle demos">
+                <button class="toc-btn toc-btn--loading" type="button" data-loading-button>
+                  <span class="toc-spinner" aria-hidden="true"></span>
+                  <span class="toc-loading-label">Sync agents</span>
+                </button>
+
+                <button
+                  class="toc-btn toc-btn--toggle"
+                  type="button"
+                  aria-pressed="false"
+                  data-toggle-button
+                >
+                  <span class="toc-toggle-indicator" aria-hidden="true"></span>
+                  <span class="toc-toggle-label">Readonly mode</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="toc-preview-card toc-preview-card--states">
+            <div class="toc-card-heading">
+              <div>
+                <p class="toc-section-label">State matrix</p>
+                <h2>Interaction confidence</h2>
+              </div>
+              <p class="toc-card-copy">
+                Every major variant supports crisp hover, active, focus-visible,
+                and reduced-emphasis states with tactile but restrained motion.
+              </p>
+            </div>
+
+            <div class="toc-state-grid" aria-label="Button state examples">
+              <div class="toc-state-item">
+                <span>Default</span>
+                <button class="toc-btn toc-btn--secondary" type="button">Inspect job</button>
+              </div>
+              <div class="toc-state-item">
+                <span>Selected</span>
+                <button class="toc-btn toc-btn--toggle is-active" type="button" aria-pressed="true">
+                  <span class="toc-toggle-indicator" aria-hidden="true"></span>
+                  Metrics stream
+                </button>
+              </div>
+              <div class="toc-state-item">
+                <span>Disabled</span>
+                <button class="toc-btn toc-btn--outline" type="button" disabled>
+                  Await approval
+                </button>
+              </div>
+              <div class="toc-state-item">
+                <span>Critical</span>
+                <button class="toc-btn toc-btn--danger" type="button">Force rollback</button>
+              </div>
+            </div>
+          </article>
+        </main>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
