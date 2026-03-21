@@ -1,0 +1,681 @@
+:root {
+  color-scheme: dark;
+  --architect-bg: #131516;
+  --architect-surface: #181c1f;
+  --architect-surface-soft: rgba(28, 31, 34, 0.82);
+  --architect-panel: rgba(236, 231, 223, 0.05);
+  --architect-panel-strong: rgba(236, 231, 223, 0.1);
+  --architect-text: #f2eee8;
+  --architect-muted: rgba(242, 238, 232, 0.72);
+  --architect-soft: rgba(242, 238, 232, 0.52);
+  --architect-line: rgba(242, 238, 232, 0.14);
+  --architect-line-strong: rgba(242, 238, 232, 0.28);
+  --architect-accent: #c49a6c;
+  --architect-accent-soft: rgba(196, 154, 108, 0.22);
+  --architect-shadow: 0 36px 90px rgba(0, 0, 0, 0.35);
+  --architect-cut-shadow: 16px 20px 40px rgba(0, 0, 0, 0.24);
+  --architect-radius-shell: 2rem;
+  --architect-radius-panel: 1.4rem;
+  --architect-ease: 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --architect-shell-width: min(100%, 1520px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(214, 192, 165, 0.08), transparent 32%),
+    linear-gradient(145deg, #121416 0%, #1a1d20 42%, #111315 100%);
+  color: var(--architect-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.architect-hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 2vw, 1.75rem);
+}
+
+.architect-hero__shell {
+  position: relative;
+  width: var(--architect-shell-width);
+  min-height: min(94vh, 980px);
+  padding: clamp(1.15rem, 2vw, 1.8rem);
+  border: 1px solid var(--architect-line);
+  border-radius: var(--architect-radius-shell);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    linear-gradient(160deg, rgba(38, 42, 46, 0.96), rgba(17, 19, 21, 0.98));
+  box-shadow: var(--architect-shadow);
+  overflow: clip;
+  isolation: isolate;
+}
+
+.architect-hero__shell::before,
+.architect-hero__shell::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.architect-hero__shell::before {
+  inset: 1rem;
+  border: 1px solid rgba(242, 238, 232, 0.06);
+  border-radius: calc(var(--architect-radius-shell) - 0.5rem);
+}
+
+.architect-hero__shell::after {
+  inset: auto 0 0 auto;
+  width: clamp(14rem, 20vw, 20rem);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(196, 154, 108, 0.18), transparent 70%);
+  opacity: 0.4;
+}
+
+.architect-hero__background,
+.architect-hero__layout,
+.architect-hero__masthead {
+  position: relative;
+  z-index: 1;
+}
+
+.architect-hero__background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.architect-hero__wash {
+  position: absolute;
+  filter: blur(8px);
+  opacity: 0.8;
+}
+
+.architect-hero__wash--north {
+  top: -10%;
+  right: 8%;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 62%);
+}
+
+.architect-hero__wash--south {
+  left: -8%;
+  bottom: -14%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, rgba(196, 154, 108, 0.1), transparent 68%);
+}
+
+.architect-hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(242, 238, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 238, 232, 0.04) 1px, transparent 1px);
+  background-size: 5rem 5rem;
+  mask-image: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.18));
+}
+
+.architect-hero__blueprint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.architect-hero__blueprint path {
+  fill: none;
+  stroke: rgba(242, 238, 232, 0.12);
+  stroke-width: 1.2;
+  stroke-linecap: square;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+}
+
+.architect-hero__masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0.25rem 1.4rem;
+  border-bottom: 1px solid rgba(242, 238, 232, 0.08);
+}
+
+.architect-hero__eyebrow,
+.architect-hero__kicker,
+.media-card__label,
+.info-block__label,
+.architect-hero__annotations dt,
+.architect-hero__masthead-meta,
+.architect-hero__metrics dt {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.architect-hero__eyebrow,
+.architect-hero__masthead-meta,
+.architect-hero__kicker,
+.media-card__label,
+.info-block__label,
+.architect-hero__annotations dt,
+.architect-hero__metrics dt {
+  font-size: 0.74rem;
+}
+
+.architect-hero__eyebrow {
+  margin: 0;
+  color: rgba(242, 238, 232, 0.84);
+}
+
+.architect-hero__masthead-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.7rem 1.25rem;
+  margin: 0;
+  color: var(--architect-soft);
+}
+
+.architect-hero__masthead-meta span {
+  position: relative;
+}
+
+.architect-hero__masthead-meta span + span::before {
+  content: "";
+  position: absolute;
+  left: -0.7rem;
+  top: 50%;
+  width: 0.18rem;
+  height: 0.18rem;
+  border-radius: 50%;
+  background: var(--architect-line-strong);
+  transform: translateY(-50%);
+}
+
+.architect-hero__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(22rem, 0.98fr);
+  gap: clamp(1.25rem, 2vw, 2rem);
+  padding-top: clamp(1.25rem, 2vw, 2rem);
+}
+
+.architect-hero__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 1.7vw, 1.5rem);
+  min-width: 0;
+  padding: clamp(1rem, 1vw, 1.5rem) clamp(0.1rem, 1vw, 0.75rem) clamp(1rem, 1vw, 1.5rem) 0;
+}
+
+.architect-hero__content::before,
+.architect-hero__content::after {
+  content: "";
+  display: block;
+  width: clamp(4rem, 12vw, 8rem);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(196, 154, 108, 0.8), transparent);
+}
+
+.architect-hero__kicker,
+.architect-hero__body,
+.architect-hero__annotations dd,
+.architect-hero__metrics dd,
+.info-block__copy,
+.media-card__text {
+  color: var(--architect-muted);
+}
+
+.architect-hero__kicker,
+.architect-hero__body,
+.info-block__copy,
+.architect-hero__metrics dd,
+.architect-hero__annotations dd,
+.media-card__text {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.architect-hero__title {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(3.2rem, 7vw, 6.8rem);
+  line-height: 0.93;
+  letter-spacing: -0.06em;
+}
+
+.architect-hero__body {
+  max-width: 34rem;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+}
+
+.architect-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  padding-top: 0.5rem;
+}
+
+.architect-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0.9rem 1.35rem;
+  border: 1px solid transparent;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.architect-hero__cta--primary {
+  background: linear-gradient(135deg, var(--architect-accent), #d6b083);
+  color: #181614;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.architect-hero__cta--secondary {
+  border-color: var(--architect-line-strong);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.architect-hero__cta:hover,
+.architect-hero__cta:focus-visible {
+  transform: translateY(-1px);
+}
+
+.architect-hero__cta--primary:hover,
+.architect-hero__cta--primary:focus-visible {
+  background: linear-gradient(135deg, #d4ac7b, #ebca9c);
+}
+
+.architect-hero__cta--secondary:hover,
+.architect-hero__cta--secondary:focus-visible {
+  border-color: rgba(242, 238, 232, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.architect-hero__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 0;
+  padding-top: 0.9rem;
+}
+
+.architect-hero__metrics div {
+  padding: 1rem 1rem 0 0;
+  border-top: 1px solid rgba(242, 238, 232, 0.12);
+}
+
+.architect-hero__metrics dt,
+.architect-hero__annotations dt {
+  margin-bottom: 0.55rem;
+  color: rgba(242, 238, 232, 0.8);
+}
+
+.architect-hero__metrics dd,
+.architect-hero__annotations dd {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.architect-hero__media {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(15rem, 0.72fr);
+  gap: 1rem;
+  min-width: 0;
+}
+
+.media-card,
+.info-block,
+.architect-hero__annotations {
+  position: relative;
+  border: 1px solid rgba(242, 238, 232, 0.1);
+  background: var(--architect-surface-soft);
+  backdrop-filter: blur(6px);
+}
+
+.media-card {
+  min-width: 0;
+  overflow: visible;
+}
+
+.media-card--primary {
+  align-self: end;
+  padding: clamp(0.75rem, 1vw, 1rem);
+  clip-path: polygon(0 12%, 18% 0, 100% 0, 100% 88%, 82% 100%, 0 100%);
+}
+
+.media-card--secondary {
+  padding: 0.7rem;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 86% 100%, 0 100%);
+}
+
+.media-card__frame,
+.media-card__shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.media-card__frame {
+  border: 1px solid rgba(242, 238, 232, 0.14);
+  clip-path: inherit;
+}
+
+.media-card__shadow {
+  inset: 1.1rem -1.4rem -1.6rem 1.6rem;
+  background: linear-gradient(165deg, rgba(196, 154, 108, 0.2), rgba(0, 0, 0, 0));
+  filter: blur(0.6rem);
+  z-index: -1;
+  clip-path: polygon(18% 0, 100% 0, 100% 88%, 82% 100%, 0 100%, 0 12%);
+  box-shadow: var(--architect-cut-shadow);
+}
+
+.media-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 0.82;
+  clip-path: inherit;
+  border: 1px solid rgba(242, 238, 232, 0.08);
+}
+
+.media-card--secondary .media-card__image {
+  aspect-ratio: 1.3;
+}
+
+.media-card__caption {
+  position: absolute;
+  left: clamp(0.9rem, 1.3vw, 1.25rem);
+  right: clamp(0.9rem, 1.3vw, 1.25rem);
+  bottom: clamp(0.9rem, 1.3vw, 1.25rem);
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem 0.95rem;
+  background: linear-gradient(135deg, rgba(18, 20, 22, 0.92), rgba(18, 20, 22, 0.72));
+  border: 1px solid rgba(242, 238, 232, 0.08);
+  border-radius: 0.85rem;
+}
+
+.media-card__caption--compact {
+  position: static;
+  margin-top: 0.8rem;
+}
+
+.media-card__label,
+.info-block__label {
+  color: color-mix(in srgb, var(--architect-accent) 76%, white);
+}
+
+.media-card__text,
+.info-block__copy,
+.architect-hero__annotations dd,
+.architect-hero__metrics dd {
+  font-size: 0.95rem;
+}
+
+.architect-hero__rail {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.info-block {
+  padding: 1.1rem 1.1rem 1.2rem;
+}
+
+.info-block::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem auto auto 0.9rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-top: 1px solid rgba(242, 238, 232, 0.14);
+  border-left: 1px solid rgba(242, 238, 232, 0.14);
+}
+
+.info-block__label,
+.info-block__title {
+  margin: 0;
+}
+
+.info-block__title {
+  max-width: 18ch;
+  margin-top: 0.9rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.info-block__copy {
+  margin-top: 0.8rem;
+}
+
+.architect-hero__annotations {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+}
+
+.architect-hero__annotations div + div {
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(242, 238, 232, 0.08);
+}
+
+[data-reveal-group] [data-reveal] {
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 700ms ease;
+  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+  will-change: transform, opacity;
+}
+
+.js-enhanced [data-reveal-group] [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+}
+
+.js-enhanced.is-ready [data-reveal-group] [data-reveal] {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path {
+  animation: blueprint-draw 1.35s var(--architect-ease) forwards;
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path:nth-child(4) {
+  animation-delay: 220ms;
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path:nth-child(5) {
+  animation-delay: 300ms;
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path:nth-child(6) {
+  animation-delay: 360ms;
+}
+
+.js-enhanced.is-ready .architect-hero__blueprint path:nth-child(7) {
+  animation-delay: 420ms;
+}
+
+[data-depth] {
+  transform: translate3d(var(--shift-x, 0px), var(--shift-y, 0px), 0);
+  transition: transform 220ms ease-out;
+}
+
+@keyframes blueprint-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 1180px) {
+  .architect-hero__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .architect-hero__content {
+    padding-right: 0;
+  }
+
+  .architect-hero__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .architect-hero__media {
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.72fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .architect-hero__shell {
+    min-height: auto;
+  }
+
+  .architect-hero__masthead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .architect-hero__masthead-meta {
+    justify-content: flex-start;
+  }
+
+  .architect-hero__media {
+    grid-template-columns: 1fr;
+  }
+
+  .architect-hero__rail {
+    grid-template-columns: 1fr;
+  }
+
+  .media-card--primary,
+  .media-card--secondary {
+    clip-path: polygon(0 8%, 14% 0, 100% 0, 100% 92%, 86% 100%, 0 100%);
+  }
+
+  .media-card__image {
+    aspect-ratio: 1.08;
+  }
+
+  .architect-hero__metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .architect-hero {
+    padding: 0.75rem;
+  }
+
+  .architect-hero__shell {
+    border-radius: 1.4rem;
+    padding: 0.9rem;
+  }
+
+  .architect-hero__grid {
+    background-size: 3.25rem 3.25rem;
+  }
+
+  .architect-hero__title {
+    max-width: 12ch;
+  }
+
+  .architect-hero__actions {
+    flex-direction: column;
+  }
+
+  .architect-hero__cta {
+    width: 100%;
+  }
+
+  .media-card--primary,
+  .media-card--secondary,
+  .media-card__frame,
+  .media-card__image,
+  .media-card__shadow {
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
+  }
+
+  .media-card__caption {
+    position: static;
+    margin-top: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-depth],
+  .js-enhanced [data-reveal-group] [data-reveal],
+  .js-enhanced.is-ready [data-reveal-group] [data-reveal] {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  .architect-hero__blueprint path {
+    stroke-dashoffset: 0;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid rgba(196, 154, 108, 0.95);
+  outline-offset: 3px;
+}
