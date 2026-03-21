@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Illustration Storyteller Hand-drawn hero component for human-centered services, featuring a warm narrative illustration, premium typography, and calm micro-motion."
+    />
+    <title>Illustration Storyteller Hand-drawn Hero</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="story-hero-page">
+      <section class="story-hero" aria-labelledby="story-hero-title" data-hero>
+        <div class="story-hero__texture" aria-hidden="true"></div>
+        <div class="story-hero__wash story-hero__wash--left" aria-hidden="true"></div>
+        <div class="story-hero__wash story-hero__wash--right" aria-hidden="true"></div>
+
+        <div class="story-hero__layout">
+          <div class="story-hero__content" data-reveal-group>
+            <p class="story-hero__eyebrow" data-reveal>
+              <span class="story-hero__eyebrow-mark" aria-hidden="true"></span>
+              Brightpath Learning Circle • Calm guidance for families and students
+            </p>
+
+            <div class="story-hero__copy" data-reveal>
+              <p class="story-hero__overline">A more human path from uncertainty to progress</p>
+              <h1 id="story-hero-title">
+                Hand-drawn guidance that helps every learner feel seen, supported, and ready for the next step.
+              </h1>
+              <p class="story-hero__lede">
+                Brightpath pairs each family with a real learning coach, a simple weekly plan, and visual progress
+                cues so school support feels clear, encouraging, and sustainable instead of overwhelming.
+              </p>
+            </div>
+
+            <div class="story-hero__actions" data-reveal aria-label="Primary calls to action">
+              <a class="story-button story-button--primary" href="#start" data-primary-cta>
+                Book a welcome session
+              </a>
+              <a class="story-button story-button--secondary" href="#tour">
+                See how support works
+              </a>
+            </div>
+
+            <dl class="story-hero__proof" data-reveal aria-label="Key proof points">
+              <div>
+                <dt>1:1 coach</dt>
+                <dd>Every learner gets a consistent human guide instead of rotating generic tips.</dd>
+              </div>
+              <div>
+                <dt>12 minutes</dt>
+                <dd>Average time for families to understand the weekly plan and next action.</dd>
+              </div>
+              <div>
+                <dt>91%</dt>
+                <dd>Of guardians say the illustrated roadmap makes support feel easier to follow.</dd>
+              </div>
+            </dl>
+
+            <div class="story-hero__micro" data-reveal>
+              <span class="story-chip">Built for edtech, community care, and wellbeing tools</span>
+              <p>
+                Clear, trustworthy, and warm enough for high-empathy products that need conversion without a hard-sell tone.
+              </p>
+            </div>
+          </div>
+
+          <div class="story-stage" data-reveal data-stage>
+            <div class="story-stage__frame">
+              <div class="story-stage__card story-stage__card--note" data-float>
+                <span class="story-stage__card-label">Step 1</span>
+                <strong>Share what feels hard</strong>
+                <p>A family note, a teacher insight, and a confidence check-in open the story.</p>
+              </div>
+
+              <div class="story-stage__card story-stage__card--result" data-float>
+                <span class="story-stage__card-label">Outcome</span>
+                <strong>One simple plan for this week</strong>
+                <p>Coach guidance turns into small actions the learner can actually complete.</p>
+              </div>
+
+              <div class="story-stage__card story-stage__card--signal" data-float>
+                <span class="story-stage__card-label">Trust signal</span>
+                <strong>Progress shared gently</strong>
+                <p>Families see wins, effort, and next steps without feeling watched or judged.</p>
+              </div>
+
+              <svg
+                class="story-illustration"
+                viewBox="0 0 760 640"
+                role="img"
+                aria-labelledby="story-illustration-title story-illustration-desc"
+              >
+                <title id="story-illustration-title">Illustrated service journey from intake to confident progress</title>
+                <desc id="story-illustration-desc">
+                  A hand-drawn style scene showing a coach listening to a learner on the left, a central pathway of
+                  notes and progress markers, and a learner confidently moving forward on the right with supportive
+                  community and progress cues.
+                </desc>
+
+                <defs>
+                  <linearGradient id="storyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fffdfa" />
+                    <stop offset="100%" stop-color="#eff6f0" />
+                  </linearGradient>
+                  <linearGradient id="storyPath" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#8caee5" />
+                    <stop offset="100%" stop-color="#85c4a4" />
+                  </linearGradient>
+                  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#7b8b92" flood-opacity="0.16" />
+                  </filter>
+                </defs>
+
+                <g aria-hidden="true">
+                  <path
+                    d="M112 88c88-48 203-52 296-20 70 24 141 76 177 146 36 69 34 155-5 223-33 58-91 104-157 127-104 38-231 18-317-51C17 454-6 315 39 211c16-36 40-69 73-95Z"
+                    fill="url(#storyBg)"
+                    stroke="#d7dfd6"
+                    stroke-width="2.5"
+                    filter="url(#softShadow)"
+                  />
+                  <path
+                    d="M136 424c77 39 158 54 243 44 84-10 162-46 229-110"
+                    fill="none"
+                    stroke="#d4dbd4"
+                    stroke-width="9"
+                    stroke-linecap="round"
+                    stroke-dasharray="1 23"
+                  />
+                  <path
+                    class="story-illustration__path"
+                    d="M160 400c62 36 127 51 196 48 98-5 183-49 246-127"
+                    fill="none"
+                    stroke="url(#storyPath)"
+                    stroke-width="18"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    class="story-illustration__arrow"
+                    d="M550 317c17 1 29 6 40 18-18 0-31 3-44 16"
+                    fill="none"
+                    stroke="#6f9fb8"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+
+                <g class="story-illustration__cloud story-illustration__cloud--one" aria-hidden="true">
+                  <path d="M118 144c7-27 42-39 66-20 10-21 39-25 57-9 13-7 31-2 39 10 20 1 33 25 24 43-9 20-29 21-48 18H144c-27 0-40-18-35-42 2-8 5-14 9-20Z" fill="#fffdfa" stroke="#ccd6cf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <g class="story-illustration__cloud story-illustration__cloud--two" aria-hidden="true">
+                  <path d="M525 131c8-20 33-30 53-18 8-18 34-20 49-7 11-6 25-2 33 9 17 2 28 22 20 37-7 15-23 17-39 15h-90c-21 0-33-14-29-33 1-6 2-10 3-3Z" fill="#fff8f1" stroke="#d8cec3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+
+                <g class="story-illustration__scene story-illustration__scene--coach" aria-label="Coach listening to learner goals">
+                  <ellipse cx="190" cy="448" rx="87" ry="18" fill="#dce7de" />
+                  <g class="story-illustration__bubble" aria-hidden="true">
+                    <path d="M124 244c0-32 26-58 58-58h39c32 0 58 26 58 58s-26 58-58 58h-24l-24 24 6-24c-31-2-55-28-55-58Z" fill="#fff8ef" stroke="#d7cbbd" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M152 244h90" stroke="#7f8c98" stroke-width="5" stroke-linecap="round" />
+                    <path d="M152 266h58" stroke="#9ea8ae" stroke-width="5" stroke-linecap="round" />
+                    <circle cx="233" cy="266" r="6" fill="#85c4a4" />
+                  </g>
+                  <g class="story-illustration__person story-illustration__person--coach">
+                    <path d="M142 415c2-47 30-79 76-83 58-5 83 31 88 89" fill="#d8ebdc" stroke="#627f74" stroke-width="4" stroke-linecap="round" />
+                    <path d="M165 352c17-24 52-31 80-20 19 7 34 22 40 43-46 14-95 10-120-23Z" fill="#5b7d91" />
+                    <circle cx="204" cy="311" r="43" fill="#f2c7a6" stroke="#8b6d57" stroke-width="3.5" />
+                    <path d="M173 307c7-22 26-37 52-39 20-1 39 10 47 29-18 5-43 8-69 4-12-2-22-7-30-14Z" fill="#39576d" />
+                    <path d="M187 315c4 4 9 7 17 7 8 0 13-3 18-7" fill="none" stroke="#8b6d57" stroke-width="3" stroke-linecap="round" />
+                    <path d="M194 330c7 6 18 8 29 5" fill="none" stroke="#b87e74" stroke-width="3" stroke-linecap="round" />
+                    <circle cx="190" cy="311" r="3.2" fill="#28343b" />
+                    <circle cx="220" cy="311" r="3.2" fill="#28343b" />
+                    <path d="M170 414c16-20 38-31 67-31 29 0 52 11 70 31" fill="none" stroke="#5d7c70" stroke-width="4" stroke-linecap="round" />
+                    <path d="M166 379c18 11 42 17 69 17 28 0 51-7 70-18" fill="#f0efe8" stroke="#627f74" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M160 396c15 21 26 33 44 49" fill="none" stroke="#627f74" stroke-width="4" stroke-linecap="round" />
+                    <path d="M249 396c-13 22-25 38-42 50" fill="none" stroke="#627f74" stroke-width="4" stroke-linecap="round" />
+                  </g>
+                </g>
+
+                <g class="story-illustration__scene story-illustration__scene--journey" aria-label="Support plan taking shape through steps and notes">
+                  <g class="story-illustration__leaf story-illustration__leaf--one" aria-hidden="true">
+                    <path d="M325 438c-8-36 13-73 47-90 15 34 3 73-31 96" fill="#cde5cf" stroke="#739178" stroke-width="3.5" stroke-linejoin="round" />
+                    <path d="M345 366c0 25-6 50-17 71" fill="none" stroke="#739178" stroke-width="3" stroke-linecap="round" />
+                  </g>
+                  <g class="story-illustration__leaf story-illustration__leaf--two" aria-hidden="true">
+                    <path d="M402 262c31-20 72-17 102 8-22 30-63 40-99 21" fill="#d7ecdd" stroke="#7a9781" stroke-width="3.5" stroke-linejoin="round" />
+                    <path d="M485 275c-26 3-51 1-76-8" fill="none" stroke="#7a9781" stroke-width="3" stroke-linecap="round" />
+                  </g>
+                  <g class="story-illustration__step story-illustration__step--one">
+                    <circle cx="326" cy="406" r="24" fill="#fffdfa" stroke="#8caee5" stroke-width="5" />
+                    <text x="326" y="414" text-anchor="middle">1</text>
+                  </g>
+                  <g class="story-illustration__step story-illustration__step--two">
+                    <circle cx="425" cy="389" r="24" fill="#fffdfa" stroke="#88c0a0" stroke-width="5" />
+                    <text x="425" y="397" text-anchor="middle">2</text>
+                  </g>
+                  <g class="story-illustration__step story-illustration__step--three">
+                    <circle cx="513" cy="340" r="24" fill="#fffdfa" stroke="#7aa5c0" stroke-width="5" />
+                    <text x="513" y="348" text-anchor="middle">3</text>
+                  </g>
+                  <g class="story-illustration__mini-card" aria-hidden="true">
+                    <rect x="308" y="210" width="128" height="86" rx="22" fill="#fffefa" stroke="#d7ddd1" stroke-width="4" />
+                    <path d="M330 238h52" stroke="#6f8e7d" stroke-width="5" stroke-linecap="round" />
+                    <path d="M330 260h80" stroke="#afb7b0" stroke-width="5" stroke-linecap="round" />
+                    <path d="M330 281h60" stroke="#d2b98d" stroke-width="5" stroke-linecap="round" />
+                    <circle cx="400" cy="238" r="8" fill="#8caee5" />
+                  </g>
+                </g>
+
+                <g class="story-illustration__scene story-illustration__scene--learner" aria-label="Learner moving forward with visible support">
+                  <ellipse cx="576" cy="456" rx="97" ry="20" fill="#dbe8de" />
+                  <g class="story-illustration__progress-board" aria-hidden="true">
+                    <rect x="535" y="200" width="144" height="124" rx="26" fill="#fffdf9" stroke="#d9ddd4" stroke-width="4" />
+                    <path d="M562 233h74" stroke="#6f8e7d" stroke-width="5" stroke-linecap="round" />
+                    <path d="M562 254h52" stroke="#b2b8b2" stroke-width="5" stroke-linecap="round" />
+                    <path d="M562 288c14-16 28-24 43-24 13 0 24 5 34 15 11-19 26-28 44-29" fill="none" stroke="#88c0a0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="561" cy="288" r="8" fill="#8caee5" />
+                    <circle cx="604" cy="264" r="8" fill="#88c0a0" />
+                    <circle cx="639" cy="279" r="8" fill="#d8b07c" />
+                  </g>
+                  <g class="story-illustration__person story-illustration__person--learner">
+                    <path d="M518 417c0-41 29-72 72-77 50-6 83 24 95 79" fill="#dce9f5" stroke="#637d8f" stroke-width="4" stroke-linecap="round" />
+                    <circle cx="595" cy="307" r="42" fill="#f5d1b6" stroke="#946e56" stroke-width="3.5" />
+                    <path d="M566 291c11-25 35-38 61-35 20 2 37 14 43 33-28 12-74 16-104 2Z" fill="#d2a36a" />
+                    <circle cx="580" cy="309" r="3.2" fill="#2e3a42" />
+                    <circle cx="607" cy="309" r="3.2" fill="#2e3a42" />
+                    <path d="M584 328c8 6 19 8 30 5" fill="none" stroke="#c18276" stroke-width="3" stroke-linecap="round" />
+                    <path d="M551 371c22 17 47 26 77 26 24 0 44-6 62-17" fill="#fff8ef" stroke="#637d8f" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M554 390c-6 24-22 43-45 55" fill="none" stroke="#637d8f" stroke-width="4" stroke-linecap="round" />
+                    <path d="M672 389c16 23 27 38 45 50" fill="none" stroke="#637d8f" stroke-width="4" stroke-linecap="round" />
+                    <path d="M575 372c14 15 35 15 47 0" fill="none" stroke="#8ea8b5" stroke-width="4" stroke-linecap="round" />
+                  </g>
+                  <g class="story-illustration__spark" aria-hidden="true">
+                    <path d="M679 164l8 18 19 3-14 13 4 18-17-10-16 10 3-18-13-13 18-3 8-18Z" fill="#f3cf94" stroke="#ccab73" stroke-width="3" stroke-linejoin="round" />
+                  </g>
+                </g>
+
+                <g class="story-illustration__caption story-illustration__caption--left" aria-hidden="true">
+                  <path d="M126 470c18 10 46 16 73 16" fill="none" stroke="#7f8c98" stroke-width="4" stroke-linecap="round" />
+                  <text x="86" y="507">Listen</text>
+                </g>
+                <g class="story-illustration__caption story-illustration__caption--center" aria-hidden="true">
+                  <path d="M348 470c18 11 50 16 83 11" fill="none" stroke="#7f8c98" stroke-width="4" stroke-linecap="round" />
+                  <text x="310" y="515">Shape the plan</text>
+                </g>
+                <g class="story-illustration__caption story-illustration__caption--right" aria-hidden="true">
+                  <path d="M544 472c19 8 45 11 79 6" fill="none" stroke="#7f8c98" stroke-width="4" stroke-linecap="round" />
+                  <text x="540" y="512">Grow with confidence</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
