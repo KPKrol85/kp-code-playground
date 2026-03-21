@@ -1,0 +1,573 @@
+:root {
+  color-scheme: dark;
+  --page-bg: #04050a;
+  --hero-bg: #070a13;
+  --surface: rgba(10, 14, 25, 0.56);
+  --surface-strong: rgba(255, 255, 255, 0.08);
+  --surface-border: rgba(255, 255, 255, 0.14);
+  --text-primary: #f4f7ff;
+  --text-secondary: rgba(232, 239, 255, 0.8);
+  --text-soft: rgba(210, 220, 245, 0.64);
+  --accent-a: #77d0ff;
+  --accent-b: #7a7dff;
+  --accent-c: #69f0d2;
+  --accent-d: #c38cff;
+  --shadow-lg: 0 28px 90px rgba(2, 5, 14, 0.48);
+  --shadow-md: 0 18px 54px rgba(4, 8, 20, 0.34);
+  --radius-xl: 2rem;
+  --radius-lg: 1.5rem;
+  --radius-pill: 999px;
+  --container: min(1200px, calc(100vw - 2rem));
+  --title-size: clamp(3.4rem, 8vw, 7rem);
+  --copy-size: clamp(1rem, 1.4vw, 1.16rem);
+  --ui-size: 0.92rem;
+  --transition: 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  --pointer-x: 0px;
+  --pointer-y: 0px;
+  --pointer-strength: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at top, rgba(119, 208, 255, 0.12), transparent 28%),
+    linear-gradient(180deg, #05060b 0%, #060913 50%, #05070e 100%);
+}
+
+body::selection {
+  background: rgba(122, 125, 255, 0.38);
+  color: #ffffff;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.mesh-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  overflow: clip;
+  isolation: isolate;
+  padding: clamp(1rem, 1.4vw, 1.5rem);
+  background: linear-gradient(180deg, rgba(5, 7, 12, 0.38), rgba(5, 7, 12, 0.72));
+}
+
+.mesh-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: clamp(5rem, 12vw, 9rem);
+  background: linear-gradient(180deg, rgba(5, 8, 14, 0), rgba(5, 8, 14, 0.92));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mesh-hero__backdrop,
+.mesh-hero__gradient,
+.mesh-hero__grid,
+.mesh-hero__noise,
+.mesh-hero__glow {
+  position: absolute;
+  inset: 0;
+}
+
+.mesh-hero__backdrop {
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(132, 149, 255, 0.12), transparent 42%),
+    linear-gradient(145deg, #05070f 0%, #060a14 38%, #070912 100%);
+}
+
+.mesh-hero__gradient {
+  will-change: transform, opacity;
+}
+
+.mesh-hero__gradient--base {
+  background:
+    radial-gradient(circle at 25% 24%, rgba(119, 208, 255, 0.28), transparent 0 34%),
+    radial-gradient(circle at 76% 28%, rgba(195, 140, 255, 0.22), transparent 0 32%),
+    radial-gradient(circle at 55% 72%, rgba(105, 240, 210, 0.16), transparent 0 30%),
+    radial-gradient(circle at 46% 52%, rgba(122, 125, 255, 0.32), transparent 0 42%);
+  filter: blur(42px) saturate(112%);
+  opacity: 0.92;
+  animation: meshDrift 24s ease-in-out infinite alternate;
+  transform: translate3d(calc(var(--pointer-x) * 0.02), calc(var(--pointer-y) * 0.02), 0);
+}
+
+.mesh-hero__gradient--orb-a {
+  inset: 8% auto auto 12%;
+  width: min(42rem, 52vw);
+  height: min(42rem, 52vw);
+  background: radial-gradient(circle, rgba(119, 208, 255, 0.38) 0%, rgba(119, 208, 255, 0) 68%);
+  filter: blur(18px);
+  opacity: 0.84;
+  animation: meshFloatA 18s ease-in-out infinite alternate;
+  transform: translate3d(calc(var(--pointer-x) * -0.045), calc(var(--pointer-y) * -0.035), 0);
+}
+
+.mesh-hero__gradient--orb-b {
+  inset: auto 4% 18% auto;
+  width: min(38rem, 48vw);
+  height: min(38rem, 48vw);
+  background: radial-gradient(circle, rgba(122, 125, 255, 0.34) 0%, rgba(195, 140, 255, 0.06) 42%, transparent 70%);
+  filter: blur(14px);
+  opacity: 0.84;
+  animation: meshFloatB 22s ease-in-out infinite alternate;
+  transform: translate3d(calc(var(--pointer-x) * 0.05), calc(var(--pointer-y) * 0.04), 0);
+}
+
+.mesh-hero__gradient--orb-c {
+  inset: 24% auto auto 42%;
+  width: min(34rem, 42vw);
+  height: min(34rem, 42vw);
+  background: radial-gradient(circle, rgba(105, 240, 210, 0.22) 0%, rgba(105, 240, 210, 0) 72%);
+  filter: blur(12px);
+  opacity: calc(0.56 + (var(--pointer-strength) * 0.22));
+  animation: meshFloatC 20s ease-in-out infinite alternate;
+  transform: translate3d(calc(var(--pointer-x) * -0.032), calc(var(--pointer-y) * 0.024), 0) scale(calc(1 + (var(--pointer-strength) * 0.035)));
+}
+
+.mesh-hero__grid {
+  inset: -10%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 9rem 9rem;
+  mask-image: radial-gradient(circle at 50% 45%, black 20%, transparent 78%);
+  opacity: 0.16;
+  transform: perspective(1200px) rotateX(72deg) translateY(24%);
+}
+
+.mesh-hero__noise {
+  opacity: 0.08;
+  mix-blend-mode: soft-light;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 0.5px, transparent 0.8px),
+    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.65) 0.5px, transparent 0.8px),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.7) 0.4px, transparent 0.8px);
+  background-size: 180px 180px, 220px 220px, 200px 200px;
+}
+
+.mesh-hero__glow {
+  background:
+    radial-gradient(circle at calc(50% + (var(--pointer-x) * 0.09)) calc(48% + (var(--pointer-y) * 0.09)), rgba(255, 255, 255, 0.11), transparent 22%),
+    radial-gradient(circle at 50% 50%, rgba(109, 124, 255, 0.08), transparent 30%);
+  opacity: calc(0.52 + (var(--pointer-strength) * 0.34));
+  filter: blur(20px);
+}
+
+.mesh-hero__shell,
+.mesh-hero__footer,
+.mesh-hero__scroll {
+  position: relative;
+  z-index: 2;
+}
+
+.mesh-hero__shell {
+  width: var(--container);
+  margin: auto auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.72fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: center;
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.mesh-hero__content-panel,
+.mesh-hero__spotlight-card {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.mesh-hero__content-panel {
+  max-width: 42rem;
+  padding: clamp(1.4rem, 2vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, rgba(11, 16, 30, 0.58), rgba(11, 16, 30, 0.3));
+  box-shadow: var(--shadow-lg);
+}
+
+.mesh-hero__eyebrow,
+.mesh-hero__label,
+.mesh-hero__signal dt,
+.mesh-hero__footer-copy,
+.mesh-hero__brand-row {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mesh-hero__eyebrow {
+  margin: 0 0 1.1rem;
+  font-size: 0.74rem;
+  line-height: 1.6;
+  color: var(--accent-a);
+}
+
+.mesh-hero__title {
+  margin: 0;
+  max-width: 11ch;
+  font-size: var(--title-size);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.mesh-hero__copy {
+  max-width: 34rem;
+  margin: 1.4rem 0 0;
+  font-size: var(--copy-size);
+  line-height: 1.78;
+  color: var(--text-secondary);
+}
+
+.mesh-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+.mesh-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.2rem;
+  padding: 0.95rem 1.35rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-size: var(--ui-size);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition:
+    transform var(--transition),
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    color var(--transition);
+}
+
+.mesh-hero__button:hover,
+.mesh-hero__button:focus-visible {
+  transform: translateY(-2px);
+}
+
+.mesh-hero__button--primary {
+  color: #06101a;
+  background: linear-gradient(135deg, #f3f8ff, #a8d5ff);
+  box-shadow: 0 16px 40px rgba(168, 213, 255, 0.24);
+}
+
+.mesh-hero__button--primary:hover,
+.mesh-hero__button--primary:focus-visible {
+  box-shadow: 0 22px 48px rgba(168, 213, 255, 0.32);
+}
+
+.mesh-hero__button--secondary {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mesh-hero__button--secondary:hover,
+.mesh-hero__button--secondary:focus-visible {
+  border-color: rgba(119, 208, 255, 0.4);
+  background: rgba(119, 208, 255, 0.08);
+}
+
+.mesh-hero__signals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.8rem 0 0;
+}
+
+.mesh-hero__signal {
+  padding: 1rem 1rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.mesh-hero__signal dt {
+  font-size: 0.65rem;
+  color: var(--text-soft);
+}
+
+.mesh-hero__signal dd {
+  margin: 0.65rem 0 0;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.mesh-hero__spotlight {
+  display: grid;
+  gap: 1rem;
+  align-self: stretch;
+}
+
+.mesh-hero__spotlight-card {
+  padding: 1.35rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(13, 18, 31, 0.62), rgba(13, 18, 31, 0.36));
+  box-shadow: var(--shadow-md);
+}
+
+.mesh-hero__label {
+  margin: 0;
+  font-size: 0.68rem;
+  color: var(--text-soft);
+}
+
+.mesh-hero__metric {
+  margin: 0.8rem 0 0;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+}
+
+.mesh-hero__detail {
+  margin: 0.9rem 0 0;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.mesh-hero__stack {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.mesh-hero__stack li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.mesh-hero__stack li::before {
+  content: "";
+  position: absolute;
+  top: 0.62rem;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-a), var(--accent-c));
+  box-shadow: 0 0 0 0.25rem rgba(119, 208, 255, 0.12);
+}
+
+.mesh-hero__footer {
+  width: var(--container);
+  margin: 0 auto;
+  padding: 0 0 clamp(2.8rem, 4vw, 3.4rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  align-items: center;
+}
+
+.mesh-hero__footer-copy {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--text-soft);
+}
+
+.mesh-hero__brand-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.76rem;
+  color: rgba(235, 243, 255, 0.74);
+}
+
+.mesh-hero__scroll {
+  position: absolute;
+  right: clamp(1rem, 2vw, 1.8rem);
+  bottom: clamp(1.25rem, 2vw, 1.8rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mesh-hero__scroll-line {
+  width: 3.2rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(119, 208, 255, 0.9));
+  transform-origin: left center;
+  animation: scrollPulse 2.8s ease-in-out infinite;
+}
+
+:is(a, button):focus-visible {
+  outline: 3px solid rgba(119, 208, 255, 0.92);
+  outline-offset: 4px;
+}
+
+@keyframes meshDrift {
+  0% {
+    transform: translate3d(calc(var(--pointer-x) * 0.02), calc(var(--pointer-y) * 0.02), 0) scale(1);
+  }
+  100% {
+    transform: translate3d(calc(var(--pointer-x) * 0.02), calc(var(--pointer-y) * 0.02), 0) scale(1.06) rotate(3deg);
+  }
+}
+
+@keyframes meshFloatA {
+  0% {
+    transform: translate3d(calc(var(--pointer-x) * -0.045), calc(var(--pointer-y) * -0.035), 0);
+  }
+  100% {
+    transform: translate3d(calc(var(--pointer-x) * -0.045 + 2%), calc(var(--pointer-y) * -0.035 - 2%), 0);
+  }
+}
+
+@keyframes meshFloatB {
+  0% {
+    transform: translate3d(calc(var(--pointer-x) * 0.05), calc(var(--pointer-y) * 0.04), 0) scale(1);
+  }
+  100% {
+    transform: translate3d(calc(var(--pointer-x) * 0.05 - 2%), calc(var(--pointer-y) * 0.04 + 2%), 0) scale(1.08);
+  }
+}
+
+@keyframes meshFloatC {
+  0% {
+    transform: translate3d(calc(var(--pointer-x) * -0.032), calc(var(--pointer-y) * 0.024), 0) scale(calc(1 + (var(--pointer-strength) * 0.035)));
+  }
+  100% {
+    transform: translate3d(calc(var(--pointer-x) * -0.032 + 2%), calc(var(--pointer-y) * 0.024 - 1.5%), 0) scale(calc(1.04 + (var(--pointer-strength) * 0.035)));
+  }
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.54;
+    transform: scaleX(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 980px) {
+  .mesh-hero__shell {
+    grid-template-columns: 1fr;
+  }
+
+  .mesh-hero__content-panel {
+    max-width: none;
+  }
+
+  .mesh-hero__signals {
+    grid-template-columns: 1fr;
+  }
+
+  .mesh-hero__spotlight {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mesh-hero__scroll {
+    position: static;
+    width: var(--container);
+    margin: 0 auto 1rem;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 720px) {
+  .mesh-hero {
+    padding-inline: 0.75rem;
+  }
+
+  .mesh-hero__shell {
+    width: min(100%, calc(100vw - 1.5rem));
+    padding-block-start: 2.6rem;
+  }
+
+  .mesh-hero__content-panel,
+  .mesh-hero__spotlight-card {
+    padding: 1.15rem;
+  }
+
+  .mesh-hero__title {
+    max-width: 12ch;
+  }
+
+  .mesh-hero__actions {
+    flex-direction: column;
+  }
+
+  .mesh-hero__button {
+    width: 100%;
+  }
+
+  .mesh-hero__spotlight {
+    grid-template-columns: 1fr;
+  }
+
+  .mesh-hero__footer {
+    width: min(100%, calc(100vw - 1.5rem));
+    align-items: flex-start;
+  }
+
+  .mesh-hero__scroll {
+    width: min(100%, calc(100vw - 1.5rem));
+    font-size: 0.72rem;
+  }
+
+  .mesh-hero__grid {
+    background-size: 7rem 7rem;
+    opacity: 0.12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .mesh-hero__gradient,
+  .mesh-hero__scroll-line {
+    animation: none;
+  }
+
+  .mesh-hero__glow,
+  .mesh-hero__gradient--orb-c {
+    opacity: 0.58;
+  }
+
+  .mesh-hero__button,
+  .mesh-hero__scroll-line {
+    transition: none;
+  }
+}
