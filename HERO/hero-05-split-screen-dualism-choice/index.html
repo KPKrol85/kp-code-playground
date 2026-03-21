@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split-Screen Dualism Choice</title>
+    <meta
+      name="description"
+      content="A premium split-screen hero that helps users choose between two equally important product journeys."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <section class="dualism-hero" aria-labelledby="dualism-title" data-active-side="">
+        <div class="dualism-hero__shell">
+          <p class="dualism-hero__eyebrow">KP_Code Digital Vault Component</p>
+          <div class="dualism-hero__split" aria-label="Choose your primary path">
+            <article class="path-panel path-panel--teams" id="teams-journey" data-side="teams" aria-labelledby="teams-title">
+              <div class="path-panel__backdrop" aria-hidden="true">
+                <span class="path-panel__orb path-panel__orb--one"></span>
+                <span class="path-panel__orb path-panel__orb--two"></span>
+                <span class="path-panel__grid"></span>
+              </div>
+              <div class="path-panel__inner">
+                <p class="path-panel__overline">For revenue teams</p>
+                <h1 class="path-panel__title" id="dualism-title">
+                  One control layer for buyers, pipeline, and post-sale growth.
+                </h1>
+                <h2 class="path-panel__headline" id="teams-title">Grow commercial accounts with precision.</h2>
+                <p class="path-panel__description">
+                  Unify sales, success, and operations around shared account intelligence, guided plays,
+                  and cleaner handoffs across the funnel.
+                </p>
+                <ul class="path-panel__list" aria-label="Revenue team highlights">
+                  <li>Shared account plans across sales and customer success</li>
+                  <li>Guided execution for expansion, renewal, and risk moments</li>
+                  <li>Decision-ready reporting for leadership and frontline teams</li>
+                </ul>
+                <div class="path-panel__actions">
+                  <a class="path-panel__cta" href="#teams-journey">Explore revenue workflow</a>
+                  <span class="path-panel__meta">Best for buyer, seller, and partner motions</span>
+                </div>
+              </div>
+            </article>
+
+            <div class="center-spine" aria-hidden="true">
+              <span class="center-spine__line"></span>
+              <div class="center-spine__badge">
+                <span class="center-spine__label">same platform</span>
+                <span class="center-spine__mark">K</span>
+              </div>
+              <span class="center-spine__line"></span>
+            </div>
+
+            <article class="path-panel path-panel--members" id="members-journey" data-side="members" aria-labelledby="members-title">
+              <div class="path-panel__backdrop" aria-hidden="true">
+                <span class="path-panel__orb path-panel__orb--one"></span>
+                <span class="path-panel__orb path-panel__orb--two"></span>
+                <span class="path-panel__grid"></span>
+              </div>
+              <div class="path-panel__inner">
+                <p class="path-panel__overline">For members</p>
+                <h2 class="path-panel__headline" id="members-title">Deliver a premium member experience at every touchpoint.</h2>
+                <p class="path-panel__description">
+                  Give customers a clear, elegant path into onboarding, support, rewards, and curated
+                  service moments without increasing operational drag.
+                </p>
+                <ul class="path-panel__list" aria-label="Member experience highlights">
+                  <li>Adaptive onboarding journeys tailored to account intent</li>
+                  <li>Self-serve service flows paired with high-touch concierge moments</li>
+                  <li>Lifecycle personalization that deepens trust and retention</li>
+                </ul>
+                <div class="path-panel__actions">
+                  <a class="path-panel__cta" href="#members-journey">See the member journey</a>
+                  <span class="path-panel__meta">Built for customer, creator, and community experiences</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <nav class="dualism-hero__quick-nav" aria-label="Preview both journeys">
+            <button class="dualism-hero__toggle" type="button" data-target="teams">
+              Revenue teams
+            </button>
+            <button class="dualism-hero__toggle" type="button" data-target="members">
+              Members
+            </button>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
