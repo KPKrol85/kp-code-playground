@@ -35,6 +35,8 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "validate:jsonld": "node scripts/validate-jsonld.js",
-    "qa:links": "node scripts/validate-internal-links.js"
+    "qa:links": "node scripts/validate-internal-links.js",
+    "qa:smoke": "node scripts/qa-smoke-lighthouse.js",
+    "qa:smoke:enforce": "node scripts/qa-smoke-lighthouse.js --enforce"
   }
 }

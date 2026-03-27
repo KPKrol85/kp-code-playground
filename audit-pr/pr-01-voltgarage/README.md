@@ -32,6 +32,7 @@ VOLT GARAGE to statyczny front-end sklepu motoryzacyjnego z wieloma podstronami,
 1. `npm install`
 2. QA i walidacja:
    - `npm run qa`
+   - `npm run qa:smoke` (baseline Lighthouse smoke-check, tryb report-only)
    - `npm run validate:jsonld`
 3. Build assetów (minifikacja CSS/JS):
    - `npm run build`
@@ -41,6 +42,17 @@ VOLT GARAGE to statyczny front-end sklepu motoryzacyjnego z wieloma podstronami,
 - Deployment target jest zgodny z Netlify (`_headers`, `_redirects`).
 - Service worker rejestruje się z root scope (`/sw.js`) i obsługuje fallback offline.
 - Nagłówki CSP dopuszczają inline script/style (potrzebne przy obecnym preloadzie motywu i stylach inline-free fallbackach).
+
+## QA smoke-check (Lighthouse baseline)
+- Skrypt: `npm run qa:smoke`
+- Domyślne strony bazowe: `/`, `/pages/shop.html`, `/pages/product.html`
+- Domyślnie działa w trybie **report-only** (nie blokuje pracy przy niespełnionych progach).
+- Tryb egzekwowania pod CI jest dostępny osobno: `npm run qa:smoke:enforce`
+- Progi są celowo konserwatywne i konfigurowalne przez zmienne środowiskowe:
+  - `SMOKE_THRESHOLD_PERFORMANCE`
+  - `SMOKE_THRESHOLD_ACCESSIBILITY`
+  - `SMOKE_THRESHOLD_BEST_PRACTICES`
+  - `SMOKE_THRESHOLD_SEO`
 
 ## Notatki dostępności
 - Skip link jest obecny na stronach.
@@ -106,6 +118,7 @@ VOLT GARAGE is a static front-end storefront with multiple pages, modular CSS/JS
 1. `npm install`
 2. Quality checks:
    - `npm run qa`
+   - `npm run qa:smoke` (baseline Lighthouse smoke-check, report-only mode)
    - `npm run validate:jsonld`
 3. Asset build:
    - `npm run build`
@@ -115,6 +128,17 @@ VOLT GARAGE is a static front-end storefront with multiple pages, modular CSS/JS
 - Netlify-specific config is included (`_headers`, `_redirects`).
 - Service worker is registered at root (`/sw.js`) and provides offline fallback.
 - Current CSP allows inline script/style due to current implementation choices.
+
+## QA smoke-check (Lighthouse baseline)
+- Script: `npm run qa:smoke`
+- Default baseline pages: `/`, `/pages/shop.html`, `/pages/product.html`
+- It runs in **report-only** mode by default (non-blocking when thresholds are missed).
+- Optional CI enforcement is available separately: `npm run qa:smoke:enforce`
+- Thresholds are intentionally conservative and configurable via environment variables:
+  - `SMOKE_THRESHOLD_PERFORMANCE`
+  - `SMOKE_THRESHOLD_ACCESSIBILITY`
+  - `SMOKE_THRESHOLD_BEST_PRACTICES`
+  - `SMOKE_THRESHOLD_SEO`
 
 ## Accessibility notes
 - Skip links are implemented.
