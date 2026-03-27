@@ -125,75 +125,77 @@
             <p class="badge" data-listing-count>0 produktów</p>
           </div>
           <div class="listing-layout">
-            <aside class="filters" data-filters-form>
-              <div class="filters__group">
-                <p class="filters__title">Cena</p>
-                <select class="form__select" name="price">
-                  <option value="">Wszystkie</option>
-                  <option value="0-150">0–150 PLN</option>
-                  <option value="151-300">151–300 PLN</option>
-                  <option value="301-600">301–600 PLN</option>
-                  <option value="601-1200">601–1200 PLN</option>
-                </select>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Minimalna ocena</p>
-                <select class="form__select" name="rating">
-                  <option value="">Każda</option>
-                  <option value="4">4.0+</option>
-                  <option value="4.5">4.5+</option>
-                </select>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Podkategorie</p>
-                <select class="form__select" name="subcategory">
-                  <option value="">Wszystkie</option>
-                  <option value="Plecaki trekkingowe">Plecaki trekkingowe</option>
-                  <option value="Plecaki miejskie">Plecaki miejskie</option>
-                  <option value="Torby podróżne">Torby podróżne</option>
-                  <option value="Saszetki i organizery">Saszetki i organizery</option>
-                  <option value="Termosy">Termosy</option>
-                  <option value="Kubki termiczne">Kubki termiczne</option>
-                  <option value="Butelki filtrujące">Butelki filtrujące</option>
-                  <option value="Kuchenki">Kuchenki</option>
-                  <option value="Maty i hamaki">Maty i hamaki</option>
-                  <option value="Namioty i tarp">Namioty i tarp</option>
-                  <option value="Latarki">Latarki</option>
-                  <option value="Powerbanki">Powerbanki</option>
-                  <option value="Nawigacja">Nawigacja</option>
-                  <option value="Karabińczyki">Karabińczyki</option>
-                  <option value="Apteczki">Apteczki</option>
-                  <option value="Zestawy naprawcze">Zestawy naprawcze</option>
-                </select>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Badge</p>
-                <label class="checkbox">
-                  <input type="checkbox" name="badge" value="Bestseller" />
-                  Bestseller
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox" name="badge" value="New" />
-                  New
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox" name="badge" value="Eco" />
-                  Eco
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox" name="badge" value="Limited" />
-                  Limited
-                </label>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Sortowanie</p>
-                <select class="form__select" name="sort">
-                  <option value="popularity">Popularność</option>
-                  <option value="priceAsc">Cena rosnąco</option>
-                  <option value="priceDesc">Cena malejąco</option>
-                  <option value="newest">Najnowsze</option>
-                </select>
-              </div>
+            <aside class="filters">
+              <form data-filters-form>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Cena</legend>
+                  <select class="form__select" name="price">
+                    <option value="">Wszystkie</option>
+                    <option value="0-150">0–150 PLN</option>
+                    <option value="151-300">151–300 PLN</option>
+                    <option value="301-600">301–600 PLN</option>
+                    <option value="601-1200">601–1200 PLN</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Minimalna ocena</legend>
+                  <select class="form__select" name="rating">
+                    <option value="">Każda</option>
+                    <option value="4">4.0+</option>
+                    <option value="4.5">4.5+</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Podkategorie</legend>
+                  <select class="form__select" name="subcategory">
+                    <option value="">Wszystkie</option>
+                    <option value="Plecaki trekkingowe">Plecaki trekkingowe</option>
+                    <option value="Plecaki miejskie">Plecaki miejskie</option>
+                    <option value="Torby podróżne">Torby podróżne</option>
+                    <option value="Saszetki i organizery">Saszetki i organizery</option>
+                    <option value="Termosy">Termosy</option>
+                    <option value="Kubki termiczne">Kubki termiczne</option>
+                    <option value="Butelki filtrujące">Butelki filtrujące</option>
+                    <option value="Kuchenki">Kuchenki</option>
+                    <option value="Maty i hamaki">Maty i hamaki</option>
+                    <option value="Namioty i tarp">Namioty i tarp</option>
+                    <option value="Latarki">Latarki</option>
+                    <option value="Powerbanki">Powerbanki</option>
+                    <option value="Nawigacja">Nawigacja</option>
+                    <option value="Karabińczyki">Karabińczyki</option>
+                    <option value="Apteczki">Apteczki</option>
+                    <option value="Zestawy naprawcze">Zestawy naprawcze</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Badge</legend>
+                  <label class="checkbox">
+                    <input type="checkbox" name="badge" value="Bestseller" />
+                    Bestseller
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" name="badge" value="New" />
+                    New
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" name="badge" value="Eco" />
+                    Eco
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" name="badge" value="Limited" />
+                    Limited
+                  </label>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Sortowanie</legend>
+                  <select class="form__select" name="sort">
+                    <option value="popularity">Popularność</option>
+                    <option value="priceAsc">Cena rosnąco</option>
+                    <option value="priceDesc">Cena malejąco</option>
+                    <option value="newest">Najnowsze</option>
+                  </select>
+                </fieldset>
+              </form>
             </aside>
             <div>
               <div class="grid grid--3" data-listing-grid></div>
