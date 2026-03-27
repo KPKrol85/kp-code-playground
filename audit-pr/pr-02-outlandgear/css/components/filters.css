@@ -7,6 +7,19 @@
   gap: var(--space-md);
 }
 
+
+.filters form {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.filters fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
 .filters__group {
   display: grid;
   gap: var(--space-xs);
@@ -15,6 +28,7 @@
 .filters__title {
   font-weight: 600;
   margin-bottom: var(--space-xs);
+  padding: 0;
 }
 
 .filters__chips {
