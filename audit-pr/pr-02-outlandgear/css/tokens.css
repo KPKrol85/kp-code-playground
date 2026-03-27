@@ -38,4 +38,8 @@
   :root {
     --transition-fast: 0ms;
   }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
