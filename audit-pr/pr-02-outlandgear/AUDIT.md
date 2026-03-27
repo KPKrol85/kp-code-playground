@@ -1,78 +1,78 @@
-# Outland Gear — Senior Front-End Audit
+# Outland Gear — Audyt Senior Front-End
 
-## 1) Executive summary
-Audit scope covered static implementation evidence in `audit-pr/pr-02-outlandgear` (HTML, CSS, JS modules, data JSON, robots/sitemap). The project is a static MPA storefront with clean modular JS boundaries, token-based CSS, and solid baseline accessibility/SEO setup. No P0 blockers were detected in repository evidence. Main next-step risks are SEO consistency across all pages, JS-dependency of core commerce rendering, and performance overhead from CSS `@import` chaining.
+## 1) Podsumowanie wykonawcze
+Zakres audytu objął statyczne dowody implementacyjne w `audit-pr/pr-02-outlandgear` (HTML, CSS, moduły JS, JSON z danymi, robots/sitemap). Projekt to statyczny sklep MPA z czystym podziałem modułów JS, CSS opartym o tokeny oraz solidną bazą dostępności/SEO. W materiale repozytorium nie wykryto blokerów P0. Główne ryzyka na kolejny etap to spójność SEO na wszystkich stronach, zależność kluczowego renderowania e-commerce od JS oraz narzut wydajnościowy wynikający z łańcucha `@import` w CSS.
 
-## 2) P0 — Critical risks
-No P0 issues detected from static repository evidence.
+## 2) P0 — Ryzyka krytyczne
+Nie wykryto problemów P0 na podstawie statycznych dowodów z repozytorium.
 
-## 3) Strengths
-- Clear front-end architecture split: page templates + modular feature scripts (`catalog`, `product`, `cart`, `checkout`, `nav`).
-- Good ARIA state handling in navigation patterns (`aria-expanded`, `aria-hidden`, focus return/trap).
-- Baseline accessibility primitives are present (`skip-link`, `:focus-visible`, live status regions).
-- SEO foundation is present on core pages (`canonical`, OG/Twitter tags, JSON-LD, robots + sitemap).
-- Static link integrity check did not detect missing local `href/src` targets.
+## 3) Mocne strony
+- Czytelny podział architektury front-endu: szablony stron + modułowe skrypty funkcjonalne (`catalog`, `product`, `cart`, `checkout`, `nav`).
+- Dobra obsługa stanów ARIA we wzorcach nawigacji (`aria-expanded`, `aria-hidden`, powrót/przechwytywanie fokusu).
+- Obecne bazowe mechanizmy dostępności (`skip-link`, `:focus-visible`, regiony statusu live).
+- Fundament SEO jest obecny na kluczowych stronach (`canonical`, tagi OG/Twitter, JSON-LD, robots + sitemap).
+- Statyczna weryfikacja integralności linków nie wykryła brakujących lokalnych celów `href/src`.
 
-## 4) P1 — Improvements worth doing next (exactly 5)
-1. **SEO metadata parity is incomplete across all pages (legal pages have reduced metadata).**  
-   Evidence: `regulamin.html` and `polityka-prywatnosci.html` include title/description/canonical but no OG/Twitter/JSON-LD blocks, unlike core pages. (`regulamin.html:6-14`, `polityka-prywatnosci.html:6-14`, `index.html:12-35`)
+## 4) P1 — Usprawnienia warte wykonania w następnej kolejności (dokładnie 5)
+1. **Spójność metadanych SEO jest niepełna na wszystkich stronach (strony prawne mają ograniczone metadane).**  
+   Dowód: `regulamin.html` i `polityka-prywatnosci.html` zawierają title/description/canonical, ale nie mają bloków OG/Twitter/JSON-LD, w przeciwieństwie do stron głównych. (`regulamin.html:6-14`, `polityka-prywatnosci.html:6-14`, `index.html:12-35`)
 
-2. **Core commerce paths still depend on JavaScript rendering for meaningful content state.**  
-   Evidence: listing/product/cart rely on JS-populated containers (`data-listing-grid`, `data-product-root`, `data-cart-container`) and module initialization in app bootstrap. (`kategoria.html:201-210`, `produkt.html:103-166`, `koszyk.html:113-126`, `js/app.js:22-30`)
+2. **Kluczowe ścieżki e-commerce nadal zależą od renderowania przez JavaScript, aby pokazać sensowny stan treści.**  
+   Dowód: listing/produkt/koszyk opierają się na kontenerach wypełnianych przez JS (`data-listing-grid`, `data-product-root`, `data-cart-container`) oraz inicjalizacji modułów w bootstrapie aplikacji. (`kategoria.html:201-210`, `produkt.html:103-166`, `koszyk.html:113-126`, `js/app.js:22-30`)
 
-3. **CSS delivery uses a long `@import` chain that can increase render-blocking waterfall cost.**  
-   Evidence: `css/main.css` imports 16 separate CSS files via `@import`. (`css/main.css:1-16`)
+3. **Dostarczanie CSS używa długiego łańcucha `@import`, co może zwiększać koszt render-blocking waterfall.**  
+   Dowód: `css/main.css` importuje 16 oddzielnych plików CSS przez `@import`. (`css/main.css:1-16`)
 
-4. **Product metadata update is partial: canonical/description/title are updated, but OG/Twitter dynamic consistency is not handled in JS.**  
-   Evidence: product JS updates document title/meta description/canonical only; OG/Twitter tags remain static in HTML. (`js/modules/product.js:14-31`, `produkt.html:9-19`)
+4. **Aktualizacja metadanych produktu jest częściowa: canonical/description/title są aktualizowane, ale dynamiczna spójność OG/Twitter nie jest obsługiwana w JS.**  
+   Dowód: JS produktu aktualizuje tylko document title/meta description/canonical; tagi OG/Twitter pozostają statyczne w HTML. (`js/modules/product.js:14-31`, `produkt.html:9-19`)
 
-5. **Error handling for data/storage failures is developer-facing rather than user-facing.**  
-   Evidence: fetch throws on data load failures and storage failures are logged to console (`console.error`) without UI fallback messaging. (`js/modules/data.js:7-10`, `js/modules/storage.js:21-33`)
+5. **Obsługa błędów przy awariach danych/pamięci jest skierowana do dewelopera, a nie do użytkownika.**  
+   Dowód: fetch rzuca wyjątek przy błędach ładowania danych, a błędy pamięci są logowane do konsoli (`console.error`) bez fallbacku w UI. (`js/modules/data.js:7-10`, `js/modules/storage.js:21-33`)
 
-## 5) P2 — Minor refinements
-- Contact form has semantic labeling, but no explicit submission target/handler for a real backend workflow (demo form behavior).
-- Footer links for “Regulamin/FAQ” currently point to `kontakt.html` on multiple pages instead of dedicated pages.
-- Placeholder social share image is an SVG placeholder asset, which is acceptable for demo but weak for production previews.
-- Contrast compliance cannot be verified without computed style/runtime analysis.
+## 5) P2 — Drobne dopracowania
+- Formularz kontaktowy ma semantyczne etykiety, ale nie ma jawnego celu wysyłki/handlera pod realny workflow backendowy (zachowanie demonstracyjne).
+- Linki stopki „Regulamin/FAQ” na wielu stronach obecnie wskazują `kontakt.html` zamiast dedykowanych stron.
+- Placeholder obrazu social share to zasób SVG, co jest akceptowalne w demo, ale słabe dla produkcyjnych podglądów.
+- Zgodności kontrastu nie da się zweryfikować bez analizy runtime/computed style.
 
-## 6) Future enhancements (exactly 5)
-1. Add OG/Twitter/JSON-LD blocks to legal pages to standardize metadata coverage.
-2. Provide richer no-JS fallbacks for listing/product/cart beyond informational notices.
-3. Replace CSS `@import` aggregation with a build/bundle or preload strategy for critical CSS.
-4. Extend product page metadata synchronization to OG/Twitter tags when slug changes.
-5. Add user-visible error UI for fetch/storage failures (not just console error output).
+## 6) Przyszłe usprawnienia (dokładnie 5)
+1. Dodać bloki OG/Twitter/JSON-LD do stron prawnych, aby ujednolicić pokrycie metadanymi.
+2. Zapewnić bogatsze fallbacki no-JS dla listingu/produktu/koszyka poza samymi komunikatami informacyjnymi.
+3. Zastąpić agregację CSS przez `@import` strategią build/bundle lub preload dla krytycznego CSS.
+4. Rozszerzyć synchronizację metadanych strony produktu o tagi OG/Twitter przy zmianie sluga.
+5. Dodać widoczne dla użytkownika UI błędów dla awarii fetch/storage (nie tylko logi konsolowe).
 
-## 7) Compliance checklist
-- **headings valid:** **PASS** (single `h1` with descending section headings in core pages).  
-  Evidence: `index.html:125`, `kategoria.html:122`, `produkt.html:133`, `checkout.html:107`.
-- **no broken links excluding intentional minification strategy:** **PASS** (local link audit result: `NO_MISSING_LOCAL_LINKS`).  
-  Evidence command: HTML `href/src` static existence scan.
-- **no console.log:** **PASS** (no `console.log` detected in repository files).  
-  Evidence: code search output.
-- **aria attributes valid:** **PASS (static review)** (`aria-controls`/`aria-expanded`/`aria-hidden` state pairing implemented in nav logic).  
-  Evidence: `index.html:69-85`, `js/modules/nav.js:3-31`.
-- **images have width/height:** **PASS** for static HTML images and JS-generated product/cart images.  
-  Evidence: `index.html:55,133`, `kategoria.html:114`, `produkt.html:116-126`, `js/modules/catalog.js:115-116`, `js/modules/cart.js:79-80`.
-- **no-JS baseline usable:** **FAIL (partial baseline only)** because critical commerce content rendering is JS-dependent despite `noscript` notices.  
-  Evidence: `kategoria.html:202-207`, `produkt.html:104-111`, `koszyk.html:114-119`, `js/app.js:22-30`.
-- **sitemap present if expected:** **PASS** (`sitemap.xml` exists and lists all core pages).  
-  Evidence: `sitemap.xml:1-30`.
-- **robots present:** **PASS** (`robots.txt` exists and declares sitemap URL).  
-  Evidence: `robots.txt:1-3`.
-- **OG image exists:** **PASS** (OG image file exists and is referenced on core pages).  
-  Evidence: `assets/svg/social-share-placeholder.svg`, `index.html:16`, `kategoria.html:13`, `produkt.html:13`.
-- **JSON-LD valid:** **PASS (static syntax review)**; JSON-LD scripts are valid JSON objects for `Organization` / `WebSite`.  
-  Evidence: `index.html:25-47`, `kategoria.html:22-38`, `checkout.html:22-29`.
+## 7) Lista kontrolna zgodności
+- **headings valid:** **PASS** (pojedynczy `h1` z malejącą hierarchią nagłówków sekcji na kluczowych stronach).  
+  Dowód: `index.html:125`, `kategoria.html:122`, `produkt.html:133`, `checkout.html:107`.
+- **no broken links excluding intentional minification strategy:** **PASS** (wynik audytu lokalnych linków: `NO_MISSING_LOCAL_LINKS`).  
+  Dowód polecenia: statyczny skan istnienia `href/src` w HTML.
+- **no console.log:** **PASS** (nie wykryto `console.log` w plikach repozytorium).  
+  Dowód: wynik wyszukiwania w kodzie.
+- **aria attributes valid:** **PASS (przegląd statyczny)** (sparowanie stanów `aria-controls`/`aria-expanded`/`aria-hidden` zaimplementowane w logice nawigacji).  
+  Dowód: `index.html:69-85`, `js/modules/nav.js:3-31`.
+- **images have width/height:** **PASS** dla statycznych obrazów HTML i obrazów produktu/koszyka generowanych przez JS.  
+  Dowód: `index.html:55,133`, `kategoria.html:114`, `produkt.html:116-126`, `js/modules/catalog.js:115-116`, `js/modules/cart.js:79-80`.
+- **no-JS baseline usable:** **FAIL (tylko częściowa baza)**, ponieważ renderowanie krytycznej treści e-commerce zależy od JS mimo komunikatów `noscript`.  
+  Dowód: `kategoria.html:202-207`, `produkt.html:104-111`, `koszyk.html:114-119`, `js/app.js:22-30`.
+- **sitemap present if expected:** **PASS** (`sitemap.xml` istnieje i zawiera wszystkie kluczowe strony).  
+  Dowód: `sitemap.xml:1-30`.
+- **robots present:** **PASS** (`robots.txt` istnieje i deklaruje URL mapy strony).  
+  Dowód: `robots.txt:1-3`.
+- **OG image exists:** **PASS** (plik obrazu OG istnieje i jest referencjonowany na kluczowych stronach).  
+  Dowód: `assets/svg/social-share-placeholder.svg`, `index.html:16`, `kategoria.html:13`, `produkt.html:13`.
+- **JSON-LD valid:** **PASS (statyczny przegląd składni)**; skrypty JSON-LD są poprawnymi obiektami JSON dla `Organization` / `WebSite`.  
+  Dowód: `index.html:25-47`, `kategoria.html:22-38`, `checkout.html:22-29`.
 
-## 8) Architecture score (0–10)
-- **BEM consistency:** 8.4/10
-- **Token usage:** 9.0/10
-- **Accessibility:** 7.7/10
-- **Performance:** 7.4/10
-- **Maintainability:** 8.5/10
+## 8) Ocena architektury (0–10)
+- **Spójność BEM:** 8.4/10
+- **Użycie tokenów:** 9.0/10
+- **Dostępność:** 7.7/10
+- **Wydajność:** 7.4/10
+- **Utrzymywalność:** 8.5/10
 
-**Total architecture score: 8.2/10**
+**Łączna ocena architektury: 8.2/10**
 
-## 9) Senior rating (1–10)
-**Senior rating: 8.1/10.**  
-Technical justification: The codebase is structurally strong for a static MPA (clear module separation, reusable CSS architecture, and baseline a11y/SEO controls). Point deductions are mainly due to production-hardening gaps (metadata parity, JS dependency for commerce content, CSS delivery strategy) rather than structural instability.
+## 9) Ocena seniorska (1–10)
+**Ocena seniorska: 8.1/10.**  
+Uzasadnienie techniczne: Kod bazowy jest strukturalnie mocny jak na statyczny MPA (czytelny podział modułów, reużywalna architektura CSS i bazowe mechanizmy a11y/SEO). Punkty odjęto głównie za luki związane z utwardzeniem produkcyjnym (spójność metadanych, zależność treści e-commerce od JS, strategia dostarczania CSS), a nie za niestabilność strukturalną.
