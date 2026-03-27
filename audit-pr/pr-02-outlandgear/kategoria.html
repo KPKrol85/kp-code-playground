@@ -114,9 +114,10 @@
             <p class="badge" data-listing-count>0 produktów</p>
           </div>
           <div class="listing-layout">
-            <aside class="filters" data-filters-form>
-              <div class="filters__group">
-                <p class="filters__title">Cena</p>
+            <aside class="filters">
+              <form class="filters__form" data-filters-form>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Cena</legend>
                 <select class="form__select" name="price">
                   <option value="">Wszystkie</option>
                   <option value="0-150">0–150 PLN</option>
@@ -124,17 +125,17 @@
                   <option value="301-600">301–600 PLN</option>
                   <option value="601-1200">601–1200 PLN</option>
                 </select>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Minimalna ocena</p>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Minimalna ocena</legend>
                 <select class="form__select" name="rating">
                   <option value="">Każda</option>
                   <option value="4">4.0+</option>
                   <option value="4.5">4.5+</option>
                 </select>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Podkategorie</p>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Podkategorie</legend>
                 <select class="form__select" name="subcategory">
                   <option value="">Wszystkie</option>
                   <option value="Plecaki trekkingowe">Plecaki trekkingowe</option>
@@ -154,9 +155,9 @@
                   <option value="Apteczki">Apteczki</option>
                   <option value="Zestawy naprawcze">Zestawy naprawcze</option>
                 </select>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Badge</p>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Badge</legend>
                 <label class="checkbox">
                   <input type="checkbox" name="badge" value="Bestseller" />
                   Bestseller
@@ -173,16 +174,17 @@
                   <input type="checkbox" name="badge" value="Limited" />
                   Limited
                 </label>
-              </div>
-              <div class="filters__group">
-                <p class="filters__title">Sortowanie</p>
+                </fieldset>
+                <fieldset class="filters__group">
+                  <legend class="filters__title">Sortowanie</legend>
                 <select class="form__select" name="sort">
                   <option value="popularity">Popularność</option>
                   <option value="priceAsc">Cena rosnąco</option>
                   <option value="priceDesc">Cena malejąco</option>
                   <option value="newest">Najnowsze</option>
                 </select>
-              </div>
+                </fieldset>
+              </form>
             </aside>
             <div>
               <div class="grid grid--3" data-listing-grid></div>
