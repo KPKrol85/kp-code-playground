@@ -1,101 +1,101 @@
-# Outland Gear — Senior Front-End Audit
+# Outland Gear — Audyt Senior Front-End
 
-## 1. Executive summary
-Audit scope covered the real implementation in `audit-pr/pr-02-outlandgear` (HTML/CSS/JS/data/SEO files). The project is a static MPA storefront with modular JS, tokenized CSS, and baseline accessibility/SEO patterns in place. No production-blocking defect was statically detected, but there are clear next-step improvements around no-JS resilience, social metadata, semantics of filters, and deploy-oriented optimization.
+## 1. Podsumowanie wykonawcze
+Zakres audytu objął rzeczywistą implementację w `audit-pr/pr-02-outlandgear` (pliki HTML/CSS/JS/data/SEO). Projekt to statyczny storefront MPA z modułowym JS, tokenizowanym CSS oraz bazowymi wzorcami dostępności/SEO. Statycznie nie wykryto defektu blokującego produkcję, ale są wyraźne obszary kolejnych usprawnień: odporność na brak JS, metadane społecznościowe, semantyka filtrów i optymalizacje wdrożeniowe.
 
-## 2. P0 — Critical risks
-No P0 issues detected from static repository evidence.
+## 2. P0 — Ryzyka krytyczne
+Nie wykryto problemów klasy P0 na podstawie statycznych dowodów z repozytorium.
 
-## 3. Strengths
-- Clear multi-page architecture with consistent header/footer/navigation patterns.
-- CSS architecture is modular and token-based (`tokens/base/layout/components/pages`).
-- Good baseline a11y: skip links, focus-visible, ARIA state updates in nav/dropdowns, and keyboard escape handling.
-- Product/listing/cart/checkout logic is decomposed into focused ES modules.
-- Technical SEO baseline exists: canonical tags, robots file, sitemap file, JSON-LD blocks.
+## 3. Mocne strony
+- Czytelna architektura wielostronicowa ze spójnymi wzorcami header/footer/nawigacji.
+- Architektura CSS jest modułowa i oparta o tokeny (`tokens/base/layout/components/pages`).
+- Dobry poziom bazowej a11y: skip linki, `focus-visible`, aktualizacje stanów ARIA w nawigacji/dropdownach oraz obsługa klawisza Escape.
+- Logika produktu/listingu/koszyka/checkoutu jest rozdzielona na wyspecjalizowane moduły ES.
+- Istnieje techniczna baza SEO: tagi canonical, plik robots, plik sitemap, bloki JSON-LD.
 
-## 4. P1 — Improvements worth doing next (exactly 5)
-1. **No Open Graph/Twitter metadata on pages (SEO share quality risk).**  
-   Evidence: no `og:*`/`twitter:*` tags found in HTML files; only canonical + JSON-LD are present. (`index.html`, `kategoria.html`, `produkt.html`, etc.)
+## 4. P1 — Usprawnienia warte wykonania w kolejnym kroku (dokładnie 5)
+1. **Brak metadanych Open Graph/Twitter na stronach (ryzyko jakości udostępnień SEO).**  
+   Dowód: w plikach HTML nie znaleziono tagów `og:*`/`twitter:*`; obecne są jedynie canonical + JSON-LD. (`index.html`, `kategoria.html`, `produkt.html` itd.)
 
-2. **Core commerce content depends on JS without `<noscript>` fallback (progressive enhancement gap).**  
-   Evidence: listing/product/cart regions are rendered from JS/data (`data-listing-grid`, `data-product-root`, `data-cart-container`) and initialized in `js/app.js`; no `<noscript>` blocks detected in pages.
+2. **Kluczowa treść e-commerce zależy od JS bez fallbacku `<noscript>` (luka progressive enhancement).**  
+   Dowód: sekcje listing/produkt/koszyk są renderowane z JS/danych (`data-listing-grid`, `data-product-root`, `data-cart-container`) i inicjalizowane w `js/app.js`; na stronach nie wykryto bloków `<noscript>`.
 
-3. **Contact details are plain text, not actionable links (usability/accessibility downgrade).**  
-   Evidence: `kontakt.html` exposes email/phone as text but does not use `mailto:` or `tel:`.
+3. **Dane kontaktowe są zwykłym tekstem, a nie klikalnymi linkami (spadek użyteczności/dostępności).**  
+   Dowód: `kontakt.html` pokazuje e-mail/telefon jako tekst, ale bez `mailto:` i `tel:`.
 
-4. **Filter area uses generic container instead of semantic form grouping (screen-reader ergonomics).**  
-   Evidence: filters are in `<aside class="filters" data-filters-form>` with loose controls and title paragraphs, without `<form>`, `<fieldset>`, `<legend>` grouping.
+4. **Obszar filtrów używa generycznego kontenera zamiast semantycznego grupowania formularza (ergonomia dla czytników ekranu).**  
+   Dowód: filtry są w `<aside class="filters" data-filters-form>` z luźnymi kontrolkami i tytułami w paragrafach, bez grupowania `<form>`, `<fieldset>`, `<legend>`.
 
-5. **CSS delivery via chained `@import` statements can increase blocking and request waterfall risk.**  
-   Evidence: `css/main.css` imports tokens/base/layout/components/pages through 16 `@import` rules.
+5. **Dostarczanie CSS przez łańcuchowe instrukcje `@import` może zwiększać blokowanie renderowania i ryzyko waterfallu żądań.**  
+   Dowód: `css/main.css` importuje tokens/base/layout/components/pages przez 16 reguł `@import`.
 
-## 5. P2 — Minor refinements
-- `html { scroll-behavior: smooth; }` remains globally active; reduced-motion only shortens transition token, not smooth scrolling behavior.
-- Contact and checkout legal text references “regulamin i politykę prywatności” but no dedicated legal page links are present in form context.
-- Error handling in storage/data modules is console-based and user feedback could be richer for fetch/storage failures.
-- Contrast compliance cannot be fully verified without computed style analysis/runtime checks.
+## 5. P2 — Drobne dopracowania
+- `html { scroll-behavior: smooth; }` pozostaje aktywne globalnie; reduced-motion skraca jedynie token przejścia, ale nie wyłącza smooth scrollingu.
+- Teksty prawne w kontakt/checkout odnoszą się do „regulaminu i polityki prywatności”, ale w kontekście formularzy brak dedykowanych linków do stron prawnych.
+- Obsługa błędów w modułach storage/data opiera się o konsolę; komunikacja błędów dla użytkownika mogłaby być bogatsza przy problemach fetch/storage.
+- Zgodności kontrastu nie da się w pełni zweryfikować bez analizy stylów wyliczonych i testów runtime.
 
-## 6. Future enhancements (exactly 5)
-1. Add Open Graph + Twitter cards (title/description/image/url) and ensure `og:url` matches canonical per page.
-2. Add `noscript` notice and minimal server-rendered fallback for catalog/product/cart summaries.
-3. Introduce richer JSON-LD (`Product`, `Offer`, `AggregateRating`, breadcrumb where relevant).
-4. Convert filters into semantic form groups (`<form>`, `<fieldset>`, `<legend>`) with clear accessible names.
-5. Optimize CSS loading strategy (reduce import chain, prioritize critical styles).
+## 6. Przyszłe usprawnienia (dokładnie 5)
+1. Dodać karty Open Graph + Twitter (title/description/image/url) i dopilnować, aby `og:url` zgadzał się z canonical na każdej podstronie.
+2. Dodać komunikat `noscript` i minimalny fallback renderowany po stronie serwera dla podsumowań katalogu/produktu/koszyka.
+3. Rozszerzyć JSON-LD (`Product`, `Offer`, `AggregateRating`, breadcrumb tam, gdzie adekwatne).
+4. Przebudować filtry do semantycznych grup formularza (`<form>`, `<fieldset>`, `<legend>`) z czytelnymi nazwami dostępnymi.
+5. Zoptymalizować strategię ładowania CSS (redukcja łańcucha importów, priorytetyzacja stylów krytycznych).
 
-## 7. Compliance checklist
-- **Headings valid:** **PASS** (hierarchical `h1` + lower levels present across pages).  
-- **No broken links (excluding intentional minification strategy):** **PASS** (static href/src existence check returned `NO_MISSING_LOCAL_LINKS`).  
-- **No `console.log`:** **PASS** (none detected).  
-- **ARIA attributes valid:** **PASS (static)** (`aria-expanded`, `aria-hidden`, `aria-current`, `aria-live` used with matching controls/targets in nav and status regions).  
-- **Images have width/height:** **PASS** for declared static and JS-created product/cart media in reviewed code.  
-- **No-JS baseline usable:** **FAIL** (core catalog/product/cart experiences depend on JS rendering).  
-- **Sitemap present if expected:** **PASS** (`sitemap.xml` exists and is referenced in robots).  
-- **Robots present:** **PASS** (`robots.txt` exists).  
-- **OG image exists:** **FAIL** (no OG metadata or OG image declaration detected).  
-- **JSON-LD valid:** **PASS (static syntax review)** for included `Organization`/`WebSite` blocks.
+## 7. Lista zgodności
+- **Nagłówki poprawne:** **PASS** (hierarchiczne `h1` + niższe poziomy obecne na stronach).  
+- **Brak uszkodzonych linków (z wyłączeniem zamierzonej strategii minifikacji):** **PASS** (statyczna kontrola `href/src` zwróciła `NO_MISSING_LOCAL_LINKS`).  
+- **Brak `console.log`:** **PASS** (nie wykryto).  
+- **Atrybuty ARIA poprawne:** **PASS (statycznie)** (`aria-expanded`, `aria-hidden`, `aria-current`, `aria-live` użyte z pasującymi kontrolkami/celami w nawigacji i regionach statusu).  
+- **Obrazy mają width/height:** **PASS** dla zadeklarowanych statycznie i tworzonych przez JS mediów produktów/koszyka w przejrzanym kodzie.  
+- **Bazowa używalność bez JS:** **FAIL** (kluczowe ścieżki katalog/produkt/koszyk zależą od renderowania JS).  
+- **Sitemap obecna, jeśli oczekiwana:** **PASS** (`sitemap.xml` istnieje i jest wskazana w robots).  
+- **Robots obecny:** **PASS** (`robots.txt` istnieje).  
+- **OG image istnieje:** **FAIL** (nie wykryto metadanych OG ani deklaracji obrazu OG).  
+- **JSON-LD poprawny:** **PASS (statyczna weryfikacja składni)** dla dołączonych bloków `Organization`/`WebSite`.
 
-## 8. Architecture score (0–10)
-- **BEM consistency:** 8.5/10  
-- **Token usage:** 9.0/10  
-- **Accessibility:** 7.2/10  
-- **Performance:** 7.0/10  
-- **Maintainability:** 8.3/10  
+## 8. Ocena architektury (0–10)
+- **Spójność BEM:** 8.5/10  
+- **Wykorzystanie tokenów:** 9.0/10  
+- **Dostępność:** 7.2/10  
+- **Wydajność:** 7.0/10  
+- **Utrzymywalność:** 8.3/10  
 
-**Overall architecture score: 8.0/10**
+**Łączna ocena architektury: 8.0/10**
 
-## 9. Senior rating (1–10)
-**Senior rating: 8/10.**  
-Technical rationale: the project is cleanly structured and production-oriented for a static MPA, with modular feature JS and coherent CSS architecture. The main deductions are from progressive enhancement/SEO-social completeness and delivery optimizations rather than structural defects.
+## 9. Ocena seniorska (1–10)
+**Ocena seniorska: 8/10.**  
+Uzasadnienie techniczne: projekt jest czysto zorganizowany i gotowy produkcyjnie jak na statyczny MPA, z modułowym JS per funkcja i spójną architekturą CSS. Główne potrącenia punktowe wynikają z progressive enhancement, kompletności SEO-social oraz optymalizacji dostarczania, a nie z defektów strukturalnych.
 
 ---
 
-## Evidence index (path:line)
-- Canonical + JSON-LD baseline:  
+## Indeks dowodów (ścieżka:linia)
+- Baza canonical + JSON-LD:  
   - `index.html:11-36`  
   - `kategoria.html:8-27`  
   - `produkt.html:8-19`
-- Skip link, ARIA nav controls, and drawer semantics:  
+- Skip link, kontrolki ARIA nawigacji oraz semantyka drawer:  
   - `index.html:39-93`  
   - `js/modules/nav.js:3-80`
-- Listing dynamic render + filters + load more:  
+- Dynamiczne renderowanie listingu + filtry + „wczytaj więcej”:  
   - `kategoria.html:116-196`  
   - `js/modules/catalog.js:130-198`
-- Product dynamic render + related section:  
+- Dynamiczne renderowanie produktu + sekcja powiązanych:  
   - `produkt.html:92-146`  
   - `js/modules/product.js:8-134`
-- Cart dynamic render + localStorage persistence:  
+- Dynamiczne renderowanie koszyka + persystencja localStorage:  
   - `koszyk.html:100-114`  
   - `js/modules/cart.js:55-164`  
   - `js/modules/storage.js:12-33`
-- Checkout validation and status live region:  
+- Walidacja checkoutu i live region statusu:  
   - `checkout.html:101-167`  
   - `js/modules/checkout.js:21-56`
-- CSS import chain and reduced motion token handling:  
+- Łańcuch importów CSS i obsługa tokenów reduced motion:  
   - `css/main.css:1-16`  
   - `css/tokens.css:37-40`  
   - `css/base.css:7-9`
 - Robots + sitemap:  
   - `robots.txt:1-3`  
   - `sitemap.xml:1-24`
-- Contact email/phone as plain text (no `mailto:`/`tel:`):  
+- E-mail/telefon w kontakcie jako zwykły tekst (bez `mailto:`/`tel:`):  
   - `kontakt.html:101-104`
