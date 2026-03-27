@@ -5,6 +5,32 @@ import { formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
 
+
+const SITE_NAME = "Outland Gear";
+
+const setProductMetadata = (product, slug) => {
+  if (!product || !slug) return;
+
+  const titleParts = [product.name, product.category, SITE_NAME];
+  document.title = titleParts.filter(Boolean).join(" | ");
+
+  const description = [product.shortDescription, product.subcategory]
+    .filter(Boolean)
+    .join(" ");
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute("content", description);
+  }
+
+  const canonicalUrl = new URL("produkt.html", window.location.origin);
+  canonicalUrl.searchParams.set("slug", slug);
+
+  const canonicalLink = document.querySelector('link[rel="canonical"]');
+  if (canonicalLink) {
+    canonicalLink.setAttribute("href", canonicalUrl.href);
+  }
+};
+
 const renderProduct = (product) => {
   const root = qs(CONFIG.selectors.productRoot);
   if (!root) return;
@@ -128,7 +154,14 @@ export const initProduct = async () => {
   if (!root) return;
   const products = await fetchJson("data/products.json");
   const slug = new URLSearchParams(window.location.search).get("slug");
-  const product = products.find((item) => item.slug === slug) || products[0];
+  const normalizedSlug = slug?.trim() || "";
+  const matchedProduct = products.find((item) => item.slug === normalizedSlug);
+  const product = matchedProduct || products[0];
+
+  if (matchedProduct) {
+    setProductMetadata(matchedProduct, normalizedSlug);
+  }
+
   renderProduct(product);
   renderRelated(products, product);
 };
