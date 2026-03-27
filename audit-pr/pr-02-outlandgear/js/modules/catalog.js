@@ -11,11 +11,95 @@ const parseRange = (value) => {
   return { min, max };
 };
 
+const DEFAULT_FILTERS = {
+  range: null,
+  price: "",
+  rating: 0,
+  subcategory: "",
+  badges: [],
+  sort: "popularity",
+};
+
 const sorters = {
   popularity: (a, b) => b.rating * b.reviewsCount - a.rating * a.reviewsCount,
   priceAsc: (a, b) => a.price - b.price,
   priceDesc: (a, b) => b.price - a.price,
   newest: (a, b) => b.id - a.id,
+};
+
+
+const hasOption = (select, value) => Boolean(select && value && qsa("option", select).some((option) => option.value === value));
+
+const parseStateFromUrl = (form) => {
+  const params = new URLSearchParams(window.location.search);
+  const state = {
+    searchTerm: params.get("q")?.trim() || "",
+    price: params.get("price") || "",
+    rating: params.get("rating") || "",
+    subcategory: params.get("subcategory") || "",
+    badges: (params.get("badges") || "")
+      .split(",")
+      .map((badge) => badge.trim())
+      .filter(Boolean),
+    sort: params.get("sort") || DEFAULT_FILTERS.sort,
+    limit: Number.parseInt(params.get("limit") || "", 10),
+  };
+
+  if (form) {
+    const priceSelect = qs("[name=price]", form);
+    const ratingSelect = qs("[name=rating]", form);
+    const subSelect = qs("[name=subcategory]", form);
+    const sortSelect = qs("[name=sort]", form);
+    const badgeValues = qsa("[name=badge]", form).map((input) => input.value);
+
+    if (!hasOption(priceSelect, state.price)) state.price = "";
+    if (!hasOption(ratingSelect, state.rating)) state.rating = "";
+    if (!hasOption(subSelect, state.subcategory)) state.subcategory = "";
+    if (!hasOption(sortSelect, state.sort)) state.sort = DEFAULT_FILTERS.sort;
+
+    state.badges = state.badges.filter((badge, index, arr) => badgeValues.includes(badge) && arr.indexOf(badge) === index);
+  }
+
+  if (!Number.isInteger(state.limit) || state.limit < CONFIG.perPage) {
+    state.limit = CONFIG.perPage;
+  }
+
+  return state;
+};
+
+const applyStateToForm = (form, state) => {
+  if (!form) return;
+
+  const priceSelect = qs("[name=price]", form);
+  const ratingSelect = qs("[name=rating]", form);
+  const subSelect = qs("[name=subcategory]", form);
+  const sortSelect = qs("[name=sort]", form);
+
+  if (priceSelect) priceSelect.value = state.price;
+  if (ratingSelect) ratingSelect.value = state.rating;
+  if (subSelect) subSelect.value = state.subcategory;
+  if (sortSelect) sortSelect.value = state.sort;
+
+  const selectedBadges = new Set(state.badges);
+  qsa("[name=badge]", form).forEach((input) => {
+    input.checked = selectedBadges.has(input.value);
+  });
+};
+
+const syncUrlState = (searchTerm, filters, limit) => {
+  const params = new URLSearchParams();
+
+  if (searchTerm) params.set("q", searchTerm);
+  if (filters.price) params.set("price", filters.price);
+  if (filters.rating) params.set("rating", String(filters.rating));
+  if (filters.subcategory) params.set("subcategory", filters.subcategory);
+  if (filters.badges.length) params.set("badges", filters.badges.join(","));
+  if (filters.sort && filters.sort !== DEFAULT_FILTERS.sort) params.set("sort", filters.sort);
+  if (limit > CONFIG.perPage) params.set("limit", String(limit));
+
+  const nextQuery = params.toString();
+  const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ""}`;
+  history.replaceState(null, "", nextUrl);
 };
 
 const createCard = (product) => {
@@ -120,10 +204,11 @@ const getFilters = (form) => {
   const badgeInputs = qsa("[name=badge]:checked", form);
   return {
     range: parseRange(rangeValue),
+    price: rangeValue || "",
     rating: ratingValue ? Number(ratingValue) : 0,
     subcategory: subValue || "",
     badges: badgeInputs.map((input) => input.value),
-    sort: sortValue || "popularity",
+    sort: sortValue || DEFAULT_FILTERS.sort,
   };
 };
 
@@ -137,14 +222,18 @@ export const initCatalog = async () => {
   const loadMoreBtn = qs(CONFIG.selectors.listingLoad);
   const searchInput = qs(CONFIG.selectors.searchInput);
 
-  let limit = CONFIG.perPage;
-  let searchTerm = new URLSearchParams(window.location.search).get("q") || "";
-  if (searchInput && searchTerm) {
+  const initialState = parseStateFromUrl(form);
+  let limit = initialState.limit;
+  let searchTerm = initialState.searchTerm;
+
+  if (searchInput) {
     searchInput.value = searchTerm;
   }
 
+  applyStateToForm(form, initialState);
+
   const updateListing = () => {
-    const filters = form ? getFilters(form) : { range: null, rating: 0, subcategory: "", badges: [], sort: "popularity" };
+    const filters = form ? getFilters(form) : { ...DEFAULT_FILTERS };
     const filtered = applyFilters(products, filters, searchTerm);
     renderListing(filtered, grid, countEl, limit);
 
@@ -157,6 +246,8 @@ export const initCatalog = async () => {
     if (emptyState) {
       emptyState.hidden = filtered.length !== 0;
     }
+
+    syncUrlState(searchTerm, filters, limit);
   };
 
   if (form) {
@@ -192,6 +283,19 @@ export const initCatalog = async () => {
     addToCart(product, 1);
     updateCartCount();
     showToast(`${product.name} dodano do koszyka.`);
+  });
+
+  on(window, "popstate", () => {
+    const stateFromUrl = parseStateFromUrl(form);
+    searchTerm = stateFromUrl.searchTerm;
+    limit = stateFromUrl.limit;
+
+    if (searchInput) {
+      searchInput.value = searchTerm;
+    }
+
+    applyStateToForm(form, stateFromUrl);
+    updateListing();
   });
 
   updateListing();
