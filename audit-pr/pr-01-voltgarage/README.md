@@ -1,171 +1,151 @@
-# VOLT GARAGE — Dokumentacja projektu (PL)
+# VOLT GARAGE — dokumentacja projektu (PL)
 
 ## Przegląd projektu
-VOLT GARAGE to statyczny front-end sklepu motoryzacyjnego z wieloma podstronami, modułowym CSS/JS, dynamicznym renderowaniem katalogu produktów z `data/products.json`, trybem PWA (manifest + service worker) oraz wdrożeniem pod Netlify (`_headers`, `_redirects`).
+VOLT GARAGE to statyczny front-end e-commerce (wersja demo) zbudowany jako zestaw stron HTML z modułowym JavaScriptem i warstwą PWA (manifest + service worker). Projekt używa własnego systemu tokenów CSS i komponentów opartych o klasy semantyczne. 
 
-## Kluczowe funkcje (wyłącznie wykryte w repozytorium)
-- Wielostronicowa struktura HTML: strona główna + koszyk, checkout, kontakt, regulaminy, nowości, promocje, sklep, produkt, kolekcje.
-- Dynamiczne renderowanie produktów i filtrów po stronie klienta (`js/features/products.js`, `js/features/filters.js`, `js/services/products.js`).
-- Koszyk oparty o localStorage (`js/features/cart.js`, `js/services/storage.js`).
-- Modal demo z wymuszeniem akceptacji i pułapką focusu (`js/ui/demo-modal.js`, `js/ui/focus-trap.js`).
-- Przełącznik motywu light/dark z pamięcią preferencji (`js/ui/theme.js`).
-- Obsługa PWA: `site.webmanifest`, `sw.js`, strona offline, CTA instalacji i komunikaty offline/update (`js/ui/pwa-prompts.js`).
-- SEO techniczne: canonical, Open Graph, Twitter card, JSON-LD, `robots.txt`, `sitemap.xml`.
+## Kluczowe funkcje (wyłącznie wykryte w repo)
+- Wielostronicowa struktura: strona główna, sklep, produkt, koszyk, checkout, kontakt, strony prawne, 404 i offline.
+- Dynamiczne renderowanie produktów z `data/products.json` (listy, filtrowanie, widok szczegółów, produkty powiązane, promocje, nowości).
+- Koszyk klienta i podsumowanie checkout po stronie front-end.
+- Tryb jasny/ciemny z zapisem preferencji.
+- Modal informacyjny „demo” z focus trap.
+- PWA: `site.webmanifest`, rejestracja SW, cache HTML/assetów, strona offline, prompt instalacji i komunikaty update.
+- QA scripts: walidacja HTML, CSS, JS, linków wewnętrznych i JSON-LD.
 
-## Stos technologiczny
-- HTML5 (wielostronicowy, semantyczny).
-- CSS (architektura z partialami i tokenami, `@import` z `main.css`).
-- JavaScript ES Modules (podział na `core`, `features`, `services`, `ui`).
-- Node.js narzędziowo (lint, format, minifikacja, walidacja HTML/JSON-LD, optymalizacja obrazów).
-- Netlify (nagłówki bezpieczeństwa i reguła 404).
+## Tech stack
+- HTML5 (14 plików stron + 404/offline).
+- CSS (entry `css/main.css` + partials: `base/layout/components/themes`).
+- Vanilla JavaScript ES modules (`js/main.js` + moduły `core`, `ui`, `features`, `services`).
+- Node.js tooling w `package.json` (PostCSS/cssnano, Terser, ESLint, Stylelint, html-validate, Prettier, custom QA scripts).
 
 ## Struktura projektu (skrót)
-- `index.html`, `offline.html`, `404.html`
-- `pages/*.html`
-- `css/main.css` + `css/partials/{base,layout,components,themes}.css`
-- `js/{core,features,services,ui}/**/*.js` + `js/main.js`
-- `data/products.json`
-- `site.webmanifest`, `sw.js`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`
-- `tools/image-optimizer/*`, `scripts/validate-jsonld.js`
+- `index.html`, `404.html`, `offline.html`.
+- `pages/*.html` — podstrony.
+- `css/main.css` + `css/partials/*.css`.
+- `js/main.js` + `js/{core,ui,features,services}/*.js`.
+- `data/products.json`.
+- `sw.js`, `site.webmanifest`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`.
+- `scripts/*.js` — walidatory QA.
 
 ## Setup i uruchomienie
-1. `npm install`
-2. QA i walidacja:
-   - `npm run qa`
-   - `npm run qa:smoke` (baseline Lighthouse smoke-check, tryb report-only)
-   - `npm run validate:jsonld`
-3. Build assetów (minifikacja CSS/JS):
-   - `npm run build`
-4. Lokalny podgląd: statyczny serwer (np. `npx serve .`) lub środowisko hostingu statycznego.
+Wymagania: Node.js + npm.
 
-## Notatki build/deployment
-- Deployment target jest zgodny z Netlify (`_headers`, `_redirects`).
-- Service worker rejestruje się z root scope (`/sw.js`) i obsługuje fallback offline.
-- Nagłówki CSP dopuszczają inline script/style (potrzebne przy obecnym preloadzie motywu i stylach inline-free fallbackach).
+```bash
+npm install
+npm run qa
+```
 
-## QA smoke-check (Lighthouse baseline)
-- Skrypt: `npm run qa:smoke`
-- Domyślne strony bazowe: `/`, `/pages/shop.html`, `/pages/product.html`
-- Domyślnie działa w trybie **report-only** (nie blokuje pracy przy niespełnionych progach).
-- Tryb egzekwowania pod CI jest dostępny osobno: `npm run qa:smoke:enforce`
-- Progi są celowo konserwatywne i konfigurowalne przez zmienne środowiskowe:
-  - `SMOKE_THRESHOLD_PERFORMANCE`
-  - `SMOKE_THRESHOLD_ACCESSIBILITY`
-  - `SMOKE_THRESHOLD_BEST_PRACTICES`
-  - `SMOKE_THRESHOLD_SEO`
+Tryby przydatne lokalnie:
+- `npm run build` — minifikacja CSS/JS.
+- `npm run qa:links` — sprawdzenie linków HTML.
+- `npm run validate:jsonld` — walidacja bloków JSON-LD.
 
-## Notatki dostępności
-- Skip link jest obecny na stronach.
-- Widoczne style `:focus-visible` i mechanizm wykrywania nawigacji klawiaturą.
-- Dropdowny i menu mobilne mają atrybuty `aria-expanded` i obsługę klawiszy (Escape, strzałki).
-- Modal demo używa `role="dialog"`, `aria-modal`, focus trap.
-- Wykryto jednak zależność od JS dla części nawigacji legal links w modalu (w wielu podstronach startowo `href="#"`).
+## Build / deployment notes
+- Strategia hostingu jest przygotowana pod Netlify (`_headers`, `_redirects`).
+- Cache-control dla assetów ustawione na długie TTL + immutable.
+- Service worker rejestruje się z `/sw.js` i obsługuje fallback offline.
 
-## Notatki SEO
-- Każda główna podstrona ma meta description, canonical i Open Graph.
-- `og:url` jest zgodny z canonical (na analizowanych stronach).
-- Obecne JSON-LD (Organization + WebSite; na stronie produktu dodatkowo Product i BreadcrumbList przez JS).
-- Obecne `robots.txt` oraz `sitemap.xml`.
+## Accessibility notes
+- Obecny skip link i globalny styl `:focus-visible`.
+- Menu i dropdowny posiadają obsługę klawiatury (`Escape`, `ArrowDown`, `ArrowUp`, fokus).
+- Modal demo ma `role="dialog"`, `aria-modal="true"` i focus trap.
+- Obsłużono `prefers-reduced-motion` po stronie JS i CSS.
+- Część widoków produktowych opiera się na JS (fallback tekstowy jest obecny, ale bez pełnej funkcjonalności katalogu).
 
-## Notatki wydajności
-- Obrazy produktowe i hero używają `<picture>` (AVIF/WebP/JPG fallback) oraz `loading="lazy"` poza kluczowym hero.
-- Fonty lokalne WOFF2 + `font-display: swap`; preload głównej czcionki display.
-- Service worker stosuje cache dla HTML i assetów.
-- Wykryto brak `width`/`height` dla części `<img>` (m.in. footer/header logos na wybranych stronach), co zwiększa ryzyko CLS.
+## SEO notes
+- Każda główna podstrona zawiera: meta description, canonical, OG/Twitter, JSON-LD.
+- `robots.txt` i `sitemap.xml` są obecne i spójne względem domeny kanonicznej.
+- OG image wskazuje na istniejący plik `assets/images/og/og-1200x630.jpg`.
 
-## Roadmapa (proponowana)
-- Uzupełnić statyczne fallbacki `href` w modalu na wszystkich stronach (no-JS robustness).
-- Uzupełnić brakujące `width`/`height` dla wszystkich `<img>`.
-- Dodać no-JS fallback treści produktów/list (np. serwerowy snapshot lub statyczna lista bazowa).
-- Rozdzielić część inline CSP zależności (docelowo ograniczyć `'unsafe-inline'`).
-- Dodać automatyczne testy linków i regresji a11y w CI.
+## Performance notes
+- Obecne obrazy AVIF/WebP/JPG przez `<picture>` i lazy loading (z wyjątkiem hero eager/high priority).
+- Fonty lokalne `woff2` z `font-display: swap`.
+- PWA cache warstwowe (HTML i assets) + trim cache.
+- CSS entry korzysta z `@import`, co może opóźniać krytyczny render na słabszych warunkach sieciowych.
+
+## Roadmap (na bazie audytu)
+1. Wzmocnić baseline no-JS (np. SSR listy produktów albo statyczny fallback katalogu).
+2. Ujednolicić atrybuty `width/height` dla wszystkich obrazów (w tym 404/offline/footer logo).
+3. Ograniczyć inline scripts przez nonce/hash CSP i eliminację `unsafe-inline`.
+4. Dodać CI dla `npm run qa` i smoke checks.
+5. Rozważyć bundling CSS bez `@import` chain.
 
 ## Licencja
-Repozytorium zawiera plik `LICENSE` w katalogu nadrzędnym `kp-code-playground`.
+Nie wykryto pliku licencji w repozytorium.
 
 ---
 
-# VOLT GARAGE — Project documentation (EN)
+# VOLT GARAGE — project documentation (EN)
 
 ## Project overview
-VOLT GARAGE is a static front-end storefront with multiple pages, modular CSS/JS architecture, client-side product rendering from `data/products.json`, PWA capabilities (manifest + service worker), and Netlify-oriented deployment files (`_headers`, `_redirects`).
+VOLT GARAGE is a static front-end e-commerce demo built as multi-page HTML with modular JavaScript and PWA capabilities (manifest + service worker). It uses a custom token-based CSS system and component-oriented styling.
 
-## Key features (repository-evidenced only)
-- Multi-page HTML structure: home, cart, checkout, contact, legal pages, new arrivals, promotions, shop, product details, collections.
-- Client-side product catalog rendering and filtering (`js/features/products.js`, `js/features/filters.js`, `js/services/products.js`).
-- LocalStorage-based cart (`js/features/cart.js`, `js/services/storage.js`).
-- Demo gate modal with acceptance flow and keyboard focus trap (`js/ui/demo-modal.js`, `js/ui/focus-trap.js`).
-- Light/dark theme toggle with persisted preference (`js/ui/theme.js`).
-- PWA support: `site.webmanifest`, `sw.js`, offline page, install/update/offline prompts (`js/ui/pwa-prompts.js`).
-- Technical SEO foundation: canonical, OG/Twitter tags, JSON-LD, robots, sitemap.
+## Key features (repository-confirmed)
+- Multi-page website: home, shop, product, cart, checkout, contact, legal pages, 404, and offline page.
+- Dynamic product rendering from `data/products.json` (listing, filtering, detail view, related, sale, new arrivals).
+- Client-side cart and checkout summary.
+- Light/dark theme toggle with persisted preference.
+- Demo modal with focus trap.
+- PWA setup: `site.webmanifest`, SW registration, HTML/assets caching, offline fallback, install/update prompts.
+- QA automation scripts: HTML/CSS/JS checks, internal link validation, JSON-LD validation.
 
 ## Tech stack
-- HTML5 (semantic multi-page structure).
-- CSS (token-based partials imported via `css/main.css`).
-- JavaScript ES Modules (`core`, `features`, `services`, `ui`).
-- Node.js tooling for linting, formatting, minification, HTML/JSON-LD validation, and image optimization.
-- Netlify deployment headers/redirect behavior.
+- HTML5 (14 page-level documents + 404/offline).
+- CSS (`css/main.css` + partials: base/layout/components/themes).
+- Vanilla JavaScript ES modules (`js/main.js` + `core/ui/features/services`).
+- Node tooling (`package.json`): PostCSS/cssnano, Terser, ESLint, Stylelint, html-validate, Prettier, custom QA scripts.
 
 ## Structure overview
-- Root pages: `index.html`, `offline.html`, `404.html`
-- Content pages: `pages/*.html`
-- Styles: `css/main.css` + partials
-- Scripts: `js/main.js` + modular folders
-- Data source: `data/products.json`
-- PWA/deploy: `site.webmanifest`, `sw.js`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`
+- `index.html`, `404.html`, `offline.html`.
+- `pages/*.html`.
+- `css/main.css` + `css/partials/*.css`.
+- `js/main.js` + `js/{core,ui,features,services}/*.js`.
+- `data/products.json`.
+- `sw.js`, `site.webmanifest`, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`.
+- `scripts/*.js` for QA automation.
 
 ## Setup & run
-1. `npm install`
-2. Quality checks:
-   - `npm run qa`
-   - `npm run qa:smoke` (baseline Lighthouse smoke-check, report-only mode)
-   - `npm run validate:jsonld`
-3. Asset build:
-   - `npm run build`
-4. Serve statically (e.g., `npx serve .`) or deploy to static hosting.
+Requirements: Node.js + npm.
+
+```bash
+npm install
+npm run qa
+```
+
+Useful local commands:
+- `npm run build` — minifies CSS/JS.
+- `npm run qa:links` — validates internal links.
+- `npm run validate:jsonld` — validates JSON-LD blocks.
 
 ## Build/deployment notes
-- Netlify-specific config is included (`_headers`, `_redirects`).
-- Service worker is registered at root (`/sw.js`) and provides offline fallback.
-- Current CSP allows inline script/style due to current implementation choices.
-
-## QA smoke-check (Lighthouse baseline)
-- Script: `npm run qa:smoke`
-- Default baseline pages: `/`, `/pages/shop.html`, `/pages/product.html`
-- It runs in **report-only** mode by default (non-blocking when thresholds are missed).
-- Optional CI enforcement is available separately: `npm run qa:smoke:enforce`
-- Thresholds are intentionally conservative and configurable via environment variables:
-  - `SMOKE_THRESHOLD_PERFORMANCE`
-  - `SMOKE_THRESHOLD_ACCESSIBILITY`
-  - `SMOKE_THRESHOLD_BEST_PRACTICES`
-  - `SMOKE_THRESHOLD_SEO`
+- Hosting configuration aligns with Netlify conventions (`_headers`, `_redirects`).
+- Asset caching policy uses long-lived immutable cache headers.
+- Service worker registers at `/sw.js` and provides offline fallback.
 
 ## Accessibility notes
-- Skip links are implemented.
-- Focus-visible styling and keyboard interaction handling are present.
-- Menu/dropdown controls expose ARIA state and keyboard support.
-- Demo modal includes dialog semantics and focus trapping.
-- Some legal modal links depend on JS to replace initial `href="#"`, reducing no-JS resilience.
+- Skip link and global `:focus-visible` styling are implemented.
+- Navigation/dropdowns provide keyboard behavior (`Escape`, arrow navigation, focus management).
+- Demo modal includes `role="dialog"`, `aria-modal="true"`, and focus trapping.
+- `prefers-reduced-motion` is handled in both JS and CSS.
+- Product-heavy views depend on JS (fallback text exists but full catalog UX is JS-driven).
 
 ## SEO notes
-- Main pages include description, canonical, OG/Twitter metadata.
-- `og:url` and canonical align on reviewed pages.
-- JSON-LD is present and validated by project script.
-- `robots.txt` and `sitemap.xml` are present.
+- Main pages include meta description, canonical, OG/Twitter metadata, and JSON-LD.
+- `robots.txt` and `sitemap.xml` are present and aligned with the canonical domain.
+- OG image points to an existing file (`assets/images/og/og-1200x630.jpg`).
 
 ## Performance notes
-- Responsive images use AVIF/WebP fallbacks via `<picture>`.
-- Most content images are lazy-loaded; hero uses eager/high priority.
-- Local WOFF2 fonts with `font-display: swap` and preload for display font.
-- Service worker caches HTML/assets.
-- Some `<img>` elements still miss explicit `width`/`height`, which may impact CLS.
+- Uses AVIF/WebP/JPG `<picture>` patterns and lazy-loading (hero uses eager/high priority by design).
+- Local `woff2` fonts with `font-display: swap`.
+- Layered SW caching for HTML/assets with cache trimming.
+- CSS entry relies on `@import`, which can add render-path overhead on slower networks.
 
 ## Roadmap
-- Add static legal-link fallbacks in modal markup for no-JS mode.
-- Add missing intrinsic dimensions to all `<img>` elements.
-- Improve no-JS fallback for product listing pages.
-- Harden CSP to reduce inline allowances.
-- Add automated link + accessibility regression checks in CI.
+1. Improve no-JS baseline for product listing flows.
+2. Standardize `width`/`height` attributes for all images.
+3. Tighten CSP by reducing reliance on inline scripts.
+4. Add CI enforcement for QA scripts.
+5. Consider CSS bundling strategy without `@import` chain.
 
 ## License
-A `LICENSE` file exists at the parent repository root (`kp-code-playground`).
+No license file was detected in the repository.

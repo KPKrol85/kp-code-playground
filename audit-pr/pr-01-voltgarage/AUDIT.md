@@ -1,66 +1,82 @@
-# VOLT GARAGE — Audyt Senior Front-End
+# AUDIT — VOLT GARAGE (static repository audit)
 
-## 1) Podsumowanie wykonawcze
-Projekt prezentuje dojrzałą bazę front-endową: modularny JS/CSS, semantyczne HTML, dobre pokrycie metadanych SEO oraz poprawnie skonfigurowane pliki deploy/PWA. Najważniejsze ryzyka dotyczą odporności bez JavaScript oraz stabilności layoutu (brak wymiarów części obrazów). Nie stwierdzono krytycznej awarii runtime w statycznej analizie.
+## 1. Executive summary
+Audit wykonano wyłącznie na podstawie implementacji w katalogu `audit-pr/pr-01-voltgarage`, bez założeń poza kodem. Projekt jest dobrze uporządkowany, ma modularny JS, przewidziane QA i solidne podstawy SEO/PWA. Największe ryzyka dotyczą baseline no-JS dla katalogu produktów, polityki CSP (`unsafe-inline`) oraz drobnych niespójności semantyczno-wydajnościowych (np. brak wymiarów części obrazów w 404).  
 
-## 2) P0 — Ryzyka krytyczne
-Brak wykrytych realnych P0 na podstawie statycznej analizy repozytorium.
+Zakres potwierdzony repo:
+- MPA HTML + moduły ES (`js/main.js`). Evidence: `js/main.js:1-214`.
+- PWA stack (manifest + SW + offline). Evidence: `site.webmanifest:1-75`, `sw.js:1-120`, `offline.html:1-456`.
+- QA automations (links + JSON-LD) i działające lokalnie walidacje. Evidence: `scripts/validate-internal-links.js:1-159`, `scripts/validate-jsonld.js:1-199`.
 
-## 3) Mocne strony
-- Spójna architektura modułów JS (`core`/`features`/`services`/`ui`) i centralny bootstrap w `js/main.js`. (dowód: `js/main.js:1-207`)
-- Dobra baza a11y: skip link, focus-visible, focus trap, obsługa klawiatury dla menu/dropdown. (dowód: `index.html:126`, `css/partials/base.css:62-81`, `js/ui/focus-trap.js:17-54`, `js/ui/header.js:129-163`)
-- Obsługa prefers-reduced-motion po stronie CSS i JS reveal. (dowód: `css/partials/base.css:101-126`, `js/ui/reveal.js:5-8`)
-- Pokrycie SEO/PWA/deploy: canonical + OG + JSON-LD + robots + sitemap + manifest + SW + `_headers`. (dowód: `index.html:29-91`, `robots.txt:1-4`, `sitemap.xml:1-48`, `site.webmanifest:1-75`, `sw.js:1-120`, `_headers:1-18`)
-- Walidacja HTML i JSON-LD już zautomatyzowana przez skrypty npm. (dowód: `package.json:30-37`, `scripts/validate-jsonld.js`)
+---
 
-## 4) P1 — Usprawnienia warte wykonania w następnej kolejności (dokładnie 5)
-1. **Linki prawne bez JS degradują się do `#` na większości podstron**  
-   Linki modala demo są na sztywno wpisane jako `href="#"` w HTML i naprawiane dopiero przez JS podczas działania; przy wyłączonym JS są martwymi linkami. (dowód: `pages/contact.html:114-119`, `pages/shop.html:95-100`, `js/ui/demo-modal.js:46-48`)
+## 2. P0 — Critical risks
+Brak potwierdzonych P0 na podstawie statycznej analizy repo.
 
-2. **Część obrazów nie ma wymiarów natywnych (`width`/`height`)**  
-   Wiele logo w stopce/nagłówku na wybranych stronach nie zawiera atrybutów width/height, co zwiększa ryzyko CLS. (dowód: `offline.html:112`, `offline.html:249`, `pages/cart.html:257-261`, `pages/checkout.html:313-318`, `pages/shop.html:309-314`)
+---
 
-3. **Formularze są zawsze przechwytywane po stronie klienta, co osłabia progressive enhancement**  
-   `initForms()` blokuje domyślne wysłanie przez `event.preventDefault()` dla formularzy kontakt/checkout, więc ścieżka wysyłki fallback przy braku JS/sieci nie jest używana. (dowód: `js/main.js:121-123`, `pages/contact.html:287-295`, `pages/checkout.html:236-244`)
+## 3. Strengths
+1. **Modularna architektura front-end** (core/ui/features/services) i centralny bootstrap aplikacji. Evidence: `js/main.js:1-214`.
+2. **Dobra obsługa dostępności w nawigacji i modalu** (aria-expanded, focus trap, klawiatura, skip-link). Evidence: `index.html:138-205`, `js/ui/header.js:75-179`, `js/ui/focus-trap.js:1-54`, `js/ui/demo-modal.js:26-77`.
+3. **PWA i offline readiness** (cache versioning, offline fallback, update UX). Evidence: `sw.js:1-120`, `js/ui/pwa-prompts.js:67-147`, `offline.html:1-456`.
+4. **SEO fundamentals obecne** (canonical, OG/Twitter, JSON-LD, robots, sitemap). Evidence: `index.html:29-103`, `robots.txt:1-4`, `sitemap.xml:1-63`.
+5. **Token-driven theming i font strategy** (`font-display: swap`, light/dark token sets). Evidence: `css/partials/themes.css:2-173`, `js/ui/theme.js:33-60`.
+6. **Wbudowane kontrole jakości** i możliwość egzekwowania spójności linków/JSON-LD. Evidence: `package.json:30-40`, `scripts/validate-internal-links.js:134-153`, `scripts/validate-jsonld.js:161-193`.
 
-4. **Dane kontaktowe nie są klikalne (`mailto:` / `tel:`) w hero na stronie kontaktowej**  
-   E-mail i telefon kontaktowy są zwykłymi spanami tekstowymi, co obniża użyteczność na mobile i w scenariuszach asystujących. (dowód: `pages/contact.html:273-275`)
+---
 
-5. **Pozostałość TODO w produkcyjnej stronie offline**  
-   W `offline.html` pozostał komentarz TODO inline, co wskazuje na zaległość utrzymaniową. (dowód: `offline.html:56`)
+## 4. P1 — Improvements worth doing next (exactly 5)
+1. **No-JS baseline katalogu jest ograniczony funkcjonalnie** — listy produktów w kluczowych widokach są ładowane dynamicznie, a bez JS pozostaje tylko komunikat fallback (brak realnego katalogu do przeglądania). Evidence: `index.html:342-344`, `pages/shop.html:299-301`, `js/features/products.js:129-160`.  
+2. **CSP dopuszcza `unsafe-inline` dla script/style** — to osłabia ochronę XSS i utrudnia dalsze hardening/security reviews. Evidence: `_headers:6`.  
+3. **Niespójne width/height obrazów między stronami** — np. w `404.html` logo w header/footer nie ma wymiarów, podczas gdy w głównych stronach zwykle są obecne; może to zwiększać ryzyko CLS. Evidence: `404.html:111`, `404.html:249`, `index.html:146-147`, `index.html:291-292`.  
+4. **CSS entry oparty o `@import` chain** — może wydłużać render path względem pojedynczego zbundlowanego arkusza. Evidence: `css/main.css:2-5`.  
+5. **Konfiguracja `_redirects` jest minimalna (tylko 404)** — brak deklaracji dla potencjalnych wariantów URL (np. slash/no-slash) nie jest błędem runtime, ale ogranicza kontrolę routingową i spójność canonical behavior. Evidence: `_redirects:1`.
 
-## 5) P2 — Drobne dopracowania
-- Ujednolicić sposób oznaczania `aria-current` (część statycznie w HTML breadcrumbs, część dynamicznie w JS dla nav/footer) dla łatwiejszej konserwacji.
-- Rozważyć ograniczenie globalnego `a { text-decoration: none; }` i przywracanie podkreśleń w treściach legal/content dla czytelności.
-- Rozważyć dedykowany fallback tekstowy dla pustych kontenerów produktów przed renderem JS na stronach listingu.
+---
 
-## 6) Usprawnienia na przyszłość (dokładnie 5)
-1. Dodać test linków wewnętrznych (CI), uwzględniający ścieżki root-relative.
-2. Dodać automatyczny smoke-check Lighthouse/Axe dla kluczowych podstron.
-3. Rozszerzyć walidację JSON-LD o asercje typu per-template (Home/Product/Legal).
-4. Wprowadzić strategię preconnect/preload dla kluczowych assetów obrazów hero per route.
-5. Przygotować wersję SSR/prerender katalogu produktów dla pełniejszego baseline no-JS i odporności SEO crawl.
+## 5. P2 — Minor refinements
+1. W `products.js` zostały komentarze techniczne `<!-- CHANGED: img -> picture -->` wewnątrz template strings; warto oczyścić dla czytelności kodu produkcyjnego. Evidence: `js/features/products.js:53-54`, `js/features/products.js:73-74`.
+2. Brak meta robots per-page (jest tylko `robots.txt`), co jest akceptowalne, ale można dodać jawne polityki dla stron typu 404/offline. Evidence: `404.html:1-85`, `offline.html:1-85`, `robots.txt:1-4`.
+3. `SearchAction` w JSON-LD wskazuje endpoint `/search`, którego nie wykryto jako wdrożonego widoku; nie jest blocker, ale semantyka może być myląca. Evidence: `offline.html:78-82`, `404.html:78-82`.
 
-## 7) Lista zgodności
-- **Nagłówki poprawne:** **PASS** (skrypt walidacji HTML przechodzi). (dowód: `package.json:32`, polecenie `npm run qa:html`)
-- **Brak niedziałających linków (z wyłączeniem zamierzonej strategii minifikacji):** **PASS** dla lokalnych `href` sprawdzonych skryptem statycznym; ryzyko degradacji no-JS w modalu opisane w P1. (dowód: `pages/*.html`, polecenie custom Node link check)
-- **Brak console.log:** **PASS** (`console.log` nie wykryto). (dowód: wyszukiwanie `rg -n "console\.log"`)
-- **Atrybuty ARIA poprawne:** **PASS (statycznie)** — użycie `aria-expanded`, `aria-controls`, `aria-modal`, `aria-current` jest spójne z implementacją JS; pełna walidacja runtime wymaga testu przeglądarkowego. (dowód: `index.html:100-103`, `index.html:147-149`, `js/ui/header.js:112-122`)
-- **Obrazy mają width/height:** **FAIL** (patrz P1.2). (dowód: `offline.html:112`, `pages/checkout.html:313-318`)
-- **Baseline no-JS jest używalny:** **FAIL (częściowa degradacja)** — martwe linki legal w modalu bez JS + dynamiczne listy produktów bez statycznego fallbacku danych. (dowód: `pages/shop.html:299`, `pages/contact.html:114-119`, `js/ui/demo-modal.js:46-48`)
-- **Sitemap obecny, jeśli wymagany:** **PASS** (`sitemap.xml` obecny i wskazany w robots). (dowód: `sitemap.xml:1-48`, `robots.txt:4`)
-- **Robots obecny:** **PASS** (`robots.txt` obecny). (dowód: `robots.txt:1-4`)
-- **Istnieje obraz OG:** **PASS** (ścieżka do obrazu OG istnieje w repozytorium). (dowód: `index.html:37-40`, plik `assets/images/og/og-1200x630.jpg`)
-- **JSON-LD poprawny:** **PASS** (skrypt projektu raportuje sukces dla 14 plików HTML). (dowód: `package.json:37`, polecenie `npm run validate:jsonld`)
+---
 
-## 8) Ocena architektury (0–10)
-- **Spójność BEM:** 7.8/10 (nazewnictwo komponentowe głównie spójne, miejscami miks utility/component i wariantów).
-- **Użycie tokenów:** 8.8/10 (dobry system tokenów typografii, spacingu, kolorów, radius, shadow).
-- **Dostępność:** 7.9/10 (solidna baza keyboard/focus/reduced motion, ale luki no-JS i brak pełnych dimension attrs).
-- **Wydajność:** 8.3/10 (picture AVIF/WebP, lazy loading, lokalne fonty, SW; do poprawy edge-case’y CLS).
-- **Utrzymywalność:** 8.4/10 (modułowy podział, skrypty QA, czytelna separacja warstw).
+## 6. Future enhancements (exactly 5)
+1. Dodać statyczny SSR-like fallback listy produktów dla `shop` i `featured`, aby baseline bez JS był użyteczny.
+2. Wprowadzić CSP nonce/hash i ograniczyć inline scripts (szczególnie theme preload).
+3. Dodać CI pipeline uruchamiający `npm run qa`, `npm run qa:links`, `npm run validate:jsonld` na każdym PR.
+4. Rozważyć budowanie jednego pliku CSS bez runtime `@import`.
+5. Uzupełnić monitoring jakości (np. automatyczny raport Lighthouse smoke z trendem metryk).
 
-**Końcowa ocena architektury: 8.2/10**
+---
 
-## 9) Ocena seniorska (1–10)
-**8.3/10** — Repozytorium wygląda jak produkcyjny front-end z dobrą dyscypliną struktury i narzędzi QA, ale wymaga domknięcia kilku ważnych kwestii progressive enhancement/no-JS i stabilności layoutu, aby osiągnąć wyższy poziom jakości operacyjnej.
+## 7. Compliance checklist
+- **Headings valid:** **PASS** — obecna logiczna hierarchia `h1` + sekcyjne `h2/h3` na stronach głównych i podstronach. Evidence: `index.html:301-397`, `pages/contact.html:261-299`.
+- **No broken links (excluding intentional minification strategy):** **PASS** — walidator linków przechodzi dla 14 plików HTML. Evidence: `scripts/validate-internal-links.js:134-153` + wynik uruchomienia `node scripts/validate-internal-links.js`.
+- **No console.log:** **PASS** — nie wykryto `console.log` w źródłach; występuje `console.error` (observability). Evidence: wyszukiwanie `rg -n "console\.log"` w projekcie (brak trafień), `js/main.js:171-204`.
+- **Aria attributes valid:** **PASS** (statycznie) — poprawne użycie `aria-expanded`, `aria-controls`, `aria-modal`, `aria-current` ustawiane także runtime. Evidence: `index.html:156-253`, `js/ui/header.js:33-131`, `js/ui/demo-modal.js:26-70`.
+- **Images have width/height:** **FAIL** — część obrazów nie ma jawnych atrybutów wymiarów (np. 404 logo). Evidence: `404.html:111`, `404.html:249`.
+- **No-JS baseline usable:** **FAIL (partial baseline only)** — w kluczowych listingach produktów bez JS pozostaje komunikat, nie pełna treść katalogu. Evidence: `index.html:342-344`, `pages/shop.html:299-301`, `js/features/products.js:129-160`.
+- **Sitemap present if expected:** **PASS** — sitemap istnieje i obejmuje główne URL. Evidence: `sitemap.xml:1-63`.
+- **Robots present:** **PASS** — `robots.txt` obecny. Evidence: `robots.txt:1-4`.
+- **OG image exists:** **PASS** — wskazany asset istnieje i jest referencjonowany w meta OG. Evidence: `index.html:38-40`, `assets/images/og/og-1200x630.jpg`.
+- **JSON-LD valid:** **PASS** — skrypt walidacyjny przechodzi dla 14 HTML + asercje template-specific. Evidence: `scripts/validate-jsonld.js:161-193` + wynik `node scripts/validate-jsonld.js`.
+
+---
+
+## 8. Architecture score (0–10)
+**Overall: 8.1 / 10**
+
+Breakdown:
+- **BEM consistency: 8.2/10** — klasy komponentowe i modyfikatory są stosowane spójnie (`card`, `card--skeleton`, `footer-col--newsletter`). Evidence: `css/partials/components.css:422-423`, `pages/contact.html:421-422`.
+- **Token usage: 9.0/10** — szerokie użycie custom properties dla typografii, spacingu, kolorów i theme variants. Evidence: `css/partials/themes.css:45-173`.
+- **Accessibility: 8.0/10** — dobre fundamenty (focus, keyboard nav, reduced motion, aria), ale no-JS baseline katalogu ograniczony. Evidence: `css/partials/base.css:62-126`, `js/ui/header.js:138-172`, `js/ui/reveal.js:5-8`.
+- **Performance: 7.8/10** — nowoczesne formaty obrazów i lazy loading plus SW cache; do poprawy m.in. `@import` chain i pełna spójność wymiarów obrazów. Evidence: `index.html:265-296`, `js/features/products.js:24-48`, `css/main.css:2-5`, `404.html:111`.
+- **Maintainability: 7.5/10** — modułowa struktura i QA scripts są mocne; nadal warto domknąć CI enforcement i security hardening CSP. Evidence: `package.json:30-40`, `_headers:6`.
+
+---
+
+## 9. Senior rating (1–10)
+**8.0 / 10**
+
+Techniczne uzasadnienie: repo przedstawia dojrzałą organizację kodu front-end z realnym naciskiem na jakość (linting/walidacje), PWA i dostępność runtime. Brak P0, ale kilka istotnych elementów P1 (no-JS baseline produktu, CSP `unsafe-inline`, drobne niespójności CLS/caching strategy) obniża ocenę do poziomu „production-near, requires targeted hardening”.
