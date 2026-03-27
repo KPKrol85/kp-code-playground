@@ -2,6 +2,4 @@
 
 package.json not detected in project
 
-## Notes
-- Brak skryptów npm do opisania, ponieważ w katalogu projektu nie ma pliku `package.json`.
-- Uruchamianie lokalne odbywa się przez serwer statyczny (np. `python -m http.server 8000`).
+Because `package.json` is not present in `audit-pr/pr-02-outlandgear`, there are no npm scripts to document (name/command/purpose/when to use).
