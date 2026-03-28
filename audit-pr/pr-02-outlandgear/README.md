@@ -29,12 +29,36 @@ Outland Gear to statyczny serwis front-end typu MPA (multi-page application) opa
 - SEO/deploy static: `robots.txt`, `sitemap.xml`.
 
 ### Setup i uruchomienie
-`package.json` nie występuje w projekcie, więc nie ma skryptów npm.
+`package.json` jest obecny dla workflow obrazów (`images:optimize`, `images:clean`).
 
 Przykładowe uruchomienie lokalne:
 1. `cd audit-pr/pr-02-outlandgear`
 2. `python -m http.server 8000`
 3. Otwórz `http://localhost:8000/index.html`
+
+### Image assets audit (current state)
+- Current image folder in use: `assets/svg`.
+- Current file types in use by the pages: SVG only.
+- Current production-facing assets: SVG files referenced directly in HTML metadata and UI (`logo`, `hero`, `banner`, product placeholders, favicon, social share placeholder).
+- Editable/source raster assets are not standardized yet in the current tree.
+
+### Image pipeline (source -> production)
+A lightweight Node workflow is now available for raster images:
+- Source of truth (editable raster inputs): `assets/img-src/`
+- Production output consumed by the site: `assets/img/`
+- Folder structure is preserved from source to output.
+- Raster inputs (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`) generate deterministic outputs:
+  - optimized original-family output (same extension)
+  - `.webp`
+  - `.avif`
+- SVG files are intentionally skipped by this raster pipeline.
+
+Commands:
+1. `npm install`
+2. `npm run images:optimize` (incremental generation)
+3. `npm run images:clean` (rebuild `assets/img/` from scratch)
+
+Note: existing HTML references currently point to `assets/svg/` and remain unchanged to avoid breaking the current site.
 
 ### Build / deployment notes
 - Nie wykryto konfiguracji bundlera/frameworka.
@@ -105,12 +129,36 @@ Outland Gear is a static multi-page front-end site built with HTML, CSS, and Jav
 - SEO/static hosting files: `robots.txt`, `sitemap.xml`.
 
 ### Setup & run
-`package.json` is not present, so npm scripts are unavailable.
+`package.json` is now present for the image workflow (`images:optimize`, `images:clean`).
 
 Example local run:
 1. `cd audit-pr/pr-02-outlandgear`
 2. `python -m http.server 8000`
 3. Open `http://localhost:8000/index.html`
+
+### Image assets audit (current state)
+- Current image folder in use: `assets/svg`.
+- Current file types used by pages: SVG only.
+- Current production-facing assets: SVG files referenced directly in metadata and UI (`logo`, `hero`, `banner`, product placeholders, favicon, social share placeholder).
+- Editable/source raster assets are not yet standardized in the current tree.
+
+### Image pipeline (source -> production)
+A lightweight Node workflow is now available for raster images:
+- Source-of-truth editable raster inputs: `assets/img-src/`
+- Final production output consumed by the site: `assets/img/`
+- Source folder structure is preserved in output.
+- Raster inputs (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`) generate deterministic outputs:
+  - optimized original-family output (same extension)
+  - `.webp`
+  - `.avif`
+- SVG files are intentionally skipped by this raster pipeline.
+
+Commands:
+1. `npm install`
+2. `npm run images:optimize` (incremental generation)
+3. `npm run images:clean` (rebuild `assets/img/` from scratch)
+
+Note: existing HTML references currently point to `assets/svg/` and were intentionally left unchanged for stability.
 
 ### Build / deployment notes
 - No bundler/framework configuration detected.

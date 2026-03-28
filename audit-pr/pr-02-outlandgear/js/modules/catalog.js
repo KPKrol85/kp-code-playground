@@ -3,7 +3,7 @@ import { qs, qsa, on, delegate } from "./dom.js";
 import { debounce, formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
-import { loadNormalizedProducts, findProductById } from "./product-data.js";
+import { createFallbackNotice } from "./fallback.js";
 
 const parseRange = (value) => {
   if (!value) return null;
@@ -109,14 +109,14 @@ const createCard = (product) => {
   const media = document.createElement("div");
   media.className = "product-card__media";
   const img = document.createElement("img");
-  img.src = product.images[0];
-  img.alt = product.name;
+  img.src = product.images?.[0] || "";
+  img.alt = product.name || "";
   img.loading = "lazy";
   img.width = 320;
   img.height = 220;
   media.appendChild(img);
 
-  if (product.badges && product.badges.length) {
+  if (Array.isArray(product.badges) && product.badges.length) {
     const badge = document.createElement("span");
     const badgeKey = product.badges[0].toLowerCase();
     badge.className = `badge product-card__badge badge--${badgeKey}`;
@@ -125,9 +125,10 @@ const createCard = (product) => {
   }
 
   const body = document.createElement("div");
+  body.className = "product-card__content";
   const title = document.createElement("h3");
   title.className = "product-card__title";
-  title.textContent = product.name;
+  title.textContent = product.name || "";
 
   const meta = document.createElement("div");
   meta.className = "product-card__meta";
@@ -178,8 +179,12 @@ const applyFilters = (products, filters, searchTerm) => {
   const term = searchTerm?.toLowerCase() ?? "";
   return products
     .filter((product) => {
+      const badges = Array.isArray(product.badges) ? product.badges : [];
+      const name = product.name || "";
+      const shortDescription = product.shortDescription || "";
+
       if (term) {
-        const haystack = `${product.name} ${product.shortDescription} ${product.badges.join(" ")}`.toLowerCase();
+        const haystack = `${name} ${shortDescription} ${badges.join(" ")}`.toLowerCase();
         if (!haystack.includes(term)) return false;
       }
       if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
@@ -188,7 +193,7 @@ const applyFilters = (products, filters, searchTerm) => {
         if (product.price < filters.range.min || product.price > filters.range.max) return false;
       }
       if (filters.badges.length) {
-        const hasBadge = filters.badges.some((badge) => product.badges.includes(badge));
+        const hasBadge = filters.badges.some((badge) => badges.includes(badge));
         if (!hasBadge) return false;
       }
       return true;
@@ -212,15 +217,49 @@ const getFilters = (form) => {
   };
 };
 
+
+const renderCatalogLoadError = (grid, countEl, loadMoreBtn) => {
+  if (!grid) return;
+  grid.innerHTML = "";
+  const fallback = createFallbackNotice({
+    message: "Nie udało się załadować listy produktów. Spróbuj ponownie.",
+    actionLabel: "Spróbuj ponownie",
+    onAction: () => initCatalog(),
+  });
+  grid.appendChild(fallback);
+
+  if (countEl) {
+    countEl.textContent = "0 produktów";
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.hidden = true;
+    loadMoreBtn.setAttribute("aria-hidden", "true");
+  }
+
+  const emptyState = qs("[data-empty-state]");
+  if (emptyState) {
+    emptyState.hidden = true;
+  }
+};
+
 export const initCatalog = async () => {
   const grid = qs(CONFIG.selectors.listingGrid);
   if (!grid) return;
 
-  const products = await loadNormalizedProducts();
   const form = qs(CONFIG.selectors.filtersForm);
   const countEl = qs(CONFIG.selectors.listingCount);
   const loadMoreBtn = qs(CONFIG.selectors.listingLoad);
   const searchInput = qs(CONFIG.selectors.searchInput);
+
+  let products = [];
+  try {
+    products = await fetchJson("data/products.json");
+  } catch (error) {
+    console.error("Catalog data error", error);
+    renderCatalogLoadError(grid, countEl, loadMoreBtn);
+    return;
+  }
 
   const initialState = parseStateFromUrl(form);
   let limit = initialState.limit;
@@ -242,9 +281,14 @@ export const initCatalog = async () => {
       loadMoreBtn.setAttribute("aria-hidden", String(filtered.length <= limit));
     }
 
-    const emptyState = qs("[data-empty-state]");
-    if (emptyState) {
-      emptyState.hidden = filtered.length !== 0;
+    if (filtered.length === 0) {
+      setUiState(stateRegion, {
+        type: "empty",
+        title: "Brak wyników",
+        message: "Zmień filtry lub wpisz inną frazę wyszukiwania.",
+      });
+    } else {
+      clearUiState(stateRegion);
     }
 
     syncUrlState(searchTerm, filters, limit);
@@ -280,9 +324,11 @@ export const initCatalog = async () => {
     const productId = Number(target.getAttribute("data-add-to-cart"));
     const product = findProductById(products, productId);
     if (!product) return;
-    addToCart(product, 1);
+    const saved = addToCart(product, 1);
+    if (!saved) return;
+
     updateCartCount();
-    showToast(`${product.name} dodano do koszyka.`);
+    showToast(`Dodano „${product.name}” do koszyka.`, { type: "success" });
   });
 
   on(window, "popstate", () => {
