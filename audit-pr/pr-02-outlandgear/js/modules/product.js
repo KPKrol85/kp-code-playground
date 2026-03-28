@@ -6,6 +6,8 @@ import { showToast } from "./toast.js";
 import { createFallbackNotice } from "./fallback.js";
 
 const SITE_NAME = "Outland Gear";
+const getMainImageAlt = (productName, index = 0) => `Zdjęcie ${index + 1} produktu ${productName}`;
+const getThumbLabel = (productName, index = 0) => `Pokaż zdjęcie ${index + 1} produktu ${productName}`;
 
 const setProductMetadata = (product, slug) => {
   if (!product || !slug) return;
@@ -105,9 +107,9 @@ const renderProduct = (product) => {
     thumb.setAttribute("aria-label", `Pokaż zdjęcie ${index + 1} produktu ${product.name}`);
 
     on(thumb, "click", () => {
-      if (mainImage && images[index]) {
-        mainImage.src = images[index];
-        mainImage.alt = `${product.name} ${index + 1}`;
+      if (mainImage && product.images[index]) {
+        mainImage.src = product.images[index];
+        mainImage.alt = getMainImageAlt(product.name, index);
       }
       setActiveThumb(index);
     });
@@ -138,8 +140,10 @@ const renderRelated = (products, current) => {
     const media = document.createElement("div");
     media.className = "product-card__media";
     const img = document.createElement("img");
-    img.src = product.images?.[0] || "";
-    img.alt = product.name || "";
+    img.src = product.images[0];
+    img.alt = product.name;
+    img.loading = "lazy";
+    img.decoding = "async";
     img.width = 320;
     img.height = 220;
     media.appendChild(img);
