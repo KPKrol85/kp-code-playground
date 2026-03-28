@@ -5,6 +5,8 @@ import { loadCart, saveCart, getStorageStatus } from "./storage.js";
 import { clamp, formatCurrency } from "../utils.js";
 import { showToast } from "./toast.js";
 import { createFallbackNotice } from "./fallback.js";
+import { clearUiState, setUiState } from "./ui-state.js";
+import { findProductById } from "./product-data.js";
 
 let productsCache = [];
 let cartHandlersBound = false;
@@ -198,6 +200,7 @@ export const initCart = async () => {
   }
 
   const summary = qs(CONFIG.selectors.cartSummary);
+  const stateRegion = qs("[data-cart-state]");
 
   try {
     productsCache = await fetchJson("data/products.json");
@@ -217,6 +220,7 @@ export const initCart = async () => {
 
   delegate(container, "[data-remove-item]", "click", (_, target) => {
     const id = Number(target.getAttribute("data-remove-item"));
+    if (!Number.isInteger(id)) return;
     const updated = removeItem(id);
     if (!updated) {
       upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
@@ -232,6 +236,7 @@ export const initCart = async () => {
   delegate(container, "[data-qty-input]", "change", (_, target) => {
     const id = Number(target.getAttribute("data-qty-input"));
     const qty = Number(target.value);
+    if (!Number.isInteger(id) || !Number.isFinite(qty)) return;
     const updated = updateQty(id, qty);
 
     if (!updated) {
