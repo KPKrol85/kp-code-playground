@@ -42,12 +42,15 @@ const upsertStorageNotice = (container, actionLabel, onAction) => {
 };
 
 export const addToCart = (product, qty = 1) => {
+  if (!product || !Number.isFinite(Number(product.id))) return;
+
   const cart = getCart();
-  const existing = cart.items.find((item) => item.id === product.id);
+  const productId = Number(product.id);
+  const existing = cart.items.find((item) => item.id === productId);
   if (existing) {
     existing.qty = clamp(existing.qty + qty, 1, 99);
   } else {
-    cart.items.push({ id: product.id, qty: clamp(qty, 1, 99) });
+    cart.items.push({ id: productId, qty: clamp(qty, 1, 99) });
   }
   const saved = setCart(cart);
   if (!saved) {
@@ -80,7 +83,7 @@ const updateQty = (id, qty) => {
 };
 
 const calculateTotals = (items) => {
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotal = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
   const delivery = subtotal > 600 ? 0 : 24;
   return { subtotal, delivery, total: subtotal + delivery };
 };
@@ -110,7 +113,7 @@ const renderCart = (items, stateRegion) => {
 
     const media = document.createElement("img");
     media.className = "cart-item__media";
-    media.src = item.images[0];
+    media.src = item.images?.[0] || "";
     media.alt = item.name;
     media.width = 90;
     media.height = 90;

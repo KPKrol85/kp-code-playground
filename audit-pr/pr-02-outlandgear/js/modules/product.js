@@ -44,7 +44,7 @@ const renderProduct = (product) => {
   const highlights = qs("[data-product-highlights]", root);
   const specs = qs("[data-product-specs]", root);
 
-  if (title) title.textContent = product.name;
+  if (title) title.textContent = product.name || "";
   if (price) price.textContent = formatCurrency(product.price, product.currency);
   if (oldPrice) {
     if (product.oldPrice) {
@@ -55,11 +55,12 @@ const renderProduct = (product) => {
   }
   if (rating) rating.textContent = `Ocena ${product.rating} • ${product.reviewsCount} opinii`;
   if (stock) stock.textContent = product.stockStatus;
-  if (description) description.textContent = product.shortDescription;
+  if (description) description.textContent = product.shortDescription || "";
 
   if (highlights) {
     highlights.innerHTML = "";
-    product.highlights.forEach((item) => {
+    const items = Array.isArray(product.highlights) ? product.highlights : [];
+    items.forEach((item) => {
       const li = document.createElement("li");
       li.textContent = item;
       highlights.appendChild(li);
@@ -68,7 +69,7 @@ const renderProduct = (product) => {
 
   if (specs) {
     specs.innerHTML = "";
-    Object.entries(product.specs).forEach(([label, value]) => {
+    Object.entries(product.specs || {}).forEach(([label, value]) => {
       const row = document.createElement("tr");
       const th = document.createElement("th");
       th.scope = "row";
@@ -89,24 +90,24 @@ const renderProduct = (product) => {
   };
 
   if (mainImage) {
-    mainImage.src = product.images[0];
-    mainImage.alt = product.name;
+    mainImage.src = images[0] || "";
+    mainImage.alt = product.name || "";
   }
 
   setActiveThumb(0);
 
   thumbs.forEach((thumb, index) => {
     const img = qs("img", thumb);
-    if (img && product.images[index]) {
-      img.src = product.images[index];
+    if (img && images[index]) {
+      img.src = images[index];
       img.alt = `${product.name} ${index + 1}`;
     }
 
     thumb.setAttribute("aria-label", `Pokaż zdjęcie ${index + 1} produktu ${product.name}`);
 
     on(thumb, "click", () => {
-      if (mainImage && product.images[index]) {
-        mainImage.src = product.images[index];
+      if (mainImage && images[index]) {
+        mainImage.src = images[index];
         mainImage.alt = `${product.name} ${index + 1}`;
       }
       setActiveThumb(index);
@@ -138,8 +139,8 @@ const renderRelated = (products, current) => {
     const media = document.createElement("div");
     media.className = "product-card__media";
     const img = document.createElement("img");
-    img.src = product.images[0];
-    img.alt = product.name;
+    img.src = product.images?.[0] || "";
+    img.alt = product.name || "";
     img.width = 320;
     img.height = 220;
     media.appendChild(img);
