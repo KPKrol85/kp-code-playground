@@ -1,68 +1,78 @@
-# Outland Gear — Statyczny audyt front-end (poziom senior)
+# Outland Gear — Senior Front-End Audit (static, repository-evidenced)
 
-## 1) Podsumowanie wykonawcze
-Dowody z repozytorium wskazują na statyczny sklep MPA z modułowym vanilla JS, CSS opartym o tokeny i spójnymi wzorcami bazowymi SEO/dostępności. W obecnej implementacji nie wykryto potwierdzonych blokerów produkcyjnych klasy P0. Główne ryzyka na kolejny etap to duplikacja pod kątem utrzymania (powtarzane bloki layoutu), zależność kluczowego renderowania e-commerce od JS, strategia dostarczania CSS przez łańcuch `@import` oraz brak widocznego dla użytkownika fallbacku dla błędów danych/pamięci.
+## 1. Executive summary
+Repository shows a static MPA with clear CSS tokenization, modular JS structure, and broad SEO metadata coverage. However, there are confirmed runtime blockers in key ecommerce flows (product, cart, checkout) caused by undefined identifiers/missing imports in active JS modules loaded by all pages. (`index.html:269`, `js/app.js:27-31`, `js/modules/product.js:94`, `js/modules/cart.js:212`, `js/modules/checkout.js:45-53`)
 
-## 2) P0 — Ryzyka krytyczne
-Na podstawie statycznych dowodów z repozytorium nie znaleziono potwierdzonych problemów P0.
+## 2. P0 — Critical risks
+1. **Checkout flow runtime failure (form logic broken).**  
+   `initCheckout()` calls identifiers that are not defined/imported in module scope (`initFormFieldUX`, `validateFormFields`, `firstInvalid`, `status`). This causes a hard runtime error on checkout page.  
+   Evidence: `js/modules/checkout.js:45`, `js/modules/checkout.js:50`, `js/modules/checkout.js:52-53`, `js/modules/checkout.js:76`.
 
-## 3) Mocne strony
-- Spójny zestaw metadanych na poziomie stron (`title`, description, canonical, OG/Twitter, JSON-LD) na głównych i prawnych podstronach.【index.html:6-50】【regulamin.html:6-50】
-- Ustrukturyzowana architektura CSS z tokenami projektowymi oraz segmentacją komponentów/stron importowaną z jednego punktu wejścia.【css/main.css:1-16】【css/tokens.css:1-35】
-- Bazowe funkcje dostępności: skip link, widoczne style focus, przełączanie stanów ARIA, region live status dla toastów oraz zarządzanie fokusem w mobilnym drawerze.【index.html:53-54】【css/base.css:57-77】【index.html:72-88】【js/modules/nav.js:65-125】【index.html:267】
-- Formularz checkout ma jawne etykiety, obsługę poprawności po stronie klienta, `aria-invalid` oraz ustawianie fokusu na pierwszym nieprawidłowym polu.【checkout.html:137-199】【js/modules/checkout.js:5-56】
-- Pliki robots i sitemap są obecne i spójne (`robots.txt` wskazuje na `sitemap.xml`).【robots.txt:1-3】【sitemap.xml:1-30】
+2. **Product page runtime failure (undefined variables/functions in active module).**  
+   Product module uses undefined `images`, `fetchJson`, `findProductBySlug`, `setUiState`, `clearUiState`, `stateRegion`.  
+   Evidence: `js/modules/product.js:94`, `js/modules/product.js:102`, `js/modules/product.js:206`, `js/modules/product.js:215`, `js/modules/product.js:226`, `js/modules/product.js:234`.
 
-## 4) P1 — Usprawnienia warte wykonania jako następne (dokładnie 5)
-1. **Kluczowe widoki e-commerce zależą od JS, więc użytkownicy bez JS dostają jedynie komunikaty informacyjne zamiast użytecznego fallbacku treści.**  
-   Dowód: dynamiczne kontenery listingu/produktu/koszyka są puste do czasu renderowania danych przez JS; `noscript` wyświetla wyłącznie komunikaty.【kategoria.html:213-220】【produkt.html:123-131】【koszyk.html:134-143】【js/app.js:22-32】
+3. **Cart flow runtime failure (undefined UI-state references).**  
+   Cart module calls `setUiState` / `clearUiState` and passes `stateRegion`, but these are not defined in module scope.  
+   Evidence: `js/modules/cart.js:98`, `js/modules/cart.js:107`, `js/modules/cart.js:212`, `js/modules/cart.js:227`, `js/modules/cart.js:243`.
 
-2. **Dostarczanie CSS jest zrealizowane przez 16 instrukcji `@import`, co zwiększa ryzyko render-blocking waterfall przy pierwszym malowaniu strony.**  
-   Dowód: pełny łańcuch styli z `css/main.css` importuje każdą warstwę/plik strony przez `@import`.【css/main.css:1-16】
+## 3. Strengths
+- Consistent page-level SEO tags (description, canonical, OG, Twitter) across major pages. (`index.html:7-25`, `kategoria.html:7-25`, `kontakt.html:7-25`)
+- JSON-LD is present and page-typed (`Organization` + `WebPage`/`CollectionPage`/`ContactPage`). (`index.html:27-50`, `kategoria.html:27-50`, `kontakt.html:27-50`)
+- CSS architecture is token-based and modular (`tokens/base/layout/components/pages`). (`css/tokens.css:1-37`, `css/main.css:1-17`)
+- Accessibility baseline includes skip link, focus-visible styles, ARIA state toggles, focus trap in mobile drawer. (`index.html:53`, `css/base.css:57-62`, `index.html:72-73`, `js/modules/nav.js:83-125`)
+- `robots.txt` and `sitemap.xml` are present and aligned. (`robots.txt:1-3`, `sitemap.xml:1-30`)
 
-3. **Markup header/footer/nav jest zduplikowany w wielu plikach HTML, co podnosi koszt utrzymania i ryzyko rozjazdów.**  
-   Dowód: powtarzające się identyczne bloki strukturalne na różnych stronach (przykład: header + footer w `index`, `kategoria`, `checkout`).【index.html:54-121】【kategoria.html:54-121】【checkout.html:54-121】【index.html:193-264】【checkout.html:218-289】
+## 4. P1 — Improvements worth doing next (exactly 5)
+1. **Malformed product gallery HTML should be normalized to valid structure.**  
+   Missing closing tag before another `<button>` introduces invalid nested button markup risk. (`produkt.html:146-149`)
 
-4. **Nawigacyjne rozwijane menu używa `role="menu"`/`role="menuitem"` dla linków nawigacji serwisu, co zwykle jest mniej odpowiednie niż semantyka zwykłej listy nav dla menu stron WWW.**  
-   Dowód: kontener dropdown i linki są zaimplementowane z rolami ARIA menu w kontekście podstawowej nawigacji witryny.【index.html:87-93】【kategoria.html:87-93】
+2. **Checkout form markup has structural inconsistency in grouping semantics.**  
+   A closing `</fieldset>` appears without a matching opening fieldset in the visible block, making form structure brittle for accessibility tooling. (`checkout.html:133-154`)
 
-5. **Obsługa błędów danych/pamięci nie ma widocznego dla użytkownika interfejsu odzyskiwania.**  
-   Dowód: nieudany fetch rzuca błąd; błędy storage są logowane wyłącznie do konsoli; brak implementacji renderowania widocznego stanu fallbackowego w modułach.【js/modules/data.js:7-10】【js/modules/storage.js:21-33】
+3. **No-JS baseline for ecommerce is informational rather than functional.**  
+   Listing/product/cart rely on JS-rendered core content and only show notices in `<noscript>`. (`kategoria.html:213-220`, `produkt.html:124-131`, `koszyk.html:135-140`)
 
-## 5) P2 — Drobne dopracowania
-- Kilka linków społecznościowych używa placeholdera `href="#"`; jest to akceptowalne na etapie przygotowawczym, ale przed startem produkcyjnym należy podmienić je na docelowe adresy.【index.html:218-220】
-- Formularz newslettera używa `action="#"`, więc przepływ wysyłki jest celowo niefunkcjonalny w obecnym stanie repozytorium.【index.html:201-205】
-- Miniatury galerii produktu są klikalnymi przyciskami, ale brak jawnego ogłoszenia stanu wybranego (np. `aria-current`/`aria-selected`) dla kontekstu technologii asystujących we wzorcu sterowania galerią.【produkt.html:138-147】【js/modules/product.js:89-101】
-- Zgodności kontrastu nie da się zweryfikować bez analizy stylów obliczonych (same statyczne definicje tokenów nie wystarczą do ostatecznego potwierdzenia kontrastu WCAG).【css/tokens.css:1-35】
+4. **CSS delivery strategy uses a long `@import` chain from runtime entry CSS.**  
+   This can increase render-blocking waterfall in real networks. (`css/main.css:1-17`)
 
-## 6) Ulepszenia na przyszłość (dokładnie 5)
-1. Dodać fallback renderowany po stronie serwera/statyczny dla listy produktów i podsumowania koszyka, aby zapewnić bazową użyteczność bez JS.
-2. Zastąpić łańcuch `@import` w CSS bundlowaniem na etapie builda albo strategią critical-CSS + deferred.
-3. Wprowadzić współdzielone partiale (lub include’y na etapie builda), aby usunąć powtarzane bloki header/footer.
-4. Dodać widoczne bannery błędów i UX ponawiania dla scenariuszy awarii `fetch` i localStorage.
-5. Dopracować semantykę nawigacji dla struktury dropdown zgodnie ze standardowymi wzorcami a11y dla nawigacji witryny.
+5. **Maintainability risk from repeated header/footer markup across pages.**  
+   Same large nav/footer blocks are duplicated in multiple HTML files, increasing drift risk on updates. (`index.html:54-121`, `kategoria.html:54-121`, `checkout.html:54-121`, `index.html:193-264`, `kontakt.html:171-242`)
 
-## 7) Lista kontrolna zgodności
-- **headings valid:** **PASS** — na próbkowanych stronach występuje jedno główne `h1` i malejąca hierarchia nagłówków sekcji.【index.html:128】【kategoria.html:134】【produkt.html:153】【checkout.html:128】
-- **no broken links excluding intentional minification strategy:** **PASS** — skan lokalnych odnośników plikowych zwrócił `NO_MISSING_LOCAL_LINKS`.
-- **no console.log:** **PASS** — nie wykryto `console.log` w przeszukaniu repozytorium.
-- **aria attributes valid:** **PASS (kontrola statyczna)** — kontrolki ARIA oraz stany expanded/hidden są obecne i synchronizowane w logice JS nawigacji.【index.html:72-88】【js/modules/nav.js:3-41】
-- **images have width/height:** **PASS** — obrazy produktów/koszyka statyczne oraz generowane przez JS mają ustawione wymiary.【index.html:58】【index.html:136】【kategoria.html:126】【js/modules/catalog.js:115-116】【js/modules/cart.js:79-80】
-- **no-JS baseline usable:** **FAIL (tylko częściowo)** — kluczowa zawartość e-commerce wymaga renderowania JS; ścieżka bez JS zapewnia komunikaty zamiast równoważnej interakcji.【kategoria.html:213-220】【produkt.html:123-131】【koszyk.html:134-143】
-- **sitemap present if expected:** **PASS** — `sitemap.xml` istnieje i zawiera listę stron serwisu.【sitemap.xml:1-30】
-- **robots present:** **PASS** — `robots.txt` istnieje i zawiera odnośnik do URL sitemapy.【robots.txt:1-3】
-- **OG image exists:** **PASS** — plik obrazu OG istnieje i jest referencjonowany w metadanych.【assets/svg/social-share-placeholder.svg】【index.html:19】
-- **JSON-LD valid:** **PASS (kontrola składni statycznej)** — bloki JSON-LD stron są poprawnymi obiektami JSON z typami schema (`Organization`, `WebPage`, `CollectionPage`).【index.html:27-50】【kategoria.html:27-50】【checkout.html:27-50】
+## 5. P2 — Minor refinements
+- `console.error` exists in runtime modules; acceptable for debugging, but production logging policy could be centralized. (`js/modules/data.js:22`, `js/modules/storage.js:26`)
+- Social links point to generic platform homepages instead of branded profiles. (`index.html:218-220`)
+- SVG is used as OG image placeholder; acceptable technically, but richer social previews usually use dedicated raster OG images. (`index.html:19`, `assets/svg/social-share-placeholder.svg`)
+- Contrast compliance cannot be fully verified without computed-style analysis in browser runtime.
 
-## 8) Ocena architektury (0–10)
-- **Spójność BEM:** 8.4/10
-- **Użycie tokenów:** 9.0/10
-- **Dostępność:** 7.8/10
-- **Wydajność:** 7.3/10
-- **Utrzymywalność:** 7.9/10
+## 6. Future enhancements (exactly 5)
+1. Add static fallback product cards/content in HTML for core listing and product page before JS hydration.
+2. Introduce build-time partial templating for shared header/footer/nav.
+3. Add repository linting gates (HTML validation + JS lint + link checks) in CI.
+4. Migrate CSS delivery to prebuilt single/minified stylesheet for production.
+5. Add explicit error/empty UX patterns consistently across all interactive modules.
 
-**Łączna ocena architektury: 8.1/10**
+## 7. Compliance checklist
+- **headings valid:** **PASS** (single `h1` with section hierarchy on sampled pages). (`index.html:128`, `kategoria.html:134`, `produkt.html:162`, `checkout.html:128`)
+- **no broken links excluding intentional minification strategy:** **PASS** (local link scan found `MISSING 0`).
+- **no console.log:** **FAIL** (`console.log` exists in image optimizer script). (`scripts/optimize-images.mjs:138`, `scripts/optimize-images.mjs:167-170`)
+- **aria attributes valid:** **PASS (static check)** (ARIA states and controls are present/synchronized in nav logic). (`index.html:72-73`, `index.html:87`, `js/modules/nav.js:16-22`, `js/modules/nav.js:67-69`)
+- **images have width/height:** **PASS** (dimensions declared in HTML and JS-generated cards). (`index.html:58`, `produkt.html:137`, `js/modules/catalog.js:116-117`)
+- **no-JS baseline usable:** **FAIL (partial only)** (notices exist, but ecommerce core remains JS-dependent). (`kategoria.html:213-220`, `produkt.html:124-131`, `koszyk.html:135-140`)
+- **sitemap present if expected:** **PASS** (`sitemap.xml` present). (`sitemap.xml:1-30`)
+- **robots present:** **PASS** (`robots.txt` present with sitemap pointer). (`robots.txt:1-3`)
+- **OG image exists:** **PASS** (file exists and is referenced). (`index.html:19`, `assets/svg/social-share-placeholder.svg`)
+- **JSON-LD valid:** **PASS (static parse-level review)** (well-formed JSON objects with schema.org context/types). (`index.html:27-50`, `kategoria.html:27-50`, `kontakt.html:27-50`)
 
-## 9) Ocena seniorska (1–10)
-**Ocena seniorska: 8.0/10**  
-Uzasadnienie techniczne: kod jest strukturalnie solidny jak na statyczny front-end (czytelne granice modułów, spójny CSS oparty o tokeny, mocna baza a11y/SEO), ale do utwardzenia produkcyjnego pozostają luki związane z równoważnością bez JS, efektywnością dostarczania CSS, narzutem utrzymania przy powtarzanym layoucie oraz odpornym UX dla scenariuszy awarii.
+## 8. Architecture score (0–10)
+- **BEM consistency:** 8.2/10
+- **Token usage:** 9.1/10
+- **Accessibility:** 7.2/10
+- **Performance:** 7.0/10
+- **Maintainability:** 6.8/10
+
+**Overall architecture score: 7.7/10**
+
+## 9. Senior rating (1–10)
+**Senior rating: 7.1/10**  
+Strong structural foundations are present (tokens, modular JS organization, SEO/accessibility baseline), but verified runtime blockers in checkout/product/cart and repeated HTML layout reduce production readiness and maintainability.
