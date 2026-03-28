@@ -4,7 +4,7 @@ import { qs, qsa, on } from "./dom.js";
 import { formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
-
+import { createFallbackNotice } from "./fallback.js";
 
 const SITE_NAME = "Outland Gear";
 
@@ -82,21 +82,34 @@ const renderProduct = (product) => {
 
   const mainImage = qs("[data-product-main]", root);
   const thumbs = qsa("[data-product-thumb]", root);
+  const setActiveThumb = (activeIndex) => {
+    thumbs.forEach((thumb, index) => {
+      thumb.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+    });
+  };
+
   if (mainImage) {
     mainImage.src = product.images[0];
     mainImage.alt = product.name;
   }
+
+  setActiveThumb(0);
+
   thumbs.forEach((thumb, index) => {
     const img = qs("img", thumb);
     if (img && product.images[index]) {
       img.src = product.images[index];
       img.alt = `${product.name} ${index + 1}`;
     }
+
+    thumb.setAttribute("aria-label", `Pokaż zdjęcie ${index + 1} produktu ${product.name}`);
+
     on(thumb, "click", () => {
       if (mainImage && product.images[index]) {
         mainImage.src = product.images[index];
         mainImage.alt = `${product.name} ${index + 1}`;
       }
+      setActiveThumb(index);
     });
   });
 
@@ -104,7 +117,9 @@ const renderProduct = (product) => {
   const qtyInput = qs("[data-qty-input]", root);
   on(addBtn, "click", () => {
     const qty = qtyInput ? Number(qtyInput.value) : 1;
-    addToCart(product, qty);
+    const saved = addToCart(product, qty);
+    if (!saved) return;
+
     updateCartCount();
     showToast(`${product.name} dodano do koszyka.`);
   });
@@ -149,10 +164,39 @@ const renderRelated = (products, current) => {
   });
 };
 
+
+const renderProductLoadError = (root) => {
+  if (!root) return;
+
+  root.innerHTML = "";
+  const section = document.createElement("section");
+  section.className = "section";
+  const container = document.createElement("div");
+  container.className = "container";
+
+  const fallback = createFallbackNotice({
+    message: "Nie udało się załadować produktu. Odśwież stronę i spróbuj ponownie.",
+    actionLabel: "Odśwież stronę",
+    onAction: () => window.location.reload(),
+  });
+
+  container.appendChild(fallback);
+  section.appendChild(container);
+  root.appendChild(section);
+};
+
 export const initProduct = async () => {
   const root = qs(CONFIG.selectors.productRoot);
   if (!root) return;
-  const products = await fetchJson("data/products.json");
+  let products = [];
+  try {
+    products = await fetchJson("data/products.json");
+  } catch (error) {
+    console.error("Product data error", error);
+    renderProductLoadError(root);
+    return;
+  }
+
   const slug = new URLSearchParams(window.location.search).get("slug");
   const normalizedSlug = slug?.trim() || "";
   const matchedProduct = products.find((item) => item.slug === normalizedSlug);

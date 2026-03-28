@@ -1,13 +1,19 @@
 {
-  "name": "outlandgear-static-site",
+  "name": "outlandgear",
   "version": "1.0.0",
   "private": true,
-  "description": "Static front-end storefront with a lightweight image optimization workflow.",
   "scripts": {
-    "images:optimize": "node scripts/optimize-images.mjs",
-    "images:clean": "node scripts/optimize-images.mjs --clean"
+    "build:css": "postcss css/main.css -o css/main.min.css",
+    "build:js": "esbuild js/app.js --bundle --minify --outfile=js/app.min.js",
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "postcss css/main.css -o css/main.min.css --watch",
+    "watch:js": "esbuild js/app.js --bundle --minify --outfile=js/app.min.js --watch"
   },
   "devDependencies": {
-    "sharp": "^0.34.4"
+    "cssnano": "^7.0.7",
+    "esbuild": "^0.25.11",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.1"
   }
 }
