@@ -1,0 +1,13 @@
+{
+  "name": "outlandgear-static-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static front-end storefront with a lightweight image optimization workflow.",
+  "scripts": {
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:clean": "node scripts/optimize-images.mjs --clean"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.4"
+  }
+}
