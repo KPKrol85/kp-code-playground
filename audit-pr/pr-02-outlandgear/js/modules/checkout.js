@@ -1,6 +1,7 @@
 import { CONFIG } from "../config.js";
-import { qs, qsa, on } from "./dom.js";
+import { qs, on } from "./dom.js";
 import { clearCart } from "./storage.js";
+import { clearUiState, setUiState } from "./ui-state.js";
 
 const STATUS_TYPES = {
   success: { role: "status", live: "polite" },
@@ -39,38 +40,39 @@ const clearError = (input) => {
 export const initCheckout = () => {
   const form = qs(CONFIG.selectors.checkoutForm);
   if (!form) return;
-  const status = qs(CONFIG.selectors.checkoutStatus);
-  const successPanel = qs("[data-checkout-success]");
 
-  const inputs = qsa("input, select, textarea", form);
+  const successPanel = qs("[data-checkout-success]");
+  initFormFieldUX(form);
 
   on(form, "submit", (event) => {
     event.preventDefault();
-    let firstInvalid = null;
-    setStatusMessage(status, "", "info");
 
-    inputs.forEach((input) => {
-      if (!input.checkValidity()) {
-        const message = input.validationMessage || "Wypełnij to pole.";
-        showError(input, message);
-        if (!firstInvalid) firstInvalid = input;
-      } else {
-        clearError(input);
-      }
-    });
+    const { firstInvalidField } = validateFormFields(form);
 
     if (firstInvalid) {
-      setStatusMessage(status, "Popraw oznaczone pola formularza.", "warning");
+      setUiState(status, {
+        type: "error",
+        title: "Formularz zawiera błędy",
+        message: "Uzupełnij wymagane pola i popraw oznaczone wartości.",
+      });
       firstInvalid.focus();
       return;
     }
 
-    setStatusMessage(status, "Zamówienie zapisane (demo).", "success");
+    setUiState(status, {
+      type: "success",
+      title: "Zamówienie zapisane",
+      message: "Możesz wrócić do strony głównej lub kontynuować zakupy.",
+    });
     if (successPanel) {
       successPanel.hidden = false;
     }
     form.reset();
     form.hidden = true;
     clearCart();
+  });
+
+  on(form, "input", () => {
+    clearUiState(status);
   });
 };

@@ -4,6 +4,7 @@ import { qs, qsa, on, delegate } from "./dom.js";
 import { debounce, formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
+import { createFallbackNotice } from "./fallback.js";
 
 const parseRange = (value) => {
   if (!value) return null;
@@ -125,6 +126,7 @@ const createCard = (product) => {
   }
 
   const body = document.createElement("div");
+  body.className = "product-card__content";
   const title = document.createElement("h3");
   title.className = "product-card__title";
   title.textContent = product.name;
@@ -212,15 +214,49 @@ const getFilters = (form) => {
   };
 };
 
+
+const renderCatalogLoadError = (grid, countEl, loadMoreBtn) => {
+  if (!grid) return;
+  grid.innerHTML = "";
+  const fallback = createFallbackNotice({
+    message: "Nie udało się załadować listy produktów. Spróbuj ponownie.",
+    actionLabel: "Spróbuj ponownie",
+    onAction: () => initCatalog(),
+  });
+  grid.appendChild(fallback);
+
+  if (countEl) {
+    countEl.textContent = "0 produktów";
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.hidden = true;
+    loadMoreBtn.setAttribute("aria-hidden", "true");
+  }
+
+  const emptyState = qs("[data-empty-state]");
+  if (emptyState) {
+    emptyState.hidden = true;
+  }
+};
+
 export const initCatalog = async () => {
   const grid = qs(CONFIG.selectors.listingGrid);
   if (!grid) return;
 
-  const products = await fetchJson("data/products.json");
   const form = qs(CONFIG.selectors.filtersForm);
   const countEl = qs(CONFIG.selectors.listingCount);
   const loadMoreBtn = qs(CONFIG.selectors.listingLoad);
   const searchInput = qs(CONFIG.selectors.searchInput);
+
+  let products = [];
+  try {
+    products = await fetchJson("data/products.json");
+  } catch (error) {
+    console.error("Catalog data error", error);
+    renderCatalogLoadError(grid, countEl, loadMoreBtn);
+    return;
+  }
 
   const initialState = parseStateFromUrl(form);
   let limit = initialState.limit;
@@ -242,9 +278,14 @@ export const initCatalog = async () => {
       loadMoreBtn.setAttribute("aria-hidden", String(filtered.length <= limit));
     }
 
-    const emptyState = qs("[data-empty-state]");
-    if (emptyState) {
-      emptyState.hidden = filtered.length !== 0;
+    if (filtered.length === 0) {
+      setUiState(stateRegion, {
+        type: "empty",
+        title: "Brak wyników",
+        message: "Zmień filtry lub wpisz inną frazę wyszukiwania.",
+      });
+    } else {
+      clearUiState(stateRegion);
     }
 
     syncUrlState(searchTerm, filters, limit);
@@ -280,7 +321,9 @@ export const initCatalog = async () => {
     const productId = Number(target.getAttribute("data-add-to-cart"));
     const product = products.find((item) => item.id === productId);
     if (!product) return;
-    addToCart(product, 1);
+    const saved = addToCart(product, 1);
+    if (!saved) return;
+
     updateCartCount();
     showToast(`Dodano „${product.name}” do koszyka.`, { type: "success" });
   });
