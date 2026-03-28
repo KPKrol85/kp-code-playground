@@ -282,7 +282,7 @@ export const initCatalog = async () => {
     if (!product) return;
     addToCart(product, 1);
     updateCartCount();
-    showToast(`${product.name} dodano do koszyka.`);
+    showToast(`Dodano „${product.name}” do koszyka.`, { type: "success" });
   });
 
   on(window, "popstate", () => {

@@ -106,7 +106,7 @@ const renderProduct = (product) => {
     const qty = qtyInput ? Number(qtyInput.value) : 1;
     addToCart(product, qty);
     updateCartCount();
-    showToast(`${product.name} dodano do koszyka.`);
+    showToast(`Dodano „${product.name}” do koszyka.`, { type: "success" });
   });
 };
 

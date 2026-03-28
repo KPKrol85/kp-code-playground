@@ -37,6 +37,25 @@
   font-size: 0.85rem;
 }
 
+.form__feedback {
+  min-height: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form__feedback[data-feedback-type="success"] {
+  color: var(--color-success);
+}
+
+.form__feedback[data-feedback-type="warning"],
+.form__feedback[data-feedback-type="error"] {
+  color: var(--color-alert);
+}
+
+.form__feedback[data-feedback-type="info"] {
+  color: var(--color-muted);
+}
+
 .form__row {
   display: grid;
   gap: var(--space-md);
