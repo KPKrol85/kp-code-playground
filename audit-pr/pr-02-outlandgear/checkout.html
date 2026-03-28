@@ -132,22 +132,25 @@
         <div class="checkout-layout">
           <form class="form" data-checkout-form novalidate>
             <div data-checkout-status class="ui-state" hidden></div>
-            <div class="form__row">
-              <div class="form__group">
-                <label class="form__label" for="firstName">Imię</label>
-                <input class="form__input" id="firstName" name="firstName" type="text" autocomplete="given-name" required />
-                <span class="form__error" data-error-for="firstName"></span>
-              </div>
+            <fieldset class="form__fieldset">
+              <legend class="form__legend">Dane kontaktowe</legend>
               <div class="form__row">
                 <div class="form__group">
-                  <label class="form__label" for="email">Email</label>
-                  <input class="form__input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required />
-                  <span class="form__error" data-error-for="email"></span>
+                  <label class="form__label" for="firstName">Imię</label>
+                  <input class="form__input" id="firstName" name="firstName" type="text" autocomplete="given-name" required />
+                  <span class="form__error" data-error-for="firstName"></span>
                 </div>
-                <div class="form__group">
-                  <label class="form__label" for="phone">Telefon</label>
-                  <input class="form__input" id="phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" required />
-                  <span class="form__error" data-error-for="phone"></span>
+                <div class="form__row">
+                  <div class="form__group">
+                    <label class="form__label" for="email">Email</label>
+                    <input class="form__input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required />
+                    <span class="form__error" data-error-for="email"></span>
+                  </div>
+                  <div class="form__group">
+                    <label class="form__label" for="phone">Telefon</label>
+                    <input class="form__input" id="phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" required />
+                    <span class="form__error" data-error-for="phone"></span>
+                  </div>
                 </div>
               </div>
             </fieldset>
