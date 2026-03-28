@@ -88,6 +88,20 @@
   border: 1px solid var(--color-border);
 }
 
+
+.notice--error {
+  background: #fff4f3;
+  border-color: rgba(200, 67, 58, 0.35);
+}
+
+.notice__message {
+  margin: 0;
+}
+
+.notice__actions {
+  margin-top: var(--space-sm);
+}
+
 .hero {
   background: var(--color-ink);
   color: var(--color-white);
