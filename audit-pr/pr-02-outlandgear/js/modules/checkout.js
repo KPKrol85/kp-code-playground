@@ -1,46 +1,14 @@
 import { CONFIG } from "../config.js";
 import { qs, on } from "./dom.js";
 import { clearCart } from "./storage.js";
+import { initFormFieldUX, validateFormFields } from "./form-ux.js";
 import { clearUiState, setUiState } from "./ui-state.js";
-
-const STATUS_TYPES = {
-  success: { role: "status", live: "polite" },
-  info: { role: "status", live: "polite" },
-  warning: { role: "alert", live: "assertive" },
-  error: { role: "alert", live: "assertive" },
-};
-
-const setStatusMessage = (status, message, type = "info") => {
-  if (!status) return;
-  const normalizedType = STATUS_TYPES[type] ? type : "info";
-  const semantics = STATUS_TYPES[normalizedType];
-  status.textContent = message;
-  status.dataset.feedbackType = normalizedType;
-  status.setAttribute("role", semantics.role);
-  status.setAttribute("aria-live", semantics.live);
-  status.setAttribute("aria-atomic", "true");
-};
-
-const showError = (input, message) => {
-  const error = qs(`[data-error-for="${input.name}"]`);
-  if (error) {
-    error.textContent = message;
-  }
-  input.setAttribute("aria-invalid", "true");
-};
-
-const clearError = (input) => {
-  const error = qs(`[data-error-for="${input.name}"]`);
-  if (error) {
-    error.textContent = "";
-  }
-  input.removeAttribute("aria-invalid");
-};
 
 export const initCheckout = () => {
   const form = qs(CONFIG.selectors.checkoutForm);
   if (!form) return;
 
+  const status = qs(CONFIG.selectors.checkoutStatus) || qs("[data-checkout-status]", form);
   const successPanel = qs("[data-checkout-success]");
   initFormFieldUX(form);
 
@@ -49,13 +17,13 @@ export const initCheckout = () => {
 
     const { firstInvalidField } = validateFormFields(form);
 
-    if (firstInvalid) {
+    if (firstInvalidField) {
       setUiState(status, {
         type: "error",
         title: "Formularz zawiera błędy",
         message: "Uzupełnij wymagane pola i popraw oznaczone wartości.",
       });
-      firstInvalid.focus();
+      firstInvalidField.focus();
       return;
     }
 
