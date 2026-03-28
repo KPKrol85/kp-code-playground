@@ -1,5 +1,4 @@
 import { CONFIG } from "../config.js";
-import { fetchJson } from "./data.js";
 import { qs, qsa, on, delegate } from "./dom.js";
 import { debounce, formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
@@ -323,7 +322,7 @@ export const initCatalog = async () => {
 
   delegate(grid, "[data-add-to-cart]", "click", (_, target) => {
     const productId = Number(target.getAttribute("data-add-to-cart"));
-    const product = products.find((item) => item.id === productId);
+    const product = findProductById(products, productId);
     if (!product) return;
     const saved = addToCart(product, 1);
     if (!saved) return;

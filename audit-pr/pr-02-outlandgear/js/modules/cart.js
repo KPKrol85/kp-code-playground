@@ -166,7 +166,7 @@ const renderCart = (items, stateRegion) => {
 const hydrateItems = (products, cart) =>
   cart.items
     .map((item) => {
-      const product = products.find((entry) => entry.id === item.id);
+      const product = findProductById(products, item.id);
       if (!product) return null;
       return { ...product, qty: item.qty };
     })

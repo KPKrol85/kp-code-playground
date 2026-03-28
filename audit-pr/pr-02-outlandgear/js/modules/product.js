@@ -1,5 +1,4 @@
 import { CONFIG } from "../config.js";
-import { fetchJson } from "./data.js";
 import { qs, qsa, on } from "./dom.js";
 import { formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
@@ -209,7 +208,7 @@ export const initProduct = async () => {
 
   const slug = new URLSearchParams(window.location.search).get("slug");
   const normalizedSlug = slug?.trim() || "";
-  const matchedProduct = products.find((item) => item.slug === normalizedSlug);
+  const matchedProduct = findProductBySlug(products, normalizedSlug);
   const product = matchedProduct || products[0];
 
   if (matchedProduct) {
