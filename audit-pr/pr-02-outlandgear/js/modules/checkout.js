@@ -3,6 +3,24 @@ import { qs, on } from "./dom.js";
 import { clearCart } from "./storage.js";
 import { clearUiState, setUiState } from "./ui-state.js";
 
+const STATUS_TYPES = {
+  success: { role: "status", live: "polite" },
+  info: { role: "status", live: "polite" },
+  warning: { role: "alert", live: "assertive" },
+  error: { role: "alert", live: "assertive" },
+};
+
+const setStatusMessage = (status, message, type = "info") => {
+  if (!status) return;
+  const normalizedType = STATUS_TYPES[type] ? type : "info";
+  const semantics = STATUS_TYPES[normalizedType];
+  status.textContent = message;
+  status.dataset.feedbackType = normalizedType;
+  status.setAttribute("role", semantics.role);
+  status.setAttribute("aria-live", semantics.live);
+  status.setAttribute("aria-atomic", "true");
+};
+
 const showError = (input, message) => {
   const error = qs(`[data-error-for="${input.name}"]`);
   if (error) {

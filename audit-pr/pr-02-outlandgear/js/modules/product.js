@@ -121,7 +121,7 @@ const renderProduct = (product) => {
     if (!saved) return;
 
     updateCartCount();
-    showToast(`${product.name} dodano do koszyka.`);
+    showToast(`Dodano „${product.name}” do koszyka.`, { type: "success" });
   });
 };
 
