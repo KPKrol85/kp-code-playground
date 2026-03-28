@@ -13,12 +13,15 @@ const setCart = (cart) => {
 };
 
 export const addToCart = (product, qty = 1) => {
+  if (!product || !Number.isFinite(Number(product.id))) return;
+
   const cart = getCart();
-  const existing = cart.items.find((item) => item.id === product.id);
+  const productId = Number(product.id);
+  const existing = cart.items.find((item) => item.id === productId);
   if (existing) {
     existing.qty = clamp(existing.qty + qty, 1, 99);
   } else {
-    cart.items.push({ id: product.id, qty: clamp(qty, 1, 99) });
+    cart.items.push({ id: productId, qty: clamp(qty, 1, 99) });
   }
   setCart(cart);
 };
@@ -47,7 +50,7 @@ const updateQty = (id, qty) => {
 };
 
 const calculateTotals = (items) => {
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotal = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
   const delivery = subtotal > 600 ? 0 : 24;
   return { subtotal, delivery, total: subtotal + delivery };
 };
@@ -74,7 +77,7 @@ const renderCart = (items) => {
 
     const media = document.createElement("img");
     media.className = "cart-item__media";
-    media.src = item.images[0];
+    media.src = item.images?.[0] || "";
     media.alt = item.name;
     media.width = 90;
     media.height = 90;
@@ -139,7 +142,10 @@ export const initCart = async () => {
     updateCartCount();
     return;
   }
-  productsCache = await fetchJson("data/products.json");
+  productsCache = await fetchJson("data/products.json", []);
+  if (!Array.isArray(productsCache)) {
+    productsCache = [];
+  }
   const cart = getCart();
   const items = hydrateItems(productsCache, cart);
   renderCart(items);

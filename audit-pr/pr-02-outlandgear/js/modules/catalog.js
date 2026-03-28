@@ -109,14 +109,14 @@ const createCard = (product) => {
   const media = document.createElement("div");
   media.className = "product-card__media";
   const img = document.createElement("img");
-  img.src = product.images[0];
-  img.alt = product.name;
+  img.src = product.images?.[0] || "";
+  img.alt = product.name || "";
   img.loading = "lazy";
   img.width = 320;
   img.height = 220;
   media.appendChild(img);
 
-  if (product.badges && product.badges.length) {
+  if (Array.isArray(product.badges) && product.badges.length) {
     const badge = document.createElement("span");
     const badgeKey = product.badges[0].toLowerCase();
     badge.className = `badge product-card__badge badge--${badgeKey}`;
@@ -127,7 +127,7 @@ const createCard = (product) => {
   const body = document.createElement("div");
   const title = document.createElement("h3");
   title.className = "product-card__title";
-  title.textContent = product.name;
+  title.textContent = product.name || "";
 
   const meta = document.createElement("div");
   meta.className = "product-card__meta";
@@ -178,8 +178,12 @@ const applyFilters = (products, filters, searchTerm) => {
   const term = searchTerm?.toLowerCase() ?? "";
   return products
     .filter((product) => {
+      const badges = Array.isArray(product.badges) ? product.badges : [];
+      const name = product.name || "";
+      const shortDescription = product.shortDescription || "";
+
       if (term) {
-        const haystack = `${product.name} ${product.shortDescription} ${product.badges.join(" ")}`.toLowerCase();
+        const haystack = `${name} ${shortDescription} ${badges.join(" ")}`.toLowerCase();
         if (!haystack.includes(term)) return false;
       }
       if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
@@ -188,7 +192,7 @@ const applyFilters = (products, filters, searchTerm) => {
         if (product.price < filters.range.min || product.price > filters.range.max) return false;
       }
       if (filters.badges.length) {
-        const hasBadge = filters.badges.some((badge) => product.badges.includes(badge));
+        const hasBadge = filters.badges.some((badge) => badges.includes(badge));
         if (!hasBadge) return false;
       }
       return true;
@@ -216,7 +220,8 @@ export const initCatalog = async () => {
   const grid = qs(CONFIG.selectors.listingGrid);
   if (!grid) return;
 
-  const products = await fetchJson("data/products.json");
+  const productsData = await fetchJson("data/products.json", []);
+  const products = Array.isArray(productsData) ? productsData : [];
   const form = qs(CONFIG.selectors.filtersForm);
   const countEl = qs(CONFIG.selectors.listingCount);
   const loadMoreBtn = qs(CONFIG.selectors.listingLoad);
