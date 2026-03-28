@@ -1,137 +1,138 @@
-# Outland Gear
+# Outland Gear — Dokumentacja projektu (PL)
 
-## PL (wersja polska)
+## Przegląd projektu
+Outland Gear to statyczny serwis front-end e-commerce (wielostronicowy), oparty na HTML/CSS/ES Modules, z danymi produktów ładowanymi z plików JSON oraz dynamicznym renderowaniem listy, karty produktu i koszyka. Dowód: `package.json` (narzędzia build), `js/app.js` (bootstrap modułów), `data/products.json` i `data/categories.json` (źródła danych).
 
-### Przegląd projektu
-Outland Gear to statyczny serwis front-end typu MPA (multi-page app) zbudowany na HTML, CSS i Vanilla JS (ES Modules). Repozytorium zawiera stronę główną, listing, kartę produktu, koszyk, checkout oraz strony informacyjne/prawne.  
-Dowody: `index.html`, `kategoria.html`, `produkt.html`, `koszyk.html`, `checkout.html`, `o-nas.html`, `kontakt.html`, `regulamin.html`, `polityka-prywatnosci.html`.
+## Kluczowe funkcje (wyłącznie wykryte w repo)
+- Wielostronicowa nawigacja: strona główna, kategoria, produkt, koszyk, checkout, kontakt, o nas, regulamin, polityka prywatności. (np. `index.html`, `kategoria.html`, `produkt.html`, `koszyk.html`, `checkout.html`).
+- Dynamiczne komponenty JS:
+  - katalog + filtrowanie/sortowanie (`js/modules/catalog.js`),
+  - karta produktu + mini-galeria (`js/modules/product.js`),
+  - koszyk z localStorage (`js/modules/cart.js`, `js/modules/storage.js`),
+  - formularze checkout/kontakt z walidacją (`js/modules/checkout.js`, `js/modules/contact.js`, `js/modules/form-ux.js`).
+- Obsługa partials dla nagłówka/stopki z fallbackiem HTML (`js/modules/partials.js`, `partials/header.html`, `partials/footer.html`).
+- Podstawowe fallbacki no-JS na wybranych stronach (`kategoria.html`, `produkt.html`, `koszyk.html` sekcje `<noscript>`).
 
-### Kluczowe funkcje (tylko wykryte w kodzie)
-- Wielostronicowa nawigacja + aktywne stany `aria-current` na podstronach. (`kategoria.html:95`, `kontakt.html:97`)
-- Dynamiczny listing produktów (filtrowanie/sortowanie/search po query string + load more). (`kategoria.html:141-225`, `js/modules/catalog.js:33-103`, `js/modules/catalog.js:205-218`)
-- Dynamiczny koszyk oparty o `localStorage`. (`js/modules/storage.js:39-57`, `js/modules/cart.js:44-83`)
-- Formularz kontaktowy i checkout z walidacją po stronie klienta. (`kontakt.html:139-167`, `js/modules/form-ux.js:72-87`, `checkout.html:133-210`)
-- SEO baseline: canonical, OG, Twitter, robots, sitemap, JSON-LD. (`index.html:11-25`, `index.html:27-50`, `robots.txt:1-3`, `sitemap.xml:1-30`)
+## Stack technologiczny
+- HTML5 (statyczne podstrony).
+- CSS z podziałem na tokeny, base, layout, komponenty, strony (`css/main.css` + importy).
+- JavaScript ES Modules (`js/app.js` + `js/modules/*`).
+- Build: PostCSS (`postcss-import`, `cssnano`) i esbuild (`package.json`, `postcss.config.js`).
 
-### Tech stack
-- HTML5 (MPA)
-- CSS (tokeny + modularny podział przez `@import`) (`css/main.css:1-17`, `css/tokens.css:1-37`)
-- Vanilla JavaScript (ES Modules) (`js/app.js:1-34`)
-- Narzędzia build: PostCSS, cssnano, esbuild (`package.json:6-17`)
+## Struktura projektu
+- `css/` — tokeny, baza, layout, komponenty, style per-page.
+- `js/` — entrypoint aplikacji i moduły domenowe.
+- `data/` — dane katalogowe JSON.
+- `partials/` — współdzielony header/footer.
+- `assets/svg/` — grafiki SVG.
+- `scripts/` — narzędzia pomocnicze (`optimize-images.mjs`).
 
-### Struktura projektu
-- Strony: pliki HTML w katalogu głównym projektu.
-- Style: `css/main.css` + `css/base.css`, `css/layout.css`, `css/components/*`, `css/pages/*`.
-- Skrypty: `js/app.js`, `js/config.js`, `js/modules/*`.
-- Dane: `data/products.json`, `data/categories.json`.
-- SEO/deploy static: `robots.txt`, `sitemap.xml`.
+## Setup i uruchomienie
+1. Zainstaluj zależności: `npm install`.
+2. Development (watch):
+   - `npm run watch:css`
+   - `npm run watch:js`
+3. Build produkcyjny: `npm run build`.
+4. Uruchomienie lokalne: serwowanie statycznych plików (np. przez prosty serwer HTTP).
 
-### Setup i uruchomienie
-1. `cd audit-pr/pr-02-outlandgear`
-2. `npm install`
-3. Build: `npm run build`
-4. Lokalny podgląd (przykład): `python -m http.server 8000`
-5. Otwórz `http://localhost:8000/index.html`
+## Uwagi build / deployment
+- Wykryte skrypty build dla CSS i JS zapisują minifikaty do `css/main.min.css` i `js/app.min.js`, ale strony HTML obecnie ładują wersje źródłowe (`css/main.css`, `js/app.js`).
+- W repo obecne są `robots.txt` i `sitemap.xml`.
+- Nie wykryto plików konfiguracyjnych hostingu typu `_headers`, `_redirects`, `netlify.toml`, `vercel.json`.
+- Nie wykryto `manifest.webmanifest` ani rejestracji service workera.
 
-### Build / deployment notes
-- Skrypty build istnieją i generują `css/main.min.css` oraz `js/app.min.js`. (`package.json:6-10`)
-- Aktualnie HTML ładuje **nieminiowane** entrypointy: `css/main.css`, `js/app.js`. (`index.html:26`, `index.html:269`)
-- Brak wykrytych plików `_headers`, `_redirects`, `netlify.toml`, `vercel.json`.
-- Brak wykrytego service workera i brak manifestu PWA.
+## Uwagi dostępności (A11y)
+- Jest skip link (`.skip-link`) i cel `#main` na stronach.
+- Widoczne style `:focus-visible` w bazowym CSS.
+- Nawigacja mobilna zawiera focus trap i powrót focusu po zamknięciu drawer.
+- Dropdown/nav korzysta z `aria-expanded`, `aria-hidden`, `aria-controls`; aktywny link ustawiany przez `aria-current`.
+- Jest wsparcie `prefers-reduced-motion` przez tokeny czasów animacji i `scroll-behavior`.
+- Część stron ma fallback no-JS, ale checkout i kontakt są oparte o JS (`preventDefault`) i nie mają dedykowanego `<noscript>` workflow.
 
-### Accessibility notes
-- Obecny skip link i focus-visible. (`index.html:53`, `css/base.css:57-62`, `css/base.css:103-117`)
-- Drawer mobilny ma `aria-expanded`/`aria-hidden`, focus trap i ESC. (`index.html:72`, `index.html:106-107`, `js/modules/nav.js:65-125`)
-- Preferencja reduced motion obsłużona w tokenach CSS. (`css/tokens.css:39-47`)
-- No-JS baseline jest częściowy: listing/produkt/koszyk pokazują komunikaty, ale kluczowe treści e-commerce są renderowane JS-em. (`kategoria.html:213-220`, `produkt.html:124-131`, `koszyk.html:135-140`)
+## Uwagi SEO
+- Wykryte: `meta description`, canonical, Open Graph, Twitter Card, robots meta, `robots.txt`, `sitemap.xml`, JSON-LD.
+- `og:url` jest spójne z canonical na analizowanych podstronach.
+- OG image wskazuje na istniejący asset SVG (`assets/svg/social-share-placeholder.svg`).
 
-### SEO notes
-- Meta description/canonical/OG/Twitter obecne na głównych podstronach. (`index.html:7`, `index.html:11`, `index.html:13-25`)
-- `og:url` jest zgodny z canonical na analizowanych stronach. (`index.html:11`, `index.html:18`)
-- JSON-LD występuje jako `Organization` + typ strony. (`index.html:27-50`, `kategoria.html:27-50`, `kontakt.html:27-50`)
-- robots i sitemap obecne i spójne. (`robots.txt:1-3`, `sitemap.xml:1-30`)
+## Uwagi wydajności
+- Obrazy mają zdefiniowane `width`/`height` w wielu miejscach.
+- Miniatury i obrazy renderowane dynamicznie używają `loading="lazy"` i `decoding="async"` (dla dynamicznie tworzonych `<img>`).
+- Brak preloadu fontów i brak self-hostowanych plików fontów (użyte fallbackowe stacki rodzin fontów w tokenach).
+- W repo współistnieją source + minified assety CSS/JS (decyzja build/deploy).
 
-### Performance notes
-- Obrazy mają deklarowane `width`/`height` w HTML i przy renderze JS. (`index.html:136`, `produkt.html:137`, `js/modules/catalog.js:116-117`)
-- Lazy loading jest używany w części obrazów (np. miniatury/grafiki listingowe). (`produkt.html:141-147`, `js/modules/catalog.js:114`)
-- CSS przez łańcuch `@import` może zwiększać koszt pierwszego renderu. (`css/main.css:1-17`)
-- W projekcie nie wykryto zewnętrznych frameworków runtime JS.
+## Roadmap (rekomendowana na podstawie audytu)
+- Ujednolicić strategię assetów produkcyjnych (source vs minified w HTML).
+- Dodać no-JS fallback dla checkout/kontakt lub endpoint `action`.
+- Rozszerzyć SEO structured data dla stron produktowych (`Product` schema).
+- Dodać politykę linków zewnętrznych (`rel="noopener noreferrer"` dla nowych kart).
+- Rozważyć manifest + SW tylko jeśli jest realny plan offline/PWA.
 
-### Roadmap (evidence-based)
-1. Naprawić krytyczne błędy runtime w `js/modules/product.js`, `js/modules/cart.js`, `js/modules/checkout.js`.
-2. Ograniczyć waterfall CSS (prefabrykowany bundle / krytyczny CSS).
-3. Rozszerzyć no-JS fallback o realną, czytelną treść produktów.
-4. Ujednolicić i odchudzić powtarzany header/footer między stronami.
-5. Dodać automatyczne kontrole jakości (lint/test statyczny HTML/JS).
-
-### Licencja
-`LICENSE` nie został wykryty w katalogu projektu.
+## Licencja
+- Plik licencji nie został wykryty w repozytorium.
 
 ---
 
-## EN (English version)
+# Outland Gear — Project Documentation (EN)
 
-### Project overview
-Outland Gear is a static multi-page front-end website built with HTML, CSS, and Vanilla JS (ES Modules). The repository includes a homepage, listing, product page, cart, checkout, and legal/informational pages.  
-Evidence: `index.html`, `kategoria.html`, `produkt.html`, `koszyk.html`, `checkout.html`, `o-nas.html`, `kontakt.html`, `regulamin.html`, `polityka-prywatnosci.html`.
+## Project overview
+Outland Gear is a static multi-page e-commerce front-end built with HTML/CSS/ES Modules. Product/category data is loaded from JSON files, while listing/product/cart experiences are rendered/enhanced via JavaScript modules.
 
-### Key features (repository-evidenced only)
-- Multi-page navigation with `aria-current` on active pages. (`kategoria.html:95`, `kontakt.html:97`)
-- Dynamic product listing (URL search/filter/sort/load more). (`kategoria.html:141-225`, `js/modules/catalog.js:33-103`, `js/modules/catalog.js:205-218`)
-- LocalStorage-backed cart. (`js/modules/storage.js:39-57`, `js/modules/cart.js:44-83`)
-- Client-side validated contact and checkout forms. (`kontakt.html:139-167`, `js/modules/form-ux.js:72-87`, `checkout.html:133-210`)
-- SEO baseline: canonical, OG/Twitter tags, robots, sitemap, JSON-LD. (`index.html:11-25`, `index.html:27-50`, `robots.txt:1-3`, `sitemap.xml:1-30`)
+## Key implemented features (repository-evidenced)
+- Multi-page structure: home, category, product, cart, checkout, contact, about, terms, privacy.
+- JS domain modules for catalog filtering, product view, cart state, checkout/contact form UX.
+- Partial header/footer loading with graceful fallback.
+- No-JS fallback content on selected pages (category/product/cart).
 
-### Tech stack
-- HTML5 (MPA)
-- CSS (tokenized + modular imports) (`css/main.css:1-17`, `css/tokens.css:1-37`)
-- Vanilla JavaScript ES Modules (`js/app.js:1-34`)
-- Build tooling: PostCSS, cssnano, esbuild (`package.json:6-17`)
+## Tech stack
+- HTML5 static pages.
+- Modular CSS architecture (`tokens`, `base`, `layout`, `components`, `pages`).
+- JavaScript ES Modules.
+- Build tooling: PostCSS + esbuild.
 
-### Structure overview
-- Pages: top-level HTML files.
-- Styles: `css/main.css`, `css/base.css`, `css/layout.css`, `css/components/*`, `css/pages/*`.
-- Scripts: `js/app.js`, `js/config.js`, `js/modules/*`.
-- Data: `data/products.json`, `data/categories.json`.
-- SEO/static hosting: `robots.txt`, `sitemap.xml`.
+## Project structure overview
+- `css/` styling layers.
+- `js/` app entry and feature modules.
+- `data/` JSON datasets.
+- `partials/` shared HTML fragments.
+- `assets/svg/` visual assets.
+- `scripts/` utility scripts.
 
-### Setup & run
-1. `cd audit-pr/pr-02-outlandgear`
-2. `npm install`
-3. Build: `npm run build`
-4. Local preview example: `python -m http.server 8000`
-5. Open `http://localhost:8000/index.html`
+## Setup & run
+1. `npm install`
+2. Run watchers: `npm run watch:css` and `npm run watch:js`
+3. Production build: `npm run build`
+4. Serve as static site locally.
 
-### Build / deployment notes
-- Build scripts generate `css/main.min.css` and `js/app.min.js`. (`package.json:6-10`)
-- Current HTML loads non-minified entries (`css/main.css`, `js/app.js`). (`index.html:26`, `index.html:269`)
+## Build/deployment notes
+- Build outputs (`css/main.min.css`, `js/app.min.js`) are generated, but pages currently reference source assets (`css/main.css`, `js/app.js`).
+- `robots.txt` and `sitemap.xml` are present.
 - No `_headers`, `_redirects`, `netlify.toml`, or `vercel.json` detected.
-- No service worker and no PWA manifest detected.
+- No PWA manifest or service worker registration detected.
 
-### Accessibility notes
-- Skip link and focus-visible styles are implemented. (`index.html:53`, `css/base.css:57-62`, `css/base.css:103-117`)
-- Mobile drawer includes ARIA state sync, focus trapping, and Escape close handling. (`index.html:72`, `index.html:106-107`, `js/modules/nav.js:65-125`)
-- Reduced-motion preference is supported. (`css/tokens.css:39-47`)
-- No-JS baseline is partial: listing/product/cart rely on JS for core ecommerce content. (`kategoria.html:213-220`, `produkt.html:124-131`, `koszyk.html:135-140`)
+## Accessibility notes
+- Skip links + landmark targeting are present.
+- Focus-visible styling exists in base CSS.
+- Mobile drawer includes keyboard focus management and Escape handling.
+- ARIA state attributes are used for nav/dropdown interactions.
+- Reduced-motion handling is present via media query token overrides.
+- Checkout/contact currently rely on JS submit interception and do not provide dedicated no-JS workflows.
 
-### SEO notes
-- Meta description/canonical/OG/Twitter are present on core pages. (`index.html:7`, `index.html:11`, `index.html:13-25`)
-- `og:url` aligns with canonical on reviewed pages. (`index.html:11`, `index.html:18`)
-- JSON-LD is present (`Organization` + page type). (`index.html:27-50`, `kategoria.html:27-50`, `kontakt.html:27-50`)
-- robots and sitemap are present and consistent. (`robots.txt:1-3`, `sitemap.xml:1-30`)
+## SEO notes
+- Description, canonical, OG/Twitter metadata, robots directives, sitemap, and JSON-LD are present.
+- Canonical and `og:url` alignment appears consistent on sampled pages.
 
-### Performance notes
-- Images define width/height in HTML and JS-generated cards. (`index.html:136`, `produkt.html:137`, `js/modules/catalog.js:116-117`)
-- Lazy loading is used on product/gallery/listing images. (`produkt.html:141-147`, `js/modules/catalog.js:114`)
-- CSS `@import` chain can add render-blocking waterfall risk. (`css/main.css:1-17`)
-- No heavy third-party runtime framework detected.
+## Performance notes
+- Many images include explicit dimensions.
+- Lazy loading is present on gallery/thumb and dynamic listing/cart imagery.
+- No explicit font preloading strategy detected.
+- Source and minified assets coexist in repository.
 
-### Roadmap
-1. Fix critical runtime errors in `js/modules/product.js`, `js/modules/cart.js`, and `js/modules/checkout.js`.
-2. Reduce CSS loading waterfall.
-3. Improve meaningful no-JS fallback for ecommerce views.
-4. Reduce repeated header/footer markup.
-5. Add automated static quality checks.
+## Roadmap
+- Align production asset-loading strategy.
+- Improve no-JS baseline for form submissions.
+- Add product-specific structured data.
+- Harden external-link security defaults.
+- Add PWA surface only if product scope requires it.
 
-### License
-No `LICENSE` file detected in this project directory.
+## License
+- No license file detected in repository.

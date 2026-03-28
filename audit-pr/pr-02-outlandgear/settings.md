@@ -1,31 +1,31 @@
-# npm scripts reference
+# settings.md — npm scripts documentation
 
-## Detected `package.json`
+## package.json status
 `package.json` detected in project root.
 
 ## Scripts
 
-### `build:css`
+### 1) `build:css`
 - **Command:** `postcss css/main.css -o css/main.min.css`
-- **What it does:** Processes the CSS entry file and writes a minified/bundled output to `css/main.min.css` (using PostCSS toolchain configured in the project).
-- **When to use:** Before production deployment or whenever CSS sources change and you need refreshed minified CSS.
+- **What it does:** Runs PostCSS on the main CSS entry and writes a minified/bundled output file.
+- **When to use:** Before release/deployment, or when you need an updated production CSS artifact after style changes.
 
-### `build:js`
+### 2) `build:js`
 - **Command:** `esbuild js/app.js --bundle --minify --outfile=js/app.min.js`
-- **What it does:** Bundles JS from the main entry module and outputs minified build artifact `js/app.min.js`.
-- **When to use:** Before production deployment or whenever JS modules change.
+- **What it does:** Bundles the JavaScript application starting from `js/app.js` and outputs a minified bundle.
+- **When to use:** Before release/deployment, or after JS module changes when generating production output.
 
-### `build`
+### 3) `build`
 - **Command:** `npm run build:css && npm run build:js`
-- **What it does:** Runs full front-end build sequence (CSS then JS).
-- **When to use:** Standard one-command build for release candidates and deploy artifacts.
+- **What it does:** Executes a full production build pipeline in sequence (CSS first, JS second).
+- **When to use:** Standard one-command build for release candidates, handoff, and static hosting artifacts.
 
-### `watch:css`
+### 4) `watch:css`
 - **Command:** `postcss css/main.css -o css/main.min.css --watch`
-- **What it does:** Watches CSS sources and continuously rebuilds `css/main.min.css` on file changes.
-- **When to use:** During local styling work.
+- **What it does:** Watches CSS sources and continuously rebuilds `css/main.min.css` when changes are detected.
+- **When to use:** During local front-end development focused on styling.
 
-### `watch:js`
+### 5) `watch:js`
 - **Command:** `esbuild js/app.js --bundle --minify --outfile=js/app.min.js --watch`
-- **What it does:** Watches JS modules and continuously rebuilds `js/app.min.js` on file changes.
-- **When to use:** During local JavaScript development.
+- **What it does:** Watches JavaScript modules and continuously rebuilds `js/app.min.js` when files change.
+- **When to use:** During local development focused on interaction/business logic updates.
