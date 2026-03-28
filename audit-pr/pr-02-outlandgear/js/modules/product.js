@@ -4,6 +4,9 @@ import { formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
 import { createFallbackNotice } from "./fallback.js";
+import { fetchJson } from "./data.js";
+import { findProductBySlug } from "./product-data.js";
+import { setUiState, clearUiState } from "./ui-state.js";
 
 const SITE_NAME = "Outland Gear";
 const getMainImageAlt = (productName, index = 0) => `Zdjęcie ${index + 1} produktu ${productName}`;
@@ -84,6 +87,7 @@ const renderProduct = (product) => {
 
   const mainImage = qs("[data-product-main]", root);
   const thumbs = qsa("[data-product-thumb]", root);
+  const images = Array.isArray(product?.images) && product.images.length ? product.images : [""];
   const setActiveThumb = (activeIndex) => {
     thumbs.forEach((thumb, index) => {
       thumb.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
@@ -107,8 +111,8 @@ const renderProduct = (product) => {
     thumb.setAttribute("aria-label", `Pokaż zdjęcie ${index + 1} produktu ${product.name}`);
 
     on(thumb, "click", () => {
-      if (mainImage && product.images[index]) {
-        mainImage.src = product.images[index];
+      if (mainImage && images[index]) {
+        mainImage.src = images[index];
         mainImage.alt = getMainImageAlt(product.name, index);
       }
       setActiveThumb(index);
@@ -201,6 +205,7 @@ const renderProductLoadError = (root) => {
 export const initProduct = async () => {
   const root = qs(CONFIG.selectors.productRoot);
   if (!root) return;
+  const stateRegion = qs("[data-product-state]", root);
   let products = [];
   try {
     products = await fetchJson("data/products.json");
@@ -214,6 +219,10 @@ export const initProduct = async () => {
   const normalizedSlug = slug?.trim() || "";
   const matchedProduct = findProductBySlug(products, normalizedSlug);
   const product = matchedProduct || products[0];
+  if (!product) {
+    renderProductLoadError(root);
+    return;
+  }
 
   if (matchedProduct) {
     setProductMetadata(matchedProduct, normalizedSlug);
