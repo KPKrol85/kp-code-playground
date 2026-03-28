@@ -1,6 +1,7 @@
 import { CONFIG } from "./config.js";
 import { qs, on } from "./modules/dom.js";
 import { initNav } from "./modules/nav.js";
+import { initPartials } from "./modules/partials.js";
 import { initCatalog } from "./modules/catalog.js";
 import { initProduct } from "./modules/product.js";
 import { initCart, updateCartCount } from "./modules/cart.js";
@@ -31,4 +32,11 @@ const initApp = () => {
   initContactForm();
 };
 
-document.addEventListener("DOMContentLoaded", initApp);
+const bootstrapApp = async () => {
+  await initPartials();
+  initApp();
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  void bootstrapApp();
+});
