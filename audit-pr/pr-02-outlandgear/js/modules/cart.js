@@ -1,16 +1,44 @@
 import { CONFIG } from "../config.js";
 import { fetchJson } from "./data.js";
 import { qs, qsa, delegate } from "./dom.js";
-import { loadCart, saveCart } from "./storage.js";
+import { loadCart, saveCart, getStorageStatus } from "./storage.js";
 import { clamp, formatCurrency } from "../utils.js";
-import { clearUiState, setUiState } from "./ui-state.js";
+import { showToast } from "./toast.js";
+import { createFallbackNotice } from "./fallback.js";
 
 let productsCache = [];
+let cartHandlersBound = false;
 
 const getCart = () => loadCart();
 
-const setCart = (cart) => {
-  saveCart(cart);
+const setCart = (cart) => saveCart(cart);
+
+const upsertStorageNotice = (container, actionLabel, onAction) => {
+  if (!container) return;
+
+  const status = getStorageStatus();
+  const existing = qs("[data-storage-warning]", container.parentElement || container);
+
+  if (status.available) {
+    if (existing) existing.remove();
+    return;
+  }
+
+  const notice = createFallbackNotice({
+    message: status.message || "Nie możemy zapisać zmian w koszyku.",
+    actionLabel,
+    onAction,
+    role: "status",
+    polite: true,
+  });
+
+  notice.setAttribute("data-storage-warning", "");
+
+  if (existing) {
+    existing.replaceWith(notice);
+  } else {
+    container.before(notice);
+  }
 };
 
 export const addToCart = (product, qty = 1) => {
@@ -21,7 +49,11 @@ export const addToCart = (product, qty = 1) => {
   } else {
     cart.items.push({ id: product.id, qty: clamp(qty, 1, 99) });
   }
-  setCart(cart);
+  const saved = setCart(cart);
+  if (!saved) {
+    showToast("Nie udało się zapisać koszyka. Odśwież stronę i spróbuj ponownie.");
+  }
+  return saved;
 };
 
 export const updateCartCount = () => {
@@ -35,7 +67,7 @@ export const updateCartCount = () => {
 const removeItem = (id) => {
   const cart = getCart();
   cart.items = cart.items.filter((item) => item.id !== id);
-  setCart(cart);
+  return setCart(cart);
 };
 
 const updateQty = (id, qty) => {
@@ -44,7 +76,7 @@ const updateQty = (id, qty) => {
   if (item) {
     item.qty = clamp(qty, 1, 99);
   }
-  setCart(cart);
+  return setCart(cart);
 };
 
 const calculateTotals = (items) => {
@@ -137,27 +169,36 @@ const hydrateItems = (products, cart) =>
     })
     .filter(Boolean);
 
+const renderCartLoadError = (container, summary) => {
+  if (!container) return;
+
+  container.innerHTML = "";
+  const fallback = createFallbackNotice({
+    message: "Nie udało się załadować danych produktów w koszyku. Spróbuj ponownie.",
+    actionLabel: "Spróbuj ponownie",
+    onAction: () => initCart(),
+  });
+
+  container.appendChild(fallback);
+  if (summary) {
+    summary.innerHTML = '<p class="subtle">Odśwież dane, aby zobaczyć podsumowanie zamówienia.</p>';
+  }
+};
+
 export const initCart = async () => {
   const container = qs(CONFIG.selectors.cartContainer);
   if (!container) {
     updateCartCount();
     return;
   }
-  const stateRegion = qs("[data-cart-state]");
-  setUiState(stateRegion, {
-    type: "loading",
-    title: "Ładowanie koszyka",
-    message: "Sprawdzamy dostępność produktów w koszyku.",
-  });
+
+  const summary = qs(CONFIG.selectors.cartSummary);
 
   try {
     productsCache = await fetchJson("data/products.json");
   } catch (error) {
-    setUiState(stateRegion, {
-      type: "error",
-      title: "Nie udało się załadować koszyka",
-      message: "Spróbuj odświeżyć stronę i wrócić do koszyka.",
-    });
+    console.error("Cart data error", error);
+    renderCartLoadError(container, summary);
     return;
   }
 
@@ -165,21 +206,39 @@ export const initCart = async () => {
   const items = hydrateItems(productsCache, cart);
   renderCart(items, stateRegion);
   updateCartCount();
+  upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
+
+  if (cartHandlersBound) return;
 
   delegate(container, "[data-remove-item]", "click", (_, target) => {
     const id = Number(target.getAttribute("data-remove-item"));
-    removeItem(id);
+    const updated = removeItem(id);
+    if (!updated) {
+      upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
+      return;
+    }
+
     const refreshed = hydrateItems(productsCache, getCart());
     renderCart(refreshed, stateRegion);
     updateCartCount();
+    upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
   });
 
-  delegate(container, "[data-qty-input]", "change", (event, target) => {
+  delegate(container, "[data-qty-input]", "change", (_, target) => {
     const id = Number(target.getAttribute("data-qty-input"));
     const qty = Number(target.value);
-    updateQty(id, qty);
+    const updated = updateQty(id, qty);
+
+    if (!updated) {
+      upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
+      return;
+    }
+
     const refreshed = hydrateItems(productsCache, getCart());
     renderCart(refreshed, stateRegion);
     updateCartCount();
+    upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
   });
+
+  cartHandlersBound = true;
 };
