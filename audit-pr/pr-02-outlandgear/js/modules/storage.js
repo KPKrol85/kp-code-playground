@@ -1,6 +1,6 @@
 import { CONFIG } from "../config.js";
 
-const DEFAULT_CART = { version: CONFIG.storageVersion, items: [] };
+const defaultCart = () => ({ version: CONFIG.storageVersion, items: [] });
 
 const safeParse = (value, fallback) => {
   if (!value) return fallback;
@@ -11,70 +11,47 @@ const safeParse = (value, fallback) => {
   }
 };
 
-const safeStorage = () => {
+let storageIssue = null;
+
+const setStorageIssue = (error) => {
+  storageIssue = error || null;
+};
+
+const withStorageGuard = (operation, fallbackValue) => {
   try {
-    return window.localStorage;
+    const result = operation();
+    setStorageIssue(null);
+    return result;
   } catch (error) {
-    return null;
+    console.error("Storage error", error);
+    setStorageIssue(error);
+    return fallbackValue;
   }
 };
 
-const normalizeCart = (value) => {
-  if (!value || typeof value !== "object") {
-    return { ...DEFAULT_CART };
-  }
-
-  const rawItems = Array.isArray(value.items) ? value.items : [];
-  const items = rawItems
-    .map((item) => {
-      const id = Number(item?.id);
-      const qty = Number(item?.qty);
-      if (!Number.isFinite(id) || !Number.isFinite(qty)) return null;
-      return {
-        id,
-        qty: Math.max(1, Math.min(Math.round(qty), 99)),
-      };
-    })
-    .filter(Boolean);
-
-  return {
-    version: value.version,
-    items,
-  };
-};
+export const getStorageStatus = () => ({
+  available: !storageIssue,
+  message: storageIssue
+    ? "Nie możemy zapisać zmian w koszyku w tej przeglądarce."
+    : "",
+});
 
 export const loadCart = () => {
-  const storage = safeStorage();
-  if (!storage) return { ...DEFAULT_CART };
-
-  const data = safeParse(storage.getItem(CONFIG.storageKey), null);
-  const cart = normalizeCart(data);
-  if (cart.version !== CONFIG.storageVersion) {
-    return { ...DEFAULT_CART };
+  const parsed = withStorageGuard(() => safeParse(localStorage.getItem(CONFIG.storageKey), null), null);
+  if (!parsed || parsed.version !== CONFIG.storageVersion) {
+    return defaultCart();
   }
-  return cart;
+  return parsed;
 };
 
-export const saveCart = (cart) => {
-  const storage = safeStorage();
-  if (!storage) return;
+export const saveCart = (cart) =>
+  withStorageGuard(() => {
+    localStorage.setItem(CONFIG.storageKey, JSON.stringify(cart));
+    return true;
+  }, false);
 
-  const normalizedCart = normalizeCart(cart);
-  normalizedCart.version = CONFIG.storageVersion;
-  try {
-    storage.setItem(CONFIG.storageKey, JSON.stringify(normalizedCart));
-  } catch (error) {
-    console.error("Storage error", error);
-  }
-};
-
-export const clearCart = () => {
-  const storage = safeStorage();
-  if (!storage) return;
-
-  try {
-    storage.removeItem(CONFIG.storageKey);
-  } catch (error) {
-    console.error("Storage error", error);
-  }
-};
+export const clearCart = () =>
+  withStorageGuard(() => {
+    localStorage.removeItem(CONFIG.storageKey);
+    return true;
+  }, false);

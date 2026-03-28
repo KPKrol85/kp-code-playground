@@ -84,12 +84,12 @@
               >
                 Kategorie
               </button>
-              <div class="dropdown__menu" id="nav-categories" aria-hidden="true" role="menu">
-                <a class="dropdown__link" href="kategoria.html" role="menuitem">Plecaki i torby</a>
-                <a class="dropdown__link" href="kategoria.html" role="menuitem">Termika i napoje</a>
-                <a class="dropdown__link" href="kategoria.html" role="menuitem">Kemping</a>
-                <a class="dropdown__link" href="kategoria.html" role="menuitem">Elektronika outdoor</a>
-                <a class="dropdown__link" href="kategoria.html" role="menuitem">Akcesoria</a>
+              <div class="dropdown__menu" id="nav-categories" aria-hidden="true">
+                <a class="dropdown__link" href="kategoria.html">Plecaki i torby</a>
+                <a class="dropdown__link" href="kategoria.html">Termika i napoje</a>
+                <a class="dropdown__link" href="kategoria.html">Kemping</a>
+                <a class="dropdown__link" href="kategoria.html">Elektronika outdoor</a>
+                <a class="dropdown__link" href="kategoria.html">Akcesoria</a>
               </div>
             </div>
             <a class="site-nav__link" href="kategoria.html">Nowości</a>
@@ -123,7 +123,7 @@
     <main id="main" class="section">
       <div class="container">
         <div class="section-header">
-          <div>
+          <div class="section-header__intro">
             <p class="kicker">Kontakt</p>
             <h1>Skontaktuj się z zespołem Outland Gear</h1>
           </div>
@@ -136,19 +136,31 @@
             <p><strong>Showroom:</strong> Marynarki Wojennej 12/31, 33-100 Tarnów, Polska</p>
             <p class="subtle">Godziny pracy: pn-pt 9:00–18:00</p>
           </article>
-          <form class="form card info-card">
+          <form class="form card info-card" data-contact-form novalidate>
             <h2>Formularz kontaktowy</h2>
+            <p aria-live="polite" role="status" data-form-status class="form__status"></p>
             <div class="form__group">
               <label class="form__label" for="contactName">Imię i nazwisko</label>
-              <input class="form__input" id="contactName" type="text" autocomplete="name" required />
+              <input class="form__input" id="contactName" name="contactName" type="text" autocomplete="name" required />
+              <span class="form__error" data-error-for="contactName"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="contactEmail">Email</label>
-              <input class="form__input" id="contactEmail" type="email" autocomplete="email" required />
+              <input
+                class="form__input"
+                id="contactEmail"
+                name="contactEmail"
+                type="email"
+                autocomplete="email"
+                inputmode="email"
+                required
+              />
+              <span class="form__error" data-error-for="contactEmail"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="contactMessage">Wiadomość</label>
-              <textarea class="form__textarea" id="contactMessage" rows="4" required></textarea>
+              <textarea class="form__textarea" id="contactMessage" name="contactMessage" rows="4" required></textarea>
+              <span class="form__error" data-error-for="contactMessage"></span>
             </div>
             <p class="subtle">Wysyłając formularz, akceptujesz <a href="regulamin.html">regulamin</a> i <a href="polityka-prywatnosci.html">politykę prywatności</a>.</p>
             <button class="btn" type="submit">Wyślij wiadomość</button>
@@ -181,9 +193,9 @@
               Techniczny sprzęt outdoor i travel gear dla osób, które traktują każdą wyprawę serio.
             </p>
             <ul class="site-footer__social" aria-label="Kanały społecznościowe">
-              <li><a href="#" aria-label="Instagram">Instagram</a></li>
-              <li><a href="#" aria-label="YouTube">YouTube</a></li>
-              <li><a href="#" aria-label="Facebook">Facebook</a></li>
+              <li><a href="https://www.instagram.com/" aria-label="Instagram">Instagram</a></li>
+              <li><a href="https://www.youtube.com/" aria-label="YouTube">YouTube</a></li>
+              <li><a href="https://www.facebook.com/" aria-label="Facebook">Facebook</a></li>
             </ul>
           </div>
 
