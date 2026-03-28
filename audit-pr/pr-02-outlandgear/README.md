@@ -1,32 +1,32 @@
-# Outland Gear — Documentation
+# Outland Gear
 
 ## PL (wersja podstawowa)
 
 ### Przegląd projektu
-Outland Gear to statyczny serwis front-end (MPA) oparty o HTML, CSS i JavaScript ES Modules. Kod implementuje katalog produktów, kartę produktu, koszyk i checkout demo z danymi ładowanymi z lokalnych plików JSON.
+Outland Gear to statyczny serwis front-end typu MPA (multi-page application) oparty na HTML, CSS i JavaScript (ES Modules). Implementacja obejmuje stronę główną, listing kategorii, kartę produktu, koszyk, checkout oraz strony informacyjne/prawne.
 
-### Kluczowe funkcje (potwierdzone w repo)
-- Wielostronicowa struktura: strona główna, listing, produkt, koszyk, checkout, kontakt, o nas, regulamin i polityka prywatności.
-- Dynamiczny listing (filtry, sortowanie, wyszukiwanie, paginacja przyciskiem „Pokaż więcej”).
-- Dynamiczna karta produktu z galerią miniatur, specyfikacją i sekcją produktów powiązanych.
-- Koszyk oparty o `localStorage` + globalny licznik koszyka.
-- Checkout demo z walidacją pól i komunikatami błędów.
-- Podstawy SEO technicznego: `canonical`, Open Graph/Twitter (na głównych podstronach), `robots.txt`, `sitemap.xml`, JSON-LD.
-- Podstawy dostępności: skip-link, focus ring, `aria-expanded`/`aria-hidden` w nawigacji, `aria-current`, live region dla toastów.
+### Kluczowe funkcje (potwierdzone w repozytorium)
+- Wielostronicowa nawigacja: `index`, `kategoria`, `produkt`, `koszyk`, `checkout`, `o-nas`, `kontakt`, `regulamin`, `polityka-prywatnosci`.
+- Dynamiczny listing produktów: filtrowanie, sortowanie, wyszukiwanie po URL (`?q=`), przycisk „Pokaż więcej”.
+- Dynamiczna karta produktu: aktualizacja danych produktu po `slug`, galeria miniatur, tabela specyfikacji, sekcja „Często kupowane razem”.
+- Koszyk oparty o `localStorage` oraz globalny licznik koszyka w nagłówku.
+- Checkout demo z walidacją formularza i komunikatami błędów przy polach.
+- Podstawy SEO: `canonical`, Open Graph, Twitter Card, `robots.txt`, `sitemap.xml`, JSON-LD na kluczowych stronach.
+- Podstawy dostępności: skip-link, focus-visible, `aria-expanded`/`aria-hidden`, `aria-current`, live region dla toastów.
 
 ### Tech stack
-- HTML5 (statyczne podstrony).
-- CSS3 (tokeny + warstwy `base`, `layout`, `components`, `pages`).
-- Vanilla JS (ES Modules).
-- Lokalne źródła danych JSON (`data/products.json`, `data/categories.json`).
-- Zasoby SVG (logo, grafiki produktu, hero/banner, OG placeholder).
+- HTML5
+- CSS3 (tokeny + warstwy `base`, `layout`, `components`, `pages`)
+- Vanilla JavaScript (ES Modules)
+- Lokalne pliki danych JSON (`data/products.json`, `data/categories.json`)
+- Zasoby SVG (`assets/svg`)
 
 ### Struktura projektu
-- Strony: `index.html`, `kategoria.html`, `produkt.html`, `koszyk.html`, `checkout.html`, `o-nas.html`, `kontakt.html`, `regulamin.html`, `polityka-prywatnosci.html`
-- Style: `css/main.css` + importy do `tokens/base/layout/components/pages`
-- Logika: `js/app.js`, `js/config.js`, `js/utils.js`, `js/modules/*.js`
-- Dane: `data/products.json`, `data/categories.json`
-- SEO/deploy static: `robots.txt`, `sitemap.xml`
+- Strony: pliki `*.html` w katalogu głównym projektu.
+- Style: `css/main.css` i importowane moduły stylów.
+- Logika: `js/app.js`, `js/config.js`, `js/utils.js`, `js/modules/*.js`.
+- Dane: `data/products.json`, `data/categories.json`.
+- SEO/deploy static: `robots.txt`, `sitemap.xml`.
 
 ### Setup i uruchomienie
 `package.json` nie występuje w projekcie, więc nie ma skryptów npm.
@@ -37,36 +37,39 @@ Przykładowe uruchomienie lokalne:
 3. Otwórz `http://localhost:8000/index.html`
 
 ### Build / deployment notes
-- Nie wykryto konfiguracji bundlera/frameworka ani pipeline build.
-- Nie wykryto konfiguracji Netlify/Vercel ani Service Workera.
-- Projekt jest przygotowany jako statyczny serwis do hostingu plików.
+- Nie wykryto konfiguracji bundlera/frameworka.
+- Nie wykryto plików `_headers`, `_redirects`, `netlify.toml`, `vercel.json`.
+- Nie wykryto service workera ani manifestu.
+- Projekt jest przygotowany do hostingu statycznych plików.
 
 ### Accessibility notes
-- Obecny skip link i globalny styl `:focus-visible`.
-- Nawigacja mobilna ma focus trap i zamykanie klawiszem `Escape`.
-- Dropdowny i drawer aktualizują `aria-expanded` oraz `aria-hidden`.
-- Formularz checkout ustawia `aria-invalid` i skupia fokus na pierwszym błędnym polu.
-- Dla listing/produkt/koszyk są fallbacki `noscript`, ale kluczowa zawartość e-commerce pozostaje zależna od JS.
+- Skip link prowadzi do `#main` na stronach.
+- Globalny styl `:focus-visible` jest zdefiniowany.
+- Drawer mobilny ma focus trap i zamykanie klawiszem `Escape`.
+- Dropdown i drawer synchronizują stany ARIA (`aria-expanded`, `aria-hidden`).
+- Checkout przenosi fokus na pierwsze niepoprawne pole i oznacza je `aria-invalid`.
+- Dla `kategoria`, `produkt`, `koszyk` są komunikaty `noscript`, ale kluczowe treści e-commerce nadal zależą od JavaScript.
 
 ### SEO notes
-- Główne strony mają `title`, `meta description`, `canonical`, Open Graph i Twitter metadata.
+- Główne strony mają `title`, `meta description`, `canonical`, OG/Twitter.
 - `robots.txt` istnieje i wskazuje `sitemap.xml`.
-- `sitemap.xml` zawiera komplet głównych podstron.
-- JSON-LD (`Organization`, miejscami `WebSite`) jest obecne.
-- Strony prawne (`regulamin`, `polityka prywatności`) nie mają bloków OG/Twitter/JSON-LD.
+- `sitemap.xml` zawiera główne podstrony.
+- JSON-LD występuje na kluczowych stronach (`Organization` + typ strony).
+- Strony prawne również zawierają metadata OG/Twitter oraz JSON-LD.
 
 ### Performance notes
-- Obrazy statyczne mają jawne `width`/`height`; obrazy w JS są tworzone z wymiarami.
-- Lazy loading jest stosowany dla obrazów listingu i bannera.
-- Brak zewnętrznych bibliotek JS runtime.
-- CSS jest ładowany łańcuchem `@import` (potencjalny waterfall render-blocking).
+- Obrazy w HTML mają jawne `width`/`height`.
+- Obrazy tworzone przez JS również dostają `width`/`height`.
+- Lazy loading występuje m.in. na listingu i banerze.
+- CSS jest ładowany przez łańcuch `@import` (potencjalny waterfall render-blocking).
+- Brak ciężkich bibliotek JS po stronie klienta.
 
 ### Roadmap
-1. Ujednolicić SEO metadata dla stron prawnych (OG/Twitter/JSON-LD).
-2. Ograniczyć koszt ładowania CSS z `@import` (scalenie/preload krytycznego CSS).
-3. Rozszerzyć dostępność galerii produktu (np. pełna obsługa klawiatury miniatur).
-4. Dodać bezpieczny fallback UI dla błędów `fetch` danych produktów.
-5. Rozważyć pełniejszy no-JS fallback dla listingu/produktu/koszyka.
+1. Ujednolicić metadata SEO na stronach prawnych.
+2. Ograniczyć koszt ładowania CSS przez strategię bundling/preload.
+3. Dodać czytelny UI fallback dla błędów `fetch` danych produktów.
+4. Rozszerzyć no-JS fallback dla krytycznych ścieżek e-commerce.
+5. Dopracować semantykę menu dropdown (nawigacja linkowa vs wzorzec `menuitem`).
 
 ### Licencja
 Plik `LICENSE` nie został wykryty w katalogu projektu.
@@ -76,33 +79,33 @@ Plik `LICENSE` nie został wykryty w katalogu projektu.
 ## EN (English version)
 
 ### Project overview
-Outland Gear is a static multi-page front-end website built with HTML, CSS, and JavaScript ES Modules. The implementation includes a product listing, product details page, cart, and a demo checkout flow powered by local JSON files.
+Outland Gear is a static multi-page front-end site built with HTML, CSS, and JavaScript (ES Modules). The implementation includes a homepage, category listing, product detail page, cart, checkout, and informational/legal pages.
 
 ### Key features (repository-evidenced)
-- Multi-page structure: home, category listing, product, cart, checkout, contact, about, terms, privacy policy.
-- Dynamic listing (filters, sorting, search, and “load more”).
-- Dynamic product page with thumbnails, specs table, and related products.
-- Cart persistence in `localStorage` plus a shared cart counter.
-- Demo checkout form with field validation and status messages.
-- Technical SEO baseline: `canonical`, Open Graph/Twitter tags (on core pages), `robots.txt`, `sitemap.xml`, JSON-LD.
-- Accessibility baseline: skip link, visible focus styling, ARIA state handling in nav, and live toast region.
+- Multi-page navigation: `index`, `kategoria`, `produkt`, `koszyk`, `checkout`, `o-nas`, `kontakt`, `regulamin`, `polityka-prywatnosci`.
+- Dynamic product listing: filtering, sorting, URL-based search (`?q=`), and “Load more”.
+- Dynamic product page: slug-based product state, thumbnail gallery, specs table, related products.
+- `localStorage` cart with shared cart counter in header.
+- Demo checkout with client-side validation and per-field error messaging.
+- SEO baseline: `canonical`, Open Graph, Twitter tags, `robots.txt`, `sitemap.xml`, JSON-LD on core pages.
+- Accessibility baseline: skip link, focus-visible styling, ARIA state toggles, `aria-current`, live toast region.
 
 ### Tech stack
-- HTML5 static pages.
-- CSS3 with tokenized system and layered architecture.
-- Vanilla JavaScript (ES Modules).
-- Local JSON data files (`data/products.json`, `data/categories.json`).
-- SVG assets for UI/marketing/product visuals.
+- HTML5
+- CSS3 (tokens + `base/layout/components/pages` layers)
+- Vanilla JavaScript (ES Modules)
+- Local JSON data files (`data/products.json`, `data/categories.json`)
+- SVG assets (`assets/svg`)
 
 ### Structure overview
-- Pages: `index.html`, `kategoria.html`, `produkt.html`, `koszyk.html`, `checkout.html`, `o-nas.html`, `kontakt.html`, `regulamin.html`, `polityka-prywatnosci.html`
-- Styles: `css/main.css` plus imports to `tokens/base/layout/components/pages`
-- Scripts: `js/app.js`, `js/config.js`, `js/utils.js`, `js/modules/*.js`
-- Data: `data/products.json`, `data/categories.json`
-- SEO/static hosting files: `robots.txt`, `sitemap.xml`
+- Pages: top-level `*.html` files.
+- Styles: `css/main.css` and imported CSS modules.
+- Scripts: `js/app.js`, `js/config.js`, `js/utils.js`, `js/modules/*.js`.
+- Data: `data/products.json`, `data/categories.json`.
+- SEO/static hosting files: `robots.txt`, `sitemap.xml`.
 
 ### Setup & run
-`package.json` is not present, so npm scripts are not available.
+`package.json` is not present, so npm scripts are unavailable.
 
 Example local run:
 1. `cd audit-pr/pr-02-outlandgear`
@@ -110,36 +113,39 @@ Example local run:
 3. Open `http://localhost:8000/index.html`
 
 ### Build / deployment notes
-- No bundler/framework build pipeline detected.
-- No Netlify/Vercel config files or service worker detected.
-- Repository is structured for static hosting.
+- No bundler/framework configuration detected.
+- No `_headers`, `_redirects`, `netlify.toml`, or `vercel.json` files detected.
+- No service worker or web app manifest detected.
+- The repository is structured for static file hosting.
 
 ### Accessibility notes
-- Skip link and global `:focus-visible` styles are implemented.
-- Mobile drawer implements focus trap and `Escape` close behavior.
-- Dropdown and drawer components synchronize ARIA states.
-- Checkout validation applies `aria-invalid` and focus management.
-- Listing/product/cart include `noscript` notices, but core commerce rendering still depends on JavaScript.
+- Skip link points to `#main`.
+- Global `:focus-visible` styling is implemented.
+- Mobile drawer has focus trapping and `Escape` close handling.
+- Dropdown/drawer update ARIA state attributes (`aria-expanded`, `aria-hidden`).
+- Checkout moves focus to the first invalid field and applies `aria-invalid`.
+- `kategoria`, `produkt`, and `koszyk` provide `noscript` notices, but core e-commerce rendering still relies on JavaScript.
 
 ### SEO notes
-- Core pages include `title`, `meta description`, `canonical`, Open Graph, and Twitter metadata.
+- Core pages include `title`, `meta description`, `canonical`, OG/Twitter tags.
 - `robots.txt` exists and references `sitemap.xml`.
-- `sitemap.xml` includes all core pages.
-- JSON-LD (`Organization`, sometimes `WebSite`) is present.
-- Legal pages do not include OG/Twitter/JSON-LD blocks.
+- `sitemap.xml` lists core pages.
+- JSON-LD is present on core pages (`Organization` + page schema type).
+- Legal pages also include OG/Twitter metadata and JSON-LD blocks.
 
 ### Performance notes
-- Static images have explicit `width`/`height`; JS-created images are also assigned dimensions.
-- Lazy loading is used in listing/banner flows.
-- No runtime-heavy third-party JS libraries were found.
-- CSS is composed through `@import`, which can introduce render-blocking request waterfalls.
+- HTML images include explicit `width`/`height`.
+- JS-created images also include explicit dimensions.
+- Lazy loading is used (e.g., listing/banner).
+- CSS is composed via `@import`, which can increase render-blocking waterfall risk.
+- No heavy third-party runtime JS libraries were detected.
 
 ### Roadmap
-1. Align legal pages with the SEO metadata standard (OG/Twitter/JSON-LD).
-2. Reduce CSS `@import` waterfall via bundling or critical CSS strategy.
-3. Improve product gallery keyboard accessibility patterns.
-4. Add robust user-facing fallback for product-data fetch failures.
-5. Consider stronger no-JS fallback for core commerce paths.
+1. Align SEO metadata coverage on legal pages.
+2. Reduce CSS loading overhead with bundling/preload strategy.
+3. Add user-facing UI fallback for `fetch` failures.
+4. Strengthen no-JS fallback for critical e-commerce flows.
+5. Refine dropdown semantics (navigational links vs `menuitem` pattern).
 
 ### License
 No `LICENSE` file was detected in this project directory.
