@@ -5,6 +5,7 @@ import { initCatalog } from "./modules/catalog.js";
 import { initProduct } from "./modules/product.js";
 import { initCart, updateCartCount } from "./modules/cart.js";
 import { initCheckout } from "./modules/checkout.js";
+import { initContactForm } from "./modules/contact.js";
 
 const initSearch = () => {
   const form = qs(CONFIG.selectors.searchForm);
@@ -27,6 +28,7 @@ const initApp = () => {
   initProduct();
   initCart();
   initCheckout();
+  initContactForm();
 };
 
 document.addEventListener("DOMContentLoaded", initApp);
