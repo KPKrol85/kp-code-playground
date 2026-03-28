@@ -1,9 +1,9 @@
 import { CONFIG } from "../config.js";
-import { fetchJson } from "./data.js";
 import { qs, qsa, on, delegate } from "./dom.js";
 import { debounce, formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
+import { loadNormalizedProducts, findProductById } from "./product-data.js";
 
 const parseRange = (value) => {
   if (!value) return null;
@@ -216,7 +216,7 @@ export const initCatalog = async () => {
   const grid = qs(CONFIG.selectors.listingGrid);
   if (!grid) return;
 
-  const products = await fetchJson("data/products.json");
+  const products = await loadNormalizedProducts();
   const form = qs(CONFIG.selectors.filtersForm);
   const countEl = qs(CONFIG.selectors.listingCount);
   const loadMoreBtn = qs(CONFIG.selectors.listingLoad);
@@ -278,7 +278,7 @@ export const initCatalog = async () => {
 
   delegate(grid, "[data-add-to-cart]", "click", (_, target) => {
     const productId = Number(target.getAttribute("data-add-to-cart"));
-    const product = products.find((item) => item.id === productId);
+    const product = findProductById(products, productId);
     if (!product) return;
     addToCart(product, 1);
     updateCartCount();

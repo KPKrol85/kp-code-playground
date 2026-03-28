@@ -1,8 +1,8 @@
 import { CONFIG } from "../config.js";
-import { fetchJson } from "./data.js";
 import { qs, qsa, on, delegate } from "./dom.js";
 import { loadCart, saveCart } from "./storage.js";
 import { clamp, formatCurrency } from "../utils.js";
+import { loadNormalizedProducts, findProductById } from "./product-data.js";
 
 let productsCache = [];
 
@@ -127,7 +127,7 @@ const renderCart = (items) => {
 const hydrateItems = (products, cart) =>
   cart.items
     .map((item) => {
-      const product = products.find((entry) => entry.id === item.id);
+      const product = findProductById(products, item.id);
       if (!product) return null;
       return { ...product, qty: item.qty };
     })
@@ -139,7 +139,7 @@ export const initCart = async () => {
     updateCartCount();
     return;
   }
-  productsCache = await fetchJson("data/products.json");
+  productsCache = await loadNormalizedProducts();
   const cart = getCart();
   const items = hydrateItems(productsCache, cart);
   renderCart(items);

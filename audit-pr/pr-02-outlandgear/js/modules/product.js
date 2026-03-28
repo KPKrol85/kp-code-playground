@@ -1,9 +1,9 @@
 import { CONFIG } from "../config.js";
-import { fetchJson } from "./data.js";
 import { qs, qsa, on } from "./dom.js";
 import { formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
+import { loadNormalizedProducts, findProductBySlug } from "./product-data.js";
 
 
 const SITE_NAME = "Outland Gear";
@@ -152,10 +152,11 @@ const renderRelated = (products, current) => {
 export const initProduct = async () => {
   const root = qs(CONFIG.selectors.productRoot);
   if (!root) return;
-  const products = await fetchJson("data/products.json");
+  const products = await loadNormalizedProducts();
+  if (!products.length) return;
   const slug = new URLSearchParams(window.location.search).get("slug");
   const normalizedSlug = slug?.trim() || "";
-  const matchedProduct = products.find((item) => item.slug === normalizedSlug);
+  const matchedProduct = findProductBySlug(products, normalizedSlug);
   const product = matchedProduct || products[0];
 
   if (matchedProduct) {
