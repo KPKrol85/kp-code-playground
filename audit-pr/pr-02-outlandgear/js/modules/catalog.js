@@ -126,6 +126,7 @@ const createCard = (product) => {
   }
 
   const body = document.createElement("div");
+  body.className = "product-card__content";
   const title = document.createElement("h3");
   title.className = "product-card__title";
   title.textContent = product.name;

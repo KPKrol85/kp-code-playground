@@ -145,6 +145,7 @@ const renderRelated = (products, current) => {
     media.appendChild(img);
 
     const body = document.createElement("div");
+    body.className = "product-card__content";
     const title = document.createElement("h3");
     title.className = "product-card__title";
     title.textContent = product.name;
@@ -153,12 +154,20 @@ const renderRelated = (products, current) => {
     price.className = "product-card__price";
     price.textContent = formatCurrency(product.price, product.currency);
 
+    const meta = document.createElement("p");
+    meta.className = "product-card__meta";
+    meta.textContent = `Ocena ${product.rating} • ${product.reviewsCount} opinii`;
+
+    const actions = document.createElement("div");
+    actions.className = "product-card__actions";
+
     const link = document.createElement("a");
     link.href = `produkt.html?slug=${product.slug}`;
     link.className = "btn btn--outline btn--small";
     link.textContent = "Zobacz";
 
-    body.append(title, price, link);
+    actions.append(link);
+    body.append(title, price, meta, actions);
     article.append(media, body);
     grid.appendChild(article);
   });
