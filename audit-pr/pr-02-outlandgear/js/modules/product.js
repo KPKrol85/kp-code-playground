@@ -82,21 +82,34 @@ const renderProduct = (product) => {
 
   const mainImage = qs("[data-product-main]", root);
   const thumbs = qsa("[data-product-thumb]", root);
+  const setActiveThumb = (activeIndex) => {
+    thumbs.forEach((thumb, index) => {
+      thumb.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+    });
+  };
+
   if (mainImage) {
     mainImage.src = product.images[0];
     mainImage.alt = product.name;
   }
+
+  setActiveThumb(0);
+
   thumbs.forEach((thumb, index) => {
     const img = qs("img", thumb);
     if (img && product.images[index]) {
       img.src = product.images[index];
       img.alt = `${product.name} ${index + 1}`;
     }
+
+    thumb.setAttribute("aria-label", `Pokaż zdjęcie ${index + 1} produktu ${product.name}`);
+
     on(thumb, "click", () => {
       if (mainImage && product.images[index]) {
         mainImage.src = product.images[index];
         mainImage.alt = `${product.name} ${index + 1}`;
       }
+      setActiveThumb(index);
     });
   });
 
