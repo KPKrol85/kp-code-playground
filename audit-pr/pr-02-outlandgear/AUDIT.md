@@ -1,68 +1,68 @@
-# Outland Gear — Senior Front-End Static Audit
+# Outland Gear — Statyczny audyt front-end (poziom senior)
 
-## 1) Executive summary
-Repository evidence shows a static MPA storefront with modular vanilla JS, token-driven CSS, and consistent SEO/accessibility baseline patterns. No P0 production blockers were detected in the current implementation. The main next-step risks are maintainability duplication (repeated layout blocks), JS-dependency for core commerce rendering, CSS delivery strategy via chained `@import`, and missing user-facing fallback for data/storage errors.
+## 1) Podsumowanie wykonawcze
+Dowody z repozytorium wskazują na statyczny sklep MPA z modułowym vanilla JS, CSS opartym o tokeny i spójnymi wzorcami bazowymi SEO/dostępności. W obecnej implementacji nie wykryto potwierdzonych blokerów produkcyjnych klasy P0. Główne ryzyka na kolejny etap to duplikacja pod kątem utrzymania (powtarzane bloki layoutu), zależność kluczowego renderowania e-commerce od JS, strategia dostarczania CSS przez łańcuch `@import` oraz brak widocznego dla użytkownika fallbacku dla błędów danych/pamięci.
 
-## 2) P0 — Critical risks
-No confirmed P0 issues found from static repository evidence.
+## 2) P0 — Ryzyka krytyczne
+Na podstawie statycznych dowodów z repozytorium nie znaleziono potwierdzonych problemów P0.
 
-## 3) Strengths
-- Consistent page-level metadata set (`title`, description, canonical, OG/Twitter, JSON-LD) across major and legal pages.【index.html:6-50】【regulamin.html:6-50】
-- Structured CSS architecture with design tokens and component/page segmentation imported from one entrypoint.【css/main.css:1-16】【css/tokens.css:1-35】
-- Accessible baseline features: skip link, visible focus styling, ARIA state toggles, live status region for toast, and focus management in mobile drawer.【index.html:53-54】【css/base.css:57-77】【index.html:72-88】【js/modules/nav.js:65-125】【index.html:267】
-- Checkout form has explicit labels, client-side validity handling, `aria-invalid`, and first-invalid focus targeting.【checkout.html:137-199】【js/modules/checkout.js:5-56】
-- Robots and sitemap files are present and aligned (`robots.txt` points to `sitemap.xml`).【robots.txt:1-3】【sitemap.xml:1-30】
+## 3) Mocne strony
+- Spójny zestaw metadanych na poziomie stron (`title`, description, canonical, OG/Twitter, JSON-LD) na głównych i prawnych podstronach.【index.html:6-50】【regulamin.html:6-50】
+- Ustrukturyzowana architektura CSS z tokenami projektowymi oraz segmentacją komponentów/stron importowaną z jednego punktu wejścia.【css/main.css:1-16】【css/tokens.css:1-35】
+- Bazowe funkcje dostępności: skip link, widoczne style focus, przełączanie stanów ARIA, region live status dla toastów oraz zarządzanie fokusem w mobilnym drawerze.【index.html:53-54】【css/base.css:57-77】【index.html:72-88】【js/modules/nav.js:65-125】【index.html:267】
+- Formularz checkout ma jawne etykiety, obsługę poprawności po stronie klienta, `aria-invalid` oraz ustawianie fokusu na pierwszym nieprawidłowym polu.【checkout.html:137-199】【js/modules/checkout.js:5-56】
+- Pliki robots i sitemap są obecne i spójne (`robots.txt` wskazuje na `sitemap.xml`).【robots.txt:1-3】【sitemap.xml:1-30】
 
-## 4) P1 — Improvements worth doing next (exactly 5)
-1. **Core commerce views are JS-dependent, so no-JS users only get informational notices instead of usable fallback content.**  
-   Evidence: listing/product/cart dynamic containers are empty until JS renders data; `noscript` only displays notices.【kategoria.html:213-220】【produkt.html:123-131】【koszyk.html:134-143】【js/app.js:22-32】
+## 4) P1 — Usprawnienia warte wykonania jako następne (dokładnie 5)
+1. **Kluczowe widoki e-commerce zależą od JS, więc użytkownicy bez JS dostają jedynie komunikaty informacyjne zamiast użytecznego fallbacku treści.**  
+   Dowód: dynamiczne kontenery listingu/produktu/koszyka są puste do czasu renderowania danych przez JS; `noscript` wyświetla wyłącznie komunikaty.【kategoria.html:213-220】【produkt.html:123-131】【koszyk.html:134-143】【js/app.js:22-32】
 
-2. **CSS delivery is implemented through 16 `@import` statements, increasing render-blocking waterfall risk on first paint.**  
-   Evidence: full stylesheet chain from `css/main.css` imports every layer/page file via `@import`.【css/main.css:1-16】
+2. **Dostarczanie CSS jest zrealizowane przez 16 instrukcji `@import`, co zwiększa ryzyko render-blocking waterfall przy pierwszym malowaniu strony.**  
+   Dowód: pełny łańcuch styli z `css/main.css` importuje każdą warstwę/plik strony przez `@import`.【css/main.css:1-16】
 
-3. **Header/footer/nav markup is duplicated across many HTML files, raising maintenance cost and drift risk.**  
-   Evidence: repeated identical structural blocks in separate pages (example: header + footer in `index`, `kategoria`, `checkout`).【index.html:54-121】【kategoria.html:54-121】【checkout.html:54-121】【index.html:193-264】【checkout.html:218-289】
+3. **Markup header/footer/nav jest zduplikowany w wielu plikach HTML, co podnosi koszt utrzymania i ryzyko rozjazdów.**  
+   Dowód: powtarzające się identyczne bloki strukturalne na różnych stronach (przykład: header + footer w `index`, `kategoria`, `checkout`).【index.html:54-121】【kategoria.html:54-121】【checkout.html:54-121】【index.html:193-264】【checkout.html:218-289】
 
-4. **Navigation dropdown uses `role="menu"`/`role="menuitem"` for site navigation links, which is typically less appropriate than plain nav list semantics for website menus.**  
-   Evidence: dropdown container and links are implemented with ARIA menu roles in primary site navigation context.【index.html:87-93】【kategoria.html:87-93】
+4. **Nawigacyjne rozwijane menu używa `role="menu"`/`role="menuitem"` dla linków nawigacji serwisu, co zwykle jest mniej odpowiednie niż semantyka zwykłej listy nav dla menu stron WWW.**  
+   Dowód: kontener dropdown i linki są zaimplementowane z rolami ARIA menu w kontekście podstawowej nawigacji witryny.【index.html:87-93】【kategoria.html:87-93】
 
-5. **Data/storage failure handling lacks user-facing recovery UI.**  
-   Evidence: failed fetch throws error; storage failures log to console error only; no visible fallback state rendering is implemented in modules.【js/modules/data.js:7-10】【js/modules/storage.js:21-33】
+5. **Obsługa błędów danych/pamięci nie ma widocznego dla użytkownika interfejsu odzyskiwania.**  
+   Dowód: nieudany fetch rzuca błąd; błędy storage są logowane wyłącznie do konsoli; brak implementacji renderowania widocznego stanu fallbackowego w modułach.【js/modules/data.js:7-10】【js/modules/storage.js:21-33】
 
-## 5) P2 — Minor refinements
-- Several social links use placeholder `href="#"`; this is acceptable in staged content but should be replaced with real destinations before production launch.【index.html:218-220】
-- Newsletter form uses `action="#"`, so submission flow is non-functional by design in current repository state.【index.html:201-205】
-- Product gallery thumbs are clickable buttons, but there is no explicit selected-state announcement (e.g., `aria-current`/`aria-selected`) for assistive tech context in the gallery control pattern.【produkt.html:138-147】【js/modules/product.js:89-101】
-- Contrast compliance cannot be verified without computed style analysis (static token definitions alone are insufficient for final WCAG contrast confirmation).【css/tokens.css:1-35】
+## 5) P2 — Drobne dopracowania
+- Kilka linków społecznościowych używa placeholdera `href="#"`; jest to akceptowalne na etapie przygotowawczym, ale przed startem produkcyjnym należy podmienić je na docelowe adresy.【index.html:218-220】
+- Formularz newslettera używa `action="#"`, więc przepływ wysyłki jest celowo niefunkcjonalny w obecnym stanie repozytorium.【index.html:201-205】
+- Miniatury galerii produktu są klikalnymi przyciskami, ale brak jawnego ogłoszenia stanu wybranego (np. `aria-current`/`aria-selected`) dla kontekstu technologii asystujących we wzorcu sterowania galerią.【produkt.html:138-147】【js/modules/product.js:89-101】
+- Zgodności kontrastu nie da się zweryfikować bez analizy stylów obliczonych (same statyczne definicje tokenów nie wystarczą do ostatecznego potwierdzenia kontrastu WCAG).【css/tokens.css:1-35】
 
-## 6) Future enhancements (exactly 5)
-1. Add a server-rendered/static fallback product list and cart summary for no-JS baseline usability.
-2. Replace CSS `@import` chain with build-time bundling or critical-CSS + deferred strategy.
-3. Introduce reusable partial templating (or build-time includes) to remove repeated header/footer blocks.
-4. Add visible error banners and retry UX for `fetch` and localStorage failure scenarios.
-5. Refine navigation semantics for dropdown structure to align with standard site-navigation a11y patterns.
+## 6) Ulepszenia na przyszłość (dokładnie 5)
+1. Dodać fallback renderowany po stronie serwera/statyczny dla listy produktów i podsumowania koszyka, aby zapewnić bazową użyteczność bez JS.
+2. Zastąpić łańcuch `@import` w CSS bundlowaniem na etapie builda albo strategią critical-CSS + deferred.
+3. Wprowadzić współdzielone partiale (lub include’y na etapie builda), aby usunąć powtarzane bloki header/footer.
+4. Dodać widoczne bannery błędów i UX ponawiania dla scenariuszy awarii `fetch` i localStorage.
+5. Dopracować semantykę nawigacji dla struktury dropdown zgodnie ze standardowymi wzorcami a11y dla nawigacji witryny.
 
-## 7) Compliance checklist
-- **headings valid:** **PASS** — sampled pages follow one primary `h1` and descending section headings.【index.html:128】【kategoria.html:134】【produkt.html:153】【checkout.html:128】
-- **no broken links excluding intentional minification strategy:** **PASS** — local file reference scan returned `NO_MISSING_LOCAL_LINKS`.
-- **no console.log:** **PASS** — `console.log` not detected in repository search.
-- **aria attributes valid:** **PASS (static check)** — ARIA controls and expanded/hidden states are present and synchronized in nav JS logic.【index.html:72-88】【js/modules/nav.js:3-41】
-- **images have width/height:** **PASS** — static and JS-generated product/cart images set dimensions.【index.html:58】【index.html:136】【kategoria.html:126】【js/modules/catalog.js:115-116】【js/modules/cart.js:79-80】
-- **no-JS baseline usable:** **FAIL (partial only)** — key commerce content requires JS rendering; non-JS path provides notices instead of equivalent interaction.【kategoria.html:213-220】【produkt.html:123-131】【koszyk.html:134-143】
-- **sitemap present if expected:** **PASS** — `sitemap.xml` exists and lists site pages.【sitemap.xml:1-30】
-- **robots present:** **PASS** — `robots.txt` exists and references sitemap URL.【robots.txt:1-3】
-- **OG image exists:** **PASS** — OG image file exists and is referenced in metadata.【assets/svg/social-share-placeholder.svg】【index.html:19】
-- **JSON-LD valid:** **PASS (static syntax check)** — page JSON-LD blocks are valid JSON objects with schema types (`Organization`, `WebPage`, `CollectionPage`).【index.html:27-50】【kategoria.html:27-50】【checkout.html:27-50】
+## 7) Lista kontrolna zgodności
+- **headings valid:** **PASS** — na próbkowanych stronach występuje jedno główne `h1` i malejąca hierarchia nagłówków sekcji.【index.html:128】【kategoria.html:134】【produkt.html:153】【checkout.html:128】
+- **no broken links excluding intentional minification strategy:** **PASS** — skan lokalnych odnośników plikowych zwrócił `NO_MISSING_LOCAL_LINKS`.
+- **no console.log:** **PASS** — nie wykryto `console.log` w przeszukaniu repozytorium.
+- **aria attributes valid:** **PASS (kontrola statyczna)** — kontrolki ARIA oraz stany expanded/hidden są obecne i synchronizowane w logice JS nawigacji.【index.html:72-88】【js/modules/nav.js:3-41】
+- **images have width/height:** **PASS** — obrazy produktów/koszyka statyczne oraz generowane przez JS mają ustawione wymiary.【index.html:58】【index.html:136】【kategoria.html:126】【js/modules/catalog.js:115-116】【js/modules/cart.js:79-80】
+- **no-JS baseline usable:** **FAIL (tylko częściowo)** — kluczowa zawartość e-commerce wymaga renderowania JS; ścieżka bez JS zapewnia komunikaty zamiast równoważnej interakcji.【kategoria.html:213-220】【produkt.html:123-131】【koszyk.html:134-143】
+- **sitemap present if expected:** **PASS** — `sitemap.xml` istnieje i zawiera listę stron serwisu.【sitemap.xml:1-30】
+- **robots present:** **PASS** — `robots.txt` istnieje i zawiera odnośnik do URL sitemapy.【robots.txt:1-3】
+- **OG image exists:** **PASS** — plik obrazu OG istnieje i jest referencjonowany w metadanych.【assets/svg/social-share-placeholder.svg】【index.html:19】
+- **JSON-LD valid:** **PASS (kontrola składni statycznej)** — bloki JSON-LD stron są poprawnymi obiektami JSON z typami schema (`Organization`, `WebPage`, `CollectionPage`).【index.html:27-50】【kategoria.html:27-50】【checkout.html:27-50】
 
-## 8) Architecture score (0–10)
-- **BEM consistency:** 8.4/10
-- **token usage:** 9.0/10
-- **accessibility:** 7.8/10
-- **performance:** 7.3/10
-- **maintainability:** 7.9/10
+## 8) Ocena architektury (0–10)
+- **Spójność BEM:** 8.4/10
+- **Użycie tokenów:** 9.0/10
+- **Dostępność:** 7.8/10
+- **Wydajność:** 7.3/10
+- **Utrzymywalność:** 7.9/10
 
-**Overall architecture score: 8.1/10**
+**Łączna ocena architektury: 8.1/10**
 
-## 9) Senior rating (1–10)
-**Senior rating: 8.0/10**  
-Technical justification: the codebase is structurally solid for a static front-end (clear module boundaries, coherent tokenized CSS, robust baseline a11y/SEO), but production-hardening gaps remain around no-JS parity, CSS delivery efficiency, repeated layout maintenance overhead, and resilient failure UX.
+## 9) Ocena seniorska (1–10)
+**Ocena seniorska: 8.0/10**  
+Uzasadnienie techniczne: kod jest strukturalnie solidny jak na statyczny front-end (czytelne granice modułów, spójny CSS oparty o tokeny, mocna baza a11y/SEO), ale do utwardzenia produkcyjnego pozostają luki związane z równoważnością bez JS, efektywnością dostarczania CSS, narzutem utrzymania przy powtarzanym layoucie oraz odpornym UX dla scenariuszy awarii.
