@@ -1,5 +1,5 @@
 import { CONFIG } from "../config.js";
-import { qs, qsa, on } from "./dom.js";
+import { qs, on } from "./dom.js";
 import { clearCart } from "./storage.js";
 import { clearUiState, setUiState } from "./ui-state.js";
 
@@ -22,24 +22,14 @@ const clearError = (input) => {
 export const initCheckout = () => {
   const form = qs(CONFIG.selectors.checkoutForm);
   if (!form) return;
-  const status = qs(CONFIG.selectors.checkoutStatus);
-  const successPanel = qs("[data-checkout-success]");
 
-  const inputs = qsa("input, select, textarea", form);
+  const successPanel = qs("[data-checkout-success]");
+  initFormFieldUX(form);
 
   on(form, "submit", (event) => {
     event.preventDefault();
-    let firstInvalid = null;
 
-    inputs.forEach((input) => {
-      if (!input.checkValidity()) {
-        const message = input.validationMessage || "Wypełnij to pole.";
-        showError(input, message);
-        if (!firstInvalid) firstInvalid = input;
-      } else {
-        clearError(input);
-      }
-    });
+    const { firstInvalidField } = validateFormFields(form);
 
     if (firstInvalid) {
       setUiState(status, {

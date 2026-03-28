@@ -136,19 +136,31 @@
             <p><strong>Showroom:</strong> Marynarki Wojennej 12/31, 33-100 Tarnów, Polska</p>
             <p class="subtle">Godziny pracy: pn-pt 9:00–18:00</p>
           </article>
-          <form class="form card info-card">
+          <form class="form card info-card" data-contact-form novalidate>
             <h2>Formularz kontaktowy</h2>
+            <p aria-live="polite" role="status" data-form-status class="form__status"></p>
             <div class="form__group">
               <label class="form__label" for="contactName">Imię i nazwisko</label>
-              <input class="form__input" id="contactName" type="text" autocomplete="name" required />
+              <input class="form__input" id="contactName" name="contactName" type="text" autocomplete="name" required />
+              <span class="form__error" data-error-for="contactName"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="contactEmail">Email</label>
-              <input class="form__input" id="contactEmail" type="email" autocomplete="email" required />
+              <input
+                class="form__input"
+                id="contactEmail"
+                name="contactEmail"
+                type="email"
+                autocomplete="email"
+                inputmode="email"
+                required
+              />
+              <span class="form__error" data-error-for="contactEmail"></span>
             </div>
             <div class="form__group">
               <label class="form__label" for="contactMessage">Wiadomość</label>
-              <textarea class="form__textarea" id="contactMessage" rows="4" required></textarea>
+              <textarea class="form__textarea" id="contactMessage" name="contactMessage" rows="4" required></textarea>
+              <span class="form__error" data-error-for="contactMessage"></span>
             </div>
             <p class="subtle">Wysyłając formularz, akceptujesz <a href="regulamin.html">regulamin</a> i <a href="polityka-prywatnosci.html">politykę prywatności</a>.</p>
             <button class="btn" type="submit">Wyślij wiadomość</button>
