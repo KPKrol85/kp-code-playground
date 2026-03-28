@@ -1,8 +1,9 @@
 import { CONFIG } from "../config.js";
 import { fetchJson } from "./data.js";
-import { qs, qsa, on, delegate } from "./dom.js";
+import { qs, qsa, delegate } from "./dom.js";
 import { loadCart, saveCart } from "./storage.js";
 import { clamp, formatCurrency } from "../utils.js";
+import { clearUiState, setUiState } from "./ui-state.js";
 
 let productsCache = [];
 
@@ -52,20 +53,23 @@ const calculateTotals = (items) => {
   return { subtotal, delivery, total: subtotal + delivery };
 };
 
-const renderCart = (items) => {
+const renderCart = (items, stateRegion) => {
   const container = qs(CONFIG.selectors.cartContainer);
   const summary = qs(CONFIG.selectors.cartSummary);
-  const empty = qs(CONFIG.selectors.cartEmpty);
   if (!container || !summary) return;
 
   container.innerHTML = "";
   if (!items.length) {
-    if (empty) empty.hidden = false;
+    setUiState(stateRegion, {
+      type: "empty",
+      title: "Koszyk jest pusty",
+      message: "Dodaj produkty z katalogu, aby przejść do podsumowania.",
+    });
     summary.innerHTML = "";
     return;
   }
 
-  if (empty) empty.hidden = true;
+  clearUiState(stateRegion);
 
   items.forEach((item) => {
     const row = document.createElement("div");
@@ -139,17 +143,34 @@ export const initCart = async () => {
     updateCartCount();
     return;
   }
-  productsCache = await fetchJson("data/products.json");
+  const stateRegion = qs("[data-cart-state]");
+  setUiState(stateRegion, {
+    type: "loading",
+    title: "Ładowanie koszyka",
+    message: "Sprawdzamy dostępność produktów w koszyku.",
+  });
+
+  try {
+    productsCache = await fetchJson("data/products.json");
+  } catch (error) {
+    setUiState(stateRegion, {
+      type: "error",
+      title: "Nie udało się załadować koszyka",
+      message: "Spróbuj odświeżyć stronę i wrócić do koszyka.",
+    });
+    return;
+  }
+
   const cart = getCart();
   const items = hydrateItems(productsCache, cart);
-  renderCart(items);
+  renderCart(items, stateRegion);
   updateCartCount();
 
   delegate(container, "[data-remove-item]", "click", (_, target) => {
     const id = Number(target.getAttribute("data-remove-item"));
     removeItem(id);
     const refreshed = hydrateItems(productsCache, getCart());
-    renderCart(refreshed);
+    renderCart(refreshed, stateRegion);
     updateCartCount();
   });
 
@@ -158,7 +179,7 @@ export const initCart = async () => {
     const qty = Number(target.value);
     updateQty(id, qty);
     const refreshed = hydrateItems(productsCache, getCart());
-    renderCart(refreshed);
+    renderCart(refreshed, stateRegion);
     updateCartCount();
   });
 };

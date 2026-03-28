@@ -4,6 +4,7 @@ import { qs, qsa, on } from "./dom.js";
 import { formatCurrency } from "../utils.js";
 import { addToCart, updateCartCount } from "./cart.js";
 import { showToast } from "./toast.js";
+import { clearUiState, setUiState } from "./ui-state.js";
 
 
 const SITE_NAME = "Outland Gear";
@@ -152,7 +153,25 @@ const renderRelated = (products, current) => {
 export const initProduct = async () => {
   const root = qs(CONFIG.selectors.productRoot);
   if (!root) return;
-  const products = await fetchJson("data/products.json");
+  const stateRegion = qs("[data-product-state]", root);
+  setUiState(stateRegion, {
+    type: "loading",
+    title: "Ładowanie produktu",
+    message: "Pobieramy szczegóły wybranego modelu.",
+  });
+
+  let products = [];
+  try {
+    products = await fetchJson("data/products.json");
+  } catch (error) {
+    setUiState(stateRegion, {
+      type: "error",
+      title: "Nie udało się załadować produktu",
+      message: "Odśwież stronę i spróbuj ponownie.",
+    });
+    return;
+  }
+
   const slug = new URLSearchParams(window.location.search).get("slug");
   const normalizedSlug = slug?.trim() || "";
   const matchedProduct = products.find((item) => item.slug === normalizedSlug);
@@ -164,4 +183,15 @@ export const initProduct = async () => {
 
   renderProduct(product);
   renderRelated(products, product);
+
+  if (!matchedProduct && normalizedSlug) {
+    setUiState(stateRegion, {
+      type: "info",
+      title: "Nie znaleźliśmy tego produktu",
+      message: "Wyświetlamy najbliższą dostępną propozycję.",
+    });
+    return;
+  }
+
+  clearUiState(stateRegion);
 };
