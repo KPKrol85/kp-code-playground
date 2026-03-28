@@ -212,10 +212,18 @@
             <div>
               <div class="grid grid--3" data-listing-grid></div>
               <noscript>
-                <div class="notice" role="status">
-                  Lista produktów wymaga włączonej obsługi JavaScript. Włącz JavaScript, aby
-                  przeglądać kategorię i filtrować ofertę.
-                </div>
+                <section class="notice stack" role="status" aria-label="Informacje bez JavaScriptu">
+                  <h2>Przeglądanie kategorii bez JavaScriptu</h2>
+                  <p>
+                    Interaktywna lista produktów i filtry nie są dostępne bez JavaScriptu.
+                    Możesz jednak kontynuować zakupy, korzystając z poniższych stron:
+                  </p>
+                  <ul>
+                    <li><a href="index.html">Strona główna z polecanymi produktami</a></li>
+                    <li><a href="produkt.html">Przykładowa karta produktu</a></li>
+                    <li><a href="kontakt.html">Kontakt z doradcą Outland Gear</a></li>
+                  </ul>
+                </section>
               </noscript>
               <div class="ui-state" data-listing-state hidden></div>
               <div class="section-actions text-center">
