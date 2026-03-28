@@ -1,7 +1,23 @@
 import { CONFIG } from "../config.js";
 import { qs, on } from "./dom.js";
 import { clearCart } from "./storage.js";
-import { initFormFieldUX, setFormStatus, setSubmitState, validateFormFields } from "./form-ux.js";
+import { clearUiState, setUiState } from "./ui-state.js";
+
+const showError = (input, message) => {
+  const error = qs(`[data-error-for="${input.name}"]`);
+  if (error) {
+    error.textContent = message;
+  }
+  input.setAttribute("aria-invalid", "true");
+};
+
+const clearError = (input) => {
+  const error = qs(`[data-error-for="${input.name}"]`);
+  if (error) {
+    error.textContent = "";
+  }
+  input.removeAttribute("aria-invalid");
+};
 
 export const initCheckout = () => {
   const form = qs(CONFIG.selectors.checkoutForm);
@@ -15,24 +31,30 @@ export const initCheckout = () => {
 
     const { firstInvalidField } = validateFormFields(form);
 
-    if (firstInvalidField) {
-      setFormStatus(form, "Uzupełnij pola oznaczone błędem i spróbuj ponownie.", "error");
-      firstInvalidField.focus();
+    if (firstInvalid) {
+      setUiState(status, {
+        type: "error",
+        title: "Formularz zawiera błędy",
+        message: "Uzupełnij wymagane pola i popraw oznaczone wartości.",
+      });
+      firstInvalid.focus();
       return;
     }
 
-    setSubmitState(form, true, "Przetwarzanie zamówienia...");
-    setFormStatus(form, "Weryfikujemy dane zamówienia...", "info");
+    setUiState(status, {
+      type: "success",
+      title: "Zamówienie zapisane",
+      message: "Możesz wrócić do strony głównej lub kontynuować zakupy.",
+    });
+    if (successPanel) {
+      successPanel.hidden = false;
+    }
+    form.reset();
+    form.hidden = true;
+    clearCart();
+  });
 
-    window.setTimeout(() => {
-      setSubmitState(form, false);
-      setFormStatus(form, "Zamówienie zostało zapisane (demo).", "success");
-      if (successPanel) {
-        successPanel.hidden = false;
-      }
-      form.reset();
-      form.hidden = true;
-      clearCart();
-    }, 500);
+  on(form, "input", () => {
+    clearUiState(status);
   });
 };
