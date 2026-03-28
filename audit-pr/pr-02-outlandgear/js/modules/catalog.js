@@ -112,6 +112,7 @@ const createCard = (product) => {
   img.src = product.images[0];
   img.alt = product.name;
   img.loading = "lazy";
+  img.decoding = "async";
   img.width = 320;
   img.height = 220;
   media.appendChild(img);

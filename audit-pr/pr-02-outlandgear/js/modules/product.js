@@ -7,6 +7,8 @@ import { showToast } from "./toast.js";
 
 
 const SITE_NAME = "Outland Gear";
+const getMainImageAlt = (productName, index = 0) => `Zdjęcie ${index + 1} produktu ${productName}`;
+const getThumbLabel = (productName, index = 0) => `Pokaż zdjęcie ${index + 1} produktu ${productName}`;
 
 const setProductMetadata = (product, slug) => {
   if (!product || !slug) return;
@@ -84,18 +86,23 @@ const renderProduct = (product) => {
   const thumbs = qsa("[data-product-thumb]", root);
   if (mainImage) {
     mainImage.src = product.images[0];
-    mainImage.alt = product.name;
+    mainImage.alt = getMainImageAlt(product.name, 0);
+    mainImage.decoding = "async";
   }
   thumbs.forEach((thumb, index) => {
     const img = qs("img", thumb);
+    thumb.setAttribute("aria-label", getThumbLabel(product.name, index));
     if (img && product.images[index]) {
       img.src = product.images[index];
-      img.alt = `${product.name} ${index + 1}`;
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.setAttribute("aria-hidden", "true");
     }
     on(thumb, "click", () => {
       if (mainImage && product.images[index]) {
         mainImage.src = product.images[index];
-        mainImage.alt = `${product.name} ${index + 1}`;
+        mainImage.alt = getMainImageAlt(product.name, index);
       }
     });
   });
@@ -125,6 +132,8 @@ const renderRelated = (products, current) => {
     const img = document.createElement("img");
     img.src = product.images[0];
     img.alt = product.name;
+    img.loading = "lazy";
+    img.decoding = "async";
     img.width = 320;
     img.height = 220;
     media.appendChild(img);

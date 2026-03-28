@@ -76,6 +76,8 @@ const renderCart = (items) => {
     media.className = "cart-item__media";
     media.src = item.images[0];
     media.alt = item.name;
+    media.loading = "lazy";
+    media.decoding = "async";
     media.width = 90;
     media.height = 90;
 
