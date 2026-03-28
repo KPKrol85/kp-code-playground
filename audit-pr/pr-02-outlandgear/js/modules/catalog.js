@@ -277,9 +277,14 @@ export const initCatalog = async () => {
       loadMoreBtn.setAttribute("aria-hidden", String(filtered.length <= limit));
     }
 
-    const emptyState = qs("[data-empty-state]");
-    if (emptyState) {
-      emptyState.hidden = filtered.length !== 0;
+    if (filtered.length === 0) {
+      setUiState(stateRegion, {
+        type: "empty",
+        title: "Brak wyników",
+        message: "Zmień filtry lub wpisz inną frazę wyszukiwania.",
+      });
+    } else {
+      clearUiState(stateRegion);
     }
 
     syncUrlState(searchTerm, filters, limit);

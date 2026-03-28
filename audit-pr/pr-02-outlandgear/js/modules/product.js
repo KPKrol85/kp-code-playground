@@ -208,4 +208,15 @@ export const initProduct = async () => {
 
   renderProduct(product);
   renderRelated(products, product);
+
+  if (!matchedProduct && normalizedSlug) {
+    setUiState(stateRegion, {
+      type: "info",
+      title: "Nie znaleźliśmy tego produktu",
+      message: "Wyświetlamy najbliższą dostępną propozycję.",
+    });
+    return;
+  }
+
+  clearUiState(stateRegion);
 };

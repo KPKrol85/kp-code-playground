@@ -1,6 +1,7 @@
 import { CONFIG } from "../config.js";
 import { qs, qsa, on } from "./dom.js";
 import { clearCart } from "./storage.js";
+import { clearUiState, setUiState } from "./ui-state.js";
 
 const showError = (input, message) => {
   const error = qs(`[data-error-for="${input.name}"]`);
@@ -41,17 +42,29 @@ export const initCheckout = () => {
     });
 
     if (firstInvalid) {
-      if (status) status.textContent = "Uzupełnij wymagane pola formularza.";
+      setUiState(status, {
+        type: "error",
+        title: "Formularz zawiera błędy",
+        message: "Uzupełnij wymagane pola i popraw oznaczone wartości.",
+      });
       firstInvalid.focus();
       return;
     }
 
-    if (status) status.textContent = "Zamówienie zostało zapisane (demo).";
+    setUiState(status, {
+      type: "success",
+      title: "Zamówienie zapisane",
+      message: "Możesz wrócić do strony głównej lub kontynuować zakupy.",
+    });
     if (successPanel) {
       successPanel.hidden = false;
     }
     form.reset();
     form.hidden = true;
     clearCart();
+  });
+
+  on(form, "input", () => {
+    clearUiState(status);
   });
 };

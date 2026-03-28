@@ -85,20 +85,23 @@ const calculateTotals = (items) => {
   return { subtotal, delivery, total: subtotal + delivery };
 };
 
-const renderCart = (items) => {
+const renderCart = (items, stateRegion) => {
   const container = qs(CONFIG.selectors.cartContainer);
   const summary = qs(CONFIG.selectors.cartSummary);
-  const empty = qs(CONFIG.selectors.cartEmpty);
   if (!container || !summary) return;
 
   container.innerHTML = "";
   if (!items.length) {
-    if (empty) empty.hidden = false;
+    setUiState(stateRegion, {
+      type: "empty",
+      title: "Koszyk jest pusty",
+      message: "Dodaj produkty z katalogu, aby przejść do podsumowania.",
+    });
     summary.innerHTML = "";
     return;
   }
 
-  if (empty) empty.hidden = true;
+  clearUiState(stateRegion);
 
   items.forEach((item) => {
     const row = document.createElement("div");
@@ -201,7 +204,7 @@ export const initCart = async () => {
 
   const cart = getCart();
   const items = hydrateItems(productsCache, cart);
-  renderCart(items);
+  renderCart(items, stateRegion);
   updateCartCount();
   upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
 
@@ -216,7 +219,7 @@ export const initCart = async () => {
     }
 
     const refreshed = hydrateItems(productsCache, getCart());
-    renderCart(refreshed);
+    renderCart(refreshed, stateRegion);
     updateCartCount();
     upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
   });
@@ -232,7 +235,7 @@ export const initCart = async () => {
     }
 
     const refreshed = hydrateItems(productsCache, getCart());
-    renderCart(refreshed);
+    renderCart(refreshed, stateRegion);
     updateCartCount();
     upsertStorageNotice(container, "Odśwież stronę", () => window.location.reload());
   });
