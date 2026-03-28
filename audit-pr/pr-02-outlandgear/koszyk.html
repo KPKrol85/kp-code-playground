@@ -133,10 +133,19 @@
           <div class="card card--padded">
             <div data-cart-container></div>
             <noscript>
-              <div class="notice" role="status">
-                Koszyk działa z włączoną obsługą JavaScript. Włącz JavaScript, aby wyświetlić
-                produkty i przejść do finalizacji zamówienia.
-              </div>
+              <section class="notice stack" role="status" aria-label="Koszyk bez JavaScriptu">
+                <h2>Podsumowanie koszyka bez JavaScriptu</h2>
+                <p>
+                  Dynamiczna zawartość koszyka i automatyczne podsumowanie wartości zamówienia
+                  wymagają JavaScriptu.
+                </p>
+                <p>W trybie podstawowym możesz:</p>
+                <ul>
+                  <li><a href="kategoria.html">wrócić do kategorii i przeglądać ofertę</a>,</li>
+                  <li><a href="produkt.html">otworzyć przykładową kartę produktu</a>,</li>
+                  <li><a href="kontakt.html">skontaktować się z obsługą, aby dokończyć zamówienie</a>.</li>
+                </ul>
+              </section>
             </noscript>
             <div class="ui-state" data-cart-state hidden></div>
           </div>
