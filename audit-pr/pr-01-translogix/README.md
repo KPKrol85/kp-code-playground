@@ -36,6 +36,11 @@ TransLogix to statyczna strona firmowa B2B dla transportu i logistyki, oparta o 
    ```
 3. Uruchom testy zależnie od celu (pełna lista w `settings.md`).
 
+## 5a) QA: automatic broken-links guard
+- `npm run check:links` validates local HTML `href` and `src` references (internal pages and local assets).
+- The check ignores external/protocol links (`http`, `https`, `mailto`, `tel`, etc.) and fragment-only anchors.
+- `npm run test:e2e` now runs this check first via `pretest:e2e`, so broken local references fail fast before Playwright.
+
 ## 6) Build i deployment
 - Deploy jest przygotowany pod Netlify przez `_headers` (CSP, cache policy, security headers) i `_redirects` (pretty URL rewrites).
 - `sw.js` cache’uje kluczowe strony i część assetów oraz obsługuje fallback offline.

@@ -14,7 +14,8 @@ Poniżej opis każdego skryptu z sekcji `scripts`.
 | `verify:assets` | `node scripts/verify-assets.js` | Sprawdza integralność referencji do assetów (linki/zasoby lokalne). | Po zmianach w HTML/CSS/assetach, przed merge. |
 | `img:opt` | `node scripts/optimize-images.js` | Uruchamia optymalizację obrazów przez skrypt Node. | Po dodaniu nowych obrazów lub porządkach wydajnościowych. |
 | `check:html` | `html-validate "**/*.html"` | Waliduje składnię/zasady HTML we wszystkich stronach. | W CI oraz lokalnie po edycjach HTML. |
-| `check:links` | `npm run verify:assets` | Alias do walidacji assetów/linków. | Szybkie uruchomienie checku linkowania. |
+| `check:links` | `node scripts/check-local-links.js` | Waliduje lokalne `href` i `src` w HTML (strony i assety) oraz failuje dla brakujących celów. | Po zmianach HTML/assetów i jako gate przed E2E. |
+| `pretest:e2e` | `npm run check:links` | Automatycznie uruchamia broken-links check przed Playwright E2E. | Działa automatycznie przy `npm run test:e2e`. |
 | `check:a11y` | `start-server-and-test "http-server . -p 8080" http://127.0.0.1:8080 "pa11y-ci --config .pa11yci.json"` | Startuje lokalny serwer i wykonuje audyt a11y według konfiguracji pa11y-ci. | Przed wydaniem i cyklicznie w QA dostępności. |
 | `check` | `npm run check:html && npm run check:a11y` | Łączy podstawowy check jakości: HTML + a11y. | Jako szybki quality gate przed PR. |
 | `test:e2e` | `playwright test` | Uruchamia testy end-to-end Playwright. | Przed mergem i po zmianach zachowania UI. |
@@ -25,4 +26,5 @@ Poniżej opis każdego skryptu z sekcji `scripts`.
 
 ## Notes
 - `check` nie obejmuje domyślnie testów E2E ani Lighthouse; te uruchamiane są osobno.
+- `test:e2e` ma teraz automatyczny pre-check (`pretest:e2e`) walidujący lokalne referencje `href`/`src`, aby wychwycić broken linki przed uruchomieniem Playwright.
 - `deploy:css` zmienia `assets/css/style.css`; używaj świadomie, bo wpływa na źródło stylów w repo.
