@@ -784,7 +784,7 @@ html.theme-dark #quick-quote fieldset {
   transform: translateY(-2px);
   box-shadow: 0 22px 55px -28px var(--color-shadow);
 }
-.footer__stats .stat h3 {
+.footer__stats .stat__value {
   font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem);
   font-weight: 700;
   margin-bottom: 0.25rem;
