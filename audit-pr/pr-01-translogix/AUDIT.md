@@ -1,60 +1,81 @@
-# TransLogix — Senior Front-End Audit (static repository audit)
+# AUDIT.md — Senior Front-End Static Audit (evidence-based)
 
 ## 1) Executive summary
-Zakres audytu objął rzeczywiste pliki źródłowe w katalogu `audit-pr/pr-01-translogix` (bez artefaktów build). Projekt ma czytelną strukturę wielostronicową, modularny CSS, dobrze wdrożone podstawy a11y (skip-link, focus-visible, aria-current/expanded), sensowną warstwę SEO i deploy (robots/sitemap/_headers/_redirects), a także service worker z offline fallback. Dowody: `index.html:73-109`, `assets/css/style.css:2-7`, `_headers:1-49`, `robots.txt:1-4`, `sw.js:1-143`.
+Zakres audytu: statyczna analiza rzeczywistych plików projektu `audit-pr/pr-01-translogix` bez modyfikacji kodu aplikacji.
 
-Największe ryzyka nie są krytyczne runtime (brak P0), ale dotyczą jakości utrzymania i spójności operacyjnej: niespójna konfiguracja testów E2E, placeholderowe linki social, nieużywane pliki JSON-LD oraz drobne niedociągnięcia wydajnościowe (brak width/height dla obrazów lightboxa). Dowody: `playwright.config.js:23-27`, `package.json:8-23`, `index.html:363-373`, `fleet.html:418-427`, `assets/data/jsonld/*.json` + brak referencji do tej ścieżki (`rg` w repo).
+Projekt ma dobrze uporządkowaną bazę front-endową (modularny CSS, komponentowe moduły JS, wdrożone podstawy a11y, obecne mechanizmy SEO/deploy i service worker). Najważniejsze ryzyka dotyczą spójności linkowania i kompletności SEO (broken internal links w `fleet.html`, brakujący asset Twitter image na stronie floty, ograniczony zakres sitemap). W warstwie utrzymaniowej widać też miejsca do poprawy (nagłówki semantyczne na niektórych stronach, ostre budżety gzip, potencjalne rozjazdy między źródłami CSS).
 
 ## 2) P0 — Critical risks
-**Brak wykrytych P0** na podstawie analizy statycznej repo.
+Brak potwierdzonych P0.
+
+Nie wykryto twardych runtime blockerów globalnie (aplikacja ma działające wejścia HTML, CSS, JS i deploy config), ale wykryto istotne P1 wymagające szybkiej korekty.
 
 ## 3) Strengths
-- Semantyczna struktura i spójny landmarking (`header`, `nav`, `main`, `footer`) na podstronach. Dowód: np. `index.html:76-109`, `index.html:297-386`.
-- Dobre fundamenty dostępności: skip-link, focus-visible, aria-current, aria-expanded, focus trap w menu i modalu zgody. Dowód: `index.html:73`, `assets/css/modules/base.css:39-62`, `assets/js/aria-current.js:1-27`, `assets/js/nav.js:76-99`, `assets/js/site-consent.js:60-111`.
-- Progressive enhancement/no-JS sygnalizowane klasami `no-js/js`, a strona `service.html` ma fallback `<noscript>`. Dowód: `assets/js/boot.js:1-4`, `service.html:169-172`.
-- Dobrze przygotowane SEO baseline: meta description + canonical + OG + JSON-LD na stronach indeksowalnych, robots i sitemap obecne. Dowód: `index.html:8-68`, `robots.txt:1-4`, `sitemap.xml:1-28`.
-- Wydajnościowo: self-hosted fonts `woff2` + `font-display: swap`, lazy-loading obrazów na kartach floty, cache policy i SW. Dowód: `assets/css/modules/base.css:64-113`, `index.html:209-230`, `_headers:12-49`, `sw.js:1-143`.
+- Modularna architektura stylów przez importy warstw (`settings/base/layout/components/utilities/pages`). Evidence: `assets/css/style.css:1-6`.
+- Uporządkowane inicjalizowanie funkcji front-end i bezpieczna rejestracja service worker tylko na HTTPS/localhost. Evidence: `assets/js/main.js:1-35`.
+- Dobre fundamenty dostępności: skip-link, focus-visible, aria-controls/expanded, pułapka focusa w menu i consent modalu. Evidence: `index.html:73-108`, `assets/css/modules/base.css:39-62`, `assets/js/nav.js:15-99`, `assets/js/site-consent.js:60-111`.
+- Wdrożone reduced-motion w JS i CSS. Evidence: `assets/js/reveal.js:4-6`, `assets/js/stats.js:4-31`, `assets/css/modules/pages.css` (`@media (prefers-reduced-motion: reduce)`).
+- SEO i deploy baseline obecne: canonical/OG/JSON-LD, robots, sitemap, _headers, _redirects. Evidence: `index.html:17-68`, `robots.txt:1-4`, `sitemap.xml:1-28`, `_headers:1-49`, `_redirects:1-5`.
 
 ## 4) P1 — Improvements worth doing next (exactly 5)
-1. **Konfiguracja Playwright wskazuje brakujące skrypty npm (`build:html`, `serve`)** — utrudnia uruchamialność testów E2E w obecnym stanie konfiguracji. Dowód: `playwright.config.js:24`, `package.json:8-23`.
-2. **Linki social są placeholderami (`href="#"`)** na stronach publicznych — to problem jakości/wiarygodności i potencjalnie użyteczności (nawigacja donikąd). Dowód: `index.html:363-373` (analogiczny wzorzec na innych podstronach).
-3. **Brak `width`/`height` dla obrazów lightboxa** (dynamiczne `<img src="">`) może zwiększać ryzyko CLS przy renderze galerii. Dowód: `fleet.html:418`, `fleet.html:427`.
-4. **Nieużywane pliki `assets/data/jsonld/*.json`** — dane JSON-LD istnieją, ale strony używają JSON-LD inline i brak referencji do tej ścieżki, co zwiększa koszt utrzymania i ryzyko dryfu treści. Dowód: `assets/data/jsonld/*.json`, `index.html:44-68` oraz brak wyników odwołań do `assets/data/jsonld` w kodzie.
-5. **Sitemap obejmuje tylko 5 URL-i i pomija strony legalne** (`privacy.html`, `terms.html`, `cookies.html`, `service.html`) — jeśli mają być indeksowane, obecny stan jest niepełny SEO-operacyjnie. Dowód: `sitemap.xml:3-27` vs obecność plików HTML w repo (`privacy.html`, `terms.html`, `cookies.html`, `service.html`).
+1. **Broken internal links in fleet cards (`order.html` does not exist).**
+   - Evidence: `fleet.html:178`, `fleet.html:250`, `fleet.html:322`, `fleet.html:394`.
+   - Evidence of missing target: no `order.html` file in project root (`rg --files` output).
+   - Impact: user journey dead-end + crawl quality drop.
+
+2. **Twitter image path mismatch on fleet page.**
+   - Evidence: `fleet.html:38` uses `assets/img/og/translogix-og.jpg`.
+   - Existing OG assets are under `assets/img/og-img/` (e.g. `assets/img/og-img/og-1200x630.jpg`).
+   - Impact: social preview reliability for X/Twitter.
+
+3. **Sitemap coverage is incomplete vs existing HTML pages.**
+   - Evidence (sitemap URLs): `sitemap.xml:3-27` (5 URLs).
+   - Existing indexable/supporting pages include more files (`privacy.html`, `terms.html`, `cookies.html`, `service.html`, `404.html`, etc.; visible in root file list).
+   - Impact: weaker crawl discoverability / inconsistent SEO intent.
+
+4. **Heading hierarchy consistency issues on selected pages.**
+   - Example: `fleet.html` starts with `h1` then card titles begin at `h3` (`fleet.html:102`, `fleet.html:130`, `fleet.html:156`).
+   - Example: similar skips occur on `services.html` footer sections (`services.html:102`, `services.html:171`, `services.html:196`).
+   - Impact: semantic clarity and screen-reader section navigation quality.
+
+5. **Potential maintainability drift in CSS source of truth.**
+   - Evidence: development CSS is modular imports in `assets/css/style.css:1-6`, while script `deploy:css` copies minified output over `style.css` (`package.json:9-10`).
+   - Impact: risk of accidental overwrite of authoring entrypoint if process discipline is weak.
 
 ## 5) P2 — Minor refinements
-- Ujednolicić diakrytykę i copywriting (np. “chlodnia” vs “chłodnia”) dla spójności językowej UI. Dowód: `index.html:225`, `contact.html:158`.
-- Dodać spójny wzorzec linków `tel:`/`mailto:` także w sekcjach treści kontaktowych (nie tylko w stopce) dla szybszej akcji użytkownika mobilnego. Dowód: `contact.html:111-116`, `contact.html:314-315`.
-- Ograniczyć logowanie `console.warn/error` w service workerze na produkcji (bardziej kontrolowane raportowanie). Dowód: `sw.js:39`, `sw.js:52`, `sw.js:56`.
+- Rozważyć ograniczenie logów `console.warn/error` w SW na produkcji lub zapięcie ich pod flagę środowiskową. Evidence: `sw.js:39`, `sw.js:52`, `sw.js:56`.
+- Ujednolicić formatowanie i wyrównanie w sekcjach `<head>` (sporadyczne różnice w wcięciach przy `<link rel="stylesheet">`). Evidence: `index.html:27`, `services.html:24`, `fleet.html:24`.
+- Rozważyć dopisanie jawnych `aria-label` dla niektórych grup przycisków filtrów dla pełniejszego kontekstu SR (częściowo obecne już teraz). Evidence: `services.html:104-111`, `fleet.html:104-110`.
 
 ## 6) Future enhancements (exactly 5)
-1. Dodać automatyczny test spójności `canonical` ↔ `og:url` dla wszystkich HTML w CI.
-2. Rozszerzyć testy E2E o ścieżki legal pages i offline fallback.
-3. Wprowadzić automatyczny checker placeholderów linków (`href="#"`) przed deployem.
-4. Przenieść i centralizować JSON-LD do jednego źródła prawdy (inline generator lub import), żeby uniknąć duplikacji.
-5. Dodać statyczny raport kontrastu (token-aware) jako etap CI, bo obecnie pełna zgodność kontrastu nie jest możliwa do potwierdzenia tylko z analizy statycznej.
+1. Dodać automatyczny check broken links dla wszystkich `href/src` w CI (przed `test:e2e`).
+2. Dodać statyczną walidację spójności `canonical` ↔ `og:url` ↔ `twitter:image` dla każdej strony HTML.
+3. Rozszerzyć testy Playwright o scenariusz SEO smoke (meta tags + canonical presence).
+4. Dodać dedykowany check hierarchii nagłówków i landmarków (np. custom lint script).
+5. Ustabilizować proces release CSS (oddzielny plik wejściowy autora vs plik wyjściowy deploy bez nadpisywania).
 
 ## 7) Compliance checklist
-- **Headings valid:** ✅ PASS (po 1 `h1` na stronę HTML, logiczne `h2/h3`). Dowód: skan `*.html`, np. `index.html:112-124`, `contact.html:104-108`.
-- **No broken links (excluding intentional minification strategy):** ⚠️ PARTIAL — asset links zweryfikowane pozytywnie, ale wykryto celowe placeholdery `href="#"` w social. Dowód: `scripts/verify-assets.js` wynik „All referenced assets exist.” + `index.html:363-373`.
-- **No console.log:** ❌ FAIL (występuje w skryptach narzędziowych). Dowód: `scripts/check-budgets.js:67-86`, `scripts/build-css.js:47`.
-- **ARIA attributes valid:** ✅ PASS (poprawne wzorce `aria-expanded`, `aria-current`, `aria-live`, `aria-controls`). Dowód: `assets/js/nav.js:15-37`, `assets/js/aria-current.js:21-24`, `contact.html:189-206`.
-- **Images have width/height:** ❌ FAIL (2 wyjątki w lightboxie). Dowód: `fleet.html:418`, `fleet.html:427`.
-- **No-JS baseline usable:** ✅ PASS (strony renderują treść statyczną; dodatkowy `<noscript>` dla detail page). Dowód: `service.html:169-172`, `assets/js/boot.js:1-4`.
-- **Sitemap present if expected:** ✅ PASS (`sitemap.xml` obecny).
-- **Robots present:** ✅ PASS (`robots.txt` obecny + robots meta na stronach). Dowód: `robots.txt:1-4`, `index.html:12`.
-- **OG image exists:** ✅ PASS (plik istnieje i jest referencjonowany). Dowód: `index.html:34`, `assets/img/og-img/og-1200x630.jpg`.
-- **JSON-LD valid:** ✅ PASS (parsowanie JSON poprawne dla inline i plików data/jsonld). Dowód: statyczna walidacja parserem JSON + `index.html:44-68`.
+- **Headings valid:** ❌ FAIL (wykryte przeskoki poziomów na części stron). Evidence: `fleet.html:102`, `fleet.html:130`.
+- **No broken links (excluding minification strategy):** ❌ FAIL (`order.html` missing). Evidence: `fleet.html:178`, `fleet.html:250`, `fleet.html:322`, `fleet.html:394`.
+- **No console.log:** ❌ FAIL (występują w skryptach narzędziowych). Evidence: `scripts/check-budgets.js:67-87`, `scripts/build-css.js:47`.
+- **ARIA attributes valid:** ✅ PASS (sensowne użycie `aria-expanded`, `aria-controls`, `aria-current`, `aria-live`). Evidence: `assets/js/nav.js:15-37`, `assets/js/aria-current.js:20-24`, `contact.html:174`.
+- **Images have width/height:** ✅ PASS (na głównych stronach obrazy mają atrybuty wymiarów). Evidence: `index.html:79-80`, `index.html:209-230`, `fleet.html:116-122`.
+- **No-JS baseline usable:** ✅ PASS (treść dostępna statycznie, `no-js/js` class toggle, fallback `<noscript>` na dynamic detail page). Evidence: `assets/js/boot.js:1-4`, `service.html:169-172`.
+- **Sitemap present if expected:** ✅ PASS (`sitemap.xml` istnieje). Evidence: `sitemap.xml:1-28`.
+- **Robots present:** ✅ PASS (`robots.txt` + robots meta). Evidence: `robots.txt:1-4`, `index.html:12`.
+- **OG image exists:** ⚠️ PARTIAL (globalnie asset OG istnieje, ale `fleet.html` ma błędną ścieżkę twitter image). Evidence: `index.html:34`, `fleet.html:38`, `assets/img/og-img/og-1200x630.jpg`.
+- **JSON-LD valid:** ⚠️ PARTIAL (JSON-LD występuje i jest syntaktycznie poprawny wizualnie, ale pełna walidacja schema.org wymaga runtime walidatora). Evidence: `index.html:44-68`, `services.html:39-58`, `contact.html:39-60`.
 
 ## 8) Architecture score (0–10)
-**8.2 / 10**
-- **BEM consistency: 8.4/10** — wysoka spójność (`block__element--modifier`) w komponentach header/footer/cards. Dowód: `index.html:77-104`, `assets/css/modules/components.css`.
-- **Token usage: 8.8/10** — rozbudowane CSS custom properties i dark theme overrides. Dowód: `assets/css/modules/settings.css:1-78`.
-- **Accessibility: 8.0/10** — bardzo dobre fundamenty, drobne braki i miejsca do dalszej automatyzacji. Dowód: `assets/js/nav.js`, `assets/css/modules/base.css`.
-- **Performance: 7.8/10** — dobre podstawy (lazy/fonts/cache/SW), ale są miejsca do dopracowania (lightbox sizing, porządki danych). Dowód: `fleet.html:418-427`, `_headers:12-49`.
-- **Maintainability: 8.0/10** — modularność dobra, jednak niespójność konfiguracji testów i martwe artefakty obniżają wynik. Dowód: `playwright.config.js:23-27`, `package.json:8-23`.
+- **BEM consistency: 8.0/10** — nazewnictwo klas jest przeważnie komponentowe i spójne (`block__element--modifier`), z nielicznymi wyjątkami utility-like. Evidence: `assets/css/modules/components.css`, `index.html` class patterns.
+- **Token usage: 8.8/10** — szerokie użycie custom properties i centralnych tokenów. Evidence: `assets/css/modules/settings.css:1-78`.
+- **Accessibility: 7.9/10** — solidne bazowe wdrożenie, ale z miejscowymi problemami semantyki nagłówków. Evidence: `assets/js/nav.js:76-99`, `fleet.html:102-156`.
+- **Performance: 7.8/10** — nowoczesne formaty obrazów i lazy-loading + SW/cache, ale istnieją ryzyka operacyjne (budżety, cache/fingerprinting). Evidence: `_headers:12-49`, `sw.js:1-143`, `perf-budgets.json:2-9`.
+- **Maintainability: 7.6/10** — modularna struktura jest dobra, lecz proces CSS i niespójności treści/SEO obniżają ocenę. Evidence: `assets/css/style.css:1-6`, `package.json:9-10`, `fleet.html:38`.
+
+**Final architecture score: 8.0/10**
 
 ## 9) Senior rating (1–10)
-**8.1 / 10**
+**Senior rating: 8/10.**
 
-Krótka ocena techniczna: implementacja jest produkcyjnie bliska gotowości dla statycznego serwisu marketingowo-usługowego (solidne a11y/SEO/deploy baseline), ale wymaga uporządkowania warstwy operacyjnej (E2E config drift), eliminacji placeholderów i drobnych poprawek CLS/utrzymaniowych, aby spełnić standard „senior-ready” bez zastrzeżeń.
+Technicznie jest to solidny, produkcyjnie sensowny front-end statyczny z dobrze rozdzielonymi warstwami i praktycznym zestawem narzędzi QA. Do poziomu „bardzo dobry+” brakuje domknięcia kilku jakościowych detali o wysokiej widoczności biznesowej (broken links, pełna spójność SEO assets, pełniejsza mapa strony, semantyka nagłówków).
