@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas Screen Modal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="atlas-page">
+      <section class="atlas-intro" aria-labelledby="atlas-demo-title">
+        <p class="atlas-eyebrow">Modal Collection · #07</p>
+        <h1 id="atlas-demo-title">Atlas Screen</h1>
+        <p>
+          A mobile-first full-screen modal demo for onboarding and profile setup flows.
+          On small screens it fills the viewport, while on wider screens it adapts into
+          a large centered dialog.
+        </p>
+        <button class="atlas-open-btn" type="button" data-atlas-open>
+          Open Atlas Screen
+        </button>
+      </section>
+    </main>
+
+    <div class="atlas-modal" data-atlas-modal hidden>
+      <div class="atlas-modal__backdrop" data-atlas-close></div>
+      <section
+        class="atlas-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="atlas-modal-title"
+        aria-describedby="atlas-modal-description"
+        tabindex="-1"
+      >
+        <header class="atlas-modal__header">
+          <div class="atlas-modal__header-text">
+            <p class="atlas-chip">Welcome</p>
+            <h2 id="atlas-modal-title">Atlas Screen</h2>
+            <p id="atlas-modal-description">Set up your profile to personalize your workspace.</p>
+          </div>
+          <button class="atlas-icon-btn" type="button" data-atlas-close aria-label="Close Atlas Screen modal">
+            <span aria-hidden="true">✕</span>
+          </button>
+        </header>
+
+        <div class="atlas-modal__body">
+          <form class="atlas-form" action="#" method="post">
+            <fieldset>
+              <legend>Profile basics</legend>
+              <label for="atlas-name">Full name</label>
+              <input id="atlas-name" name="name" type="text" autocomplete="name" placeholder="Jordan Lee" />
+
+              <label for="atlas-role">Role</label>
+              <select id="atlas-role" name="role">
+                <option value="">Choose your role</option>
+                <option>Designer</option>
+                <option>Developer</option>
+                <option>Product Manager</option>
+                <option>Operations</option>
+              </select>
+
+              <label for="atlas-bio">Short bio</label>
+              <textarea
+                id="atlas-bio"
+                name="bio"
+                rows="4"
+                placeholder="Tell your team a little about your focus and interests."
+              ></textarea>
+            </fieldset>
+
+            <fieldset>
+              <legend>Preferences</legend>
+              <p class="atlas-hint">Choose what you want to receive during onboarding.</p>
+              <label class="atlas-check">
+                <input type="checkbox" name="updates" checked />
+                <span>Weekly product updates</span>
+              </label>
+              <label class="atlas-check">
+                <input type="checkbox" name="tips" checked />
+                <span>Setup tips and quick guides</span>
+              </label>
+              <label class="atlas-check">
+                <input type="checkbox" name="events" />
+                <span>Invites to live onboarding sessions</span>
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Working style</legend>
+              <p class="atlas-hint">These details help us tailor defaults for your dashboard.</p>
+              <label for="atlas-team-size">Team size</label>
+              <input id="atlas-team-size" name="team-size" type="number" min="1" max="200" placeholder="12" />
+
+              <label for="atlas-timezone">Timezone</label>
+              <input id="atlas-timezone" name="timezone" type="text" placeholder="UTC-05:00" />
+
+              <label for="atlas-goals">Primary goals</label>
+              <textarea
+                id="atlas-goals"
+                name="goals"
+                rows="4"
+                placeholder="e.g. Improve handoff speed, track releases, and align weekly priorities"
+              ></textarea>
+            </fieldset>
+          </form>
+        </div>
+
+        <footer class="atlas-modal__footer">
+          <button class="atlas-secondary" type="button" data-atlas-close>Cancel</button>
+          <button class="atlas-primary" type="button">Save profile</button>
+        </footer>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
