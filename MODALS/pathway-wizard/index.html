@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathway Wizard Modal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="pw-demo">
+      <section class="pw-hero" aria-label="Pathway Wizard demo">
+        <p class="pw-kicker">Component Demo</p>
+        <h1>Pathway Wizard</h1>
+        <p class="pw-intro">
+          Guide users through a focused three-step workspace setup with clear
+          progress and polished navigation.
+        </p>
+        <button id="openWizard" class="pw-open-btn" type="button">
+          Launch Pathway Wizard
+        </button>
+      </section>
+    </main>
+
+    <div class="pw-modal" id="pathwayWizard" aria-hidden="true">
+      <div class="pw-backdrop" data-close="true"></div>
+
+      <section
+        class="pw-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pwTitle"
+        aria-describedby="pwDescription"
+        tabindex="-1"
+      >
+        <header class="pw-header">
+          <div>
+            <p class="pw-eyebrow">Onboarding flow</p>
+            <h2 id="pwTitle">Pathway Wizard</h2>
+          </div>
+          <button
+            class="pw-icon-btn"
+            id="closeWizard"
+            type="button"
+            aria-label="Close Pathway Wizard"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </header>
+
+        <p id="pwDescription" class="pw-description">
+          Complete these three steps to personalize your workspace.
+        </p>
+
+        <ol class="pw-progress" aria-label="Wizard progress">
+          <li class="pw-progress-item is-active" data-step-dot="1">
+            <span class="pw-progress-index" aria-hidden="true">1</span>
+            <span class="pw-progress-label">Team setup</span>
+          </li>
+          <li class="pw-progress-item" data-step-dot="2">
+            <span class="pw-progress-index" aria-hidden="true">2</span>
+            <span class="pw-progress-label">Workflow style</span>
+          </li>
+          <li class="pw-progress-item" data-step-dot="3">
+            <span class="pw-progress-index" aria-hidden="true">3</span>
+            <span class="pw-progress-label">Review</span>
+          </li>
+        </ol>
+
+        <div class="pw-step-frame" aria-live="polite" aria-atomic="true">
+          <section class="pw-step is-active" data-step="1" aria-labelledby="step1Title">
+            <h3 id="step1Title">Invite your core team</h3>
+            <p>
+              Start with the people who need immediate visibility into your
+              product roadmap and delivery progress.
+            </p>
+            <div class="pw-field-grid">
+              <label class="pw-field">
+                Team name
+                <input type="text" placeholder="Acme Product Team" />
+              </label>
+              <label class="pw-field">
+                Team size
+                <select>
+                  <option>1-5 members</option>
+                  <option>6-15 members</option>
+                  <option>16-50 members</option>
+                  <option>51+ members</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="pw-step" data-step="2" aria-labelledby="step2Title" hidden>
+            <h3 id="step2Title">Choose your workflow preferences</h3>
+            <p>
+              Tailor how Pathway Wizard structures updates, priorities, and
+              planning cadence across projects.
+            </p>
+            <fieldset class="pw-choice-group">
+              <legend>Default planning mode</legend>
+              <label><input type="radio" name="mode" checked /> Weekly sprints</label>
+              <label><input type="radio" name="mode" /> Continuous delivery</label>
+              <label><input type="radio" name="mode" /> Milestone-based release</label>
+            </fieldset>
+          </section>
+
+          <section class="pw-step" data-step="3" aria-labelledby="step3Title" hidden>
+            <h3 id="step3Title">Review and activate workspace</h3>
+            <p>
+              You are ready to launch. Confirm your setup to generate a starter
+              board and invite your team instantly.
+            </p>
+            <ul class="pw-review">
+              <li><strong>Workspace:</strong> Product Operations Hub</li>
+              <li><strong>Default cadence:</strong> Weekly sprint planning</li>
+              <li><strong>Visibility:</strong> Team-level and leadership summaries</li>
+            </ul>
+          </section>
+        </div>
+
+        <footer class="pw-footer">
+          <p class="pw-step-counter" id="stepCounter">Step 1 of 3</p>
+          <div class="pw-actions">
+            <button id="prevStep" class="pw-ghost-btn" type="button" disabled>
+              Previous
+            </button>
+            <button id="nextStep" class="pw-primary-btn" type="button">Next</button>
+            <button id="finishWizard" class="pw-primary-btn" type="button" hidden>
+              Finish setup
+            </button>
+          </div>
+        </footer>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
