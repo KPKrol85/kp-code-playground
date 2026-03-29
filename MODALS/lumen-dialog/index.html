@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Dialog Demo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="lumen-page">
+      <section class="lumen-card" aria-label="Lumen Dialog demo">
+        <h1 class="lumen-card__title">Lumen Dialog</h1>
+        <p class="lumen-card__text">
+          A classic centered modal with polished motion, keyboard support, and accessible structure.
+        </p>
+        <button class="lumen-button lumen-button--primary" id="openLumenDialog" type="button">
+          Open Lumen Dialog
+        </button>
+      </section>
+    </main>
+
+    <div class="lumen-modal" id="lumenModal" aria-hidden="true">
+      <div class="lumen-modal__backdrop" data-lumen-close></div>
+      <section
+        class="lumen-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="lumenDialogTitle"
+        aria-describedby="lumenDialogDescription"
+        tabindex="-1"
+      >
+        <header class="lumen-modal__header">
+          <h2 class="lumen-modal__title" id="lumenDialogTitle">Lumen Dialog</h2>
+          <button
+            class="lumen-icon-button"
+            type="button"
+            aria-label="Close Lumen Dialog"
+            data-lumen-close
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </header>
+
+        <div class="lumen-modal__body" id="lumenDialogDescription">
+          <p>
+            This is a reusable premium modal pattern featuring clean spacing, clear hierarchy, and dependable
+            keyboard interaction.
+          </p>
+        </div>
+
+        <footer class="lumen-modal__footer">
+          <button class="lumen-button lumen-button--secondary" type="button" data-lumen-close>
+            Cancel
+          </button>
+          <button class="lumen-button lumen-button--primary" type="button">Confirm</button>
+        </footer>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
