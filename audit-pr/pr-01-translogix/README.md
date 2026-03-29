@@ -1,146 +1,133 @@
-# TransLogix — Dokumentacja projektu
+# TransLogix — Dokumentacja projektu (PL)
 
-## 🇵🇱 Wersja polska
+## 1) Przegląd projektu
+TransLogix to statyczna strona firmowa B2B dla transportu i logistyki, oparta o wielostronicowe HTML + modularny CSS + moduły JS uruchamiane przez `main.js`. Projekt ma konfigurację deploy dla Netlify (`_headers`, `_redirects`), service worker z fallbackiem offline oraz zestaw narzędzi QA (HTML, a11y, E2E, budżety wydajnościowe, Lighthouse CI).
 
-### Przegląd projektu
-TransLogix to statyczny serwis B2B (HTML/CSS/JS) dla firmy transportowo-logistycznej, z wieloma podstronami (usługi, flota, cennik, kontakt, polityki prawne), obsługą trybu offline (service worker + offline page) oraz lokalnym pipeline’em walidacji jakości. Dowód: `package.json:2-23`, `index.html:1-391`, `sw.js:1-143`.
+## 2) Kluczowe funkcje wykryte w repo
+- Wielostronicowa nawigacja: `index`, `services`, `service`, `fleet`, `pricing`, `contact`, strony legalne i `404`.
+- Dynamiczne elementy UI: menu mobilne, przełącznik motywu, filtry usług/floty, lightbox, akordeon FAQ, kalkulatory wyceny.
+- Formularz kontaktowy z atrybutami Netlify Forms (`data-netlify`, honeypot, hidden `form-name`).
+- Dostępność: skip-link, `aria-expanded`, `aria-current` (ustawiane skryptem), focus traps w menu i modalu zgody.
+- SEO baseline: `meta description`, `canonical`, Open Graph, Twitter card, inline JSON-LD, `robots.txt`, `sitemap.xml`.
+- PWA/offline: `site.webmanifest`, rejestracja SW na HTTPS/localhost, `offline.html`.
 
-### Kluczowe funkcje (wyłącznie wykryte w repo)
-- Wielostronicowa architektura statyczna (`index.html`, `services.html`, `service.html`, `fleet.html`, `pricing.html`, `contact.html`, dokumenty prawne). Dowód: `sitemap.xml:3-27`, lista plików HTML w katalogu głównym.
-- Responsywna nawigacja mobilna z `aria-expanded`, trapem fokusu i obsługą `Escape`. Dowód: `assets/js/nav.js:1-131`.
-- Motyw jasny/ciemny z zapisem preferencji do `localStorage`. Dowód: `assets/js/theme-init.js:1-17`, `assets/js/theme.js:1-50`, `assets/css/modules/settings.css:57-78`.
-- Formularze z walidacją klienta + stany błędu (`aria-invalid`, `aria-describedby`) oraz formularz kontaktowy z Netlify (`data-netlify`). Dowód: `assets/js/form.js:1-272`, `contact.html:126-175`.
-- FAQ (accordion), filtry usług i strona szczegółu usługi oparta o `assets/data/services.json`. Dowód: `assets/js/accordion-faq.js`, `assets/js/services-filters.js:102`, `assets/js/service-detail.js:40`.
-- Lightbox galerii floty oraz animacje reveal z uwzględnieniem `prefers-reduced-motion`. Dowód: `assets/js/lightbox.js`, `assets/js/reveal.js:2-22`, `assets/css/modules/pages.css:888-1093`.
-- PWA/offline baseline: rejestracja SW tylko na HTTPS/localhost, cache strategii network-first/stale-while-revalidate, `offline.html`. Dowód: `assets/js/main.js:32-35`, `sw.js:1-143`, `offline.html:1-205`.
+## 3) Tech stack
+- HTML5 (statyczne strony)
+- CSS (moduły importowane przez `assets/css/style.css`)
+- Vanilla JavaScript ES modules
+- Narzędzia Node.js: PostCSS, html-validate, pa11y-ci, Playwright, Lighthouse CI, Sharp
 
-### Tech stack
-- HTML5 (wielostronicowo, semantyczne sekcje). Dowód: pliki `*.html`.
-- CSS modularny przez `@import` (settings/base/layout/components/utilities/pages). Dowód: `assets/css/style.css:2-7`.
-- Vanilla JavaScript ES modules. Dowód: `assets/js/main.js:1-35`.
-- Tooling: PostCSS, Autoprefixer, cssnano, html-validate, pa11y-ci, Playwright, LHCI. Dowód: `package.json:24-36`.
+## 4) Struktura katalogów (skrót)
+- `*.html` — strony serwisu
+- `assets/css/modules/` — warstwy stylów (`settings`, `base`, `layout`, `components`, `utilities`, `pages`)
+- `assets/js/` — moduły front-end
+- `assets/data/` — dane usług oraz pliki JSON-LD
+- `scripts/` — skrypty pomocnicze (budowa CSS, budżety, optymalizacja obrazów)
+- `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `sw.js` — warstwa deploy/SEO/runtime
 
-### Struktura projektu (skrót)
-- `assets/css/` — style źródłowe + wynik minifikacji.
-- `assets/js/` — moduły funkcjonalne front-end.
-- `assets/data/` — dane usług i dodatkowe JSON-LD.
-- `scripts/` — skrypty pomocnicze (budżety, CSS build, asset verification, image optimize).
-- `tests/e2e/` — testy Playwright.
-- `_headers`, `_redirects`, `sw.js`, `robots.txt`, `sitemap.xml` — warstwa deploy/SEO.
-
-### Setup i uruchomienie
-1. Instalacja zależności:
+## 5) Setup i uruchomienie
+1. Zainstaluj zależności:
    ```bash
-   npm ci
+   npm install
    ```
-2. Build CSS:
+2. Zbuduj CSS (minified):
    ```bash
    npm run build:css
    ```
-3. Walidacje:
-   ```bash
-   npm run check
-   ```
-4. E2E:
-   ```bash
-   npm run test:e2e
-   ```
+3. Uruchom testy zależnie od celu (pełna lista w `settings.md`).
 
-> Uwaga: `playwright.config.js` odwołuje się do `npm run build:html` i `npm run serve`, których nie ma w `package.json` (patrz audyt). Dowód: `playwright.config.js:23-27`, `package.json:8-23`.
+## 6) Build i deployment
+- Deploy jest przygotowany pod Netlify przez `_headers` (CSP, cache policy, security headers) i `_redirects` (pretty URL rewrites).
+- `sw.js` cache’uje kluczowe strony i część assetów oraz obsługuje fallback offline.
+- `deploy:css` nadpisuje `style.css` zawartością wygenerowaną z `style.min.css` (to decyzja operacyjna i warto ją utrzymać spójnie w pipeline).
 
-### Build / deployment notes
-- Konfiguracja nagłówków bezpieczeństwa i cache policy w `_headers`. Dowód: `_headers:1-49`.
-- Friendly URL rewrites/redirects w `_redirects`. Dowód: `_redirects:1-5`.
-- `robots.txt` i `sitemap.xml` są obecne. Dowód: `robots.txt:1-4`, `sitemap.xml:1-28`.
-- Manifest web-app obecny. Dowód: `assets/icons/site.webmanifest:1-20`.
+## 7) Dostępność (stan obecny)
+**Zaobserwowane wdrożenia:**
+- skip link i `main#main`
+- focus-visible w CSS
+- aria patterns (`aria-expanded`, `aria-controls`, `aria-live`, `aria-current`)
+- `prefers-reduced-motion` w JS (reveal/stats) i CSS (lightbox/consent)
+- no-JS baseline przez klasę `no-js`/`js` + fallback `<noscript>` na `service.html`
 
-### Accessibility notes
-- Obecne: skip-link, `main#main`, focus-visible, aria-current, aria-expanded, focus trap w menu i modalu zgody. Dowód: `index.html:73-109`, `assets/css/modules/base.css:39-62`, `assets/js/aria-current.js:1-27`, `assets/js/nav.js:76-99`, `assets/js/site-consent.js:60-111`.
-- `prefers-reduced-motion` zaimplementowane JS + CSS. Dowód: `assets/js/reveal.js:4-6`, `assets/js/stats.js:4`, `assets/css/modules/pages.css:888-1093`.
-- No-JS baseline wykryty; dodatkowo `service.html` zawiera `<noscript>`. Dowód: `service.html:169-172`, `assets/js/boot.js:1-4`.
-- Kontrast: częściowo oparty o tokeny; pełna zgodność kontrastu nie może być potwierdzona bez obliczeń stylów runtime.
+**Ryzyko do poprawy:**
+- Hierarchia nagłówków bywa przeskakiwana na części stron (np. `h1 -> h3` bez `h2`).
 
-### SEO notes
-- Na głównych podstronach: `meta description`, `canonical`, Open Graph, Twitter card, robots meta, JSON-LD inline. Dowód: np. `index.html:8-68`, `contact.html:11-39`.
-- `canonical` i `og:url` są spójne na stronach indeksowalnych. Dowód: `index.html:17`, `index.html:31`, analogicznie pozostałe strony.
-- `404.html` ma `noindex,follow`. Dowód: `404.html:10`.
+## 8) SEO (stan obecny)
+- Strony główne mają komplet podstawowych metadanych oraz JSON-LD.
+- `canonical` i `og:url` są z reguły spójne.
+- Wykryta niespójność: `fleet.html` wskazuje obraz Twitter na ścieżkę, której nie ma w repo (`assets/img/og/translogix-og.jpg`).
+- `sitemap.xml` zawiera tylko 5 URL-i i nie obejmuje wszystkich istniejących stron HTML.
 
-### Performance notes
-- Obrazy: użyte formaty AVIF/WEBP/JPG w zasobach i lazy-loading na wielu elementach. Dowód: `assets/img/hero/*`, `index.html:209-230`, `fleet.html:116-344`.
-- Fonts self-hosted `woff2` + `font-display: swap`. Dowód: `assets/css/modules/base.css:64-113`.
-- CSS/JS cache policy ustawione, SW obecny. Dowód: `_headers:12-49`, `sw.js:1-143`.
+## 9) Wydajność (stan obecny)
+- Pozytywy: formaty obrazów AVIF/WebP/JPG, lazy-loading na wielu obrazach, self-hosted `woff2` + `font-display: swap`, service worker, budżety gzip.
+- Ryzyka: bardzo restrykcyjne budżety w `perf-budgets.json` (mogą często failować), brak fingerprintingu nazw plików przy polityce cache.
 
-### Roadmap (repo-evidence driven)
-- Naprawa komend `build:html` / `serve` użytych w Playwright config.
-- Uporządkowanie nieużywanych plików `assets/data/jsonld/*.json`.
-- Zamiana linków social `href="#"` na rzeczywiste URL lub usunięcie.
-- Dodanie explicit `width`/`height` dla obrazów lightboxa.
-- Rozszerzenie sitemap o strony legalne (jeśli mają być indeksowane).
+## 10) Roadmap (proponowana)
+1. Naprawić linki `order.html` w `fleet.html` (plik nie istnieje).
+2. Ujednolicić ścieżkę Twitter image w `fleet.html` do istniejącego assetu OG.
+3. Rozszerzyć `sitemap.xml` o wszystkie strony przeznaczone do indeksacji.
+4. Uporządkować hierarchię nagłówków na stronach o przeskokach poziomów.
+5. Urealnić/zweryfikować budżety gzip pod faktyczne rozmiary produkcyjne.
 
-### Licencja
-`UNLICENSED`. Dowód: `package.json:7`.
+## 11) Licencja
+W `package.json` ustawiono `UNLICENSED`.
 
 ---
 
-## 🇬🇧 English version
+# TransLogix — Project documentation (EN)
 
-### Project overview
-TransLogix is a static B2B logistics website (HTML/CSS/JS) with multiple pages, offline support (service worker + offline page), and local quality tooling. Evidence: `package.json:2-23`, `index.html:1-391`, `sw.js:1-143`.
+## 1) Project overview
+TransLogix is a static B2B transport/logistics website built as a multi-page HTML project with modular CSS and JS modules initialized from `main.js`. The repository also includes Netlify deployment config (`_headers`, `_redirects`), a service worker with offline fallback, and QA tooling (HTML validation, accessibility checks, E2E tests, performance budgets, Lighthouse CI).
 
-### Key implemented features
-- Multi-page static architecture (home, services, service detail, fleet, pricing, contact, legal pages). Evidence: `sitemap.xml:3-27`.
-- Mobile navigation with `aria-expanded`, keyboard handling, and focus trap. Evidence: `assets/js/nav.js:1-131`.
-- Light/dark theme with persisted preference. Evidence: `assets/js/theme-init.js:1-17`, `assets/js/theme.js:1-50`.
-- Client-side form validation and Netlify form integration. Evidence: `assets/js/form.js:1-272`, `contact.html:126-175`.
-- Service worker registration and offline fallback. Evidence: `assets/js/main.js:32-35`, `sw.js:1-143`, `offline.html:1-205`.
+## 2) Implemented key features (repository evidence)
+- Multi-page content architecture (`index`, `services`, `service`, `fleet`, `pricing`, `contact`, legal pages, `404`).
+- Interactive UI modules: mobile navigation, theme switch, filters, gallery lightbox, FAQ accordion, quote calculators.
+- Netlify form handling for contact workflow (`data-netlify`, honeypot, hidden form-name).
+- Accessibility foundations: skip link, `aria-expanded`, JS-driven `aria-current`, focus trapping in mobile nav and consent modal.
+- SEO baseline: description/canonical/OG/Twitter tags, inline JSON-LD, `robots.txt`, `sitemap.xml`.
+- Offline/PWA baseline: `site.webmanifest`, service worker registration on HTTPS/localhost, `offline.html`.
 
-### Tech stack
-- HTML5, modular CSS (`@import`), vanilla JS modules.
-- Build/QA toolchain: PostCSS, html-validate, pa11y-ci, Playwright, LHCI.
-Evidence: `assets/css/style.css:2-7`, `assets/js/main.js:1-35`, `package.json:8-36`.
+## 3) Tech stack
+- HTML5
+- CSS (modular imports)
+- Vanilla JS (ES modules)
+- Node tooling: PostCSS, html-validate, pa11y-ci, Playwright, Lighthouse CI, Sharp
 
-### Structure overview
-- `assets/css`, `assets/js`, `assets/data`
-- `scripts`, `tests/e2e`
-- deployment & SEO files: `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `sw.js`
+## 4) Structure overview (short)
+- `*.html` — pages
+- `assets/css/modules/` — style layers
+- `assets/js/` — front-end modules
+- `assets/data/` — services data and JSON-LD payloads
+- `scripts/` — helper/build scripts
+- `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `sw.js` — deployment/runtime/SEO config
 
-### Setup & run
+## 5) Setup & run
 ```bash
-npm ci
+npm install
 npm run build:css
-npm run check
-npm run test:e2e
 ```
+Then run the needed checks from `settings.md`.
 
-### Build/deployment notes
-- Security and caching headers are defined in `_headers`.
-- Route rewrites are defined in `_redirects`.
-- Robots and sitemap are present.
-Evidence: `_headers:1-49`, `_redirects:1-5`, `robots.txt:1-4`, `sitemap.xml:1-28`.
+## 6) Build / deployment notes
+- Netlify-oriented headers and rewrite rules are present.
+- Service worker precaches key pages and provides offline fallback.
+- `deploy:css` copies minified CSS over `style.css` (should stay consistent with your release workflow).
 
-### Accessibility notes
-- Skip links, focus-visible styling, `aria-current`, `aria-expanded`, and keyboard focus traps are implemented.
-- Reduced-motion handling exists in JS/CSS.
-- No-JS baseline is present; `service.html` includes a `<noscript>` fallback note.
-Evidence: `index.html:73-109`, `assets/css/modules/base.css:39-62`, `assets/js/nav.js:76-99`, `assets/js/reveal.js:4-6`, `service.html:169-172`.
+## 7) Accessibility notes
+Current implementation includes skip-link, focus-visible styles, ARIA state management, reduced-motion handling, and no-JS baseline support. Heading hierarchy consistency still needs cleanup on selected pages.
 
-### SEO notes
-- Meta description, canonical, OG/Twitter tags, robots meta, and inline JSON-LD are present on indexable pages.
-- `canonical` and `og:url` values are aligned.
-Evidence: `index.html:8-44`, `index.html:17`, `index.html:31`.
+## 8) SEO notes
+Meta tags and JSON-LD are present on primary pages, but there is a broken Twitter image path in `fleet.html`, and sitemap coverage is incomplete vs available HTML pages.
 
-### Performance notes
-- Lazy-loaded imagery is used in many sections.
-- Self-hosted `woff2` fonts with `font-display: swap`.
-- SW caching and explicit cache-control headers are configured.
-Evidence: `index.html:209-230`, `fleet.html:116-344`, `assets/css/modules/base.css:64-113`, `_headers:12-49`, `sw.js:1-143`.
+## 9) Performance notes
+The project uses modern image formats and lazy loading in many areas, self-hosted `woff2` fonts with `font-display: swap`, and SW caching. Potential risk areas: strict gzip budgets and non-fingerprinted asset naming with revalidation cache strategy.
 
-### Roadmap
-- Fix missing Playwright webServer scripts (`build:html`, `serve`).
-- Remove or wire unused JSON-LD data files.
-- Replace social placeholder links.
-- Add `width`/`height` for lightbox dynamic images.
-- Revisit sitemap coverage for legal pages.
+## 10) Roadmap
+1. Fix `order.html` links in `fleet.html`.
+2. Fix Twitter image path in `fleet.html`.
+3. Extend sitemap coverage.
+4. Normalize heading levels.
+5. Recalibrate performance budgets.
 
-### License
-`UNLICENSED` (`package.json:7`).
+## 11) License
+`UNLICENSED` (as declared in `package.json`).
