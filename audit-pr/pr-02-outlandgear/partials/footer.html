@@ -50,6 +50,7 @@
       <h3>Firma</h3>
       <ul class="stack">
         <li><a href="o-nas.html">O Outland Gear</a></li>
+        <li><button class="site-footer__link-button" type="button" data-legal-open>Informacja o projekcie</button></li>
         <li><a href="polityka-prywatnosci.html">Polityka prywatności</a></li>
         <li><a href="regulamin.html">Regulamin</a></li>
       </ul>
@@ -59,5 +60,37 @@
   <div class="site-footer__bottom">
     <p>© <span id="year">2025</span> Outland Gear. Wszelkie prawa zastrzeżone.</p>
     <p class="subtle">Designed for long miles and wild weather.</p>
+  </div>
+</div>
+
+<div class="outland-legal-modal" id="outland-legal-modal" aria-hidden="true" hidden inert>
+  <div class="outland-legal-modal__backdrop" data-legal-close></div>
+  <div
+    class="outland-legal-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="outland-legal-title"
+    aria-describedby="outland-legal-desc"
+    data-legal-modal-panel
+    tabindex="-1"
+  >
+    <p class="outland-legal-modal__eyebrow">Outland Gear • Demo Experience</p>
+    <h2 class="outland-legal-modal__title" id="outland-legal-title">Informacja o projekcie</h2>
+    <p class="outland-legal-modal__text" id="outland-legal-desc">
+      Serwis „Outland Gear” ma charakter demonstracyjny i został przygotowany przez
+      <a href="https://www.kp-code.pl" rel="noopener">KP_Code Digital Studio</a>
+      jako przykładowy sklep internetowy z wyposażeniem outdoorowym i travel gear.
+      Treści, opinie oraz dane produktów mają charakter poglądowy.
+      Korzystając z serwisu akceptujesz
+      <a href="regulamin.html">Regulamin</a>.
+    </p>
+    <div class="outland-legal-modal__links">
+      <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+      <a href="kontakt.html">Kontakt</a>
+    </div>
+    <div class="outland-legal-modal__actions">
+      <button class="btn" type="button" data-legal-accept>Akceptuję</button>
+      <button class="btn btn--ghost" type="button" data-legal-close>Zamknij</button>
+    </div>
   </div>
 </div>

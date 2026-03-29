@@ -7,6 +7,7 @@ import { initProduct } from "./modules/product.js";
 import { initCart, updateCartCount } from "./modules/cart.js";
 import { initCheckout } from "./modules/checkout.js";
 import { initContactForm } from "./modules/contact.js";
+import { initLegalModal } from "./modules/legal-modal.js";
 
 const initSearch = () => {
   const form = qs(CONFIG.selectors.searchForm);
@@ -30,6 +31,7 @@ const initApp = () => {
   initCart();
   initCheckout();
   initContactForm();
+  initLegalModal();
 };
 
 const bootstrapApp = async () => {
