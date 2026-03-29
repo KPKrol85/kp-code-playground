@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edge Drawer Modal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="edge-drawer-demo">
+      <section class="edge-drawer-hero">
+        <p class="edge-drawer-eyebrow">UI Pattern Demo</p>
+        <h1>Edge Drawer</h1>
+        <p>
+          A practical filter drawer for narrowing dashboard results without navigating away.
+        </p>
+        <button type="button" class="edge-drawer-trigger" data-edge-drawer-open>
+          Open Filter Drawer
+        </button>
+      </section>
+    </main>
+
+    <div class="edge-drawer" data-edge-drawer>
+      <div class="edge-drawer__backdrop" data-edge-drawer-backdrop></div>
+
+      <section
+        class="edge-drawer__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="edge-drawer-title"
+        aria-describedby="edge-drawer-description"
+        tabindex="-1"
+      >
+        <header class="edge-drawer__header">
+          <div>
+            <h2 id="edge-drawer-title">Edge Drawer</h2>
+            <p id="edge-drawer-description">Refine results with quick product filters.</p>
+          </div>
+          <button
+            type="button"
+            class="edge-drawer__close"
+            data-edge-drawer-close
+            aria-label="Close Edge Drawer"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </header>
+
+        <div class="edge-drawer__body">
+          <fieldset class="edge-drawer__group">
+            <legend>Price Range</legend>
+            <label><input type="radio" name="price" checked /> Any price</label>
+            <label><input type="radio" name="price" /> Under $50</label>
+            <label><input type="radio" name="price" /> $50 - $150</label>
+            <label><input type="radio" name="price" /> Over $150</label>
+          </fieldset>
+
+          <fieldset class="edge-drawer__group">
+            <legend>Availability</legend>
+            <label><input type="checkbox" checked /> In stock</label>
+            <label><input type="checkbox" /> Ready to ship today</label>
+            <label><input type="checkbox" /> Local pickup eligible</label>
+          </fieldset>
+
+          <fieldset class="edge-drawer__group">
+            <legend>Rating</legend>
+            <label><input type="checkbox" /> 4★ and up</label>
+            <label><input type="checkbox" /> 3★ and up</label>
+          </fieldset>
+        </div>
+
+        <footer class="edge-drawer__actions">
+          <button type="button" class="edge-drawer__button edge-drawer__button--ghost">
+            Reset
+          </button>
+          <button type="button" class="edge-drawer__button edge-drawer__button--primary">
+            Apply Filters
+          </button>
+        </footer>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
