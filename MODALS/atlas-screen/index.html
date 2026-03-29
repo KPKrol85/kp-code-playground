@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas Screen Modal Demo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="atlas-demo">
+      <section class="atlas-demo__intro" aria-labelledby="atlas-demo-title">
+        <p class="atlas-demo__eyebrow">Modal Collection · #07</p>
+        <h1 id="atlas-demo-title">Atlas Screen</h1>
+        <p>
+          A mobile-first, full-screen modal pattern for onboarding and profile setup flows.
+          On larger screens it adapts into a spacious, centered dialog.
+        </p>
+        <button class="atlas-demo__open-btn" type="button" data-atlas-open>
+          Open Atlas Screen
+        </button>
+      </section>
+    </main>
+
+    <div class="atlas-modal" data-atlas-modal hidden>
+      <div class="atlas-modal__backdrop" data-atlas-close></div>
+
+      <section
+        class="atlas-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="atlas-modal-title"
+        aria-describedby="atlas-modal-description"
+        tabindex="-1"
+      >
+        <header class="atlas-modal__header">
+          <div>
+            <p class="atlas-modal__kicker">Profile Setup</p>
+            <h2 id="atlas-modal-title">Atlas Screen</h2>
+          </div>
+          <button class="atlas-modal__icon-btn" type="button" aria-label="Close Atlas Screen" data-atlas-close>
+            <span aria-hidden="true">×</span>
+          </button>
+        </header>
+
+        <div class="atlas-modal__body" id="atlas-modal-description">
+          <p>
+            Welcome to Atlas Screen. This onboarding view helps new users complete a practical
+            profile foundation before they start using advanced workspace tools.
+          </p>
+
+          <form class="atlas-form" action="#" method="post">
+            <label class="atlas-field">
+              <span>Display name</span>
+              <input type="text" name="display-name" placeholder="e.g. Riley Carter" required />
+            </label>
+
+            <label class="atlas-field">
+              <span>Role</span>
+              <input type="text" name="role" placeholder="Product Designer" />
+            </label>
+
+            <label class="atlas-field">
+              <span>Primary goal</span>
+              <select name="goal" required>
+                <option value="">Choose one</option>
+                <option value="onboarding">Get oriented quickly</option>
+                <option value="collaboration">Coordinate with team</option>
+                <option value="organization">Structure personal workflow</option>
+                <option value="reporting">Track progress and outcomes</option>
+              </select>
+            </label>
+
+            <fieldset class="atlas-fieldset">
+              <legend>Notification preferences</legend>
+              <label class="atlas-choice">
+                <input type="checkbox" name="notif-updates" checked />
+                Product updates and release notes
+              </label>
+              <label class="atlas-choice">
+                <input type="checkbox" name="notif-reminders" checked />
+                Weekly setup reminders
+              </label>
+              <label class="atlas-choice">
+                <input type="checkbox" name="notif-tips" />
+                Tips for advanced workflows
+              </label>
+            </fieldset>
+
+            <label class="atlas-field">
+              <span>About your workflow</span>
+              <textarea
+                name="workflow"
+                rows="5"
+                placeholder="Tell us what you want Atlas Screen to help you accomplish."
+              ></textarea>
+            </label>
+          </form>
+
+          <section class="atlas-card" aria-label="Why this setup helps">
+            <h3>Why this setup matters</h3>
+            <p>
+              The details you provide here power default recommendations, contextual tips, and
+              relevant templates. You can update everything later from your account settings.
+            </p>
+            <ul>
+              <li>Faster first-session guidance</li>
+              <li>More relevant workspace defaults</li>
+              <li>Better team collaboration prompts</li>
+            </ul>
+          </section>
+        </div>
+
+        <footer class="atlas-modal__footer">
+          <button class="atlas-btn atlas-btn--ghost" type="button" data-atlas-close>
+            Cancel
+          </button>
+          <button class="atlas-btn atlas-btn--primary" type="button">
+            Save profile
+          </button>
+        </footer>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
