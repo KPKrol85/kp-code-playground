@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal Success Modal</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="signal-success-demo">
+      <p class="signal-success-demo__eyebrow">Signal Success</p>
+      <h1 class="signal-success-demo__title">Status Modal Demo</h1>
+      <p class="signal-success-demo__copy">
+        Trigger a polished success modal used after a completed action.
+      </p>
+      <button class="signal-success-demo__trigger" id="openModalBtn" type="button">
+        Open Signal Success
+      </button>
+    </main>
+
+    <div class="signal-success-modal" id="successModal" hidden>
+      <div class="signal-success-modal__backdrop" data-close-modal="true"></div>
+      <section
+        class="signal-success-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="successModalTitle"
+        aria-describedby="successModalDescription"
+        tabindex="-1"
+      >
+        <div class="signal-success-modal__status" role="img" aria-label="Success status">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20.285 6.709a1 1 0 0 1 .006 1.414l-9.2 9.28a1 1 0 0 1-1.42.002L3.71 11.48a1 1 0 1 1 1.414-1.414l5.247 5.247 8.494-8.57a1 1 0 0 1 1.42-.034z" />
+          </svg>
+        </div>
+        <h2 id="successModalTitle" class="signal-success-modal__title">Signal Success</h2>
+        <p id="successModalDescription" class="signal-success-modal__description">
+          Your project has been published and is now live for your team.
+        </p>
+        <button class="signal-success-modal__cta" id="confirmBtn" type="button">
+          Continue
+        </button>
+      </section>
+    </div>
+  </body>
+</html>
