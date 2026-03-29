@@ -2,13 +2,13 @@
   "name": "translogix",
   "version": "1.0.0",
   "private": true,
-  "description": "TransLogix \u2013 B2B transport & logistics website (HTML, CSS, JS)",
+  "description": "TransLogix – B2B transport & logistics website (HTML, CSS, JS)",
   "author": "KP_Code_",
   "license": "UNLICENSED",
   "scripts": {
     "dev:css": "npm run build:css",
     "build:css": "postcss assets/css/style.css -o assets/css/style.min.css",
-    "deploy:css": "npm run build:css && cp assets/css/style.min.css assets/css/style.css",
+    "deploy:css": "npm run build:css",
     "verify:assets": "node scripts/verify-assets.js",
     "img:opt": "node scripts/optimize-images.js",
     "check:html": "html-validate \"**/*.html\"",
@@ -19,7 +19,11 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
     "lhci": "npx --yes @lhci/cli@0.14.0 autorun --config=./lighthouserc.json",
-    "check:budget": "node scripts/check-budgets.js"
+    "check:budget": "node scripts/check-budgets.js",
+    "build:js": "node scripts/build-js.js",
+    "build:assets": "npm run build:css && npm run build:js",
+    "build:dist": "npm run build:assets && node scripts/build-dist.js",
+    "build": "npm run build:dist"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",
