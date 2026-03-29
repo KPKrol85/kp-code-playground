@@ -1,28 +1,37 @@
-const openButton = document.querySelector('[data-atlas-open]');
-const modal = document.querySelector('[data-atlas-modal]');
-const panel = modal?.querySelector('.atlas-modal__panel');
-const closeControls = modal?.querySelectorAll('[data-atlas-close]');
+const atlasOpenButton = document.querySelector('[data-atlas-open]');
+const atlasModal = document.querySelector('[data-atlas-modal]');
+const atlasPanel = atlasModal?.querySelector('.atlas-modal__panel');
+const atlasCloseElements = atlasModal?.querySelectorAll('[data-atlas-close]');
 
-let lastFocusedElement = null;
+let previousFocus = null;
 
-const getFocusableElements = () => {
-  if (!modal) {
-    return [];
+function getFocusableItems(container) {
+  return container.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+}
+
+function onModalKeydown(event) {
+  if (!atlasModal.classList.contains('is-open')) {
+    return;
   }
 
-  return [...modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter(
-    (element) => !element.hasAttribute('disabled') && !element.getAttribute('aria-hidden')
-  );
-};
+  if (event.key === 'Escape') {
+    closeAtlasModal();
+    return;
+  }
 
-const trapFocus = (event) => {
   if (event.key !== 'Tab') {
     return;
   }
 
-  const focusable = getFocusableElements();
-  if (focusable.length === 0) {
+  const focusable = Array.from(getFocusableItems(atlasPanel)).filter(
+    (item) => !item.hasAttribute('disabled') && !item.getAttribute('aria-hidden')
+  );
+
+  if (!focusable.length) {
     event.preventDefault();
+    atlasPanel.focus();
     return;
   }
 
@@ -36,65 +45,42 @@ const trapFocus = (event) => {
     event.preventDefault();
     first.focus();
   }
-};
+}
 
-const openModal = () => {
-  if (!modal) {
-    return;
-  }
-
-  lastFocusedElement = document.activeElement;
-  modal.hidden = false;
+function openAtlasModal() {
+  previousFocus = document.activeElement;
+  atlasModal.hidden = false;
   requestAnimationFrame(() => {
-    modal.classList.add('atlas-modal--visible');
-    panel?.focus();
+    atlasModal.classList.add('is-open');
+    document.body.classList.add('atlas-scroll-lock');
+    const firstFocusable = getFocusableItems(atlasPanel)[0];
+    (firstFocusable || atlasPanel).focus();
   });
-  document.body.classList.add('atlas-modal-open');
-};
+}
 
-const closeModal = () => {
-  if (!modal || modal.hidden) {
-    return;
-  }
+function closeAtlasModal() {
+  atlasModal.classList.remove('is-open');
+  document.body.classList.remove('atlas-scroll-lock');
 
-  modal.classList.remove('atlas-modal--visible');
-  window.setTimeout(() => {
-    modal.hidden = true;
-  }, 240);
-  document.body.classList.remove('atlas-modal-open');
-
-  if (lastFocusedElement instanceof HTMLElement) {
-    lastFocusedElement.focus();
-  }
-};
-
-openButton?.addEventListener('click', openModal);
-
-closeControls?.forEach((control) => {
-  control.addEventListener('click', (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) {
-      return;
+  const finishClose = () => {
+    atlasModal.hidden = true;
+    atlasModal.removeEventListener('transitionend', finishClose);
+    if (previousFocus instanceof HTMLElement) {
+      previousFocus.focus();
     }
+  };
 
-    if (target.classList.contains('atlas-modal__backdrop') && window.innerWidth < 768) {
-      return;
-    }
+  atlasModal.addEventListener('transitionend', finishClose);
 
-    closeModal();
-  });
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    finishClose();
+  }
+}
+
+atlasOpenButton?.addEventListener('click', openAtlasModal);
+atlasCloseElements?.forEach((element) => {
+  element.addEventListener('click', closeAtlasModal);
 });
 
-document.addEventListener('keydown', (event) => {
-  if (!modal || modal.hidden) {
-    return;
-  }
-
-  if (event.key === 'Escape') {
-    event.preventDefault();
-    closeModal();
-    return;
-  }
-
-  trapFocus(event);
-});
+document.addEventListener('keydown', onModalKeydown);

@@ -3,19 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlas Screen Modal Demo</title>
+    <title>Atlas Screen Modal</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="atlas-demo">
-      <section class="atlas-demo__intro" aria-labelledby="atlas-demo-title">
-        <p class="atlas-demo__eyebrow">Modal Collection · #07</p>
+    <main class="atlas-page">
+      <section class="atlas-intro" aria-labelledby="atlas-demo-title">
+        <p class="atlas-eyebrow">Modal Collection · #07</p>
         <h1 id="atlas-demo-title">Atlas Screen</h1>
         <p>
-          A mobile-first, full-screen modal pattern for onboarding and profile setup flows.
-          On larger screens it adapts into a spacious, centered dialog.
+          A mobile-first full-screen modal demo for onboarding and profile setup flows.
+          On small screens it fills the viewport, while on wider screens it adapts into
+          a large centered dialog.
         </p>
-        <button class="atlas-demo__open-btn" type="button" data-atlas-open>
+        <button class="atlas-open-btn" type="button" data-atlas-open>
           Open Atlas Screen
         </button>
       </section>
@@ -23,7 +24,6 @@
 
     <div class="atlas-modal" data-atlas-modal hidden>
       <div class="atlas-modal__backdrop" data-atlas-close></div>
-
       <section
         class="atlas-modal__panel"
         role="dialog"
@@ -33,90 +33,81 @@
         tabindex="-1"
       >
         <header class="atlas-modal__header">
-          <div>
-            <p class="atlas-modal__kicker">Profile Setup</p>
+          <div class="atlas-modal__header-text">
+            <p class="atlas-chip">Welcome</p>
             <h2 id="atlas-modal-title">Atlas Screen</h2>
+            <p id="atlas-modal-description">Set up your profile to personalize your workspace.</p>
           </div>
-          <button class="atlas-modal__icon-btn" type="button" aria-label="Close Atlas Screen" data-atlas-close>
-            <span aria-hidden="true">×</span>
+          <button class="atlas-icon-btn" type="button" data-atlas-close aria-label="Close Atlas Screen modal">
+            <span aria-hidden="true">✕</span>
           </button>
         </header>
 
-        <div class="atlas-modal__body" id="atlas-modal-description">
-          <p>
-            Welcome to Atlas Screen. This onboarding view helps new users complete a practical
-            profile foundation before they start using advanced workspace tools.
-          </p>
-
+        <div class="atlas-modal__body">
           <form class="atlas-form" action="#" method="post">
-            <label class="atlas-field">
-              <span>Display name</span>
-              <input type="text" name="display-name" placeholder="e.g. Riley Carter" required />
-            </label>
+            <fieldset>
+              <legend>Profile basics</legend>
+              <label for="atlas-name">Full name</label>
+              <input id="atlas-name" name="name" type="text" autocomplete="name" placeholder="Jordan Lee" />
 
-            <label class="atlas-field">
-              <span>Role</span>
-              <input type="text" name="role" placeholder="Product Designer" />
-            </label>
-
-            <label class="atlas-field">
-              <span>Primary goal</span>
-              <select name="goal" required>
-                <option value="">Choose one</option>
-                <option value="onboarding">Get oriented quickly</option>
-                <option value="collaboration">Coordinate with team</option>
-                <option value="organization">Structure personal workflow</option>
-                <option value="reporting">Track progress and outcomes</option>
+              <label for="atlas-role">Role</label>
+              <select id="atlas-role" name="role">
+                <option value="">Choose your role</option>
+                <option>Designer</option>
+                <option>Developer</option>
+                <option>Product Manager</option>
+                <option>Operations</option>
               </select>
-            </label>
 
-            <fieldset class="atlas-fieldset">
-              <legend>Notification preferences</legend>
-              <label class="atlas-choice">
-                <input type="checkbox" name="notif-updates" checked />
-                Product updates and release notes
+              <label for="atlas-bio">Short bio</label>
+              <textarea
+                id="atlas-bio"
+                name="bio"
+                rows="4"
+                placeholder="Tell your team a little about your focus and interests."
+              ></textarea>
+            </fieldset>
+
+            <fieldset>
+              <legend>Preferences</legend>
+              <p class="atlas-hint">Choose what you want to receive during onboarding.</p>
+              <label class="atlas-check">
+                <input type="checkbox" name="updates" checked />
+                <span>Weekly product updates</span>
               </label>
-              <label class="atlas-choice">
-                <input type="checkbox" name="notif-reminders" checked />
-                Weekly setup reminders
+              <label class="atlas-check">
+                <input type="checkbox" name="tips" checked />
+                <span>Setup tips and quick guides</span>
               </label>
-              <label class="atlas-choice">
-                <input type="checkbox" name="notif-tips" />
-                Tips for advanced workflows
+              <label class="atlas-check">
+                <input type="checkbox" name="events" />
+                <span>Invites to live onboarding sessions</span>
               </label>
             </fieldset>
 
-            <label class="atlas-field">
-              <span>About your workflow</span>
-              <textarea
-                name="workflow"
-                rows="5"
-                placeholder="Tell us what you want Atlas Screen to help you accomplish."
-              ></textarea>
-            </label>
-          </form>
+            <fieldset>
+              <legend>Working style</legend>
+              <p class="atlas-hint">These details help us tailor defaults for your dashboard.</p>
+              <label for="atlas-team-size">Team size</label>
+              <input id="atlas-team-size" name="team-size" type="number" min="1" max="200" placeholder="12" />
 
-          <section class="atlas-card" aria-label="Why this setup helps">
-            <h3>Why this setup matters</h3>
-            <p>
-              The details you provide here power default recommendations, contextual tips, and
-              relevant templates. You can update everything later from your account settings.
-            </p>
-            <ul>
-              <li>Faster first-session guidance</li>
-              <li>More relevant workspace defaults</li>
-              <li>Better team collaboration prompts</li>
-            </ul>
-          </section>
+              <label for="atlas-timezone">Timezone</label>
+              <input id="atlas-timezone" name="timezone" type="text" placeholder="UTC-05:00" />
+
+              <label for="atlas-goals">Primary goals</label>
+              <textarea
+                id="atlas-goals"
+                name="goals"
+                rows="4"
+                placeholder="e.g. Improve handoff speed, track releases, and align weekly priorities"
+              ></textarea>
+            </fieldset>
+          </form>
         </div>
 
         <footer class="atlas-modal__footer">
-          <button class="atlas-btn atlas-btn--ghost" type="button" data-atlas-close>
-            Cancel
-          </button>
-          <button class="atlas-btn atlas-btn--primary" type="button">
-            Save profile
-          </button>
+          <button class="atlas-secondary" type="button" data-atlas-close>Cancel</button>
+          <button class="atlas-primary" type="button">Save profile</button>
         </footer>
       </section>
     </div>
