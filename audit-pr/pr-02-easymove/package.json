@@ -4,13 +4,13 @@
   "description": "Premium multi-page website for Easy Move moving company.",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
     "build": "node scripts/build.mjs",
-    "preview": "vite preview --host",
     "css:build": "postcss css/main.css -o dist/css/main.css",
     "css:watch": "postcss css/main.css -o dist/css/main.css --watch",
-    "js:build": "terser js/main.js -o dist/js/main.js --compress --mangle",
-    "images:convert": "node scripts/convert-images.mjs"
+    "dev": "vite --host",
+    "images:convert": "node scripts/convert-images.mjs",
+    "js:build": "mkdir -p dist/js/modules && terser js/main.js -o dist/js/main.js --compress --mangle --module && for f in js/modules/*.js; do terser \"$f\" -o \"dist/$f\" --compress --mangle --module; done",
+    "preview": "vite preview --host"
   },
   "devDependencies": {
     "cssnano": "^6.1.2",
