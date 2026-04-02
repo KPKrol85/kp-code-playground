@@ -24,6 +24,13 @@ htmlFiles.forEach((file) => {
   cpSync(join(rootDir, file), join(distPath, file));
 });
 
+['robots.txt', 'sitemap.xml'].forEach((file) => {
+  const sourcePath = join(rootDir, file);
+  if (existsSync(sourcePath)) {
+    cpSync(sourcePath, join(distPath, file));
+  }
+});
+
 const assetsPath = join(rootDir, 'assets');
 if (existsSync(assetsPath)) {
   cpSync(assetsPath, join(distPath, 'assets'), { recursive: true });
