@@ -9,30 +9,130 @@ import { findProductBySlug } from "./product-data.js";
 import { setUiState, clearUiState } from "./ui-state.js";
 
 const SITE_NAME = "Outland Gear";
+const SITE_URL = "https://outlandgear.example.com/";
+const PRODUCT_PAGE_PATH = "produkt.html";
+const FALLBACK_SOCIAL_IMAGE = "assets/svg/social-share-placeholder.svg";
+const WEBPAGE_SCHEMA_SELECTOR = 'script[data-schema="webpage"]';
+const PRODUCT_SCHEMA_SELECTOR = 'script[data-schema="product"]';
 const getMainImageAlt = (productName, index = 0) => `Zdjęcie ${index + 1} produktu ${productName}`;
 const getThumbLabel = (productName, index = 0) => `Pokaż zdjęcie ${index + 1} produktu ${productName}`;
+
+const ensureMetaTag = (selector, attributes) => {
+  let tag = document.querySelector(selector);
+  if (!tag) {
+    tag = document.createElement("meta");
+    Object.entries(attributes || {}).forEach(([key, value]) => {
+      tag.setAttribute(key, value);
+    });
+    document.head.appendChild(tag);
+  }
+  return tag;
+};
+
+const setMetaContent = (selector, attributes, value) => {
+  const tag = ensureMetaTag(selector, attributes);
+  if (tag) {
+    tag.setAttribute("content", value);
+  }
+};
+
+const ensureJsonLdScript = (selector, schemaType) => {
+  let script = document.querySelector(selector);
+  if (!script) {
+    script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-schema", schemaType);
+    document.head.appendChild(script);
+  }
+  return script;
+};
+
+const setJsonLd = (selector, schemaType, payload) => {
+  const script = ensureJsonLdScript(selector, schemaType);
+  if (script) {
+    script.textContent = JSON.stringify(payload);
+  }
+};
 
 const setProductMetadata = (product, slug) => {
   if (!product || !slug) return;
 
   const titleParts = [product.name, product.category, SITE_NAME];
-  document.title = titleParts.filter(Boolean).join(" | ");
+  const pageTitle = titleParts.filter(Boolean).join(" | ");
+  document.title = pageTitle;
 
   const description = [product.shortDescription, product.subcategory]
     .filter(Boolean)
     .join(" ");
-  const metaDescription = document.querySelector('meta[name="description"]');
-  if (metaDescription) {
-    metaDescription.setAttribute("content", description);
-  }
+  setMetaContent('meta[name="description"]', { name: "description" }, description);
 
-  const canonicalUrl = new URL("produkt.html", window.location.origin);
+  const canonicalUrl = new URL(PRODUCT_PAGE_PATH, window.location.origin);
   canonicalUrl.searchParams.set("slug", slug);
+  const canonicalHref = canonicalUrl.href;
+  const primaryImagePath = product.images?.[0] || FALLBACK_SOCIAL_IMAGE;
+  const imageUrl = new URL(primaryImagePath, window.location.origin).href;
+  const imageAlt = product.name
+    ? `${product.name} — ${SITE_NAME}`
+    : "Outland Gear - outdoor i travel marketplace";
+  const formattedPrice = Number.isFinite(product.price) ? product.price.toFixed(2) : "";
 
   const canonicalLink = document.querySelector('link[rel="canonical"]');
   if (canonicalLink) {
-    canonicalLink.setAttribute("href", canonicalUrl.href);
+    canonicalLink.setAttribute("href", canonicalHref);
   }
+
+  setMetaContent('meta[property="og:title"]', { property: "og:title" }, pageTitle);
+  setMetaContent('meta[property="og:description"]', { property: "og:description" }, description);
+  setMetaContent('meta[property="og:url"]', { property: "og:url" }, canonicalHref);
+  setMetaContent('meta[property="og:image"]', { property: "og:image" }, imageUrl);
+  setMetaContent('meta[property="og:image:alt"]', { property: "og:image:alt" }, imageAlt);
+
+  setMetaContent('meta[name="twitter:title"]', { name: "twitter:title" }, pageTitle);
+  setMetaContent('meta[name="twitter:description"]', { name: "twitter:description" }, description);
+  setMetaContent('meta[name="twitter:image"]', { name: "twitter:image" }, imageUrl);
+
+  setJsonLd(WEBPAGE_SCHEMA_SELECTOR, "webpage", {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: pageTitle,
+    description,
+    url: canonicalHref,
+    inLanguage: "pl-PL",
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  });
+
+  setJsonLd(PRODUCT_SCHEMA_SELECTOR, "product", {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.shortDescription || description,
+    category: product.category || undefined,
+    sku: String(product.id || slug),
+    image: [imageUrl],
+    url: canonicalHref,
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: product.currency || "PLN",
+      price: formattedPrice,
+      availability: product.stockStatus === "Dostępny" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      url: canonicalHref,
+    },
+    aggregateRating: Number.isFinite(product.rating)
+      ? {
+          "@type": "AggregateRating",
+          ratingValue: String(product.rating),
+          reviewCount: String(product.reviewsCount || 0),
+        }
+      : undefined,
+  });
 };
 
 const renderProduct = (product) => {
