@@ -10,6 +10,8 @@ export const initCheckout = () => {
 
   const status = qs(CONFIG.selectors.checkoutStatus) || qs("[data-checkout-status]", form);
   const successPanel = qs("[data-checkout-success]");
+
+  form.noValidate = true;
   initFormFieldUX(form);
 
   on(form, "submit", (event) => {
