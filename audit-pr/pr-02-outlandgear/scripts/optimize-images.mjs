@@ -34,6 +34,15 @@ const avifOptions = {
   effort: 6,
 };
 
+const log = {
+  info(message) {
+    console.info(`[optimize-images] ${message}`);
+  },
+  error(message) {
+    console.error(`[optimize-images] ${message}`);
+  },
+};
+
 async function pathExists(targetPath) {
   try {
     await stat(targetPath);
@@ -122,7 +131,7 @@ async function main() {
   const shouldClean = process.argv.includes('--clean');
 
   if (!(await pathExists(SOURCE_DIR))) {
-    console.error(`Source folder not found: ${SOURCE_DIR}`);
+    log.error(`Source folder not found: ${SOURCE_DIR}`);
     process.exit(1);
   }
 
@@ -135,7 +144,7 @@ async function main() {
   const files = await listFilesRecursively(SOURCE_DIR);
 
   if (!files.length) {
-    console.log('No source files found in assets/img-src/.');
+    log.info('No source files found in assets/img-src/.');
     return;
   }
 
@@ -164,13 +173,13 @@ async function main() {
     copiedCount += 1;
   }
 
-  console.log(`Raster images optimized: ${optimizedCount}`);
-  console.log(`Non-raster files copied as-is: ${copiedCount}`);
-  console.log(`SVG files skipped: ${skippedSvgCount}`);
-  console.log('Done.');
+  log.info(`Raster images optimized: ${optimizedCount}`);
+  log.info(`Non-raster files copied as-is: ${copiedCount}`);
+  log.info(`SVG files skipped: ${skippedSvgCount}`);
+  log.info('Done.');
 }
 
 main().catch((error) => {
-  console.error(error);
+  log.error(error instanceof Error ? error.stack ?? error.message : String(error));
   process.exit(1);
 });
