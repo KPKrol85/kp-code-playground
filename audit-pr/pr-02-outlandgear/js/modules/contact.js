@@ -5,6 +5,7 @@ export const initContactForm = () => {
   const form = qs("[data-contact-form]");
   if (!form) return;
 
+  form.noValidate = true;
   initFormFieldUX(form);
 
   on(form, "submit", (event) => {
