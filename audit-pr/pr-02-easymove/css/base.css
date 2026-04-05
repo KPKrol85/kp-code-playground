@@ -27,6 +27,16 @@ svg {
 
 a {
   color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.header a,
+.nav a,
+.mobile-nav a,
+a.button,
+.skip-link,
+.footer a[aria-label] {
   text-decoration: none;
 }
 
