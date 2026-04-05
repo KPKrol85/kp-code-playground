@@ -197,6 +197,11 @@
   gap: var(--space-8);
 }
 
+.footer__social-icons {
+  display: flex;
+  gap: var(--space-3);
+}
+
 .footer__bottom {
   margin-top: var(--space-6);
   border-top: 1px solid var(--color-border);
