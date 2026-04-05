@@ -3,7 +3,14 @@ const validators = {
   phone: (value) => /^[+\d\s()-]{7,}$/.test(value.trim()),
   email: (value) => /\S+@\S+\.\S+/.test(value.trim()),
   required: (value) => value.trim() !== '',
+  dateNotPast: (value, minDate) => value >= minDate,
   consent: (value) => value === true,
+};
+
+const getTodayDate = () => {
+  const now = new Date();
+  const localMidnight = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return localMidnight.toISOString().slice(0, 10);
 };
 
 const setError = (field, message) => {
@@ -34,9 +41,15 @@ export const initContactForm = () => {
 
   const status = document.querySelector('[data-form-status]');
   const summary = document.querySelector('[data-form-summary]');
+  const dateField = form.querySelector('[name="moveDate"]');
+
+  if (dateField) {
+    dateField.min = getTodayDate();
+  }
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+    const minMoveDate = getTodayDate();
 
     const name = form.querySelector('[name="fullName"]');
     const phone = form.querySelector('[name="phone"]');
@@ -64,6 +77,7 @@ export const initContactForm = () => {
       { field: cityStart, valid: validators.required(cityStart.value), message: 'Podaj miasto startowe.' },
       { field: cityEnd, valid: validators.required(cityEnd.value), message: 'Podaj miasto docelowe.' },
       { field: date, valid: validators.required(date.value), message: 'Wybierz termin przeprowadzki.' },
+      { field: date, valid: validators.dateNotPast(date.value, minMoveDate), message: 'Data przeprowadzki nie może być z przeszłości.' },
       { field: consent, valid: validators.consent(consent.checked), message: 'Potrzebujemy zgody na kontakt.' },
     ];
 
