@@ -45,6 +45,24 @@
   gap: var(--space-6);
 }
 
+.mt-6 {
+  margin-top: var(--space-6);
+}
+
+.inline-flex-gap-3 {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.list-unstyled {
+  list-style: none;
+}
+
+.list-disc-pl-1 {
+  list-style: disc;
+  padding-left: 1rem;
+}
+
 @media (min-width: 760px) {
   .grid-2 {
     grid-template-columns: repeat(2, 1fr);
