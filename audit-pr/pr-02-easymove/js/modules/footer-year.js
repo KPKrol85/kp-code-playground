@@ -1,5 +1,5 @@
 export const initFooterYear = () => {
-  const footerYear = document.querySelector('.footer__bottom > span');
+  const footerYear = document.querySelector('[data-footer-year]') ?? document.querySelector('.footer__bottom > span');
 
   if (!footerYear) {
     return;
