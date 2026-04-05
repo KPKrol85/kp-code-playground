@@ -89,9 +89,10 @@ export const initContactForm = () => {
 
     if (errors.length) {
       if (summary) {
+        const uniqueErrors = [...new Set(errors)];
         const list = document.createElement('ul');
 
-        errors.forEach((errorMessage) => {
+        uniqueErrors.forEach((errorMessage) => {
           const item = document.createElement('li');
           item.textContent = errorMessage;
           list.appendChild(item);
