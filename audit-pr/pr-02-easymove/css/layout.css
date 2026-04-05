@@ -93,8 +93,9 @@
   display: none;
 }
 
-.nav__dropdown[open] .nav__summary {
+.nav__summary--active {
   color: var(--color-primary);
+  font-weight: 600;
 }
 
 .nav__submenu {
