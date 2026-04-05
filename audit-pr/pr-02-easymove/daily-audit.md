@@ -1,27 +1,24 @@
 # Dzienny audyt frontendu Easy Move
-Najważniejsze usprawnienia do wdrożenia w kolejnym kroku.
+Najważniejsze usprawnienia do wdrożenia w kolejnym kroku (na bazie aktualnego stanu kodu).
 
-## Dostępność i interakcje
-- Uzupełnić akordeon o pełne powiązania dostępności (`id`, `aria-controls`, `aria-labelledby`) i przełączanie stanu paneli atrybutem `hidden`.
-- Dodać pełną obsługę klawiatury dla zakładek (strzałki, Home/End, roving `tabindex`) oraz spójne stany `aria-selected` i `tabindex`.
-- Powiązać przyciski akordeonu z konkretnymi panelami zamiast opierać logikę wyłącznie na klasach CSS.
-- Uzupełnić formularz o walidację daty przeprowadzki względem dnia bieżącego (blokada dat przeszłych).
+## HTML i semantyka
+- Zastąpić powtarzające się style inline (`style="margin-top: ..."`, `style="display: flex; gap: ..."`) dedykowanymi klasami utility i użyć ich we wszystkich szablonach.
+- Naprawić duplikat treści w sekcji opinii na stronie głównej (podwójne „Anna, Warszawa”).
+- Zamienić tekstowe elementy stopki „Polityka prywatności” i „Cookies” na realne linki do podstron dokumentów.
+- Ujednolicić dane kontaktowe między widokiem a JSON-LD (telefon w schema powinien odpowiadać numerowi prezentowanemu w interfejsie).
 
-## Treść i wiarygodność
-- Zastąpić wszystkie linki techniczne `href="#"` docelowymi adresami lub tymczasowo usunąć je z interfejsu.
-- Zaktualizować stopkę z `© 2024` do bieżącego roku albo generować rok automatycznie.
-- Zamienić widoczne dane kontaktowe (telefon, e-mail) na klikalne odnośniki `tel:` i `mailto:`.
+## Dostępność (A11y)
+- Uzupełnić zakładki o pełny wzorzec WAI-ARIA: nadać `id` wszystkim `role="tab"`, ustawić `aria-labelledby` w `role="tabpanel"` oraz przełączać ukrycie paneli przez `hidden`/`aria-hidden` (nie tylko klasą CSS).
+- Dodać zarządzanie dostępnością mobilnego menu: podczas zamknięcia ustawiać `aria-hidden`/`inert` dla kontenera, aby elementy poza ekranem nie były fokusowalne z klawiatury.
+- Dodać obsługę zamykania menu po zmianie breakpointu do desktopu (reset stanu `aria-expanded`, focus trap i `no-scroll`).
 
-## Spójność kodu HTML/CSS
-- Usunąć powtarzalne style inline (`style="..."`) i przenieść je do klas w arkuszach CSS.
-- Ograniczyć globalne `a { text-decoration: none; }` i przywrócić podkreślenia dla linków treściowych (np. prawnych i stopki).
-- Ujednolicić komponenty list w stopce i sekcjach kart przez wspólną klasę pomocniczą zamiast lokalnych nadpisań.
+## CSS i utrzymanie
+- Ograniczyć zależność od `@import` w `css/main.css`: przenieść fonty Google do `<head>` (`preconnect` + `stylesheet`), a style lokalne spinać jednym buildem do pliku wynikowego.
+- Uporządkować dublowanie klas utility `.sr-only` i `.visually-hidden` (zostawić jedną nazwę i jeden standard użycia).
 
-## JavaScript i utrzymanie
-- Dodać synchronizację stanów ARIA w modułach `tabs` i `accordion` przy każdej zmianie widoku.
-- Rozszerzyć walidację formularza o deduplikację komunikatów błędów w podsumowaniu (bez powtórzeń tych samych treści).
-- Rozbić powtarzalny układ nagłówka i stopki na współdzielony mechanizm szablonów w procesie budowania, aby ograniczyć duplikację między stronami.
+## JavaScript i architektura
+- Rozszerzyć moduł `tabs` o aktualizację stanów paneli (`hidden`, `aria-hidden`) równolegle do klas wizualnych.
+- Wydzielić powtarzalny layout nagłówka i stopki do wspólnego szablonu w procesie build (`scripts/build.mjs`), aby ograniczyć duplikację zmian między wszystkimi stronami.
 
-## Wydajność
-- Zastąpić ładowanie fontów przez `@import` zestawem linków w `<head>` (`preconnect` + `stylesheet`) dla szybszego renderu.
-- Przygotować dedykowaną grafikę social preview (raster 1200x630) zamiast opierania Open Graph wyłącznie na pliku SVG.
+## SEO i wiarygodność
+- Przygotować dedykowaną grafikę social preview 1200×630 (PNG/JPG) i podmienić `og:image`/`twitter:image` z obecnego SVG.
