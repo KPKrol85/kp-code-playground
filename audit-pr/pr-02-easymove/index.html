@@ -116,14 +116,19 @@
   <main id="main">
     <section class="hero">
       <div class="container hero__grid">
-        <div class="flow" data-reveal>
+        <div class="hero__content flow" data-reveal>
           <span class="badge">Nowoczesne przeprowadzki w 48h</span>
           <h1 class="hero__title">Bezstresowa przeprowadzka z zespołem, który dowozi więcej niż kartony.</h1>
-          <p class="text-muted">Easy Move to kompleksowa obsługa przeprowadzek mieszkań i biur. Zapewniamy opiekę koordynatora, ubezpieczenie i elastyczne terminy w całej Polsce.</p>
-          <div class="hero__stats">
+          <p class="hero__lead text-muted">Easy Move to kompleksowa obsługa przeprowadzek mieszkań i biur. Zapewniamy opiekę koordynatora, ubezpieczenie i elastyczne terminy w całej Polsce.</p>
+          <div class="hero__actions">
             <a class="button button--primary" href="kontakt.html#formularz">Darmowa wycena</a>
             <a class="button button--ghost" href="uslugi.html">Poznaj usługi</a>
           </div>
+          <ul class="hero__highlights" aria-label="Najważniejsze atuty Easy Move">
+            <li><strong>Wyjazdy codziennie</strong><span class="text-muted">starty z Warszawy i obsługa tras międzyregionalnych</span></li>
+            <li><strong>Koordynator 1:1</strong><span class="text-muted">jeden kontakt od wyceny po rozładunek</span></li>
+            <li><strong>Kompletna ochrona</strong><span class="text-muted">zabezpieczenia i ubezpieczenie do 500 tys. zł</span></li>
+          </ul>
           <div class="trust">
             <div class="trust__item">
               <span class="trust__icon" aria-hidden="true">⏱</span>
@@ -142,8 +147,10 @@
           </div>
         </div>
         <div class="hero__illustration" data-reveal>
-          <h2>Przeprowadzki premium</h2>
-          <p class="text-muted">Zespół 20+ specjalistów i flota 8 pojazdów gotowych na każdy kilometraż.</p>
+          <div class="hero__eyebrow">
+            <span class="badge">Przeprowadzki premium</span>
+            <p class="text-muted">Zespół 20+ specjalistów i flota 8 pojazdów gotowych na każdy kilometraż.</p>
+          </div>
           <svg viewBox="0 0 320 200" role="img" aria-label="Ilustracja samochodu przeprowadzkowego">
             <rect width="320" height="200" rx="24" fill="var(--color-surface-alt)"/>
             <rect x="40" y="70" width="170" height="70" rx="12" fill="var(--color-primary)"/>
@@ -163,6 +170,13 @@
               <span class="text-muted">Na podstawie ankiet klientów</span>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="container" data-reveal>
+        <div class="hero__strip" aria-label="Kluczowe dane operacyjne Easy Move">
+          <p><strong>1 500+</strong> zrealizowanych przeprowadzek rocznie</p>
+          <p><strong>60 min</strong> średni czas przygotowania oferty</p>
+          <p><strong>96%</strong> klientów wraca z kolejnym zleceniem lub poleceniem</p>
         </div>
       </div>
     </section>
@@ -231,7 +245,8 @@
             <p class="text-muted">Dla kawalerek i małych biur do 30 m².</p>
             <strong>od 890 zł</strong>
           </article>
-          <article class="card">
+          <article class="card card--featured">
+            <p class="card__tag">Najczęściej wybierany</p>
             <h3>Comfort</h3>
             <p class="text-muted">Najczęściej wybierany pakiet dla rodzin.</p>
             <strong>od 1490 zł</strong>
