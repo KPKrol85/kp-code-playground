@@ -1,27 +1,10 @@
-# Dzienny audyt frontendu Easy Move
-Najważniejsze usprawnienia do wdrożenia w kolejnym kroku.
-
-## Dostępność i interakcje
-- Uzupełnić akordeon o pełne powiązania dostępności (`id`, `aria-controls`, `aria-labelledby`) i przełączanie stanu paneli atrybutem `hidden`.
-- Dodać pełną obsługę klawiatury dla zakładek (strzałki, Home/End, roving `tabindex`) oraz spójne stany `aria-selected` i `tabindex`.
-- Powiązać przyciski akordeonu z konkretnymi panelami zamiast opierać logikę wyłącznie na klasach CSS.
-- Uzupełnić formularz o walidację daty przeprowadzki względem dnia bieżącego (blokada dat przeszłych).
-
-## Treść i wiarygodność
-- Zastąpić wszystkie linki techniczne `href="#"` docelowymi adresami lub tymczasowo usunąć je z interfejsu.
-- Zaktualizować stopkę z `© 2024` do bieżącego roku albo generować rok automatycznie.
-- Zamienić widoczne dane kontaktowe (telefon, e-mail) na klikalne odnośniki `tel:` i `mailto:`.
-
-## Spójność kodu HTML/CSS
-- Usunąć powtarzalne style inline (`style="..."`) i przenieść je do klas w arkuszach CSS.
-- Ograniczyć globalne `a { text-decoration: none; }` i przywrócić podkreślenia dla linków treściowych (np. prawnych i stopki).
-- Ujednolicić komponenty list w stopce i sekcjach kart przez wspólną klasę pomocniczą zamiast lokalnych nadpisań.
-
-## JavaScript i utrzymanie
-- Dodać synchronizację stanów ARIA w modułach `tabs` i `accordion` przy każdej zmianie widoku.
-- Rozszerzyć walidację formularza o deduplikację komunikatów błędów w podsumowaniu (bez powtórzeń tych samych treści).
-- Rozbić powtarzalny układ nagłówka i stopki na współdzielony mechanizm szablonów w procesie budowania, aby ograniczyć duplikację między stronami.
-
-## Wydajność
-- Zastąpić ładowanie fontów przez `@import` zestawem linków w `<head>` (`preconnect` + `stylesheet`) dla szybszego renderu.
-- Przygotować dedykowaną grafikę social preview (raster 1200x630) zamiast opierania Open Graph wyłącznie na pliku SVG.
+1. Zastąpić ładowanie fontów przez `@import` w `css/main.css` linkami `<link rel="preconnect">` + `<link rel="stylesheet">` w `<head>`, aby skrócić blokowanie renderowania.
+2. Usunąć powtarzające się style inline (`style="margin-top: ..."`, `style="display: flex; gap: ..."`) z plików HTML i przenieść je do klas pomocniczych w CSS.
+3. Zamienić teksty „Polityka prywatności” i „Cookies” w stopce ze `<span>` na realne linki do stron prawnych.
+4. Zmienić ikony social media w stopce z nieklikalnych `<span>` na dostępne linki `<a>` z czytelnymi etykietami (`aria-label`).
+5. Dodać `aria-current="page"` dla aktywnej pozycji nawigacji i ujednolicić oznaczenie aktywnej sekcji „Usługi” między desktopem i mobile.
+6. Uzupełnić komponent tabs o pełne powiązania ARIA (`id` na tabach + `aria-labelledby` na panelach) i przełączać także atrybut `hidden`, nie tylko klasy CSS.
+7. Przenieść podstawowe atrybuty dostępności akordeonu (`id`, `aria-controls`, `aria-labelledby`, `hidden`) do HTML, aby semantyka działała także przy wyłączonym JS.
+8. W formularzu kontaktowym po nieudanej walidacji przenosić fokus do pierwszego błędnego pola i dodać w podsumowaniu błędów linki prowadzące do konkretnych pól.
+9. Zastąpić „symulowaną” wysyłkę formularza (sam `preventDefault`) realnym przepływem submit (`action`/`method` + backend/API) albo dodać wyraźny fallback bez JS.
+10. Ograniczyć duplikację kodu między stronami (powtarzany header/footer i bloki SEO JSON-LD) przez wspólne partiale w procesie builda.
