@@ -35,6 +35,10 @@
   margin-bottom: var(--space-6);
 }
 
+.section__action {
+  margin-top: var(--space-6);
+}
+
 .grid-2 {
   display: grid;
   gap: var(--space-6);
