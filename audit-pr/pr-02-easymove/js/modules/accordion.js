@@ -2,24 +2,45 @@ export const initAccordion = () => {
   const accordionButtons = document.querySelectorAll('[data-accordion-button]');
   if (!accordionButtons.length) return;
 
-  accordionButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const item = button.closest('.accordion__item');
-      if (!item) return;
+  const accordionItems = Array.from(accordionButtons)
+    .map((button) => {
+      const panelId = button.getAttribute('aria-controls');
+      if (!panelId) return null;
 
-      const isOpen = item.classList.contains('accordion__item--open');
+      const panel = document.getElementById(panelId);
+      if (!panel) return null;
 
-      accordionButtons.forEach((btn) => {
-        const parent = btn.closest('.accordion__item');
-        if (!parent) return;
+      return {
+        button,
+        panel,
+        item: panel.closest('.accordion__item')
+      };
+    })
+    .filter(Boolean);
 
-        parent.classList.remove('accordion__item--open');
-        btn.setAttribute('aria-expanded', 'false');
+  if (!accordionItems.length) return;
+
+  const setItemState = ({ button, panel, item }, isOpen) => {
+    button.setAttribute('aria-expanded', String(isOpen));
+    panel.hidden = !isOpen;
+    if (item) {
+      item.classList.toggle('accordion__item--open', isOpen);
+    }
+  };
+
+  accordionItems.forEach((entry) => {
+    const isExpanded = entry.button.getAttribute('aria-expanded') === 'true';
+    setItemState(entry, isExpanded);
+
+    entry.button.addEventListener('click', () => {
+      const shouldOpen = entry.button.getAttribute('aria-expanded') !== 'true';
+
+      accordionItems.forEach((item) => {
+        setItemState(item, false);
       });
 
-      if (!isOpen) {
-        item.classList.add('accordion__item--open');
-        button.setAttribute('aria-expanded', 'true');
+      if (shouldOpen) {
+        setItemState(entry, true);
       }
     });
   });
