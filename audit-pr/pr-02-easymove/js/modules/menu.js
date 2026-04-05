@@ -2,6 +2,8 @@ export const initMenu = () => {
   const header = document.querySelector('[data-header]');
   const menuToggle = document.querySelector('[data-menu-toggle]');
   const mobileNav = document.querySelector('[data-mobile-nav]');
+  const menuToggleText = menuToggle?.querySelector('.nav__toggle-text');
+  const desktopMq = window.matchMedia('(min-width: 1024px)');
 
   let lastKnownScroll = 0;
   let ticking = false;
@@ -61,7 +63,13 @@ export const initMenu = () => {
 
   const closeMenu = () => {
     mobileNav.classList.remove('mobile-nav--open');
+    mobileNav.setAttribute('aria-hidden', 'true');
     menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Otwórz menu nawigacji');
+    menuToggle.setAttribute('data-menu-state', 'closed');
+    if (menuToggleText) {
+      menuToggleText.textContent = 'Menu';
+    }
 
     document.body.classList.remove('no-scroll');
     document.removeEventListener('keydown', trapFocus);
@@ -83,7 +91,13 @@ export const initMenu = () => {
 
     lastFocusedElement = document.activeElement;
     mobileNav.classList.add('mobile-nav--open');
+    mobileNav.setAttribute('aria-hidden', 'false');
     menuToggle.setAttribute('aria-expanded', 'true');
+    menuToggle.setAttribute('aria-label', 'Zamknij menu nawigacji');
+    menuToggle.setAttribute('data-menu-state', 'open');
+    if (menuToggleText) {
+      menuToggleText.textContent = 'Zamknij';
+    }
     document.body.classList.add('no-scroll');
 
     document.addEventListener('keydown', trapFocus);
@@ -93,6 +107,21 @@ export const initMenu = () => {
     const firstLink = mobileNav.querySelector('a, button, summary');
     if (firstLink instanceof HTMLElement) {
       firstLink.focus();
+    }
+  });
+
+  mobileNav.setAttribute('aria-hidden', 'true');
+  menuToggle.setAttribute('data-menu-state', 'closed');
+
+  mobileNav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  desktopMq.addEventListener('change', (event) => {
+    if (event.matches) {
+      closeMenu();
     }
   });
 };
