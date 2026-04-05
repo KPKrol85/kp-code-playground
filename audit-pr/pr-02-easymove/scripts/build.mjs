@@ -1,9 +1,14 @@
 import { execSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const distDir = new URL('../dist', import.meta.url);
-const distPath = distDir.pathname;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const rootDir = resolve(__dirname, '..');
+const distDir = join(rootDir, 'dist');
+
+const includePattern = /<!--\s*@include\s+([^\s]+)\s*-->/g;
 
 const ensureDir = (path) => {
   if (!existsSync(path)) {
@@ -11,27 +16,47 @@ const ensureDir = (path) => {
   }
 };
 
-ensureDir(distPath);
-ensureDir(join(distPath, 'css'));
-ensureDir(join(distPath, 'js'));
+const resolveIncludes = (content, baseDir) =>
+  content.replace(includePattern, (_, includePath) => {
+    const resolvedPath = resolve(baseDir, includePath);
+    if (!existsSync(resolvedPath)) {
+      throw new Error(`Missing include file: ${resolvedPath}`);
+    }
 
-execSync('npm run css:build', { stdio: 'inherit' });
-execSync('npm run js:build', { stdio: 'inherit' });
+    const includeContent = readFileSync(resolvedPath, 'utf8');
+    return resolveIncludes(includeContent, dirname(resolvedPath));
+  });
 
-const rootDir = new URL('..', import.meta.url).pathname;
+rmSync(distDir, { recursive: true, force: true });
+ensureDir(distDir);
+ensureDir(join(distDir, 'css'));
+ensureDir(join(distDir, 'js'));
+
+execSync('npm run build:css', { stdio: 'inherit' });
+execSync('npm run build:js', { stdio: 'inherit' });
+
 const htmlFiles = readdirSync(rootDir).filter((file) => file.endsWith('.html'));
-htmlFiles.forEach((file) => {
-  cpSync(join(rootDir, file), join(distPath, file));
-});
 
-['robots.txt', 'sitemap.xml'].forEach((file) => {
+for (const file of htmlFiles) {
   const sourcePath = join(rootDir, file);
-  if (existsSync(sourcePath)) {
-    cpSync(sourcePath, join(distPath, file));
-  }
-});
+  const sourceHtml = readFileSync(sourcePath, 'utf8');
+  const assembledHtml = resolveIncludes(sourceHtml, rootDir)
+    .replace(/href="css\/main\.css"/g, 'href="css/main.min.css"')
+    .replace(/src="js\/main\.js"/g, 'src="js/main.min.js"');
 
-const assetsPath = join(rootDir, 'assets');
-if (existsSync(assetsPath)) {
-  cpSync(assetsPath, join(distPath, 'assets'), { recursive: true });
+  writeFileSync(join(distDir, file), assembledHtml);
+}
+
+for (const staticFile of ['robots.txt', 'sitemap.xml']) {
+  const sourcePath = join(rootDir, staticFile);
+  if (existsSync(sourcePath)) {
+    cpSync(sourcePath, join(distDir, staticFile));
+  }
+}
+
+for (const assetDir of ['assets']) {
+  const sourcePath = join(rootDir, assetDir);
+  if (existsSync(sourcePath)) {
+    cpSync(sourcePath, join(distDir, assetDir), { recursive: true });
+  }
 }
