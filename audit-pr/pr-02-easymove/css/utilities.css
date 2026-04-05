@@ -54,3 +54,17 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.list-shared {
+  margin: 0;
+  padding-left: 0;
+}
+
+:is(.card, .tabs__panel) .list-shared {
+  list-style: disc;
+  padding-left: 1rem;
+}
+
+.footer .list-shared {
+  list-style: none;
+}
