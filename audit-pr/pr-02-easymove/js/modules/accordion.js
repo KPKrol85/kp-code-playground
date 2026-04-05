@@ -1,25 +1,47 @@
+const setAccordionItemState = (item, button, panel, isOpen) => {
+  item.classList.toggle('accordion__item--open', isOpen);
+  button.setAttribute('aria-expanded', String(isOpen));
+  panel.hidden = !isOpen;
+};
+
 export const initAccordion = () => {
-  const accordionButtons = document.querySelectorAll('[data-accordion-button]');
-  if (!accordionButtons.length) return;
+  const accordionItems = document.querySelectorAll('.accordion__item');
+  if (!accordionItems.length) return;
 
-  accordionButtons.forEach((button) => {
+  const accordionEntries = [];
+
+  accordionItems.forEach((item, index) => {
+    const button = item.querySelector('[data-accordion-button]');
+    const panel = item.querySelector('.accordion__panel');
+    if (!button || !panel) return;
+
+    if (!button.id) {
+      button.id = `accordion-button-${index + 1}`;
+    }
+
+    if (!panel.id) {
+      panel.id = `accordion-panel-${index + 1}`;
+    }
+
+    button.setAttribute('aria-controls', panel.id);
+    panel.setAttribute('aria-labelledby', button.id);
+
+    const isOpen = button.getAttribute('aria-expanded') === 'true' || item.classList.contains('accordion__item--open');
+    setAccordionItemState(item, button, panel, isOpen);
+
+    accordionEntries.push({ item, button, panel });
+  });
+
+  accordionEntries.forEach(({ item, button, panel }) => {
     button.addEventListener('click', () => {
-      const item = button.closest('.accordion__item');
-      if (!item) return;
+      const isOpen = button.getAttribute('aria-expanded') === 'true';
 
-      const isOpen = item.classList.contains('accordion__item--open');
-
-      accordionButtons.forEach((btn) => {
-        const parent = btn.closest('.accordion__item');
-        if (!parent) return;
-
-        parent.classList.remove('accordion__item--open');
-        btn.setAttribute('aria-expanded', 'false');
+      accordionEntries.forEach((entry) => {
+        setAccordionItemState(entry.item, entry.button, entry.panel, false);
       });
 
       if (!isOpen) {
-        item.classList.add('accordion__item--open');
-        button.setAttribute('aria-expanded', 'true');
+        setAccordionItemState(item, button, panel, true);
       }
     });
   });
