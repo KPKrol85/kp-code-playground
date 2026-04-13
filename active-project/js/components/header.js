@@ -17,7 +17,11 @@ const navItems = [
       routeMatch: "prefix",
     },
     dropdown: [
-      { label: "UI Kits & Components", path: "#/products/ui-kits", dataRoute: "#/products/ui-kits" },
+      {
+        label: "UI Kits & Components",
+        path: "#/products/ui-kits",
+        dataRoute: "#/products/ui-kits",
+      },
       {
         label: "Templates & Dashboards",
         path: "#/products/templates",
@@ -107,65 +111,52 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     return theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
   };
 
-  let themeIconCount = 0;
+  const getThemeToggleTitle = (theme) =>
+    theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+
+  const setThemeButtonState = (button, theme) => {
+    button.setAttribute("aria-label", getThemeLabel(theme));
+    button.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+    button.setAttribute("title", getThemeToggleTitle(theme));
+  };
+
   const createThemeIcon = () => {
-    themeIconCount += 1;
-    const maskId = `moon-mask-${themeIconCount}`;
     const ns = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("class", "sun-and-moon");
-    svg.setAttribute("aria-hidden", "true");
-    svg.setAttribute("viewBox", "0 0 24 24");
+    const createSvg = (className) => {
+      const svg = document.createElementNS(ns, "svg");
+      svg.setAttribute("class", className);
+      svg.setAttribute("viewBox", "0 0 24 24");
+      svg.setAttribute("focusable", "false");
+      return svg;
+    };
+    const iconSet = document.createElement("span");
+    iconSet.setAttribute("class", "theme-toggle-icons");
+    iconSet.setAttribute("aria-hidden", "true");
 
-    const mask = document.createElementNS(ns, "mask");
-    mask.setAttribute("id", maskId);
-    const maskRect = document.createElementNS(ns, "rect");
-    maskRect.setAttribute("x", "0");
-    maskRect.setAttribute("y", "0");
-    maskRect.setAttribute("width", "100%");
-    maskRect.setAttribute("height", "100%");
-    maskRect.setAttribute("fill", "white");
-    const maskCircle = document.createElementNS(ns, "circle");
-    maskCircle.setAttribute("class", "moon");
-    maskCircle.setAttribute("cx", "24");
-    maskCircle.setAttribute("cy", "10");
-    maskCircle.setAttribute("r", "6");
-    maskCircle.setAttribute("fill", "black");
-    mask.appendChild(maskRect);
-    mask.appendChild(maskCircle);
+    const sun = createSvg("theme-icon theme-icon-sun");
+    const sunCore = document.createElementNS(ns, "circle");
+    sunCore.setAttribute("cx", "12");
+    sunCore.setAttribute("cy", "12");
+    sunCore.setAttribute("r", "4.25");
+    const sunRays = document.createElementNS(ns, "path");
+    sunRays.setAttribute(
+      "d",
+      "M12 2.75v2.2M12 19.05v2.2M5.46 5.46l1.56 1.56M16.98 16.98l1.56 1.56M2.75 12h2.2M19.05 12h2.2M5.46 18.54l1.56-1.56M16.98 7.02l1.56-1.56"
+    );
+    sun.appendChild(sunCore);
+    sun.appendChild(sunRays);
 
-    const sun = document.createElementNS(ns, "circle");
-    sun.setAttribute("class", "sun");
-    sun.setAttribute("cx", "12");
-    sun.setAttribute("cy", "12");
-    sun.setAttribute("r", "6");
-    sun.setAttribute("mask", `url(#${maskId})`);
+    const moon = createSvg("theme-icon theme-icon-moon");
+    const moonShape = document.createElementNS(ns, "path");
+    moonShape.setAttribute(
+      "d",
+      "M14.78 2.62a.8.8 0 0 0-.96.96A8.22 8.22 0 0 1 3.58 13.82a.8.8 0 0 0-.96.96 9.4 9.4 0 1 0 12.16-12.16Z"
+    );
+    moon.appendChild(moonShape);
 
-    const beams = document.createElementNS(ns, "g");
-    beams.setAttribute("class", "sun-beams");
-    const beamLines = [
-      ["12", "1", "12", "3"],
-      ["12", "21", "12", "23"],
-      ["4.22", "4.22", "5.64", "5.64"],
-      ["18.36", "18.36", "19.78", "19.78"],
-      ["1", "12", "3", "12"],
-      ["21", "12", "23", "12"],
-      ["4.22", "19.78", "5.64", "18.36"],
-      ["18.36", "5.64", "19.78", "4.22"],
-    ];
-    beamLines.forEach(([x1, y1, x2, y2]) => {
-      const line = document.createElementNS(ns, "line");
-      line.setAttribute("x1", x1);
-      line.setAttribute("y1", y1);
-      line.setAttribute("x2", x2);
-      line.setAttribute("y2", y2);
-      beams.appendChild(line);
-    });
-
-    svg.appendChild(mask);
-    svg.appendChild(sun);
-    svg.appendChild(beams);
-    return svg;
+    iconSet.appendChild(sun);
+    iconSet.appendChild(moon);
+    return iconSet;
   };
 
   const updateDropdownMenu = (menu, items) => {
@@ -275,13 +266,12 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
         attrs: {
           id: withId ? "theme-toggle" : null,
           type: "button",
-          "aria-label": getThemeLabel(selectors.theme(store.getState())),
           "aria-live": "polite",
-          title: "Toggle theme",
         },
       },
       [createThemeIcon()]
     );
+    setThemeButtonState(themeButton, selectors.theme(store.getState()));
 
     themeButton.addEventListener("click", onThemeToggle);
 
@@ -293,7 +283,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
       update(nextState) {
         cartButton.textContent = `Koszyk (${nextState.cartCount})`;
         updateDropdownMenu(accountDropdown.menu, getAccountItems(nextState.isAuthenticated));
-        themeButton.setAttribute("aria-label", getThemeLabel(nextState.theme));
+        setThemeButtonState(themeButton, nextState.theme);
       },
     };
   };
