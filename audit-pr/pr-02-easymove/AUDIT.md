@@ -1,51 +1,51 @@
-# Easy Move — repository technical audit
+# Easy Move — audyt techniczny repozytorium
 
-## 1. Short overall assessment
-The project is a clean multi-page static front-end with consistent semantic structure, reusable JS modules, and a defined build pipeline. The main risks are around deployment URL strategy consistency (clean URLs in SEO files vs `.html` output artifacts) and a contact form that currently simulates successful submission without any persistence or transport.
+## 1. Krótka ocena całościowa
+Projekt to przejrzysty, wielostronicowy statyczny front-end ze spójną strukturą semantyczną, reużywalnymi modułami JS i zdefiniowanym pipeline’em builda. Główne ryzyka dotyczą spójności strategii URL przy wdrożeniu (czyste URL-e w plikach SEO vs artefakty wyjściowe `.html`) oraz formularza kontaktowego, który obecnie symuluje udane wysłanie bez jakiejkolwiek trwałości danych lub transportu.
 
-## 2. Strengths
-- Clear build pipeline exists and is deterministic: CSS minification, JS minification, partial includes resolution, and asset/static file copy (`scripts/build.mjs:30-61`).
-- Cross-page baseline SEO metadata is present (title, description, canonical, OG, Twitter) across core pages (example: `index.html:6-19`, `kontakt.html:6-19`, `uslugi.html:6-19`).
-- Accessibility baseline includes skip link and visible keyboard focus styles (`index.html:56`, `css/base.css:59-78`).
-- Navigation and mobile menu include explicit ARIA state updates and keyboard escape/focus-trap handling (`js/modules/menu.js:31-111`).
-- Motion preferences are respected in CSS and JS (`css/base.css:102-105`, `css/components.css:227-231`, `js/modules/reveal.js:5-10`).
-- Form fields include labels, required state, and field-level error targets (`kontakt.html:155-227`).
+## 2. Mocne strony
+- Istnieje czytelny i deterministyczny pipeline builda: minifikacja CSS, minifikacja JS, rozwiązywanie include’ów partiali oraz kopiowanie assetów/plików statycznych (`scripts/build.mjs:30-61`).
+- Bazowe metadane SEO są obecne na wszystkich kluczowych stronach (title, description, canonical, OG, Twitter) (przykład: `index.html:6-19`, `kontakt.html:6-19`, `uslugi.html:6-19`).
+- Podstawy dostępności obejmują skip link oraz widoczne style fokusu klawiatury (`index.html:56`, `css/base.css:59-78`).
+- Nawigacja i menu mobilne zawierają jawne aktualizacje stanu ARIA oraz obsługę Escape/focus-trap dla klawiatury (`js/modules/menu.js:31-111`).
+- Preferencje dotyczące ruchu (motion) są respektowane w CSS i JS (`css/base.css:102-105`, `css/components.css:227-231`, `js/modules/reveal.js:5-10`).
+- Pola formularza zawierają etykiety, stan wymagania i docelowe miejsca na błędy per pole (`kontakt.html:155-227`).
 
-## 3. P0 — Critical risks
-none detected.
+## 3. P0 — Ryzyka krytyczne
+nie wykryto.
 
-## 4. P1 — Important issues worth fixing next
-1. **Contact form success is client-only (no transport/persistence)**  
-   - Evidence: submit handler always `preventDefault()`, validates, then `form.reset()` and displays a success message; no `fetch`, no XHR, no action target, no backend integration (`js/modules/form.js:50-127`, `kontakt.html:155`).  
-   - Why this matters: on a production lead form, users can receive a success confirmation while no inquiry is actually delivered.
+## 4. P1 — Ważne problemy warte naprawy w następnej kolejności
+1. **Sukces formularza kontaktowego działa wyłącznie po stronie klienta (brak transportu/trwałości danych)**  
+   - Dowód: handler submit zawsze wykonuje `preventDefault()`, waliduje, potem robi `form.reset()` i wyświetla komunikat sukcesu; brak `fetch`, brak XHR, brak celu action, brak integracji backendowej (`js/modules/form.js:50-127`, `kontakt.html:155`).  
+   - Dlaczego to ważne: w produkcyjnym formularzu leadowym użytkownik może otrzymać potwierdzenie sukcesu, mimo że zapytanie faktycznie nigdzie nie trafiło.
 
-2. **URL strategy mismatch between SEO/declarative URLs and build output files**  
-   - Evidence: canonical/og/sitemap use clean URLs like `/kontakt`, `/uslugi` (`kontakt.html:8,13`; `sitemap.xml:7-23`), while build copies source pages as `.html` files into `dist` (`scripts/build.mjs:38-48`).  
-   - Also not detected in project: `_redirects`, rewrite config, hosting rules that guarantee extensionless routing.  
-   - Why this matters: without host-level rewrites, canonical/og/sitemap URLs may not resolve to actual pages, weakening SEO consistency and crawl reliability.
+2. **Niedopasowanie strategii URL między URL-ami SEO/deklaratywnymi a plikami wyjściowymi builda**  
+   - Dowód: canonical/og/sitemap używają czystych URL-i, np. `/kontakt`, `/uslugi` (`kontakt.html:8,13`; `sitemap.xml:7-23`), podczas gdy build kopiuje strony źródłowe do `dist` jako pliki `.html` (`scripts/build.mjs:38-48`).  
+   - Dodatkowo nie wykryto w projekcie: `_redirects`, konfiguracji rewrite ani reguł hostingu, które gwarantują routing bez rozszerzeń.  
+   - Dlaczego to ważne: bez rewrite’ów po stronie hosta URL-e z canonical/og/sitemap mogą nie wskazywać istniejących stron, osłabiając spójność SEO i niezawodność crawlowania.
 
-3. **Consent copy references policies but does not link them in the form context**  
-   - Evidence: consent label says user accepts privacy/cookies policy but contains no anchors (`kontakt.html:221-224`). Links exist elsewhere (footer) but not in the consent text itself (`partials/footer.html:57`).  
-   - Why this matters: legal/compliance and usability expectations are stronger when referenced policies are directly accessible at decision point.
+3. **Treść zgody odwołuje się do polityk, ale nie linkuje ich bezpośrednio w kontekście formularza**  
+   - Dowód: etykieta zgody mówi, że użytkownik akceptuje politykę prywatności/cookies, ale nie zawiera anchorów (`kontakt.html:221-224`). Linki istnieją w innym miejscu (footer), lecz nie w samej treści zgody (`partials/footer.html:57`).  
+   - Dlaczego to ważne: wymagania prawne/compliance i użyteczność są lepiej spełnione, gdy wskazane polityki są dostępne bezpośrednio w momencie podejmowania decyzji.
 
-## 5. P2 — Minor refinements
-1. **`og:image` is present, but `og:image:alt` is not detected**  
-   - Evidence: OG image tag appears (`index.html:15`, similarly other pages), but no `og:image:alt` tag detected in audited HTML files.
+## 5. P2 — Drobne usprawnienia
+1. **`og:image` jest obecne, ale nie wykryto `og:image:alt`**  
+   - Dowód: tag OG image występuje (`index.html:15`, analogicznie na innych stronach), ale w audytowanych plikach HTML nie wykryto tagu `og:image:alt`.
 
-2. **Google Fonts loaded via CSS `@import` in main entry stylesheet**  
-   - Evidence: `@import url('https://fonts.googleapis.com/...')` in `css/main.css:1`.  
-   - Impact: workable, but typically slower than `<link rel="preconnect">` + `<link rel="stylesheet">` in document head.
+2. **Google Fonts ładowane przez CSS `@import` w głównym arkuszu wejściowym**  
+   - Dowód: `@import url('https://fonts.googleapis.com/...')` w `css/main.css:1`.  
+   - Wpływ: działa poprawnie, ale zwykle jest wolniejsze niż `<link rel="preconnect">` + `<link rel="stylesheet">` w `<head>` dokumentu.
 
-3. **Contrast compliance cannot be verified without computed style analysis**  
-   - Evidence: color tokens and theme variables exist, but this static audit did not run rendered contrast computations (`css/tokens.css`, `css/components.css`).
+3. **Zgodności kontrastu nie można potwierdzić bez analizy stylów obliczonych**  
+   - Dowód: istnieją tokeny kolorów i zmienne motywu, ale ten statyczny audyt nie uruchamiał obliczeń kontrastu na wyrenderowanym widoku (`css/tokens.css`, `css/components.css`).
 
-## 6. Extra quality improvements
-- Add explicit hosting/deploy documentation (or config files) that defines extensionless routing behavior, and align source links/canonical/sitemap with that strategy.
-- If form backend is intentionally out of scope for this repo, show a clear non-submission disclaimer in UI or wire a lightweight endpoint (serverless/email API).
-- Add `og:image:alt` consistently for better social accessibility metadata quality.
-- Consider adding `manifest.webmanifest` only if PWA installability is a real project goal (not detected in project currently).
-- Optionally add `noscript` microcopy for JS-dependent enhancements (menu animation/reveal/theme toggle), while keeping core navigation/content already accessible.
+## 6. Dodatkowe ulepszenia jakości
+- Dodać jawną dokumentację wdrożenia/hostingu (lub pliki konfiguracyjne), która definiuje zachowanie routingu bez rozszerzeń, i dopasować linki źródłowe/canonical/sitemap do tej strategii.
+- Jeśli backend formularza celowo nie wchodzi w zakres tego repo, pokazać jasny disclaimer o braku wysyłki w UI albo podpiąć lekki endpoint (serverless/email API).
+- Dodać `og:image:alt` konsekwentnie dla lepszej jakości metadanych dostępności w social media.
+- Rozważyć dodanie `manifest.webmanifest` tylko wtedy, gdy instalowalność PWA jest realnym celem projektu (obecnie nie wykryto w projekcie).
+- Opcjonalnie dodać mikrocopy `noscript` dla ulepszeń zależnych od JS (animacja menu/reveal/toggle motywu), przy zachowaniu obecnie dostępnej podstawowej nawigacji i treści.
 
-## 7. Senior rating (1–10)
+## 7. Ocena seniorska (1–10)
 **7.6 / 10**  
-Strong front-end fundamentals, clean modularity, and good accessibility baseline are present. Score is reduced by production-readiness gaps around lead capture reliability and URL/deploy consistency evidence.
+Mocne fundamenty front-endowe, czysta modularność i dobry baseline dostępności są obecne. Wynik jest obniżony przez luki w gotowości produkcyjnej związane z niezawodnością pozyskiwania leadów oraz spójnością URL/wdrożenia.
