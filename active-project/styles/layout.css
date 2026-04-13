@@ -16,10 +16,10 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  --header-padding-y: var(--space-4);
+  --header-padding-y: var(--space-3);
   --header-padding-y-shrink: var(--space-2);
-  --logo-height: var(--space-10);
-  --logo-height-shrink: var(--space-9);
+  --logo-height: var(--space-9);
+  --logo-height-shrink: calc(var(--space-8) + var(--space-1));
   min-height: calc(var(--logo-height) + (var(--header-padding-y) * 2));
 }
 
@@ -31,8 +31,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--header-padding-y) var(--space-4);
-  gap: var(--space-4);
+  padding: var(--header-padding-y) var(--space-3);
+  gap: var(--space-3);
   transition: padding var(--transition-fast);
 }
 
@@ -112,6 +112,7 @@ header {
   align-items: center;
   gap: var(--space-2);
   color: var(--color-accent);
+  flex-shrink: 0;
 }
 
 .brand img,
@@ -122,7 +123,7 @@ header {
 }
 
 header.is-shrink .header-inner {
-  padding: var(--header-padding-y-shrink) var(--space-4);
+  padding: var(--header-padding-y-shrink) var(--space-3);
 }
 
 header.is-shrink {
@@ -135,7 +136,7 @@ header.is-shrink .brand svg {
 }
 
 .nav-links .nav-link {
-  padding: 8px 12px;
+  padding: 7px 10px;
   border-radius: var(--radius-xs);
   color: var(--color-text-muted);
   font-weight: 500;
@@ -175,6 +176,34 @@ header.is-shrink .brand svg {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
+}
+
+.primary-nav {
+  flex: 1;
+  min-width: 0;
+}
+
+.primary-nav .nav-links {
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: nowrap;
+}
+
+.header-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.header-actions {
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+}
+
+.header-actions .nav-dropdown__button {
+  padding: 7px 10px;
 }
 
 .menu-toggle[aria-expanded="true"] {
@@ -848,7 +877,8 @@ footer.is-mounted #app-footer {
   }
 
   .primary-nav,
-  .header-actions {
+  .header-actions,
+  .header-meta .badge {
     display: none;
   }
 
@@ -902,6 +932,48 @@ footer.is-mounted #app-footer {
 
   .scroll-indicator-shell {
     --scroll-indicator-outset: var(--space-6);
+  }
+}
+
+@media (min-width: 480px) {
+  .header-inner {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  header.is-shrink .header-inner {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+@media (min-width: 760px) {
+  header {
+    --logo-height: calc(var(--space-9) + var(--space-1));
+    --logo-height-shrink: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  header {
+    --header-padding-y: var(--space-2);
+    --header-padding-y-shrink: 6px;
+  }
+
+  .header-inner {
+    gap: var(--space-4);
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+
+  header.is-shrink .header-inner {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+
+  .header-meta .badge {
+    margin-right: var(--space-1);
+    font-size: 11px;
   }
 }
 
