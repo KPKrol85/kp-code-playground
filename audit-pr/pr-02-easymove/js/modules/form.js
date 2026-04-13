@@ -35,6 +35,24 @@ const clearError = (field) => {
   field.setAttribute('aria-invalid', 'false');
 };
 
+const setFormPendingState = (form, isPending) => {
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (!submitButton) return;
+
+  const defaultLabel = submitButton.dataset.defaultLabel || submitButton.textContent || 'Wyślij zapytanie';
+  submitButton.dataset.defaultLabel = defaultLabel;
+  submitButton.disabled = isPending;
+  submitButton.textContent = isPending ? 'Wysyłanie…' : defaultLabel;
+  form.setAttribute('aria-busy', isPending ? 'true' : 'false');
+};
+
+const getSubmissionEndpoint = (form) => {
+  const action = form.getAttribute('action')?.trim();
+  if (!action || action === '#') return '';
+
+  return action;
+};
+
 export const initContactForm = () => {
   const form = document.querySelector('[data-contact-form]');
   if (!form) return;
@@ -42,12 +60,13 @@ export const initContactForm = () => {
   const status = document.querySelector('[data-form-status]');
   const summary = document.querySelector('[data-form-summary]');
   const dateField = form.querySelector('[name="moveDate"]');
+  const endpoint = getSubmissionEndpoint(form);
 
   if (dateField) {
     dateField.min = getTodayDate();
   }
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const minMoveDate = getTodayDate();
 
@@ -119,11 +138,51 @@ export const initContactForm = () => {
       return;
     }
 
-    form.reset();
-    checks.forEach(({ field }) => clearError(field));
+    if (!endpoint) {
+      if (summary) {
+        summary.textContent = 'Formularz nie ma skonfigurowanego endpointu wysyłki. Użyj telefonu lub adresu e-mail podanych wyżej.';
+        summary.focus();
+      }
 
-    if (status) {
-      status.textContent = 'Dziękujemy! Twoje zgłoszenie zostało wysłane. Skontaktujemy się w ciągu 24 godzin.';
+      return;
+    }
+
+    try {
+      setFormPendingState(form, true);
+
+      if (status) {
+        status.textContent = 'Wysyłamy Twoje zapytanie…';
+      }
+
+      const response = await fetch(endpoint, {
+        method: form.method || 'POST',
+        body: new FormData(form),
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      form.reset();
+      checks.forEach(({ field }) => clearError(field));
+
+      if (status) {
+        status.textContent = 'Dziękujemy! Twoje zgłoszenie zostało wysłane. Skontaktujemy się w ciągu 24 godzin.';
+      }
+    } catch (_error) {
+      if (summary) {
+        summary.textContent = 'Nie udało się wysłać formularza. Spróbuj ponownie za chwilę lub skontaktuj się telefonicznie.';
+        summary.focus();
+      }
+
+      if (status) {
+        status.textContent = '';
+      }
+    } finally {
+      setFormPendingState(form, false);
     }
   });
 };
