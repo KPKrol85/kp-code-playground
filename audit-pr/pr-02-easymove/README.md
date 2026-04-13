@@ -78,6 +78,9 @@ Build wykonuje:
 - podmianę odwołań do assetów na wersje `.min`,
 - kopiowanie `assets/`, `robots.txt`, `sitemap.xml` do `dist/`.
 
+Strategia URL dla deployu jest oparta o pliki HTML (`index.html`, `uslugi.html`, `kontakt.html` itd.).  
+W związku z tym metadane SEO (canonical, Open Graph, JSON-LD `WebPage.url`) i wpisy `sitemap.xml` wskazują jawne ścieżki z `.html` (poza stroną główną `/`).
+
 Podgląd builda:
 ```bash
 npm run preview
@@ -184,6 +187,9 @@ The build process performs:
 - HTML include assembly,
 - replacement of asset references with `.min` variants,
 - copying of `assets/`, `robots.txt`, and `sitemap.xml` to `dist/`.
+
+Deployment URL strategy is explicitly file-based (`index.html`, `uslugi.html`, `kontakt.html`, etc.).  
+Therefore, SEO metadata (canonical, Open Graph, JSON-LD `WebPage.url`) and `sitemap.xml` entries point to explicit `.html` paths (except the homepage `/`).
 
 Build preview:
 ```bash
