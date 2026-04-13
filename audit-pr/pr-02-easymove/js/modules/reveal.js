@@ -1,11 +1,39 @@
 export const initReveal = () => {
-  const reveals = document.querySelectorAll('[data-reveal]');
-  if (!reveals.length) return;
+  const revealRoots = document.querySelectorAll('[data-reveal]');
+  if (!revealRoots.length) return;
+
+  const revealTargets = [];
+
+  revealRoots.forEach((root) => {
+    const childSelector = root.dataset.revealChildren;
+    const staggerStep = Number.parseInt(root.dataset.revealStagger || '', 10);
+    const childTargets = childSelector
+      ? Array.from(root.querySelectorAll(childSelector))
+      : [];
+    const targets = childTargets.length ? childTargets : [root];
+
+    targets.forEach((target, index) => {
+      if (target.classList.contains('reveal')) return;
+
+      target.classList.add('reveal');
+
+      if (!Number.isNaN(staggerStep) && staggerStep > 0 && targets.length > 1) {
+        target.style.setProperty('--reveal-delay', `${index * staggerStep}ms`);
+      }
+
+      revealTargets.push(target);
+    });
+  });
+
+  if (!revealTargets.length) return;
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReduced || !('IntersectionObserver' in window)) {
-    reveals.forEach((el) => el.classList.add('reveal--visible'));
+    revealTargets.forEach((target) => {
+      target.style.removeProperty('--reveal-delay');
+      target.classList.add('reveal--visible');
+    });
     return;
   }
 
@@ -16,10 +44,7 @@ export const initReveal = () => {
       entry.target.classList.add('reveal--visible');
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
 
-  reveals.forEach((el) => {
-    el.classList.add('reveal');
-    observer.observe(el);
-  });
+  revealTargets.forEach((target) => observer.observe(target));
 };
