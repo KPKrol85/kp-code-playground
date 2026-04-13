@@ -24,9 +24,9 @@ nie wykryto.
    - Dowód: `sitemap.xml` wskazuje te same URL-e `.html` dla podstron (`sitemap.xml:7-23`).  
    - Dowód: README dokumentuje przyjętą strategię deploymentową i jej wpływ na metadane SEO (`README.md`, sekcje „Build produkcyjny” / „Production Build”).
 
-3. **Treść zgody odwołuje się do polityk, ale nie linkuje ich bezpośrednio w kontekście formularza**  
-   - Dowód: etykieta zgody mówi, że użytkownik akceptuje politykę prywatności/cookies, ale nie zawiera anchorów (`kontakt.html:221-224`). Linki istnieją w innym miejscu (footer), lecz nie w samej treści zgody (`partials/footer.html:57`).  
-   - Dlaczego to ważne: wymagania prawne/compliance i użyteczność są lepiej spełnione, gdy wskazane polityki są dostępne bezpośrednio w momencie podejmowania decyzji.
+3. **✅ [RESOLVED] Treść zgody linkuje polityki bezpośrednio w kontekście formularza**  
+   - Status: checkbox zgody nadal jest poprawnie powiązany z etykietą, a w samej treści zgody dodano bezpośrednie linki do `Polityki prywatności` i `Polityki cookies` (`kontakt.html`).  
+   - Dowód: linki są klikalne i dostępne z klawiatury dokładnie w punkcie podejmowania decyzji; zachowano też czytelność wizualną przez drobne style dla sekcji zgody (`css/components.css`).
 
 ## 5. P2 — Drobne usprawnienia
 1. **`og:image` jest obecne, ale nie wykryto `og:image:alt`**  

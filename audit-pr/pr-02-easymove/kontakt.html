@@ -220,10 +220,13 @@
             <label for="message">Wiadomość (opcjonalnie)</label>
             <textarea class="form__field" id="message" name="message" rows="4"></textarea>
           </div>
-          <div class="form__group">
-            <label>
-              <input type="checkbox" name="consent" required aria-describedby="consent-error">
-              Wyrażam zgodę na kontakt i akceptuję politykę prywatności oraz cookies.*
+          <div class="form__group form__group--consent">
+            <label for="consent">
+              <input id="consent" type="checkbox" name="consent" required aria-describedby="consent-error">
+              Wyrażam zgodę na kontakt i akceptuję
+              <a href="/polityka-prywatnosci.html">Politykę prywatności</a>
+              oraz
+              <a href="/cookies.html">Politykę cookies</a>.*
             </label>
             <span class="form__error" id="consent-error"></span>
           </div>
