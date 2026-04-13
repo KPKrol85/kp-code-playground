@@ -18,10 +18,11 @@ nie wykryto.
 1. **✅ [RESOLVED] Formularz nie symuluje już sukcesu bez transportu**  
    - Status: wdrożono uczciwy flow submit: walidacja klienta + stan „wysyłanie” + sukces tylko po `response.ok` z realnego endpointu; przy braku endpointu formularz pokazuje jawny błąd konfiguracji i nie zgłasza sukcesu (`js/modules/form.js`, `kontakt.html`).
 
-2. **Niedopasowanie strategii URL między URL-ami SEO/deklaratywnymi a plikami wyjściowymi builda**  
-   - Dowód: canonical/og/sitemap używają czystych URL-i, np. `/kontakt`, `/uslugi` (`kontakt.html:8,13`; `sitemap.xml:7-23`), podczas gdy build kopiuje strony źródłowe do `dist` jako pliki `.html` (`scripts/build.mjs:38-48`).  
-   - Dodatkowo nie wykryto w projekcie: `_redirects`, konfiguracji rewrite ani reguł hostingu, które gwarantują routing bez rozszerzeń.  
-   - Dlaczego to ważne: bez rewrite’ów po stronie hosta URL-e z canonical/og/sitemap mogą nie wskazywać istniejących stron, osłabiając spójność SEO i niezawodność crawlowania.
+2. **✅ [RESOLVED] Strategia URL jest spójna z artefaktami builda i SEO**  
+   - Status: projekt przyjął jawną strategię URL opartą o pliki `.html` (poza `/` dla strony głównej).  
+   - Dowód: canonical + `og:url` i `WebPage.url` wskazują na realne ścieżki `.html` (`kontakt.html`, `uslugi.html`, `o-nas.html`, `faq.html`, `cennik.html`, `przeprowadzki-firm.html`, `cookies.html`, `polityka-prywatnosci.html`).  
+   - Dowód: `sitemap.xml` wskazuje te same URL-e `.html` dla podstron (`sitemap.xml:7-23`).  
+   - Dowód: README dokumentuje przyjętą strategię deploymentową i jej wpływ na metadane SEO (`README.md`, sekcje „Build produkcyjny” / „Production Build”).
 
 3. **Treść zgody odwołuje się do polityk, ale nie linkuje ich bezpośrednio w kontekście formularza**  
    - Dowód: etykieta zgody mówi, że użytkownik akceptuje politykę prywatności/cookies, ale nie zawiera anchorów (`kontakt.html:221-224`). Linki istnieją w innym miejscu (footer), lecz nie w samej treści zgody (`partials/footer.html:57`).  
@@ -39,7 +40,7 @@ nie wykryto.
    - Dowód: istnieją tokeny kolorów i zmienne motywu, ale ten statyczny audyt nie uruchamiał obliczeń kontrastu na wyrenderowanym widoku (`css/tokens.css`, `css/components.css`).
 
 ## 6. Dodatkowe ulepszenia jakości
-- Dodać jawną dokumentację wdrożenia/hostingu (lub pliki konfiguracyjne), która definiuje zachowanie routingu bez rozszerzeń, i dopasować linki źródłowe/canonical/sitemap do tej strategii.
+- Strategia URL/deploy została ujednolicona do ścieżek `.html`; przy ewentualnym przyszłym przejściu na clean URLs należy dodać rewrite po stronie hostingu oraz zaktualizować canonical/OG/JSON-LD/sitemap w jednym kroku.
 - Jeśli backend formularza celowo nie wchodzi w zakres tego repo, pokazać jasny disclaimer o braku wysyłki w UI albo podpiąć lekki endpoint (serverless/email API).
 - Dodać `og:image:alt` konsekwentnie dla lepszej jakości metadanych dostępności w social media.
 - Rozważyć dodanie `manifest.webmanifest` tylko wtedy, gdy instalowalność PWA jest realnym celem projektu (obecnie nie wykryto w projekcie).
