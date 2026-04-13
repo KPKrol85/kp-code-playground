@@ -175,7 +175,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     });
   };
 
-  const buildDropdown = ({ label, menuId, items }) => {
+  const buildDropdown = ({ label, menuId, items, route, routeMatch }) => {
     const itemWrapper = createElement("div", { className: "nav-item nav-dropdown" });
     const triggerButton = createElement("button", {
       text: label,
@@ -184,6 +184,8 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
         type: "button",
         "aria-expanded": "false",
         "aria-controls": menuId,
+        "data-route": route || null,
+        "data-route-match": routeMatch || null,
       },
     });
     const trigger = createElement("div", { className: "nav-dropdown__trigger" }, [triggerButton]);
@@ -211,6 +213,8 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
           label: item.label,
           menuId: `${idPrefix}-dropdown-${index}`,
           items: dropdownItems,
+          route: item.dropdownRoot?.dataRoute || item.dropdownRoot?.path,
+          routeMatch: item.dropdownRoot?.routeMatch || "prefix",
         });
         navList.appendChild(itemWrapper);
         return;
@@ -443,6 +447,21 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     );
     menuButton.addEventListener("click", () => setMenuOpen(!menuOpen));
 
+    const mobileCloseButton = createElement("button", {
+      text: "Zamknij",
+      className: "mobile-menu-close",
+      attrs: {
+        type: "button",
+        "aria-label": "Close menu",
+      },
+    });
+    mobileCloseButton.addEventListener("click", () => setMenuOpen(false));
+
+    const mobileMenuHeader = createElement("div", { className: "mobile-menu__header" }, [
+      createElement("p", { text: "Nawigacja", className: "mobile-menu__title" }),
+      mobileCloseButton,
+    ]);
+
     // --- MOBILE MENU ---
     const mobileActions = buildActions("nav-links mobile-action-links");
 
@@ -458,7 +477,11 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
           "aria-hidden": menuOpen ? "false" : "true",
         },
       },
-      [buildNavLinks("nav-links mobile-nav-links", { idPrefix: "mobile" }), mobileActions.element]
+      [
+        mobileMenuHeader,
+        buildNavLinks("nav-links mobile-nav-links", { idPrefix: "mobile" }),
+        mobileActions.element,
+      ]
     );
 
     const mobileOverlay = createElement("div", { className: "mobile-menu-overlay" });
