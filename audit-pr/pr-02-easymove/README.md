@@ -24,7 +24,7 @@ Easy Move to wielostronicowy serwis statyczny dla firmy przeprowadzkowej, zbudow
 - Vite (dev server, preview)
 - PostCSS (`postcss-import`, `cssnano`) do bundlingu/minifikacji CSS
 - Terser do minifikacji JavaScript
-- Skrypt builda Node (`scripts/build.mjs`) do składania include’ów HTML i kopiowania zasobów
+- Skrypty builda Node (`scripts/build.mjs`, `scripts/build-js.mjs`) do składania include’ów HTML, minifikacji JS i kopiowania zasobów
 - Sharp (`scripts/convert-images.mjs`) do konwersji obrazów do WebP/AVIF
 
 ### Struktura projektu
@@ -45,6 +45,7 @@ Easy Move to wielostronicowy serwis statyczny dla firmy przeprowadzkowej, zbudow
 ├── partials/                # Wspólne fragmenty HTML (footer, skrypty)
 ├── scripts/
 │   ├── build.mjs            # Build produkcyjny do dist/
+│   ├── build-js.mjs         # Minifikacja JS (entry + moduły) do dist/js
 │   └── convert-images.mjs   # Konwersja obrazów
 ├── *.html                   # Strony serwisu
 ├── robots.txt
@@ -81,7 +82,7 @@ Build wykonuje:
 Strategia URL dla deployu jest oparta o pliki HTML (`index.html`, `uslugi.html`, `kontakt.html` itd.).  
 W związku z tym metadane SEO (canonical, Open Graph, JSON-LD `WebPage.url`) i wpisy `sitemap.xml` wskazują jawne ścieżki z `.html` (poza stroną główną `/`).
 
-Podgląd builda:
+Podgląd builda (komenda najpierw odświeża `dist/`, a potem uruchamia serwer podglądu):
 ```bash
 npm run preview
 ```
@@ -134,7 +135,7 @@ Easy Move is a multi-page static website for a moving company, built with HTML, 
 - Vite (dev server, preview)
 - PostCSS (`postcss-import`, `cssnano`) for CSS bundling/minification
 - Terser for JavaScript minification
-- Node build script (`scripts/build.mjs`) for HTML include assembly and asset copying
+- Node build scripts (`scripts/build.mjs`, `scripts/build-js.mjs`) for HTML include assembly, JS minification, and asset copying
 - Sharp (`scripts/convert-images.mjs`) for WebP/AVIF conversion
 
 ### Project Structure
@@ -155,6 +156,7 @@ Easy Move is a multi-page static website for a moving company, built with HTML, 
 ├── partials/                # Shared HTML fragments (footer, scripts)
 ├── scripts/
 │   ├── build.mjs            # Production build to dist/
+│   ├── build-js.mjs         # JS minification (entry + modules) to dist/js
 │   └── convert-images.mjs   # Image conversion utility
 ├── *.html                   # Website pages
 ├── robots.txt
@@ -191,7 +193,7 @@ The build process performs:
 Deployment URL strategy is explicitly file-based (`index.html`, `uslugi.html`, `kontakt.html`, etc.).  
 Therefore, SEO metadata (canonical, Open Graph, JSON-LD `WebPage.url`) and `sitemap.xml` entries point to explicit `.html` paths (except the homepage `/`).
 
-Build preview:
+Build preview (the command refreshes `dist/` first and then starts the preview server):
 ```bash
 npm run preview
 ```
