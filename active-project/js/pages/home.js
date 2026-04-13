@@ -20,16 +20,23 @@ export const renderHome = () => {
   const hero = createElement("section", { className: "container hero" });
   const heroContent = createElement("div", { className: "hero-content" });
 
+  const heroEyebrow = createElement("p", {
+    className: "hero-eyebrow",
+    text: "Easy Move • Relokacje lokalne i międzymiastowe",
+  });
+
+  heroContent.appendChild(heroEyebrow);
+
   const h1 = createElement("h1", { className: "hero-title" });
-  h1.append("KP_Code");
+  h1.append("Przeprowadzki zaplanowane");
   h1.appendChild(document.createElement("br"));
-  h1.append("Digital Vault");
+  h1.append("co do godziny");
 
   heroContent.appendChild(h1);
 
   const p = createElement("p", {
     className: "hero-lead",
-    text: "Produkty cyfrowe dla twórców i firm: szablony stron, UI kits, komponenty i mini-narzędzia — gotowe do użycia w Twoich projektach.",
+    text: "Obsługujemy mieszkania, biura i transport specjalny. Jasna wycena, ubezpieczona usługa i zespół, który dowozi termin bez zbędnych przestojów.",
   });
 
   heroContent.appendChild(p);
@@ -37,17 +44,25 @@ export const renderHome = () => {
   const heroActions = createElement("div", { className: "hero-actions" }, [
     createElement("a", {
       className: "button",
-      text: "Przeglądaj produkty",
-      attrs: { href: "#/products" },
+      text: "Umów bezpłatną wycenę",
+      attrs: { href: "#/contact" },
     }),
     createElement("a", {
       className: "button secondary",
-      text: "Zobacz demo konta",
-      attrs: { href: "#/account" },
+      text: "Zobacz zakres usług",
+      attrs: { href: "#/products" },
     }),
   ]);
 
   heroContent.appendChild(heroActions);
+
+  const heroMeta = createElement("div", { className: "hero-meta" }, [
+    createElement("span", { className: "hero-meta-item", text: "Dostępność 6 dni w tygodniu" }),
+    createElement("span", { className: "hero-meta-item", text: "Start zlecenia od 24h" }),
+    createElement("span", { className: "hero-meta-item", text: "Średnia ocena klientów 4.9/5" }),
+  ]);
+
+  heroContent.appendChild(heroMeta);
 
   const heroVisual = createElement("div", { className: "hero-visual" });
   const heroVideo = createElement("video", {
@@ -140,9 +155,7 @@ export const renderHome = () => {
         return;
       }
       if (
-        event.target.closest(
-          "a, button, input, select, textarea, [role='button'], [data-action]"
-        )
+        event.target.closest("a, button, input, select, textarea, [role='button'], [data-action]")
       ) {
         return;
       }
@@ -330,7 +343,10 @@ export const renderHome = () => {
   const section = createElement("section", { className: "container section" });
   section.appendChild(createElement("h2", { text: "Popularne produkty" }));
   const grid = createElement("div", { className: "products-slider" });
-  const productsIndicators = addScrollIndicators(grid, { shellClass: "products-shell", hint: true });
+  const productsIndicators = addScrollIndicators(grid, {
+    shellClass: "products-shell",
+    hint: true,
+  });
 
   const renderProductsGrid = (state) => {
     const { products, productsStatus, productsError } = state;
