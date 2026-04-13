@@ -14,7 +14,7 @@ body {
   font-family: var(--font-sans);
   background: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.6;
+  line-height: 1.55;
   min-height: 100vh;
   transition: background var(--transition-slow), color var(--transition-slow);
 }
@@ -86,8 +86,17 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  line-height: 1.2;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
   margin-top: 0;
+}
+
+h2 {
+  font-size: clamp(1.55rem, 3vw, 2.05rem);
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
 }
 
 p {
