@@ -1,7 +1,7 @@
 # Easy Move — audyt techniczny repozytorium
 
 ## 1. Krótka ocena całościowa
-Projekt to przejrzysty, wielostronicowy statyczny front-end ze spójną strukturą semantyczną, reużywalnymi modułami JS i zdefiniowanym pipeline’em builda. Główne ryzyka dotyczą spójności strategii URL przy wdrożeniu (czyste URL-e w plikach SEO vs artefakty wyjściowe `.html`) oraz formularza kontaktowego, który obecnie symuluje udane wysłanie bez jakiejkolwiek trwałości danych lub transportu.
+Projekt to przejrzysty, wielostronicowy statyczny front-end ze spójną strukturą semantyczną, reużywalnymi modułami JS i zdefiniowanym pipeline’em builda. Główne ryzyka dotyczą obecnie głównie spójności strategii URL przy wdrożeniu (czyste URL-e w plikach SEO vs artefakty wyjściowe `.html`).
 
 ## 2. Mocne strony
 - Istnieje czytelny i deterministyczny pipeline builda: minifikacja CSS, minifikacja JS, rozwiązywanie include’ów partiali oraz kopiowanie assetów/plików statycznych (`scripts/build.mjs:30-61`).
@@ -15,9 +15,8 @@ Projekt to przejrzysty, wielostronicowy statyczny front-end ze spójną struktur
 nie wykryto.
 
 ## 4. P1 — Ważne problemy warte naprawy w następnej kolejności
-1. **Sukces formularza kontaktowego działa wyłącznie po stronie klienta (brak transportu/trwałości danych)**  
-   - Dowód: handler submit zawsze wykonuje `preventDefault()`, waliduje, potem robi `form.reset()` i wyświetla komunikat sukcesu; brak `fetch`, brak XHR, brak celu action, brak integracji backendowej (`js/modules/form.js:50-127`, `kontakt.html:155`).  
-   - Dlaczego to ważne: w produkcyjnym formularzu leadowym użytkownik może otrzymać potwierdzenie sukcesu, mimo że zapytanie faktycznie nigdzie nie trafiło.
+1. **✅ [RESOLVED] Formularz nie symuluje już sukcesu bez transportu**  
+   - Status: wdrożono uczciwy flow submit: walidacja klienta + stan „wysyłanie” + sukces tylko po `response.ok` z realnego endpointu; przy braku endpointu formularz pokazuje jawny błąd konfiguracji i nie zgłasza sukcesu (`js/modules/form.js`, `kontakt.html`).
 
 2. **Niedopasowanie strategii URL między URL-ami SEO/deklaratywnymi a plikami wyjściowymi builda**  
    - Dowód: canonical/og/sitemap używają czystych URL-i, np. `/kontakt`, `/uslugi` (`kontakt.html:8,13`; `sitemap.xml:7-23`), podczas gdy build kopiuje strony źródłowe do `dist` jako pliki `.html` (`scripts/build.mjs:38-48`).  
