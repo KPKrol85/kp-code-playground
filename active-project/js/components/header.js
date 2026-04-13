@@ -474,11 +474,14 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     menuDrawer = mobileMenu;
     menuOverlay = mobileOverlay;
 
+    const headerMeta = createElement("div", { className: "header-meta" });
+    headerMeta.appendChild(demoBadge);
+    headerMeta.appendChild(actions.element);
+
     // --- MOUNT ---
     container.appendChild(brandLink);
     container.appendChild(nav);
-    container.appendChild(demoBadge);
-    container.appendChild(actions.element);
+    container.appendChild(headerMeta);
     container.appendChild(menuButton);
     container.appendChild(mobileOverlay);
     container.appendChild(mobileMenu);
