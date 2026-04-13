@@ -11,16 +11,22 @@
 }
 
 header {
-  background: var(--color-surface);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 10;
+  backdrop-filter: saturate(145%) blur(8px);
+  -webkit-backdrop-filter: saturate(145%) blur(8px);
   --header-padding-y: var(--space-3);
   --header-padding-y-shrink: var(--space-2);
   --logo-height: var(--space-9);
   --logo-height-shrink: calc(var(--space-8) + var(--space-1));
   min-height: calc(var(--logo-height) + (var(--header-padding-y) * 2));
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 #app-header:empty {
@@ -129,6 +135,7 @@ header.is-shrink .header-inner {
 
 header.is-shrink {
   min-height: calc(var(--logo-height-shrink) + (var(--header-padding-y-shrink) * 2));
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--color-text) 8%, transparent);
 }
 
 header.is-shrink .brand img,
@@ -214,10 +221,38 @@ header.is-shrink .brand svg {
 .header-actions {
   gap: var(--space-2);
   flex-wrap: nowrap;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface-muted) 44%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
 }
 
 .header-actions .nav-dropdown__button {
   padding: 7px 10px;
+}
+
+.header-actions .theme-toggle {
+  margin-left: 2px;
+}
+
+.header-actions .nav-link--cta {
+  background: var(--color-accent);
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--color-accent-strong) 45%, transparent);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-accent) 34%, transparent);
+}
+
+.header-actions .nav-link--cta[aria-current="page"] {
+  background: var(--color-accent-strong);
+  color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .header-actions .nav-link--cta:hover,
+  .header-actions .nav-link--cta:focus-visible {
+    color: #fff;
+    background: color-mix(in srgb, var(--color-accent-strong) 88%, black 12%);
+  }
 }
 
 .menu-toggle[aria-expanded="true"] {
@@ -1030,6 +1065,10 @@ footer.is-mounted #app-footer {
   .header-meta .badge {
     margin-right: var(--space-1);
     font-size: 11px;
+  }
+
+  .header-actions {
+    gap: 6px;
   }
 }
 

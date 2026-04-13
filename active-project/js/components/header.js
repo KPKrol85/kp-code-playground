@@ -254,6 +254,7 @@ export const renderHeader = (container, onThemeToggle, { onHeightChange } = {}) 
     const actions = createElement("div", { className });
     const cartButton = createElement("a", {
       text: `Koszyk (${selectors.cartCount(store.getState())})`,
+      className: "nav-link nav-link--cta",
       attrs: { href: "#/cart" },
     });
 

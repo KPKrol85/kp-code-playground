@@ -19,7 +19,7 @@
 }
 
 .theme-toggle {
-  --toggle-size: calc(var(--space-8) + (var(--space-1) / 2));
+  --toggle-size: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -60,11 +60,12 @@
 
 .theme-toggle-icons {
   position: relative;
-  width: var(--space-5);
-  height: var(--space-5);
+  width: 18px;
+  height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transform: translateY(-0.5px);
 }
 
 .theme-icon {
