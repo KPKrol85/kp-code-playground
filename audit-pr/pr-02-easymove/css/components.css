@@ -204,6 +204,22 @@
   border: 1px solid var(--color-accent);
 }
 
+.form__group--consent label {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.form__group--consent input[type="checkbox"] {
+  margin-right: 0.4rem;
+}
+
+.form__group--consent a {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
 .back-to-top {
   position: fixed;
   right: var(--space-6);
