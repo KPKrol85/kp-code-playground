@@ -1,24 +1,22 @@
-# TODO – 20 priorytetowych usprawnień projektu
+# TODO — Next 20 Improvements (Prioritized)
 
-> Kontekst: projekt jest w fazie początkowej (MVP / demo), dlatego lista skupia się na szybkich krokach o wysokim zwrocie biznesowo-technicznym.
-
-1. Dodać **prawdziwy backend autoryzacji** (JWT + refresh token + unieważnianie sesji).
-2. Zastąpić hash hasła po stronie klienta (`simpleHash`) pełnym flow po stronie serwera.
-3. Wprowadzić **role i uprawnienia RBAC** (user/admin/editor) egzekwowane na backendzie, nie tylko w UI.
-4. Wdrożyć **testy jednostkowe** dla utils/services (minimum smoke testy dla krytycznych modułów).
-5. Dodać **testy E2E** (logowanie, checkout, nawigacja, error states).
-6. Uruchomić **CI/CD** (lint + build + test + deploy preview).
-7. Ujednolicić formatowanie kodu (prettier --write + blokada na PR przez format:check).
-8. Dodać **TypeScript lub JSDoc types** do kluczowych warstw (router/store/services).
-9. Rozdzielić konfigurację środowiskową (dev/staging/prod) do jawnych plików konfiguracyjnych.
-10. Zaimplementować centralny **logger błędów** (Sentry/LogRocket) z kontekstem route/user action.
-11. Zdefiniować i mierzyć **Core Web Vitals** (LCP/INP/CLS) z real-user monitoring.
-12. Dodać **analitykę produktową** (zdarzenia: view product, add to cart, checkout intent, purchase).
-13. Rozszerzyć obsługę offline/PWA o jawny fallback dla niedostępnych zasobów dynamicznych.
-14. Wprowadzić wersjonowanie i politykę cache busting dla assetów oraz SW release strategy.
-15. Uporządkować i udokumentować architekturę frontendu (ADR + diagram modułów).
-16. Dodać pełny **design system** (tokeny, komponenty, standardy dostępności WCAG 2.2 AA).
-17. Zaimplementować i zwalidować i18n (PL/EN) z separacją treści od logiki.
-18. Rozbudować bezpieczeństwo frontu: CSP, trusted types, twarde nagłówki bezpieczeństwa.
-19. Dodać monitoring jakości danych (walidacja JSON schemas dla `data/*.json`).
-20. Uzupełnić roadmapę produktu o KPI i etapy delivery (30/60/90 dni).
+1. Create a minimal source scaffold (`src/`, `public/`, `styles/`, `assets/`) to establish a clear working structure.
+2. Add a package manifest (`package.json`) with explicit scripts for `dev`, `build`, and `preview`.
+3. Introduce ESLint and Prettier with shared config files and a single style baseline.
+4. Add an `.editorconfig` to enforce consistent line endings, indentation, and charset.
+5. Create a basic semantic HTML app shell with `header`, `main`, `nav`, and `footer` landmarks.
+6. Implement a base global stylesheet with reset/normalize strategy and typography defaults.
+7. Define core design tokens (colors, spacing, typography, radius) in one centralized file.
+8. Establish a component naming convention (e.g., BEM or utility-first + documented rules).
+9. Add a responsive breakpoint strategy and document mobile-first layout rules.
+10. Build one reusable UI component pattern (button, card, form field) as a style reference.
+11. Add accessibility baseline rules: visible focus states, label/input pairing, and skip-link support.
+12. Include an accessibility linting step (e.g., eslint-plugin-jsx-a11y equivalent for chosen stack).
+13. Create a lightweight JS module entrypoint with clear separation of DOM, state, and API concerns.
+14. Add centralized error handling utilities for user-facing messages and debug logging.
+15. Add environment configuration (`.env.example`) for runtime variables and deployment clarity.
+16. Set up basic unit testing (at least one test each for utility logic and DOM behavior).
+17. Add a CI workflow to run format, lint, and tests on every pull request.
+18. Replace or archive `audyt.md` by consolidating on one canonical audit document language and format.
+19. Add a `README.md` in this folder describing setup, scripts, structure, and quality standards.
+20. Define milestone-based delivery checkpoints (foundation, first UI slice, quality hardening) with acceptance criteria.
