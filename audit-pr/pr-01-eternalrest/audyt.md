@@ -1,105 +1,139 @@
-# Senior Front-End Audyt projektu — Eternal Rest
+# Audyt senior front-end — Eternal Rest (etap early-stage)
 
-**Klient wewnętrzny:** KP_Code Digital Studio  
-**Zakres:** `audit-pr/pr-01-eternalrest`  
-**Data audytu:** 16.04.2026  
-**Rola audytora:** Senior Front-End Auditor
-
----
-
-## 1. Executive summary
-Projekt jest **dobrą bazą pod dalszą rozbudowę**: ma sensowną strukturę wielostronicową, modularne CSS, czytelny Vanilla JS i poprawny poziom dostępności bazowej (skip-link, aria, obsługa klawiatury, reduced motion). Jednocześnie, na obecnym etapie to nadal **MVP infrastrukturalne**, a nie gotowy produkt leadowy.
-
-Najważniejsza luka biznesowa: formularz działa tylko na poziomie front-endowej walidacji, bez potwierdzonego backendowego przepływu danych. Druga istotna luka: pipeline build nie przechodzi w całości (błąd na kopiowaniu assetów), więc release jest niestabilny.
-
-**Ocena seniorska (stan obecny): 7.2/10**  
-Wysoka jakość bazy front-endowej, ale z krytycznymi brakami „go-live readiness”.
+**Projekt:** `audit-pr/pr-01-eternalrest`  
+**Data audytu:** 18.04.2026  
+**Zakres:** architektura MPA, HTML/CSS/JS, UX, a11y, utrzymanie, gotowość produkcyjna  
+**Charakter oceny:** produkcyjno-wdrożeniowa, z uwzględnieniem realiów wczesnej fazy produktu
 
 ---
 
-## 2. Co działa bardzo dobrze (mocne strony)
+## 1) Executive summary
 
-### 2.1 Architektura i czytelność
-- Logiczna struktura MPA: osobne strony dla usług, cennika, poradnika, kontaktu.
-- Dobra separacja warstw CSS (`tokens/base/layout/components/pages/utilities`).
-- Spójne nazewnictwo klas i przewidywalna semantyka HTML.
+Projekt jest **dobrze przygotowanym MVP front-endowym** dla serwisu usługowego: ma czytelną strukturę wielostronicową, spójny design, modularny CSS i sensowny JavaScript dla najważniejszych interakcji (menu, accordion, filtrowanie, walidacja formularza, motyw jasny/ciemny).
 
-### 2.2 UX i dostępność bazowa
-- Skip-link, poprawna nawigacja, aria dla menu mobilnego.
-- Obsługa klawiatury (ESC/Tab) i focus management w menu.
-- Obsługa `prefers-reduced-motion` i sensowne fallbacki.
+Jednocześnie obecny stan to nadal **wersja przedprodukcyjna**. Największe ryzyka są praktyczne:
 
-### 2.3 Produktowe fundamenty
-- Przemyślana ścieżka treści: hero → usługi → proces → FAQ → kontakt.
-- Właściwy kierunek brandowy dla branży wymagającej zaufania i spokoju komunikacyjnego.
+- pipeline build nie domyka się (błąd w `build:assets`),
+- formularz kontaktowy działa wyłącznie po stronie klienta (brak realnej wysyłki danych),
+- brakuje elementów „operacyjnej profesjonalizacji” (telemetria, testy e2e, twarde kryteria jakości release).
+
+**Wniosek:** bardzo dobra baza do dalszego rozwoju, ale przed wdrożeniem publicznym potrzebny jest krótki etap hardeningu (technicznego i procesowego).
 
 ---
 
-## 3. Kluczowe ryzyka (priorytety P0/P1)
+## 2) Co jest zrobione dobrze (mocne strony)
 
-## P0 — blokery wejścia na produkcję
+### 2.1 Struktura i organizacja projektu
+- Jasny podział na strony biznesowe (`index`, `uslugi`, `cennik`, `o-nas`, `poradnik`, `formularz`).
+- Rozsądny podział CSS na warstwy (`tokens`, `base`, `layout`, `components`, `utilities`, `pages`).
+- Spójny schemat powtarzalnych sekcji (header/footer/sekcje treści), co ułatwia dalsze utrzymanie.
 
-### 3.1 Niestabilny build procesu release
-Build nie domyka się przez błąd w kroku kopiowania assetów (`cpx -r assets dist/assets` -> `Unknown option(s): -r`).
+### 2.2 UX i interakcje
+- Dobrze działające kluczowe interakcje front-endowe:
+  - menu mobilne z obsługą ESC i pułapką fokusu,
+  - akordeony FAQ,
+  - filtrowanie pakietów cenowych,
+  - przycisk „back to top”,
+  - reveal-on-scroll (z fallbackiem dla reduced motion).
+- CTA są widoczne i sensownie rozmieszczone (telefon 24/7, formularz konsultacji).
 
-**Ryzyko:** brak przewidywalnego artefaktu produkcyjnego i wysoka podatność na ręczne workaroundy.  
-**Rekomendacja:** wymiana komendy na kompatybilną wersję z `cpx` albo migracja kopiowania assetów na `cpy-cli`/skrypt Node.
+### 2.3 Dostępność bazowa (na plus)
+- Obecny `skip-link` i sensowne landmarki (`header`, `nav`, `main`, `footer`).
+- Dbałość o `aria-*` w elementach dynamicznych.
+- Użycie `:focus-visible` i respektowanie `prefers-reduced-motion`.
 
-### 3.2 Brak produkcyjnego przepływu formularza
-Formularz jest dobrze przygotowany UI/UX-owo, ale bez pewnego endpointu i walidacji backendowej.
-
-**Ryzyko:** pozorna konwersja (użytkownik „wysyła”, biznes nie dostaje leada).  
-**Rekomendacja:** integracja z API/CRM + logika retry + monitoring błędów + antyspam.
-
-## P1 — ważne do wdrożenia w pierwszej iteracji
-
-### 3.3 SEO techniczne jest niepełne
-Brakuje kluczowych elementów indeksacji i social share (canonical, OG/Twitter cards per strona, sitemap/robots).
-
-### 3.4 Brak telemetryki i mierzalności
-Nie ma warstwy analityki zdarzeń i KPI dla lejka konwersji. Decyzje optymalizacyjne będą „na wyczucie”.
-
-### 3.5 Brak testów E2E i bramek jakości
-Aktualnie jakość opiera się głównie na ręcznej kontroli. To nie skaluje się wraz z rozwojem.
+### 2.4 Fundamenty utrzymania
+- ESLint i Prettier są skonfigurowane.
+- Osobny skrypt do konwersji obrazów (`webp/avif`) pokazuje dobrą intencję optymalizacji.
+- Dokumentacja README opisuje uruchomienie i build.
 
 ---
 
-## 4. Ocena domenowa (senior scorecard)
+## 3) Najważniejsze problemy i ryzyka
+
+## P0 (krytyczne przed wdrożeniem)
+
+### 3.1 Build produkcyjny jest niestabilny
+Komenda `npm run build` kończy się błędem na kroku `build:assets` (`cpx -r assets dist/assets` -> `Unknown option(s): -r`). To blokuje powtarzalne wydania.
+
+**Ryzyko biznesowe:** brak wiarygodnego artefaktu release i ryzyko ręcznych obejść.
+
+### 3.2 Formularz nie realizuje celu biznesowego
+Walidacja formularza działa tylko po stronie klienta i kończy się komunikatem sukcesu bez potwierdzonej wysyłki do backendu/CRM.
+
+**Ryzyko biznesowe:** utrata leadów przy pozornie działającym flow.
+
+---
+
+## P1 (wysoki priorytet po domknięciu P0)
+
+### 3.3 Walidacja danych jest zbyt ogólna
+Obecna walidacja sprawdza głównie pusto/niepusto. Brakuje reguł formatów (np. telefon), limitów długości i bardziej precyzyjnych komunikatów.
+
+### 3.4 Warstwa SEO technicznego jest podstawowa
+Są `title` i `description`, ale brakuje szerszego pakietu pod SEO operacyjne (m.in. canonical, sitemap, robots, dane strukturalne).
+
+### 3.5 Brak telemetrii i KPI
+Brak analityki zdarzeń (kliknięcia CTA, wysyłki formularza, interakcje z cennikiem/FAQ), co utrudnia optymalizację konwersji.
+
+### 3.6 Brak testów scenariuszy krytycznych
+Brak automatycznych testów e2e dla najważniejszych flow użytkownika.
+
+---
+
+## P2 (doskonalenie jakości i skalowalności)
+
+### 3.7 Monolityczny `main.js`
+Plik JS jest czytelny, ale rosnąca liczba funkcji w jednym miejscu pogarsza skalowalność i utrzymanie.
+
+### 3.8 Wysoki poziom duplikacji markupu
+Header i footer są ręcznie powielane na wielu stronach, co zwiększa koszt zmian i ryzyko niespójności.
+
+### 3.9 Treści i wiarygodność
+Projekt jest poprawny wizualnie, ale część treści ma charakter szablonowy (placeholderowe social linki/mapa), co osłabia odbiór „production-ready”.
+
+### 3.10 Braki formalno-prawne
+Linki do polityk są placeholderami, brak domkniętych elementów compliance (RODO/prywatność/cookies).
+
+---
+
+## 4) Ocena obszarowa (w kontekście wczesnej fazy)
 
 | Obszar | Ocena | Komentarz |
 |---|---:|---|
-| Architektura front-end | 8.5/10 | Bardzo dobra baza MPA i podział CSS |
-| Czytelność i maintainability | 8.0/10 | Kod zrozumiały, ale `main.js` warto modularnie podzielić |
-| Dostępność (A11y) | 7.8/10 | Dobre fundamenty, potrzebny pełny audyt WCAG 2.2 AA |
-| Wydajność | 7.0/10 | Brak twardych budżetów i automatycznej kontroli CWV |
-| SEO techniczne | 6.8/10 | Podstawy są, ale brak pełnego zestawu produkcyjnego |
-| Konwersja/lead flow | 5.8/10 | Główna luka: finalna obsługa formularza |
-| DevEx / CI jakości | 6.5/10 | Lint jest, ale build jest niestabilny i brak testów E2E |
+| Architektura front-end | 8/10 | Dobra baza MPA i rozsądny podział CSS |
+| Czytelność kodu | 8/10 | Kod prosty i przewidywalny |
+| UX podstawowy | 7.5/10 | Intuicyjne flow i sensowne CTA |
+| Dostępność (bazowa) | 7.5/10 | Fundamenty są, potrzebny pełny przegląd WCAG 2.2 |
+| SEO techniczne | 6/10 | Podstawa jest, brakuje elementów operacyjnych |
+| Konwersja / lead flow | 5.5/10 | Największa luka: brak realnej wysyłki formularza |
+| Gotowość produkcyjna | 5/10 | Build blocker + brak testów/metryk |
 
 ---
 
-## 5. Wnioski seniorskie dla KP_Code Digital Studio
+## 5) Priorytety na najbliższy etap
 
-1. **To jest dobry szkielet produktu**, gotowy na fazę hardeningu i skalowania.  
-2. Najpierw należy domknąć „ścieżkę pieniędzy”: build + formularz + monitoring zdarzeń.  
-3. Następnie uruchomić jakość inżynierską: CI, testy E2E, Lighthouse CI, release checklist.  
-4. Równolegle można podnosić jakość marketingową: SEO techniczne, dane strukturalne, trust factors i dowody społeczne.
+### Priorytet A (natychmiast)
+1. Naprawić pipeline build i potwierdzić powtarzalny artefakt `dist`.
+2. Podłączyć formularz do realnego endpointu (z obsługą błędu i sukcesu).
+3. Uporządkować minimalny standard release (checklista + podstawowe smoke testy).
 
-Jeżeli ten porządek zostanie utrzymany, projekt może wejść do produkcji jako **stabilny i rozwijalny produkt usługowy** w 1–2 sprintach naprawczych + 1 sprincie optymalizacyjnym.
+### Priorytet B (krótki horyzont)
+4. Rozszerzyć walidację formularza (formaty, ograniczenia, komunikaty).
+5. Dodać analitykę zdarzeń i podstawowe KPI konwersji.
+6. Uzupełnić SEO techniczne (roboty/sitemap/canonical/JSON-LD).
+
+### Priorytet C (stabilizacja i skalowanie)
+7. Rozbić JS na moduły domenowe.
+8. Ograniczyć duplikację layoutów.
+9. Dodać testy e2e dla flow krytycznych.
 
 ---
 
-## 6. Rekomendowany plan naprawczy (skrót)
+## 6) Ocena końcowa
 
-- **Sprint A (P0):** naprawa builda, endpoint formularza, walidacja backend, antyspam.
-- **Sprint B (P1):** SEO techniczne, analityka zdarzeń, dashboard KPI.
-- **Sprint C (P1/P2):** testy E2E, Lighthouse CI, refaktor `main.js` na moduły.
-- **Sprint D (P2):** hardening UX/A11y + optymalizacje konwersji.
+Projekt Eternal Rest jest **solidnym early-stage front-endem**: estetycznym, spójnym i dobrze rokującym pod dalszą profesjonalizację. Nie wymaga przebudowy architektonicznej „od zera”, tylko **precyzyjnego domknięcia braków wdrożeniowych** i uporządkowania jakości procesu.
 
----
-
-## 7. Finalna rekomendacja go-live
-
-**Status:** `GO-LIVE = NIE TERAZ (Conditional)`  
-**Warunek wejścia na produkcję:** zamknięcie pozycji P0 (build + realny przepływ formularza).  
-Po spełnieniu warunków P0 i wdrożeniu minimum P1 projekt może bezpiecznie wejść do ograniczonego ruchu produkcyjnego.
+**Rekomendacja:**
+- status na dziś: **„warunkowo gotowy do dalszego developmentu, nie do pełnego wdrożenia produkcyjnego”**,
+- po usunięciu punktów P0 i części P1: możliwe bezpieczne wejście w etap soft-launch.
