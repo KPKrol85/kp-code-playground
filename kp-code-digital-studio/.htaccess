@@ -1,0 +1,24 @@
+<IfModule mod_authz_core.c>
+  <Files "contact-mail.config.php">
+    Require all denied
+  </Files>
+  <FilesMatch "^contact-mail\.config(\..+)?\.local\.php$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+  <Files "contact-mail.config.php">
+    Order Allow,Deny
+    Deny from all
+  </Files>
+  <FilesMatch "^contact-mail\.config(\..+)?\.local\.php$">
+    Order Allow,Deny
+    Deny from all
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^contact\.html$ contact.php [L]
+</IfModule>

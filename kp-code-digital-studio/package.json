@@ -1,0 +1,51 @@
+{
+  "name": "kp-code-digital-studio",
+  "version": "1.0.0",
+  "description": "Official website for KP_Code Digital Studio.",
+  "private": true,
+  "type": "module",
+  "main": "",
+  "scripts": {
+    "build:css": "node ./scripts/build-css.mjs",
+    "build:js": "node ./scripts/build-js.mjs",
+    "build:dist": "node ./scripts/build-dist.mjs",
+    "build": "npm run build:dist",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "qa": "npm run build && node ./scripts/qa/run-qa.mjs",
+    "preview": "node ./scripts/preview-dist.mjs",
+    "preview:source": "node ./scripts/preview-source.mjs",
+    "build:preview": "npm run build && npm run preview",
+    "img:build": "node ./scripts/images/build-images.mjs",
+    "img:clean": "node ./scripts/images/clean-images.mjs"
+  },
+  "keywords": [
+    "kp-code",
+    "digital-studio",
+    "brand-website",
+    "services-website",
+    "html",
+    "css",
+    "javascript",
+    "image-optimization"
+  ],
+  "author": "Kamil Król",
+  "email": "kontakt@kp-code.pl",
+  "telephone": "+48 533 537 091",
+  "url": "https://www.kp-code.pl/",
+  "repository": "kp-code-portfolio",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "esbuild": "^0.25.2",
+    "fast-glob": "^3.3.2",
+    "lightningcss": "^1.30.2",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.25.0",
+    "prettier": "^3.8.1"
+  }
+}
