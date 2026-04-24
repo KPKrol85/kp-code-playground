@@ -22,7 +22,7 @@
 .project-hero-preview {
   width: min(100%, 34rem);
   margin: 0;
-  padding: clamp(var(--space-3), 2.5vw, var(--space-5));
+  padding: clamp(var(--space-2), 2.5vw, var(--space-3));
   border: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
   border-radius: calc(var(--radius-lg) + 2px);
   background: linear-gradient(
@@ -39,7 +39,7 @@
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  padding: var(--space-2);
+  padding: var(--space-1);
   border: 1px solid color-mix(in srgb, var(--color-border) 76%, transparent);
   background: linear-gradient(
     180deg,
@@ -578,48 +578,38 @@
   .page--project-detail .page-hero__layout {
     grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 0.82fr);
   }
-
   .project-hero-preview {
     width: min(100%, 35rem);
   }
-
   .project-mockups {
     grid-template-columns: minmax(0, 1.65fr) minmax(15rem, 0.92fr) minmax(10rem, 0.58fr);
     gap: var(--space-6);
   }
-
   .project-mockups--duo {
     grid-template-columns: auto auto;
     justify-content: center;
     align-items: center;
   }
-
   .project-mockups__item--laptop {
     grid-column: auto;
   }
-
   .project-mockups--duo .project-mockups__item--laptop {
     width: min(100%, 34rem);
   }
-
   .project-mockups--duo .project-mockups__item--mobile {
     width: min(100%, 17rem);
   }
-
   .project-mockups__item--tablet,
   .project-mockups__item--mobile {
     width: 100%;
   }
-
   .page--project-volt-garage .project-mockups--pair {
     gap: var(--space-6);
     max-width: 56rem;
   }
-
   .page--project-volt-garage .project-mockups--pair .project-mockups__item--laptop {
     width: clamp(26rem, 38vw, 31rem);
   }
-
   .page--project-volt-garage .project-mockups--pair .project-mockups__item--mobile {
     width: clamp(11rem, 14vw, 13rem);
   }
