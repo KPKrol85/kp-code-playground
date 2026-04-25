@@ -1,137 +1,137 @@
-# Client Website Brief Template
+# Szablon briefu strony internetowej dla klienta
 
 **Brief do strony internetowej przed zamówieniem projektu**
 
-This template helps clients organize clear project requirements before ordering a website from a developer, freelancer, or digital studio.
+Ten szablon pomaga klientowi uporządkować wymagania projektu przed zamówieniem strony internetowej u developera, freelancera lub studia cyfrowego.
 
 ---
 
-## 1. Business goals
+## 1. Cele biznesowe
 
-Guiding questions:
-- What is the main purpose of the website?
-- What should the visitor do after entering the site?
-- What business problem should the website solve?
-- Is the website meant to sell, generate leads, inform, build trust, or support an existing brand?
+Pytania pomocnicze:
+- Jaki jest główny cel strony internetowej?
+- Co użytkownik powinien zrobić po wejściu na stronę?
+- Jaki problem biznesowy strona ma rozwiązać?
+- Czy strona ma sprzedawać, pozyskiwać leady, informować, budować zaufanie czy wspierać istniejącą markę?
 
-**Answer:**
-
-
-## 2. Target audience
-
-Guiding questions:
-- Who is the ideal visitor or customer?
-- What problems, needs, or expectations does this person have?
-- Is the audience local, national, or international?
-- What language or tone should the website use?
-
-**Answer:**
+**Odpowiedź:**
 
 
-## 3. Website structure and required pages
+## 2. Grupa docelowa
 
-Guiding questions:
-- What pages are required?
-- Is a homepage enough, or is a multi-page website needed?
-- Are dedicated service pages needed?
-- Is a blog, portfolio, case study, FAQ, pricing, contact, or legal section required?
+Pytania pomocnicze:
+- Kim jest idealny odwiedzający lub klient?
+- Jakie problemy, potrzeby lub oczekiwania ma ta osoba?
+- Czy odbiorca jest lokalny, krajowy czy międzynarodowy?
+- Jakiego języka i tonu komunikacji powinna używać strona?
 
-**Answer (page list / sitemap draft):**
+**Odpowiedź:**
 
 
-## 4. Required features and functionality
+## 3. Struktura strony i wymagane podstrony
 
-Checklist (mark what is needed):
-- [ ] Contact form
-- [ ] Newsletter signup
-- [ ] Booking/contact flow
-- [ ] Downloadable files
-- [ ] Gallery or portfolio
-- [ ] Testimonials
+Pytania pomocnicze:
+- Jakie podstrony są potrzebne?
+- Czy wystarczy strona główna, czy potrzebna jest witryna wielostronicowa?
+- Czy potrzebne są dedykowane podstrony usług?
+- Czy potrzebne są: blog, portfolio, case studies, FAQ, cennik, kontakt lub sekcja prawna?
+
+**Odpowiedź (lista podstron / wstępna mapa strony):**
+
+
+## 4. Wymagane funkcje i funkcjonalności
+
+Lista kontrolna (zaznacz, co jest potrzebne):
+- [ ] Formularz kontaktowy
+- [ ] Zapis do newslettera
+- [ ] Proces rezerwacji / kontaktu
+- [ ] Pliki do pobrania
+- [ ] Galeria lub portfolio
+- [ ] Opinie klientów
 - [ ] FAQ
-- [ ] CMS / editable content
-- [ ] Analytics (if intentionally planned)
-- [ ] Integrations (payments, CRM, tools)
+- [ ] CMS / edytowalne treści
+- [ ] Analityka (jeśli planowana świadomie)
+- [ ] Integracje (płatności, CRM, narzędzia)
 
-**Answer (feature details):**
-
-
-## 5. Visual style and brand direction
-
-Guiding questions:
-- Do you already have a logo or brand identity?
-- Preferred colors and typography direction?
-- Which websites do you like and dislike?
-- Desired mood: minimal, premium, modern, warm, technical, luxury, bold, calm, etc.?
-- Any accessibility and readability expectations?
-
-**Answer:**
+**Odpowiedź (szczegóły funkcji):**
 
 
-## 6. Competitors and references
+## 5. Styl wizualny i kierunek marki
 
-Guiding questions:
-- Who are the main competitors?
-- Which websites do you like and why?
-- Which websites do you dislike and why?
-- What should be avoided?
+Pytania pomocnicze:
+- Czy masz już logo lub identyfikację marki?
+- Jakie są preferowane kolory i kierunek typografii?
+- Jakie strony Ci się podobają, a jakie nie?
+- Jaki klimat ma mieć strona: minimalistyczny, premium, nowoczesny, ciepły, techniczny, luksusowy, odważny, spokojny itd.?
+- Czy są oczekiwania dotyczące dostępności i czytelności?
 
-**Answer:**
-
-
-## 7. Client materials and content
-
-Checklist (mark what is ready):
-- [ ] Logo files
-- [ ] Brand assets
-- [ ] Photos
-- [ ] Text/copy
-- [ ] Product or service descriptions
-- [ ] Testimonials
-- [ ] Legal/company details
-- [ ] Domain, hosting, CMS, analytics, or existing website access (if relevant)
-
-**Answer (missing materials and ownership):**
+**Odpowiedź:**
 
 
-## 8. SEO starter information
+## 6. Konkurencja i inspiracje
 
-Guiding questions:
-- What are the main services or products?
-- What is the main location or service area?
-- What are the priority keywords and search phrases?
-- Is there an existing Google Business Profile (if relevant)?
-- Are there existing analytics/search console accounts (if relevant)?
-- Which pages should rank in search first?
+Pytania pomocnicze:
+- Kim są główni konkurenci?
+- Jakie strony Ci się podobają i dlaczego?
+- Jakie strony Ci się nie podobają i dlaczego?
+- Czego należy unikać?
 
-**Answer:**
+**Odpowiedź:**
 
 
-## 9. Deadline, budget, and project constraints
+## 7. Materiały klienta i treści
 
-Guiding questions:
-- What is the desired launch date?
-- What is the real deadline vs. preferred deadline?
-- What is the approximate budget range?
-- What is the priority level?
-- What is must-have vs. nice-to-have?
-- Are there known limitations?
-- Who are the decision makers and what is the approval process?
+Lista kontrolna (zaznacz, co jest gotowe):
+- [ ] Pliki logo
+- [ ] Materiały marki
+- [ ] Zdjęcia
+- [ ] Teksty/copy
+- [ ] Opisy produktów lub usług
+- [ ] Opinie klientów
+- [ ] Dane prawne/firmowe
+- [ ] Dostępy do domeny, hostingu, CMS, analityki lub istniejącej strony (jeśli dotyczy)
 
-**Answer:**
+**Odpowiedź (brakujące materiały i odpowiedzialność):**
 
 
-## 10. Final notes / additional context
+## 8. Informacje startowe pod SEO
 
-Guiding prompts:
-- Additional context
-- Risks or concerns
-- Questions for the developer/studio
-- Space for next steps
+Pytania pomocnicze:
+- Jakie są główne usługi lub produkty?
+- Jaka jest główna lokalizacja lub obszar działania?
+- Jakie są priorytetowe słowa kluczowe i frazy wyszukiwania?
+- Czy istnieje profil Google Business Profile (jeśli dotyczy)?
+- Czy istnieją konta analityczne / Search Console (jeśli dotyczy)?
+- Które podstrony powinny najszybciej rankować w wyszukiwarce?
 
-**Answer:**
+**Odpowiedź:**
+
+
+## 9. Termin, budżet i ograniczenia projektu
+
+Pytania pomocnicze:
+- Jaka jest oczekiwana data uruchomienia strony?
+- Jaki jest termin rzeczywisty vs. preferowany?
+- Jaki jest orientacyjny zakres budżetu?
+- Jaki jest poziom priorytetu projektu?
+- Co jest „must-have”, a co „nice-to-have”?
+- Czy są znane ograniczenia?
+- Kto podejmuje decyzje i jak wygląda proces akceptacji?
+
+**Odpowiedź:**
+
+
+## 10. Notatki końcowe / dodatkowy kontekst
+
+Wskazówki:
+- Dodatkowy kontekst
+- Ryzyka lub obawy
+- Pytania do developera/studia
+- Miejsce na kolejne kroki
+
+**Odpowiedź:**
 
 
 ---
 
-KP_Code Digital Vault — practical digital resources for better websites.
+KP_Code Digital Vault — praktyczne zasoby cyfrowe do tworzenia lepszych stron internetowych.
