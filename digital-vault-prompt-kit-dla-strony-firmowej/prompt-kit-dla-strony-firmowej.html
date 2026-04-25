@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt Kit dla strony firmowej</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --brand: #1d4ed8;
+      --brand-soft: #dbeafe;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page {
+      width: min(1100px, 100% - 3rem);
+      margin: 1.5rem auto 3rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    header {
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    h1 { margin: 0; font-size: 2rem; }
+    .subtitle { margin-top: .35rem; color: var(--muted); font-weight: 600; }
+    h2 {
+      margin-top: 2rem;
+      border-left: 4px solid var(--brand);
+      padding-left: .65rem;
+      font-size: 1.4rem;
+    }
+    h3 { margin: 0 0 .5rem; font-size: 1.08rem; }
+    p, li { font-size: .98rem; }
+    .note {
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: .9rem 1rem;
+    }
+    .category { margin-top: 2rem; }
+    .prompt-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: .9rem 0;
+      background: #fff;
+    }
+    .label { font-weight: 700; display: block; margin-top: .5rem; }
+    .prompt-box {
+      margin-top: .25rem;
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      padding: .75rem;
+      white-space: pre-wrap;
+    }
+    .workflow, .notes {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fcfcff;
+      padding: 1rem;
+    }
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+    }
+    .notes-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 90px;
+      padding: .5rem;
+      background: #fff;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+      border-top: 1px solid var(--line);
+      padding-top: .9rem;
+    }
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: #fff; }
+      .page {
+        width: 100%;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+      }
+      .prompt-card, .workflow, .notes, .note { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Prompt Kit dla strony firmowej</h1>
+      <p class="subtitle">30 promptów do przygotowania treści, oferty i podstaw SEO dla małej strony internetowej</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>Wprowadzenie</h2>
+        <p>Ten zestaw pomaga uporządkować myślenie przed budową, odświeżeniem lub audytem małej strony firmowej. Został zaprojektowany tak, aby ułatwić przygotowanie treści, doprecyzowanie oferty, zebranie podstawowych kierunków SEO i końcową kontrolę jakości materiałów przekazywanych do wdrożenia.</p>
+        <p>To nie jest przypadkowa lista promptów. To praktyczny system pracy: od strategii, przez ofertę i sekcje strony, po SEO starter i audyt końcowy.</p>
+      </section>
+
+      <section>
+        <h2>Jak korzystać z tego zestawu</h2>
+        <ol>
+          <li>Wybierz kategorię zgodną z aktualnym etapem pracy nad stroną.</li>
+          <li>Kopiuj i uruchamiaj <strong>jeden prompt na raz</strong>.</li>
+          <li>Uzupełnij nawiasy kwadratowe konkretnymi danymi firmy.</li>
+          <li>Dodaj kontekst: branża, grupa docelowa, lokalizacja, ton marki, zakres usługi, ograniczenia.</li>
+          <li>Po wygenerowaniu odpowiedzi popraw treść ręcznie i dopasuj ją do realnej oferty.</li>
+          <li>Zachowaj spójność języka na całej stronie (to samo nazewnictwo usług, ten sam styl i poziom szczegółu).</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Zasady jakości i bezpieczeństwa treści</h2>
+        <div class="note">
+          <ul>
+            <li>Nie kopiuj treści wygenerowanych przez AI bez weryfikacji.</li>
+            <li>Sprawdź ręcznie fakty, ceny, zakres usług, dane kontaktowe, nazwy własne, deklaracje i zapisy prawne.</li>
+            <li>Nie publikuj obietnic, których firma nie jest w stanie spełnić.</li>
+            <li>Traktuj sugestie SEO jako punkt startowy do dalszej walidacji, a nie gwarancję pozycji w Google.</li>
+            <li>Usuwaj ogólniki i zastępuj je konkretami: dla kogo, co dokładnie, w jakim efekcie, w jakim czasie.</li>
+            <li>Najlepsze wyniki uzyskasz, gdy dodasz realny kontekst firmy, klientów i procesu pracy.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="category">
+        <h2>1. Strategia strony</h2>
+
+        <article class="prompt-card"><h3>1. Cel główny strony</h3><span class="label">Do czego służy:</span><p>Pomaga ustalić jeden nadrzędny cel biznesowy strony i cele wspierające.</p><span class="label">Kiedy użyć:</span><p>Na samym początku projektu lub przy przebudowie obecnej strony.</p><span class="label">Prompt:</span><p class="prompt-box">Pracujesz jako strateg treści dla małej firmy. Na podstawie danych: [nazwa firmy], [branża], [lokalizacja], [grupa docelowa], [najważniejszy cel strony], [obecne źródła klientów], [główna usługa], zaproponuj 1 główny cel strony i maksymalnie 3 cele pomocnicze. Dla każdego celu podaj: dlaczego jest ważny, jak wpływa na decyzję klienta, jaki element strony powinien go wspierać (np. hero, oferta, FAQ, CTA), oraz prosty wskaźnik, po którym poznamy, że cel działa. Jeśli brakuje krytycznych informacji, zadaj do 3 krótkich pytań doprecyzowujących.</p><span class="label">Jak ocenić wynik:</span><p>Czy wskazano jeden jasny priorytet? Czy cele są mierzalne i możliwe do wdrożenia na małej stronie?</p></article>
+        <article class="prompt-card"><h3>2. Profil idealnego klienta</h3><span class="label">Do czego służy:</span><p>Pomaga opisać, do kogo strona ma mówić i jakim językiem.</p><span class="label">Kiedy użyć:</span><p>Po określeniu celu strony, przed pisaniem treści sekcji.</p><span class="label">Prompt:</span><p class="prompt-box">Na podstawie informacji o firmie [nazwa firmy] z branży [branża], przygotuj profil idealnego klienta dla strony internetowej. Uwzględnij: kim jest klient, czego szuka, czego się obawia, jakie ma kryteria wyboru, jakich słów używa, co buduje jego zaufanie i co blokuje decyzję. Następnie zaproponuj wskazówki językowe do treści strony: słowa, których używać częściej, słowa, których unikać, i 5 konkretnych komunikatów, które trafiają do tej grupy. Pisz prostym, profesjonalnym językiem w tonie [ton marki].</p><span class="label">Jak ocenić wynik:</span><p>Czy opis klienta jest konkretny i użyteczny przy pisaniu tekstów? Czy wskazówki językowe są praktyczne?</p></article>
+        <article class="prompt-card"><h3>3. Architektura podstron</h3><span class="label">Do czego służy:</span><p>Pomaga zaplanować logiczną strukturę strony i kolejność treści.</p><span class="label">Kiedy użyć:</span><p>Przed tworzeniem makiet lub zleceniem projektu strony.</p><span class="label">Prompt:</span><p class="prompt-box">Ułóż rekomendowaną strukturę małej strony firmowej dla [nazwa firmy], [branża], [główne usługi], [grupa docelowa], [najważniejszy cel strony]. Zaproponuj listę podstron i sekcji na stronie głównej. Dla każdej pozycji podaj: cel sekcji/podstrony, najważniejsze pytanie klienta, na które odpowiada, oraz sugerowany CTA. Na końcu przedstaw kolejność nawigacji głównej i uzasadnij ją pod kątem prostoty dla użytkownika. Jeśli podana [lista podstron] istnieje, porównaj ją z rekomendacją i wskaż braki.</p><span class="label">Jak ocenić wynik:</span><p>Czy struktura pomaga klientowi szybko zrozumieć ofertę i przejść do kontaktu? Czy nie ma zbędnych podstron?</p></article>
+        <article class="prompt-card"><h3>4. Główne CTA strony</h3><span class="label">Do czego służy:</span><p>Pomaga wybrać najmocniejsze wezwanie do działania dla kluczowych miejsc na stronie.</p><span class="label">Kiedy użyć:</span><p>Przy planowaniu hero, sekcji ofertowej i stopki kontaktowej.</p><span class="label">Prompt:</span><p class="prompt-box">Przygotuj propozycję głównego CTA dla strony [nazwa firmy]. Kontekst: [branża], [typ klienta], [typ usługi], [średnia wartość zlecenia], [preferowany kanał kontaktu], [najważniejszy cel strony]. Zaproponuj 5 wersji CTA (krótki tekst przycisku + zdanie wspierające), dopasowanych do różnych etapów gotowości klienta. Dodaj rekomendację, które CTA powinno być główne i gdzie umieścić wersje pomocnicze. Unikaj pustych sloganów, stawiaj na konkret i naturalny język.</p><span class="label">Jak ocenić wynik:</span><p>Czy CTA jest jasne, wiarygodne i zgodne z realnym procesem obsługi klienta?</p></article>
+        <article class="prompt-card"><h3>5. Główny przekaz strony</h3><span class="label">Do czego służy:</span><p>Pomaga sformułować rdzeń komunikacji marki na stronie.</p><span class="label">Kiedy użyć:</span><p>Przed pisaniem hero, nagłówków i opisów usług.</p><span class="label">Prompt:</span><p class="prompt-box">Na podstawie danych [nazwa firmy], [branża], [grupa docelowa], [problem klienta], [unikalna wartość], [ton marki], stwórz 3 wersje głównego przekazu strony (1-2 zdania każda). Każda wersja ma jasno odpowiadać: komu pomagamy, w czym pomagamy, jaki efekt klient otrzymuje i dlaczego warto nam zaufać. Następnie dla każdej wersji podaj: mocną stronę, ryzyko niezrozumienia i krótką poprawioną wersję po optymalizacji.</p><span class="label">Jak ocenić wynik:</span><p>Czy przekaz jest zrozumiały w kilka sekund i odróżnia firmę od konkurencji?</p></article>
+      </section>
+
+      <section class="category">
+        <h2>2. Oferta i usługi</h2>
+        <article class="prompt-card"><h3>6. Prosty opis usługi</h3><span class="label">Do czego służy:</span><p>Pomaga opisać usługę językiem zrozumiałym dla klienta nietechnicznego.</p><span class="label">Kiedy użyć:</span><p>Przy tworzeniu podstrony usługi lub sekcji „Co robimy”.</p><span class="label">Prompt:</span><p class="prompt-box">Napisz prosty, konkretny opis usługi [nazwa usługi] dla firmy [nazwa firmy]. Uwzględnij: dla kogo jest usługa, jaki problem rozwiązuje, jak wygląda współpraca krok po kroku, co klient dostaje na końcu i czego usługa nie obejmuje. Pisz do odbiorcy [grupa docelowa], w tonie [ton marki], bez żargonu i bez przesadnych obietnic. Przygotuj 2 wersje: krótką (do sekcji na stronie głównej) i rozszerzoną (na podstronę usługi).</p><span class="label">Jak ocenić wynik:</span><p>Czy osoba spoza branży rozumie usługę bez dodatkowych wyjaśnień?</p></article>
+        <article class="prompt-card"><h3>7. Korzyści zamiast cech</h3><span class="label">Do czego służy:</span><p>Pomaga przekształcić listę cech usługi w realne korzyści biznesowe dla klienta.</p><span class="label">Kiedy użyć:</span><p>Gdy oferta brzmi zbyt technicznie lub „katalogowo”.</p><span class="label">Prompt:</span><p class="prompt-box">Mam listę cech usługi: [opis oferty]. Przekształć każdą cechę w korzyść dla klienta z grupy [grupa docelowa]. Dla każdej pozycji podaj: cecha (oryginał), korzyść praktyczna, korzyść biznesowa, przykładowy mierzalny efekt oraz propozycję krótkiego zdania na stronę. Styl: konkretny, profesjonalny, zrozumiały dla osoby nietechnicznej. Jeśli jakaś cecha nie daje realnej korzyści, zaznacz to i zaproponuj lepsze ujęcie.</p><span class="label">Jak ocenić wynik:</span><p>Czy treść odpowiada na pytanie klienta: „Co ja z tego będę mieć?”</p></article>
+        <article class="prompt-card"><h3>8. Pakiety usług</h3><span class="label">Do czego służy:</span><p>Pomaga ułożyć ofertę w czytelne warianty zakupowe.</p><span class="label">Kiedy użyć:</span><p>Gdy firma chce skrócić proces wyceny i uprościć decyzję klienta.</p><span class="label">Prompt:</span><p class="prompt-box">Zaprojektuj 3 pakiety usługi dla [nazwa firmy]: podstawowy, rozszerzony i premium. Kontekst: [nazwa usługi], [grupa docelowa], [typowe potrzeby klientów], [zakres możliwy do realizacji], [model rozliczenia]. Dla każdego pakietu podaj: dla kogo jest, co zawiera, czego nie zawiera, orientacyjny poziom inwestycji (bez twardych liczb, jeśli ich nie podano), przewidywany efekt i rekomendowany CTA. Dodaj sekcję „jak wybrać pakiet” w 4 krótkich punktach.</p><span class="label">Jak ocenić wynik:</span><p>Czy różnice między pakietami są jasne i pomagają klientowi podjąć decyzję?</p></article>
+        <article class="prompt-card"><h3>9. FAQ do oferty</h3><span class="label">Do czego służy:</span><p>Pomaga przygotować odpowiedzi na pytania, które blokują decyzję zakupową.</p><span class="label">Kiedy użyć:</span><p>Po przygotowaniu opisu usługi i CTA.</p><span class="label">Prompt:</span><p class="prompt-box">Stwórz sekcję FAQ dla usługi [nazwa usługi] firmy [nazwa firmy]. Uwzględnij kontekst: [główne obiekcje klientów], [czas realizacji], [proces współpracy], [zakres usługi], [lokalizacja], [ton marki]. Przygotuj 10 pytań i odpowiedzi, z czego minimum 5 ma dotyczyć ryzyk lub wątpliwości klienta (np. koszt, czas, efekty, odpowiedzialność, poprawki). Odpowiedzi mają być konkretne, uczciwe i bez obietnic bez pokrycia.</p><span class="label">Jak ocenić wynik:</span><p>Czy FAQ realnie usuwa obawy klienta, zamiast powtarzać ogólniki?</p></article>
+        <article class="prompt-card"><h3>10. Odpowiedzi na obiekcje</h3><span class="label">Do czego służy:</span><p>Pomaga przygotować krótkie, wiarygodne komunikaty na najczęstsze zastrzeżenia klientów.</p><span class="label">Kiedy użyć:</span><p>Przy tworzeniu sekcji sprzedażowych, FAQ i skryptów odpowiedzi mailowych.</p><span class="label">Prompt:</span><p class="prompt-box">Przygotuj tabelę „obiekcja -> odpowiedź” dla firmy [nazwa firmy] i usługi [nazwa usługi]. Uwzględnij obiekcje: [główne obiekcje klientów]. Dla każdej obiekcji stwórz: empatyczne uznanie wątpliwości, krótką odpowiedź merytoryczną, przykład lub dowód (jeśli dostępny), oraz bezpieczne CTA do kolejnego kroku. Styl: rzeczowy, spokojny, bez presji sprzedażowej. Dodaj też 3 zdania, których lepiej unikać, bo obniżają zaufanie.</p><span class="label">Jak ocenić wynik:</span><p>Czy odpowiedzi brzmią naturalnie i budują zaufanie, zamiast „zamykać sprzedaż na siłę”?</p></article>
+      </section>
+
+      <section class="category">
+        <h2>3. Treści sekcji strony</h2>
+        <article class="prompt-card"><h3>11. Sekcja hero</h3><span class="label">Do czego służy:</span><p>Pomaga stworzyć pierwszy ekran strony, który jasno komunikuje wartość i kieruje do działania.</p><span class="label">Kiedy użyć:</span><p>Podczas pisania strony głównej lub landing page.</p><span class="label">Prompt:</span><p class="prompt-box">Na podstawie danych [nazwa firmy], [branża], [grupa docelowa], [główny problem klienta], [główny przekaz strony], [najważniejszy cel strony], [ton marki], przygotuj 3 wersje sekcji hero. Każda wersja ma zawierać: nagłówek, podnagłówek, główne CTA, pomocnicze CTA i 3 krótkie punkty wartości. Unikaj pustych haseł i pisz tak, by klient od razu wiedział: co oferujemy, dla kogo i co dalej zrobić.</p><span class="label">Jak ocenić wynik:</span><p>Czy hero da się zrozumieć w 5–8 sekund i czy prowadzi do konkretnej akcji?</p></article>
+        <article class="prompt-card"><h3>12. Sekcja O nas</h3><span class="label">Do czego służy:</span><p>Pomaga opisać firmę w sposób, który buduje zaufanie, a nie tylko „opowiada historię”.</p><span class="label">Kiedy użyć:</span><p>Przy tworzeniu podstrony O nas lub krótkiej sekcji na stronie głównej.</p><span class="label">Prompt:</span><p class="prompt-box">Napisz sekcję „O nas” dla [nazwa firmy]. Kontekst: [branża], [lokalizacja], [lata doświadczenia], [styl współpracy], [wartości], [typ klientów], [ton marki]. Przygotuj wersję o długości 180–250 słów, w której pokażesz: komu pomagamy, jak pracujemy, co nas wyróżnia, jakie standardy jakości utrzymujemy i dlaczego klient może nam zaufać. Na końcu dodaj krótkie CTA do kontaktu.</p><span class="label">Jak ocenić wynik:</span><p>Czy sekcja brzmi wiarygodnie, konkretnie i skupia się na wartości dla klienta?</p></article>
+        <article class="prompt-card"><h3>13. Sekcja Proces współpracy</h3><span class="label">Do czego służy:</span><p>Pomaga wyjaśnić klientowi, jak wygląda współpraca krok po kroku.</p><span class="label">Kiedy użyć:</span><p>Gdy klienci pytają „jak to wygląda w praktyce?” albo boją się chaosu.</p><span class="label">Prompt:</span><p class="prompt-box">Przygotuj sekcję „Jak wygląda współpraca” dla usługi [nazwa usługi] w firmie [nazwa firmy]. Uwzględnij [czas realizacji], [liczba etapów], [kanał komunikacji], [zakres odpowiedzialności klienta], [zakres odpowiedzialności wykonawcy]. Opisz proces w 5–7 krokach. Dla każdego kroku podaj: cel, co dzieje się po stronie firmy, czego potrzebujemy od klienta i jaki jest rezultat etapu. Styl: prosty, uporządkowany, uspokajający.</p><span class="label">Jak ocenić wynik:</span><p>Czy klient po lekturze rozumie proces i wie, czego się spodziewać na każdym etapie?</p></article>
+        <article class="prompt-card"><h3>14. Sekcja Zaufanie i opinie</h3><span class="label">Do czego służy:</span><p>Pomaga pokazać dowody jakości i wiarygodność firmy.</p><span class="label">Kiedy użyć:</span><p>Przy budowie strony głównej, podstron usług i landing pages.</p><span class="label">Prompt:</span><p class="prompt-box">Zaproponuj sekcję „Dlaczego warto nam zaufać” dla [nazwa firmy]. Kontekst: [dowody jakości], [opinie klientów], [case studies], [certyfikaty], [branża], [ton marki]. Przygotuj: 1 nagłówek sekcji, 5 elementów budujących wiarygodność, 3 przykłady krótkich cytatów opinii (format gotowy do podmiany), oraz ostrzeżenie, jakich typów „dowodów” nie używać, by nie stracić wiarygodności.</p><span class="label">Jak ocenić wynik:</span><p>Czy sekcja opiera się na konkretnych dowodach, a nie wyłącznie deklaracjach?</p></article>
+        <article class="prompt-card"><h3>15. Sekcja Kontakt + CTA</h3><span class="label">Do czego służy:</span><p>Pomaga domknąć stronę jasnym komunikatem i prostą ścieżką kontaktu.</p><span class="label">Kiedy użyć:</span><p>Przy finalizacji strony głównej i podstron usług.</p><span class="label">Prompt:</span><p class="prompt-box">Stwórz sekcję kontaktową z CTA dla [nazwa firmy]. Dane: [preferowany kanał kontaktu], [godziny kontaktu], [lokalizacja], [typ zapytań], [ton marki], [główne obawy klienta przed kontaktem]. Przygotuj: nagłówek, krótki opis zachęcający, listę informacji do podania przez klienta, tekst przycisku CTA i krótkie zdanie obniżające barierę wejścia. Wersja ma być konkretna i przyjazna, bez presji.</p><span class="label">Jak ocenić wynik:</span><p>Czy klient wie dokładnie, jak się skontaktować i co stanie się po wysłaniu zapytania?</p></article>
+      </section>
+
+      <section class="category">
+        <h2>4. SEO starter</h2>
+        <article class="prompt-card"><h3>16. Pomysły na title tag</h3><span class="label">Do czego służy:</span><p>Pomaga stworzyć robocze wersje tytułów SEO dla kluczowych podstron.</p><span class="label">Kiedy użyć:</span><p>Po ustaleniu struktury podstron i głównych tematów oferty.</p><span class="label">Prompt:</span><p class="prompt-box">Przygotuj propozycje title tag dla strony [nazwa firmy]. Dane wejściowe: [branża], [lokalizacja], [lista podstron], [główne frazy], [grupa docelowa]. Dla każdej podstrony zaproponuj 3 wersje title tag (max ok. 60 znaków), zróżnicowane pod kątem intencji użytkownika. Dodaj krótkie uzasadnienie, kiedy wybrać daną wersję. Unikaj clickbaitu i sztucznego upychania słów kluczowych.</p><span class="label">Jak ocenić wynik:</span><p>Czy tytuły są czytelne dla człowieka, zgodne z treścią podstrony i sensownie używają fraz?</p></article>
+        <article class="prompt-card"><h3>17. Pomysły na meta description</h3><span class="label">Do czego służy:</span><p>Pomaga przygotować opisy wyników wyszukiwania zachęcające do kliknięcia.</p><span class="label">Kiedy użyć:</span><p>Po opracowaniu roboczych title tag.</p><span class="label">Prompt:</span><p class="prompt-box">Stwórz meta description dla podstron [lista podstron] strony [adres strony]. Kontekst: [branża], [lokalizacja], [grupa docelowa], [główne korzyści oferty], [ton marki]. Dla każdej podstrony podaj 2 wersje opisu (ok. 140–160 znaków), zawierające jasną wartość i naturalne wezwanie do działania. Opisy mają być konkretne, bez obietnic niemożliwych do zagwarantowania.</p><span class="label">Jak ocenić wynik:</span><p>Czy opisy są zrozumiałe, wiarygodne i zachęcają do kliknięcia bez przesady?</p></article>
+        <article class="prompt-card"><h3>18. Struktura nagłówków H1/H2/H3</h3><span class="label">Do czego służy:</span><p>Pomaga uporządkować treść pod kątem czytelności i podstaw SEO.</p><span class="label">Kiedy użyć:</span><p>Przed finalnym pisaniem długich podstron usługowych.</p><span class="label">Prompt:</span><p class="prompt-box">Ułóż strukturę nagłówków H1/H2/H3 dla podstrony [nazwa podstrony] firmy [nazwa firmy]. Uwzględnij: [cel podstrony], [grupa docelowa], [główna fraza], [frazy pomocnicze], [zakres usługi]. Zbuduj logiczny szkielet treści: 1 H1, 5–8 nagłówków H2 i adekwatne H3 tam, gdzie potrzebna jest szczegółowość. Przy każdym nagłówku dodaj krótką notatkę, co powinno znaleźć się w treści akapitu.</p><span class="label">Jak ocenić wynik:</span><p>Czy struktura jest logiczna dla użytkownika i nie wygląda jak sztuczne „SEO pod roboty”?</p></article>
+        <article class="prompt-card"><h3>19. Frazy lokalne SEO</h3><span class="label">Do czego służy:</span><p>Pomaga przygotować listę lokalnych wariantów fraz do testowania w treściach.</p><span class="label">Kiedy użyć:</span><p>Gdy firma działa lokalnie lub regionalnie.</p><span class="label">Prompt:</span><p class="prompt-box">Na podstawie danych [branża], [lokalizacja], [obszar działania], [nazwa usługi], [grupa docelowa], przygotuj listę lokalnych fraz SEO do strony firmowej. Podziel frazy na: główne, długi ogon, pytania użytkowników, frazy „problem + lokalizacja”. Dla każdej grupy zaproponuj, gdzie najlepiej użyć ich na stronie (np. hero, opis usługi, FAQ, blog, meta). Zaznacz, które frazy brzmią naturalnie, a które ryzykownie spamowo.</p><span class="label">Jak ocenić wynik:</span><p>Czy frazy są realne językowo i pasują do sposobu, w jaki klienci faktycznie szukają usługi?</p></article>
+        <article class="prompt-card"><h3>20. Linkowanie wewnętrzne i tematy treści</h3><span class="label">Do czego służy:</span><p>Pomaga połączyć podstrony oraz zaplanować wspierające tematy contentowe.</p><span class="label">Kiedy użyć:</span><p>Po przygotowaniu głównych podstron oferty.</p><span class="label">Prompt:</span><p class="prompt-box">Stwórz plan podstawowego linkowania wewnętrznego dla strony [adres strony] z podstronami [lista podstron]. Dla każdej podstrony wskaż: do jakich 2–4 innych podstron powinna linkować i dlaczego. Następnie zaproponuj 10 tematów treści wspierających SEO (np. poradniki, pytania klientów, porównania), które naturalnie prowadzą do oferty [nazwa usługi]. Dodaj priorytety: szybkie do wdrożenia vs. wymagające więcej zasobów.</p><span class="label">Jak ocenić wynik:</span><p>Czy plan wspiera nawigację użytkownika i jednocześnie wzmacnia widoczność kluczowych podstron?</p></article>
+      </section>
+
+      <section class="category">
+        <h2>5. Poprawa istniejących tekstów</h2>
+        <article class="prompt-card"><h3>21. Upraszczanie tekstu</h3><span class="label">Do czego służy:</span><p>Pomaga skrócić i uprościć zbyt złożone treści bez utraty sensu.</p><span class="label">Kiedy użyć:</span><p>Gdy tekst jest długi, trudny lub przeładowany specjalistycznym językiem.</p><span class="label">Prompt:</span><p class="prompt-box">Uprość poniższy tekst strony firmowej tak, aby był zrozumiały dla odbiorcy [grupa docelowa], który nie zna branżowego żargonu. Tekst: [wklej tekst]. Zachowaj sens merytoryczny, usuń zbędne dygresje, skróć zdania i popraw rytm czytania. Przygotuj dwie wersje: 1) „po prostu prościej”, 2) „krócej i bardziej dynamicznie”. Na końcu wskaż 5 najważniejszych zmian, które poprawiły czytelność.</p><span class="label">Jak ocenić wynik:</span><p>Czy nowa wersja jest łatwiejsza do zrozumienia i nadal oddaje faktyczny zakres oferty?</p></article>
+        <article class="prompt-card"><h3>22. Usuwanie ogólników</h3><span class="label">Do czego służy:</span><p>Pomaga zamienić puste deklaracje na konkretne, wiarygodne komunikaty.</p><span class="label">Kiedy użyć:</span><p>Gdy treści zawierają dużo haseł typu „najwyższa jakość”, „indywidualne podejście”.</p><span class="label">Prompt:</span><p class="prompt-box">Przeanalizuj tekst: [wklej tekst] i wskaż zdania, które są zbyt ogólne, marketingowe albo nieweryfikowalne. Następnie przeredaguj je na konkretne wersje oparte na danych wejściowych: [zakres usługi], [proces pracy], [standardy], [czas realizacji], [forma kontaktu]. Zwróć wynik w tabeli: „oryginał / problem / propozycja poprawy / dlaczego lepsze”. Zachowaj ton [ton marki].</p><span class="label">Jak ocenić wynik:</span><p>Czy po poprawkach treść jest bardziej wiarygodna i mniej „szablonowa”?</p></article>
+        <article class="prompt-card"><h3>23. Konkret zamiast deklaracji</h3><span class="label">Do czego służy:</span><p>Pomaga doprecyzować opisy usług i efektów dla klienta.</p><span class="label">Kiedy użyć:</span><p>Gdy tekst jest poprawny językowo, ale nie daje jasnego obrazu wartości.</p><span class="label">Prompt:</span><p class="prompt-box">Na podstawie tekstu [wklej tekst] zaproponuj poprawki, które zwiększą konkret: kto, co, w jakim zakresie, w jakim czasie, z jakim rezultatem. Dla każdego akapitu podaj wersję „przed” i „po” oraz krótkie uzasadnienie. Jeśli brakuje danych do doprecyzowania, wypisz listę informacji, które firma powinna uzupełnić przed publikacją.</p><span class="label">Jak ocenić wynik:</span><p>Czy klient po lekturze lepiej rozumie, co dokładnie dostanie i na jakich warunkach?</p></article>
+        <article class="prompt-card"><h3>24. Ton premium, ale naturalny</h3><span class="label">Do czego służy:</span><p>Pomaga podnieść jakość języka bez sztucznego, nadętego stylu.</p><span class="label">Kiedy użyć:</span><p>Gdy marka chce brzmieć bardziej ekspercko i profesjonalnie.</p><span class="label">Prompt:</span><p class="prompt-box">Przeredaguj tekst [wklej tekst] do tonu „premium, ale naturalnie”. Kontekst marki: [ton marki], [grupa docelowa], [charakter usługi], [poziom formalności]. Zachowaj prostotę i konkret, usuń przesadnie potoczne zwroty oraz sztucznie brzmiące korporacyjne sformułowania. Przygotuj dwie wersje: bardziej formalną i bardziej partnerską. Dodaj krótką rekomendację, która wersja lepiej pasuje do strony [nazwa firmy] i dlaczego.</p><span class="label">Jak ocenić wynik:</span><p>Czy tekst brzmi profesjonalnie, a jednocześnie ludzko i wiarygodnie?</p></article>
+        <article class="prompt-card"><h3>25. Tłumaczenie technicznego języka</h3><span class="label">Do czego służy:</span><p>Pomaga przełożyć techniczne opisy na język korzyści dla klienta.</p><span class="label">Kiedy użyć:</span><p>Gdy ekspert pisze poprawnie merytorycznie, ale zbyt specjalistycznie.</p><span class="label">Prompt:</span><p class="prompt-box">Przepisz tekst techniczny [wklej tekst] na wersję przyjazną dla klienta nietechnicznego. Zachowaj poprawność merytoryczną, ale wyjaśnij trudne pojęcia prostym językiem i pokaż, co to oznacza w praktyce dla klienta. Dodaj mini-słowniczek 5 najtrudniejszych terminów oraz krótkie przykłady „co to zmienia dla klienta”. Styl: [ton marki], bez infantylizacji i bez uproszczeń, które fałszują znaczenie.</p><span class="label">Jak ocenić wynik:</span><p>Czy treść pozostaje fachowa, ale staje się zrozumiała dla osoby spoza branży?</p></article>
+      </section>
+
+      <section class="category">
+        <h2>6. Audyt i kontrola jakości treści</h2>
+        <article class="prompt-card"><h3>26. Audyt klarowności treści</h3><span class="label">Do czego służy:</span><p>Pomaga sprawdzić, czy strona jest czytelna i logiczna dla nowego użytkownika.</p><span class="label">Kiedy użyć:</span><p>Po przygotowaniu pełnej pierwszej wersji treści.</p><span class="label">Prompt:</span><p class="prompt-box">Wykonaj audyt klarowności treści dla strony [adres strony] lub tekstu [wklej tekst]. Oceń: zrozumiałość przekazu, spójność komunikatów, poziom skomplikowania języka, czytelność struktury i łatwość znalezienia kluczowych informacji. Zwróć wynik w skali 1–5 dla każdego obszaru, podaj uzasadnienie i 10 konkretnych poprawek o najwyższym wpływie.</p><span class="label">Jak ocenić wynik:</span><p>Czy raport wskazuje konkretne problemy i podpowiada wykonalne poprawki, a nie ogólne uwagi?</p></article>
+        <article class="prompt-card"><h3>27. Audyt kompletności oferty</h3><span class="label">Do czego służy:</span><p>Pomaga ocenić, czy na stronie są wszystkie informacje potrzebne do decyzji.</p><span class="label">Kiedy użyć:</span><p>Przed publikacją nowej strony lub podstrony usługi.</p><span class="label">Prompt:</span><p class="prompt-box">Sprawdź kompletność opisu oferty na podstawie treści [wklej tekst] dla usługi [nazwa usługi]. Oceń, czy klient znajdzie: dla kogo jest usługa, co obejmuje, czego nie obejmuje, przebieg współpracy, orientacyjny koszt/inwestycję, terminy, FAQ, dowody zaufania i jasne CTA. Przygotuj checklistę „jest / brakuje / do doprecyzowania” oraz priorytetową listę braków do uzupełnienia.</p><span class="label">Jak ocenić wynik:</span><p>Czy po audycie wiadomo dokładnie, jakie luki treści trzeba zamknąć przed publikacją?</p></article>
+        <article class="prompt-card"><h3>28. Audyt siły CTA</h3><span class="label">Do czego służy:</span><p>Pomaga ocenić skuteczność wezwań do działania na stronie.</p><span class="label">Kiedy użyć:</span><p>Gdy strona ma ruch, ale mało zapytań lub słabą konwersję.</p><span class="label">Prompt:</span><p class="prompt-box">Przeanalizuj CTA na stronie [adres strony] lub w tekście [wklej tekst]. Oceń: jasność komunikatu, dopasowanie do intencji klienta, poziom tarcia (czy klient wie, co dalej), rozmieszczenie CTA oraz spójność między sekcjami. Zaproponuj 8 konkretnych zmian: nowe brzmienia przycisków, lepsze mikrokomunikaty, miejsca dodania CTA i elementy obniżające obawy przed kontaktem.</p><span class="label">Jak ocenić wynik:</span><p>Czy rekomendacje są konkretne i możliwe do wdrożenia bez przebudowy całej strony?</p></article>
+        <article class="prompt-card"><h3>29. Audyt sygnałów zaufania</h3><span class="label">Do czego służy:</span><p>Pomaga sprawdzić, czy strona wystarczająco buduje wiarygodność firmy.</p><span class="label">Kiedy użyć:</span><p>Przed finalnym odbiorem treści i publikacją.</p><span class="label">Prompt:</span><p class="prompt-box">Wykonaj audyt sygnałów zaufania dla strony [adres strony] firmy [nazwa firmy]. Oceń obecność i jakość: opinii klientów, case studies, danych firmy, transparentności procesu, FAQ, informacji kontaktowych, zdjęć zespołu/realizacji, polityk i zapisów formalnych tam, gdzie potrzebne. Podaj ocenę każdego elementu (brak / słabe / dobre / mocne) oraz konkretne rekomendacje uzupełnień.</p><span class="label">Jak ocenić wynik:</span><p>Czy po audycie wiadomo, które elementy zaufania trzeba wzmocnić i jak to zrobić?</p></article>
+        <article class="prompt-card"><h3>30. Braki i słabe sekcje</h3><span class="label">Do czego służy:</span><p>Pomaga wychwycić pominięte informacje i najsłabsze punkty całej strony.</p><span class="label">Kiedy użyć:</span><p>Na końcu pracy, jako ostatnia kontrola przed publikacją.</p><span class="label">Prompt:</span><p class="prompt-box">Przeprowadź końcowy przegląd treści strony [adres strony] (lub materiału [wklej tekst]) i wskaż: 1) brakujące informacje, 2) sekcje o niskiej jakości, 3) fragmenty zbyt ogólne, 4) niespójności tonu, 5) ryzyka w obietnicach marketingowych. Dla każdego problemu podaj poziom wpływu (wysoki/średni/niski), krótkie uzasadnienie oraz gotową propozycję poprawki. Na końcu przygotuj listę „Top 10 poprawek przed publikacją”.</p><span class="label">Jak ocenić wynik:</span><p>Czy lista końcowa jest priorytetyzowana i pomaga zamknąć projekt bez domysłów?</p></article>
+      </section>
+
+      <section>
+        <h2>Proponowany workflow pracy</h2>
+        <div class="workflow">
+          <ol>
+            <li><strong>Strategia strony (1–5):</strong> najpierw ustal cel, klienta, strukturę i główny przekaz.</li>
+            <li><strong>Oferta i usługi (6–10):</strong> doprecyzuj ofertę, korzyści, pakiety, FAQ i obiekcje.</li>
+            <li><strong>Treści sekcji strony (11–15):</strong> przygotuj właściwe bloki treści do wdrożenia.</li>
+            <li><strong>SEO starter (16–20):</strong> opracuj robocze title, meta, nagłówki i mapę tematów.</li>
+            <li><strong>Poprawa tekstów (21–25):</strong> uprość, uczyń treści konkretnymi i spójnymi z tonem marki.</li>
+            <li><strong>Audyt końcowy (26–30):</strong> sprawdź jakość, kompletność, CTA i sygnały zaufania przed publikacją.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2>Notatki użytkownika</h2>
+        <div class="notes">
+          <div class="notes-grid">
+            <div class="notes-box"><strong>Ważny kontekst firmy</strong></div>
+            <div class="notes-box"><strong>Preferowany ton komunikacji</strong></div>
+            <div class="notes-box"><strong>Grupa docelowa</strong></div>
+            <div class="notes-box"><strong>Notatki o ofercie</strong></div>
+            <div class="notes-box"><strong>Notatki SEO</strong></div>
+            <div class="notes-box"><strong>Kolejne kroki</strong></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      KP_Code Digital Vault — praktyczne zasoby cyfrowe dla lepszych stron internetowych.
+    </footer>
+  </div>
+</body>
+</html>
