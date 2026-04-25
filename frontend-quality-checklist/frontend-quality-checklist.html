@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frontend Quality Checklist — HTML/CSS/JS przed pokazaniem projektu</title>
+  <meta name="description" content="Praktyczna checklista jakości frontendowej przed pokazaniem projektu klientowi, publikacją portfolio lub wdrożeniem statycznej strony.">
+  <style>
+    :root {
+      --bg: #f4f6fa;
+      --surface: #ffffff;
+      --ink: #1a2233;
+      --muted: #4f5b72;
+      --line: #cfd6e3;
+      --line-strong: #9aa7bf;
+      --brand: #1f3a8a;
+      --ok: #0f766e;
+      --warn: #b45309;
+      --na: #475569;
+      --radius: 10px;
+      --space-1: 0.4rem;
+      --space-2: 0.7rem;
+      --space-3: 1rem;
+      --space-4: 1.4rem;
+      --space-5: 2rem;
+      --shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.45 "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: var(--space-5) auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    header,
+    main,
+    footer {
+      padding-inline: var(--space-5);
+    }
+
+    header {
+      padding-top: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--line);
+      background: linear-gradient(160deg, #f8faff 0%, #eef3ff 100%);
+    }
+
+    h1 {
+      margin: 0 0 var(--space-2);
+      font-size: 1.75rem;
+      line-height: 1.2;
+      color: var(--brand);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 90ch;
+    }
+
+    main {
+      padding-top: var(--space-4);
+      padding-bottom: var(--space-5);
+    }
+
+    section {
+      margin-bottom: var(--space-5);
+    }
+
+    h2 {
+      margin: 0 0 var(--space-2);
+      font-size: 1.2rem;
+      color: #111827;
+    }
+
+    p,
+    ul { margin: 0 0 var(--space-3); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: var(--space-3);
+      background: #fbfcff;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: var(--space-2) var(--space-4);
+    }
+
+    .meta-field {
+      border-bottom: 1px dashed var(--line-strong);
+      padding-bottom: var(--space-1);
+      min-height: 2rem;
+      color: #334155;
+    }
+
+    .status-legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+    }
+
+    .status-item {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: var(--space-2);
+      background: #fff;
+      font-size: 0.94rem;
+    }
+
+    .status-item strong { display: block; margin-bottom: 0.2rem; }
+    .status-ok strong { color: var(--ok); }
+    .status-fix strong { color: var(--warn); }
+    .status-na strong { color: var(--na); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 920px;
+      background: #fff;
+    }
+
+    caption {
+      text-align: left;
+      font-weight: 700;
+      padding: var(--space-2) var(--space-3);
+      background: #f2f6ff;
+      border-bottom: 1px solid var(--line);
+      color: #1e293b;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 0.52rem 0.62rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8faff;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .col-area { width: 17%; }
+    .col-crit { width: 43%; }
+    .col-check { width: 8%; text-align: center; }
+    .col-notes { width: 24%; }
+
+    .mark-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 4px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .summary-item {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: var(--space-2);
+      min-height: 62px;
+      background: #fff;
+    }
+
+    .decision-list {
+      display: grid;
+      gap: 0.45rem;
+      margin-top: var(--space-2);
+    }
+
+    .decision-list li {
+      list-style: none;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: var(--space-2);
+      background: #fff;
+    }
+
+    .line-block {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: var(--space-3);
+      min-height: 82px;
+    }
+
+    .line-block p {
+      margin: 0;
+      min-height: 1.4rem;
+      border-bottom: 1px dashed var(--line-strong);
+    }
+
+    footer {
+      border-top: 2px solid var(--line);
+      background: #f7f9ff;
+      padding-top: var(--space-3);
+      padding-bottom: var(--space-3);
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        margin: 0;
+        border-radius: 0;
+        border: none;
+      }
+
+      header,
+      main,
+      footer { padding-inline: var(--space-3); }
+
+      .meta-grid,
+      .status-legend,
+      .summary-grid { grid-template-columns: 1fr; }
+
+      table { min-width: 820px; }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      html,
+      body {
+        background: #fff;
+        color: #000;
+        font-size: 11pt;
+      }
+
+      .page {
+        max-width: none;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      section,
+      .table-wrap,
+      .card,
+      .line-block {
+        break-inside: avoid;
+      }
+
+      h1,
+      h2,
+      caption {
+        color: #000;
+      }
+
+      .mark-box {
+        border-color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Frontend Quality Checklist — HTML/CSS/JS przed pokazaniem projektu</h1>
+      <p class="subtitle">
+        Praktyczna karta przeglądu jakości frontendowej przed przekazaniem projektu klientowi,
+        publikacją w portfolio lub wdrożeniem statycznej strony. Dokument wspiera szybki,
+        techniczny przegląd: od semantyki i dostępności po deploy, README i higienę Git.
+      </p>
+    </header>
+
+    <main>
+      <section aria-labelledby="wprowadzenie">
+        <h2 id="wprowadzenie">1. Wprowadzenie</h2>
+        <div class="card">
+          <p>
+            Użyj tej checklisty jako końcowego przeglądu „przed pokazaniem”. Jej celem nie jest
+            formalny audyt, tylko praktyczne wychwycenie ryzyk, które najczęściej psują odbiór
+            projektu: niespójny kod, brak fallbacków, problemy z dostępnością, regressions na mobile
+            i niedopilnowany proces publikacji.
+          </p>
+          <p>
+            Wypełniaj statusy bez „na oko”. Jeśli coś jest oznaczone jako <strong>OK</strong>, powinno
+            być sprawdzone ręcznie lub potwierdzone w narzędziach.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="dane-projektu">
+        <h2 id="dane-projektu">2. Dane projektu</h2>
+        <div class="card meta-grid">
+          <div><strong>Nazwa projektu:</strong> <div class="meta-field"></div></div>
+          <div><strong>Typ projektu:</strong> <div class="meta-field"></div></div>
+          <div><strong>Adres lokalny / środowisko testowe:</strong> <div class="meta-field"></div></div>
+          <div><strong>Adres produkcyjny (jeśli dostępny):</strong> <div class="meta-field"></div></div>
+          <div><strong>Data przeglądu:</strong> <div class="meta-field"></div></div>
+          <div><strong>Osoba wykonująca przegląd:</strong> <div class="meta-field"></div></div>
+          <div><strong>Branch / commit reference:</strong> <div class="meta-field"></div></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="status-checklisty">
+        <h2 id="status-checklisty">3. Status checklisty</h2>
+        <div class="card">
+          <p>Każdy punkt oznacz jednym statusem i dopisz notatkę, jeśli wymaga decyzji lub poprawki.</p>
+          <div class="status-legend">
+            <div class="status-item status-ok"><strong>OK</strong> Element jest gotowy i sprawdzony.</div>
+            <div class="status-item status-fix"><strong>Do poprawy</strong> Wymaga pracy przed pokazaniem.</div>
+            <div class="status-item status-na"><strong>Nie dotyczy</strong> Nie ma zastosowania w tym projekcie.</div>
+            <div class="status-item"><strong>Notatki</strong> Problem, decyzja, link do poprawki lub commit.</div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="checklista-glowna">
+        <h2 id="checklista-glowna">4–16. Główna checklista jakości frontendowej</h2>
+        <div class="table-wrap">
+          <table>
+            <caption>Checklista przeglądu jakości</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="col-area">Obszar</th>
+                <th scope="col" class="col-crit">Kryterium jakości</th>
+                <th scope="col" class="col-check">OK</th>
+                <th scope="col" class="col-check">Do poprawy</th>
+                <th scope="col" class="col-check">Nie dotyczy</th>
+                <th scope="col" class="col-notes">Notatki / poprawki</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td rowspan="7"><strong>4. Semantic HTML i struktura dokumentu</strong></td><td>Poprawna struktura HTML5 i brak błędnych zagnieżdżeń.</td><td><span class="mark-box" aria-hidden="true"></span></td><td><span class="mark-box" aria-hidden="true"></span></td><td><span class="mark-box" aria-hidden="true"></span></td><td></td></tr>
+              <tr><td>Jeden logiczny <code>&lt;main&gt;</code> na stronie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Landmarki <code>header/nav/main/section/footer</code> użyte zgodnie z rolą treści.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Hierarchia nagłówków jest logiczna i wspiera czytanie oraz SEO.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Linki i przyciski są użyte zgodnie z przeznaczeniem interakcji.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak pustych lub dekoracyjnych elementów udających treść.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Atrybuty <code>lang</code>, <code>title</code> i meta są ustawione adekwatnie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="6"><strong>5. BEM i spójność nazewnictwa</strong></td><td>Nazewnictwo klas jest konsekwentne i przewidywalne.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak przypadkowych nazw typu <code>box1</code>, <code>test</code>, <code>new-style</code>.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Podział blok / element / modyfikator jest czytelny.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak niepotrzebnego nadpisywania selektorów i „walki o specyficzność”.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Klasy opisują strukturę/komponent, a nie chwilowy wygląd.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Łatwo znaleźć powiązanie między HTML i CSS.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="7"><strong>6. Architektura CSS i design tokens</strong></td><td>Zmiennie CSS obejmują kolory, spacing, fonty i breakpointy.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak magic numbers bez uzasadnienia lub komentarza.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Spójny rytm odstępów i przewidywalny system spacingu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Skala typografii jest jednolita i nieprzypadkowa.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Specyficzność selektorów pozostaje na kontrolowanym poziomie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Usunięte nieużywane lub martwe reguły CSS.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Warstwy base/layout/components/utilities są rozdzielone tam, gdzie to ma sens.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="8"><strong>7. Responsive design i stabilność layoutu</strong></td><td>Zachowanie mobile-first jest utrzymane.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak poziomego scrolla na typowych szerokościach ekranu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Odstępy i czytelność treści są dobre na mobile/tablet/desktop.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Breakpointy odpowiadają realnym potrzebom layoutu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Media mają zarezerwowane wymiary lub <code>aspect-ratio</code>.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Nawigacja działa poprawnie na małych ekranach.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Karty i siatki nie łamią layoutu przy skrajnych treściach.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak CLS powodowanego przez obrazy, fonty lub późne przesunięcia.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="8"><strong>8. JavaScript i progressive enhancement</strong></td><td>JavaScript nie blokuje podstawowego dostępu do treści.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Interakcje mają bezpieczne fallbacki tam, gdzie to potrzebne.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak błędów w konsoli podczas podstawowego przepływu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Komponenty wspierają wiele instancji (jeśli dotyczy).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak sztywnej zależności od jednego ID bez uzasadnienia.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Event listenery są kontrolowane i nie dublują się.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Obsłużone scenariusze resize / Escape / click outside (gdzie potrzebne).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Kod jest modularny, czytelny i prosty w utrzymaniu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="6"><strong>9. Ruch, reduced motion i jakość interakcji</strong></td><td>Animacje są subtelne, celowe i wspierają UX.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td><code>prefers-reduced-motion</code> jest obsłużone tam, gdzie występuje ruch.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Stany hover/focus/active są spójne i przewidywalne.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak <code>transition: all</code> na elementach interaktywnych.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Animacje nie powodują layout thrashing.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Mikrointerakcje nie przeszkadzają w korzystaniu ze strony.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="9"><strong>10. Przegląd dostępności (a11y)</strong></td><td>Cała podstawowa ścieżka działa z klawiatury.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Focus states są widoczne i nieusuwane globalnie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Linki mają sensowne teksty (bez „kliknij tutaj”).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Formularze mają poprawne powiązanie <code>label</code> z polami.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Komunikaty błędów/sukcesu są czytelne i dostępne.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Kontrast tekstu i elementów interaktywnych jest wystarczający.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Istotne obrazy mają adekwatny alt text.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>ARIA jest używane tylko tam, gdzie semantyka HTML nie wystarcza.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Wykonany test ścieżki Tab / Shift+Tab / Enter / Escape.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="9"><strong>11. Performance i Lighthouse</strong></td><td>Obrazy są zoptymalizowane rozmiarem i formatem.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak niepotrzebnie ciężkich assetów.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Strategia fontów jest świadoma (lokalne fonty lub uzasadnione zewnętrzne).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td><code>font-display</code> ustawione tam, gdzie to potrzebne.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Lazy loading dla mediów niekrytycznych.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Ograniczone render-blocking resources.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Wykonana podstawowa weryfikacja Lighthouse.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Zespół zna wpływ LCP, CLS i INP na odbiór strony.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak zbędnych bibliotek do prostych funkcji.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="8"><strong>12. SEO i metadane</strong></td><td>Unikalny <code>&lt;title&gt;</code> dla strony.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Meta description jest uzupełniony i adekwatny.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Open Graph / social preview działa poprawnie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Canonical URL ustawiony tam, gdzie ma sens.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Hierarchia nagłówków wspiera SEO i czytelność.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Linki wewnętrzne są opisowe i celowe.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Sitemap / robots są ustawione tam, gdzie wymagane.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td><code>noindex</code> użyte wyłącznie intencjonalnie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="8"><strong>13. Formularze i walidacja (jeśli dotyczy)</strong></td><td>Pola mają poprawne typy i atrybuty.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Pola wymagane są oznaczone i uzasadnione.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Walidacja po stronie klienta działa i wspiera użytkownika.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Komunikaty błędów i sukcesu są jasne.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Honeypot lub podstawowa ochrona antyspamowa (gdzie potrzebna).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Submit ma stany disabled/loading i jasny feedback.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Przy formularzu jest notatka o prywatności danych.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Przetestowany realny przepływ formularza end-to-end.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="9"><strong>14. Netlify / gotowość deploymentu</strong></td><td>Folder publikacji jest poprawnie wskazany.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Build command ustawiony tylko tam, gdzie faktycznie potrzebny.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Nie jest deployowana przypadkowa lub niepełna wersja projektu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Redirecty działają poprawnie (jeśli dotyczy).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Strona 404 istnieje i nie prowadzi do ślepego końca (jeśli dotyczy).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Cache/security headers są ustawione tam, gdzie skonfigurowane.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Zmienne środowiskowe nie są ujawnione po stronie klienta.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Production URL przetestowany ręcznie po deployu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Deployment nie generuje zbędnego „szumu” rebuildów.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="9"><strong>15. README i dokumentacja</strong></td><td>README jasno opisuje cel projektu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Wskazany stack i główne technologie.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Struktura folderów jest opisana.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Komendy uruchomienia/build/test są aktualne (jeśli dotyczy).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Są notatki dotyczące deployu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Opisane decyzje a11y, SEO i performance.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Known limitations są jawnie zapisane.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Opisane sensowne next steps.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak przestarzałych lub mylących instrukcji.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+
+              <tr><td rowspan="8"><strong>16. Higiena Git i handoff projektu</strong></td><td>Working tree jest czysty przed przekazaniem projektu.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Commity są sensowne i opisują faktyczne zmiany.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak przypadkowych plików tymczasowych i artefaktów lokalnych.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Brak sekretów, tokenów i kluczy API w repo.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Nazwa brancha jest czytelna i adekwatna do zakresu pracy.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Opis pull requesta jest jasny i konkretny (jeśli używany).</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Zmiany są możliwe do review i sensownie zgrupowane.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+              <tr><td>Finalny diff został ręcznie sprawdzony przed handoffem.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="podsumowanie-gotowosci">
+        <h2 id="podsumowanie-gotowosci">17. Final readiness assessment</h2>
+        <div class="card">
+          <div class="summary-grid">
+            <div class="summary-item"><strong>Liczba elementów OK:</strong></div>
+            <div class="summary-item"><strong>Liczba elementów do poprawy:</strong></div>
+            <div class="summary-item"><strong>Liczba elementów „nie dotyczy”:</strong></div>
+          </div>
+          <p><strong>Najważniejsze ryzyka:</strong></p>
+          <div class="line-block" aria-label="Najważniejsze ryzyka">
+            <p></p><p></p><p></p>
+          </div>
+          <p style="margin-top: 1rem;"><strong>Decyzja końcowa:</strong></p>
+          <ul class="decision-list">
+            <li><span class="mark-box" aria-hidden="true"></span> Gotowe do pokazania</li>
+            <li><span class="mark-box" aria-hidden="true"></span> Gotowe po drobnych poprawkach</li>
+            <li><span class="mark-box" aria-hidden="true"></span> Wymaga większego dopracowania</li>
+          </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="priorytety">
+        <h2 id="priorytety">18. Priorytetowe poprawki i kolejne kroki</h2>
+        <div class="card">
+          <p><strong>3 najważniejsze poprawki przed pokazaniem projektu:</strong></p>
+          <div class="line-block"><p></p><p></p><p></p></div>
+          <p style="margin-top: 1rem;"><strong>Szybkie poprawki jakościowe (quick wins):</strong></p>
+          <div class="line-block"><p></p><p></p></div>
+          <p style="margin-top: 1rem;"><strong>Rzeczy do zaplanowania później:</strong></p>
+          <div class="line-block"><p></p><p></p></div>
+          <p style="margin-top: 1rem;"><strong>Notatki dla developera lub klienta:</strong></p>
+          <div class="line-block"><p></p><p></p><p></p></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="notatki-koncowe">
+        <h2 id="notatki-koncowe">19. Notatki końcowe</h2>
+        <div class="line-block" style="min-height: 140px;"><p></p><p></p><p></p><p></p></div>
+      </section>
+    </main>
+
+    <footer>
+      KP_Code Digital Vault — praktyczne zasoby cyfrowe dla lepszych stron internetowych.
+    </footer>
+  </div>
+</body>
+</html>
