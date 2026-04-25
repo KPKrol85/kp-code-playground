@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Website Brief Template | KP_Code Digital Vault</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #ffffff;
+      --ink: #1e2430;
+      --muted: #5d687a;
+      --line: #d9dfeb;
+      --line-strong: #bcc7db;
+      --accent: #1f4fc9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    .document {
+      width: min(980px, calc(100% - 2rem));
+      margin: 2rem auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 2rem 2rem 1.2rem;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+    }
+
+    .product-kicker {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2rem);
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0.6rem 0 0;
+      color: var(--muted);
+      max-width: 76ch;
+    }
+
+    main {
+      padding: 1.25rem 2rem 2rem;
+    }
+
+    section {
+      padding: 1.3rem 0 1.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-of-type { border-bottom: 0; }
+
+    h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.2rem;
+    }
+
+    p.helper {
+      margin: 0.2rem 0 0.9rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .question-list {
+      margin: 0.25rem 0 0.9rem 1.1rem;
+      padding: 0;
+    }
+
+    .question-list li { margin: 0.28rem 0; }
+
+    .answer-label {
+      margin: 1rem 0 0.4rem;
+      font-size: 0.94rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .answer-box {
+      border: 1.2px solid var(--line-strong);
+      border-radius: 8px;
+      min-height: 84px;
+      background:
+        linear-gradient(to bottom, transparent 27px, #edf1f8 28px) 0 0/100% 28px,
+        #fff;
+    }
+
+    .answer-box.tall { min-height: 140px; }
+    .answer-box.short { min-height: 56px; }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 0.55rem 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      border: 1px dashed var(--line-strong);
+      border-radius: 7px;
+      font-size: 0.94rem;
+    }
+
+    .box {
+      width: 14px;
+      height: 14px;
+      border: 1.3px solid #7283a0;
+      border-radius: 3px;
+      flex: 0 0 14px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+      color: #2f3a4f;
+    }
+
+    .line {
+      border: 1px solid var(--line-strong);
+      min-height: 42px;
+      border-radius: 7px;
+      background: #fff;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1rem 2rem 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: #fcfdff;
+    }
+
+    @media (max-width: 760px) {
+      .document { width: calc(100% - 1rem); margin: 0.5rem auto; border-radius: 10px; }
+      header, main, footer { padding-inline: 1rem; }
+      .checklist, .meta-grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: #fff; }
+      .document {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      header { background: #fff; }
+      .answer-box, .line { break-inside: avoid; }
+      section { break-inside: avoid-page; }
+    }
+  </style>
+</head>
+<body>
+  <article class="document" aria-label="Client website brief template">
+    <header>
+      <p class="product-kicker">KP_Code Digital Vault</p>
+      <h1>Client Website Brief Template</h1>
+      <p class="subtitle"><strong>Brief do strony internetowej przed zamówieniem projektu</strong><br>This template helps you organize key project information before ordering a website from a freelancer, developer, or digital studio.</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>1. Business goals</h2>
+        <ul class="question-list">
+          <li>What is the main purpose of the website?</li>
+          <li>What should the visitor do after entering the site?</li>
+          <li>What business problem should the website solve?</li>
+          <li>Is the website meant to sell, generate leads, inform, build trust, or support an existing brand?</li>
+        </ul>
+        <p class="answer-label">Answer:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>2. Target audience</h2>
+        <ul class="question-list">
+          <li>Who is the ideal visitor or customer?</li>
+          <li>What problems, needs, or expectations does this person have?</li>
+          <li>Is the audience local, national, or international?</li>
+          <li>What language or tone should the website use?</li>
+        </ul>
+        <p class="answer-label">Answer:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>3. Website structure and required pages</h2>
+        <ul class="question-list">
+          <li>What pages are required?</li>
+          <li>Is a homepage enough, or is a multi-page website needed?</li>
+          <li>Are dedicated service pages needed?</li>
+          <li>Is a blog, portfolio, case study, FAQ, pricing, contact, or legal section required?</li>
+        </ul>
+        <p class="answer-label">Page list / sitemap draft:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>4. Required features and functionality</h2>
+        <p class="helper">Mark required elements and describe how they should work.</p>
+        <div class="checklist" role="list" aria-label="Feature checklist">
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Contact form</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Newsletter signup</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Booking/contact flow</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Downloadable files</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Gallery or portfolio</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Testimonials</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>FAQ</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>CMS / editable content</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Analytics (if intentionally planned)</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Integrations (payments, CRM, tools)</div>
+        </div>
+        <p class="answer-label">Details:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>5. Visual style and brand direction</h2>
+        <ul class="question-list">
+          <li>Do you already have a logo or brand identity?</li>
+          <li>Preferred colors and typography direction?</li>
+          <li>Which websites do you like and dislike?</li>
+          <li>Desired mood: minimal, premium, modern, warm, technical, luxury, bold, calm, etc.?</li>
+          <li>Any accessibility and readability expectations?</li>
+        </ul>
+        <p class="answer-label">Answer:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>6. Competitors and references</h2>
+        <ul class="question-list">
+          <li>Main competitors and their websites.</li>
+          <li>Useful references from the same industry.</li>
+          <li>What should be avoided?</li>
+        </ul>
+        <p class="answer-label">Answer:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>7. Client materials and content</h2>
+        <p class="helper">List what is ready and what still needs to be prepared.</p>
+        <div class="checklist" role="list" aria-label="Materials checklist">
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Logo files</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Brand assets</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Photos</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Text/copy</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Product/service descriptions</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Testimonials</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Legal/company details</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Domain/hosting/CMS access</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Existing analytics/search console access</div>
+        </div>
+        <p class="answer-label">Missing materials and ownership:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>8. SEO starter information</h2>
+        <ul class="question-list">
+          <li>Main services or products to promote.</li>
+          <li>Main location or service area.</li>
+          <li>Priority keywords and search phrases.</li>
+          <li>Existing Google Business Profile (if relevant).</li>
+          <li>Main pages that should rank in search.</li>
+        </ul>
+        <p class="answer-label">Answer:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>9. Deadline, budget, and project constraints</h2>
+        <div class="meta-grid">
+          <div class="field"><label>Desired launch date</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Real deadline vs. preferred deadline</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Approximate budget range</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Priority level</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Must-have features</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Nice-to-have features</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Known limitations</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Decision makers and approval process</label><div class="line" aria-hidden="true"></div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>10. Final notes / additional context</h2>
+        <ul class="question-list">
+          <li>Additional context, risks, or concerns.</li>
+          <li>Questions for the developer or studio.</li>
+          <li>Important next steps.</li>
+        </ul>
+        <p class="answer-label">Final notes:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <footer>
+      KP_Code Digital Vault — practical digital resources for better websites.
+    </footer>
+  </article>
+</body>
+</html>
