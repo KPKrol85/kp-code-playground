@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Maintenance Checklist — co sprawdzać na stronie raz w miesiącu</title>
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --panel: #f8fafc;
+      --brand: #0f766e;
+      --brand-soft: #ecfeff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      line-height: 1.5;
+      background: #ffffff;
+    }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--brand-soft) 0%, #fff 80%);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.8rem;
+      line-height: 1.2;
+      color: #0b4f4a;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin: 1.75rem 0 0.75rem;
+      color: #0b4f4a;
+      border-bottom: 2px solid #cde7e4;
+      padding-bottom: 0.35rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin: 1rem 0 0.5rem;
+      color: #0b4f4a;
+    }
+
+    p, li { color: var(--ink); }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .field {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      min-height: 52px;
+      background: #fff;
+    }
+
+    .field strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .status-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.6rem 0 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    caption {
+      text-align: left;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      color: #0b4f4a;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.5rem 0.55rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f5f9;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .col-status {
+      width: 7%;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .col-area { width: 16%; }
+    .col-check { width: 34%; }
+    .col-notes { width: 22%; }
+
+    .note-area {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 90px;
+      padding: 0.65rem 0.75rem;
+      background: #fff;
+      margin-bottom: 0.9rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      background: #fff;
+    }
+
+    ul.compact {
+      margin-top: 0.3rem;
+      padding-left: 1.1rem;
+    }
+
+    footer {
+      margin-top: 1.6rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { font-size: 11pt; }
+      .page { max-width: none; padding: 0; }
+      header, .status-box, .field, .note-area, .pill, th, td { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      table { page-break-inside: auto; }
+      tr { page-break-inside: avoid; page-break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Website Maintenance Checklist — co sprawdzać na stronie raz w miesiącu</h1>
+      <p class="lead">Praktyczna karta miesięcznego przeglądu strony dla właścicieli firm, freelancerów i osób nietechnicznych.</p>
+    </header>
+
+    <main>
+      <section aria-labelledby="wprowadzenie">
+        <h2 id="wprowadzenie">1. Wprowadzenie</h2>
+        <p>Ta checklista pomaga regularnie sprawdzać najważniejsze elementy strony internetowej raz w miesiącu. Celem jest szybkie wychwycenie drobnych usterek, zanim przerodzą się w większy problem biznesowy (utrata zapytań, błędne dane kontaktowe, niedziałające formularze, spadek zaufania użytkowników).</p>
+        <p>To narzędzie właścicielskie: proste, konkretne i zrozumiałe. Nie zastępuje pełnego audytu technicznego, ale daje rzetelny miesięczny obraz kondycji strony i ułatwia przekazanie zadań do developera lub opiekuna strony.</p>
+      </section>
+
+      <section aria-labelledby="dane-kontroli">
+        <h2 id="dane-kontroli">2. Dane strony i miesiąc kontroli</h2>
+        <div class="meta-grid">
+          <div class="field"><strong>Nazwa firmy / projektu</strong></div>
+          <div class="field"><strong>Adres strony</strong></div>
+          <div class="field"><strong>Miesiąc kontroli</strong></div>
+          <div class="field"><strong>Data sprawdzenia</strong></div>
+          <div class="field"><strong>Osoba sprawdzająca</strong></div>
+          <div class="field"><strong>Uwagi ogólne</strong></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="statusy">
+        <h2 id="statusy">3. Model statusów</h2>
+        <div class="status-box">
+          <ul class="compact">
+            <li><strong>OK</strong> — element działa poprawnie.</li>
+            <li><strong>Do sprawdzenia</strong> — element wymaga uwagi lub dodatkowej weryfikacji.</li>
+            <li><strong>Problem</strong> — element wymaga poprawy.</li>
+            <li><strong>Nie dotyczy</strong> — element nie ma zastosowania na tej stronie.</li>
+            <li><strong>Notatki</strong> — miejsce na opis sytuacji, decyzję lub osobę odpowiedzialną.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="checklisty">
+        <h2 id="checklisty">4–13. Miesięczna checklista kondycji strony</h2>
+
+        <table>
+          <caption>4. Formularze i kontakt</caption>
+          <thead>
+            <tr>
+              <th class="col-area" scope="col">Obszar</th>
+              <th class="col-check" scope="col">Co sprawdzić</th>
+              <th class="col-status" scope="col">OK</th>
+              <th class="col-status" scope="col">Do sprawdzenia</th>
+              <th class="col-status" scope="col">Problem</th>
+              <th class="col-status" scope="col">Nie dotyczy</th>
+              <th class="col-notes" scope="col">Notatki</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Formularze i kontakt</td><td>Czy formularz kontaktowy działa?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Formularze i kontakt</td><td>Czy wiadomość testowa dochodzi na właściwy adres e-mail?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Formularze i kontakt</td><td>Czy komunikat sukcesu po wysyłce formularza jest widoczny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Formularze i kontakt</td><td>Czy komunikaty błędów są zrozumiałe dla klienta?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Formularze i kontakt</td><td>Czy numer telefonu na stronie jest poprawny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Formularze i kontakt</td><td>Czy adres e-mail na stronie jest poprawny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Formularze i kontakt</td><td>Czy przyciski kontaktowe prowadzą we właściwe miejsce?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>5. Linki i nawigacja</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Linki i nawigacja</td><td>Czy główne linki w menu działają?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Linki i nawigacja</td><td>Czy linki w stopce działają?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Linki i nawigacja</td><td>Czy linki do usług/oferty prowadzą do właściwych stron?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Linki i nawigacja</td><td>Czy linki zewnętrzne otwierają się poprawnie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Linki i nawigacja</td><td>Czy nie ma oczywistych błędów 404?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Linki i nawigacja</td><td>Czy przyciski CTA prowadzą do właściwej akcji?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>6. Szybkość i podstawowa wydajność</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Szybkość i wydajność</td><td>Czy strona ładuje się szybko na telefonie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Szybkość i wydajność</td><td>Czy strona ładuje się poprawnie na komputerze?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Szybkość i wydajność</td><td>Czy obrazy nie ładują się zbyt wolno?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Szybkość i wydajność</td><td>Czy nie pojawiają się widoczne przeskoki układu?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Szybkość i wydajność</td><td>Czy strona nie zawiesza się lub nie ładuje podejrzanie długo?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Szybkość i wydajność</td><td>Czy podstawowy test Lighthouse / PageSpeed zapisano jako punkt odniesienia?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>7. Backup i bezpieczeństwo danych</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Backup i bezpieczeństwo</td><td>Czy istnieje aktualny backup strony?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Backup i bezpieczeństwo</td><td>Czy wiadomo, gdzie backup jest przechowywany?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Backup i bezpieczeństwo</td><td>Czy backup obejmuje pliki i bazę danych (jeśli dotyczy)?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Backup i bezpieczeństwo</td><td>Czy dostęp do hostingu/CMS jest bezpieczny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Backup i bezpieczeństwo</td><td>Czy hasła nie są udostępniane przypadkowym osobom?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Backup i bezpieczeństwo</td><td>Czy ważne dane dostępowe są uporządkowane i bezpiecznie zapisane?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>8. WordPress / CMS / pluginy (jeśli dotyczy)</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>WordPress/CMS</td><td>Czy WordPress/CMS jest aktualny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>WordPress/CMS</td><td>Czy pluginy są aktualne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>WordPress/CMS</td><td>Czy motyw jest aktualny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>WordPress/CMS</td><td>Czy po aktualizacji strona nadal działa poprawnie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>WordPress/CMS</td><td>Czy nie ma ostrzeżeń w panelu CMS?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>WordPress/CMS</td><td>Czy nieużywane pluginy są usunięte lub wyłączone?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>WordPress/CMS</td><td>Czy przed aktualizacjami wykonano backup?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>9. Aktualność treści</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Aktualność treści</td><td>Czy oferta jest aktualna?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Aktualność treści</td><td>Czy ceny lub pakiety są aktualne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Aktualność treści</td><td>Czy opisy usług są nadal prawdziwe?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Aktualność treści</td><td>Czy zdjęcia/projekty/realizacje są aktualne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Aktualność treści</td><td>Czy godziny otwarcia są poprawne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Aktualność treści</td><td>Czy informacje sezonowe lub promocyjne nie są przeterminowane?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Aktualność treści</td><td>Czy wpisy blogowe lub aktualności nie wyglądają na porzucone?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>10. Dane kontaktowe i zaufanie</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Dane i zaufanie</td><td>Czy telefon, e-mail i adres są poprawne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Dane i zaufanie</td><td>Czy dane firmy są aktualne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Dane i zaufanie</td><td>Czy linki do social media działają?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Dane i zaufanie</td><td>Czy opinie/testimonials są aktualne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Dane i zaufanie</td><td>Czy informacje prawne są dostępne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Dane i zaufanie</td><td>Czy stopka zawiera właściwe dane?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Dane i zaufanie</td><td>Czy klient może łatwo znaleźć sposób kontaktu?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>11. SSL, domena i hosting</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>SSL, domena i hosting</td><td>Czy strona działa przez HTTPS?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SSL, domena i hosting</td><td>Czy certyfikat SSL jest aktywny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SSL, domena i hosting</td><td>Czy przeglądarka nie pokazuje ostrzeżeń bezpieczeństwa?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SSL, domena i hosting</td><td>Czy domena działa poprawnie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SSL, domena i hosting</td><td>Czy nie zbliża się termin odnowienia domeny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SSL, domena i hosting</td><td>Czy hosting działa stabilnie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SSL, domena i hosting</td><td>Czy nie ma komunikatów o przekroczonych limitach?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>12. Widok na telefonie i komputerze</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Widok i użyteczność</td><td>Czy strona wygląda dobrze na telefonie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Widok i użyteczność</td><td>Czy menu mobilne działa poprawnie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Widok i użyteczność</td><td>Czy tekst jest czytelny?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Widok i użyteczność</td><td>Czy przyciski są łatwe do kliknięcia?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Widok i użyteczność</td><td>Czy formularze da się wygodnie wypełnić?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Widok i użyteczność</td><td>Czy strona wygląda dobrze na desktopie?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Widok i użyteczność</td><td>Czy nie ma poziomego przewijania?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <caption>13. Podstawowe SEO i widoczność</caption>
+          <thead><tr><th>Obszar</th><th>Co sprawdzić</th><th class="col-status">OK</th><th class="col-status">Do sprawdzenia</th><th class="col-status">Problem</th><th class="col-status">Nie dotyczy</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>SEO i widoczność</td><td>Czy najważniejsze podstrony są dostępne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SEO i widoczność</td><td>Czy tytuły stron wyglądają poprawnie w przeglądarce?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SEO i widoczność</td><td>Czy opisy w wynikach wyszukiwania nie są rażąco błędne?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SEO i widoczność</td><td>Czy Google Business Profile (jeśli dotyczy) ma poprawny link do strony?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SEO i widoczność</td><td>Czy nie ustawiono przypadkowo noindex na ważnych stronach?</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>SEO i widoczność</td><td>Czy nowe ważne treści są logicznie podlinkowane?</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="podsumowanie">
+        <h2 id="podsumowanie">14. Miesięczne podsumowanie</h2>
+        <div class="summary-grid">
+          <div class="pill"><strong>Liczba elementów OK:</strong></div>
+          <div class="pill"><strong>Liczba elementów do sprawdzenia:</strong></div>
+          <div class="pill"><strong>Liczba problemów:</strong></div>
+        </div>
+        <div class="note-area"><strong>Najważniejszy problem miesiąca:</strong></div>
+        <div class="note-area"><strong>Elementy do poprawy w pierwszej kolejności:</strong></div>
+        <h3>Decyzja końcowa</h3>
+        <table>
+          <thead><tr><th>Opcja</th><th>Zaznacz</th><th>Komentarz</th></tr></thead>
+          <tbody>
+            <tr><td>Strona działa poprawnie</td><td></td><td></td></tr>
+            <tr><td>Strona wymaga drobnych poprawek</td><td></td><td></td></tr>
+            <tr><td>Strona wymaga pilnej interwencji</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="priorytety">
+        <h2 id="priorytety">15. Priorytety na następny miesiąc</h2>
+        <div class="note-area"><strong>3 najważniejsze poprawki:</strong></div>
+        <div class="note-area"><strong>Szybkie usprawnienia:</strong></div>
+        <div class="note-area"><strong>Rzeczy do obserwacji:</strong></div>
+        <div class="note-area"><strong>Pytania do developera / opiekuna strony:</strong></div>
+      </section>
+
+      <section aria-labelledby="notatki-koncowe">
+        <h2 id="notatki-koncowe">16. Notatki końcowe</h2>
+        <div class="note-area" style="min-height: 140px;"><strong>Dodatkowe obserwacje i kolejne kroki:</strong></div>
+      </section>
+    </main>
+
+    <footer>
+      KP_Code Digital Vault — praktyczne zasoby cyfrowe dla lepszych stron internetowych.
+    </footer>
+  </div>
+</body>
+</html>
