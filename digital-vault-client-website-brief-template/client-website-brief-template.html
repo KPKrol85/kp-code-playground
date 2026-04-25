@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brief do strony internetowej przed zamówieniem projektu | KP_Code Digital Vault</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #ffffff;
+      --ink: #1e2430;
+      --muted: #5d687a;
+      --line: #d9dfeb;
+      --line-strong: #bcc7db;
+      --accent: #1f4fc9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    .document {
+      width: min(980px, calc(100% - 2rem));
+      margin: 2rem auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 2rem 2rem 1.2rem;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+    }
+
+    .product-kicker {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2rem);
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0.6rem 0 0;
+      color: var(--muted);
+      max-width: 76ch;
+    }
+
+    main {
+      padding: 1.25rem 2rem 2rem;
+    }
+
+    section {
+      padding: 1.3rem 0 1.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-of-type { border-bottom: 0; }
+
+    h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.2rem;
+    }
+
+    p.helper {
+      margin: 0.2rem 0 0.9rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .question-list {
+      margin: 0.25rem 0 0.9rem 1.1rem;
+      padding: 0;
+    }
+
+    .question-list li { margin: 0.28rem 0; }
+
+    .answer-label {
+      margin: 1rem 0 0.4rem;
+      font-size: 0.94rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .answer-box {
+      border: 1.2px solid var(--line-strong);
+      border-radius: 8px;
+      min-height: 84px;
+      background:
+        linear-gradient(to bottom, transparent 27px, #edf1f8 28px) 0 0/100% 28px,
+        #fff;
+    }
+
+    .answer-box.tall { min-height: 140px; }
+    .answer-box.short { min-height: 56px; }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 0.55rem 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      border: 1px dashed var(--line-strong);
+      border-radius: 7px;
+      font-size: 0.94rem;
+    }
+
+    .box {
+      width: 14px;
+      height: 14px;
+      border: 1.3px solid #7283a0;
+      border-radius: 3px;
+      flex: 0 0 14px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+      color: #2f3a4f;
+    }
+
+    .line {
+      border: 1px solid var(--line-strong);
+      min-height: 42px;
+      border-radius: 7px;
+      background: #fff;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1rem 2rem 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: #fcfdff;
+    }
+
+    @media (max-width: 760px) {
+      .document { width: calc(100% - 1rem); margin: 0.5rem auto; border-radius: 10px; }
+      header, main, footer { padding-inline: 1rem; }
+      .checklist, .meta-grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: #fff; }
+      .document {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      header { background: #fff; }
+      .answer-box, .line { break-inside: avoid; }
+      section { break-inside: avoid-page; }
+    }
+  </style>
+</head>
+<body>
+  <article class="document" aria-label="Szablon briefu strony internetowej">
+    <header>
+      <p class="product-kicker">KP_Code Digital Vault</p>
+      <h1>Brief do strony internetowej przed zamówieniem projektu</h1>
+      <p class="subtitle">Ten szablon pomaga uporządkować najważniejsze informacje o projekcie przed zamówieniem strony internetowej u freelancera, dewelopera lub studia cyfrowego.</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>1. Cele biznesowe</h2>
+        <ul class="question-list">
+          <li>Jaki jest główny cel strony internetowej?</li>
+          <li>Co użytkownik powinien zrobić po wejściu na stronę?</li>
+          <li>Jaki problem biznesowy strona ma rozwiązać?</li>
+          <li>Czy strona ma sprzedawać, pozyskiwać leady, informować, budować zaufanie czy wzmacniać istniejącą markę?</li>
+        </ul>
+        <p class="answer-label">Odpowiedź:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>2. Grupa docelowa</h2>
+        <ul class="question-list">
+          <li>Kto jest idealnym odbiorcą lub klientem?</li>
+          <li>Jakie problemy, potrzeby lub oczekiwania ma ta osoba?</li>
+          <li>Czy grupa docelowa jest lokalna, krajowa czy międzynarodowa?</li>
+          <li>Jakiego języka i tonu komunikacji powinna używać strona?</li>
+        </ul>
+        <p class="answer-label">Odpowiedź:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>3. Struktura strony i wymagane podstrony</h2>
+        <ul class="question-list">
+          <li>Jakie podstrony są wymagane?</li>
+          <li>Czy wystarczy strona główna, czy potrzebna jest rozbudowana strona wielopodstronowa?</li>
+          <li>Czy potrzebne są osobne podstrony usług?</li>
+          <li>Czy potrzebne są sekcje: blog, portfolio, case study, FAQ, cennik, kontakt lub treści prawne?</li>
+        </ul>
+        <p class="answer-label">Odpowiedź (lista podstron / szkic struktury):</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>4. Funkcje i elementy interaktywne</h2>
+        <p class="helper">Zaznacz wymagane elementy i opisz, jak mają działać.</p>
+        <div class="checklist" role="list" aria-label="Lista funkcji">
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Formularz kontaktowy</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Zapis do newslettera</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Ścieżka rezerwacji / kontaktu</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Pliki do pobrania</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Galeria lub portfolio</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Opinie klientów</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>FAQ</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>CMS / możliwość samodzielnej edycji</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Analityka (jeśli planowana)</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Integracje (płatności, CRM, inne narzędzia)</div>
+        </div>
+        <p class="answer-label">Szczegóły:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>5. Kierunek wizualny i styl marki</h2>
+        <ul class="question-list">
+          <li>Czy masz już logo lub identyfikację wizualną?</li>
+          <li>Jakie są preferowane kolory i kierunek typografii?</li>
+          <li>Jakie strony internetowe Ci się podobają, a jakie nie?</li>
+          <li>Jaki klimat ma mieć strona: minimalistyczny, premium, nowoczesny, ciepły, techniczny, luksusowy, wyrazisty, spokojny itd.?</li>
+          <li>Czy są konkretne oczekiwania dotyczące dostępności i czytelności?</li>
+        </ul>
+        <p class="answer-label">Odpowiedź:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>6. Konkurencja i inspiracje</h2>
+        <ul class="question-list">
+          <li>Kto jest Twoją główną konkurencją i jakie mają strony internetowe?</li>
+          <li>Które realizacje z branży mogą być inspiracją?</li>
+          <li>Czego zdecydowanie należy unikać?</li>
+        </ul>
+        <p class="answer-label">Odpowiedź:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>7. Materiały od klienta</h2>
+        <p class="helper">Wskaż, co jest już gotowe, a co trzeba jeszcze przygotować.</p>
+        <div class="checklist" role="list" aria-label="Lista materiałów">
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Pliki logo</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Materiały marki</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Zdjęcia</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Treści / copy</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Opisy usług lub produktów</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Referencje / opinie</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Dane prawne i firmowe</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Dostępy do domeny, hostingu i CMS</div>
+          <div class="check-item"><span class="box" aria-hidden="true"></span>Dostępy do analityki i Search Console</div>
+        </div>
+        <p class="answer-label">Brakujące materiały i odpowiedzialność:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>8. Informacje startowe SEO</h2>
+        <ul class="question-list">
+          <li>Jakie usługi lub produkty są najważniejsze?</li>
+          <li>Jaki jest główny obszar działania (lokalizacja)?</li>
+          <li>Jakie są priorytetowe słowa kluczowe i frazy wyszukiwania?</li>
+          <li>Czy istnieje Profil Firmy w Google (jeśli dotyczy)?</li>
+          <li>Które podstrony powinny w pierwszej kolejności rankować w wyszukiwarce?</li>
+        </ul>
+        <p class="answer-label">Odpowiedź:</p>
+        <div class="answer-box" aria-hidden="true"></div>
+      </section>
+
+      <section>
+        <h2>9. Termin, budżet i ograniczenia projektu</h2>
+        <div class="meta-grid">
+          <div class="field"><label>Docelowa data uruchomienia</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Termin rzeczywisty vs. termin preferowany</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Orientacyjny przedział budżetu</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Poziom priorytetu</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Funkcje must-have</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Funkcje nice-to-have</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Znane ograniczenia</label><div class="line" aria-hidden="true"></div></div>
+          <div class="field"><label>Osoby decyzyjne i proces akceptacji</label><div class="line" aria-hidden="true"></div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>10. Dodatkowy kontekst i kolejne kroki</h2>
+        <ul class="question-list">
+          <li>Dodatkowy kontekst, ryzyka lub obawy.</li>
+          <li>Pytania do dewelopera lub studia.</li>
+          <li>Najważniejsze kolejne kroki.</li>
+        </ul>
+        <p class="answer-label">Notatki:</p>
+        <div class="answer-box tall" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <footer>
+      KP_Code Digital Vault — praktyczne zasoby cyfrowe dla lepszych stron internetowych.
+    </footer>
+  </article>
+</body>
+</html>
