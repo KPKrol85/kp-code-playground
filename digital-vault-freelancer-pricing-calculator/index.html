@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Freelancer Website Pricing Calculator by KP_Code Digital Vault for estimating website project costs."
+    />
+    <title>Freelancer Website Pricing Calculator | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <p class="vault-label">KP_Code Digital Vault</p>
+      <h1>Freelancer Website Pricing Calculator</h1>
+      <p class="intro">
+        A practical pricing assistant for freelancers building client websites. Set project scope,
+        apply business margin, and generate a transparent estimate in PLN.
+      </p>
+    </header>
+
+    <main class="layout" aria-label="Pricing calculator and estimate details">
+      <section class="card" aria-labelledby="calculator-heading">
+        <h2 id="calculator-heading">Project Scope Inputs</h2>
+
+        <form id="pricing-form" novalidate>
+          <div class="field-group">
+            <label for="websiteType">Website type</label>
+            <select id="websiteType" name="websiteType">
+              <option value="landing">Simple landing page</option>
+              <option value="smallBusiness" selected>Small business website</option>
+              <option value="portfolio">Portfolio website</option>
+              <option value="service">Service website</option>
+              <option value="extendedCompany">Extended company website</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="pageCount">Number of pages</label>
+            <input id="pageCount" name="pageCount" type="number" min="1" max="30" value="5" inputmode="numeric" />
+            <p class="hint" id="pageCountHint">Allowed range: 1 to 30 pages.</p>
+          </div>
+
+          <fieldset class="field-group options-group">
+            <legend>Feature add-ons</legend>
+            <label class="checkbox-row" for="contactForm">
+              <input id="contactForm" name="contactForm" type="checkbox" checked />
+              Contact form
+            </label>
+            <label class="checkbox-row" for="cmsIntegration">
+              <input id="cmsIntegration" name="cmsIntegration" type="checkbox" />
+              CMS integration
+            </label>
+            <label class="checkbox-row" for="seoSetup">
+              <input id="seoSetup" name="seoSetup" type="checkbox" checked />
+              SEO starter setup
+            </label>
+            <label class="checkbox-row" for="expressDeadline">
+              <input id="expressDeadline" name="expressDeadline" type="checkbox" />
+              Express deadline (rush delivery)
+            </label>
+          </fieldset>
+
+          <div class="field-group">
+            <label for="revisionRounds">Revision rounds</label>
+            <select id="revisionRounds" name="revisionRounds">
+              <option value="1" selected>1 round</option>
+              <option value="2">2 rounds</option>
+              <option value="3">3 rounds</option>
+              <option value="4">4+ rounds</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="marginPercent">Business margin: <span id="marginValue">15%</span></label>
+            <input id="marginPercent" name="marginPercent" type="range" min="0" max="50" step="1" value="15" />
+            <p class="hint">Applied after base, pages, add-ons, and express fee.</p>
+          </div>
+
+          <div class="actions">
+            <button type="reset" id="resetButton">Reset to defaults</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card results" aria-labelledby="result-heading" aria-live="polite">
+        <h2 id="result-heading">Estimate Summary</h2>
+        <dl class="result-list">
+          <div>
+            <dt>Estimated base price</dt>
+            <dd id="basePrice">—</dd>
+          </div>
+          <div>
+            <dt>Selected add-ons & scope</dt>
+            <dd id="addonsBreakdown">—</dd>
+          </div>
+          <div>
+            <dt>Subtotal</dt>
+            <dd id="subtotal">—</dd>
+          </div>
+          <div>
+            <dt>Margin amount</dt>
+            <dd id="marginAmount">—</dd>
+          </div>
+          <div class="total-row">
+            <dt>Final estimated project price</dt>
+            <dd id="finalPrice">—</dd>
+          </div>
+        </dl>
+        <p class="notice">
+          This calculator provides a professional working estimate. Final pricing should be confirmed in a written proposal
+          and contract based on exact project requirements.
+        </p>
+      </section>
+    </main>
+
+    <section class="info-grid" aria-label="Usage notes">
+      <article class="card">
+        <h2>How to use this calculator</h2>
+        <ol>
+          <li>Select the website type that best matches client scope.</li>
+          <li>Set page count and choose required project features.</li>
+          <li>Pick revision rounds and enable express deadline if needed.</li>
+          <li>Adjust business margin to match your operating model.</li>
+          <li>Use the final estimate as a starting point for your client offer.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h2>What affects the final price?</h2>
+        <ul>
+          <li>Project complexity and website type baseline.</li>
+          <li>Total number of pages beyond the first included page.</li>
+          <li>Implementation of CMS, SEO setup, and contact forms.</li>
+          <li>Client feedback cycles and revision workload.</li>
+          <li>Delivery speed requirements and your margin strategy.</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer class="site-footer">
+      <p>KP_Code Digital Vault • Practical digital tools for modern freelancers.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
