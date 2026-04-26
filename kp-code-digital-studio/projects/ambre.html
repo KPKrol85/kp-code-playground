@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pl">
   <head>
-     <!-- Meta -->
+    <!-- Meta -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -14,6 +14,7 @@
       content="Poznaj Ambre: statyczny, wielostronicowy front-end restauracji fine dining z menu, galerią, formularzem rezerwacji, SEO, PWA i dopracowaną warstwą UI."
     />
     <link rel="canonical" href="https://www.kp-code.pl/projects/ambre.html" />
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pl_PL" />
     <meta property="og:site_name" content="KP_Code Digital Studio" />
@@ -25,6 +26,7 @@
     <meta property="og:url" content="https://www.kp-code.pl/projects/ambre.html" />
     <meta property="og:image" content="https://www.kp-code.pl/assets/og/og-img.png" />
     <meta property="og:image:alt" content="Podgląd projektu Ambre w KP_Code Digital Studio" />
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Ambre | Projekt portfolio" />
     <meta
@@ -33,6 +35,7 @@
     />
     <meta name="twitter:image" content="https://www.kp-code.pl/assets/og/og-img.png" />
     <meta name="twitter:image:alt" content="Podgląd projektu Ambre w KP_Code Digital Studio" />
+    <!-- Icons / PWA -->
     <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/assets/icons/site.webmanifest" />
@@ -44,7 +47,10 @@
 
     <!-- Header -->
     <!-- @include:header -->
+
+    <!-- Main -->
     <main id="main">
+      <!-- Hero -->
       <section class="section page-hero" data-reveal="soft">
         <div class="container">
           <nav class="breadcrumbs" aria-label="Breadcrumb">
@@ -104,6 +110,8 @@
           </div>
         </div>
       </section>
+
+      <!-- Project overview -->
       <section class="section" data-reveal="standard">
         <div class="container">
           <div class="project-overview__grid">
@@ -123,15 +131,14 @@
               <p>
                 Zakres obejmuje publiczne strony serwisu: <code>index.html</code>,
                 <code>menu.html</code> i <code>galeria.html</code>, a także strony prawne,
-                dedykowany widok <code>404.html</code> oraz ekran <code>offline.html</code>.
-                Dzięki temu Ambre nie jest pojedynczym landingiem, tylko uporządkowanym projektem
+                dedykowany widok <code>404.html</code> oraz ekran <code>offline.html</code>. Dzięki
+                temu Ambre nie jest pojedynczym landingiem, tylko uporządkowanym projektem
                 wielostronicowym.
               </p>
               <p>
                 Warstwa interakcji obejmuje menu mobilne, scrollspy, sticky header, przełącznik
-                motywu, płynne przewijanie, lightbox galerii, filtry zakładek, mechanizm
-                „load more” oraz formularz rezerwacji z walidacją i fallbackiem do natywnego
-                wysłania.
+                motywu, płynne przewijanie, lightbox galerii, filtry zakładek, mechanizm „load more”
+                oraz formularz rezerwacji z walidacją i fallbackiem do natywnego wysłania.
               </p>
               <div class="pill-grid" aria-label="Kategorie projektu Ambre">
                 <span class="tag">Strony</span>
@@ -144,11 +151,15 @@
               <div class="project-meta">
                 <div class="project-meta__group">
                   <p class="project-meta__label">Typ projektu</p>
-                  <p class="project-meta__value">Wielostronicowy front-end restauracji fine dining</p>
+                  <p class="project-meta__value">
+                    Wielostronicowy front-end restauracji fine dining
+                  </p>
                 </div>
                 <div class="project-meta__group">
                   <p class="project-meta__label">Status</p>
-                  <p class="project-meta__value">Projekt referencyjny / gotowy front-end statyczny</p>
+                  <p class="project-meta__value">
+                    Projekt referencyjny / gotowy front-end statyczny
+                  </p>
                   <p class="project-meta__note">
                     Serwis przygotowany jako statyczne wdrożenie z buildem <code>dist</code>,
                     Service Workerem, Web App Manifestem, regułami hostingu oraz skryptami QA.
@@ -176,6 +187,8 @@
           </div>
         </div>
       </section>
+
+      <!-- Project highlights -->
       <section class="section project-highlights" aria-labelledby="ambre-highlights-title">
         <div class="container">
           <div class="section__header" data-reveal="soft">
@@ -213,6 +226,8 @@
           </div>
         </div>
       </section>
+
+      <!-- Project stack -->
       <section class="section" data-reveal="standard">
         <div class="container">
           <div class="project-stack__grid">
@@ -232,7 +247,10 @@
               </p>
               <ul class="list">
                 <li>moduły UI dla nawigacji, motywu, lightboxa, filtrów, formularza i PWA,</li>
-                <li>build produkcyjny z minifikacją CSS/JS oraz generowaniem katalogu <code>dist</code>,</li>
+                <li>
+                  build produkcyjny z minifikacją CSS/JS oraz generowaniem katalogu
+                  <code>dist</code>,
+                </li>
                 <li>
                   QA oparte o html-validate, Playwright, <code>@axe-core/playwright</code>,
                   <code>qa:seo</code> i Lighthouse CI.
@@ -260,7 +278,8 @@
                   <p class="project-stack__label">Standard jakości</p>
                   <p class="project-stack__value">SEO, a11y, PWA i QA</p>
                   <p class="project-stack__desc">
-                    JSON-LD, sitemap, cache offline, testy a11y, walidacja SEO i audyty Lighthouse CI.
+                    JSON-LD, sitemap, cache offline, testy a11y, walidacja SEO i audyty Lighthouse
+                    CI.
                   </p>
                 </div>
               </div>
@@ -268,12 +287,9 @@
           </div>
         </div>
       </section>
+
       <!-- Visual -->
-      <section
-        class="section"
-        aria-label="Podgląd wizualny projektu Ambre"
-        data-reveal="visual"
-      >
+      <section class="section" aria-label="Podgląd wizualny projektu Ambre" data-reveal="visual">
         <div class="container">
           <figure class="project-visual__frame">
             <div class="project-mockups project-mockups--trio">
@@ -320,6 +336,8 @@
           </figure>
         </div>
       </section>
+
+      <!-- CTA -->
       <section class="section" data-reveal="soft">
         <div class="container">
           <div class="card project-cta__shell">
@@ -329,9 +347,9 @@
                 Zobacz wielostronicowy serwis Ambre albo wróć do pełnego portfolio.
               </h2>
               <p class="section__subtitle">
-                Ambre pokazuje zakres pracy nad statycznym front-endem restauracji: od menu,
-                galerii i rezerwacji po SEO, dostępność, PWA, cache offline i przygotowanie projektu
-                do publikacji.
+                Ambre pokazuje zakres pracy nad statycznym front-endem restauracji: od menu, galerii
+                i rezerwacji po SEO, dostępność, PWA, cache offline i przygotowanie projektu do
+                publikacji.
               </p>
             </div>
             <div class="project-cta__actions">
@@ -351,6 +369,8 @@
 
     <!-- Footer -->
     <!-- @include:footer -->
+
+    <!-- Json-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -419,6 +439,8 @@
         ]
       }
     </script>
+
+    <!-- Script -->
     <script type="module" src="../js/main.js"></script>
   </body>
 </html>

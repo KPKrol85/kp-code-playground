@@ -1,4 +1,3 @@
-
 /* Page shell */
 
 main {
@@ -495,9 +494,7 @@ html:not(.js) .nav__toggle {
     grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
   }
 
-
   .footer__logo {
     height: var(--logo-md);
   }
-
 }

@@ -3,9 +3,11 @@
 ## PL
 
 ### Przegląd projektu
+
 Vista to wielostronicowy projekt front-end dla serwisu hotelowo-podróżniczego, zbudowany w czystym HTML, CSS i JavaScript. Repozytorium zawiera komplet stron publicznych (m.in. strona główna, pokoje, oferty, galeria, kontakt oraz strony prawne), warstwę PWA, pipeline budowania assetów oraz przygotowanie do publikacji statycznej.
 
 ### Kluczowe funkcje
+
 - Wielostronicowa nawigacja z aktywnym stanem linków i mobilnym menu.
 - Przełączanie motywu (light/dark/auto) z zapisem preferencji w `localStorage`.
 - Filtrowanie pokoi i galerii po kategoriach.
@@ -16,6 +18,7 @@ Vista to wielostronicowy projekt front-end dla serwisu hotelowo-podróżniczego,
 - Service Worker z cache statycznym i fallbackiem `offline.html`.
 
 ### Stack technologiczny
+
 - Runtime:
   - HTML5
   - CSS3
@@ -30,6 +33,7 @@ Vista to wielostronicowy projekt front-end dla serwisu hotelowo-podróżniczego,
   - Konfiguracja Netlify (`netlify/_headers`, `netlify/_redirects`)
 
 ### Struktura projektu
+
 ```text
 pr-01-vista/
 ├── assets/
@@ -59,11 +63,13 @@ pr-01-vista/
 ```
 
 ### Instalacja i konfiguracja
+
 ```bash
 npm install
 ```
 
 ### Development lokalny
+
 Dostępne są osobne watchery dla CSS i JS:
 
 ```bash
@@ -80,6 +86,7 @@ npm run test:a11y
 ```
 
 ### Build produkcyjny
+
 Pełny build produkcyjny (minifikacja CSS/JS oraz przygotowanie `dist/`):
 
 ```bash
@@ -98,13 +105,17 @@ npm run img:clean
 ```
 
 ### Deployment
+
 Repozytorium zawiera konfigurację pod wdrożenie statyczne na Netlify:
+
 - reguły nagłówków bezpieczeństwa i cache (`netlify/_headers`),
 - przekierowanie `/index.html -> /` oraz obsługa 404 (`netlify/_redirects`),
 - generowanie gotowego artefaktu wdrożeniowego w katalogu `dist/` przez `scripts/build-dist.mjs`.
 
 ### Dostępność
+
 W projekcie zaimplementowano m.in.:
+
 - skip link do głównej treści,
 - semantyczne regiony i etykiety ARIA w nawigacji, formularzu, zakładkach i lightboxie,
 - obsługę klawiatury (menu mobilne, tabs, filtry, lightbox),
@@ -112,14 +123,18 @@ W projekcie zaimplementowano m.in.:
 - automatyczne scenariusze testowe dostępności (`scripts/a11y-axe.mjs`).
 
 ### SEO
+
 Wdrożone elementy SEO obejmują:
+
 - metadane per strona (`title`, `description`, `canonical`, Open Graph, Twitter),
 - `robots.txt` i `sitemap.xml`,
 - dane strukturalne JSON-LD (fallback inline + dynamiczne ładowanie z plików `assets/seo/*.json`),
 - manifest PWA (`site.webmanifest`).
 
 ### Wydajność
+
 W repozytorium widoczne są następujące rozwiązania:
+
 - responsywne obrazy (`srcset`, `sizes`) z wariantami AVIF/WebP/JPG,
 - preload głównej grafiki hero,
 - lazy loading dla części zasobów (np. mapy i wybranych obrazów),
@@ -128,6 +143,7 @@ W repozytorium widoczne są następujące rozwiązania:
 - cache’owanie zasobów statycznych i fallback offline w Service Workerze.
 
 ### Utrzymanie projektu
+
 - Główna orkiestracja front-endu znajduje się w `js/script.js`.
 - Funkcjonalności UI są rozdzielone na moduły w `js/features/`.
 - Warstwa stylów jest podzielona modułowo przez `css/modules/` i spinana przez `css/style.css`.
@@ -135,14 +151,17 @@ W repozytorium widoczne są następujące rozwiązania:
 - Reguły deployu i nagłówki bezpieczeństwa są utrzymywane w `netlify/`.
 
 ### Licencja
+
 Projekt jest udostępniony na licencji MIT (plik `LICENSE`).
 
 ## EN
 
 ### Project Overview
+
 Vista is a multi-page front-end project for a hospitality/travel website, built with plain HTML, CSS, and JavaScript. The repository includes the full set of public pages (including home, rooms, offers, gallery, contact, and legal pages), a PWA layer, an asset build pipeline, and static deployment preparation.
 
 ### Key Features
+
 - Multi-page navigation with active link state and mobile menu.
 - Theme switching (light/dark/auto) with preference persistence in `localStorage`.
 - Category-based filtering for rooms and gallery views.
@@ -153,6 +172,7 @@ Vista is a multi-page front-end project for a hospitality/travel website, built 
 - Service Worker with static caching and `offline.html` fallback.
 
 ### Tech Stack
+
 - Runtime:
   - HTML5
   - CSS3
@@ -167,6 +187,7 @@ Vista is a multi-page front-end project for a hospitality/travel website, built 
   - Netlify configuration (`netlify/_headers`, `netlify/_redirects`)
 
 ### Project Structure
+
 ```text
 pr-01-vista/
 ├── assets/
@@ -196,11 +217,13 @@ pr-01-vista/
 ```
 
 ### Setup and Installation
+
 ```bash
 npm install
 ```
 
 ### Local Development
+
 Dedicated watchers are available for CSS and JS:
 
 ```bash
@@ -217,6 +240,7 @@ npm run test:a11y
 ```
 
 ### Production Build
+
 Full production build (CSS/JS minification and `dist/` generation):
 
 ```bash
@@ -235,13 +259,17 @@ npm run img:clean
 ```
 
 ### Deployment
+
 The repository includes configuration for static deployment on Netlify:
+
 - security and caching header rules (`netlify/_headers`),
 - `/index.html -> /` redirect and 404 handling (`netlify/_redirects`),
 - generation of a deployable artifact in `dist/` via `scripts/build-dist.mjs`.
 
 ### Accessibility
+
 The implementation includes:
+
 - a skip link to main content,
 - semantic regions and ARIA labeling in navigation, forms, tabs, and lightbox,
 - keyboard interaction support (mobile menu, tabs, filters, lightbox),
@@ -249,14 +277,18 @@ The implementation includes:
 - automated accessibility test scenarios (`scripts/a11y-axe.mjs`).
 
 ### SEO
+
 Implemented SEO surface includes:
+
 - per-page metadata (`title`, `description`, `canonical`, Open Graph, Twitter),
 - `robots.txt` and `sitemap.xml`,
 - structured data via JSON-LD (inline fallback + dynamic loading from `assets/seo/*.json`),
 - PWA manifest (`site.webmanifest`).
 
 ### Performance
+
 The repository includes the following explicit optimizations:
+
 - responsive images (`srcset`, `sizes`) with AVIF/WebP/JPG variants,
 - preload of the primary hero image,
 - lazy loading for selected resources (for example map and selected images),
@@ -265,6 +297,7 @@ The repository includes the following explicit optimizations:
 - static asset caching and offline fallback in the Service Worker.
 
 ### Project Maintenance
+
 - Main front-end bootstrapping lives in `js/script.js`.
 - UI behavior is split into dedicated modules in `js/features/`.
 - Styling is modularized in `css/modules/` and composed through `css/style.css`.
@@ -272,4 +305,5 @@ The repository includes the following explicit optimizations:
 - Deployment rules and security headers are maintained in `netlify/`.
 
 ### License
+
 This project is distributed under the MIT License (`LICENSE` file).
