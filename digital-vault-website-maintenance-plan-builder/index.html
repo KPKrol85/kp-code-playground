@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP_Code Digital Vault | Website Maintenance Plan Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="product-header">
+      <p class="vault-label">KP_Code Digital Vault</p>
+      <h1>Website Maintenance Plan Builder</h1>
+      <p class="product-description">
+        Build professional website care plans with transparent logic for tier recommendation,
+        monthly pricing, and client-facing communication.
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="panel builder-panel" aria-labelledby="builder-title">
+        <h2 id="builder-title">Maintenance Plan Inputs</h2>
+
+        <form id="plan-builder-form" novalidate>
+          <div class="field-group">
+            <label for="websiteType">Website type</label>
+            <select id="websiteType" name="websiteType">
+              <option value="static">static business website</option>
+              <option value="wordpress">WordPress website</option>
+              <option value="ecommerce">small ecommerce website</option>
+              <option value="custom">custom web app / advanced website</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="updateFrequency">Update frequency</label>
+            <select id="updateFrequency" name="updateFrequency">
+              <option value="occasional">occasional updates</option>
+              <option value="monthly">monthly updates</option>
+              <option value="weekly">weekly updates</option>
+              <option value="frequent">frequent / active development</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="backupPolicy">Backup policy</label>
+            <select id="backupPolicy" name="backupPolicy">
+              <option value="none">no backup included</option>
+              <option value="monthly">monthly backup</option>
+              <option value="weekly">weekly backup</option>
+              <option value="daily">daily backup</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="monitoring">Monitoring</label>
+            <select id="monitoring" name="monitoring">
+              <option value="none">no monitoring</option>
+              <option value="uptime">uptime monitoring</option>
+              <option value="basic">uptime + basic performance monitoring</option>
+              <option value="advanced">uptime + performance + security checks</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="supportHours">Monthly support hours</label>
+            <select id="supportHours" name="supportHours" aria-describedby="custom-hours-hint">
+              <option value="0">0 hours</option>
+              <option value="1">1 hour</option>
+              <option value="2">2 hours</option>
+              <option value="4">4 hours</option>
+              <option value="8">8 hours</option>
+              <option value="custom">custom hours</option>
+            </select>
+          </div>
+
+          <div class="field-group hidden" id="custom-hours-wrapper">
+            <label for="customHours">Custom support hours (0–40)</label>
+            <input
+              type="number"
+              id="customHours"
+              name="customHours"
+              min="0"
+              max="40"
+              step="1"
+              value="0"
+              aria-describedby="custom-hours-hint custom-hours-error"
+            />
+            <p id="custom-hours-hint" class="hint">Used only when “custom hours” is selected.</p>
+            <p id="custom-hours-error" class="error" role="alert" aria-live="polite"></p>
+          </div>
+
+          <fieldset class="checkbox-group">
+            <legend>Included options</legend>
+            <label><input type="checkbox" id="minorContentEdits" name="minorContentEdits" /> minor content edits</label>
+            <label><input type="checkbox" id="technicalUpdates" name="technicalUpdates" checked /> technical updates</label>
+            <label><input type="checkbox" id="monthlyReport" name="monthlyReport" /> monthly report</label>
+            <label><input type="checkbox" id="seoCheck" name="seoCheck" /> SEO check</label>
+            <label><input type="checkbox" id="prioritySupport" name="prioritySupport" /> priority support</label>
+            <label><input type="checkbox" id="emergencyFixes" name="emergencyFixes" /> emergency fixes</label>
+          </fieldset>
+
+          <div class="field-group">
+            <label for="tone">Client-facing tone</label>
+            <select id="tone" name="tone">
+              <option value="simple">clear and simple</option>
+              <option value="premium">premium and professional</option>
+              <option value="technical">technical and detailed</option>
+            </select>
+          </div>
+
+          <div class="actions">
+            <button type="button" id="copyPlanButton" class="btn btn-primary">Copy maintenance plan</button>
+            <button type="reset" id="resetButton" class="btn btn-secondary">Reset builder</button>
+          </div>
+          <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel result-panel" aria-labelledby="result-title" aria-live="polite">
+        <h2 id="result-title">Recommended Maintenance Plan</h2>
+        <p class="tier-chip" id="recommendedTier">Essential Care</p>
+        <p><strong>Estimated monthly starting price:</strong> <span id="monthlyPrice"></span></p>
+        <p><strong>Support hours:</strong> <span id="supportHoursDisplay"></span></p>
+        <p><strong>Backup policy:</strong> <span id="backupPolicyDisplay"></span></p>
+        <p><strong>Monitoring level:</strong> <span id="monitoringDisplay"></span></p>
+        <p><strong>Reporting level:</strong> <span id="reportingDisplay"></span></p>
+        <p><strong>SEO check level:</strong> <span id="seoDisplay"></span></p>
+        <p><strong>Priority level:</strong> <span id="priorityDisplay"></span></p>
+
+        <h3>Included services</h3>
+        <ul id="includedServices"></ul>
+
+        <h3>Client-facing plan summary</h3>
+        <p id="clientSummary"></p>
+
+        <h3>Internal recommendation note</h3>
+        <p id="internalNote" class="note"></p>
+
+        <p class="disclaimer" id="disclaimerText">
+          This tool supports planning and communication only. It is not a binding offer, SLA, legal agreement,
+          accounting advice, or final contract.
+        </p>
+      </section>
+    </main>
+
+    <section class="info-grid">
+      <article class="panel">
+        <h2>How to use this builder</h2>
+        <ol>
+          <li>Select site type, change volume, backup strategy, and monitoring scope.</li>
+          <li>Add support hours and optional service add-ons based on realistic client needs.</li>
+          <li>Review the suggested tier, estimated monthly starting price, and generated summary.</li>
+          <li>Copy the result and adapt it in your proposal, service catalog, or onboarding workflow.</li>
+        </ol>
+      </article>
+
+      <article class="panel">
+        <h2>Common maintenance plan levels</h2>
+        <ul>
+          <li><strong>Essential Care:</strong> low-complexity sites with limited monthly change.</li>
+          <li><strong>Growth Care:</strong> business sites with recurring updates and light support.</li>
+          <li><strong>Pro Care:</strong> dynamic websites requiring regular monitoring and technical work.</li>
+          <li><strong>Priority Care:</strong> high-dependency websites needing rapid support and resilience.</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2>What to define before offering maintenance</h2>
+        <ul>
+          <li>Response time expectations and channels of communication.</li>
+          <li>Scope boundaries for content edits, technical tasks, and out-of-scope work.</li>
+          <li>Backup retention policy, restore testing expectations, and monitoring alerts.</li>
+          <li>Escalation process, incident windows, and billing for emergency interventions.</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer class="product-footer">
+      <p>KP_Code Digital Vault · Website Maintenance Plan Builder</p>
+      <p>Professional planning support for recurring website care services.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
