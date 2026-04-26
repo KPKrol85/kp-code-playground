@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Payment Planner | KP_Code Digital Vault</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="page-header">
+    <p class="vault-label">KP_Code Digital Vault</p>
+    <h1>Project Payment Planner</h1>
+    <p class="intro">
+      Plan transparent project payment structures, invoice timing, and due dates for client website projects.
+      Built for practical freelance and studio workflow planning.
+    </p>
+  </header>
+
+  <main class="layout">
+    <section class="panel planner" aria-labelledby="planner-heading">
+      <h2 id="planner-heading">Planner Inputs</h2>
+      <form id="planner-form" novalidate>
+        <div class="field-group">
+          <label for="project-total">Project total amount (PLN)</label>
+          <input id="project-total" name="project-total" type="number" min="0" step="0.01" value="12000" required />
+        </div>
+
+        <div class="field-group">
+          <label for="payment-model">Payment model</label>
+          <select id="payment-model" name="payment-model">
+            <option value="30-40-30">30 / 40 / 30</option>
+            <option value="40-40-20">40 / 40 / 20</option>
+            <option value="50-30-20">50 / 30 / 20</option>
+            <option value="50-50">50 / 50</option>
+            <option value="100-upfront">100 upfront</option>
+            <option value="custom">Custom split</option>
+          </select>
+        </div>
+
+        <fieldset id="custom-split-fields" class="field-group custom-split" hidden>
+          <legend>Custom split percentages</legend>
+          <div class="inline-fields">
+            <div>
+              <label for="custom-deposit">Deposit (%)</label>
+              <input id="custom-deposit" type="number" min="0" max="100" step="1" value="40" />
+            </div>
+            <div>
+              <label for="custom-milestone">Milestone pool (%)</label>
+              <input id="custom-milestone" type="number" min="0" max="100" step="1" value="40" />
+            </div>
+            <div>
+              <label for="custom-final">Final (%)</label>
+              <input id="custom-final" type="number" min="0" max="100" step="1" value="20" />
+            </div>
+          </div>
+          <p id="custom-split-message" class="message" role="status" aria-live="polite"></p>
+        </fieldset>
+
+        <div class="field-group">
+          <label for="milestones">Number of milestones</label>
+          <select id="milestones" name="milestones">
+            <option value="0">0 milestones</option>
+            <option value="1">1 milestone</option>
+            <option value="2" selected>2 milestones</option>
+            <option value="3">3 milestones</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="start-date">Project start date</label>
+          <input id="start-date" name="start-date" type="date" />
+        </div>
+
+        <div class="field-group">
+          <label for="duration-weeks">Planned project duration</label>
+          <select id="duration-weeks" name="duration-weeks">
+            <option value="1">1 week</option>
+            <option value="2">2 weeks</option>
+            <option value="4" selected>4 weeks</option>
+            <option value="6">6 weeks</option>
+            <option value="8">8 weeks</option>
+            <option value="12">12 weeks</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="vat-mode">VAT mode</label>
+          <select id="vat-mode" name="vat-mode">
+            <option value="none">No VAT / net amount only</option>
+            <option value="vat23">Add 23% VAT</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="invoice-prefix">Invoice label prefix</label>
+          <input id="invoice-prefix" name="invoice-prefix" type="text" value="KP-DV" maxlength="20" />
+        </div>
+
+        <div class="field-group">
+          <label for="due-days">Payment due days</label>
+          <input id="due-days" name="due-days" type="number" value="7" min="0" max="60" required />
+        </div>
+
+        <div class="actions">
+          <button type="button" id="copy-plan">Copy payment plan</button>
+          <button type="reset" id="reset-form" class="secondary">Reset defaults</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel results" aria-labelledby="results-heading">
+      <h2 id="results-heading">Live Payment Plan</h2>
+      <div id="alerts" class="alerts" aria-live="polite"></div>
+
+      <dl class="totals">
+        <div>
+          <dt>Input amount</dt>
+          <dd id="input-amount">—</dd>
+        </div>
+        <div>
+          <dt>VAT amount</dt>
+          <dd id="vat-amount">—</dd>
+        </div>
+        <div>
+          <dt>Project total used for schedule</dt>
+          <dd id="gross-amount">—</dd>
+        </div>
+        <div>
+          <dt>Payment model</dt>
+          <dd id="model-label">—</dd>
+        </div>
+        <div>
+          <dt>Deposit amount</dt>
+          <dd id="deposit-amount">—</dd>
+        </div>
+        <div>
+          <dt>Milestone pool amount</dt>
+          <dd id="milestone-pool">—</dd>
+        </div>
+        <div>
+          <dt>Final payment amount</dt>
+          <dd id="final-amount">—</dd>
+        </div>
+      </dl>
+
+      <h3>Payment schedule</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Type</th>
+              <th>Share</th>
+              <th>Issue date</th>
+              <th>Due date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-body"></tbody>
+        </table>
+      </div>
+
+      <p id="rounding-note" class="note" hidden></p>
+      <p id="milestone-note" class="note" hidden></p>
+      <p id="copy-message" class="message" aria-live="polite"></p>
+      <p class="disclaimer">
+        Disclaimer: This planner supports budgeting and project planning workflows. It does not replace accounting,
+        tax, legal, or contract advice.
+      </p>
+    </section>
+  </main>
+
+  <section class="panel info" aria-labelledby="how-to-use-heading">
+    <h2 id="how-to-use-heading">How to use this planner</h2>
+    <ol>
+      <li>Enter your planned project amount and choose whether VAT should be added.</li>
+      <li>Select a payment model or define a custom split that totals exactly 100%.</li>
+      <li>Set milestones, start date, duration, invoice prefix, and due day terms.</li>
+      <li>Review the schedule, confirm totals, and copy the plan into your proposal or brief.</li>
+    </ol>
+  </section>
+
+  <section class="panel info" aria-labelledby="recommended-models-heading">
+    <h2 id="recommended-models-heading">Recommended payment models</h2>
+    <ul>
+      <li><strong>30 / 40 / 30</strong> — balanced for medium projects with defined delivery checkpoints.</li>
+      <li><strong>40 / 40 / 20</strong> — stronger liquidity during build with moderate final settlement.</li>
+      <li><strong>50 / 30 / 20</strong> — ideal when discovery and architecture are front-loaded.</li>
+      <li><strong>50 / 50</strong> — simpler two-invoice flow for compact builds.</li>
+      <li><strong>100 upfront</strong> — useful for short engagements and quick-turn retainers.</li>
+    </ul>
+  </section>
+
+  <section class="panel info" aria-labelledby="billing-notes-heading">
+    <h2 id="billing-notes-heading">Important billing notes</h2>
+    <ul>
+      <li>Confirm payment triggers in your contract for each invoice row.</li>
+      <li>Align milestone names with concrete deliverables or approval checkpoints.</li>
+      <li>Keep due-day terms consistent with your invoice templates and jurisdiction.</li>
+      <li>Before sending to clients, review tax setup and legal wording with professionals.</li>
+    </ul>
+  </section>
+
+  <footer class="page-footer">
+    <p>KP_Code Digital Vault · Professional planning tools for modern freelancers and small studios.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
