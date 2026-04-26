@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://e-commerce-pr02-outlandgear.netlify.app/sitemap.xml
