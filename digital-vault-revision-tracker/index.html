@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="KP_Code Digital Vault Revision Tracker for managing client change requests, scope control, and revision costs."
+    />
+    <title>KP_Code Digital Vault · Revision Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container brand-wrap">
+        <p class="brand-kicker">KP_Code Digital Vault</p>
+        <h1>Revision Tracker</h1>
+        <p class="lead">
+          A practical, client-facing revision tracker for freelancers, developers,
+          designers, and small studios.
+        </p>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <h2 id="hero-title">Track revisions with clear scope control</h2>
+          <p>
+            Use this standalone tracker to log client requests, identify whether
+            changes are in scope, set priority, record responses, and estimate
+            additional costs before work starts.
+          </p>
+        </div>
+      </section>
+
+      <section class="tracker" aria-labelledby="tracker-title">
+        <div class="container two-col">
+          <article>
+            <h2 id="tracker-title">Add revision request</h2>
+            <form id="revision-form" novalidate>
+              <div class="field">
+                <label for="request">Request</label>
+                <textarea
+                  id="request"
+                  name="request"
+                  rows="3"
+                  required
+                  placeholder="Describe the requested change"
+                ></textarea>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="date">Date</label>
+                  <input id="date" name="date" type="date" required />
+                </div>
+
+                <div class="field">
+                  <label for="status">Status</label>
+                  <select id="status" name="status" required>
+                    <option value="new">new</option>
+                    <option value="in review">in review</option>
+                    <option value="accepted">accepted</option>
+                    <option value="out of scope">out of scope</option>
+                    <option value="completed">completed</option>
+                    <option value="rejected">rejected</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="in-scope">In scope</label>
+                  <select id="in-scope" name="inScope" required>
+                    <option value="yes">yes</option>
+                    <option value="no">no</option>
+                    <option value="needs clarification">needs clarification</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="priority">Priority</label>
+                  <select id="priority" name="priority" required>
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                    <option value="urgent">urgent</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="response">Response</label>
+                <textarea
+                  id="response"
+                  name="response"
+                  rows="3"
+                  placeholder="State next step, timeline, or approval needed"
+                ></textarea>
+              </div>
+
+              <div class="field">
+                <label for="additional-cost">Additional cost (USD)</label>
+                <input
+                  id="additional-cost"
+                  name="additionalCost"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value="0"
+                  required
+                />
+              </div>
+
+              <p id="form-feedback" role="status" aria-live="polite"></p>
+
+              <div class="actions">
+                <button type="submit" class="btn btn-primary">Add request</button>
+                <button type="reset" class="btn btn-secondary">Clear form</button>
+              </div>
+            </form>
+          </article>
+
+          <aside class="summary-panel" aria-labelledby="summary-title">
+            <h2 id="summary-title">Live summary</h2>
+            <ul class="summary-list" id="summary-list">
+              <li>Total requests: <strong id="total-requests">0</strong></li>
+              <li>In-scope requests: <strong id="in-scope-count">0</strong></li>
+              <li>Out-of-scope requests: <strong id="out-scope-count">0</strong></li>
+              <li>
+                Clarification needed: <strong id="clarification-count">0</strong>
+              </li>
+              <li>Urgent requests: <strong id="urgent-count">0</strong></li>
+              <li>
+                Estimated additional cost: <strong id="additional-cost-total">$0.00</strong>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="table-section" aria-labelledby="table-title">
+        <div class="container">
+          <h2 id="table-title">Revision log</h2>
+          <p class="table-help">
+            Entries are held in this session only. Remove a row when a request no
+            longer needs tracking.
+          </p>
+          <div class="table-wrap" role="region" aria-label="Revision table" tabindex="0">
+            <table>
+              <thead>
+                <tr>
+                  <th>Request</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>In scope</th>
+                  <th>Priority</th>
+                  <th>Response</th>
+                  <th>Additional cost</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="revision-table-body">
+                <tr>
+                  <td colspan="8" class="empty-state">
+                    No revision requests added yet.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="template" aria-labelledby="template-title">
+        <div class="container">
+          <h2 id="template-title">Markdown template preview</h2>
+          <p>
+            Use this template in client portals, project docs, or status updates
+            even when JavaScript is unavailable.
+          </p>
+          <pre><code>| Request | Date | Status | In scope | Priority | Response | Additional cost |
+| --- | --- | --- | --- | --- | --- | --- |
+| Homepage hero text update | 2026-04-27 | in review | yes | medium | Waiting for approved copy deck | $0.00 |
+| Add payment gateway support | 2026-04-27 | out of scope | no | high | Quoted as separate add-on | $600.00 |</code></pre>
+          <p>
+            Full template file:
+            <a href="revision-tracker-template.md">revision-tracker-template.md</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="guidance" aria-labelledby="usage-title">
+        <div class="container split-sections">
+          <article>
+            <h2 id="usage-title">Practical usage guide</h2>
+            <ol>
+              <li>Log every client request immediately.</li>
+              <li>Mark in scope only when it matches the agreed deliverables.</li>
+              <li>Use response notes to document decisions and timelines.</li>
+              <li>Confirm cost before implementing out-of-scope work.</li>
+            </ol>
+          </article>
+
+          <article aria-labelledby="tips-title">
+            <h2 id="tips-title">Scope-control tips</h2>
+            <ul>
+              <li>Link each request to a contract section or approved brief.</li>
+              <li>Use "needs clarification" when requirements are unclear.</li>
+              <li>Escalate urgent requests with a confirmed turnaround window.</li>
+              <li>Review summary totals before weekly client check-ins.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="disclaimer" aria-labelledby="disclaimer-title">
+        <div class="container">
+          <h2 id="disclaimer-title">Disclaimer</h2>
+          <p>
+            This tool is for operational tracking only and does not replace legal
+            agreements, signed change orders, or professional accounting advice.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 KP_Code Digital Vault · Revision Tracker</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
