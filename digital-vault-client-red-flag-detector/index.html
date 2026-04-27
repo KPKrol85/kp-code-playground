@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Client Red Flag Detector by KP_Code Digital Vault helps freelancers and studios assess cooperation risk before starting a project."
+    />
+    <title>Client Red Flag Detector | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header" aria-label="KP_Code Digital Vault branding">
+      <div class="container">
+        <p class="eyebrow">KP_Code Digital Vault Utility</p>
+        <h1>Client Red Flag Detector</h1>
+        <p class="intro">
+          A practical pre-project screening tool for freelancers, developers,
+          designers, and small studios. Check common warning signs and get a
+          clear cooperation risk level before you commit.
+        </p>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <h2 id="hero-title">Spot scope trouble before it spots you.</h2>
+          <p>
+            This quick checklist helps you evaluate client communication,
+            expectation management, and payment reliability. The goal is not to
+            judge people — it is to protect project outcomes and working
+            relationships.
+          </p>
+        </div>
+      </section>
+
+      <section class="tool" aria-labelledby="tool-title">
+        <div class="container grid">
+          <article class="panel checklist-panel">
+            <h2 id="tool-title">Red Flag Checklist</h2>
+            <p class="section-copy">
+              Tick any statements you have heard. Each one carries a weighted
+              risk score.
+            </p>
+
+            <form id="risk-form" novalidate>
+              <fieldset>
+                <legend>Client statements and signals</legend>
+                <ul class="checklist" id="red-flag-list">
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="1" />
+                      “It’s just a small change”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="5" />
+                      “I’ll pay after results”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="2" />
+                      “My cousin also builds websites”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="5" />
+                      “We don’t need a contract”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="3" />
+                      “Can you start today?”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="3" />
+                      “The budget is flexible, but low”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="2" />
+                      “This should only take 10 minutes”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="4" />
+                      “We need it like Apple, but cheaper”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="3" />
+                      “There will be more work later”
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox" data-score="4" />
+                      “I don’t know what I want, but I’ll know when I see it”
+                    </label>
+                  </li>
+                </ul>
+              </fieldset>
+
+              <button type="reset" id="reset-button">Reset checklist</button>
+            </form>
+          </article>
+
+          <aside class="panel result-panel" aria-live="polite" aria-atomic="true">
+            <h2>Live Risk Result</h2>
+            <dl class="stats">
+              <div>
+                <dt>Total score</dt>
+                <dd id="total-score">0</dd>
+              </div>
+              <div>
+                <dt>Selected red flags</dt>
+                <dd id="selected-count">0</dd>
+              </div>
+              <div>
+                <dt>Risk level</dt>
+                <dd id="risk-level" class="risk-pill low">Low risk</dd>
+              </div>
+            </dl>
+
+            <section aria-labelledby="result-summary-title">
+              <h3 id="result-summary-title">Assessment</h3>
+              <p id="risk-explanation">
+                Client looks manageable. Proceed with your normal briefing,
+                scope, and payment process.
+              </p>
+            </section>
+
+            <section aria-labelledby="next-steps-title">
+              <h3 id="next-steps-title">Recommended next steps</h3>
+              <ul id="next-steps-list">
+                <li>Share your standard proposal and timeline.</li>
+                <li>Define deliverables and revision limits in writing.</li>
+                <li>Confirm deposit and start date before kickoff.</li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="education" aria-labelledby="education-title">
+        <div class="container">
+          <h2 id="education-title">Why client screening matters</h2>
+          <p>
+            Early screening reduces misalignment, protects your time, and keeps
+            projects healthier for everyone. Clear agreements on scope,
+            communication, and payment are often the difference between a smooth
+            build and a preventable fire drill.
+          </p>
+        </div>
+      </section>
+
+      <section class="examples" aria-labelledby="examples-title">
+        <div class="container">
+          <h2 id="examples-title">Common red flag patterns</h2>
+          <ul>
+            <li>Urgent timelines with unclear goals.</li>
+            <li>Vague scope but very specific outcomes.</li>
+            <li>Pressure to skip contracts, deposits, or documentation.</li>
+            <li>Comparison shopping that discounts expertise.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="disclaimer" aria-labelledby="disclaimer-title">
+        <div class="container">
+          <h2 id="disclaimer-title">Disclaimer</h2>
+          <p>
+            This utility is an educational decision-support tool, not legal or
+            financial advice. Use your professional judgment and local contract
+            best practices.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year">2026</span> KP_Code Digital Vault · Built for practical client decisions.</p>
+      </div>
+    </footer>
+  </body>
+</html>
