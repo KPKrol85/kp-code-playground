@@ -1,16 +1,16 @@
-# Revision Tracker Template
+# Szablon Trackera Poprawek
 
-Use this template to track client revision requests with clear scope and cost decisions.
+Użyj tego szablonu do śledzenia próśb o poprawki od klienta z jasnymi decyzjami zakresowymi i kosztowymi.
 
-| Request | Date | Status | In scope | Priority | Response | Additional cost |
+| Prośba | Data | Status | W zakresie | Priorytet | Odpowiedź | Dodatkowy koszt |
 | --- | --- | --- | --- | --- | --- | --- |
-|  | YYYY-MM-DD | new / in review / accepted / out of scope / completed / rejected | yes / no / needs clarification | low / medium / high / urgent |  | $0.00 |
-|  | YYYY-MM-DD | new / in review / accepted / out of scope / completed / rejected | yes / no / needs clarification | low / medium / high / urgent |  | $0.00 |
-|  | YYYY-MM-DD | new / in review / accepted / out of scope / completed / rejected | yes / no / needs clarification | low / medium / high / urgent |  | $0.00 |
+|  | RRRR-MM-DD | new / in review / accepted / out of scope / completed / rejected | yes / no / needs clarification | low / medium / high / urgent |  | 0,00 zł |
+|  | RRRR-MM-DD | new / in review / accepted / out of scope / completed / rejected | yes / no / needs clarification | low / medium / high / urgent |  | 0,00 zł |
+|  | RRRR-MM-DD | new / in review / accepted / out of scope / completed / rejected | yes / no / needs clarification | low / medium / high / urgent |  | 0,00 zł |
 
-## Suggested Process
+## Sugerowany proces
 
-1. Record every request as soon as it arrives.
-2. Confirm whether the request matches signed scope.
-3. Respond with timeline and approval requirements.
-4. Quote additional cost before implementation when out of scope.
+1. Zapisuj każdą prośbę od razu po jej otrzymaniu.
+2. Potwierdzaj, czy prośba jest zgodna z podpisanym zakresem.
+3. Odpowiadaj z terminem i wymaganiami akceptacji.
+4. Przy pracach poza zakresem najpierw wyceń koszt dodatkowy.

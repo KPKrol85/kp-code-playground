@@ -18,10 +18,14 @@
 
   const entries = [];
 
+  const statusLabels = { 'new': 'Nowe', 'in review': 'W analizie', 'accepted': 'Zaakceptowane', 'out of scope': 'Poza zakresem', 'completed': 'Zrealizowane', 'rejected': 'Odrzucone' };
+  const scopeLabels = { yes: 'Tak', no: 'Nie', 'needs clarification': 'Wymaga doprecyzowania' };
+  const priorityLabels = { low: 'Niski', medium: 'Średni', high: 'Wysoki', urgent: 'Pilny' };
+
   const formatCurrency = (amount) =>
-    new Intl.NumberFormat('en-US', {
+    new Intl.NumberFormat('pl-PL', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'PLN'
     }).format(amount);
 
   const sanitizeText = (value) => value.trim();
@@ -30,7 +34,7 @@
     if (entries.length === 0) {
       tableBody.innerHTML = `
         <tr>
-          <td colspan="8" class="empty-state">No revision requests added yet.</td>
+          <td colspan="8" class="empty-state">Nie dodano jeszcze żadnych próśb o poprawkę.</td>
         </tr>
       `;
     }
@@ -73,12 +77,12 @@
       row.innerHTML = `
         <td>${entry.request}</td>
         <td>${entry.date}</td>
-        <td>${entry.status}</td>
-        <td>${entry.inScope}</td>
-        <td>${entry.priority}</td>
+        <td>${statusLabels[entry.status] || entry.status}</td>
+        <td>${scopeLabels[entry.inScope] || entry.inScope}</td>
+        <td>${priorityLabels[entry.priority] || entry.priority}</td>
         <td>${entry.response || '—'}</td>
         <td>${formatCurrency(entry.additionalCost)}</td>
-        <td><button type="button" class="remove-btn" data-index="${index}" aria-label="Remove revision ${index + 1}">Remove</button></td>
+        <td><button type="button" class="remove-btn" data-index="${index}" aria-label="Usuń poprawkę ${index + 1}">Usuń</button></td>
       `;
 
       tableBody.appendChild(row);
@@ -99,11 +103,11 @@
     const additionalCost = Number.parseFloat(additionalCostRaw);
 
     if (!request || !date || !status || !inScope || !priority) {
-      return { error: 'Please complete all required fields.' };
+      return { error: 'Uzupełnij wszystkie wymagane pola.' };
     }
 
     if (Number.isNaN(additionalCost) || additionalCost < 0) {
-      return { error: 'Additional cost must be a non-negative number.' };
+      return { error: 'Dodatkowy koszt musi być liczbą nieujemną.' };
     }
 
     return {
@@ -138,7 +142,7 @@
     document.getElementById('in-scope').value = 'yes';
     document.getElementById('priority').value = 'low';
     document.getElementById('additional-cost').value = '0';
-    feedback.textContent = 'Revision request added.';
+    feedback.textContent = 'Dodano prośbę o poprawkę.';
   });
 
   form.addEventListener('reset', () => {

@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="KP_Code Digital Vault Revision Tracker for managing client change requests, scope control, and revision costs."
+      content="KP_Code Digital Vault Tracker Poprawek do zarządzania zmianami klienta, kontrolą zakresu i kosztami poprawek."
     />
-    <title>KP_Code Digital Vault · Revision Tracker</title>
+    <title>KP_Code Digital Vault · Tracker Poprawek Klienta</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
       <div class="container brand-wrap">
         <p class="brand-kicker">KP_Code Digital Vault</p>
-        <h1>Revision Tracker</h1>
+        <h1>Tracker Poprawek Klienta</h1>
         <p class="lead">
-          A practical, client-facing revision tracker for freelancers, developers,
-          designers, and small studios.
+          Praktyczny tracker poprawek dla freelancerów, developerów, projektantów i małych studiów.
         </p>
       </div>
     </header>
@@ -25,11 +24,9 @@
     <main id="main-content">
       <section class="hero" aria-labelledby="hero-title">
         <div class="container">
-          <h2 id="hero-title">Track revisions with clear scope control</h2>
+          <h2 id="hero-title">Śledź poprawki z jasną kontrolą zakresu</h2>
           <p>
-            Use this standalone tracker to log client requests, identify whether
-            changes are in scope, set priority, record responses, and estimate
-            additional costs before work starts.
+            Korzystaj z tego samodzielnego trackera, aby rejestrować prośby klienta, oceniać zgodnieść z zakresem, ustalać priorytet, zapisywać odpowiedzi i szacować dodatkowe koszty przed rozpoczęciem prac.
           </p>
         </div>
       </section>
@@ -37,69 +34,69 @@
       <section class="tracker" aria-labelledby="tracker-title">
         <div class="container two-col">
           <article>
-            <h2 id="tracker-title">Add revision request</h2>
-            <form id="revision-form" novalidate>
+            <h2 id="tracker-title">Dodaj prośbę o poprawkę</h2>
+            <form id="revision-form" nievalidate>
               <div class="field">
-                <label for="request">Request</label>
+                <label for="request">Prośba</label>
                 <textarea
                   id="request"
                   name="request"
                   rows="3"
                   required
-                  placeholder="Describe the requested change"
+                  placeholder="Opisz oczekiwaną zmianę"
                 ></textarea>
               </div>
 
               <div class="field-grid">
                 <div class="field">
-                  <label for="date">Date</label>
+                  <label for="date">Data</label>
                   <input id="date" name="date" type="date" required />
                 </div>
 
                 <div class="field">
                   <label for="status">Status</label>
                   <select id="status" name="status" required>
-                    <option value="new">new</option>
-                    <option value="in review">in review</option>
-                    <option value="accepted">accepted</option>
-                    <option value="out of scope">out of scope</option>
-                    <option value="completed">completed</option>
-                    <option value="rejected">rejected</option>
+                    <option value="niewe">niewe</option>
+                    <option value="in review">W analizie</option>
+                    <option value="accepted">Zaakceptowane</option>
+                    <option value="out of scope">Poza zakresem</option>
+                    <option value="completed">Zrealizowane</option>
+                    <option value="rejected">Odrzucone</option>
                   </select>
                 </div>
 
                 <div class="field">
-                  <label for="in-scope">In scope</label>
+                  <label for="in-scope">W zakresie</label>
                   <select id="in-scope" name="inScope" required>
-                    <option value="yes">yes</option>
-                    <option value="no">no</option>
-                    <option value="needs clarification">needs clarification</option>
+                    <option value="yes">Tak</option>
+                    <option value="no">Nie</option>
+                    <option value="needs clarification">Wymaga doprecyzowania</option>
                   </select>
                 </div>
 
                 <div class="field">
-                  <label for="priority">Priority</label>
+                  <label for="priority">Priorytet</label>
                   <select id="priority" name="priority" required>
-                    <option value="low">low</option>
-                    <option value="medium">medium</option>
-                    <option value="high">high</option>
-                    <option value="urgent">urgent</option>
+                    <option value="low">Niski</option>
+                    <option value="medium">Średni</option>
+                    <option value="high">Wysoki</option>
+                    <option value="urgent">Pilny</option>
                   </select>
                 </div>
               </div>
 
               <div class="field">
-                <label for="response">Response</label>
+                <label for="response">Odpowiedź</label>
                 <textarea
                   id="response"
                   name="response"
                   rows="3"
-                  placeholder="State next step, timeline, or approval needed"
+                  placeholder="Wpisz kolejny krok, termin lub wymaganą akceptację"
                 ></textarea>
               </div>
 
               <div class="field">
-                <label for="additional-cost">Additional cost (USD)</label>
+                <label for="additional-cost">Dodatkowy koszt (PLN)</label>
                 <input
                   id="additional-cost"
                   name="additionalCost"
@@ -114,24 +111,24 @@
               <p id="form-feedback" role="status" aria-live="polite"></p>
 
               <div class="actions">
-                <button type="submit" class="btn btn-primary">Add request</button>
-                <button type="reset" class="btn btn-secondary">Clear form</button>
+                <button type="submit" class="btn btn-primary">Dodaj prośbę</button>
+                <button type="reset" class="btn btn-secondary">Wyczyść formularz</button>
               </div>
             </form>
           </article>
 
           <aside class="summary-panel" aria-labelledby="summary-title">
-            <h2 id="summary-title">Live summary</h2>
+            <h2 id="summary-title">Podsumowanie na żywo</h2>
             <ul class="summary-list" id="summary-list">
-              <li>Total requests: <strong id="total-requests">0</strong></li>
-              <li>In-scope requests: <strong id="in-scope-count">0</strong></li>
-              <li>Out-of-scope requests: <strong id="out-scope-count">0</strong></li>
+              <li>Łącznie próśb: <strong id="total-requests">0</strong></li>
+              <li>Prośby w zakresie: <strong id="in-scope-count">0</strong></li>
+              <li>Prośby poza zakresem: <strong id="out-scope-count">0</strong></li>
               <li>
-                Clarification needed: <strong id="clarification-count">0</strong>
+                Wymaga doprecyzowania: <strong id="clarification-count">0</strong>
               </li>
-              <li>Urgent requests: <strong id="urgent-count">0</strong></li>
+              <li>Prośby pilne: <strong id="pilne-count">0</strong></li>
               <li>
-                Estimated additional cost: <strong id="additional-cost-total">$0.00</strong>
+                Szacowany koszt dodatkowy: <strong id="additional-cost-total">0,00 zł</strong>
               </li>
             </ul>
           </aside>
@@ -140,29 +137,28 @@
 
       <section class="table-section" aria-labelledby="table-title">
         <div class="container">
-          <h2 id="table-title">Revision log</h2>
+          <h2 id="table-title">Rejestr poprawek</h2>
           <p class="table-help">
-            Entries are held in this session only. Remove a row when a request no
-            longer needs tracking.
+            Wpisy są przechowywane tylko w tej sesji. Usuń wiersz, gdy dana prośba nie wymaga już śledzenia.
           </p>
-          <div class="table-wrap" role="region" aria-label="Revision table" tabindex="0">
+          <div class="table-wrap" role="region" aria-label="Tabela poprawek" tabindex="0">
             <table>
               <thead>
                 <tr>
-                  <th>Request</th>
-                  <th>Date</th>
+                  <th>Prośba</th>
+                  <th>Data</th>
                   <th>Status</th>
-                  <th>In scope</th>
-                  <th>Priority</th>
-                  <th>Response</th>
-                  <th>Additional cost</th>
-                  <th>Action</th>
+                  <th>W zakresie</th>
+                  <th>Priorytet</th>
+                  <th>Odpowiedź</th>
+                  <th>Dodatkowy koszt</th>
+                  <th>Akcja</th>
                 </tr>
               </thead>
               <tbody id="revision-table-body">
                 <tr>
                   <td colspan="8" class="empty-state">
-                    No revision requests added yet.
+                    Nie dodano jeszcze żadnych próśb o poprawkę.
                   </td>
                 </tr>
               </tbody>
@@ -173,17 +169,16 @@
 
       <section class="template" aria-labelledby="template-title">
         <div class="container">
-          <h2 id="template-title">Markdown template preview</h2>
+          <h2 id="template-title">Podgląd szablonu Markdown</h2>
           <p>
-            Use this template in client portals, project docs, or status updates
-            even when JavaScript is unavailable.
+            Użyj tego szablonu w portalach klienta, dokumentacji projektu lub aktualizacjach statusu, nawet gdy JavaScript jest niedostępny.
           </p>
-          <pre><code>| Request | Date | Status | In scope | Priority | Response | Additional cost |
+          <pre><code>| Prośba | Data | Status | W zakresie | Priorytet | Odpowiedź | Dodatkowy koszt |
 | --- | --- | --- | --- | --- | --- | --- |
-| Homepage hero text update | 2026-04-27 | in review | yes | medium | Waiting for approved copy deck | $0.00 |
-| Add payment gateway support | 2026-04-27 | out of scope | no | high | Quoted as separate add-on | $600.00 |</code></pre>
+| Aktualizacja tekstu hero na stronie głównej | 2026-04-27 | in review | yes | medium | Oczekiwanie na zatwierdzone treści | 0,00 zł |
+| Dodanie integracji płatności | 2026-04-27 | out of scope | no | high | Wycenione jako osobny dodatek | 600,00 zł |</code></pre>
           <p>
-            Full template file:
+            Pełny plik szablonu:
             <a href="revision-tracker-template.md">revision-tracker-template.md</a>
           </p>
         </div>
@@ -192,22 +187,22 @@
       <section class="guidance" aria-labelledby="usage-title">
         <div class="container split-sections">
           <article>
-            <h2 id="usage-title">Practical usage guide</h2>
+            <h2 id="usage-title">Praktyczny przewodnik użycia</h2>
             <ol>
-              <li>Log every client request immediately.</li>
-              <li>Mark in scope only when it matches the agreed deliverables.</li>
-              <li>Use response notes to document decisions and timelines.</li>
-              <li>Confirm cost before implementing out-of-scope work.</li>
+              <li>Zapisuj każdą prośbę klienta od razu po jej otrzymaniu.</li>
+              <li>Oznaczaj jako „w zakresie” tylko to, co pokrywa się z ustalonym zakresem.</li>
+              <li>Używaj pola odpowiedzi do dokumentowania decyzji i terminów.</li>
+              <li>Potwierdzaj koszt przed realizacją prac poza zakresem.</li>
             </ol>
           </article>
 
           <article aria-labelledby="tips-title">
-            <h2 id="tips-title">Scope-control tips</h2>
+            <h2 id="tips-title">Wskazówki kontroli zakresu</h2>
             <ul>
-              <li>Link each request to a contract section or approved brief.</li>
-              <li>Use "needs clarification" when requirements are unclear.</li>
-              <li>Escalate urgent requests with a confirmed turnaround window.</li>
-              <li>Review summary totals before weekly client check-ins.</li>
+              <li>Łącz każdą prośbę z odpowiednim punktem umowy lub zatwierdzonego briefu.</li>
+              <li>Używaj statusu "wymaga doprecyzowania", gdy wymagania są niejasne.</li>
+              <li>Eskaluj pilne prośby z potwierdzonym oknem realizacji.</li>
+              <li>Sprawdzaj podsumowanie przed cotygodniowymi spotkaniami z klientem.</li>
             </ul>
           </article>
         </div>
@@ -215,10 +210,9 @@
 
       <section class="disclaimer" aria-labelledby="disclaimer-title">
         <div class="container">
-          <h2 id="disclaimer-title">Disclaimer</h2>
+          <h2 id="disclaimer-title">Zastrzeżenie</h2>
           <p>
-            This tool is for operational tracking only and does not replace legal
-            agreements, signed change orders, or professional accounting advice.
+            To narzędzie służy wyłącznie do operacyjnego śledzenia i nie zastępuje umów, podpisanych change requestów ani profesjonalnej porady księgowej.
           </p>
         </div>
       </section>
@@ -226,7 +220,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <p>© 2026 KP_Code Digital Vault · Revision Tracker</p>
+        <p>© 2026 KP_Code Digital Vault · Tracker Poprawek Klienta</p>
       </div>
     </footer>
 

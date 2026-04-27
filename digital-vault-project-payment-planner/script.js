@@ -7,7 +7,7 @@
     "40-40-20": { label: "40 / 40 / 20", depositPct: 40, milestonePct: 40, finalPct: 20 },
     "50-30-20": { label: "50 / 30 / 20", depositPct: 50, milestonePct: 30, finalPct: 20 },
     "50-50": { label: "50 / 50", depositPct: 50, milestonePct: 0, finalPct: 50 },
-    "100-upfront": { label: "100 upfront", depositPct: 100, milestonePct: 0, finalPct: 0 }
+    "100-upfront": { label: "100 z góry", depositPct: 100, milestonePct: 0, finalPct: 0 }
   };
 
   const form = document.getElementById("planner-form");
@@ -30,19 +30,19 @@
     vatMode: document.getElementById("vat-mode"),
     invoicePrefix: document.getElementById("invoice-prefix"),
     dueDays: document.getElementById("due-days"),
-    customDeposit: document.getElementById("custom-deposit"),
-    customMilestone: document.getElementById("custom-milestone"),
-    customFinal: document.getElementById("custom-final")
+    customZaliczka: document.getElementById("custom-deposit"),
+    customEtap: document.getElementById("custom-milestone"),
+    customKońcowa: document.getElementById("custom-final")
   };
 
   const outputs = {
-    inputAmount: document.getElementById("input-amount"),
-    vatAmount: document.getElementById("vat-amount"),
-    grossAmount: document.getElementById("gross-amount"),
+    inputKwota: document.getElementById("input-amount"),
+    vatKwota: document.getElementById("vat-amount"),
+    grossKwota: document.getElementById("gross-amount"),
     modelLabel: document.getElementById("model-label"),
-    depositAmount: document.getElementById("deposit-amount"),
+    depositKwota: document.getElementById("deposit-amount"),
     milestonePool: document.getElementById("milestone-pool"),
-    finalAmount: document.getElementById("final-amount")
+    finalKwota: document.getElementById("final-amount")
   };
 
   let latestPlanText = "";
@@ -80,23 +80,23 @@
       return { ...MODEL_CONFIG[paymentModel.value], valid: true, source: "preset" };
     }
 
-    const deposit = Number(fields.customDeposit.value);
-    const milestone = Number(fields.customMilestone.value);
-    const final = Number(fields.customFinal.value);
+    const deposit = Number(fields.customZaliczka.value);
+    const milestone = Number(fields.customEtap.value);
+    const final = Number(fields.customKońcowa.value);
     const sum = deposit + milestone + final;
 
     if ([deposit, milestone, final].some((n) => !Number.isFinite(n) || n < 0 || n > 100)) {
-      return { valid: false, reason: "Custom percentages must be between 0 and 100." };
+      return { valid: false, reason: "Własne wartości procentowe muszą mieścić się między 0 a 100." };
     }
     if (sum !== 100) {
       return {
         valid: false,
-        reason: `Custom split must total exactly 100%. Current total: ${sum}%.`
+        reason: `Własny podział musi dawać dokładnie 100%. Obecnie: ${sum}%.`
       };
     }
 
     return {
-      label: `Custom (${deposit} / ${milestone} / ${final})`,
+      label: `Własny (${deposit} / ${milestone} / ${final})`,
       depositPct: deposit,
       milestonePct: milestone,
       finalPct: final,
@@ -116,13 +116,13 @@
     const dueDays = Number(fields.dueDays.value);
 
     if (Number.isNaN(totalGroszeInput)) {
-      renderError("Enter a valid project total amount (0 PLN or more).");
+      renderError("Wpisz poprawną łączną kwotę projektu (0 PLN lub więcej).");
       clearSchedule();
       return;
     }
 
     if (!Number.isInteger(dueDays) || dueDays < 0 || dueDays > 60) {
-      renderError("Payment due days must be an integer between 0 and 60.");
+      renderError("Termin płatności musi być liczbą całkowitą od 0 do 60.");
       clearSchedule();
       return;
     }
@@ -131,11 +131,11 @@
     if (!model.valid) {
       customSplitMessage.textContent = model.reason;
       customSplitMessage.className = "message error";
-      renderError("Custom split is invalid. Fix the percentages to generate accurate results.");
+      renderError("Własny split is invalid. Fix the percentages to generate accurate results.");
       clearSchedule();
       return;
     }
-    customSplitMessage.textContent = paymentModel.value === "custom" ? "Custom split is valid." : "";
+    customSplitMessage.textContent = paymentModel.value === "custom" ? "Własny split is valid." : "";
     customSplitMessage.className = paymentModel.value === "custom" ? "message success" : "message";
 
     const vatMode = fields.vatMode.value;
@@ -153,18 +153,18 @@
     const startDate = parseStartDate(fields.startDate.value);
     const durationDays = Number(fields.durationWeeks.value) * 7;
 
-    rows.push(createRow(`${prefix}-001`, "Deposit", model.depositPct, depositGrosze, 0, startDate, durationDays, dueDays));
+    rows.push(createRow(`${prefix}-001`, "Zaliczka", model.depositPct, depositGrosze, 0, startDate, durationDays, dueDays));
 
     if (milestonePoolGrosze > 0 && milestonesCount > 0) {
-      const baseMilestone = Math.floor(milestonePoolGrosze / milestonesCount);
+      const baseEtap = Math.floor(milestonePoolGrosze / milestonesCount);
       let distributed = 0;
       for (let i = 0; i < milestonesCount; i += 1) {
-        const amount = i === milestonesCount - 1 ? milestonePoolGrosze - distributed : baseMilestone;
+        const amount = i === milestonesCount - 1 ? milestonePoolGrosze - distributed : baseEtap;
         distributed += amount;
         const pct = Number((model.milestonePct / milestonesCount).toFixed(2));
         rows.push(createRow(
           `${prefix}-${String(rows.length + 1).padStart(3, "0")}`,
-          `Milestone ${i + 1}`,
+          `Etap ${i + 1}`,
           pct,
           amount,
           i + 1,
@@ -178,19 +178,19 @@
       finalGrosze += milestonePoolGrosze;
       milestonePoolGrosze = 0;
       milestoneNote.hidden = false;
-      milestoneNote.textContent = "Milestone pool moved to final payment because 0 milestones were selected.";
+      milestoneNote.textContent = "Etap pool moved to final payment because 0 milestones were selected.";
     }
 
     const finalRowPct = rows.length === 1 && model.finalPct === 0 ? 0 : model.finalPct + (model.milestonePct > 0 && milestonesCount === 0 ? model.milestonePct : 0);
-    rows.push(createRow(`${prefix}-${String(rows.length + 1).padStart(3, "0")}`, "Final", finalRowPct, finalGrosze, milestonesCount + 1, startDate, durationDays, dueDays, milestonesCount));
+    rows.push(createRow(`${prefix}-${String(rows.length + 1).padStart(3, "0")}`, "Końcowa", finalRowPct, finalGrosze, milestonesCount + 1, startDate, durationDays, dueDays, milestonesCount));
 
     const plannedSum = rows.reduce((acc, row) => acc + row.amountGrosze, 0);
     const diff = grossGrosze - plannedSum;
     if (diff !== 0) {
       rows[rows.length - 1].amountGrosze += diff;
       roundingNote.hidden = false;
-      const direction = diff > 0 ? "added to" : "subtracted from";
-      roundingNote.textContent = `Rounding adjustment: ${groszeToPln(Math.abs(diff))} ${direction} final payment so totals match exactly.`;
+      const direction = diff > 0 ? "dodano do" : "odjęto od";
+      roundingNote.textContent = `Korekta zaokrąglenia: ${groszeToPln(Math.abs(diff))} ${direction} płatności końcowej, aby suma zgadzała się co do grosza.`;
     }
 
     render(rows, {
@@ -207,16 +207,16 @@
   }
 
   function createRow(invoiceLabel, type, pct, amountGrosze, index, startDate, durationDays, dueDays, milestonesCount = 0) {
-    let issueDate = "not scheduled yet";
-    let dueDate = "not scheduled yet";
+    let issueDate = "jeszcze nie zaplanowano";
+    let dueDate = "jeszcze nie zaplanowano";
 
     if (startDate) {
       let issue = startDate;
-      if (type.startsWith("Milestone")) {
+      if (type.startsWith("Etap")) {
         const spacing = Math.round(durationDays / (milestonesCount + 1));
         issue = addDays(startDate, spacing * index);
       }
-      if (type === "Final") {
+      if (type === "Końcowa") {
         issue = addDays(startDate, durationDays);
       }
 
@@ -248,7 +248,7 @@
 
   function render(rows, context) {
     outputs.inputAmount.textContent = groszeToPln(context.inputGrosze);
-    outputs.vatAmount.textContent = context.vatGrosze ? groszeToPln(context.vatGrosze) : "No VAT added";
+    outputs.vatAmount.textContent = context.vatGrosze ? groszeToPln(context.vatGrosze) : "Nie doliczono VAT";
     outputs.grossAmount.textContent = groszeToPln(context.grossGrosze);
     outputs.modelLabel.textContent = context.model.label;
     outputs.depositAmount.textContent = groszeToPln(context.depositGrosze);
@@ -272,27 +272,27 @@
     if (!context.hasStartDate) {
       const block = document.createElement("p");
       block.className = "alert error";
-      block.textContent = "Select a start date to generate schedule dates.";
+      block.textContent = "Wybierz datę startu, aby wygenerować daty harmonogramu.";
       alerts.append(block);
     }
 
     latestPlanText = [
-      "Project Payment Planner — KP_Code Digital Vault",
-      `Project amount input: ${groszeToPln(context.inputGrosze)}`,
-      `VAT amount: ${context.vatGrosze ? groszeToPln(context.vatGrosze) : "No VAT"}`,
-      `Project total used for schedule: ${groszeToPln(context.grossGrosze)}`,
-      `Payment model: ${context.model.label}`,
+      "Planer Płatności Projektu — KP_Code Digital Vault",
+      `Kwota wejściowa projektu: ${groszeToPln(context.inputGrosze)}`,
+      `Kwota VAT: ${context.vatGrosze ? groszeToPln(context.vatGrosze) : "Bez VAT"}`,
+      `Łączna kwota projektu użyta w harmonogramie: ${groszeToPln(context.grossGrosze)}`,
+      `Model płatności: ${context.model.label}`,
       "",
-      "Payment rows:",
-      ...rows.map((row) => `${row.invoiceLabel} | ${row.type} | ${row.pct}% | Issue: ${row.issueDate} | Due: ${row.dueDate} | Amount: ${groszeToPln(row.amountGrosze)}`),
+      "Pozycje płatności:",
+      ...rows.map((row) => `${row.invoiceLabel} | ${row.type} | ${row.pct}% | Wystawienie: ${row.issueDate} | Termin: ${row.dueDate} | Kwota: ${groszeToPln(row.amountGrosze)}`),
       "",
-      "Disclaimer: Planning support only. Not accounting, tax, legal, or contract advice."
+      "Zastrzeżenie: narzędzie wspierające planowanie; nie jest poradą księgową, podatkową, prawną ani umowną."
     ].join("\n");
   }
 
   async function copyPlan() {
     if (!latestPlanText) {
-      copyMessage.textContent = "No valid payment plan to copy yet.";
+      copyMessage.textContent = "Brak poprawnego planu płatności do skopiowania.";
       copyMessage.className = "message error";
       return;
     }
@@ -308,22 +308,22 @@
         document.execCommand("copy");
         area.remove();
       }
-      copyMessage.textContent = "Payment plan copied.";
+      copyMessage.textContent = "Plan płatności skopiowany.";
       copyMessage.className = "message success";
     } catch {
-      copyMessage.textContent = "Copy failed in this browser. Select and copy manually from the schedule.";
+      copyMessage.textContent = "Kopiowanie nie powiodło się w tej przeglądarce. Skopiuj treść ręcznie z harmonogramu.";
       copyMessage.className = "message error";
     }
   }
 
-  function updateCustomVisibility() {
+  function updateWłasnyVisibility() {
     customSplitFields.hidden = paymentModel.value !== "custom";
   }
 
   form.addEventListener("input", calculate);
   form.addEventListener("change", calculate);
   paymentModel.addEventListener("change", () => {
-    updateCustomVisibility();
+    updateWłasnyVisibility();
     calculate();
   });
 
@@ -337,14 +337,14 @@
       fields.vatMode.value = "none";
       fields.invoicePrefix.value = "KP-DV";
       fields.dueDays.value = "7";
-      fields.customDeposit.value = "40";
-      fields.customMilestone.value = "40";
-      fields.customFinal.value = "20";
-      updateCustomVisibility();
+      fields.customZaliczka.value = "40";
+      fields.customEtap.value = "40";
+      fields.customKońcowa.value = "20";
+      updateWłasnyVisibility();
       calculate();
     }, 0);
   });
 
-  updateCustomVisibility();
+  updateWłasnyVisibility();
   calculate();
 })();

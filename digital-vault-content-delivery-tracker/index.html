@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Content Delivery Tracker by KP_Code Digital Vault helps freelancers and studios track client materials, risks, and project readiness in one static workflow tool."
+      content="Tracker Materiałów od Klienta od KP_Code Digital Vault pomaga freelancerom i studiom śledzić materiały, ryzyka i gotowość projektu w jednym statycznym narzędziu."
     />
-    <title>KP_Code Digital Vault · Content Delivery Tracker</title>
+    <title>KP_Code Digital Vault · Tracker Materiałów od Klienta</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -15,28 +15,27 @@
       <div class="container hero-grid">
         <div>
           <p class="brand">KP_Code Digital Vault</p>
-          <h1 id="product-title">Content Delivery Tracker</h1>
-          <p class="tagline">Keep every client material request visible, accountable, and production-ready.</p>
+          <h1 id="product-title">Tracker Materiałów od Klienta</h1>
+          <p class="tagline">Trzymaj wszystkie prośby o materiały od klienta w jednym miejscu i pod pełną kontrolą.</p>
           <p class="lead">
-            A standalone workflow tool for freelancers, web developers, agencies, and digital studios to track
-            requested assets, identify blockers early, and keep project timelines realistic.
+            Samodzielne narzędzie workflow dla freelancerów, developerów, agencji i studiów cyfrowych do śledzenia wymaganych materiałów, szybkiego wykrywania blokad i realistycznego planowania terminów.
           </p>
-          <div class="badges" aria-label="Product highlights">
-            <span>Client assets</span>
-            <span>Project handoff</span>
-            <span>Freelancer workflow</span>
-            <span>No backend required</span>
+          <div class="badges" aria-label="Najważniejsze cechy produktu">
+            <span>Materiały klienta</span>
+            <span>Przekazanie projektu</span>
+            <span>Proces freelancera</span>
+            <span>Bez backendu</span>
           </div>
         </div>
         <aside class="hero-panel" aria-labelledby="project-summary-title">
-          <h2 id="project-summary-title">Project summary</h2>
+          <h2 id="project-summary-title">Podsumowanie projektu</h2>
           <dl id="project-summary" class="summary-grid">
-            <div><dt>Client</dt><dd data-summary="clientName">Not set</dd></div>
-            <div><dt>Project</dt><dd data-summary="projectName">Not set</dd></div>
-            <div><dt>Type</dt><dd data-summary="projectType">Not set</dd></div>
-            <div><dt>Deadline</dt><dd data-summary="deadline">Not set</dd></div>
-            <div><dt>Owner</dt><dd data-summary="manager">Not set</dd></div>
-            <div><dt>Notes</dt><dd data-summary="notes">—</dd></div>
+            <div><dt>Klient</dt><dd data-summary="clientName">Nie ustawiono</dd></div>
+            <div><dt>Projekt</dt><dd data-summary="projectName">Nie ustawiono</dd></div>
+            <div><dt>Typ</dt><dd data-summary="projectType">Nie ustawiono</dd></div>
+            <div><dt>Termin</dt><dd data-summary="deadline">Nie ustawiono</dd></div>
+            <div><dt>Właściciel</dt><dd data-summary="manager">Nie ustawiono</dd></div>
+            <div><dt>Notatki</dt><dd data-summary="notes">—</dd></div>
           </dl>
         </aside>
       </div>
@@ -44,44 +43,44 @@
 
     <main class="container">
       <section class="card" aria-labelledby="setup-title">
-        <h2 id="setup-title">Project and client setup</h2>
+        <h2 id="setup-title">Ustawienia projektu i klienta</h2>
         <form id="setup-form" class="setup-grid" novalidate>
           <label>
-            Client name
-            <input type="text" name="clientName" maxlength="80" placeholder="Example: Bright Dental Clinic" />
+            Nazwa klienta
+            <input type="text" name="clientName" maxlength="80" placeholder="Przykład: Bright Dental Clinic" />
           </label>
           <label>
-            Project name
-            <input type="text" name="projectName" maxlength="80" placeholder="Example: Website redesign Q3" />
+            Nazwa projektu
+            <input type="text" name="projectName" maxlength="80" placeholder="Przykład: Redesign strony Q3" />
           </label>
           <label>
-            Project type
-            <input type="text" name="projectType" maxlength="60" placeholder="Landing page, e-commerce, rebrand site..." />
+            Typ projektu
+            <input type="text" name="projectType" maxlength="60" placeholder="Landing page, e-commerce, strona po rebrandingu..." />
           </label>
           <label>
-            Delivery deadline
+            Termin dostarczenia
             <input type="date" name="deadline" />
           </label>
           <label>
-            Project manager / responsible person
-            <input type="text" name="manager" maxlength="80" placeholder="Name, role, or account owner" />
+            Project manager / osoba odpowiedzialna
+            <input type="text" name="manager" maxlength="80" placeholder="Imię i nazwisko, rola lub opiekun konta" />
           </label>
           <label class="span-full">
-            Optional notes
-            <textarea name="notes" rows="2" maxlength="240" placeholder="Any constraints, channels, dependencies, or client context"></textarea>
+            Opcjonalne notatki
+            <textarea name="notes" rows="2" maxlength="240" placeholder="Ograniczenia, kanały, zależności i kontekst klienta"></textarea>
           </label>
         </form>
       </section>
 
       <section class="card" aria-labelledby="tracker-title">
         <div class="section-head">
-          <h2 id="tracker-title">Content tracker</h2>
-          <button id="reset-tracker" type="button" class="btn subtle">Reset tracker to default items</button>
+          <h2 id="tracker-title">Tracker materiałów</h2>
+          <button id="reset-tracker" type="button" class="btn subtle">Przywróć domyślną listę elementów</button>
         </div>
 
-        <form id="controls" class="controls" aria-label="Filter and search controls">
+        <form id="controls" class="controls" aria-label="Kontrolki filtrowania i wyszukiwania">
           <label>
-            Category
+            Kategoria
             <select name="categoryFilter" id="category-filter"></select>
           </label>
           <label>
@@ -89,65 +88,65 @@
             <select name="statusFilter" id="status-filter"></select>
           </label>
           <label>
-            Priority
+            Priorytet
             <select name="priorityFilter" id="priority-filter"></select>
           </label>
           <label class="search-field">
-            Search item or note
-            <input type="search" name="searchFilter" id="search-filter" placeholder="Search by deliverable or note" />
+            Szukaj elementu lub notatki
+            <input type="search" name="searchFilter" id="search-filter" placeholder="Szukaj po elemencie lub notatce" />
           </label>
           <div class="actions-inline">
-            <button id="reset-filters" type="button" class="btn subtle">Reset filters</button>
+            <button id="reset-filters" type="button" class="btn subtle">Wyczyść filtry</button>
           </div>
         </form>
 
         <form id="add-item-form" class="add-item" novalidate>
-          <h3>Add custom item</h3>
+          <h3>Dodaj własny element</h3>
           <label>
-            Item name
-            <input type="text" name="itemName" maxlength="100" required placeholder="Example: Press kit PDF" />
+            Nazwa elementu
+            <input type="text" name="itemName" maxlength="100" required placeholder="Przykład: Press kit PDF" />
           </label>
           <label>
-            Category
+            Kategoria
             <select name="itemCategory" id="custom-category"></select>
           </label>
           <label>
-            Priority
+            Priorytet
             <select name="itemPriority" id="custom-priority"></select>
           </label>
           <label>
-            Requirement
+            Wymagalność
             <select name="itemRequired">
-              <option value="required">Required</option>
-              <option value="optional">Optional</option>
+              <option value="required">Wymagane</option>
+              <option value="optional">Opcjonalne</option>
             </select>
           </label>
           <label>
-            Owner
-            <input type="text" name="itemOwner" maxlength="80" placeholder="Client, PM, developer..." />
+            Właściciel
+            <input type="text" name="itemOwner" maxlength="80" placeholder="Klient, PM, developer..." />
           </label>
           <label class="span-full">
-            Notes
-            <textarea name="itemNotes" rows="2" maxlength="180" placeholder="Any acceptance criteria or source links"></textarea>
+            Notatki
+            <textarea name="itemNotes" rows="2" maxlength="180" placeholder="Kryteria akceptacji lub linki źródłowe"></textarea>
           </label>
-          <button type="submit" class="btn primary">Add custom item</button>
+          <button type="submit" class="btn primary">Dodaj własny element</button>
           <p id="add-item-feedback" role="status" aria-live="polite"></p>
         </form>
 
-        <div class="table-wrap" role="region" aria-label="Tracker items" tabindex="0">
+        <div class="table-wrap" role="region" aria-label="Elementy trackera" tabindex="0">
           <table>
             <thead>
               <tr>
-                <th>Item</th>
-                <th>Category</th>
+                <th>Element</th>
+                <th>Kategoria</th>
                 <th>Status</th>
-                <th>Priority</th>
-                <th>Required</th>
-                <th>Requested</th>
-                <th>Received</th>
-                <th>Owner</th>
-                <th>Notes</th>
-                <th>Action</th>
+                <th>Priorytet</th>
+                <th>Wymagane</th>
+                <th>Poproszono</th>
+                <th>Otrzymano</th>
+                <th>Właściciel</th>
+                <th>Notatki</th>
+                <th>Akcja</th>
               </tr>
             </thead>
             <tbody id="tracker-body"></tbody>
@@ -156,37 +155,37 @@
       </section>
 
       <section class="card" aria-labelledby="dashboard-title">
-        <h2 id="dashboard-title">Progress and risk summary</h2>
+        <h2 id="dashboard-title">Podsumowanie postępu i ryzyka</h2>
         <div class="metrics" id="metrics"></div>
         <p class="readiness">
-          <strong>Project readiness:</strong>
-          <span id="readiness-status">Not ready</span>
+          <strong>Gotowość projektu:</strong>
+          <span id="readiness-status">Niegotowy</span>
         </p>
       </section>
 
       <section class="card" aria-labelledby="missing-title">
-        <h2 id="missing-title">Missing materials summary</h2>
+        <h2 id="missing-title">Podsumowanie brakujących materiałów</h2>
         <div id="missing-summary" class="summary-output"></div>
-        <button id="copy-follow-up" type="button" class="btn primary">Copy client follow-up message</button>
+        <button id="copy-follow-up" type="button" class="btn primary">Skopiuj wiadomość follow-up do klienta</button>
       </section>
 
       <section class="card" aria-labelledby="export-title">
-        <h2 id="export-title">Export templates</h2>
+        <h2 id="export-title">Szablony do eksportu</h2>
         <div class="export-grid">
           <article>
-            <h3>Client request checklist</h3>
+            <h3>Checklista prośby do klienta</h3>
             <textarea id="export-client-checklist" rows="8" readonly></textarea>
-            <button class="btn subtle copy-export" type="button" data-export="export-client-checklist">Copy checklist</button>
+            <button class="btn subtle copy-export" type="button" data-export="export-client-checklist">Kopiuj checklistę</button>
           </article>
           <article>
-            <h3>Internal handoff summary</h3>
+            <h3>Wewnętrzne podsumowanie przekazania</h3>
             <textarea id="export-handoff" rows="8" readonly></textarea>
-            <button class="btn subtle copy-export" type="button" data-export="export-handoff">Copy handoff summary</button>
+            <button class="btn subtle copy-export" type="button" data-export="export-handoff">Kopiuj podsumowanie przekazania</button>
           </article>
           <article>
-            <h3>Missing materials follow-up</h3>
+            <h3>Follow-up brakujących materiałów</h3>
             <textarea id="export-follow-up" rows="8" readonly></textarea>
-            <button class="btn subtle copy-export" type="button" data-export="export-follow-up">Copy follow-up</button>
+            <button class="btn subtle copy-export" type="button" data-export="export-follow-up">Kopiuj follow-up</button>
           </article>
         </div>
       </section>

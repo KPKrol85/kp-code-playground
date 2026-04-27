@@ -1,55 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Payment Planner | KP_Code Digital Vault</title>
+  <title>Planer Płatności Projektu | KP_Code Digital Vault</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="page-header">
     <p class="vault-label">KP_Code Digital Vault</p>
-    <h1>Project Payment Planner</h1>
+    <h1>Planer Płatności Projektu</h1>
     <p class="intro">
-      Plan transparent project payment structures, invoice timing, and due dates for client website projects.
-      Built for practical freelance and studio workflow planning.
+      Planuj przejrzyste struktury płatności projektowych, terminy faktur i daty płatności dla projektów stron internetowych. Narzędzie stworzone pod praktyczny proces freelancera i studia.
     </p>
   </header>
 
   <main class="layout">
     <section class="panel planner" aria-labelledby="planner-heading">
-      <h2 id="planner-heading">Planner Inputs</h2>
+      <h2 id="planner-heading">Dane wejściowe planera</h2>
       <form id="planner-form" novalidate>
         <div class="field-group">
-          <label for="project-total">Project total amount (PLN)</label>
+          <label for="project-total">Łączna kwota projektu (PLN)</label>
           <input id="project-total" name="project-total" type="number" min="0" step="0.01" value="12000" required />
         </div>
 
         <div class="field-group">
-          <label for="payment-model">Payment model</label>
+          <label for="payment-model">Model płatności</label>
           <select id="payment-model" name="payment-model">
             <option value="30-40-30">30 / 40 / 30</option>
             <option value="40-40-20">40 / 40 / 20</option>
             <option value="50-30-20">50 / 30 / 20</option>
             <option value="50-50">50 / 50</option>
-            <option value="100-upfront">100 upfront</option>
-            <option value="custom">Custom split</option>
+            <option value="100-upfront">100 z góry</option>
+            <option value="custom">Podział własny</option>
           </select>
         </div>
 
         <fieldset id="custom-split-fields" class="field-group custom-split" hidden>
-          <legend>Custom split percentages</legend>
+          <legend>Podział własny percentages</legend>
           <div class="inline-fields">
             <div>
-              <label for="custom-deposit">Deposit (%)</label>
+              <label for="custom-deposit">Zaliczka (%)</label>
               <input id="custom-deposit" type="number" min="0" max="100" step="1" value="40" />
             </div>
             <div>
-              <label for="custom-milestone">Milestone pool (%)</label>
+              <label for="custom-milestone">Pula etapowa (%)</label>
               <input id="custom-milestone" type="number" min="0" max="100" step="1" value="40" />
             </div>
             <div>
-              <label for="custom-final">Final (%)</label>
+              <label for="custom-final">Końcowa (%)</label>
               <input id="custom-final" type="number" min="0" max="100" step="1" value="20" />
             </div>
           </div>
@@ -57,103 +56,103 @@
         </fieldset>
 
         <div class="field-group">
-          <label for="milestones">Number of milestones</label>
+          <label for="milestones">Liczba etapów</label>
           <select id="milestones" name="milestones">
-            <option value="0">0 milestones</option>
-            <option value="1">1 milestone</option>
-            <option value="2" selected>2 milestones</option>
-            <option value="3">3 milestones</option>
+            <option value="0">0 etapów</option>
+            <option value="1">1 etap</option>
+            <option value="2" selected>2 etapy</option>
+            <option value="3">3 etapy</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="start-date">Project start date</label>
+          <label for="start-date">Data startu projektu</label>
           <input id="start-date" name="start-date" type="date" />
         </div>
 
         <div class="field-group">
-          <label for="duration-weeks">Planned project duration</label>
+          <label for="duration-weeks">Planowany czas trwania projektu</label>
           <select id="duration-weeks" name="duration-weeks">
-            <option value="1">1 week</option>
-            <option value="2">2 weeks</option>
-            <option value="4" selected>4 weeks</option>
-            <option value="6">6 weeks</option>
-            <option value="8">8 weeks</option>
-            <option value="12">12 weeks</option>
+            <option value="1">1 tydzień</option>
+            <option value="2">2 tygodnie</option>
+            <option value="4" selected>4 tygodnie</option>
+            <option value="6">6 tygodni</option>
+            <option value="8">8 tygodni</option>
+            <option value="12">12 tygodnie</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="vat-mode">VAT mode</label>
+          <label for="vat-mode">Tryb VAT</label>
           <select id="vat-mode" name="vat-mode">
-            <option value="none">No VAT / net amount only</option>
-            <option value="vat23">Add 23% VAT</option>
+            <option value="none">Bez VAT / tylko kwota netto</option>
+            <option value="vat23">Dodaj 23% VAT</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="invoice-prefix">Invoice label prefix</label>
+          <label for="invoice-prefix">Prefiks numeracji faktur</label>
           <input id="invoice-prefix" name="invoice-prefix" type="text" value="KP-DV" maxlength="20" />
         </div>
 
         <div class="field-group">
-          <label for="due-days">Payment due days</label>
+          <label for="due-days">Termin płatności (dni)</label>
           <input id="due-days" name="due-days" type="number" value="7" min="0" max="60" required />
         </div>
 
         <div class="actions">
-          <button type="button" id="copy-plan">Copy payment plan</button>
-          <button type="reset" id="reset-form" class="secondary">Reset defaults</button>
+          <button type="button" id="copy-plan">Kopiuj plan płatności</button>
+          <button type="reset" id="reset-form" class="secondary">Przywróć domyślne</button>
         </div>
       </form>
     </section>
 
     <section class="panel results" aria-labelledby="results-heading">
-      <h2 id="results-heading">Live Payment Plan</h2>
+      <h2 id="results-heading">Plan płatności na żywo</h2>
       <div id="alerts" class="alerts" aria-live="polite"></div>
 
       <dl class="totals">
         <div>
-          <dt>Input amount</dt>
+          <dt>Kwota wejściowa</dt>
           <dd id="input-amount">—</dd>
         </div>
         <div>
-          <dt>VAT amount</dt>
+          <dt>Kwota VAT</dt>
           <dd id="vat-amount">—</dd>
         </div>
         <div>
-          <dt>Project total used for schedule</dt>
+          <dt>Łączna kwota projektu użyta w harmonogramie</dt>
           <dd id="gross-amount">—</dd>
         </div>
         <div>
-          <dt>Payment model</dt>
+          <dt>Model płatności</dt>
           <dd id="model-label">—</dd>
         </div>
         <div>
-          <dt>Deposit amount</dt>
+          <dt>Kwota zaliczki</dt>
           <dd id="deposit-amount">—</dd>
         </div>
         <div>
-          <dt>Milestone pool amount</dt>
+          <dt>Kwota puli etapowej</dt>
           <dd id="milestone-pool">—</dd>
         </div>
         <div>
-          <dt>Final payment amount</dt>
+          <dt>Kwota płatności końcowej</dt>
           <dd id="final-amount">—</dd>
         </div>
       </dl>
 
-      <h3>Payment schedule</h3>
+      <h3>Harmonogram płatności</h3>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Invoice</th>
-              <th>Type</th>
-              <th>Share</th>
-              <th>Issue date</th>
-              <th>Due date</th>
-              <th>Amount</th>
+              <th>Faktura</th>
+              <th>Typ</th>
+              <th>Udział</th>
+              <th>Data wystawienia</th>
+              <th>Termin płatności</th>
+              <th>Kwota</th>
             </tr>
           </thead>
           <tbody id="schedule-body"></tbody>
@@ -164,45 +163,44 @@
       <p id="milestone-note" class="note" hidden></p>
       <p id="copy-message" class="message" aria-live="polite"></p>
       <p class="disclaimer">
-        Disclaimer: This planner supports budgeting and project planning workflows. It does not replace accounting,
-        tax, legal, or contract advice.
+        Zastrzeżenie: To narzędzie wspiera planowanie budżetu i projektu. Nie zastępuje porad księgowych, podatkowych, prawnych ani umownych.
       </p>
     </section>
   </main>
 
   <section class="panel info" aria-labelledby="how-to-use-heading">
-    <h2 id="how-to-use-heading">How to use this planner</h2>
+    <h2 id="how-to-use-heading">Jak korzystać z planera</h2>
     <ol>
-      <li>Enter your planned project amount and choose whether VAT should be added.</li>
-      <li>Select a payment model or define a custom split that totals exactly 100%.</li>
-      <li>Set milestones, start date, duration, invoice prefix, and due day terms.</li>
-      <li>Review the schedule, confirm totals, and copy the plan into your proposal or brief.</li>
+      <li>Wpisz planowaną kwotę projektu i wybierz, czy doliczyć VAT.</li>
+      <li>Wybierz model płatności lub ustaw własny podział, który sumuje się dokładnie do 100%.</li>
+      <li>Ustaw etapy, datę startu, czas trwania, prefiks faktur i dni terminu płatności.</li>
+      <li>Sprawdź harmonogram, potwierdź kwoty i skopiuj plan do oferty lub briefu.</li>
     </ol>
   </section>
 
   <section class="panel info" aria-labelledby="recommended-models-heading">
-    <h2 id="recommended-models-heading">Recommended payment models</h2>
+    <h2 id="recommended-models-heading">Rekomendowane modele płatności</h2>
     <ul>
-      <li><strong>30 / 40 / 30</strong> — balanced for medium projects with defined delivery checkpoints.</li>
-      <li><strong>40 / 40 / 20</strong> — stronger liquidity during build with moderate final settlement.</li>
-      <li><strong>50 / 30 / 20</strong> — ideal when discovery and architecture are front-loaded.</li>
-      <li><strong>50 / 50</strong> — simpler two-invoice flow for compact builds.</li>
-      <li><strong>100 upfront</strong> — useful for short engagements and quick-turn retainers.</li>
+      <li><strong>30 / 40 / 30</strong> — zbalansowany dla średnich projektów z jasno określonymi checkpointami.</li>
+      <li><strong>40 / 40 / 20</strong> — większa płynność podczas realizacji i umiarkowana płatność końcowa.</li>
+      <li><strong>50 / 30 / 20</strong> — dobry, gdy discovery i architektura są mocno obciążone na starcie.</li>
+      <li><strong>50 / 50</strong> — prosty model dwufakturowy dla mniejszych realizacji.</li>
+      <li><strong>100 z góry</strong> — przydatny przy krótkich zleceniach i szybkich retainerach.</li>
     </ul>
   </section>
 
   <section class="panel info" aria-labelledby="billing-notes-heading">
-    <h2 id="billing-notes-heading">Important billing notes</h2>
+    <h2 id="billing-notes-heading">Ważne uwagi rozliczeniowe</h2>
     <ul>
-      <li>Confirm payment triggers in your contract for each invoice row.</li>
-      <li>Align milestone names with concrete deliverables or approval checkpoints.</li>
-      <li>Keep due-day terms consistent with your invoice templates and jurisdiction.</li>
-      <li>Before sending to clients, review tax setup and legal wording with professionals.</li>
+      <li>Potwierdź w umowie wyzwalacze płatności dla każdej pozycji faktury.</li>
+      <li>Dopasuj nazwy etapów do konkretnych deliverables lub punktów akceptacji.</li>
+      <li>Utrzymuj spójne terminy płatności z szablonami faktur i lokalnymi wymaganiami.</li>
+      <li>Przed wysyłką do klienta zweryfikuj ustawienia podatkowe i zapisy prawne ze specjalistą.</li>
     </ul>
   </section>
 
   <footer class="page-footer">
-    <p>KP_Code Digital Vault · Professional planning tools for modern freelancers and small studios.</p>
+    <p>KP_Code Digital Vault · Profesjonalne narzędzia planistyczne dla nowoczesnych freelancerów i małych studiów.</p>
   </footer>
 
   <script src="script.js"></script>

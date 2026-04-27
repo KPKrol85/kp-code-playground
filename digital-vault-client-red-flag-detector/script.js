@@ -12,36 +12,36 @@
 
   const riskProfiles = {
     low: {
-      label: "Low risk",
+      label: "Niskie ryzyko",
       className: "low",
       explanation:
-        "Client looks manageable. Proceed with your normal process and keep documentation clear.",
+        "Sytuacja wygląda stabilnie. Działaj zgodnie ze swoim standardowym procesem i dbaj o jasną dokumentację.",
       steps: [
-        "Share your standard proposal and timeline.",
-        "Define deliverables and revision limits in writing.",
-        "Confirm deposit and start date before kickoff."
+        "Wyślij standardową ofertę i harmonogram.",
+        "Opisz na piśmie zakres dostarczanych elementów i limity poprawek.",
+        "Potwierdź zaliczkę i datę startu przed rozpoczęciem prac."
       ]
     },
     medium: {
-      label: "Medium risk",
+      label: "Średnie ryzyko",
       className: "medium",
       explanation:
-        "Potential friction detected. Clarify scope, payment terms, timeline, and contract details before starting.",
+        "Wykryto potencjalne tarcia. Przed startem doprecyzuj zakres, warunki płatności, harmonogram i zapisy umowy.",
       steps: [
-        "Break work into clear phases and approvals.",
-        "Require a signed agreement with revision boundaries.",
-        "Collect a deposit before scheduling active production."
+        "Podziel prace na czytelne etapy i punkty akceptacji.",
+        "Wymagaj podpisanej umowy z jasno określonym limitem poprawek.",
+        "Pobierz zaliczkę przed wejściem w aktywną realizację."
       ]
     },
     high: {
-      label: "High risk",
+      label: "Wysokie ryzyko",
       className: "high",
       explanation:
-        "Multiple warning signs detected. Pause and set firm boundaries before taking on the project.",
+        "Wykryto wiele sygnałów ostrzegawczych. Zatrzymaj proces i ustal twarde zasady przed przyjęciem projektu.",
       steps: [
-        "Require a written agreement and explicit scope before work.",
-        "Collect a meaningful upfront deposit and milestone payments.",
-        "Decline or defer if expectations remain unclear or unsafe."
+        "Wymagaj pisemnej umowy i jednoznacznie zdefiniowanego zakresu przed rozpoczęciem prac.",
+        "Ustal realną zaliczkę na start oraz płatności etapowe.",
+        "Odrzuć lub odłóż projekt, jeśli oczekiwania nadal są niejasne albo ryzykowne."
       ]
     }
   };

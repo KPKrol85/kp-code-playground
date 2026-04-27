@@ -1,49 +1,49 @@
 (() => {
   const STATUSES = [
-    'Not requested',
-    'Requested',
-    'In progress',
-    'Received',
-    'Needs revision',
-    'Approved',
-    'Blocked'
+    'Niepoproszono',
+    'Poproszono',
+    'W trakcie',
+    'Otrzymano',
+    'Wymaga poprawek',
+    'Zatwierdzono',
+    'Zablokowane'
   ];
 
-  const PRIORITIES = ['Low', 'Medium', 'High', 'Critical'];
+  const PRIORITIES = ['Niski', 'Średni', 'Wysoki', 'Krytyczny'];
 
   const CATEGORIES = [
-    'Brand assets',
-    'Website content',
-    'Contact and business data',
-    'Social media and marketing',
-    'Legal and compliance',
-    'Technical access',
-    'Optional project extras'
+    'Materiały marki',
+    'Treści strony',
+    'Dane kontaktowe i firmowe',
+    'Social media i marketing',
+    'Aspekty prawne i zgodność',
+    'Dostępy techniczne',
+    'Opcjonalne dodatki projektowe'
   ];
 
   const STORAGE_KEY = 'dvContentDeliveryTracker.v1';
 
   const defaultItems = [
-    item('Logo files (SVG, PNG, favicon)', 'Brand assets', 'High', 'required'),
-    item('Brand colors and guidelines', 'Brand assets', 'High', 'required'),
-    item('Website photos / approved image pack', 'Brand assets', 'Medium', 'required'),
-    item('Page copy (home, services, about, contact)', 'Website content', 'Critical', 'required'),
-    item('Product / service descriptions', 'Website content', 'High', 'required'),
-    item('Testimonials / case studies', 'Website content', 'Medium', 'optional'),
-    item('Team information and bios', 'Website content', 'Medium', 'optional'),
-    item('Contact details and business hours', 'Contact and business data', 'Critical', 'required'),
-    item('Pricing information', 'Contact and business data', 'High', 'required'),
-    item('Social profile links', 'Social media and marketing', 'Medium', 'optional'),
-    item('Privacy policy', 'Legal and compliance', 'Critical', 'required'),
-    item('Terms and conditions', 'Legal and compliance', 'High', 'required'),
-    item('Cookie policy', 'Legal and compliance', 'High', 'required'),
-    item('Hosting access credentials', 'Technical access', 'Critical', 'required'),
-    item('Domain registrar access', 'Technical access', 'Critical', 'required'),
-    item('CMS access details', 'Technical access', 'Critical', 'required'),
-    item('Analytics access (GA4 / GTM)', 'Technical access', 'Medium', 'optional'),
-    item('Email / SMTP details', 'Technical access', 'High', 'required'),
-    item('Downloadable files (PDFs, lead magnets)', 'Optional project extras', 'Low', 'optional'),
-    item('Extra notes from client', 'Optional project extras', 'Low', 'optional')
+    item('Logo files (SVG, PNG, favicon)', 'Materiały marki', 'Wysoki', 'wymagane'),
+    item('Brand colors and guidelines', 'Materiały marki', 'Wysoki', 'wymagane'),
+    item('Website photos / approved image pack', 'Materiały marki', 'Średni', 'wymagane'),
+    item('Page copy (home, services, about, contact)', 'Treści strony', 'Krytyczny', 'wymagane'),
+    item('Product / service descriptions', 'Treści strony', 'Wysoki', 'wymagane'),
+    item('Testimonials / case studies', 'Treści strony', 'Średni', 'opcjonalne'),
+    item('Team information and bios', 'Treści strony', 'Średni', 'opcjonalne'),
+    item('Contact details and business hours', 'Dane kontaktowe i firmowe', 'Krytyczny', 'wymagane'),
+    item('Pricing information', 'Dane kontaktowe i firmowe', 'Wysoki', 'wymagane'),
+    item('Social profile links', 'Social media i marketing', 'Średni', 'opcjonalne'),
+    item('Privacy policy', 'Aspekty prawne i zgodność', 'Krytyczny', 'wymagane'),
+    item('Terms and conditions', 'Aspekty prawne i zgodność', 'Wysoki', 'wymagane'),
+    item('Cookie policy', 'Aspekty prawne i zgodność', 'Wysoki', 'wymagane'),
+    item('Hosting access credentials', 'Dostępy techniczne', 'Krytyczny', 'wymagane'),
+    item('Domain registrar access', 'Dostępy techniczne', 'Krytyczny', 'wymagane'),
+    item('CMS access details', 'Dostępy techniczne', 'Krytyczny', 'wymagane'),
+    item('Analytics access (GA4 / GTM)', 'Dostępy techniczne', 'Średni', 'opcjonalne'),
+    item('Email / SMTP details', 'Dostępy techniczne', 'Wysoki', 'wymagane'),
+    item('Downloadable files (PDFs, lead magnets)', 'Opcjonalne dodatki projektowe', 'Niski', 'opcjonalne'),
+    item('Extra notes from client', 'Opcjonalne dodatki projektowe', 'Niski', 'opcjonalne')
   ];
 
   const els = {
@@ -80,9 +80,9 @@
       notes: ''
     },
     filters: {
-      category: 'All categories',
-      status: 'All statuses',
-      priority: 'All priorities',
+      category: 'Wszystkie kategorie',
+      status: 'Wszystkie statusy',
+      priority: 'Wszystkie priorytety',
       search: ''
     },
     items: defaultItems.map((entry) => ({ ...entry }))
@@ -104,7 +104,7 @@
       id: `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Math.random().toString(16).slice(2, 8)}`,
       name,
       category,
-      status: 'Not requested',
+      status: 'Niepoproszono',
       priority,
       required,
       requestedDate: '',
@@ -116,9 +116,9 @@
   }
 
   function renderSelectOptions() {
-    renderSelect(els.categoryFilter, ['All categories', ...CATEGORIES]);
-    renderSelect(els.statusFilter, ['All statuses', ...STATUSES]);
-    renderSelect(els.priorityFilter, ['All priorities', ...PRIORITIES]);
+    renderSelect(els.categoryFilter, ['Wszystkie kategorie', ...CATEGORIES]);
+    renderSelect(els.statusFilter, ['Wszystkie statusy', ...STATUSES]);
+    renderSelect(els.priorityFilter, ['Wszystkie priorytety', ...PRIORITIES]);
     renderSelect(els.customCategory, CATEGORIES);
     renderSelect(els.customPriority, PRIORITIES);
 
@@ -139,22 +139,22 @@
     });
 
     els.resetFiltersBtn.addEventListener('click', () => {
-      state.filters = { category: 'All categories', status: 'All statuses', priority: 'All priorities', search: '' };
+      state.filters = { category: 'Wszystkie kategorie', status: 'Wszystkie statusy', priority: 'Wszystkie priorytety', search: '' };
       els.searchFilter.value = '';
       renderAll();
-      announce('Filters reset. Showing all tracker items.');
+      announce('Filtry wyczyszczone. Pokazuję wszystkie elementy trackera.');
     });
 
     els.addItemForm.addEventListener('submit', handleAddItem);
     els.trackerBody.addEventListener('input', handleRowInput);
     els.trackerBody.addEventListener('click', handleRowActions);
-    els.copyFollowUp.addEventListener('click', () => copyText(els.exportFollowUp.value, 'Follow-up message copied.'));
+    els.copyFollowUp.addEventListener('click', () => copyText(els.exportFollowUp.value, 'Wiadomość follow-up skopiowana.'));
     document.querySelectorAll('.copy-export').forEach((button) => {
       button.addEventListener('click', () => {
         const id = button.dataset.export;
         const field = document.getElementById(id);
         if (!field) return;
-        copyText(field.value, 'Template copied to clipboard.');
+        copyText(field.value, 'Szablon skopiowany do schowka.');
       });
     });
 
@@ -162,7 +162,7 @@
       state.items = defaultItems.map((entry) => ({ ...entry }));
       persist();
       renderAll();
-      announce('Tracker reset to default starter list.');
+      announce('Tracker przywrócono do domyślnej listy startowej.');
     });
   }
 
@@ -192,7 +192,7 @@
     const name = String(formData.get('itemName') || '').trim();
 
     if (!name) {
-      els.addItemFeedback.textContent = 'Item name is required.';
+      els.addItemFeedback.textContent = 'Nazwa elementu jest wymagana.';
       els.addItemFeedback.classList.add('error-text');
       return;
     }
@@ -201,7 +201,7 @@
       id: `custom-${Date.now()}`,
       name,
       category: String(formData.get('itemCategory')),
-      status: 'Not requested',
+      status: 'Niepoproszono',
       priority: String(formData.get('itemPriority')),
       required: String(formData.get('itemRequired')),
       requestedDate: '',
@@ -214,8 +214,8 @@
     state.items.push(newItem);
     els.addItemForm.reset();
     els.customCategory.value = CATEGORIES[0];
-    els.customPriority.value = 'Low';
-    els.addItemFeedback.textContent = `Custom item added: ${newItem.name}.`;
+    els.customPriority.value = 'Niski';
+    els.addItemFeedback.textContent = `Dodano własny element: ${newItem.name}.`;
     els.addItemFeedback.classList.remove('error-text');
     persist();
     renderAll();
@@ -250,7 +250,7 @@
     state.items = state.items.filter((entry) => entry.id !== row.dataset.id);
     persist();
     renderAll();
-    announce('Custom item removed from tracker.');
+    announce('Usunięto własny element z trackera.');
   }
 
   function renderAll() {
@@ -262,11 +262,11 @@
 
   function renderProjectSummary() {
     const fallback = {
-      clientName: 'Not set',
-      projectName: 'Not set',
-      projectType: 'Not set',
-      deadline: 'Not set',
-      manager: 'Not set',
+      clientName: 'Nie ustawiono',
+      projectName: 'Nie ustawiono',
+      projectType: 'Nie ustawiono',
+      deadline: 'Nie ustawiono',
+      manager: 'Nie ustawiono',
       notes: '—'
     };
 
@@ -284,9 +284,9 @@
 
   function getFilteredItems() {
     return state.items.filter((entry) => {
-      const categoryOk = state.filters.category === 'All categories' || entry.category === state.filters.category;
-      const statusOk = state.filters.status === 'All statuses' || entry.status === state.filters.status;
-      const priorityOk = state.filters.priority === 'All priorities' || entry.priority === state.filters.priority;
+      const categoryOk = state.filters.category === 'Wszystkie kategorie' || entry.category === state.filters.category;
+      const statusOk = state.filters.status === 'Wszystkie statusy' || entry.status === state.filters.status;
+      const priorityOk = state.filters.priority === 'Wszystkie priorytety' || entry.priority === state.filters.priority;
       const searchHaystack = `${entry.name} ${entry.notes}`.toLowerCase();
       const searchOk = !state.filters.search || searchHaystack.includes(state.filters.search);
       return categoryOk && statusOk && priorityOk && searchOk;
@@ -296,15 +296,15 @@
   function renderTracker() {
     const visible = getFilteredItems();
     if (!visible.length) {
-      els.trackerBody.innerHTML = '<tr><td colspan="10">No tracker items match the selected filters.</td></tr>';
+      els.trackerBody.innerHTML = '<tr><td colspan="10">Brak elementów pasujących do wybranych filtrów.</td></tr>';
       return;
     }
 
     els.trackerBody.innerHTML = visible
       .map((entry) => {
         const removeButton = entry.isCustom
-          ? '<button type="button" class="btn subtle remove-custom">Remove</button>'
-          : '<small>Default item</small>';
+          ? '<button type="button" class="btn subtle remove-custom">Usuń</button>'
+          : '<small>Element domyślny</small>';
 
         return `
           <tr data-id="${escapeHtml(entry.id)}">
@@ -312,11 +312,11 @@
             <td>${escapeHtml(entry.category)}</td>
             <td>${selectHtml('status', STATUSES, entry.status)}</td>
             <td>${selectHtml('priority', PRIORITIES, entry.priority)}</td>
-            <td>${selectHtml('required', ['required', 'optional'], entry.required)}</td>
-            <td><input class="inline-field" data-field="requestedDate" type="date" value="${escapeHtml(entry.requestedDate)}" aria-label="Requested date for ${escapeHtml(entry.name)}" /></td>
-            <td><input class="inline-field" data-field="receivedDate" type="date" value="${escapeHtml(entry.receivedDate)}" aria-label="Received date for ${escapeHtml(entry.name)}" /></td>
-            <td><input data-field="owner" type="text" value="${escapeHtml(entry.owner)}" maxlength="80" aria-label="Owner for ${escapeHtml(entry.name)}" /></td>
-            <td><textarea data-field="notes" rows="2" maxlength="180" aria-label="Notes for ${escapeHtml(entry.name)}">${escapeHtml(entry.notes)}</textarea></td>
+            <td>${selectHtml('required', ['wymagane', 'opcjonalne'], entry.required)}</td>
+            <td><input class="inline-field" data-field="requestedDate" type="date" value="${escapeHtml(entry.requestedDate)}" aria-label="Data prośby dla ${escapeHtml(entry.name)}" /></td>
+            <td><input class="inline-field" data-field="receivedDate" type="date" value="${escapeHtml(entry.receivedDate)}" aria-label="Data otrzymania dla ${escapeHtml(entry.name)}" /></td>
+            <td><input data-field="owner" type="text" value="${escapeHtml(entry.owner)}" maxlength="80" aria-label="Właściciel dla ${escapeHtml(entry.name)}" /></td>
+            <td><textarea data-field="notes" rows="2" maxlength="180" aria-label="Notatki dla ${escapeHtml(entry.name)}">${escapeHtml(entry.notes)}</textarea></td>
             <td>${removeButton}</td>
           </tr>
         `;
@@ -329,12 +329,12 @@
     const readiness = calcReadiness(totals);
 
     const metrics = [
-      ['Total items', totals.total],
-      ['Received items', totals.received],
-      ['Approved items', totals.approved],
-      ['Missing required', totals.missingRequired],
-      ['Blocked items', totals.blocked],
-      ['Completion', `${totals.completion}%`]
+      ['Liczba elementów', totals.total],
+      ['Elementy otrzymane', totals.received],
+      ['Elementy zatwierdzone', totals.approved],
+      ['Brakujące wymagane', totals.missingRequired],
+      ['Elementy zablokowane', totals.blocked],
+      ['Postęp', `${totals.completion}%`]
     ];
 
     els.metrics.innerHTML = metrics
@@ -342,15 +342,15 @@
       .join('');
 
     els.readiness.textContent = readiness;
-    els.readiness.className = readiness.startsWith('High risk') ? 'warning-text' : '';
+    els.readiness.className = readiness.startsWith('Wysokie ryzyko') ? 'warning-text' : '';
   }
 
   function calcTotals() {
     const total = state.items.length;
-    const approved = state.items.filter((entry) => entry.status === 'Approved').length;
-    const received = state.items.filter((entry) => ['Received', 'Approved'].includes(entry.status)).length;
-    const missingRequired = state.items.filter((entry) => entry.required === 'required' && !['Received', 'Approved'].includes(entry.status)).length;
-    const blocked = state.items.filter((entry) => entry.status === 'Blocked').length;
+    const approved = state.items.filter((entry) => entry.status === 'Zatwierdzono').length;
+    const received = state.items.filter((entry) => ['Otrzymano', 'Zatwierdzono'].includes(entry.status)).length;
+    const missingRequired = state.items.filter((entry) => entry.required === 'wymagane' && !['Otrzymano', 'Zatwierdzono'].includes(entry.status)).length;
+    const blocked = state.items.filter((entry) => entry.status === 'Zablokowane').length;
     const completion = total === 0 ? 0 : Math.round((approved / total) * 100);
 
     return { total, approved, received, missingRequired, blocked, completion };
@@ -358,32 +358,32 @@
 
   function calcReadiness(totals) {
     const pendingCritical = state.items.some(
-      (entry) => entry.priority === 'Critical' && entry.required === 'required' && entry.status !== 'Approved'
+      (entry) => entry.priority === 'Krytyczny' && entry.required === 'wymagane' && entry.status !== 'Zatwierdzono'
     );
 
-    if (totals.blocked > 0 && pendingCritical) return 'High risk: missing critical materials';
-    if (totals.missingRequired > 0 && totals.completion < 55) return 'Waiting for client materials';
-    if (totals.missingRequired > 0) return 'Not ready';
-    if (totals.completion >= 85) return 'Ready for production';
-    if (totals.completion >= 65) return 'Almost ready';
-    return 'Not ready';
+    if (totals.blocked > 0 && pendingCritical) return 'Wysokie ryzyko: brakuje krytycznych materiałów';
+    if (totals.missingRequired > 0 && totals.completion < 55) return 'Oczekiwanie na materiały od klienta';
+    if (totals.missingRequired > 0) return 'Niegotowy';
+    if (totals.completion >= 85) return 'Gotowy do produkcji';
+    if (totals.completion >= 65) return 'Prawie gotowy';
+    return 'Niegotowy';
   }
 
   function renderExportsAndSummary() {
     const missingRequired = state.items.filter(
-      (entry) => entry.required === 'required' && !['Received', 'Approved'].includes(entry.status)
+      (entry) => entry.required === 'wymagane' && !['Otrzymano', 'Zatwierdzono'].includes(entry.status)
     );
-    const blocked = state.items.filter((entry) => entry.status === 'Blocked');
-    const revision = state.items.filter((entry) => entry.status === 'Needs revision');
+    const blocked = state.items.filter((entry) => entry.status === 'Zablokowane');
+    const revision = state.items.filter((entry) => entry.status === 'Wymaga poprawek');
     const criticalPending = state.items.filter(
-      (entry) => entry.priority === 'Critical' && entry.status !== 'Approved'
+      (entry) => entry.priority === 'Krytyczny' && entry.status !== 'Zatwierdzono'
     );
 
     els.missingSummary.innerHTML = summarySection([
-      ['Missing required items', missingRequired],
-      ['Blocked items', blocked],
-      ['Items needing revision', revision],
-      ['Critical items not approved', criticalPending]
+      ['Brakujące wymagane elementy', missingRequired],
+      ['Elementy zablokowane', blocked],
+      ['Elementy wymagające poprawek', revision],
+      ['Krytyczne elementy bez akceptacji', criticalPending]
     ]);
 
     els.exportChecklist.value = buildChecklistText();
@@ -392,9 +392,9 @@
   }
 
   function buildChecklistText() {
-    const heading = `Client request checklist${projectLabel()}`;
+    const heading = `Checklista prośby do klienta${projectLabel()}`;
     const lines = state.items.map(
-      (entry) => `- [ ] ${entry.name} (${entry.category}) · priority: ${entry.priority} · ${entry.required}`
+      (entry) => `- [ ] ${entry.name} (${entry.category}) · priorytet: ${entry.priority} · ${entry.required}`
     );
     return [heading, '', ...lines].join('\n');
   }
@@ -402,48 +402,48 @@
   function buildHandoffText() {
     const totals = calcTotals();
     const lines = [
-      `Internal handoff summary${projectLabel()}`,
-      `Owner: ${state.project.manager || 'Not set'}`,
-      `Deadline: ${state.project.deadline || 'Not set'}`,
+      `Wewnętrzne podsumowanie przekazania${projectLabel()}`,
+      `Odpowiedzialny: ${state.project.manager || 'Nie ustawiono'}`,
+      `Termin: ${state.project.deadline || 'Nie ustawiono'}`,
       '',
-      `Total items: ${totals.total}`,
-      `Approved: ${totals.approved}`,
-      `Received: ${totals.received}`,
-      `Missing required: ${totals.missingRequired}`,
-      `Blocked: ${totals.blocked}`,
+      `Liczba elementów: ${totals.total}`,
+      `Zatwierdzone: ${totals.approved}`,
+      `Otrzymane: ${totals.received}`,
+      `Brakujące wymagane: ${totals.missingRequired}`,
+      `Zablokowane: ${totals.blocked}`,
       '',
-      'Open items:',
+      'Otwarte elementy:',
       ...state.items
-        .filter((entry) => !['Received', 'Approved'].includes(entry.status))
-        .map((entry) => `- ${entry.name} · status: ${entry.status} · priority: ${entry.priority} · owner: ${entry.owner || 'unassigned'}`)
+        .filter((entry) => !['Otrzymano', 'Zatwierdzono'].includes(entry.status))
+        .map((entry) => `- ${entry.name} · status: ${entry.status} · priorytet: ${entry.priority} · właściciel: ${entry.owner || 'nieprzypisany'}`)
     ];
 
     return lines.join('\n');
   }
 
   function buildFollowUpText(missingRequired, blocked, revision, criticalPending) {
-    const client = state.project.clientName || 'there';
-    const projectName = state.project.projectName ? ` for ${state.project.projectName}` : '';
+    const client = state.project.clientName || 'Kliencie';
+    const projectName = state.project.projectName ? ` dla ${state.project.projectName}` : '';
 
     const lines = [
-      `Hello ${client},`,
+      `Cześć ${client},`,
       '',
-      `Quick follow-up regarding the content and access materials${projectName}.`,
-      'To keep delivery on schedule, we still need the items below:',
+      `Przesyłam krótkie podsumowanie brakujących materiałów i dostępów${projectName}.`,
+      'Żeby utrzymać termin realizacji, potrzebujemy jeszcze elementów poniżej:',
       ''
     ];
 
-    appendGroup(lines, 'Missing required items', missingRequired);
-    appendGroup(lines, 'Blocked items', blocked);
-    appendGroup(lines, 'Needs revision', revision);
-    appendGroup(lines, 'Critical items pending approval', criticalPending);
+    appendGroup(lines, 'Brakujące wymagane elementy', missingRequired);
+    appendGroup(lines, 'Elementy zablokowane', blocked);
+    appendGroup(lines, 'Wymaga poprawek', revision);
+    appendGroup(lines, 'Krytyczne elementy oczekujące na akceptację', criticalPending);
 
     lines.push(
       '',
-      'Timeline note: project progress and launch timing may depend on receiving or approving these materials.',
-      'Thank you for your support and quick response.',
+      'Uwaga terminowa: postęp projektu i data wdrożenia zależą od dostarczenia lub zatwierdzenia tych materiałów.',
+      'Dziękuję za wsparcie i szybką odpowiedź.',
       '',
-      'Best regards,'
+      'Pozdrawiam,'
     );
 
     return lines.join('\n');
@@ -462,13 +462,13 @@
     const client = state.project.clientName;
     const project = state.project.projectName;
     if (!client && !project) return '';
-    return ` · ${client || 'Client'}${project ? ` / ${project}` : ''}`;
+    return ` · ${client || 'Klient'}${project ? ` / ${project}` : ''}`;
   }
 
   function summarySection(groups) {
     const parts = groups
       .map(([title, entries]) => {
-        if (!entries.length) return `<article><h3>${title}</h3><p>None currently.</p></article>`;
+        if (!entries.length) return `<article><h3>${title}</h3><p>Brak na ten moment.</p></article>`;
         const rows = entries.map((entry) => `<li><strong>${escapeHtml(entry.name)}</strong> <span>(${escapeHtml(entry.status)} · ${escapeHtml(entry.priority)})</span></li>`).join('');
         return `<article><h3>${title}</h3><ul>${rows}</ul></article>`;
       })
@@ -506,7 +506,7 @@
 
   async function copyText(text, successMessage) {
     if (!text.trim()) {
-      announce('Nothing to copy yet.');
+      announce('Na razie nie ma czego kopiować.');
       return;
     }
 

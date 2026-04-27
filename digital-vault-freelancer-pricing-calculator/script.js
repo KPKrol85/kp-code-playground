@@ -104,7 +104,7 @@
 
   function buildAddonsBreakdown(parts) {
     if (parts.length === 0) {
-      return "No add-ons selected";
+      return "Brak wybranych dodatków";
     }
 
     return parts.join(" • ");
@@ -119,35 +119,35 @@
     let extrasTotal = pagesCost;
 
     if (additionalPages > 0) {
-      parts.push(`Additional pages (${additionalPages}): ${formatCurrency(pagesCost)}`);
+      parts.push(`Dodatkowe podstrony (${additionalPages}): ${formatCurrency(pagesCost)}`);
     }
 
     if (state.contactForm) {
       extrasTotal += pricingConfig.extras.contactForm;
-      parts.push(`Contact form: ${formatCurrency(pricingConfig.extras.contactForm)}`);
+      parts.push(`Formularz kontaktowy: ${formatCurrency(pricingConfig.extras.contactForm)}`);
     }
 
     if (state.cmsIntegration) {
       extrasTotal += pricingConfig.extras.cmsIntegration;
-      parts.push(`CMS integration: ${formatCurrency(pricingConfig.extras.cmsIntegration)}`);
+      parts.push(`Integracja CMS: ${formatCurrency(pricingConfig.extras.cmsIntegration)}`);
     }
 
     if (state.seoSetup) {
       extrasTotal += pricingConfig.extras.seoSetup;
-      parts.push(`SEO starter setup: ${formatCurrency(pricingConfig.extras.seoSetup)}`);
+      parts.push(`Podstawowa konfiguracja SEO: ${formatCurrency(pricingConfig.extras.seoSetup)}`);
     }
 
     const revisionCost = pricingConfig.extras.revisions[state.revisionRounds] ?? 0;
     if (revisionCost > 0) {
       extrasTotal += revisionCost;
-      parts.push(`Revisions (${state.revisionRounds}): ${formatCurrency(revisionCost)}`);
+      parts.push(`Poprawki (${state.revisionRounds}): ${formatCurrency(revisionCost)}`);
     }
 
     let subtotal = basePrice + extrasTotal;
     if (state.expressDeadline) {
       const expressFee = subtotal * pricingConfig.extras.expressMultiplier;
       subtotal += expressFee;
-      parts.push(`Express deadline (+25%): ${formatCurrency(expressFee)}`);
+      parts.push(`Tryb ekspresowy (+25%): ${formatCurrency(expressFee)}`);
     }
 
     const marginAmount = subtotal * (state.marginPercent / 100);

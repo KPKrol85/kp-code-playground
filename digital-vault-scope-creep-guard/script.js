@@ -44,45 +44,45 @@
       min: 0,
       max: 3,
       key: 'low',
-      status: 'Included / low risk',
-      risk: 'Low',
-      action: 'Handle within current scope and proceed with normal delivery flow.',
-      tone: 'simple confirmation',
-      explanation: 'Current signals suggest this request aligns with the existing scope and delivery plan.',
-      response: 'Thanks for the request. This is within the current scope, so I can include it in our planned workflow and keep delivery moving.'
+      status: 'W zakresie / niskie ryzyko',
+      risk: 'Niskie',
+      action: 'Realizuj w bieżącym zakresie i kontynuuj standardowy przebieg projektu.',
+      tone: 'proste potwierdzenie',
+      explanation: 'Obecne sygnały wskazują, że ta prośba mieści się w uzgodnionym zakresie i planie realizacji.',
+      response: 'Dziękuję za prośbę. To mieści się w obecnym zakresie, więc mogę uwzględnić to w zaplanowanym proces i utrzymać tempo realizacji.'
     },
     {
       min: 4,
       max: 7,
       key: 'medium',
-      status: 'Minor scope risk',
-      risk: 'Moderate',
-      action: 'Clarify details before implementation and confirm effort impact.',
-      tone: 'confirm scope and effort',
-      explanation: 'The request has limited impact but needs explicit clarification before committing development time.',
-      response: 'Thanks for sharing this update. I can likely include it, but I want to confirm the exact scope and effort first so we stay aligned on timeline and expectations.'
+      status: 'Niewielkie ryzyko zakresowe',
+      risk: 'Umiarkowane',
+      action: 'Doprecyzuj szczegóły przed wdrożeniem i potwierdź wpływ na nakład pracy.',
+      tone: 'potwierdzenie zakresu i nakładu',
+      explanation: 'Prośba ma ograniczony wpływ, ale wymaga jasnego doprecyzowania przed angażowaniem czasu developerskiego.',
+      response: 'Dziękuję za aktualizację. Najprawdopodobniej mogę to uwzględnić, ale najpierw chcę potwierdzić dokładny zakres i nakład, żeby utrzymać zgodność co do terminu i oczekiwań.'
     },
     {
       min: 8,
       max: 12,
       key: 'high',
       status: 'Change request',
-      risk: 'High',
-      action: 'Document as a change request and secure approval before starting work.',
-      tone: 'professional change request message',
-      explanation: 'This request materially changes effort, timeline, or agreed deliverables and should be handled through formal approval.',
-      response: 'This request looks like a change to our original scope. I will document it as a formal change request with effort, timeline, and cost impact for your approval before implementation.'
+      risk: 'Wysokie',
+      action: 'Udokumentuj to jako change request i uzyskaj akceptację przed startem prac.',
+      tone: 'profesjonalna wiadomość change request',
+      explanation: 'Ta prośba istotnie zmienia nakład, harmonogram lub uzgodnione deliverables i powinna przejść formalną ścieżkę akceptacji.',
+      response: 'Ta prośba wygląda na zmianę pierwotnego zakresu. Przygotuję formalny change request z wpływem na nakład, termin i koszt do Twojej akceptacji przed wdrożeniem.'
     },
     {
       min: 13,
       max: Number.POSITIVE_INFINITY,
       key: 'critical',
-      status: 'Out of scope',
-      risk: 'Critical',
-      action: 'Estimate separately and obtain paid approval before implementation.',
-      tone: 'firm but polite paid-scope message',
-      explanation: 'The request is outside current project boundaries and should be treated as separately priced work to protect delivery quality.',
-      response: 'Thanks for the request. This is outside the current project scope, so I will prepare a separate estimate and timeline for approval before we proceed.'
+      status: 'Poza zakresem',
+      risk: 'Krytyczne',
+      action: 'Wyceniaj osobno i uzyskuj płatną akceptację przed wdrożeniem.',
+      tone: 'stanowcza, uprzejma wiadomość o płatnym zakresie',
+      explanation: 'Ta prośba jest poza bieżącymi granicami projektu i powinna być rozliczana osobno, aby utrzymać jakość realizacji.',
+      response: 'Dziękuję za prośbę. To wykracza poza obecny zakres projektu, więc przygotuję osobną wycenę i harmonogram do akceptacji przed dalszymi działaniami.'
     }
   ];
 
@@ -95,8 +95,8 @@
   }
 
   function buildExplanation(values, totalScore, category) {
-    const notes = values.requestNotes ? ` Internal note: ${values.requestNotes.trim()}.` : '';
-    return `${category.explanation} Score ${totalScore} reflects request type, agreement fit, effort, and delivery impact.${notes}`;
+    const notes = values.requestNotes ? ` Notatka wewnętrzna: ${values.requestNotes.trim()}.` : '';
+    return `${category.explanation} Wynik ${totalScore} odzwierciedla typ prośby, zgodność z umową, nakład i wpływ na realizację.${notes}`;
   }
 
   function renderAssessment() {
@@ -143,7 +143,7 @@
       document.body.removeChild(helper);
     }
 
-    copyFeedback.textContent = copied ? 'Copied to clipboard.' : 'Unable to copy automatically. Please copy manually.';
+    copyFeedback.textContent = copied ? 'Skopiowano do schowka.' : 'Nie udało się skopiować automatycznie. Skopiuj ręcznie.';
     copyFeedback.hidden = false;
     window.setTimeout(() => {
       copyFeedback.hidden = true;
