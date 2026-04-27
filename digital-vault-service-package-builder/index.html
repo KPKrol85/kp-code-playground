@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP_Code Digital Vault | Generator Pakietów Usług</title>
+    <meta
+      name="description"
+      content="Generator Pakietów Usług pomaga freelancerom i studiom budować czytelne pakiety Basic / Standard / Premium gotowe do wysłania klientowi."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__inner">
+        <p class="vault-label">KP_Code Digital Vault</p>
+        <h1>Generator Pakietów Usług</h1>
+        <p class="hero__subtitle">Service Package Builder</p>
+        <p class="hero__tagline">Zamień luźny pomysł na usługę w czytelną, profesjonalną ofertę pakietową dla klienta.</p>
+        <p class="hero__description">
+          Narzędzie pomaga uporządkować zakres, cenę, odpowiedzialności i kolejne kroki dla pakietów Basic / Standard / Premium.
+          Stworzone dla freelancerów, małych studiów i zespołów cyfrowych, które chcą przygotować ofertę szybciej i pewniej.
+        </p>
+        <ul class="badge-list" aria-label="Status produktu">
+          <li>Pakiety usług</li>
+          <li>Basic / Standard / Premium</li>
+          <li>Freelancer / studio</li>
+          <li>Oferta dla klienta</li>
+          <li>Bez backendu</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="panel" aria-labelledby="setup-title">
+        <div class="panel__header">
+          <h2 id="setup-title">1) Kontekst oferty</h2>
+          <p>Ustal ramy oferty, aby pakiety były spójne i łatwe do porównania.</p>
+        </div>
+        <form id="offer-setup-form" class="form-grid" novalidate>
+          <div class="field">
+            <label for="offerName">Nazwa oferty</label>
+            <input id="offerName" name="offerName" type="text" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="serviceType">Typ usługi</label>
+            <select id="serviceType" name="serviceType">
+              <option value="">Wybierz typ usługi</option>
+              <option>Strona firmowa</option>
+              <option>Landing page</option>
+              <option>Sklep internetowy</option>
+              <option>Opieka techniczna</option>
+              <option>SEO starter</option>
+              <option>Audyt strony</option>
+              <option>UI refresh</option>
+              <option>WordPress</option>
+              <option>Pakiet treści</option>
+              <option>Inna usługa</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="clientType">Branża / typ klienta</label>
+            <input id="clientType" name="clientType" type="text" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="currency">Waluta</label>
+            <select id="currency" name="currency">
+              <option value="PLN">PLN</option>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="offerGoal">Główny cel oferty</label>
+            <input id="offerGoal" name="offerGoal" type="text" maxlength="180" />
+          </div>
+          <div class="field">
+            <label for="preparedBy">Osoba / studio przygotowujące ofertę</label>
+            <input id="preparedBy" name="preparedBy" type="text" maxlength="120" />
+          </div>
+          <div class="field field--full">
+            <label for="setupNote">Krótka notatka</label>
+            <textarea id="setupNote" name="setupNote" rows="3" maxlength="400"></textarea>
+          </div>
+          <div class="field field--full actions-inline">
+            <button class="btn btn-secondary" id="reset-all" type="button">Resetuj cały generator</button>
+            <span id="setup-feedback" class="inline-status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+
+        <article class="offer-summary" aria-live="polite" aria-labelledby="offer-summary-title">
+          <h3 id="offer-summary-title">Podsumowanie kontekstu oferty</h3>
+          <dl id="offer-summary-list"></dl>
+        </article>
+      </section>
+
+      <section class="panel" aria-labelledby="packages-title">
+        <div class="panel__header panel__header--split">
+          <div>
+            <h2 id="packages-title">2) Builder pakietów</h2>
+            <p>Edytuj zakres i pozycjonowanie pakietów. Jeden pakiet oznacz jako rekomendowany.</p>
+          </div>
+          <p id="recommended-info" class="recommended-info" aria-live="polite">Pakiet rekomendowany: Standard</p>
+        </div>
+        <div id="packages-container" class="packages-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="addons-title">
+        <div class="panel__header">
+          <h2 id="addons-title">3) Wspólne dodatki (add-ons)</h2>
+          <p>Elementy opcjonalne, które możesz doliczyć poza bazowym zakresem pakietu.</p>
+        </div>
+
+        <div class="addon-form" role="group" aria-label="Dodaj własny dodatek">
+          <div class="field">
+            <label for="addonName">Nazwa dodatku</label>
+            <input id="addonName" type="text" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="addonPrice">Cena</label>
+            <input id="addonPrice" type="number" min="0" step="50" />
+          </div>
+          <div class="field field--full">
+            <label for="addonDescription">Krótki opis</label>
+            <input id="addonDescription" type="text" maxlength="220" />
+          </div>
+          <button id="add-addon" class="btn btn-primary" type="button">Dodaj dodatek</button>
+          <p id="addon-feedback" class="inline-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data-table" aria-describedby="addons-title">
+            <thead>
+              <tr>
+                <th scope="col">Dodatek</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Akcja</th>
+              </tr>
+            </thead>
+            <tbody id="addons-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="compare-title">
+        <div class="panel__header">
+          <h2 id="compare-title">4) Porównanie pakietów</h2>
+          <p>Zobacz pakiety obok siebie i szybko sprawdź różnice zakresu.</p>
+        </div>
+        <div id="comparison-view" class="comparison" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="readiness-title">
+        <div class="panel__header panel__header--split">
+          <div>
+            <h2 id="readiness-title">5) Checklist jakości oferty</h2>
+            <p>Automatyczna ocena gotowości pakietów do wysłania klientowi.</p>
+          </div>
+          <div class="readiness-score" role="status" aria-live="polite">
+            <p id="checklist-progress">0 / 0</p>
+            <p id="readiness-percent">0%</p>
+            <p id="readiness-status">Szkic roboczy</p>
+          </div>
+        </div>
+        <ul id="quality-checklist" class="checklist"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="guidance-title">
+        <div class="panel__header">
+          <h2 id="guidance-title">6) Wskazówki dot. wyceny i pozycjonowania</h2>
+        </div>
+        <ul class="guidance-list">
+          <li><strong>Różnicuj wartością, nie tylko ceną:</strong> klient musi rozumieć, co realnie zyskuje przy wyższym pakiecie.</li>
+          <li><strong>Wykluczenia porządkują współpracę:</strong> jasno opisany zakres „poza pakietem” ogranicza nieporozumienia.</li>
+          <li><strong>Limity poprawek chronią budżet:</strong> określają ramy iteracji i pomagają kontrolować scope.</li>
+          <li><strong>Jedna rekomendacja wspiera decyzję:</strong> wskazanie najlepszego wariantu skraca czas wyboru klienta.</li>
+          <li><strong>Dodatki trzymaj osobno:</strong> łatwiej utrzymać przejrzystość pakietu bazowego i dopasować ofertę.</li>
+        </ul>
+      </section>
+
+      <section class="panel" aria-labelledby="outputs-title">
+        <div class="panel__header">
+          <h2 id="outputs-title">7) Wygenerowane treści do skopiowania</h2>
+          <p>Użyj gotowych tekstów w mailu, ofercie PDF lub notatkach wewnętrznych.</p>
+        </div>
+
+        <article class="output-block">
+          <div class="output-head">
+            <h3>Podsumowanie oferty dla klienta</h3>
+            <button type="button" class="btn btn-secondary" data-copy-target="offer-output">Kopiuj podsumowanie oferty</button>
+          </div>
+          <textarea id="offer-output" rows="12" readonly></textarea>
+        </article>
+
+        <article class="output-block">
+          <div class="output-head">
+            <h3>Porównanie pakietów (tekst)</h3>
+            <button type="button" class="btn btn-secondary" data-copy-target="comparison-output">Kopiuj porównanie pakietów</button>
+          </div>
+          <textarea id="comparison-output" rows="12" readonly></textarea>
+        </article>
+
+        <article class="output-block">
+          <div class="output-head">
+            <h3>Notatka o zakresie</h3>
+            <button type="button" class="btn btn-secondary" data-copy-target="scope-output">Kopiuj notatkę o zakresie</button>
+          </div>
+          <textarea id="scope-output" rows="8" readonly></textarea>
+        </article>
+
+        <article class="output-block">
+          <div class="output-head">
+            <h3>Notatka wewnętrzna</h3>
+            <button type="button" class="btn btn-secondary" data-copy-target="internal-output">Kopiuj notatkę wewnętrzną</button>
+          </div>
+          <textarea id="internal-output" rows="9" readonly></textarea>
+        </article>
+
+        <p id="copy-feedback" class="inline-status" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>KP_Code Digital Vault · Generator Pakietów Usług</p>
+      <p>Praktyczne narzędzie do budowania przejrzystych ofert usług cyfrowych.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
