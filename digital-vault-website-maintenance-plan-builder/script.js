@@ -23,10 +23,10 @@
       }
     },
     tiers: [
-      { name: 'Essential Care', min: 0, max: 6, basePrice: 350 },
-      { name: 'Growth Care', min: 7, max: 13, basePrice: 750 },
-      { name: 'Pro Care', min: 14, max: 21, basePrice: 1400 },
-      { name: 'Priority Care', min: 22, max: Number.POSITIVE_INFINITY, basePrice: 2400 }
+      { name: 'Opieka Essential', min: 0, max: 6, basePrice: 350 },
+      { name: 'Opieka Growth', min: 7, max: 13, basePrice: 750 },
+      { name: 'Opieka Pro', min: 14, max: 21, basePrice: 1400 },
+      { name: 'Opieka Priority', min: 22, max: Number.POSITIVE_INFINITY, basePrice: 2400 }
     ],
     priceModifiers: {
       websiteType: { static: 0, wordpress: 250, ecommerce: 500, custom: 800 },
@@ -42,45 +42,45 @@
     },
     labels: {
       websiteType: {
-        static: 'Static business website',
-        wordpress: 'WordPress website',
-        ecommerce: 'Small ecommerce website',
-        custom: 'Custom web app / advanced website'
+        static: 'Statyczna strona firmowa',
+        wordpress: 'Strona WordPress',
+        ecommerce: 'Mały sklep e-commerce',
+        custom: 'Dedykowana aplikacja webowa / zaawansowana strona'
       },
       updateFrequency: {
-        occasional: 'occasional updates',
-        monthly: 'monthly updates',
-        weekly: 'weekly updates',
-        frequent: 'frequent / active development'
+        occasional: 'okazjonalnymi aktualizacjami',
+        monthly: 'miesięcznymi aktualizacjami',
+        weekly: 'tygodniowymi aktualizacjami',
+        frequent: 'częstymi zmianami / aktywnym rozwojem'
       },
       backupPolicy: {
-        none: 'No backup included',
-        monthly: 'Monthly backup',
-        weekly: 'Weekly backup',
-        daily: 'Daily backup'
+        none: 'Brak kopii zapasowej',
+        monthly: 'Kopia miesięczna',
+        weekly: 'Kopia tygodniowa',
+        daily: 'Kopia dzienna'
       },
       monitoring: {
-        none: 'No monitoring',
-        uptime: 'Uptime monitoring',
-        basic: 'Uptime + basic performance monitoring',
-        advanced: 'Uptime + performance + security checks'
+        none: 'Brak monitoringu',
+        uptime: 'Monitoring uptime',
+        basic: 'Uptime + podstawowy monitoring wydajności',
+        advanced: 'Uptime + wydajność + kontrole bezpieczeństwa'
       }
     },
     tones: {
       simple: ({ tier, price, supportHours, serviceList }) =>
-        `${tier} is recommended for this website setup. The estimated monthly starting price is ${price}. ` +
-        `It includes ${serviceList.join(', ')}, with ${supportHours} monthly support hour(s). ` +
+        `${tier} to rekomendowany pakiet dla tej konfiguracji strony. Szacowana miesięczna cena startowa to ${price}. ` +
+        `W pakiecie znajduje się ${serviceList.join(', ')}, z ${supportHours} miesięczn(y/e/ych) godzinami wsparcia. ` +
         'Work outside this scope, major redesign tasks, and external paid tools are not automatically included. ' +
-        'Final terms should be confirmed in a written offer or agreement.',
+        'Finalne warunki należy potwierdzić w pisemnej ofercie lub umowie.',
       premium: ({ tier, price, supportHours, serviceList }) =>
-        `Based on your selected scope, ${tier} is the most suitable plan. Your estimated monthly starting investment is ${price}, ` +
-        `covering ${serviceList.join(', ')} and ${supportHours} dedicated support hour(s) each month. ` +
+        `Na podstawie wybranego zakresu, ${tier} to najbardziej adekwatny plan. Szacowana miesięczna inwestycja startowa to ${price}, ` +
+        `obejmująca ${serviceList.join(', ')} and ${supportHours} dedykowanych godzin wsparcia miesięcznie. ` +
         'Strategic projects, third-party subscriptions, and non-standard requests are handled separately. ' +
         'Exact service terms should be approved through a written commercial offer and agreement.',
       technical: ({ tier, price, supportHours, serviceList, frequency, monitoring, backup }) =>
-        `Recommended tier: ${tier}. Estimated monthly starting price: ${price}. The scope includes ${serviceList.join(', ')}, ` +
-        `with ${supportHours} support engineering hour(s) per month, ${frequency} cadence, ${monitoring.toLowerCase()}, and ${backup.toLowerCase()}. ` +
-        'Tasks outside defined maintenance scope, major feature development, and licensed external tooling are excluded by default. ' +
+        `Rekomendowany pakiet: ${tier}. Szacowana miesięczna cena startowa: ${price}. Zakres obejmuje ${serviceList.join(', ')}, ` +
+        `z ${supportHours} godzin(y) wsparcia technicznego miesięcznie, ${frequency} cadence, ${monitoring.toLowerCase()}, and ${backup.toLowerCase()}. ` +
+        'Zadania poza zdefiniowanym zakresem opieki, major feature development, and licensed external tooling are excluded by default. ' +
         'Final coverage and response commitments must be documented in a formal written offer or agreement.'
     }
   };
@@ -146,18 +146,18 @@
 
   function buildIncludedServices(state) {
     const items = [
-      `regular website updates with ${config.labels.updateFrequency[state.updateFrequency]}`,
+      `regular website updates z ${config.labels.updateFrequency[state.updateFrequency]}`,
       `${config.labels.backupPolicy[state.backupPolicy].toLowerCase()}`,
       `${config.labels.monitoring[state.monitoring].toLowerCase()}`,
-      `${state.supportHours} monthly support hour(s)`
+      `${state.supportHours} miesięczn(y/e/ych) godzinami wsparcia`
     ];
 
-    if (state.minorContentEdits) items.push('minor content edits');
-    if (state.technicalUpdates) items.push('technical updates and maintenance patches');
-    if (state.monthlyReport) items.push('monthly summary report');
-    if (state.seoCheck) items.push('SEO health check');
-    if (state.prioritySupport) items.push('priority support handling');
-    if (state.emergencyFixes) items.push('emergency fix handling');
+    if (state.minorContentEdits) items.push('drobne edycje treści');
+    if (state.technicalUpdates) items.push('aktualizacje techniczne i poprawki maintenance');
+    if (state.monthlyReport) items.push('miesięczny raport podsumowujący');
+    if (state.seoCheck) items.push('kontrola kondycji SEO');
+    if (state.prioritySupport) items.push('obsługa priorytetowych zgłoszeń');
+    if (state.emergencyFixes) items.push('obsługa poprawek awaryjnych');
 
     return items;
   }
@@ -201,9 +201,9 @@
     customHoursWrapper.classList.toggle('hidden', !customSelected);
 
     if (customSelected && state.supportHours === null) {
-      customHoursError.textContent = 'Enter a valid custom value between 0 and 40.';
+      customHoursError.textContent = 'Wpisz poprawną wartość własną od 0 do 40.';
       resultEls.monthlyPrice.textContent = '—';
-      resultEls.clientSummary.textContent = 'Fix custom support hours to generate a valid maintenance plan.';
+      resultEls.clientSummary.textContent = 'Popraw własną liczbę godzin wsparcia, aby wygenerować poprawny plan.';
       return;
     }
 
@@ -216,13 +216,13 @@
     const formattedPrice = currencyFormatter.format(estimatedPrice);
 
     resultEls.recommendedTier.textContent = tier.name;
-    resultEls.monthlyPrice.textContent = `${formattedPrice} (estimated monthly starting price)`;
+    resultEls.monthlyPrice.textContent = `${formattedPrice} (szacowana miesięczna cena startowa)`;
     resultEls.supportHoursDisplay.textContent = `${state.supportHours} hour(s) / month`;
     resultEls.backupPolicyDisplay.textContent = config.labels.backupPolicy[state.backupPolicy];
     resultEls.monitoringDisplay.textContent = config.labels.monitoring[state.monitoring];
-    resultEls.reportingDisplay.textContent = state.monthlyReport ? 'Monthly report included' : 'No monthly report selected';
-    resultEls.seoDisplay.textContent = state.seoCheck ? 'SEO health check included' : 'No SEO check selected';
-    resultEls.priorityDisplay.textContent = state.prioritySupport ? 'Priority support enabled' : 'Standard support priority';
+    resultEls.reportingDisplay.textContent = state.monthlyReport ? 'Raport miesięczny w pakiecie' : 'Bez raportu miesięcznego';
+    resultEls.seoDisplay.textContent = state.seoCheck ? 'Kontrola SEO w pakiecie' : 'Bez kontroli SEO';
+    resultEls.priorityDisplay.textContent = state.prioritySupport ? 'Wsparcie priorytetowe włączone' : 'Standardowy priorytet wsparcia';
 
     resultEls.includedServices.innerHTML = '';
     includedServices.forEach((item) => {
@@ -243,37 +243,37 @@
 
     resultEls.clientSummary.textContent = config.tones[state.tone](summaryContext);
     resultEls.internalNote.textContent =
-      `Suggested due to a total score of ${score}, driven by ${config.labels.websiteType[state.websiteType].toLowerCase()}, ` +
+      `Rekomendacja na podstawie łącznego wyniku ${score}, driven by ${config.labels.websiteType[state.websiteType].toLowerCase()}, ` +
       `${config.labels.updateFrequency[state.updateFrequency]}, ${config.labels.monitoring[state.monitoring].toLowerCase()}, and selected add-ons. ` +
-      'Use this as a planning baseline and refine scope details in the final offer.';
+      'Traktuj to jako bazę planistyczną i doprecyzuj szczegóły zakresu w finalnej ofercie.';
   }
 
   async function copyPlan() {
     const state = getState();
     if (supportHoursSelect.value === 'custom' && state.supportHours === null) {
-      copyStatus.textContent = 'Cannot copy: please fix custom support hours first.';
+      copyStatus.textContent = 'Nie można skopiować: najpierw popraw własną liczbę godzin wsparcia.';
       copyStatus.style.color = 'var(--danger)';
       return;
     }
 
-    const title = 'KP_Code Digital Vault - Website Maintenance Plan Builder';
+    const title = 'KP_Code Digital Vault - Generator Planu Opieki nad Stroną';
     const planText = [
       title,
-      `Recommended plan: ${resultEls.recommendedTier.textContent}`,
-      `Estimated monthly starting price: ${resultEls.monthlyPrice.textContent}`,
-      'Selected included services:',
+      `Rekomendowany plan: ${resultEls.recommendedTier.textContent}`,
+      `Szacowana miesięczna cena startowa: ${resultEls.monthlyPrice.textContent}`,
+      'Wybrane usługi w pakiecie:',
       ...Array.from(resultEls.includedServices.querySelectorAll('li')).map((li) => `- ${li.textContent}`),
       '',
-      'Generated summary:',
+      'Wygenerowane podsumowanie:',
       resultEls.clientSummary.textContent,
       '',
-      'Disclaimer:',
+      'Zastrzeżenie:',
       document.getElementById('disclaimerText').textContent
     ].join('\n');
 
     try {
       await navigator.clipboard.writeText(planText);
-      copyStatus.textContent = 'Maintenance plan copied to clipboard.';
+      copyStatus.textContent = 'Plan opieki skopiowany do schowka.';
       copyStatus.style.color = 'var(--success)';
     } catch {
       const fallback = document.createElement('textarea');
@@ -287,11 +287,11 @@
       try {
         const success = document.execCommand('copy');
         copyStatus.textContent = success
-          ? 'Maintenance plan copied with fallback method.'
-          : 'Copy failed. Please copy manually from the summary panel.';
+          ? 'Maintenance plan copied z fallback method.'
+          : 'Kopiowanie nie powiodło się. Skopiuj treść ręcznie z panelu podsumowania.';
         copyStatus.style.color = success ? 'var(--success)' : 'var(--danger)';
       } catch {
-        copyStatus.textContent = 'Copy failed. Please copy manually from the summary panel.';
+        copyStatus.textContent = 'Kopiowanie nie powiodło się. Skopiuj treść ręcznie z panelu podsumowania.';
         copyStatus.style.color = 'var(--danger)';
       } finally {
         document.body.removeChild(fallback);

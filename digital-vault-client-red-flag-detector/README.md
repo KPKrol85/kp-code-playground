@@ -1,32 +1,32 @@
-# Client Red Flag Detector
+# Detektor Sygnałów Ostrzegawczych Klienta
 
-A standalone **KP_Code Digital Vault** utility that helps freelancers and small studios evaluate potential client cooperation risk before committing to a project.
+Samodzielne narzędzie **KP_Code Digital Vault**, które pomaga freelancerom i małym studiom ocenić ryzyko współpracy z klientem przed podjęciem projektu.
 
-## Files
+## Pliki
 
-- `index.html` – semantic page structure, content sections, checklist form, and live result panel
-- `styles.css` – responsive mobile-first styling with CSS custom properties and accessible focus states
-- `script.js` – vanilla JavaScript risk scoring logic, live updates, and reset behavior
+- `index.html` – semantyczna struktura strony, sekcje treści, formularz checklisty i panel wyniku na żywo
+- `styles.css` – responsywne style mobile-first z własnymi właściwościami CSS i dostępnymi stanami focus
+- `script.js` – logika oceny ryzyka w vanilla JavaScript, aktualizacje na żywo i reset formularza
 
-## Risk scoring model
+## Model punktacji ryzyka
 
-Each red flag has a weighted score:
+Każdy sygnał ostrzegawczy ma przypisaną wagę:
 
-- Mild: 1–2 points
-- Medium: 3 points
-- Severe: 4–5 points
+- Łagodny: 1–2 punkty
+- Średni: 3 punkty
+- Poważny: 4–5 punktów
 
-Risk bands:
+Przedziały ryzyka:
 
-- **Low risk:** 0–6
-- **Medium risk:** 7–15
-- **High risk:** 16+
+- **Niskie ryzyko:** 0–6
+- **Średnie ryzyko:** 7–15
+- **Wysokie ryzyko:** 16+
 
-## Usage
+## Jak używać
 
-Open `index.html` in a browser. Check and uncheck red flags to see the cooperation risk level update live.
+Otwórz `index.html` w przeglądarce. Zaznaczaj i odznaczaj sygnały ostrzegawcze, aby na bieżąco widzieć zmianę poziomu ryzyka współpracy.
 
-## Notes
+## Uwagi
 
-- Fully static: no framework, build tools, storage, or external assets.
-- Educational decision-support tool only (not legal/financial advice).
+- W pełni statyczne narzędzie: bez frameworków, build tools, storage i zewnętrznych assetów.
+- Narzędzie wyłącznie wspierające decyzje (to nie porada prawna/finansowa).

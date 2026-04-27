@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Client Red Flag Detector by KP_Code Digital Vault helps freelancers and studios assess cooperation risk before starting a project."
+      content="Detektor Sygnałów Ostrzegawczych Klienta od KP_Code Digital Vault pomaga freelancerom i studiom ocenić ryzyko współpracy przed startem projektu."
     />
-    <title>Client Red Flag Detector | KP_Code Digital Vault</title>
+    <title>Detektor Sygnałów Ostrzegawczych Klienta | KP_Code Digital Vault</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">Przejdź do głównej treści</a>
 
-    <header class="site-header" aria-label="KP_Code Digital Vault branding">
+    <header class="site-header" aria-label="Branding KP_Code Digital Vault">
       <div class="container">
-        <p class="eyebrow">KP_Code Digital Vault Utility</p>
-        <h1>Client Red Flag Detector</h1>
+        <p class="eyebrow">Narzędzie KP_Code Digital Vault</p>
+        <h1>Detektor Sygnałów Ostrzegawczych Klienta</h1>
         <p class="intro">
-          A practical pre-project screening tool for freelancers, developers,
-          designers, and small studios. Check common warning signs and get a
-          clear cooperation risk level before you commit.
+          Praktyczne narzędzie do oceny ryzyka przed projektem dla freelancerów,
+          developerów, projektantów i małych studiów. Sprawdź najczęstsze sygnały
+          ostrzegawcze i poznaj poziom ryzyka współpracy, zanim się zobowiążesz.
         </p>
       </div>
     </header>
@@ -29,12 +29,11 @@
     <main id="main-content">
       <section class="hero" aria-labelledby="hero-title">
         <div class="container">
-          <h2 id="hero-title">Spot scope trouble before it spots you.</h2>
+          <h2 id="hero-title">Wykryj problemy z zakresem, zanim uderzą w projekt.</h2>
           <p>
-            This quick checklist helps you evaluate client communication,
-            expectation management, and payment reliability. The goal is not to
-            judge people — it is to protect project outcomes and working
-            relationships.
+            Ta szybka checklista pomaga ocenić komunikację z klientem,
+            zarządzanie oczekiwaniami i wiarygodność płatniczą. Celem nie jest
+            ocenianie ludzi — tylko ochrona efektów projektu i dobrej współpracy.
           </p>
         </div>
       </section>
@@ -42,114 +41,52 @@
       <section class="tool" aria-labelledby="tool-title">
         <div class="container grid">
           <article class="panel checklist-panel">
-            <h2 id="tool-title">Red Flag Checklist</h2>
+            <h2 id="tool-title">Checklista sygnałów ostrzegawczych</h2>
             <p class="section-copy">
-              Tick any statements you have heard. Each one carries a weighted
-              risk score.
+              Zaznacz stwierdzenia, które usłyszałeś(-aś). Każde ma przypisaną
+              wagę ryzyka.
             </p>
 
             <form id="risk-form" novalidate>
               <fieldset>
-                <legend>Client statements and signals</legend>
+                <legend>Wypowiedzi i sygnały od klienta</legend>
                 <ul class="checklist" id="red-flag-list">
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="1" />
-                      “It’s just a small change”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="5" />
-                      “I’ll pay after results”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="2" />
-                      “My cousin also builds websites”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="5" />
-                      “We don’t need a contract”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="3" />
-                      “Can you start today?”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="3" />
-                      “The budget is flexible, but low”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="2" />
-                      “This should only take 10 minutes”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="4" />
-                      “We need it like Apple, but cheaper”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="3" />
-                      “There will be more work later”
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input type="checkbox" data-score="4" />
-                      “I don’t know what I want, but I’ll know when I see it”
-                    </label>
-                  </li>
+                  <li><label><input type="checkbox" data-score="1" />„To tylko mała zmiana”</label></li>
+                  <li><label><input type="checkbox" data-score="5" />„Zapłacę po efektach”</label></li>
+                  <li><label><input type="checkbox" data-score="2" />„Mój kuzyn też robi strony”</label></li>
+                  <li><label><input type="checkbox" data-score="5" />„Umowa nie jest potrzebna”</label></li>
+                  <li><label><input type="checkbox" data-score="3" />„Możesz zacząć dziś?”</label></li>
+                  <li><label><input type="checkbox" data-score="3" />„Budżet jest elastyczny, ale niski”</label></li>
+                  <li><label><input type="checkbox" data-score="2" />„To zajmie tylko 10 minut”</label></li>
+                  <li><label><input type="checkbox" data-score="4" />„Chcemy jak Apple, ale taniej”</label></li>
+                  <li><label><input type="checkbox" data-score="3" />„Potem będzie więcej zleceń”</label></li>
+                  <li><label><input type="checkbox" data-score="4" />„Nie wiem, czego chcę, ale poznam po zobaczeniu”</label></li>
                 </ul>
               </fieldset>
 
-              <button type="reset" id="reset-button">Reset checklist</button>
+              <button type="reset" id="reset-button">Wyczyść checklistę</button>
             </form>
           </article>
 
           <aside class="panel result-panel" aria-live="polite" aria-atomic="true">
-            <h2>Live Risk Result</h2>
+            <h2>Bieżący wynik ryzyka</h2>
             <dl class="stats">
-              <div>
-                <dt>Total score</dt>
-                <dd id="total-score">0</dd>
-              </div>
-              <div>
-                <dt>Selected red flags</dt>
-                <dd id="selected-count">0</dd>
-              </div>
-              <div>
-                <dt>Risk level</dt>
-                <dd id="risk-level" class="risk-pill low">Low risk</dd>
-              </div>
+              <div><dt>Suma punktów</dt><dd id="total-score">0</dd></div>
+              <div><dt>Zaznaczone sygnały</dt><dd id="selected-count">0</dd></div>
+              <div><dt>Poziom ryzyka</dt><dd id="risk-level" class="risk-pill low">Niskie ryzyko</dd></div>
             </dl>
 
             <section aria-labelledby="result-summary-title">
-              <h3 id="result-summary-title">Assessment</h3>
-              <p id="risk-explanation">
-                Client looks manageable. Proceed with your normal briefing,
-                scope, and payment process.
-              </p>
+              <h3 id="result-summary-title">Ocena</h3>
+              <p id="risk-explanation">Sytuacja wygląda stabilnie. Działaj według standardowego procesu briefu, zakresu i płatności.</p>
             </section>
 
             <section aria-labelledby="next-steps-title">
-              <h3 id="next-steps-title">Recommended next steps</h3>
+              <h3 id="next-steps-title">Rekomendowane kolejne kroki</h3>
               <ul id="next-steps-list">
-                <li>Share your standard proposal and timeline.</li>
-                <li>Define deliverables and revision limits in writing.</li>
-                <li>Confirm deposit and start date before kickoff.</li>
+                <li>Wyślij standardową ofertę i harmonogram.</li>
+                <li>Opisz na piśmie zakres oraz limity poprawek.</li>
+                <li>Potwierdź zaliczkę i datę startu przed rozpoczęciem prac.</li>
               </ul>
             </section>
           </aside>
@@ -158,35 +95,35 @@
 
       <section class="education" aria-labelledby="education-title">
         <div class="container">
-          <h2 id="education-title">Why client screening matters</h2>
+          <h2 id="education-title">Dlaczego wstępna ocena klienta jest ważna</h2>
           <p>
-            Early screening reduces misalignment, protects your time, and keeps
-            projects healthier for everyone. Clear agreements on scope,
-            communication, and payment are often the difference between a smooth
-            build and a preventable fire drill.
+            Wczesna ocena zmniejsza ryzyko nieporozumień, chroni Twój czas i
+            poprawia kondycję projektu dla obu stron. Jasne ustalenia dotyczące
+            zakresu, komunikacji i płatności często decydują, czy realizacja
+            przebiegnie spokojnie.
           </p>
         </div>
       </section>
 
       <section class="examples" aria-labelledby="examples-title">
         <div class="container">
-          <h2 id="examples-title">Common red flag patterns</h2>
+          <h2 id="examples-title">Najczęstsze wzorce sygnałów ostrzegawczych</h2>
           <ul>
-            <li>Urgent timelines with unclear goals.</li>
-            <li>Vague scope but very specific outcomes.</li>
-            <li>Pressure to skip contracts, deposits, or documentation.</li>
-            <li>Comparison shopping that discounts expertise.</li>
+            <li>Pilny termin przy niejasnym celu biznesowym.</li>
+            <li>Ogólny zakres, ale bardzo konkretne oczekiwania efektu.</li>
+            <li>Presja, by pominąć umowę, zaliczkę lub dokumentację.</li>
+            <li>Porównywanie ofert z pomijaniem wartości eksperckiej.</li>
           </ul>
         </div>
       </section>
 
       <section class="disclaimer" aria-labelledby="disclaimer-title">
         <div class="container">
-          <h2 id="disclaimer-title">Disclaimer</h2>
+          <h2 id="disclaimer-title">Zastrzeżenie</h2>
           <p>
-            This utility is an educational decision-support tool, not legal or
-            financial advice. Use your professional judgment and local contract
-            best practices.
+            To narzędzie ma charakter edukacyjno-wspierający i nie stanowi
+            porady prawnej ani finansowej. Korzystaj z własnej oceny i dobrych
+            praktyk umownych właściwych dla Twojej działalności.
           </p>
         </div>
       </section>
@@ -194,7 +131,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <p>© <span id="year">2026</span> KP_Code Digital Vault · Built for practical client decisions.</p>
+        <p>© <span id="year">2026</span> KP_Code Digital Vault · Narzędzie do praktycznych decyzji projektowych.</p>
       </div>
     </footer>
   </body>

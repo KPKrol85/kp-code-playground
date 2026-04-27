@@ -1,97 +1,96 @@
 <!doctype html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Scope Creep Guard | KP_Code Digital Vault</title>
-  <meta name="description" content="A professional scope control tool for freelancers and small web studios to assess client requests and prevent scope creep.">
+  <title>Strażnik Scope Creep | KP_Code Digital Vault</title>
+  <meta name="description" content="Profesjonalne narzędzie kontroli zakresu dla freelancerów i małych studiów webowych do oceny próśb klienta i ograniczania scope creep.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Przejdź do głównej treści</a>
 
   <header class="site-header">
     <p class="vault-label">KP_Code Digital Vault</p>
-    <h1>Scope Creep Guard</h1>
+    <h1>Strażnik Scope Creep</h1>
     <p class="lead">
-      Quickly evaluate incoming client requests and decide whether to proceed, clarify, submit a change request,
-      or quote separately.
+      Szybko oceniaj nowe prośby klienta i decyduj, czy realizować je od razu, doprecyzować, uruchomić change request czy wycenić osobno.
     </p>
   </header>
 
   <main id="main-content" class="layout" aria-describedby="tool-intro">
     <section class="card assessment-card" aria-labelledby="assessment-title">
-      <h2 id="assessment-title">Request assessment</h2>
+      <h2 id="assessment-title">Ocena prośby</h2>
       <p id="tool-intro" class="section-intro">
-        Use this form during calls, in Slack/email triage, or before sprint planning to keep project scope decisions consistent.
+        Użyj tego formularza podczas rozmów, triage w Slacku/mailu lub przed planowaniem sprintu, aby utrzymać spójne decyzje zakresowe.
       </p>
 
       <form id="assessment-form" novalidate>
         <div class="field-group">
-          <label for="requestType">1. Request type</label>
+          <label for="requestType">1. Typ prośby</label>
           <select id="requestType" name="requestType">
-            <option value="contentChange">Content change</option>
-            <option value="designChange">Design change</option>
-            <option value="newPage">New page or section</option>
-            <option value="newFeature">New feature</option>
-            <option value="integration">Integration</option>
-            <option value="technicalFix">Technical fix</option>
-            <option value="seoAnalytics">SEO or analytics request</option>
-            <option value="postLaunchSupport">Post-launch support</option>
+            <option value="contentChange">Zmiana treści</option>
+            <option value="designChange">Zmiana projektu graficznego</option>
+            <option value="newPage">Nowa podstrona lub sekcja</option>
+            <option value="newFeature">Nowa funkcjonalność</option>
+            <option value="integration">Integracja</option>
+            <option value="technicalFix">Poprawka techniczna</option>
+            <option value="seoAnalytics">Prośba SEO/analityka</option>
+            <option value="postLaunchSupport">Wsparcie po wdrożeniu</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="agreementIncluded">2. Included in original agreement?</label>
+          <label for="agreementIncluded">2. Czy zawarte w pierwotnej umowie?</label>
           <select id="agreementIncluded" name="agreementIncluded">
-            <option value="yes">Yes</option>
-            <option value="partly">Partly</option>
-            <option value="no">No</option>
-            <option value="unclear">Unclear</option>
+            <option value="yes">Tak</option>
+            <option value="partly">Częściowo</option>
+            <option value="no">Nie</option>
+            <option value="unclear">Niejasne</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="effortEstimate">3. Estimated effort</label>
+          <label for="effortEstimate">3. Szacowany nakład pracy</label>
           <select id="effortEstimate" name="effortEstimate">
-            <option value="under30">Less than 30 minutes</option>
-            <option value="thirtyToTwo">30 minutes to 2 hours</option>
-            <option value="halfDay">Half day</option>
-            <option value="fullDay">Full day or more</option>
+            <option value="under30">Mniej niż 30 minut</option>
+            <option value="thirtyToTwo">30 minut do 2 godzin</option>
+            <option value="halfDay">Pół dnia</option>
+            <option value="fullDay">Cały dzień lub więcej</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="timelineImpact">4. Timeline impact</label>
+          <label for="timelineImpact">4. Wpływ na termin</label>
           <select id="timelineImpact" name="timelineImpact">
-            <option value="no">No</option>
-            <option value="slightly">Slightly</option>
-            <option value="yes">Yes</option>
-            <option value="unknown">Unknown</option>
+            <option value="no">Nie</option>
+            <option value="slightly">Nieznaczny</option>
+            <option value="yes">Tak</option>
+            <option value="unknown">Nieznany</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="priceImpact">5. Price impact</label>
+          <label for="priceImpact">5. Wpływ na cenę</label>
           <select id="priceImpact" name="priceImpact">
-            <option value="no">No</option>
-            <option value="maybe">Maybe</option>
-            <option value="yes">Yes</option>
-            <option value="unknown">Unknown</option>
+            <option value="no">Nie</option>
+            <option value="maybe">Być może</option>
+            <option value="yes">Tak</option>
+            <option value="unknown">Nieznany</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="clientAssets">6. Needs new client assets/decisions?</label>
+          <label for="clientAssets">6. Wymaga nowych materiałów/decyzji od klienta?</label>
           <select id="clientAssets" name="clientAssets">
-            <option value="no">No</option>
-            <option value="yes">Yes</option>
-            <option value="unclear">Unclear</option>
+            <option value="no">Nie</option>
+            <option value="yes">Tak</option>
+            <option value="unclear">Niejasne</option>
           </select>
         </div>
 
         <div class="field-group">
-          <label for="projectPhase">7. Project phase</label>
+          <label for="projectPhase">7. Faza projektu</label>
           <select id="projectPhase" name="projectPhase">
             <option value="discovery">Discovery</option>
             <option value="design">Design</option>
@@ -103,80 +102,80 @@
         </div>
 
         <div class="field-group">
-          <label for="requestNotes">8. Request notes</label>
-          <textarea id="requestNotes" name="requestNotes" rows="4" placeholder="Short internal context (e.g., where request came from, assumptions, dependencies)."></textarea>
+          <label for="requestNotes">8. Notatki do prośby</label>
+          <textarea id="requestNotes" name="requestNotes" rows="4" placeholder="Krótki kontekst wewnętrzny (np. skąd przyszła prośba, założenia, zależności)."></textarea>
         </div>
 
         <div class="form-actions">
-          <button type="reset" class="button button-secondary">Reset assessment</button>
+          <button type="reset" class="button button-secondary">Wyczyść ocenę</button>
         </div>
       </form>
     </section>
 
     <aside class="card result-card" aria-live="polite" aria-atomic="true" aria-labelledby="result-title">
-      <h2 id="result-title">Assessment result</h2>
+      <h2 id="result-title">Wynik oceny</h2>
 
       <div class="result-meta">
-        <p><span class="label">Score:</span> <span id="scoreValue">0</span></p>
-        <p><span class="label">Status:</span> <span id="statusValue">Included / low risk</span></p>
-        <p><span class="label">Risk level:</span> <span id="riskValue">Low</span></p>
+        <p><span class="label">Wynik:</span> <span id="scoreValue">0</span></p>
+        <p><span class="label">Status:</span> <span id="statusValue">W zakresie / niskie ryzyko</span></p>
+        <p><span class="label">Poziom ryzyka:</span> <span id="riskValue">Niskie</span></p>
       </div>
 
       <section class="result-section">
-        <h3>Recommended action</h3>
-        <p id="actionValue">Handle within current scope and proceed with normal delivery flow.</p>
+        <h3>Rekomendowane działanie</h3>
+        <p id="actionValue">Realizuj w bieżącym zakresie i kontynuuj standardowy przebieg projektu.</p>
       </section>
 
       <section class="result-section">
-        <h3>Suggested client response</h3>
+        <h3>Sugerowana odpowiedź dla klienta</h3>
         <p id="responseValue"></p>
         <div class="response-actions">
-          <button type="button" id="copyResponseButton" class="button">Copy suggested response</button>
-          <span id="copyFeedback" role="status" class="copy-feedback" hidden>Copied to clipboard.</span>
+          <button type="button" id="copyResponseButton" class="button">Kopiuj sugerowaną odpowiedź</button>
+          <span id="copyFeedback" role="status" class="copy-feedback" hidden>Skopiowano do schowka.</span>
         </div>
       </section>
 
       <section class="result-section">
-        <h3>Decision explanation</h3>
+        <h3>Uzasadnienie decyzji</h3>
         <p id="explanationValue"></p>
       </section>
     </aside>
   </main>
 
-  <section class="info-grid" aria-label="Usage guidance">
+  <section class="info-grid" aria-label="Wskazówki użycia">
     <article class="card">
-      <h2>How to use this tool</h2>
+      <h2>Jak korzystać z narzędzia</h2>
       <ol>
-        <li>Capture the request in one sentence before discussing implementation details.</li>
-        <li>Set each field based on current facts, not assumptions.</li>
-        <li>Use the suggested response as a draft, then personalize with project specifics.</li>
-        <li>Save your final decision in project notes or your ticketing system for traceability.</li>
+        <li>Zapisz prośbę jednym zdaniem, zanim wejdziesz w szczegóły wdrożenia.</li>
+        <li>Ustaw każde pole na podstawie faktów, nie założeń.</li>
+        <li>Potraktuj sugerowaną odpowiedź jako szkic i dopasuj ją do kontekstu projektu.</li>
+        <li>Zapisz finalną decyzję w notatkach projektu lub systemie ticketowym dla pełnej historii.</li>
       </ol>
     </article>
 
     <article class="card">
-      <h2>Common scope creep signals</h2>
+      <h2>Typowe sygnały scope creep</h2>
       <ul>
-        <li>“This should be quick” paired with a new feature or integration request.</li>
-        <li>Late-stage changes that require design and development updates together.</li>
-        <li>Requests dependent on client assets that are not yet approved or available.</li>
-        <li>Post-launch asks that resemble roadmap items, not bug fixes.</li>
+        <li>„To powinno być szybkie” połączone z prośbą o nową funkcję lub integrację.</li>
+        <li>Późne zmiany wymagające jednocześnie aktualizacji designu i developmentu.</li>
+        <li>Prośby zależne od materiałów klienta, które nie są jeszcze zatwierdzone lub dostępne.</li>
+        <li>Prośby po wdrożeniu, które przypominają elementy roadmapy, a nie poprawki błędów.</li>
       </ul>
     </article>
 
     <article class="card">
-      <h2>Recommended workflow</h2>
+      <h2>Rekomendowany proces</h2>
       <ul>
-        <li><strong>Step 1:</strong> Assess and score request within 2–3 minutes.</li>
-        <li><strong>Step 2:</strong> Send client response draft and confirm next step.</li>
-        <li><strong>Step 3:</strong> If score is 8+, log a formal change request before coding.</li>
-        <li><strong>Step 4:</strong> Re-baseline timeline and budget once approved.</li>
+        <li><strong>Krok 1:</strong> Oceń prośbę i przyznaj wynik w 2–3 minuty.</li>
+        <li><strong>Krok 2:</strong> Wyślij szkic odpowiedzi do klienta i potwierdź kolejny krok.</li>
+        <li><strong>Krok 3:</strong> Jeśli wynik to 8+, zapisz formalny change request przed rozpoczęciem prac.</li>
+        <li><strong>Krok 4:</strong> Po akceptacji zaktualizuj bazowy termin i budżet.</li>
       </ul>
     </article>
   </section>
 
   <footer class="site-footer">
-    <p>KP_Code Digital Vault • Professional tools for practical digital delivery.</p>
+    <p>KP_Code Digital Vault • Profesjonalne narzędzia do praktycznej realizacji cyfrowej.</p>
   </footer>
 
   <script src="script.js"></script>

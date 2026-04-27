@@ -1,146 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Freelancer Website Pricing Calculator by KP_Code Digital Vault for estimating website project costs."
+      content="Kalkulator Wyceny Stron dla Freelancera od KP_Code Digital Vault do szacowania kosztów projektów WWW."
     />
-    <title>Freelancer Website Pricing Calculator | KP_Code Digital Vault</title>
+    <title>Kalkulator Wyceny Stron dla Freelancera | KP_Code Digital Vault</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
       <p class="vault-label">KP_Code Digital Vault</p>
-      <h1>Freelancer Website Pricing Calculator</h1>
+      <h1>Kalkulator Wyceny Stron dla Freelancera</h1>
       <p class="intro">
-        A practical pricing assistant for freelancers building client websites. Set project scope,
-        apply business margin, and generate a transparent estimate in PLN.
+        Praktyczny asystent wyceny dla freelancerów tworzących strony dla klientów. Ustal zakres projektu, marżę biznesową i wygeneruj przejrzystą estymację w PLN.
       </p>
     </header>
 
-    <main class="layout" aria-label="Pricing calculator and estimate details">
+    <main class="layout" aria-label="Kalkulator wyceny i szczegóły estymacji">
       <section class="card" aria-labelledby="calculator-heading">
-        <h2 id="calculator-heading">Project Scope Inputs</h2>
+        <h2 id="calculator-heading">Dane wejściowe zakresu projektu</h2>
 
         <form id="pricing-form" novalidate>
           <div class="field-group">
-            <label for="websiteType">Website type</label>
+            <label for="websiteType">Typ strony</label>
             <select id="websiteType" name="websiteType">
-              <option value="landing">Simple landing page</option>
-              <option value="smallBusiness" selected>Small business website</option>
-              <option value="portfolio">Portfolio website</option>
-              <option value="service">Service website</option>
-              <option value="extendedCompany">Extended company website</option>
+              <option value="landing">Prosty landing page</option>
+              <option value="smallBusiness" selected>Strona małej firmy</option>
+              <option value="portfolio">Strona portfolio</option>
+              <option value="service">Strona usługowa</option>
+              <option value="extendedCompany">Rozbudowana strona firmowa</option>
             </select>
           </div>
 
           <div class="field-group">
-            <label for="pageCount">Number of pages</label>
+            <label for="pageCount">Liczba podstron</label>
             <input id="pageCount" name="pageCount" type="number" min="1" max="30" value="5" inputmode="numeric" />
-            <p class="hint" id="pageCountHint">Allowed range: 1 to 30 pages.</p>
+            <p class="hint" id="pageCountHint">Dozwolony zakres: od 1 do 30 podstron.</p>
           </div>
 
           <fieldset class="field-group options-group">
-            <legend>Feature add-ons</legend>
+            <legend>Dodatkowe opcje</legend>
             <label class="checkbox-row" for="contactForm">
               <input id="contactForm" name="contactForm" type="checkbox" checked />
-              Contact form
+              Formularz kontaktowy
             </label>
             <label class="checkbox-row" for="cmsIntegration">
               <input id="cmsIntegration" name="cmsIntegration" type="checkbox" />
-              CMS integration
+              Integracja CMS
             </label>
             <label class="checkbox-row" for="seoSetup">
               <input id="seoSetup" name="seoSetup" type="checkbox" checked />
-              SEO starter setup
+              Podstawowa konfiguracja SEO
             </label>
             <label class="checkbox-row" for="expressDeadline">
               <input id="expressDeadline" name="expressDeadline" type="checkbox" />
-              Express deadline (rush delivery)
+              Tryb ekspresowy (przyspieszona realizacja)
             </label>
           </fieldset>
 
           <div class="field-group">
-            <label for="revisionRounds">Revision rounds</label>
+            <label for="revisionRounds">Liczba rund poprawek</label>
             <select id="revisionRounds" name="revisionRounds">
-              <option value="1" selected>1 round</option>
-              <option value="2">2 rounds</option>
-              <option value="3">3 rounds</option>
-              <option value="4">4+ rounds</option>
+              <option value="1" selected>1 runda</option>
+              <option value="2">2 rundy</option>
+              <option value="3">3 rundy</option>
+              <option value="4">4+ rundy</option>
             </select>
           </div>
 
           <div class="field-group">
-            <label for="marginPercent">Business margin: <span id="marginValue">15%</span></label>
+            <label for="marginPercent">Marża biznesowa: <span id="marginValue">15%</span></label>
             <input id="marginPercent" name="marginPercent" type="range" min="0" max="50" step="1" value="15" />
-            <p class="hint">Applied after base, pages, add-ons, and express fee.</p>
+            <p class="hint">Naliczana po kwocie bazowej, podstronach, dodatkach i opłacie ekspresowej.</p>
           </div>
 
           <div class="actions">
-            <button type="reset" id="resetButton">Reset to defaults</button>
+            <button type="reset" id="resetButton">Przywróć ustawienia domyślne</button>
           </div>
         </form>
       </section>
 
       <section class="card results" aria-labelledby="result-heading" aria-live="polite">
-        <h2 id="result-heading">Estimate Summary</h2>
+        <h2 id="result-heading">Podsumowanie estymacji</h2>
         <dl class="result-list">
           <div>
-            <dt>Estimated base price</dt>
+            <dt>Szacowana cena bazowa</dt>
             <dd id="basePrice">—</dd>
           </div>
           <div>
-            <dt>Selected add-ons & scope</dt>
+            <dt>Wybrane dodatki i zakres</dt>
             <dd id="addonsBreakdown">—</dd>
           </div>
           <div>
-            <dt>Subtotal</dt>
+            <dt>Suma częściowa</dt>
             <dd id="subtotal">—</dd>
           </div>
           <div>
-            <dt>Margin amount</dt>
+            <dt>Kwota marży</dt>
             <dd id="marginAmount">—</dd>
           </div>
           <div class="total-row">
-            <dt>Final estimated project price</dt>
+            <dt>Końcowa estymowana cena projektu</dt>
             <dd id="finalPrice">—</dd>
           </div>
         </dl>
         <p class="notice">
-          This calculator provides a professional working estimate. Final pricing should be confirmed in a written proposal
-          and contract based on exact project requirements.
+          Ten kalkulator daje roboczą estymację. Finalną wycenę należy potwierdzić w pisemnej ofercie i umowie na podstawie dokładnych wymagań projektu.
         </p>
       </section>
     </main>
 
-    <section class="info-grid" aria-label="Usage notes">
+    <section class="info-grid" aria-label="Wskazówki użycia">
       <article class="card">
-        <h2>How to use this calculator</h2>
+        <h2>Jak korzystać z kalkulatora</h2>
         <ol>
-          <li>Select the website type that best matches client scope.</li>
-          <li>Set page count and choose required project features.</li>
-          <li>Pick revision rounds and enable express deadline if needed.</li>
-          <li>Adjust business margin to match your operating model.</li>
-          <li>Use the final estimate as a starting point for your client offer.</li>
+          <li>Wybierz typ strony najlepiej pasujący do zakresu klienta.</li>
+          <li>Ustaw liczbę podstron i zaznacz wymagane funkcje projektu.</li>
+          <li>Wybierz liczbę rund poprawek i w razie potrzeby włącz tryb ekspresowy.</li>
+          <li>Dopasuj marżę biznesową do swojego modelu działania.</li>
+          <li>Potraktuj wynik jako punkt wyjścia do oferty dla klienta.</li>
         </ol>
       </article>
 
       <article class="card">
-        <h2>What affects the final price?</h2>
+        <h2>Co wpływa na finalną cenę?</h2>
         <ul>
-          <li>Project complexity and website type baseline.</li>
-          <li>Total number of pages beyond the first included page.</li>
-          <li>Implementation of CMS, SEO setup, and contact forms.</li>
-          <li>Client feedback cycles and revision workload.</li>
-          <li>Delivery speed requirements and your margin strategy.</li>
+          <li>Złożoność projektu i bazowy typ strony.</li>
+          <li>Łączna liczba podstron ponad pierwszą wliczoną podstronę.</li>
+          <li>Zakres wdrożenia CMS, SEO i formularzy kontaktowych.</li>
+          <li>Liczba cykli feedbacku klienta i obciążenie poprawkami.</li>
+          <li>Wymagane tempo realizacji i Twoja strategia marżowa.</li>
         </ul>
       </article>
     </section>
 
     <footer class="site-footer">
-      <p>KP_Code Digital Vault • Practical digital tools for modern freelancers.</p>
+      <p>KP_Code Digital Vault • Praktyczne narzędzia cyfrowe dla nowoczesnych freelancerów.</p>
     </footer>
 
     <script src="script.js"></script>
