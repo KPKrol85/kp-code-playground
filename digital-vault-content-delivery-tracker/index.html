@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Content Delivery Tracker by KP_Code Digital Vault helps freelancers and studios track client materials, risks, and project readiness in one static workflow tool."
+    />
+    <title>KP_Code Digital Vault · Content Delivery Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero" aria-labelledby="product-title">
+      <div class="container hero-grid">
+        <div>
+          <p class="brand">KP_Code Digital Vault</p>
+          <h1 id="product-title">Content Delivery Tracker</h1>
+          <p class="tagline">Keep every client material request visible, accountable, and production-ready.</p>
+          <p class="lead">
+            A standalone workflow tool for freelancers, web developers, agencies, and digital studios to track
+            requested assets, identify blockers early, and keep project timelines realistic.
+          </p>
+          <div class="badges" aria-label="Product highlights">
+            <span>Client assets</span>
+            <span>Project handoff</span>
+            <span>Freelancer workflow</span>
+            <span>No backend required</span>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-labelledby="project-summary-title">
+          <h2 id="project-summary-title">Project summary</h2>
+          <dl id="project-summary" class="summary-grid">
+            <div><dt>Client</dt><dd data-summary="clientName">Not set</dd></div>
+            <div><dt>Project</dt><dd data-summary="projectName">Not set</dd></div>
+            <div><dt>Type</dt><dd data-summary="projectType">Not set</dd></div>
+            <div><dt>Deadline</dt><dd data-summary="deadline">Not set</dd></div>
+            <div><dt>Owner</dt><dd data-summary="manager">Not set</dd></div>
+            <div><dt>Notes</dt><dd data-summary="notes">—</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card" aria-labelledby="setup-title">
+        <h2 id="setup-title">Project and client setup</h2>
+        <form id="setup-form" class="setup-grid" novalidate>
+          <label>
+            Client name
+            <input type="text" name="clientName" maxlength="80" placeholder="Example: Bright Dental Clinic" />
+          </label>
+          <label>
+            Project name
+            <input type="text" name="projectName" maxlength="80" placeholder="Example: Website redesign Q3" />
+          </label>
+          <label>
+            Project type
+            <input type="text" name="projectType" maxlength="60" placeholder="Landing page, e-commerce, rebrand site..." />
+          </label>
+          <label>
+            Delivery deadline
+            <input type="date" name="deadline" />
+          </label>
+          <label>
+            Project manager / responsible person
+            <input type="text" name="manager" maxlength="80" placeholder="Name, role, or account owner" />
+          </label>
+          <label class="span-full">
+            Optional notes
+            <textarea name="notes" rows="2" maxlength="240" placeholder="Any constraints, channels, dependencies, or client context"></textarea>
+          </label>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="tracker-title">
+        <div class="section-head">
+          <h2 id="tracker-title">Content tracker</h2>
+          <button id="reset-tracker" type="button" class="btn subtle">Reset tracker to default items</button>
+        </div>
+
+        <form id="controls" class="controls" aria-label="Filter and search controls">
+          <label>
+            Category
+            <select name="categoryFilter" id="category-filter"></select>
+          </label>
+          <label>
+            Status
+            <select name="statusFilter" id="status-filter"></select>
+          </label>
+          <label>
+            Priority
+            <select name="priorityFilter" id="priority-filter"></select>
+          </label>
+          <label class="search-field">
+            Search item or note
+            <input type="search" name="searchFilter" id="search-filter" placeholder="Search by deliverable or note" />
+          </label>
+          <div class="actions-inline">
+            <button id="reset-filters" type="button" class="btn subtle">Reset filters</button>
+          </div>
+        </form>
+
+        <form id="add-item-form" class="add-item" novalidate>
+          <h3>Add custom item</h3>
+          <label>
+            Item name
+            <input type="text" name="itemName" maxlength="100" required placeholder="Example: Press kit PDF" />
+          </label>
+          <label>
+            Category
+            <select name="itemCategory" id="custom-category"></select>
+          </label>
+          <label>
+            Priority
+            <select name="itemPriority" id="custom-priority"></select>
+          </label>
+          <label>
+            Requirement
+            <select name="itemRequired">
+              <option value="required">Required</option>
+              <option value="optional">Optional</option>
+            </select>
+          </label>
+          <label>
+            Owner
+            <input type="text" name="itemOwner" maxlength="80" placeholder="Client, PM, developer..." />
+          </label>
+          <label class="span-full">
+            Notes
+            <textarea name="itemNotes" rows="2" maxlength="180" placeholder="Any acceptance criteria or source links"></textarea>
+          </label>
+          <button type="submit" class="btn primary">Add custom item</button>
+          <p id="add-item-feedback" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="table-wrap" role="region" aria-label="Tracker items" tabindex="0">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Required</th>
+                <th>Requested</th>
+                <th>Received</th>
+                <th>Owner</th>
+                <th>Notes</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="tracker-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="dashboard-title">
+        <h2 id="dashboard-title">Progress and risk summary</h2>
+        <div class="metrics" id="metrics"></div>
+        <p class="readiness">
+          <strong>Project readiness:</strong>
+          <span id="readiness-status">Not ready</span>
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="missing-title">
+        <h2 id="missing-title">Missing materials summary</h2>
+        <div id="missing-summary" class="summary-output"></div>
+        <button id="copy-follow-up" type="button" class="btn primary">Copy client follow-up message</button>
+      </section>
+
+      <section class="card" aria-labelledby="export-title">
+        <h2 id="export-title">Export templates</h2>
+        <div class="export-grid">
+          <article>
+            <h3>Client request checklist</h3>
+            <textarea id="export-client-checklist" rows="8" readonly></textarea>
+            <button class="btn subtle copy-export" type="button" data-export="export-client-checklist">Copy checklist</button>
+          </article>
+          <article>
+            <h3>Internal handoff summary</h3>
+            <textarea id="export-handoff" rows="8" readonly></textarea>
+            <button class="btn subtle copy-export" type="button" data-export="export-handoff">Copy handoff summary</button>
+          </article>
+          <article>
+            <h3>Missing materials follow-up</h3>
+            <textarea id="export-follow-up" rows="8" readonly></textarea>
+            <button class="btn subtle copy-export" type="button" data-export="export-follow-up">Copy follow-up</button>
+          </article>
+        </div>
+      </section>
+
+      <p id="app-feedback" class="sr-status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
