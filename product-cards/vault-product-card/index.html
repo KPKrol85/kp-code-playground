@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vault Product Card · KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="vault-demo" aria-labelledby="vault-demo-title">
+      <section class="vault-demo__intro">
+        <h1 id="vault-demo-title">Vault Product Card</h1>
+        <p>
+          A premium baseline product-card pattern for the KP_Code Digital Vault catalog.
+          It is designed for fast value communication, responsive grid layouts, and strong
+          accessibility in light and dark themes.
+        </p>
+      </section>
+
+      <section class="vault-demo__catalog" aria-labelledby="vault-catalog-title">
+        <h2 id="vault-catalog-title" class="sr-only">Product card examples</h2>
+
+        <p class="vault-demo__live" aria-live="polite" data-vault-live-region>
+          Select “View details” to preview the selected product status.
+        </p>
+
+        <div class="vault-grid">
+          <article class="vault-card" data-product-name="Landing Page UI Kit" data-product-status="$19">
+            <div class="vault-card__media" aria-hidden="true">
+              <div class="vault-card__media-topbar"></div>
+              <div class="vault-card__media-panels">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="vault-card__media-chart"></div>
+            </div>
+
+            <div class="vault-card__body">
+              <p class="vault-card__badge">UI Kit</p>
+              <h3 class="vault-card__title">Landing Page UI Kit</h3>
+              <p class="vault-card__description">
+                A clean conversion-focused component set for marketing pages with sections,
+                forms, and callout blocks.
+              </p>
+
+              <ul class="vault-card__tags" aria-label="Product tags">
+                <li>Figma</li>
+                <li>Responsive</li>
+                <li>120+ Blocks</li>
+                <li>SaaS</li>
+              </ul>
+            </div>
+
+            <footer class="vault-card__footer">
+              <p class="vault-card__price" aria-label="Price">$19</p>
+              <div class="vault-card__actions">
+                <button type="button" class="vault-card__cta">Add to Vault</button>
+                <a href="#vault-catalog-title" class="vault-card__details" data-vault-details>
+                  View details
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="vault-card" data-product-name="Website Launch Checklist" data-product-status="Free">
+            <div class="vault-card__media" aria-hidden="true">
+              <div class="vault-card__media-topbar"></div>
+              <div class="vault-card__media-panels">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="vault-card__media-checks"></div>
+            </div>
+
+            <div class="vault-card__body">
+              <p class="vault-card__badge">Checklist</p>
+              <h3 class="vault-card__title">Website Launch Checklist</h3>
+              <p class="vault-card__description">
+                A practical pre-launch quality checklist covering UX, content, performance,
+                SEO, analytics, and legal essentials.
+              </p>
+
+              <ul class="vault-card__tags" aria-label="Product tags">
+                <li>Notion</li>
+                <li>QA</li>
+                <li>SEO</li>
+                <li>Launch</li>
+              </ul>
+            </div>
+
+            <footer class="vault-card__footer">
+              <p class="vault-card__price" aria-label="Status">Free</p>
+              <div class="vault-card__actions">
+                <button type="button" class="vault-card__cta">Get Resource</button>
+                <a href="#vault-catalog-title" class="vault-card__details" data-vault-details>
+                  View details
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="vault-card" data-product-name="Dashboard Starter Pack" data-product-status="Coming soon">
+            <div class="vault-card__media" aria-hidden="true">
+              <div class="vault-card__media-topbar"></div>
+              <div class="vault-card__media-panels">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="vault-card__media-pills"></div>
+            </div>
+
+            <div class="vault-card__body">
+              <p class="vault-card__badge">Template</p>
+              <h3 class="vault-card__title">Dashboard Starter Pack</h3>
+              <p class="vault-card__description">
+                Foundational dashboard screens with ready-to-adapt navigation, stat cards,
+                tables, and data entry flows.
+              </p>
+
+              <ul class="vault-card__tags" aria-label="Product tags">
+                <li>Admin UI</li>
+                <li>Template</li>
+                <li>Analytics</li>
+                <li>Pro</li>
+              </ul>
+            </div>
+
+            <footer class="vault-card__footer">
+              <p class="vault-card__price" aria-label="Status">Coming soon</p>
+              <div class="vault-card__actions">
+                <button type="button" class="vault-card__cta" disabled aria-disabled="true">
+                  Notify me
+                </button>
+                <a href="#vault-catalog-title" class="vault-card__details" data-vault-details>
+                  View details
+                </a>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
