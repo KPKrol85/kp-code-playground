@@ -1,0 +1,266 @@
+:root {
+  --ltf-color-bg-page: #f3f4f6;
+  --ltf-color-bg-footer: #ffffff;
+  --ltf-color-bg-card: #f8fafc;
+  --ltf-color-border: #d6dce3;
+  --ltf-color-border-strong: #c2ccd6;
+  --ltf-color-text-primary: #1e2936;
+  --ltf-color-text-secondary: #4a596b;
+  --ltf-color-link: #123b6b;
+  --ltf-color-link-hover: #0f3056;
+  --ltf-color-focus: #1d4d84;
+  --ltf-color-badge-bg: #e8eff7;
+  --ltf-color-badge-text: #183e67;
+  --ltf-shadow-soft: 0 8px 20px rgba(15, 24, 36, 0.05);
+
+  --ltf-font-stack: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --ltf-space-1: 0.25rem;
+  --ltf-space-2: 0.5rem;
+  --ltf-space-3: 0.75rem;
+  --ltf-space-4: 1rem;
+  --ltf-space-5: 1.5rem;
+  --ltf-space-6: 2rem;
+  --ltf-space-7: 2.75rem;
+
+  --ltf-radius-sm: 0.4rem;
+  --ltf-radius-md: 0.65rem;
+  --ltf-radius-lg: 1rem;
+
+  --ltf-transition-fast: 180ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ltf-font-stack);
+  background: var(--ltf-color-bg-page);
+  color: var(--ltf-color-text-primary);
+  line-height: 1.5;
+}
+
+.ltf-preview {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--ltf-space-6) var(--ltf-space-4) var(--ltf-space-5);
+}
+
+.ltf-preview__title {
+  margin: 0 0 var(--ltf-space-2);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  letter-spacing: -0.02em;
+}
+
+.ltf-preview__intro {
+  margin: 0;
+  max-width: 48ch;
+  color: var(--ltf-color-text-secondary);
+}
+
+.ltf-footer {
+  max-width: 72rem;
+  margin: 0 auto var(--ltf-space-6);
+  padding: var(--ltf-space-6) var(--ltf-space-4) var(--ltf-space-4);
+  border: 1px solid var(--ltf-color-border);
+  border-radius: var(--ltf-radius-lg);
+  background: var(--ltf-color-bg-footer);
+  box-shadow: var(--ltf-shadow-soft);
+}
+
+.ltf-footer__inner {
+  display: grid;
+  gap: var(--ltf-space-5);
+}
+
+.ltf-footer__eyebrow {
+  margin: 0 0 var(--ltf-space-2);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ltf-color-text-secondary);
+}
+
+.ltf-footer__brand-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.25;
+}
+
+.ltf-footer__owner-note {
+  margin: var(--ltf-space-3) 0 var(--ltf-space-4);
+  max-width: 50ch;
+  color: var(--ltf-color-text-secondary);
+}
+
+.ltf-footer__badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 var(--ltf-space-3);
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ltf-color-badge-text) 26%, white);
+  background: var(--ltf-color-badge-bg);
+  color: var(--ltf-color-badge-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.ltf-footer__section-title {
+  margin: 0 0 var(--ltf-space-3);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.ltf-footer__trust-list,
+.ltf-footer__link-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ltf-footer__trust-list {
+  display: grid;
+  gap: var(--ltf-space-2);
+}
+
+.ltf-footer__trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ltf-space-2);
+  padding: var(--ltf-space-3) var(--ltf-space-4);
+  border: 1px solid var(--ltf-color-border);
+  border-radius: var(--ltf-radius-md);
+  background: var(--ltf-color-bg-card);
+  color: var(--ltf-color-text-primary);
+  transition: border-color var(--ltf-transition-fast), transform var(--ltf-transition-fast);
+}
+
+.ltf-footer__trust-item span {
+  color: #2f6a45;
+  font-weight: 700;
+}
+
+.ltf-footer__link-list {
+  display: grid;
+  gap: var(--ltf-space-2);
+}
+
+.ltf-footer__link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ltf-color-link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ltf-color-link) 40%, transparent);
+  text-underline-offset: 0.14em;
+  transition: color var(--ltf-transition-fast), text-decoration-color var(--ltf-transition-fast);
+}
+
+.ltf-footer__link:hover {
+  color: var(--ltf-color-link-hover);
+  text-decoration-color: currentColor;
+}
+
+.ltf-footer__support-contact {
+  margin-top: var(--ltf-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ltf-space-2) var(--ltf-space-3);
+  padding-top: var(--ltf-space-4);
+  border-top: 1px solid var(--ltf-color-border);
+}
+
+.ltf-footer__support-label {
+  font-size: 0.875rem;
+  color: var(--ltf-color-text-secondary);
+}
+
+.ltf-footer__support-email {
+  color: var(--ltf-color-link);
+  font-weight: 600;
+}
+
+.ltf-footer__copy-button {
+  border: 1px solid var(--ltf-color-border-strong);
+  border-radius: var(--ltf-radius-sm);
+  background: #fff;
+  color: var(--ltf-color-text-primary);
+  padding: 0.35rem 0.65rem;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color var(--ltf-transition-fast), border-color var(--ltf-transition-fast);
+}
+
+.ltf-footer__copy-button:hover {
+  background: #f8fafc;
+  border-color: #9fadb9;
+}
+
+.ltf-footer__copy-status {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: 0.8125rem;
+  color: var(--ltf-color-text-secondary);
+}
+
+.ltf-footer__bottom {
+  margin-top: var(--ltf-space-6);
+  padding-top: var(--ltf-space-4);
+  border-top: 1px solid var(--ltf-color-border);
+}
+
+.ltf-footer__copyright {
+  margin: 0;
+  color: var(--ltf-color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.ltf-footer :is(a, button):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ltf-color-focus) 40%, transparent);
+  outline-offset: 2px;
+  border-radius: var(--ltf-radius-sm);
+}
+
+@media (min-width: 48rem) {
+  .ltf-footer {
+    padding: var(--ltf-space-7) var(--ltf-space-5) var(--ltf-space-5);
+  }
+
+  .ltf-footer__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ltf-space-6);
+  }
+}
+
+@media (min-width: 72rem) {
+  .ltf-footer__inner {
+    grid-template-columns: 1.35fr 1.15fr 0.85fr 0.85fr;
+    align-items: start;
+  }
+}
+
+@media (hover: hover) {
+  .ltf-footer__trust-item:hover {
+    border-color: var(--ltf-color-border-strong);
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ltf-footer__trust-item:hover {
+    transform: none;
+  }
+}
