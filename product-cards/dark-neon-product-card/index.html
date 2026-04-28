@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dark Neon Product Card | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="neon-demo">
+      <section class="neon-demo__intro" aria-labelledby="neon-demo-heading">
+        <p class="neon-demo__eyebrow">KP_Code Digital Vault · Product Cards</p>
+        <h1 id="neon-demo-heading">Dark Neon Product Card</h1>
+        <p>
+          A dark-mode-first technical product card built for developer-facing assets, vanilla JavaScript tools,
+          dashboard components, and advanced frontend templates.
+        </p>
+        <p class="neon-demo__live" aria-live="polite" id="selection-status">Selected asset: none</p>
+      </section>
+
+      <section class="neon-grid" aria-label="Dark neon technical product card demos">
+        <article class="neon-card" data-product-name="Command Palette UI">
+          <header class="neon-card__header">
+            <div class="neon-card__meta">
+              <span class="neon-card__badge">Dev asset</span>
+              <p class="neon-card__status">$29</p>
+            </div>
+            <h2 class="neon-card__title">Command Palette UI</h2>
+            <p class="neon-card__description">
+              Keyboard-driven quick launcher with fuzzy search, grouped actions, and composable command patterns.
+            </p>
+          </header>
+
+          <div class="neon-card__preview" aria-hidden="true">
+            <span class="neon-card__preview-label">palette.config</span>
+            <p class="neon-card__code-line"><span class="token token-key">mode</span>: <span class="token token-string">"global"</span></p>
+            <p class="neon-card__code-line"><span class="token token-key">commands</span>: <span class="token token-value">42</span></p>
+            <p class="neon-card__code-line"><span class="token token-key">latency</span>: <span class="token token-value">&lt;14ms</span></p>
+          </div>
+
+          <ul class="neon-card__tags" aria-label="Stack and compatibility">
+            <li class="neon-card__tag">Vanilla JS</li>
+            <li class="neon-card__tag">A11y</li>
+            <li class="neon-card__tag">No build</li>
+            <li class="neon-card__tag">Keyboard-first</li>
+          </ul>
+
+          <footer class="neon-card__footer">
+            <p class="neon-card__status-detail">Premium license</p>
+            <a class="neon-card__cta" href="#" aria-label="View Command Palette UI asset">View asset</a>
+          </footer>
+        </article>
+
+        <article class="neon-card" data-product-name="Dashboard Metrics Kit">
+          <header class="neon-card__header">
+            <div class="neon-card__meta">
+              <span class="neon-card__badge">Dashboard kit</span>
+              <p class="neon-card__status">Included</p>
+            </div>
+            <h2 class="neon-card__title">Dashboard Metrics Kit</h2>
+            <p class="neon-card__description">
+              Production-ready metric cards, trend chips, and compact chart shells for technical analytics surfaces.
+            </p>
+          </header>
+
+          <div class="neon-card__preview" aria-hidden="true">
+            <span class="neon-card__preview-label">metrics.init</span>
+            <p class="neon-card__code-line"><span class="token token-key">uptime</span>: <span class="token token-value">99.98%</span></p>
+            <p class="neon-card__code-line"><span class="token token-key">widgets</span>: <span class="token token-value">12</span></p>
+            <p class="neon-card__code-line"><span class="token token-key">theme</span>: <span class="token token-string">"dark-neon"</span></p>
+          </div>
+
+          <ul class="neon-card__tags" aria-label="Stack and compatibility">
+            <li class="neon-card__tag">HTML</li>
+            <li class="neon-card__tag">CSS</li>
+            <li class="neon-card__tag">Design tokens</li>
+            <li class="neon-card__tag">Responsive</li>
+          </ul>
+
+          <footer class="neon-card__footer">
+            <p class="neon-card__status-detail">Vault Pro</p>
+            <a class="neon-card__cta" href="#" aria-label="Get Dashboard Metrics Kit component">Get component</a>
+          </footer>
+        </article>
+
+        <article class="neon-card" data-product-name="Vanilla JS Filter Engine">
+          <header class="neon-card__header">
+            <div class="neon-card__meta">
+              <span class="neon-card__badge">JS tool</span>
+              <p class="neon-card__status">Beta</p>
+            </div>
+            <h2 class="neon-card__title">Vanilla JS Filter Engine</h2>
+            <p class="neon-card__description">
+              Lightweight filter core for technical datasets with debounced queries, faceted toggles, and URL sync.
+            </p>
+          </header>
+
+          <div class="neon-card__preview" aria-hidden="true">
+            <span class="neon-card__preview-label">engine.cli</span>
+            <p class="neon-card__code-line"><span class="token token-prompt">$</span> <span class="token token-command">filter --facet=framework</span></p>
+            <p class="neon-card__code-line"><span class="token token-prompt">&gt;</span> <span class="token token-value">matched: 168</span></p>
+            <p class="neon-card__code-line"><span class="token token-prompt">&gt;</span> <span class="token token-value">cache: warm</span></p>
+          </div>
+
+          <ul class="neon-card__tags" aria-label="Stack and compatibility">
+            <li class="neon-card__tag">Vanilla JS</li>
+            <li class="neon-card__tag">No deps</li>
+            <li class="neon-card__tag">ES modules</li>
+            <li class="neon-card__tag">Type hints</li>
+          </ul>
+
+          <footer class="neon-card__footer">
+            <p class="neon-card__status-detail">Early access</p>
+            <a class="neon-card__cta" href="#" aria-label="Open Vanilla JS Filter Engine tool">Open tool</a>
+          </footer>
+        </article>
+
+        <article class="neon-card" data-product-name="Accessible Modal System">
+          <header class="neon-card__header">
+            <div class="neon-card__meta">
+              <span class="neon-card__badge">Technical template</span>
+              <p class="neon-card__status">$24</p>
+            </div>
+            <h2 class="neon-card__title">Accessible Modal System</h2>
+            <p class="neon-card__description">
+              Focus-trapped dialog patterns with layered backdrops, escape handling, and strict accessibility defaults.
+            </p>
+          </header>
+
+          <div class="neon-card__preview" aria-hidden="true">
+            <span class="neon-card__preview-label">dialog.schema</span>
+            <p class="neon-card__code-line"><span class="token token-key">focusTrap</span>: <span class="token token-value">true</span></p>
+            <p class="neon-card__code-line"><span class="token token-key">escapeClose</span>: <span class="token token-value">true</span></p>
+            <p class="neon-card__code-line"><span class="token token-key">aria</span>: <span class="token token-string">"strict"</span></p>
+          </div>
+
+          <ul class="neon-card__tags" aria-label="Stack and compatibility">
+            <li class="neon-card__tag">A11y</li>
+            <li class="neon-card__tag">WCAG-aware</li>
+            <li class="neon-card__tag">HTML/CSS/JS</li>
+            <li class="neon-card__tag">No framework</li>
+          </ul>
+
+          <footer class="neon-card__footer">
+            <p class="neon-card__status-detail">Commercial use</p>
+            <a class="neon-card__cta" href="#" aria-label="View Accessible Modal System asset">View asset</a>
+          </footer>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
