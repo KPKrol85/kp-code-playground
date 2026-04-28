@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Recommendation Card | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="recommendation-demo">
+      <section class="recommendation-demo__intro" aria-labelledby="recommendation-title">
+        <p class="recommendation-demo__eyebrow">KP_Code Digital Vault · Product Cards</p>
+        <h1 id="recommendation-title">Smart Recommendation Card</h1>
+        <p>
+          A premium goal-based advisor card for onboarding and catalog guidance. Users pick a practical objective and
+          receive a focused product recommendation without scanning the entire vault.
+        </p>
+      </section>
+
+      <section class="recommendation-demo__grid" aria-label="Goal-based recommendation card examples">
+        <article class="recommendation-card" data-recommendation-card data-default-goal="launch-faster">
+          <header class="recommendation-card__header">
+            <p class="recommendation-card__kicker">Catalog guidance</p>
+            <p class="recommendation-card__label" data-goal-label>Goal: Launch faster</p>
+            <h2 class="recommendation-card__product" data-product-name>Premium Landing Starter Pack</h2>
+            <p class="recommendation-card__meta" data-product-meta>Template Pack · Premium</p>
+          </header>
+
+          <div class="recommendation-card__goals" role="group" aria-label="Select your primary goal">
+            <button class="recommendation-card__goal" type="button" data-goal="launch-faster" aria-pressed="true">
+              Launch faster
+            </button>
+            <button class="recommendation-card__goal" type="button" data-goal="improve-quality" aria-pressed="false">
+              Improve quality
+            </button>
+            <button class="recommendation-card__goal" type="button" data-goal="protect-scope" aria-pressed="false">
+              Protect scope
+            </button>
+            <button class="recommendation-card__goal" type="button" data-goal="build-client-trust" aria-pressed="false">
+              Build client trust
+            </button>
+            <button class="recommendation-card__goal" type="button" data-goal="polish-ui" aria-pressed="false">
+              Polish UI
+            </button>
+          </div>
+
+          <p class="recommendation-card__rationale" data-rationale>
+            Start with launch-ready building blocks and delivery checklists so you can publish quickly with fewer setup
+            decisions.
+          </p>
+
+          <ul class="recommendation-card__reasons" data-reasons>
+            <li class="recommendation-card__reason">Includes conversion-tested landing sections and modular page structure.</li>
+            <li class="recommendation-card__reason">Provides step-by-step launch sequencing for content, QA, and handoff.</li>
+            <li class="recommendation-card__reason">Cuts initial project setup time with reusable implementation patterns.</li>
+          </ul>
+
+          <footer class="recommendation-card__actions">
+            <a class="recommendation-card__cta" href="#" data-cta>Use this product</a>
+            <a class="recommendation-card__alternatives" href="#">See alternatives</a>
+          </footer>
+          <p class="recommendation-card__status" data-live aria-live="polite">
+            Goal set to Launch faster. Recommended product: Premium Landing Starter Pack.
+          </p>
+        </article>
+
+        <article
+          class="recommendation-card recommendation-card--wide"
+          data-recommendation-card
+          data-default-goal="build-client-trust"
+        >
+          <header class="recommendation-card__header">
+            <p class="recommendation-card__kicker">Onboarding advisor</p>
+            <p class="recommendation-card__label" data-goal-label>Goal: Build client trust</p>
+            <h2 class="recommendation-card__product" data-product-name>Client Website Brief Template</h2>
+            <p class="recommendation-card__meta" data-product-meta>Brief Template · Free</p>
+          </header>
+
+          <div class="recommendation-card__layout">
+            <div class="recommendation-card__goals" role="group" aria-label="Choose the onboarding goal">
+              <button class="recommendation-card__goal" type="button" data-goal="launch-faster" aria-pressed="false">
+                Launch faster
+              </button>
+              <button class="recommendation-card__goal" type="button" data-goal="improve-quality" aria-pressed="false">
+                Improve quality
+              </button>
+              <button class="recommendation-card__goal" type="button" data-goal="protect-scope" aria-pressed="false">
+                Protect scope
+              </button>
+              <button class="recommendation-card__goal" type="button" data-goal="build-client-trust" aria-pressed="true">
+                Build client trust
+              </button>
+              <button class="recommendation-card__goal" type="button" data-goal="polish-ui" aria-pressed="false">
+                Polish UI
+              </button>
+            </div>
+
+            <div class="recommendation-card__details">
+              <p class="recommendation-card__rationale" data-rationale>
+                Clarify expectations early with structured discovery prompts and approval checkpoints that clients can
+                confidently review.
+              </p>
+
+              <ul class="recommendation-card__reasons" data-reasons>
+                <li class="recommendation-card__reason">Guides project goals, constraints, and decision ownership in plain language.</li>
+                <li class="recommendation-card__reason">Creates a documented baseline that reduces misunderstandings during delivery.</li>
+                <li class="recommendation-card__reason">Supports a more professional kickoff process with reusable briefing structure.</li>
+              </ul>
+            </div>
+          </div>
+
+          <footer class="recommendation-card__actions">
+            <a class="recommendation-card__cta" href="#" data-cta>Use this product</a>
+            <a class="recommendation-card__alternatives" href="#">See alternatives</a>
+          </footer>
+          <p class="recommendation-card__status" data-live aria-live="polite">
+            Goal set to Build client trust. Recommended product: Client Website Brief Template.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
