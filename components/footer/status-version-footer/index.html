@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Status + Version Footer | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="svf-preview" aria-label="Status + Version Footer preview">
+      <h1 class="svf-preview__title">Status + Version Footer</h1>
+      <p class="svf-preview__subtitle">
+        Compact telemetry-style footer for product metadata, release confidence, and system reliability.
+      </p>
+    </main>
+
+    <footer class="svf-footer" aria-labelledby="svf-brand-title">
+      <section class="svf-footer__top" aria-label="Product footer details">
+        <div class="svf-brand">
+          <p class="svf-brand__eyebrow">Product Telemetry</p>
+          <h2 id="svf-brand-title" class="svf-brand__name">KP_Code Digital Vault</h2>
+          <p class="svf-brand__summary">
+            Production-grade tooling footer for transparent release and runtime communication.
+          </p>
+        </div>
+
+        <ul class="svf-meta" aria-label="Release metadata">
+          <li class="svf-meta__item"><span class="svf-meta__label">Version</span><code class="svf-meta__value">1.0.0</code></li>
+          <li class="svf-meta__item"><span class="svf-meta__label">Last updated</span><span class="svf-meta__value">2026</span></li>
+          <li class="svf-meta__item"><span class="svf-meta__label">Build status</span><span class="svf-meta__value">Stable</span></li>
+          <li class="svf-meta__item"><span class="svf-meta__label">System status</span><span class="svf-meta__value">Online</span></li>
+        </ul>
+
+        <nav class="svf-links" aria-label="Product links">
+          <a href="#" class="svf-links__link">Changelog</a>
+          <a href="#" class="svf-links__link">Roadmap</a>
+          <a href="#" class="svf-links__link">Release notes</a>
+          <a href="#" class="svf-links__link">Docs</a>
+          <a href="#" class="svf-links__link">Support</a>
+        </nav>
+      </section>
+
+      <section class="svf-footer__status" aria-label="Health indicators and refresh tools">
+        <ul class="svf-badges" aria-label="Indicator badges">
+          <li><span class="svf-badge svf-badge--online"><span class="svf-badge__dot" aria-hidden="true"></span>Online</span></li>
+          <li><span class="svf-badge svf-badge--stable"><span class="svf-badge__dot" aria-hidden="true"></span>Stable</span></li>
+          <li><span class="svf-badge svf-badge--beta"><span class="svf-badge__dot" aria-hidden="true"></span>Beta-ready</span></li>
+          <li><span class="svf-badge svf-badge--updated"><span class="svf-badge__dot" aria-hidden="true"></span>Updated</span></li>
+        </ul>
+
+        <div class="svf-refresh" aria-label="Demo status refresh">
+          <p id="svf-refresh-label" class="svf-refresh__label">Local status timestamp</p>
+          <p class="svf-refresh__time" data-refresh-time>Initialized just now</p>
+          <button type="button" class="svf-refresh__button" data-refresh-btn aria-describedby="svf-refresh-label">
+            Refresh status (demo)
+          </button>
+          <p class="svf-refresh__assistive" role="status" aria-live="polite" data-refresh-announcement>
+            No refresh actions yet.
+          </p>
+        </div>
+      </section>
+
+      <section class="svf-footer__bottom" aria-label="Legal and utility links">
+        <p class="svf-copyright">© <span data-year></span> KP_Code. All rights reserved.</p>
+        <nav class="svf-utility" aria-label="Legal links">
+          <a href="#" class="svf-utility__link">Privacy</a>
+          <a href="#" class="svf-utility__link">Terms</a>
+          <a href="#" class="svf-utility__link">License</a>
+        </nav>
+      </section>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
