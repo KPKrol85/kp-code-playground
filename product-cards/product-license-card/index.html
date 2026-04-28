@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product License Card | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <main class="license-demo">
+      <section class="license-demo__intro" aria-labelledby="license-demo-title">
+        <p class="license-demo__eyebrow">KP_Code Digital Vault • Product Cards</p>
+        <h1 id="license-demo-title">Product License Card</h1>
+        <p>
+          A transparent product card pattern built for quick license understanding. Compare Personal,
+          Commercial, and Extended tiers in seconds before choosing a product license.
+        </p>
+      </section>
+
+      <section class="license-grid" aria-label="Product license card examples">
+        <article
+          class="license-card"
+          data-product-name="Premium Landing Starter Pack"
+          data-default-tier="personal"
+        >
+          <header class="license-card__header">
+            <p class="license-card__category">Template Pack</p>
+            <h2 class="license-card__title">Premium Landing Starter Pack</h2>
+            <p class="license-card__description">
+              24 modular landing page sections designed for startups, studios, and SaaS launch pages.
+            </p>
+          </header>
+
+          <div class="license-card__license-zone">
+            <div class="license-card__tiers" role="group" aria-label="Select license tier">
+              <button class="license-card__tier" type="button" data-tier="personal" aria-pressed="true">
+                Personal
+              </button>
+              <button class="license-card__tier" type="button" data-tier="commercial" aria-pressed="false">
+                Commercial
+              </button>
+              <button class="license-card__tier" type="button" data-tier="extended" aria-pressed="false">
+                Extended
+              </button>
+            </div>
+
+            <div class="license-card__summary" data-license-summary>
+              <p class="license-card__badge">Selected license: <strong>Personal</strong></p>
+              <ul class="license-card__uses">
+                <li class="license-card__use">Use in one personal project.</li>
+                <li class="license-card__use">Modify sections for your own brand.</li>
+                <li class="license-card__use">Publish on one personal domain.</li>
+              </ul>
+              <p class="license-card__limits">
+                Restriction: Client delivery, resale, and team-wide distribution are not included.
+              </p>
+            </div>
+          </div>
+
+          <footer class="license-card__footer">
+            <p class="license-card__price" data-license-price>$29</p>
+            <a class="license-card__cta" href="#" data-license-cta>Choose Personal License</a>
+          </footer>
+          <p class="license-card__status" aria-live="polite" data-license-status>
+            Premium Landing Starter Pack: Personal license selected.
+          </p>
+        </article>
+
+        <article
+          class="license-card"
+          data-product-name="Dashboard Components Kit"
+          data-default-tier="commercial"
+        >
+          <header class="license-card__header">
+            <p class="license-card__category">Component Pack</p>
+            <h2 class="license-card__title">Dashboard Components Kit</h2>
+            <p class="license-card__description">
+              80 production-ready dashboard modules for analytics, CRM, and internal operations tools.
+            </p>
+          </header>
+
+          <div class="license-card__license-zone">
+            <div class="license-card__tiers" role="group" aria-label="Select license tier">
+              <button class="license-card__tier" type="button" data-tier="personal" aria-pressed="false">
+                Personal
+              </button>
+              <button class="license-card__tier" type="button" data-tier="commercial" aria-pressed="true">
+                Commercial
+              </button>
+              <button class="license-card__tier" type="button" data-tier="extended" aria-pressed="false">
+                Extended
+              </button>
+            </div>
+
+            <div class="license-card__summary" data-license-summary>
+              <p class="license-card__badge">Selected license: <strong>Commercial</strong></p>
+              <ul class="license-card__uses">
+                <li class="license-card__use">Use in up to five commercial client projects.</li>
+                <li class="license-card__use">Share with one internal delivery team.</li>
+                <li class="license-card__use">Customize and deploy to production apps.</li>
+              </ul>
+              <p class="license-card__limits">
+                Restriction: Productized resale and marketplace redistribution are not permitted.
+              </p>
+            </div>
+          </div>
+
+          <footer class="license-card__footer">
+            <p class="license-card__price" data-license-price>$149</p>
+            <a class="license-card__cta" href="#" data-license-cta>Get Commercial License</a>
+          </footer>
+          <p class="license-card__status" aria-live="polite" data-license-status>
+            Dashboard Components Kit: Commercial license selected.
+          </p>
+        </article>
+
+        <article
+          class="license-card"
+          data-product-name="Brand Asset Starter Set"
+          data-default-tier="extended"
+        >
+          <header class="license-card__header">
+            <p class="license-card__category">Asset Pack</p>
+            <h2 class="license-card__title">Brand Asset Starter Set</h2>
+            <p class="license-card__description">
+              Logo templates, social graphics, and brand foundations for multi-market campaigns.
+            </p>
+          </header>
+
+          <div class="license-card__license-zone">
+            <div class="license-card__tiers" role="group" aria-label="Select license tier">
+              <button class="license-card__tier" type="button" data-tier="personal" aria-pressed="false">
+                Personal
+              </button>
+              <button class="license-card__tier" type="button" data-tier="commercial" aria-pressed="false">
+                Commercial
+              </button>
+              <button class="license-card__tier" type="button" data-tier="extended" aria-pressed="true">
+                Extended
+              </button>
+            </div>
+
+            <div class="license-card__summary" data-license-summary>
+              <p class="license-card__badge">Selected license: <strong>Extended</strong></p>
+              <ul class="license-card__uses">
+                <li class="license-card__use">Use in unlimited commercial brand projects.</li>
+                <li class="license-card__use">Allow agency collaboration across multiple teams.</li>
+                <li class="license-card__use">Include deliverables in paid end-client engagements.</li>
+              </ul>
+              <p class="license-card__limits">
+                Restriction: You cannot sell the source files as a standalone asset bundle.
+              </p>
+            </div>
+          </div>
+
+          <footer class="license-card__footer">
+            <p class="license-card__price" data-license-price>$329</p>
+            <a class="license-card__cta" href="#" data-license-cta>Choose Extended Access</a>
+          </footer>
+          <p class="license-card__status" aria-live="polite" data-license-status>
+            Brand Asset Starter Set: Extended license selected.
+          </p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
