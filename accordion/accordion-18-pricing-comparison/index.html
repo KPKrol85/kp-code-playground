@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing Comparison Accordion</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="pricing-accordion-demo">
+      <section class="pricing-accordion" aria-labelledby="pricing-heading">
+        <header class="pricing-accordion__header">
+          <p class="pricing-accordion__eyebrow">KP_Code Digital Vault · Conversion UI</p>
+          <h1 id="pricing-heading">Choose a package with clarity, not guesswork</h1>
+          <p class="pricing-accordion__intro">
+            Compare delivery scope, timeline, support, and handoff details before booking.
+            Every plan is designed for realistic business outcomes across freelancer,
+            studio, and SaaS use cases.
+          </p>
+        </header>
+
+        <div class="pricing-accordion__list" data-accordion>
+          <article class="pricing-item">
+            <h2>
+              <button
+                class="pricing-item__trigger"
+                type="button"
+                aria-expanded="true"
+                aria-controls="panel-starter"
+                id="trigger-starter"
+              >
+                <span class="pricing-item__summary">
+                  <span class="pricing-item__title-row">
+                    <span class="pricing-item__title">Starter Website</span>
+                    <span class="pricing-item__badge">Fast Launch</span>
+                  </span>
+                  <span class="pricing-item__meta-row">
+                    <span class="pricing-item__value">For solo professionals needing a trustworthy web presence.</span>
+                    <span class="pricing-item__price">$1,200–$1,900</span>
+                  </span>
+                </span>
+                <span class="pricing-item__icon" aria-hidden="true"></span>
+              </button>
+            </h2>
+
+            <div
+              class="pricing-item__panel"
+              id="panel-starter"
+              role="region"
+              aria-labelledby="trigger-starter"
+            >
+              <div class="pricing-item__panel-inner">
+                <div class="pricing-item__highlights">
+                  <h3>What's included</h3>
+                  <ul>
+                    <li>Up to 5 custom pages with mobile-first layout</li>
+                    <li>Brand-guided typography and color setup</li>
+                    <li>Contact form with anti-spam setup</li>
+                  </ul>
+                </div>
+                <div class="pricing-item__highlights pricing-item__highlights--muted">
+                  <h3>What's excluded</h3>
+                  <ul>
+                    <li>Advanced CMS integrations</li>
+                    <li>Multilingual content setup</li>
+                    <li>Ongoing monthly optimization</li>
+                  </ul>
+                </div>
+
+                <dl class="comparison-grid">
+                  <div class="comparison-grid__row">
+                    <dt>Best for</dt>
+                    <dd>Freelancers, consultants, and early-stage founders</dd>
+                  </div>
+                  <div class="comparison-grid__row">
+                    <dt>Estimated timeline</dt>
+                    <dd>2–3 weeks from kickoff and asset delivery</dd>
+                  </div>
+                  <div class="comparison-grid__row">
+                    <dt>Support window</dt>
+                    <dd>7 days of post-launch fixes and guidance</dd>
+                  </div>
+                  <div class="comparison-grid__row">
+                    <dt>Content support</dt>
+                    <dd>Light copy polish for existing draft content</dd>
+                  </div>
+                  <div class="comparison-grid__row">
+                    <dt>SEO baseline</dt>
+                    <dd>On-page metadata, headings, sitemap, and indexing checklist</dd>
+                  </div>
+                  <div class="comparison-grid__row">
+                    <dt>Handoff</dt>
+                    <dd>Launch checklist, training video, and editable source files</dd>
+                  </div>
+                </dl>
+
+                <a class="pricing-item__cta" href="#">Book Starter discovery call</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pricing-item">
+            <h2>
+              <button
+                class="pricing-item__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="panel-business"
+                id="trigger-business"
+              >
+                <span class="pricing-item__summary">
+                  <span class="pricing-item__title-row">
+                    <span class="pricing-item__title">Business Website</span>
+                    <span class="pricing-item__badge pricing-item__badge--accent">Most Popular</span>
+                  </span>
+                  <span class="pricing-item__meta-row">
+                    <span class="pricing-item__value">For teams that need conversion-ready pages and stronger trust signals.</span>
+                    <span class="pricing-item__price">$2,600–$4,200</span>
+                  </span>
+                </span>
+                <span class="pricing-item__icon" aria-hidden="true"></span>
+              </button>
+            </h2>
+
+            <div class="pricing-item__panel" id="panel-business" role="region" aria-labelledby="trigger-business" hidden>
+              <div class="pricing-item__panel-inner">
+                <div class="pricing-item__highlights">
+                  <h3>What's included</h3>
+                  <ul>
+                    <li>Up to 10 pages with strategic funnel structure</li>
+                    <li>Case study, testimonials, and service conversion sections</li>
+                    <li>Analytics-ready conversion tracking setup</li>
+                  </ul>
+                </div>
+                <div class="pricing-item__highlights pricing-item__highlights--muted">
+                  <h3>What's excluded</h3>
+                  <ul>
+                    <li>Custom web app dashboards</li>
+                    <li>Complex API workflow automations</li>
+                    <li>Dedicated CRO retainer service</li>
+                  </ul>
+                </div>
+
+                <dl class="comparison-grid">
+                  <div class="comparison-grid__row"><dt>Best for</dt><dd>Growing agencies and established B2B services</dd></div>
+                  <div class="comparison-grid__row"><dt>Estimated timeline</dt><dd>4–6 weeks with two review cycles</dd></div>
+                  <div class="comparison-grid__row"><dt>Support window</dt><dd>14 days with priority implementation support</dd></div>
+                  <div class="comparison-grid__row"><dt>Content support</dt><dd>Messaging framework and on-page copy refinement</dd></div>
+                  <div class="comparison-grid__row"><dt>SEO baseline</dt><dd>Technical audit fixes plus structured metadata strategy</dd></div>
+                  <div class="comparison-grid__row"><dt>Handoff</dt><dd>Team walkthrough, dashboard docs, and editable component blocks</dd></div>
+                </dl>
+
+                <a class="pricing-item__cta" href="#">Request Business package proposal</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pricing-item">
+            <h2>
+              <button
+                class="pricing-item__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="panel-landing"
+                id="trigger-landing"
+              >
+                <span class="pricing-item__summary">
+                  <span class="pricing-item__title-row">
+                    <span class="pricing-item__title">Premium Landing System</span>
+                    <span class="pricing-item__badge">High Conversion</span>
+                  </span>
+                  <span class="pricing-item__meta-row">
+                    <span class="pricing-item__value">For launches and campaigns that depend on measurable lead capture.</span>
+                    <span class="pricing-item__price">$3,400–$5,800</span>
+                  </span>
+                </span>
+                <span class="pricing-item__icon" aria-hidden="true"></span>
+              </button>
+            </h2>
+
+            <div class="pricing-item__panel" id="panel-landing" role="region" aria-labelledby="trigger-landing" hidden>
+              <div class="pricing-item__panel-inner">
+                <div class="pricing-item__highlights">
+                  <h3>What's included</h3>
+                  <ul>
+                    <li>Primary landing page plus two audience-specific variants</li>
+                    <li>A/B-ready hero and pricing section architecture</li>
+                    <li>Lead magnet delivery and CRM handoff integration</li>
+                  </ul>
+                </div>
+                <div class="pricing-item__highlights pricing-item__highlights--muted">
+                  <h3>What's excluded</h3>
+                  <ul>
+                    <li>Full corporate website redesign</li>
+                    <li>Long-form blog migration</li>
+                    <li>Paid media campaign management</li>
+                  </ul>
+                </div>
+
+                <dl class="comparison-grid">
+                  <div class="comparison-grid__row"><dt>Best for</dt><dd>SaaS launches, webinars, and lead-gen campaigns</dd></div>
+                  <div class="comparison-grid__row"><dt>Estimated timeline</dt><dd>3–4 weeks with testing-ready release</dd></div>
+                  <div class="comparison-grid__row"><dt>Support window</dt><dd>21 days for iteration based on initial campaign data</dd></div>
+                  <div class="comparison-grid__row"><dt>Content support</dt><dd>Conversion copy prompts and offer hierarchy mapping</dd></div>
+                  <div class="comparison-grid__row"><dt>SEO baseline</dt><dd>Indexing controls and campaign metadata package</dd></div>
+                  <div class="comparison-grid__row"><dt>Handoff</dt><dd>Experiment log template and optimization recommendation deck</dd></div>
+                </dl>
+
+                <a class="pricing-item__cta" href="#">Plan Premium landing sprint</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pricing-item">
+            <h2>
+              <button
+                class="pricing-item__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="panel-care"
+                id="trigger-care"
+              >
+                <span class="pricing-item__summary">
+                  <span class="pricing-item__title-row">
+                    <span class="pricing-item__title">Maintenance Care Plan</span>
+                    <span class="pricing-item__badge pricing-item__badge--soft">Retainer</span>
+                  </span>
+                  <span class="pricing-item__meta-row">
+                    <span class="pricing-item__value">For businesses that need continuous updates, fixes, and performance hygiene.</span>
+                    <span class="pricing-item__price">$380–$950/mo</span>
+                  </span>
+                </span>
+                <span class="pricing-item__icon" aria-hidden="true"></span>
+              </button>
+            </h2>
+
+            <div class="pricing-item__panel" id="panel-care" role="region" aria-labelledby="trigger-care" hidden>
+              <div class="pricing-item__panel-inner">
+                <div class="pricing-item__highlights">
+                  <h3>What's included</h3>
+                  <ul>
+                    <li>Monthly update hours with prioritized task queue</li>
+                    <li>Core plugin, dependency, and security patch oversight</li>
+                    <li>Quarterly UX and conversion health review</li>
+                  </ul>
+                </div>
+                <div class="pricing-item__highlights pricing-item__highlights--muted">
+                  <h3>What's excluded</h3>
+                  <ul>
+                    <li>Net-new full page redesigns</li>
+                    <li>Custom backend development</li>
+                    <li>24/7 emergency incident response</li>
+                  </ul>
+                </div>
+
+                <dl class="comparison-grid">
+                  <div class="comparison-grid__row"><dt>Best for</dt><dd>Teams with active funnels and recurring update needs</dd></div>
+                  <div class="comparison-grid__row"><dt>Estimated timeline</dt><dd>48-hour first-response SLA on queued tasks</dd></div>
+                  <div class="comparison-grid__row"><dt>Support window</dt><dd>Continuous while plan is active</dd></div>
+                  <div class="comparison-grid__row"><dt>Content support</dt><dd>Monthly content swaps and section-level edits</dd></div>
+                  <div class="comparison-grid__row"><dt>SEO baseline</dt><dd>Technical upkeep checks and performance trend snapshots</dd></div>
+                  <div class="comparison-grid__row"><dt>Handoff</dt><dd>Monthly report with completed work and next-step recommendations</dd></div>
+                </dl>
+
+                <a class="pricing-item__cta" href="#">Start maintenance onboarding</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
