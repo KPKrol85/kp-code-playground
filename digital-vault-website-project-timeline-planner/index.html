@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Website Project Timeline Planner — planner harmonogramu projektu strony dla freelancerów i małych studiów." />
+  <title>Website Project Timeline Planner — KP_Code Digital Vault</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+
+  <header class="hero">
+    <div class="hero__inner container">
+      <p class="hero__brand">KP_Code Digital Vault</p>
+      <h1 class="hero__title">Website Project Timeline Planner — planner harmonogramu projektu strony</h1>
+      <p class="hero__lead">
+        Premium, praktyczne narzędzie do planowania, tłumaczenia i prowadzenia harmonogramu projektu strony internetowej — od briefu, przez realizację, po przegląd po wdrożeniu.
+      </p>
+      <p class="hero__intro">
+        Ten produkt pomaga freelancerom i małym studiom jasno ustalać terminy, role, zależności i punkty akceptacji, aby ograniczyć chaos, opóźnienia i nieporozumienia z klientem.
+      </p>
+      <ul class="badge-list" aria-label="Metadane produktu">
+        <li class="badge-list__item">dla freelancerów i małych studiów</li>
+        <li class="badge-list__item">harmonogram projektu</li>
+        <li class="badge-list__item">etapy i akceptacje</li>
+        <li class="badge-list__item">wersja HTML + MD</li>
+        <li class="badge-list__item">lekki planner JS</li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="container content">
+    <noscript>
+      <div class="notice notice--warning">JavaScript jest wyłączony. Nadal możesz korzystać z pełnego szablonu harmonogramu i sekcji procesowych poniżej.</div>
+    </noscript>
+
+    <section class="section card" id="purpose">
+      <h2 class="section__title">Po co ten planner?</h2>
+      <div class="section__body">
+        <p>Ten planner porządkuje projekt strony na przewidywalne etapy i pokazuje klientowi, kiedy konkretnie potrzebne są decyzje, treści i akceptacje.</p>
+        <ul class="check-list">
+          <li>zamienia ogólne „zrobimy to wkrótce” na realne przedziały czasu,</li>
+          <li>oddziela aktywną pracę wykonawcy od czasu oczekiwania na materiały i feedback,</li>
+          <li>spina harmonogram z zakresem, rewizjami, publikacją i przekazaniem projektu,</li>
+          <li>ułatwia rozmowę o terminach bez napięcia i bez niedopowiedzeń,</li>
+          <li>pomaga wcześnie wykryć wąskie gardła i ryzyka opóźnienia.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section card" id="when-to-use">
+      <h2 class="section__title">Kiedy używać?</h2>
+      <ul class="check-list">
+        <li>przed wysłaniem oferty, aby podać realistyczne ramy czasowe,</li>
+        <li>po akceptacji wyceny, aby ustalić wspólny plan działania,</li>
+        <li>w kickoffie projektu, jako podstawa komunikacji i priorytetów,</li>
+        <li>przed zebraniem treści od klienta, aby wskazać krytyczne terminy,</li>
+        <li>przed startem designu i developmentu, aby domknąć zależności,</li>
+        <li>przy projektach z wieloma punktami akceptacji,</li>
+        <li>gdy klient pyta „ile to potrwa?”,</li>
+        <li>gdy przechodzisz z realizacji do handoffu i opieki powdrożeniowej.</li>
+      </ul>
+    </section>
+
+    <section class="section card" id="process-overview">
+      <h2 class="section__title">Przegląd procesu timeline projektu</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Etap</th><th>Opis</th><th>Owner</th><th>Zakres czasu</th><th>Gate / warunek przejścia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Discovery / brief</td><td>Zebranie celów, kontekstu i ograniczeń.</td><td>Shared</td><td>1–3 dni</td><td>Brief potwierdzony.</td></tr>
+            <tr><td>2. Scope confirmation</td><td>Doprecyzowanie zakresu i priorytetów.</td><td>Shared</td><td>1–2 dni</td><td>Zakres zaakceptowany.</td></tr>
+            <tr><td>3. Content and assets</td><td>Dostarczenie treści, materiałów i brandu.</td><td>Client</td><td>2–10 dni</td><td>Komplet materiałów.</td></tr>
+            <tr><td>4. Structure / sitemap</td><td>Architektura informacji i mapa strony.</td><td>Freelancer</td><td>1–3 dni</td><td>Struktura zatwierdzona.</td></tr>
+            <tr><td>5. UX / layout planning</td><td>Układ sekcji, przepływ treści, wireframe.</td><td>Freelancer</td><td>2–4 dni</td><td>Układ zaakceptowany.</td></tr>
+            <tr><td>6. Visual direction / design</td><td>Warstwa wizualna i decyzje estetyczne.</td><td>Freelancer</td><td>3–7 dni</td><td>Design zatwierdzony.</td></tr>
+            <tr><td>7. Development</td><td>Implementacja front/back i integracji.</td><td>Freelancer</td><td>4–14 dni</td><td>Build gotowy do review.</td></tr>
+            <tr><td>8. Client review</td><td>Przegląd przez klienta i komentarze.</td><td>Client</td><td>1–5 dni</td><td>Feedback kompletny.</td></tr>
+            <tr><td>9. Revisions</td><td>Wdrożenie uzgodnionych poprawek.</td><td>Freelancer</td><td>1–6 dni</td><td>Rewizje zaakceptowane.</td></tr>
+            <tr><td>10. Testing and QA</td><td>Testy techniczne, UX i kontrola jakości.</td><td>Freelancer</td><td>1–4 dni</td><td>QA zaliczone.</td></tr>
+            <tr><td>11. Launch preparation</td><td>Backup, DNS, checklista publikacji.</td><td>Shared</td><td>1–2 dni</td><td>Zgoda na publikację.</td></tr>
+            <tr><td>12. Publication / launch</td><td>Wdrożenie produkcyjne i monitoring.</td><td>Freelancer</td><td>1 dzień</td><td>Strona online.</td></tr>
+            <tr><td>13. Handoff</td><td>Przekazanie dokumentacji i dostępów.</td><td>Shared</td><td>1–3 dni</td><td>Handoff zamknięty.</td></tr>
+            <tr><td>14. 7 / 14 / 30 day review</td><td>Kontrola wyników i drobne korekty.</td><td>Shared</td><td>3 checkpointy</td><td>Przegląd powdrożeniowy zakończony.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section card" id="planner">
+      <h2 class="section__title">Interaktywny planner harmonogramu</h2>
+      <form id="timeline-form" class="planner-form" novalidate>
+        <label>Data startu projektu
+          <input type="date" id="project-start" required />
+        </label>
+        <label>Typ projektu
+          <select id="project-type">
+            <option value="landing">simple landing page</option>
+            <option value="business">business website</option>
+            <option value="extended">extended business website</option>
+            <option value="redesign">redesign</option>
+            <option value="cms">website with CMS</option>
+            <option value="custom">custom project</option>
+          </select>
+        </label>
+        <label>Tempo projektu
+          <select id="project-pace">
+            <option value="standard">standard</option>
+            <option value="calm">calm / flexible</option>
+            <option value="express">express</option>
+          </select>
+        </label>
+        <label>Gotowość treści
+          <select id="content-readiness">
+            <option value="ready">content ready</option>
+            <option value="partial">content partially ready</option>
+            <option value="missing">content missing</option>
+          </select>
+        </label>
+        <label>Liczba rund rewizji
+          <select id="revision-rounds">
+            <option value="1">1 round</option>
+            <option value="2" selected>2 rounds</option>
+            <option value="3">3 rounds</option>
+          </select>
+        </label>
+        <label>Szybkość odpowiedzi klienta
+          <select id="client-speed">
+            <option value="fast">fast</option>
+            <option value="standard" selected>standard</option>
+            <option value="slow">slow</option>
+          </select>
+        </label>
+        <div class="planner-form__actions">
+          <button type="submit">Oblicz harmonogram</button>
+          <button type="button" id="reset-planner" class="button--secondary">Wyczyść wynik</button>
+        </div>
+      </form>
+      <div id="planner-message" class="notice" aria-live="polite"></div>
+      <div id="planner-output" class="planner-output" hidden>
+        <div class="stat-grid">
+          <article class="stat-card"><h3>Szacowany czas całkowity</h3><p id="total-duration">—</p></article>
+          <article class="stat-card"><h3>Sugerowana data zakończenia</h3><p id="end-date">—</p></article>
+          <article class="stat-card"><h3>Poziom ryzyka</h3><p id="risk-level">—</p></article>
+        </div>
+        <article class="card card--inner">
+          <h3>Interpretacja ryzyka</h3>
+          <p id="risk-explanation"></p>
+          <p><strong>Rekomendowana akcja:</strong> <span id="next-action"></span></p>
+        </article>
+        <div class="table-wrap">
+          <table id="dynamic-timeline-table">
+            <thead>
+              <tr><th>Etap</th><th>Start</th><th>Koniec</th><th>Owner</th><th>Gate</th><th>Notatki</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section card" id="default-template">
+      <h2 class="section__title">Domyślny szablon harmonogramu (wersja statyczna)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Etap</th><th>Cel etapu</th><th>Odpowiedzialność</th><th>Szacowany czas</th><th>Zależności</th><th>Punkt akceptacji</th><th>Ryzyko opóźnienia</th><th>Notatki</th></tr></thead>
+          <tbody>
+            <tr><td>Discovery / brief</td><td>Zrozumienie celów biznesowych i użytkownika.</td><td>Shared</td><td>1–3 dni</td><td>Kickoff</td><td>Brief podpisany</td><td>Niski</td><td>Ustal KPI.</td></tr>
+            <tr><td>Scope confirmation</td><td>Domknięcie zakresu i priorytetów.</td><td>Shared</td><td>1–2 dni</td><td>Brief</td><td>Zakres zamknięty</td><td>Średni</td><td>Wypisz out-of-scope.</td></tr>
+            <tr><td>Content and assets</td><td>Zebranie treści i materiałów brandowych.</td><td>Client</td><td>2–10 dni</td><td>Scope</td><td>Materiał kompletny</td><td>Wysoki</td><td>Braki = przesunięcie.</td></tr>
+            <tr><td>Structure / sitemap</td><td>Mapa strony i logika nawigacji.</td><td>Freelancer</td><td>1–3 dni</td><td>Treści minimum</td><td>Sitemap zaakceptowany</td><td>Średni</td><td>Unikaj dokładania podstron.</td></tr>
+            <tr><td>UX / layout planning</td><td>Układ sekcji i hierarchia informacji.</td><td>Freelancer</td><td>2–4 dni</td><td>Sitemap</td><td>Layout zatwierdzony</td><td>Średni</td><td>Zbieraj feedback zbiorczy.</td></tr>
+            <tr><td>Visual direction / design</td><td>Design dopasowany do marki.</td><td>Freelancer</td><td>3–7 dni</td><td>Layout</td><td>Design approved</td><td>Średni</td><td>Limit rund korekt.</td></tr>
+            <tr><td>Development</td><td>Implementacja i integracje.</td><td>Freelancer</td><td>4–14 dni</td><td>Design + content</td><td>Build review-ready</td><td>Średni</td><td>Ustal środowisko testowe.</td></tr>
+            <tr><td>Client review + revisions</td><td>Przegląd i finalne poprawki.</td><td>Shared</td><td>2–8 dni</td><td>Build</td><td>Rewizje zatwierdzone</td><td>Wysoki</td><td>Deadline feedbacku.</td></tr>
+            <tr><td>Testing and QA</td><td>Weryfikacja jakości i błędów.</td><td>Freelancer</td><td>1–4 dni</td><td>Rewizje</td><td>QA pass</td><td>Niski</td><td>Checklista przeglądarek.</td></tr>
+            <tr><td>Launch + handoff</td><td>Publikacja i przekazanie projektu.</td><td>Shared</td><td>2–4 dni</td><td>QA + dostępy</td><td>Launch + handoff</td><td>Wysoki</td><td>Dostępy min. 48h wcześniej.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section grid grid--3" id="responsibility-matrix">
+      <article class="card"><h2 class="section__title">Odpowiedzialność: Freelancer / studio</h2><ul class="check-list"><li>struktura projektu i architektura informacji,</li><li>decyzje projektowe i developerskie,</li><li>implementacja i jakość techniczna,</li><li>testy i przygotowanie do publikacji,</li><li>dokumentacja i handoff.</li></ul></article>
+      <article class="card"><h2 class="section__title">Odpowiedzialność: Klient</h2><ul class="check-list"><li>decyzje biznesowe i priorytety,</li><li>dostarczenie treści i materiałów brandowych,</li><li>dostępy przez bezpieczny kanał,</li><li>feedback w umówionym terminie,</li><li>finalne akceptacje etapów.</li></ul></article>
+      <article class="card"><h2 class="section__title">Odpowiedzialność wspólna</h2><ul class="check-list"><li>jasność zakresu,</li><li>realistyczne deadline’y,</li><li>rytm komunikacji,</li><li>decyzje o change requestach,</li><li>gotowość do launchu.</li></ul></article>
+    </section>
+
+    <section class="section card" id="approval-gates"><h2 class="section__title">Punkty akceptacji (approval gates)</h2><ol class="number-list"><li><strong>Brief approved</strong> — potwierdzenie celów i założeń; potwierdza klient; opóźnienie blokuje scope; dalej: scope confirmation.</li><li><strong>Scope approved</strong> — zamknięcie zakresu i priorytetów; potwierdzają obie strony; opóźnienie powoduje przesunięcia; dalej: content.</li><li><strong>Content received</strong> — komplet treści i assetów; potwierdza freelancer; opóźnienie zatrzymuje design/dev; dalej: structure.</li><li><strong>Structure approved</strong> — akceptacja sitemapy i układu; potwierdza klient; opóźnienie wpływa na design; dalej: visual direction.</li><li><strong>Design/layout approved</strong> — finalna akceptacja kierunku wizualnego; potwierdza klient; opóźnienie blokuje development; dalej: implementation.</li><li><strong>Development review completed</strong> — klient potwierdza przegląd wersji; opóźnienie wydłuża rewizje; dalej: revisions.</li><li><strong>Revisions approved</strong> — zamknięcie poprawek; potwierdza klient; opóźnienie przesuwa QA i launch; dalej: testing.</li><li><strong>Launch approved</strong> — zielone światło na publikację; potwierdzają obie strony; opóźnienie zmienia datę wdrożenia; dalej: publication.</li><li><strong>Handoff completed</strong> — przekazanie dokumentacji i dostępu; potwierdzają obie strony; opóźnienie utrudnia utrzymanie; dalej: review 7/14/30.</li></ol></section>
+
+    <section class="section card" id="risk-rules"><h2 class="section__title">Reguły opóźnień i ryzyk</h2><ul class="risk-list"><li><strong>Brak treści:</strong> wpływ — duże przesunięcia; prewencja — deadline contentu przed designem; reakcja — przesunięcie milestone i praca etapowa.</li><li><strong>Niejasny feedback:</strong> wpływ — dodatkowe rundy; prewencja — formularz feedbacku; reakcja — podsumowanie decyzji na piśmie.</li><li><strong>Późne akceptacje:</strong> wpływ — blokada kolejnych etapów; prewencja — okna akceptacji 24–72h; reakcja — aktualizacja harmonogramu.</li><li><strong>Prośby poza zakresem:</strong> wpływ — wydłużenie czasu i kosztu; prewencja — jasne in/out of scope; reakcja — change request.</li><li><strong>Brak dostępów hosting/domena:</strong> wpływ — opóźniony launch; prewencja — checklista dostępów na starcie; reakcja — warunkowy termin wdrożenia.</li><li><strong>Last-minute copy changes:</strong> wpływ — lawinowe poprawki; prewencja — content freeze; reakcja — nowy mini-sprint.</li><li><strong>Integracje third-party:</strong> wpływ — nieprzewidywalne blokery; prewencja — test API wcześniej; reakcja — bufor czasowy.</li><li><strong>Nierealistyczny deadline publikacji:</strong> wpływ — spadek jakości; prewencja — fazowanie scope; reakcja — wersja MVP + roadmap.</li></ul></section>
+
+    <section class="section card" id="communication"><h2 class="section__title">Rytm komunikacji z klientem</h2><div class="table-wrap"><table><thead><tr><th>Checkpoint</th><th>Kiedy wysłać</th><th>Cel</th><th>Gotowa wiadomość (PL)</th></tr></thead><tbody><tr><td>Kickoff</td><td>Dzień startu</td><td>Ustalenie wspólnych zasad</td><td>„Startujemy projekt. W załączniku harmonogram, zakres i punkty akceptacji. Proszę o potwierdzenie do końca dnia.”</td></tr><tr><td>Content reminder</td><td>48h przed deadlinem treści</td><td>Zapobieganie blokadzie</td><td>„Przypominam o terminie dostarczenia treści do [data]. To warunek utrzymania planowanej daty wdrożenia.”</td></tr><tr><td>Design review</td><td>Po przygotowaniu designu</td><td>Zebranie konkretnego feedbacku</td><td>„Proszę o zbiorczy feedback do [data], najlepiej w jednym dokumencie, aby sprawnie zamknąć etap.”</td></tr><tr><td>Development update</td><td>W połowie developmentu</td><td>Transparentny postęp</td><td>„Status prac: [x]% ukończone. Na ten moment harmonogram pozostaje / wymaga korekty o [x] dni.”</td></tr><tr><td>Revision summary</td><td>Po review klienta</td><td>Potwierdzenie zakresu poprawek</td><td>„Podsumowanie poprawek: [lista]. Realizacja do [data], po czym przechodzimy do testów końcowych.”</td></tr><tr><td>Launch prep</td><td>2–3 dni przed publikacją</td><td>Domknięcie dostępów i zgód</td><td>„Proszę o finalne potwierdzenie publikacji oraz komplet dostępów najpóźniej do [data/godzina].”</td></tr><tr><td>Handoff</td><td>Po wdrożeniu</td><td>Przekazanie projektu</td><td>„Strona została opublikowana. Przesyłam dokumentację, dostępy i instrukcję dalszej obsługi.”</td></tr><tr><td>Maintenance transition</td><td>7–14 dni po wdrożeniu</td><td>Przejście do utrzymania</td><td>„Po pierwszym okresie działania proponuję krótkie podsumowanie i ustalenie planu opieki.”</td></tr></tbody></table></div></section>
+
+    <section class="section card" id="policy"><h2 class="section__title">Szablon polityki harmonogramu (copy-ready)</h2><p>Harmonogram projektu opiera się na terminowym dostarczeniu treści, materiałów i akceptacji przez klienta. Każde opóźnienie po stronie materiałów lub decyzji może przesunąć datę publikacji. Dodatkowe wymagania poza ustalonym zakresem są obsługiwane jako change request i mogą wymagać aktualizacji terminu oraz budżetu. Punkty akceptacji etapów chronią obie strony, porządkują decyzje i ograniczają ryzyko kosztownych cofnięć. W przypadku trybu express zakres może zostać uproszczony lub wyceniony dodatkowo, aby utrzymać jakość i bezpieczeństwo wdrożenia.</p></section>
+
+    <section class="section grid grid--3" id="health-status">
+      <article class="card status-card status-card--green"><h2>Zielony — projekt zgodny z harmonogramem</h2><p>Znaczenie: etapy domykane terminowo, brak blokad krytycznych.</p><p>Typowe przyczyny: komplet treści, szybki feedback, stabilny zakres.</p><p>Rekomendacja: utrzymaj rytm raportów i potwierdzeń gate.</p></article>
+      <article class="card status-card status-card--yellow"><h2>Żółty — projekt wymaga uwagi</h2><p>Znaczenie: pojawiają się opóźnienia lokalne lub ryzyko przeciążenia.</p><p>Typowe przyczyny: częściowe treści, rozproszony feedback, drobne zmiany zakresu.</p><p>Rekomendacja: doprecyzuj priorytety i przesuń niekrytyczne elementy.</p></article>
+      <article class="card status-card status-card--red"><h2>Czerwony — projekt zagrożony opóźnieniem</h2><p>Znaczenie: kluczowe zależności nie są spełnione, data launchu zagrożona.</p><p>Typowe przyczyny: brak akceptacji, brak dostępów, duże zmiany przed publikacją.</p><p>Rekomendacja: uruchom plan naprawczy: rebaseline timeline + decyzja o MVP.</p></article>
+    </section>
+
+    <section class="section card" id="print"><h2 class="section__title">Eksport / druk do PDF</h2><p>Aby zapisać planner jako PDF: użyj funkcji drukowania w przeglądarce (<kbd>Ctrl</kbd> + <kbd>P</kbd>), wybierz „Zapisz jako PDF” i ustaw orientację pionową. Układ zawiera style drukowania, które upraszczają tło i poprawiają czytelność tabel.</p></section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p><strong>KP_Code Digital Vault</strong> — praktyczne, procesowe produkty cyfrowe dla freelancerów, frontend developerów i małych studiów.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

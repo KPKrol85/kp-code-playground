@@ -1,0 +1,78 @@
+:root {
+  --color-bg: #0d1117;
+  --color-surface: #151b24;
+  --color-surface-2: #1b2430;
+  --color-text: #e6edf7;
+  --color-muted: #9fb0c8;
+  --color-accent: #7cb3ff;
+  --color-border: #2a3545;
+  --color-success: #2f9e6f;
+  --color-warning: #d6a43a;
+  --color-danger: #d9534f;
+  --space-1: .5rem;
+  --space-2: .75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --radius-sm: .5rem;
+  --radius-md: .875rem;
+  --shadow: 0 10px 25px rgba(0,0,0,.25);
+  --font-base: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --container: 1120px;
+  --transition: 160ms ease;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font-base);background:linear-gradient(180deg,#0c1016,#101722);color:var(--color-text);line-height:1.55}
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--space-3)}
+.skip-link{position:absolute;left:-9999px;top:auto}
+.skip-link:focus{left:1rem;top:1rem;background:#fff;color:#000;padding:.5rem 1rem;border-radius:var(--radius-sm);z-index:1000}
+.hero{padding:4rem 0 2rem;border-bottom:1px solid var(--color-border)}
+.hero__brand{letter-spacing:.08em;text-transform:uppercase;color:var(--color-muted)}
+.hero__title{font-size:clamp(1.6rem,4vw,2.7rem);line-height:1.2;margin:.5rem 0}
+.hero__lead,.hero__intro{max-width:75ch;color:#d3dff0}
+.badge-list{display:flex;flex-wrap:wrap;gap:.5rem;padding:0;margin:1rem 0 0;list-style:none}
+.badge-list__item{padding:.3rem .7rem;border:1px solid var(--color-border);background:var(--color-surface);border-radius:999px;font-size:.85rem}
+.content{padding:2rem 0 3rem;display:grid;gap:1rem}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);box-shadow:var(--shadow)}
+.section__title{margin-top:0}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:.65rem;border-bottom:1px solid var(--color-border);text-align:left;vertical-align:top}
+thead th{background:var(--color-surface-2)}
+.check-list,.risk-list,.number-list{padding-left:1.1rem;margin:0}
+.grid{display:grid;gap:1rem}
+.notice{margin-top:1rem;padding:.75rem 1rem;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface-2)}
+.notice--warning{border-color:var(--color-warning)}
+.planner-form{display:grid;gap:.8rem;grid-template-columns:1fr}
+label{display:grid;gap:.35rem;color:var(--color-muted)}
+input,select,button{font:inherit}
+input,select{padding:.55rem .65rem;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:#0f1520;color:var(--color-text)}
+button{padding:.65rem .9rem;border-radius:var(--radius-sm);border:1px solid transparent;background:var(--color-accent);color:#0b1523;cursor:pointer;transition:var(--transition);font-weight:600}
+button:hover{filter:brightness(1.05)}
+.button--secondary{background:transparent;color:var(--color-text);border-color:var(--color-border)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #b9d4ff;outline-offset:2px}
+.planner-form__actions{display:flex;gap:.65rem;flex-wrap:wrap}
+.stat-grid{display:grid;gap:.75rem;margin:1rem 0}
+.stat-card{background:var(--color-surface-2);border:1px solid var(--color-border);padding:1rem;border-radius:var(--radius-sm)}
+.card--inner{padding:1rem}
+.status-card--green{border-color:#2d5f48}.status-card--yellow{border-color:#6f5930}.status-card--red{border-color:#6e3330}
+.footer{border-top:1px solid var(--color-border);padding:1.2rem 0;color:var(--color-muted)}
+
+@media (min-width: 760px){
+  .planner-form{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .planner-form__actions{grid-column:1 / -1}
+  .stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+}
+
+@media print{
+  :root{--color-bg:#fff;--color-text:#000;--color-surface:#fff;--color-surface-2:#fff;--color-border:#bbb}
+  body{background:#fff;color:#000}
+  .hero,.card,.footer{box-shadow:none}
+  .planner-form button,.skip-link{display:none}
+  table{min-width:0}
+}
