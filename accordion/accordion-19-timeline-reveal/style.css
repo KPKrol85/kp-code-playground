@@ -1,0 +1,70 @@
+:root {
+  --bg: #f4f5f6;
+  --surface: #ffffff;
+  --surface-soft: #f9fafb;
+  --text: #202530;
+  --muted: #616b7a;
+  --line: #d8dde5;
+  --accent: #415d7e;
+  --accent-soft: rgba(65, 93, 126, 0.14);
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --shadow: 0 18px 44px rgba(19, 31, 48, 0.08);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top right, #fff, var(--bg) 50%);
+}
+.timeline-demo { padding: 2rem 1rem 4rem; }
+.timeline { max-width: 64rem; margin: 0 auto; }
+.timeline__header { margin-bottom: 1.75rem; }
+.timeline__eyebrow { margin: 0 0 0.5rem; color: var(--muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.08em; }
+.timeline__title { margin: 0; font-size: clamp(1.6rem, 2vw, 2.3rem); }
+.timeline__intro { color: var(--muted); max-width: 52ch; line-height: 1.55; margin: 0.65rem 0 1rem; }
+.timeline__close-all {
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  padding: 0.55rem 0.95rem; border-radius: 999px; font-weight: 600; cursor: pointer;
+}
+.timeline__close-all:hover { border-color: var(--accent); }
+.timeline__close-all:focus-visible,
+.phase__trigger:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 45%, white);
+  outline-offset: 2px;
+}
+.timeline__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.phase__card { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.8rem; }
+.phase__rail { display: flex; flex-direction: column; align-items: center; }
+.phase__dot { width: 0.85rem; height: 0.85rem; border-radius: 50%; border: 2px solid var(--accent); background: #fff; margin-top: 1.2rem; }
+.phase.is-open .phase__dot { background: var(--accent); box-shadow: 0 0 0 6px var(--accent-soft); }
+.phase__line { flex: 1; width: 2px; background: linear-gradient(var(--line), transparent); margin-top: 0.4rem; }
+.phase__trigger {
+  width: 100%; text-align: left; border: 1px solid var(--line); background: var(--surface);
+  padding: 1rem 1.1rem; border-radius: var(--radius-lg); cursor: pointer; box-shadow: var(--shadow);
+}
+.phase__meta { display: flex; justify-content: space-between; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.phase__heading { display: block; margin-top: 0.45rem; font-size: 1.08rem; font-weight: 700; }
+.phase__summary { display: block; margin-top: 0.45rem; color: var(--muted); line-height: 1.5; }
+.phase__progress { display: inline-block; margin-top: 0.7rem; font-size: 0.76rem; color: var(--accent); background: var(--accent-soft); padding: 0.22rem 0.56rem; border-radius: 999px; }
+.phase__panel { overflow: hidden; height: 0; transition: height 240ms ease; }
+.phase__panel-inner { border: 1px solid var(--line); border-top: 0; background: var(--surface-soft); border-radius: 0 0 var(--radius-lg) var(--radius-lg); padding: 1rem 1.1rem 1.05rem; display: grid; gap: 0.8rem; }
+.phase__section h2 { margin: 0 0 0.35rem; font-size: 0.87rem; letter-spacing: 0.04em; text-transform: uppercase; color: #38465a; }
+.phase__section p, .phase__section li { margin: 0; color: #2f3641; line-height: 1.45; }
+.phase__section ul { margin: 0; padding-left: 1rem; display: grid; gap: 0.35rem; }
+.phase__checklist { list-style: "✓  "; }
+@media (min-width: 700px) {
+  .timeline-demo { padding: 3rem 1.5rem 5rem; }
+  .phase__trigger, .phase__panel-inner { padding-inline: 1.35rem; }
+  .phase__panel-inner { grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .timeline { max-width: 74rem; }
+  .timeline__header { display: grid; grid-template-columns: 1fr auto; align-items: end; column-gap: 2rem; }
+  .timeline__title, .timeline__eyebrow, .timeline__intro { grid-column: 1 / 2; }
+  .timeline__close-all { grid-column: 2 / 3; grid-row: 1 / span 3; align-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
