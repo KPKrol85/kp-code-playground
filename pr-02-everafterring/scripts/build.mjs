@@ -16,7 +16,8 @@ const htmlPages = [
   "realizacje.html",
   "o-nas.html",
   "kontakt.html",
-  "dziekujemy.html"
+  "dziekujemy.html",
+  "polityka-prywatnosci.html"
 ];
 
 const ensureDir = (targetPath) => {

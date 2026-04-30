@@ -40,6 +40,45 @@ Formularz kontaktowy został przygotowany jako statyczny formularz Netlify Forms
 
 Poprawne zgłoszenia używają natywnej ścieżki POST przygotowanej pod Netlify Forms. Nie dodano AJAX, własnego backendu, zewnętrznego providera ani ręcznych zmian w `dist/`.
 
+----------
+
+## 2026-04-30 — Brak podlinkowanej informacji o przetwarzaniu danych
+
+### Data
+
+2026-04-30
+
+### Tytuł problemu
+
+Brak podlinkowanej informacji o przetwarzaniu danych.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`daily-AUDIT.md`, sekcja P1.
+
+### Rozwiązanie
+
+Dodano źródłową stronę `polityka-prywatnosci.html` z treścią polityki prywatności dla demonstracyjnego projektu EverAfter Ring. Komunikat przy formularzu kontaktowym linkuje teraz do tej strony, a strona została uwzględniona w buildzie, sitemapie i stopce.
+
+### Zmienione pliki
+
+- `polityka-prywatnosci.html`
+- `kontakt.html`
+- `partials/footer.html`
+- `scripts/build.mjs`
+- `sitemap.xml`
+- `daily-AUDIT.md`
+- `resolved.md`
+- `README.md`
+
+### Notatki
+
+Nie dodano `regulamin.html`, `cookies.html`, bannera cookies, analityki, backendu ani ręcznych zmian w `dist/`. Strona potwierdzenia formularza `dziekujemy.html` pozostaje poza sitemapą.
+
 ## Szablon wpisu
 
 ### Data
