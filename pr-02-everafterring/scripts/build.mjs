@@ -15,7 +15,8 @@ const htmlPages = [
   "uslugi.html",
   "realizacje.html",
   "o-nas.html",
-  "kontakt.html"
+  "kontakt.html",
+  "dziekujemy.html"
 ];
 
 const ensureDir = (targetPath) => {
@@ -70,10 +71,14 @@ const getHeaderMarkupForPage = (page) => {
   let headerMarkup = readProjectFile(path.join("partials", "header.html")).trimEnd();
 
   if (page !== "uslugi.html") {
-    headerMarkup = headerMarkup.replace(
-      `class="nav__link" href="${page}"`,
-      `class="nav__link" href="${page}" aria-current="page"`
-    );
+    const activeLinkPattern = `class="nav__link" href="${page}"`;
+
+    if (headerMarkup.includes(activeLinkPattern)) {
+      headerMarkup = headerMarkup.replace(
+        activeLinkPattern,
+        `class="nav__link" href="${page}" aria-current="page"`
+      );
+    }
 
     return headerMarkup;
   }
