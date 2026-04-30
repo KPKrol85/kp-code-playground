@@ -3,10 +3,10 @@
 ## PL
 
 ### Przegląd projektu
-EverAfter Ring to statyczny, wielostronicowy serwis WWW zbudowany w HTML, CSS i JavaScript. Repozytorium zawiera sześć głównych stron źródłowych plus stronę potwierdzenia formularza i stronę polityki prywatności, współdzielone partiale nagłówka i stopki, klientowe moduły interakcji oraz własny pipeline builda generujący gotową wersję produkcyjną w katalogu `dist/`.
+EverAfter Ring to statyczny, wielostronicowy serwis WWW zbudowany w HTML, CSS i JavaScript. Repozytorium zawiera sześć głównych stron źródłowych plus stronę potwierdzenia formularza i strony prawne, współdzielone partiale nagłówka i stopki, klientowe moduły interakcji oraz własny pipeline builda generujący gotową wersję produkcyjną w katalogu `dist/`.
 
 ### Kluczowe funkcje
-- Wielostronicowa struktura obejmująca strony: `index.html`, `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html`, `kontakt.html`, `dziekujemy.html` oraz `polityka-prywatnosci.html`.
+- Wielostronicowa struktura obejmująca strony: `index.html`, `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html`, `kontakt.html`, `dziekujemy.html`, `polityka-prywatnosci.html` oraz `regulamin.html`.
 - Współdzielony `header` i `footer` obsługiwane przez `partials/`, ładowane w wersji źródłowej przez JavaScript i osadzane bezpośrednio w HTML podczas builda.
 - Responsywna nawigacja z menu mobilnym, dropdownem dla sekcji usług, obsługą `Escape`, kliknięcia poza menu oraz stanem aktywnej strony przez `aria-current`.
 - Formularz kontaktowy z walidacją po stronie klienta, komunikatami błędów dla poszczególnych pól oraz komunikatem statusu aktualizowanym w `aria-live`.
@@ -48,6 +48,7 @@ EverAfter Ring to statyczny, wielostronicowy serwis WWW zbudowany w HTML, CSS i 
 ├── kontakt.html
 ├── dziekujemy.html
 ├── polityka-prywatnosci.html
+├── regulamin.html
 ├── package.json
 ├── robots.txt
 ├── sitemap.xml
@@ -103,7 +104,7 @@ Build:
 
 ### SEO
 - Każda strona ma własny `<title>`, `meta name="description"` i `link rel="canonical"`.
-- Repozytorium zawiera `robots.txt` oraz `sitemap.xml` obejmujący sześć głównych stron i stronę polityki prywatności.
+- Repozytorium zawiera `robots.txt` oraz `sitemap.xml` obejmujący sześć głównych stron i strony prawne.
 - W dokumentach osadzono dane strukturalne JSON-LD typu `LocalBusiness` i `WebSite`.
 - Projekt zawiera faviconę SVG.
 
@@ -124,10 +125,10 @@ Build:
 ## EN
 
 ### Project Overview
-EverAfter Ring is a static multi-page website built with HTML, CSS, and JavaScript. The repository contains six main source pages plus a post-submit success page and a privacy policy page, shared header and footer partials, client-side interaction modules, and a custom build pipeline that produces a production-ready output in `dist/`.
+EverAfter Ring is a static multi-page website built with HTML, CSS, and JavaScript. The repository contains six main source pages plus a post-submit success page and legal pages, shared header and footer partials, client-side interaction modules, and a custom build pipeline that produces a production-ready output in `dist/`.
 
 ### Key Features
-- Multi-page structure covering `index.html`, `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html`, `kontakt.html`, `dziekujemy.html`, and `polityka-prywatnosci.html`.
+- Multi-page structure covering `index.html`, `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html`, `kontakt.html`, `dziekujemy.html`, `polityka-prywatnosci.html`, and `regulamin.html`.
 - Shared `header` and `footer` managed through `partials/`, loaded by JavaScript in source mode and embedded directly into HTML during the build.
 - Responsive navigation with a mobile menu, services dropdown, `Escape` handling, outside-click closing, and active-page state via `aria-current`.
 - Contact form with client-side validation, field-level error messages, and a status message updated through `aria-live`.
@@ -169,6 +170,7 @@ EverAfter Ring is a static multi-page website built with HTML, CSS, and JavaScri
 ├── kontakt.html
 ├── dziekujemy.html
 ├── polityka-prywatnosci.html
+├── regulamin.html
 ├── package.json
 ├── robots.txt
 ├── sitemap.xml
@@ -224,7 +226,7 @@ The build process:
 
 ### SEO
 - Each page defines its own `<title>`, `meta name="description"`, and `link rel="canonical"`.
-- The repository includes `robots.txt` and a `sitemap.xml` covering the six main pages and the privacy policy page.
+- The repository includes `robots.txt` and a `sitemap.xml` covering the six main pages and legal pages.
 - JSON-LD structured data for `LocalBusiness` and `WebSite` is embedded in the documents.
 - The project includes an SVG favicon.
 

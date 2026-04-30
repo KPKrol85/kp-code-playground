@@ -9,3 +9,11 @@
 .list li {
   list-style: disc;
 }
+
+.list--ordered {
+  list-style: decimal;
+}
+
+.list--ordered li {
+  list-style: decimal;
+}
