@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manager sygnałów zaufania na stronie | KP_Code Digital Vault</title>
+    <meta
+      name="description"
+      content="Interaktywna platforma do audytu, priorytetyzacji i planowania sygnałów zaufania na stronie internetowej."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-bg" aria-hidden="true"></div>
+    <header class="product-bar">
+      <div>
+        <p class="product-bar__brand">KP_Code Digital Vault</p>
+        <h1 class="product-bar__title">Manager sygnałów zaufania na stronie</h1>
+        <p class="product-bar__status">Wersja narzędziowa</p>
+      </div>
+      <div class="product-bar__actions">
+        <button type="button" class="btn btn--ghost" id="copyReportBtn">Kopiuj raport</button>
+        <button type="button" class="btn btn--ghost" id="printBtn">Drukuj</button>
+        <button type="button" class="btn btn--danger" id="resetBtn">Reset danych</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="hero panel" aria-labelledby="hero-title">
+        <h2 id="hero-title">Zarządzaj sygnałami zaufania, które decydują o tym, czy klient wyśle zapytanie.</h2>
+        <p>
+          To narzędzie pomaga wykryć braki wiarygodności, uporządkować priorytety i zamienić ocenę strony na
+          praktyczny plan działań dla Ciebie lub klienta.
+        </p>
+      </section>
+
+      <section class="dashboard" aria-label="Podsumowanie wskaźników">
+        <article class="metric-card panel">
+          <p>Trust Score</p>
+          <p class="metric-card__value" id="trustScore">0</p>
+        </article>
+        <article class="metric-card panel">
+          <p>Liczba mocnych sygnałów</p>
+          <p class="metric-card__value" id="strongSignals">0</p>
+        </article>
+        <article class="metric-card panel">
+          <p>Braki krytyczne</p>
+          <p class="metric-card__value" id="criticalMissing">0</p>
+        </article>
+        <article class="metric-card panel">
+          <p>Najwyższy priorytet</p>
+          <p class="metric-card__value metric-card__value--small" id="topPriority">-</p>
+        </article>
+        <article class="metric-card panel">
+          <p>Gotowość do pokazania klientowi</p>
+          <p class="metric-card__value metric-card__value--small" id="clientReadiness">-</p>
+        </article>
+      </section>
+
+      <div class="workspace-grid">
+        <section class="panel workspace" aria-labelledby="workspace-title">
+          <div class="section-head">
+            <h2 id="workspace-title">Obszary audytu sygnałów zaufania</h2>
+            <p>Ustaw status dla każdego elementu i dodaj notatki operacyjne.</p>
+          </div>
+          <div id="categoriesContainer" class="categories"></div>
+        </section>
+
+        <aside class="panel sidebar" aria-labelledby="report-title">
+          <section class="report" id="reportSection">
+            <h2 id="report-title">Raport i plan działań</h2>
+            <p class="report__score"><span id="reportScore">0</span>/100</p>
+            <p id="reportLabel" class="report__label">Niski poziom zaufania</p>
+            <p id="reportInterpretation" class="report__interpretation"></p>
+
+            <section class="report-block" aria-labelledby="category-breakdown-title">
+              <h3 id="category-breakdown-title">Wynik per kategoria</h3>
+              <ul id="categoryBreakdown"></ul>
+            </section>
+
+            <section class="report-block" aria-labelledby="priority-title">
+              <h3 id="priority-title">Plan priorytetów</h3>
+              <div class="priority-group">
+                <h4>Najpierw popraw</h4>
+                <ul id="priorityNow"></ul>
+              </div>
+              <div class="priority-group">
+                <h4>Następnie wzmocnij</h4>
+                <ul id="priorityNext"></ul>
+              </div>
+              <div class="priority-group">
+                <h4>Możesz dodać później</h4>
+                <ul id="priorityLater"></ul>
+              </div>
+            </section>
+
+            <section class="report-block" aria-labelledby="summary-title">
+              <h3 id="summary-title">Syntetyczne podsumowanie</h3>
+              <p id="summaryText"></p>
+            </section>
+            <p class="report__disclaimer">
+              To narzędzie pomaga uporządkować decyzje projektowe. Nie zastępuje pełnego audytu UX, SEO ani
+              technicznego.
+            </p>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <p class="feedback" id="feedback" aria-live="polite">Gotowe do pracy.</p>
+    <footer class="footer">KP_Code Digital Vault · Website Trust Signal Manager · 2026</footer>
+    <script src="script.js"></script>
+  </body>
+</html>
