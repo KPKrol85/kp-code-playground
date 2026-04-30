@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manager ścieżki konwersji na stronie | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Przejdź do głównej treści</a>
+
+    <header class="product-bar">
+      <div class="product-bar__brand">
+        <p class="product-bar__kicker">KP_Code Digital Vault</p>
+        <h1 class="product-bar__title">Manager ścieżki konwersji na stronie</h1>
+        <p class="product-bar__status">narzędzie ścieżki konwersji</p>
+      </div>
+      <div class="product-bar__actions">
+        <button type="button" class="btn btn--ghost" data-action="reset">Reset danych</button>
+        <button type="button" class="btn btn--ghost" data-action="print">Drukuj raport</button>
+        <button type="button" class="btn btn--primary" data-action="copy">Kopiuj raport</button>
+      </div>
+    </header>
+
+    <main id="main-content" class="app-main">
+      <section class="hero panel" aria-labelledby="hero-title">
+        <h2 id="hero-title">Sprawdź, czy strona prowadzi użytkownika do działania — krok po kroku.</h2>
+        <p>
+          Oceń kolejne etapy ścieżki od pierwszego wrażenia po kontakt. Narzędzie wylicza wynik,
+          wykrywa blokery i układa plan działań według priorytetu.
+        </p>
+        <p class="save-indicator" id="save-indicator">Ostatnia aktualizacja: jeszcze brak zmian</p>
+      </section>
+
+      <section class="dashboard" aria-label="Podsumowanie">
+        <article class="metric-card"><h3>Conversion Path Score</h3><p id="metric-score">0/100</p></article>
+        <article class="metric-card"><h3>Najsilniejszy etap</h3><p id="metric-strongest">—</p></article>
+        <article class="metric-card"><h3>Najsłabszy etap</h3><p id="metric-weakest">—</p></article>
+        <article class="metric-card"><h3>Blokery konwersji</h3><p id="metric-blockers">0</p></article>
+        <article class="metric-card"><h3>Gotowość ścieżki do publikacji</h3><p id="metric-status">—</p></article>
+      </section>
+
+      <div class="workspace-layout">
+        <section class="workspace panel" aria-labelledby="workspace-title">
+          <h2 id="workspace-title">Workspace ścieżki konwersji</h2>
+          <div id="stages-container" class="stages"></div>
+        </section>
+
+        <aside class="insight panel" aria-labelledby="insight-title">
+          <h2 id="insight-title">Panel raportu i priorytetów</h2>
+
+          <section class="insight-block" aria-labelledby="blockers-title">
+            <h3 id="blockers-title">Blokery konwersji</h3>
+            <ul id="blockers-list" class="list"></ul>
+          </section>
+
+          <section class="insight-block" aria-labelledby="priority-title">
+            <h3 id="priority-title">Plan działań</h3>
+            <div class="priority-group">
+              <h4>Najpierw odblokuj</h4>
+              <ul id="plan-unlock" class="list"></ul>
+            </div>
+            <div class="priority-group">
+              <h4>Następnie uporządkuj</h4>
+              <ul id="plan-organize" class="list"></ul>
+            </div>
+            <div class="priority-group">
+              <h4>Później zoptymalizuj</h4>
+              <ul id="plan-optimize" class="list"></ul>
+            </div>
+          </section>
+
+          <section class="insight-block report" id="report" aria-labelledby="report-title">
+            <h3 id="report-title">Raport końcowy</h3>
+            <p id="report-status"></p>
+            <div id="report-stages"></div>
+            <div id="report-summary"></div>
+            <p class="report__note">
+              To narzędzie pomaga uporządkować ścieżkę konwersji. Nie zastępuje pełnego audytu UX,
+              SEO ani analityki zachowania użytkowników.
+            </p>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>KP_Code Digital Vault • Website Improvement Tools Series</p>
+    </footer>
+
+    <p id="live-feedback" class="sr-only" aria-live="polite"></p>
+
+    <script src="script.js"></script>
+  </body>
+</html>
