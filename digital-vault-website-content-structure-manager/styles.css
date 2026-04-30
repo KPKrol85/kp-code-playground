@@ -1,0 +1,76 @@
+:root {
+  --bg: #f4f1ec;
+  --surface: #fffdf9;
+  --surface-alt: #f7f4ef;
+  --ink: #1f2733;
+  --muted: #5e6774;
+  --line: #d7d2c8;
+  --accent: #2f5d8a;
+  --accent-soft: #dbe8f5;
+  --warn: #a9652a;
+  --danger: #a13a3a;
+  --ok: #2f6b4f;
+  --radius: 14px;
+  --shadow: 0 8px 26px rgba(22, 29, 38, 0.08);
+  --space: 1rem;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(to bottom, #f8f4ef, var(--bg));
+  line-height: 1.5;
+}
+.panel, .metric-card, .block-card, .group-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.product-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .9rem; padding: 1rem; border-bottom: 1px solid var(--line); background: #fff; }
+.brand { letter-spacing: .08em; text-transform: uppercase; font-size: .72rem; color: var(--muted); margin: 0; }
+.product-bar h1 { margin: .2rem 0; font-size: 1.2rem; }
+.subtitle { margin: 0; color: var(--muted); font-size: .9rem; }
+.btn { border-radius: 999px; border: 1px solid var(--line); padding: .55rem .9rem; background: #fff; cursor: pointer; }
+.btn--primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.layout { padding: 1rem; display: grid; gap: 1rem; }
+.hero { padding: 1rem; background: repeating-linear-gradient(0deg,var(--surface),var(--surface) 22px,#fcfaf6 23px,#fcfaf6 24px); }
+.dashboard { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); }
+.metric-card { padding: .8rem; }
+.metric-card h3 { margin: 0 0 .4rem; font-size: .85rem; color: var(--muted); }
+.metric-card p { margin: 0; font-size: 1.08rem; font-weight: 600; }
+.workspace { display: grid; gap: 1rem; }
+.sidebar { padding: 1rem; }
+.sidebar__meter progress { width: 100%; height: 12px; }
+.group-summary { display: grid; gap: .4rem; margin-top: .8rem; }
+.group-summary__item { font-size: .9rem; display: flex; justify-content: space-between; border-bottom: 1px dashed var(--line); padding-bottom: .2rem; }
+.content-map { display: grid; gap: 1rem; }
+.group-card { padding: .9rem; }
+.group-header { display: flex; justify-content: space-between; gap: .8rem; align-items: center; }
+.block-list { display: grid; gap: .75rem; margin-top: .8rem; }
+.block-card { padding: .8rem; background: var(--surface-alt); }
+.block-head { display: flex; justify-content: space-between; gap: .6rem; align-items: start; }
+.chip { border: 1px solid var(--line); border-radius: 999px; font-size: .75rem; padding: .15rem .5rem; background: #fff; }
+.meta { color: var(--muted); font-size: .86rem; margin: .35rem 0; }
+.block-controls { display: grid; gap: .5rem; }
+textarea { width: 100%; min-height: 76px; padding: .55rem; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
+select { border: 1px solid var(--line); border-radius: 8px; padding: .45rem; background: #fff; }
+.insights-report-grid { display: grid; gap: 1rem; }
+.bullet-list { padding-left: 1rem; margin: .5rem 0 0; display: grid; gap: .45rem; }
+.report pre { white-space: pre-wrap; background: #fcfbf8; border: 1px solid var(--line); border-radius: 10px; padding: .8rem; }
+.footer { padding: 1rem; text-align: center; color: var(--muted); font-size: .9rem; }
+.visually-hidden { position: absolute; left: -9999px; }
+@media (min-width: 760px) {
+  .layout { padding: 1.2rem 1.4rem; }
+  .workspace { grid-template-columns: 280px 1fr; align-items: start; }
+  .sidebar { position: sticky; top: .8rem; }
+}
+@media (min-width: 1024px) {
+  .insights-report-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+@media print {
+  body { background: #fff; color: #000; }
+  .product-actions, .sidebar, .content-map, .hero, .dashboard, .insights-report-grid, .footer { display: none !important; }
+  .report { box-shadow: none; border: 1px solid #999; }
+  .report pre { border: none; }
+}
