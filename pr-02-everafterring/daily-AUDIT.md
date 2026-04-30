@@ -1,42 +1,42 @@
-# EverAfter Ring — Daily Audit
+# EverAfter Ring — Audyt dzienny
 
-## 1. Short overall assessment
+## 1. Krótka ocena ogólna
 
-EverAfter Ring is a clean static multi-page front-end with coherent source organization, semantic page structure, accessible navigation primitives, local font/image assets, and a deliberate build pipeline that inlines shared partials into production HTML. The main current production-facing risk found in source is the contact form: it validates fields and displays a success message, but no real delivery endpoint or submission integration is detected in project.
+EverAfter Ring to czysty, statyczny, wielostronicowy front-end ze spójną organizacją źródeł, semantyczną strukturą stron, dostępnymi podstawami nawigacji, lokalnymi fontami i obrazami oraz świadomie zaprojektowanym pipeline'em builda, który osadza współdzielone partiale w produkcyjnym HTML. Główne obecne ryzyko produkcyjne wykryte w źródłach dotyczy formularza kontaktowego: waliduje pola i pokazuje komunikat sukcesu, ale w projekcie nie wykryto rzeczywistego endpointu dostarczenia wiadomości ani integracji wysyłki.
 
-The repository contains no detected service worker, web app manifest, exposed secrets, TODO/FIXME markers, or `console.log` debugging statements outside ignored build/dependency folders.
+W repozytorium nie wykryto service workera, manifestu aplikacji webowej, ujawnionych sekretów, znaczników TODO/FIXME ani instrukcji debugujących `console.log` poza ignorowanymi katalogami builda i zależności.
 
-## 2. Strengths
+## 2. Mocne strony
 
-- Semantic page shells are consistent across the six source pages: each page has a skip link, `main id="main"`, one `h1`, and shared header/footer hosts (`index.html:33-36`, same pattern visible across `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html`, and `kontakt.html`).
-- Heading hierarchy is orderly in the audited source: each page has one `h1`, followed by section-level `h2` and nested `h3` content where needed.
-- Navigation partial uses real buttons for interactive controls, `aria-expanded`, `aria-controls`, `aria-label`, and an explicitly labelled `nav` landmark (`partials/header.html:5`, `partials/header.html:13`, `partials/header.html:22`).
-- Keyboard support is implemented for Escape handling, dropdown key handling, focus return, outside-click closing, and responsive menu state (`js/modules/nav.js:65`, `js/modules/nav.js:82`, `js/modules/nav.js:118`, `js/modules/nav.js:127`, `js/modules/nav.js:154`).
-- Reduced-motion handling exists in both CSS and JS: global transitions/animations are shortened under `prefers-reduced-motion`, smooth scrolling is disabled, and hero pointer animation is gated by `matchMedia` (`css/base.css:92`, `css/base.css:94`, `css/base.css:100-102`, `js/modules/hero.js:14`, `js/modules/hero.js:80-83`).
-- Metadata basics are strong: all six pages have a title, description, canonical URL, and two JSON-LD blocks; `robots.txt` points to `sitemap.xml`, and the sitemap includes all six pages (`robots.txt:1-3`, `sitemap.xml:4-19`).
-- Image basics are handled well: audited `<img>` elements have explicit `width`, `height`, and non-empty `alt`; below-the-fold portfolio images use `loading="lazy"` (`index.html:54`, `index.html:218`, `realizacje.html:59`).
-- The build pipeline is explicit and appropriate for this project type: CSS is bundled/minified, JS is bundled/minified, partial hosts are replaced in production HTML, and robots/sitemap/assets are copied (`scripts/build.mjs:54`, `scripts/build.mjs:65`, `scripts/build.mjs:105-115`, `scripts/build.mjs:121-127`).
+- Semantyczne szkielety stron są spójne we wszystkich sześciu stronach źródłowych: każda strona ma link pomijający, `main id="main"`, jeden `h1` oraz hosty współdzielonego nagłówka i stopki (`index.html:33-36`, ten sam wzorzec widoczny w `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html` i `kontakt.html`).
+- Hierarchia nagłówków w audytowanych źródłach jest uporządkowana: każda strona ma jeden `h1`, po którym występują sekcyjne `h2` oraz zagnieżdżone treści `h3` tam, gdzie jest to potrzebne.
+- Partial nawigacji używa prawdziwych przycisków dla kontrolek interaktywnych, atrybutów `aria-expanded`, `aria-controls`, `aria-label` oraz jawnie opisanego landmarku `nav` (`partials/header.html:5`, `partials/header.html:13`, `partials/header.html:22`).
+- Obsługa klawiatury obejmuje Escape, obsługę klawiszy w dropdownie, powrót fokusu, zamykanie po kliknięciu poza elementem oraz responsywny stan menu (`js/modules/nav.js:65`, `js/modules/nav.js:82`, `js/modules/nav.js:118`, `js/modules/nav.js:127`, `js/modules/nav.js:154`).
+- Obsługa ograniczenia ruchu istnieje zarówno w CSS, jak i w JS: globalne przejścia i animacje są skracane przy `prefers-reduced-motion`, płynne przewijanie jest wyłączane, a animacja obrazu hero zależna od kursora jest bramkowana przez `matchMedia` (`css/base.css:92`, `css/base.css:94`, `css/base.css:100-102`, `js/modules/hero.js:14`, `js/modules/hero.js:80-83`).
+- Podstawy metadanych są mocne: wszystkie sześć stron ma tytuł, opis, adres kanoniczny oraz dwa bloki JSON-LD; `robots.txt` wskazuje na `sitemap.xml`, a mapa strony obejmuje wszystkie sześć stron (`robots.txt:1-3`, `sitemap.xml:4-19`).
+- Podstawy obsługi obrazów są dobrze zaadresowane: audytowane elementy `<img>` mają jawne `width`, `height` i niepuste `alt`; obrazy portfolio poniżej pierwszego widoku używają `loading="lazy"` (`index.html:54`, `index.html:218`, `realizacje.html:59`).
+- Pipeline builda jest jawny i odpowiedni dla tego typu projektu: CSS jest bundlowany i minifikowany, JS jest bundlowany i minifikowany, hosty partiali są zastępowane w produkcyjnym HTML, a robots/sitemap/assets są kopiowane (`scripts/build.mjs:54`, `scripts/build.mjs:65`, `scripts/build.mjs:105-115`, `scripts/build.mjs:121-127`).
 
-## 3. P0 — Critical risks
+## 3. P0 — Krytyczne ryzyka
 
-none detected.
+nie wykryto.
 
-## 4. P1 — Important issues worth fixing next
+## 4. P1 — Ważne problemy do naprawy w następnej kolejności
 
-- Real defect: the contact form presents a successful submission state without any detected real submission path. The form has no `action` or `method` (`kontakt.html:55`), the submit handler always calls `event.preventDefault()` (`js/modules/form.js:56`), and after client-side validation it sets a success message and resets the form without sending data (`js/modules/form.js:73-75`). For a production contact page, this can silently lose leads while telling users their message was accepted.
-- Real defect/content compliance gap: the contact form states that submitting confirms review of data-processing information, but no privacy/RODO/GDPR/policy page or linked notice was detected in project. Evidence: the form collects name, email, phone, event date, city/region, budget, package, guest count, and message (`kontakt.html:59-117`), while the only notice is unlinked text (`kontakt.html:120`).
+- Rzeczywisty defekt: formularz kontaktowy prezentuje stan poprawnego wysłania bez wykrytej rzeczywistej ścieżki wysyłki. Formularz nie ma atrybutów `action` ani `method` (`kontakt.html:55`), handler submit zawsze wywołuje `event.preventDefault()` (`js/modules/form.js:56`), a po walidacji po stronie klienta ustawia komunikat sukcesu i resetuje formularz bez wysłania danych (`js/modules/form.js:73-75`). Na produkcyjnej stronie kontaktowej może to po cichu tracić leady, jednocześnie informując użytkowników, że wiadomość została przyjęta.
+- Rzeczywisty defekt / luka zgodności treści: formularz kontaktowy informuje, że wysłanie potwierdza zapoznanie się z informacją o przetwarzaniu danych, ale w projekcie nie wykryto strony prywatności/RODO/GDPR/polityki ani podlinkowanej informacji. Dowód: formularz zbiera imię i nazwisko, email, telefon, datę wydarzenia, miasto/region, budżet, pakiet, liczbę gości i wiadomość (`kontakt.html:59-117`), a jedyna informacja jest niepodlinkowanym tekstem (`kontakt.html:120`).
 
-## 5. P2 — Minor refinements
+## 5. P2 — Drobne usprawnienia
 
-- Cleanup: `trapFocus` is exported from `js/utils.js` and imported by `js/modules/nav.js`, but no invocation was detected. This is not a runtime defect, but it is dead/unused code visible in source (`js/utils.js:9`, `js/modules/nav.js:1`).
-- Build maintenance risk: `package.json` uses `"latest"` for `esbuild` and `lightningcss` (`package.json:14-15`). The lockfile helps current installs, but pinning explicit version ranges in `package.json` would make future dependency refreshes more intentional.
+- Porządkowanie: `trapFocus` jest eksportowane z `js/utils.js` i importowane przez `js/modules/nav.js`, ale nie wykryto żadnego wywołania. Nie jest to defekt runtime, lecz martwy/nieużywany kod widoczny w źródłach (`js/utils.js:9`, `js/modules/nav.js:1`).
+- Ryzyko utrzymaniowe builda: `package.json` używa `"latest"` dla `esbuild` i `lightningcss` (`package.json:14-15`). Lockfile pomaga przy obecnych instalacjach, ale przypięcie jawnych zakresów wersji w `package.json` uczyniłoby przyszłe odświeżenia zależności bardziej świadomymi.
 
-## 6. Extra quality improvements
+## 6. Dodatkowe ulepszenia jakościowe
 
-- Optional metadata upgrade: Open Graph and Twitter card tags are not detected in project. The current SEO basics are present, so this is a share-preview enhancement rather than a current defect.
-- Optional progressive enhancement: source HTML relies on JS/fetch for header/footer during local source preview (`index.html:34`, `index.html:265`, `js/modules/partials.js:44`). This is a conscious implementation decision documented by the build script, which embeds partials for production (`scripts/build.mjs:105-115`), so it is not classified as a defect.
-- Optional performance polish: consider preloading the primary hero image or critical local fonts if real performance testing shows LCP pressure. Current source already uses local WOFF2 fonts and explicit image dimensions.
+- Opcjonalne ulepszenie metadanych: w projekcie nie wykryto tagów Open Graph ani Twitter Card. Obecne podstawy SEO są obecne, więc jest to usprawnienie podglądów udostępniania, a nie aktualny defekt.
+- Opcjonalne ulepszenie progressive enhancement: źródłowy HTML polega na JS/fetch dla nagłówka i stopki podczas lokalnego podglądu źródeł (`index.html:34`, `index.html:265`, `js/modules/partials.js:44`). Jest to świadoma decyzja implementacyjna udokumentowana przez skrypt builda, który osadza partiale dla produkcji (`scripts/build.mjs:105-115`), więc nie jest klasyfikowana jako defekt.
+- Opcjonalne usprawnienie wydajności: warto rozważyć preload głównego obrazu hero lub krytycznych lokalnych fontów, jeżeli realne testy wydajności pokażą presję na LCP. Aktualne źródła już używają lokalnych fontów WOFF2 i jawnych wymiarów obrazów.
 
-## 7. Senior rating (1–10)
+## 7. Ocena seniorska (1–10)
 
-8/10. The project is structurally solid for a static front-end: semantic HTML, accessible navigation patterns, reduced-motion support, metadata basics, local assets, and a clear production build are all present. The rating is held back mainly by the contact form’s fake-success behavior and missing linked data-processing notice, both of which matter on a production-facing lead-generation page.
+8/10. Projekt jest strukturalnie solidny jak na statyczny front-end: obecne są semantyczny HTML, wzorce dostępnej nawigacji, obsługa ograniczenia ruchu, podstawowe metadane, lokalne assety i czytelny build produkcyjny. Ocenę obniżają głównie fałszywy sukces formularza kontaktowego oraz brak podlinkowanej informacji o przetwarzaniu danych, ponieważ oba elementy mają znaczenie na produkcyjnej stronie służącej pozyskiwaniu leadów.
