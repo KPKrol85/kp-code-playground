@@ -1,3 +1,5 @@
+/* Callout Section */
+
 .callout {
   background: var(--color-callout-bg);
   color: var(--color-callout-text);
@@ -13,4 +15,14 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-4);
+}
+
+.callout__actions .button--ghost {
+  color: var(--color-callout-text);
+  border-color: color-mix(in srgb, var(--color-callout-text) 45%, transparent);
+}
+
+[data-theme="dark"] .callout__actions .button--ghost {
+  color: var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
 }
