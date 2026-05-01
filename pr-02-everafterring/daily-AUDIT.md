@@ -28,12 +28,14 @@ nie wykryto.
 ## 5. P2 — Drobne usprawnienia
 
 - Porządkowanie: `trapFocus` jest eksportowane z `js/utils.js` i importowane przez `js/modules/nav.js`, ale nie wykryto żadnego wywołania. Nie jest to defekt runtime, lecz martwy/nieużywany kod widoczny w źródłach (`js/utils.js:9`, `js/modules/nav.js:1`).
+
 - Ryzyko utrzymaniowe builda: `package.json` używa `"latest"` dla `esbuild` i `lightningcss` (`package.json:14-15`). Lockfile pomaga przy obecnych instalacjach, ale przypięcie jawnych zakresów wersji w `package.json` uczyniłoby przyszłe odświeżenia zależności bardziej świadomymi.
 
 ## 6. Dodatkowe ulepszenia jakościowe
 
-- Opcjonalne ulepszenie metadanych: w projekcie nie wykryto tagów Open Graph ani Twitter Card. Obecne podstawy SEO są obecne, więc jest to usprawnienie podglądów udostępniania, a nie aktualny defekt.
+
 - Opcjonalne ulepszenie progressive enhancement: źródłowy HTML polega na JS/fetch dla nagłówka i stopki podczas lokalnego podglądu źródeł (`index.html:34`, `index.html:265`, `js/modules/partials.js:44`). Jest to świadoma decyzja implementacyjna udokumentowana przez skrypt builda, który osadza partiale dla produkcji (`scripts/build.mjs:110-122`), więc nie jest klasyfikowana jako defekt.
+
 - Opcjonalne usprawnienie wydajności: warto rozważyć preload głównego obrazu hero lub krytycznych lokalnych fontów, jeżeli realne testy wydajności pokażą presję na LCP. Aktualne źródła już używają lokalnych fontów WOFF2 i jawnych wymiarów obrazów.
 
 ## 7. Ocena seniorska (1–10)
