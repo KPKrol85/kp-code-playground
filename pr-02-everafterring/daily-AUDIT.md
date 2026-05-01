@@ -27,8 +27,6 @@ nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
-- Porządkowanie: `trapFocus` jest eksportowane z `js/utils.js` i importowane przez `js/modules/nav.js`, ale nie wykryto żadnego wywołania. Nie jest to defekt runtime, lecz martwy/nieużywany kod widoczny w źródłach (`js/utils.js:9`, `js/modules/nav.js:1`).
-
 - Ryzyko utrzymaniowe builda: `package.json` używa `"latest"` dla `esbuild` i `lightningcss` (`package.json:14-15`). Lockfile pomaga przy obecnych instalacjach, ale przypięcie jawnych zakresów wersji w `package.json` uczyniłoby przyszłe odświeżenia zależności bardziej świadomymi.
 
 ## 6. Dodatkowe ulepszenia jakościowe
