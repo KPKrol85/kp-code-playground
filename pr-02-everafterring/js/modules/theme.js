@@ -1,5 +1,9 @@
 const STORAGE_KEY = "everafterring-theme";
 const THEMES = ["light", "dark"];
+const THEME_COLORS = {
+  light: "#faf7f2",
+  dark: "#171311"
+};
 
 const isValidTheme = (theme) => THEMES.includes(theme);
 
@@ -35,9 +39,15 @@ const updateToggle = (toggle, theme) => {
   toggle.setAttribute("aria-label", isDark ? "Włącz tryb jasny" : "Włącz tryb ciemny");
 };
 
+const updateThemeColor = (theme) => {
+  const themeColor = document.querySelector('meta[name="theme-color"][data-theme-color]');
+  themeColor?.setAttribute("content", THEME_COLORS[theme]);
+};
+
 const applyTheme = (theme, toggle) => {
   const nextTheme = isValidTheme(theme) ? theme : "light";
   document.documentElement.dataset.theme = nextTheme;
+  updateThemeColor(nextTheme);
   updateToggle(toggle, nextTheme);
 };
 

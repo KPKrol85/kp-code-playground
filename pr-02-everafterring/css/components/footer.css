@@ -26,6 +26,15 @@
   color: var(--color-footer-heading);
 }
 
+.footer__brand-logo {
+  display: block;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  object-fit: contain;
+}
+
 .footer__list {
   display: grid;
   gap: var(--space-2);

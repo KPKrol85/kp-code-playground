@@ -1,5 +1,9 @@
 (() => {
   const storageKey = "everafterring-theme";
+  const themeColors = {
+    light: "#faf7f2",
+    dark: "#171311"
+  };
   const root = document.documentElement;
   let theme = null;
 
@@ -18,5 +22,11 @@
     theme = "dark";
   }
 
-  root.dataset.theme = theme || "light";
+  const activeTheme = theme || "light";
+  const themeColor = document.querySelector('meta[name="theme-color"][data-theme-color]');
+
+  root.dataset.theme = activeTheme;
+  if (themeColor) {
+    themeColor.setAttribute("content", themeColors[activeTheme]);
+  }
 })();
