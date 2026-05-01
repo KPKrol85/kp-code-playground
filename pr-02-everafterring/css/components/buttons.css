@@ -1,3 +1,5 @@
+/* Buttons */
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -6,9 +8,12 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
-  transition: var(--transition-base);
-  font-weight: 600;
-  font-size: var(--font-size-xs);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xxs);
 }
 
 .button--primary {
@@ -24,6 +29,12 @@
 .button--ghost {
   background: transparent;
   color: var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+.button--ghost:hover {
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
   border-color: var(--color-accent);
 }
 

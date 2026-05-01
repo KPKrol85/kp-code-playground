@@ -29,14 +29,13 @@
 }
 
 .hero__title {
-  font-size: clamp(2.2rem, 4vw, 3.4rem);
-  line-height: 1.15;
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
   margin-bottom: var(--space-4);
 }
 
 .hero__tagline {
-  font-size: var(--font-size-md);
-  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
   margin-bottom: var(--space-6);
   max-width: 90%;
 }
@@ -95,15 +94,16 @@
 
 .badge--animate {
   display: inline-block;
+  margin-bottom: var(--space-5);
   animation: slideInDown 0.6s ease-out;
 }
 
 .inline-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: var(--space-3);
   color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
 }
 
 .inline-meta span {

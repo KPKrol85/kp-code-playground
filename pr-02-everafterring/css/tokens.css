@@ -1,6 +1,7 @@
 :root {
   color-scheme: light;
 
+  /* Base Colors */
   --color-ivory: #faf7f2;
   --color-champagne: #f2e7da;
   --color-blush: #f5e1e6;
@@ -14,6 +15,7 @@
   --color-success: #2f6b4f;
   --color-error: #8f3c3c;
 
+  /* Core Colors */
   --color-page-bg: var(--color-ivory);
   --color-page-bg-muted: var(--color-champagne);
   --color-surface: var(--color-white);
@@ -41,10 +43,13 @@
   --color-hero-sheen: rgba(255, 255, 255, 0.3);
   --color-hero-border: rgba(198, 167, 122, 0.2);
 
+  /* Typography */
   --font-serif: "Cormorant Garamond", "Times New Roman", Georgia, serif;
   --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
+  /* Font Sizes */
   --font-size-micro: 0.5rem;
+  --font-size-nano: 0.6rem;
   --font-size-xxs: 0.7rem;
   --font-size-xs: 0.85rem;
   --font-size-sm: 0.95rem;
@@ -54,9 +59,32 @@
   --font-size-xl: 2rem;
   --font-size-xxl: 2.8rem;
 
-  --line-height-base: 1.6;
-  --line-height-tight: 1.2;
+  /* Logo Sizes */
+  --logo-size-sm: 2.5rem;
+  --logo-size-md: 3rem;
+  --logo-size-lg: 4rem;
 
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-compact: 1.4;
+  --line-height-base: 1.6;
+  --line-height-relaxed: 1.7;
+
+  /* Letter Spacing */
+  --letter-spacing-compact: -0.01em;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-base: 0;
+  --letter-spacing-loose: 0.01em;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-widest: 0.04em;
+  --letter-spacing-badge: 0.08em;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Spacing */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -66,18 +94,24 @@
   --space-7: 3rem;
   --space-8: 4rem;
 
+  /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 28px;
   --radius-pill: 9999px;
 
+  /* Shadows */
   --shadow-soft: 0 20px 40px rgba(42, 36, 34, 0.08);
   --shadow-card: 0 12px 24px rgba(42, 36, 34, 0.1);
 
+  /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 240ms ease;
 
+  /* Container */
   --container-width: 1100px;
+
+  /* Focus Ring */
   --focus-ring: 0 0 0 3px rgba(198, 167, 122, 0.5);
 }
 

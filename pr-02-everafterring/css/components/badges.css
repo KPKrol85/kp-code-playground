@@ -1,12 +1,14 @@
+/* Badges */
+
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  font-size: var(--font-size-xs);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-nano);
+  line-height: var(--line-height-compact);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--letter-spacing-badge);
   background: var(--color-accent-soft);
   color: var(--color-accent);
 }
