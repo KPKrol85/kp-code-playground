@@ -80,61 +80,130 @@
 
     <!-- Main -->
     <main id="main">
-
       <!-- Hero -->
       <section class="hero">
         <div class="container hero__layout">
           <div>
-            <span class="badge">Portfolio</span>
+            <span class="badge badge--animate">Portfolio</span>
             <h1 class="hero__title">Realizacje EverAfter Ring – różne style, ta sama dbałość o detal.</h1>
             <p class="hero__tagline">Każda realizacja jest opowieścią, którą tworzymy wspólnie z parą młodą.</p>
           </div>
           <div class="hero__media" data-hero-image>
             <picture>
-              <source type="image/avif" srcset="assets/img/hero/hero-400.avif 400w, assets/img/hero/hero-800.avif 800w, assets/img/hero/hero-1080.avif 1080w" sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" />
-              <source type="image/webp" srcset="assets/img/hero/hero-400.webp 400w, assets/img/hero/hero-800.webp 800w, assets/img/hero/hero-1080.webp 1080w" sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" />
-              <img src="assets/img/hero/hero-800.jpg" srcset="assets/img/hero/hero-400.jpg 400w, assets/img/hero/hero-800.jpg 800w, assets/img/hero/hero-1080.jpg 1080w" sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" width="1080" height="720" alt="Stylowe portfolio ślubne" decoding="async" />
+              <source
+                type="image/avif"
+                srcset="assets/img/hero/hero-400.avif 400w, assets/img/hero/hero-800.avif 800w, assets/img/hero/hero-1080.avif 1080w"
+                sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" />
+              <source
+                type="image/webp"
+                srcset="assets/img/hero/hero-400.webp 400w, assets/img/hero/hero-800.webp 800w, assets/img/hero/hero-1080.webp 1080w"
+                sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" />
+              <img
+                src="assets/img/hero/hero-800.jpg"
+                srcset="assets/img/hero/hero-400.jpg 400w, assets/img/hero/hero-800.jpg 800w, assets/img/hero/hero-1080.jpg 1080w"
+                sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)"
+                width="1080"
+                height="720"
+                alt="Stylowe portfolio ślubne"
+                decoding="async" />
             </picture>
           </div>
         </div>
       </section>
 
+      <!-- Portfolio -->
       <section class="section section--muted">
         <div class="container">
           <div class="section__header">
             <h2>Wybrane historie</h2>
             <p class="section__meta">Od klasycznej elegancji po nowoczesny minimalizm – zobacz style, które zrealizowaliśmy.</p>
           </div>
+          <!-- Grid -->
           <div class="grid grid--3">
+            <!-- Royal Classic -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Klasyczna realizacja w pałacowych wnętrzach" loading="lazy" />
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset="assets/img/portfolio-img/royal-classic-400.avif 400w, assets/img/portfolio-img/royal-classic-800.avif 800w, assets/img/portfolio-img/royal-classic-1200.avif 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <source
+                    type="image/webp"
+                    srcset="assets/img/portfolio-img/royal-classic-400.webp 400w, assets/img/portfolio-img/royal-classic-800.webp 800w, assets/img/portfolio-img/royal-classic-1200.webp 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <img
+                    src="assets/img/portfolio-img/royal-classic-800.jpg"
+                    srcset="assets/img/portfolio-img/royal-classic-400.jpg 400w, assets/img/portfolio-img/royal-classic-800.jpg 800w, assets/img/portfolio-img/royal-classic-1200.jpg 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)"
+                    width="1200"
+                    height="900"
+                    alt="Klasyczna aranżacja sali balowej"
+                    loading="lazy"
+                    decoding="async" />
+                </picture>
               </div>
               <h3 class="card__title">Royal Classic</h3>
               <p>Pałacowa elegancja z akcentami złota i ciepłego światła.</p>
               <div class="card__taglist">
                 <span class="badge badge--outline">klasyka</span>
-                <span class="badge badge--outline">pałac</span>
+                <span class="badge badge--outline">bal</span>
               </div>
             </article>
+
+            <!-- Card Garden Elegance -->
             <article class="card">
               <div class="card__image">
                 <picture>
-                  <source type="image/avif" srcset="assets/img/portfolio-img/garden-elegance-400.avif 400w, assets/img/portfolio-img/garden-elegance-800.avif 800w, assets/img/portfolio-img/garden-elegance-1200.avif 1200w" sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
-                  <source type="image/webp" srcset="assets/img/portfolio-img/garden-elegance-400.webp 400w, assets/img/portfolio-img/garden-elegance-800.webp 800w, assets/img/portfolio-img/garden-elegance-1200.webp 1200w" sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
-                  <img src="assets/img/portfolio-img/garden-elegance-800.jpg" srcset="assets/img/portfolio-img/garden-elegance-400.jpg 400w, assets/img/portfolio-img/garden-elegance-800.jpg 800w, assets/img/portfolio-img/garden-elegance-1200.jpg 1200w" sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" width="1200" height="900" alt="Wesele plenerowe w ogrodzie" loading="lazy" decoding="async" />
+                  <source
+                    type="image/avif"
+                    srcset="assets/img/portfolio-img/garden-elegance-400.avif 400w, assets/img/portfolio-img/garden-elegance-800.avif 800w, assets/img/portfolio-img/garden-elegance-1200.avif 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <source
+                    type="image/webp"
+                    srcset="assets/img/portfolio-img/garden-elegance-400.webp 400w, assets/img/portfolio-img/garden-elegance-800.webp 800w, assets/img/portfolio-img/garden-elegance-1200.webp 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <img
+                    src="assets/img/portfolio-img/garden-elegance-800.jpg"
+                    srcset="assets/img/portfolio-img/garden-elegance-400.jpg 400w, assets/img/portfolio-img/garden-elegance-800.jpg 800w, assets/img/portfolio-img/garden-elegance-1200.jpg 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)"
+                    width="1200"
+                    height="900"
+                    alt="Wesele plenerowe w ogrodzie"
+                    loading="lazy"
+                    decoding="async" />
                 </picture>
               </div>
-              <h3 class="card__title">Garden Romance</h3>
+              <h3 class="card__title">Garden Elegance</h3>
               <p>Plenerowa ceremonia z pastelową florystyką i naturalnym światłem.</p>
               <div class="card__taglist">
                 <span class="badge badge--outline">garden</span>
                 <span class="badge badge--outline">plener</span>
               </div>
             </article>
+
+            <!-- Urban Minimal -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Nowoczesne wesele w industrialnym lofcie" loading="lazy" />
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset="assets/img/portfolio-img/urban-minimal-400.avif 400w, assets/img/portfolio-img/urban-minimal-800.avif 800w, assets/img/portfolio-img/urban-minimal-1200.avif 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <source
+                    type="image/webp"
+                    srcset="assets/img/portfolio-img/urban-minimal-400.webp 400w, assets/img/portfolio-img/urban-minimal-800.webp 800w, assets/img/portfolio-img/urban-minimal-1200.webp 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <img
+                    src="assets/img/portfolio-img/urban-minimal-800.jpg"
+                    srcset="assets/img/portfolio-img/urban-minimal-400.jpg 400w, assets/img/portfolio-img/urban-minimal-800.jpg 800w, assets/img/portfolio-img/urban-minimal-1200.jpg 1200w"
+                    sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)"
+                    width="1200"
+                    height="900"
+                    alt="Nowoczesne wesele w loftowej przestrzeni"
+                    loading="lazy"
+                    decoding="async" />
+                </picture>
               </div>
               <h3 class="card__title">Urban Minimal</h3>
               <p>Minimalistyczna scenografia, stal i pudrowy róż.</p>
@@ -143,9 +212,11 @@
                 <span class="badge badge--outline">minimal</span>
               </div>
             </article>
+
+            <!-- Card -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Eleganckie wesele w winnicy" loading="lazy" />
+                <img src="assets\placeholders\placeholder.jpg" width="480" height="360" alt="Eleganckie wesele w winnicy" loading="lazy" />
               </div>
               <h3 class="card__title">Vineyard Glow</h3>
               <p>Kolacje przy długim stole i miękkie światło girland.</p>
@@ -154,9 +225,11 @@
                 <span class="badge badge--outline">romantycznie</span>
               </div>
             </article>
+
+            <!-- Card -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Wesele w stylu nowoczesnej klasyki" loading="lazy" />
+                <img src="assets\placeholders\placeholder.jpg" width="480" height="360" alt="Wesele w stylu nowoczesnej klasyki" loading="lazy" />
               </div>
               <h3 class="card__title">Modern Classic</h3>
               <p>Czyste linie, kremowe tekstylia i delikatne złote akcenty.</p>
@@ -165,9 +238,11 @@
                 <span class="badge badge--outline">klasyka</span>
               </div>
             </article>
+
+            <!-- Card -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Ślub kameralny w boutique hotelu" loading="lazy" />
+                <img src="assets\placeholders\placeholder.jpg" width="480" height="360" alt="Ślub kameralny w boutique hotelu" loading="lazy" />
               </div>
               <h3 class="card__title">Intimate Boutique</h3>
               <p>Kameralne przyjęcie z personalizowanym menu i muzyką na żywo.</p>
@@ -176,9 +251,11 @@
                 <span class="badge badge--outline">intymnie</span>
               </div>
             </article>
+
+            <!-- Card -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Wesele inspirowane stylem modern glam" loading="lazy" />
+                <img src="assets\placeholders\placeholder.jpg" width="480" height="360" alt="Wesele inspirowane stylem modern glam" loading="lazy" />
               </div>
               <h3 class="card__title">Modern Glam</h3>
               <p>Kryształowe detale, szampańskie barwy i światło świec.</p>
@@ -187,9 +264,11 @@
                 <span class="badge badge--outline">wieczór</span>
               </div>
             </article>
+
+            <!-- Card -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Ślub boho z naturalnymi dekoracjami" loading="lazy" />
+                <img src="assets\placeholders\placeholder.jpg" width="480" height="360" alt="Ślub boho z naturalnymi dekoracjami" loading="lazy" />
               </div>
               <h3 class="card__title">Soft Boho</h3>
               <p>Naturalne tkaniny, beże i ręcznie robione dekoracje.</p>
@@ -198,9 +277,11 @@
                 <span class="badge badge--outline">naturalnie</span>
               </div>
             </article>
+
+            <!-- Card -->
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Wesele w stylu nowoczesnego art deco" loading="lazy" />
+                <img src="assets\placeholders\placeholder.jpg" width="480" height="360" alt="Wesele w stylu nowoczesnego art deco" loading="lazy" />
               </div>
               <h3 class="card__title">Art Deco Night</h3>
               <p>Geometria, ciemne tony i teatralne oświetlenie.</p>
@@ -213,6 +294,7 @@
         </div>
       </section>
 
+      <!-- Callout -->
       <section class="callout">
         <div class="container">
           <h2>Chcecie stworzyć własną historię?</h2>
@@ -225,8 +307,10 @@
       </section>
     </main>
 
+    <!-- Footer partial -->
     <footer class="site-footer" data-partial="footer" data-partial-src="partials/footer.html"></footer>
 
+    <!-- Scripts -->
     <script type="module" src="js/app.js"></script>
   </body>
 </html>
