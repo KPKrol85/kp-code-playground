@@ -27,8 +27,6 @@ nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
-- Ryzyko utrzymaniowe builda: `package.json` używa `"latest"` dla `esbuild` i `lightningcss` (`package.json:14-15`). Lockfile pomaga przy obecnych instalacjach, ale przypięcie jawnych zakresów wersji w `package.json` uczyniłoby przyszłe odświeżenia zależności bardziej świadomymi.
-
 ## 6. Dodatkowe ulepszenia jakościowe
 
 
