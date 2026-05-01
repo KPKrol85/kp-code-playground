@@ -61,13 +61,22 @@ const buildCss = () => {
 const buildJs = async () => {
   ensureDir(path.join(distRoot, "js"));
 
-  await bundleScript({
-    entryPoints: [path.join(projectRoot, "js", "app.js")],
-    bundle: true,
-    format: "esm",
-    minify: true,
-    outfile: path.join(distRoot, "js", "app.min.js")
-  });
+  await Promise.all([
+    bundleScript({
+      entryPoints: [path.join(projectRoot, "js", "app.js")],
+      bundle: true,
+      format: "esm",
+      minify: true,
+      outfile: path.join(distRoot, "js", "app.min.js")
+    }),
+    bundleScript({
+      entryPoints: [path.join(projectRoot, "js", "theme-bootstrap.js")],
+      bundle: true,
+      format: "iife",
+      minify: true,
+      outfile: path.join(distRoot, "js", "theme-bootstrap.min.js")
+    })
+  ]);
 };
 
 const getHeaderMarkupForPage = (page) => {
@@ -120,6 +129,7 @@ const buildHtml = () => {
     const withFooter = replacePartialHost(withHeader, "footer", "footer", footerMarkup);
     const productionHtml = withFooter
       .replaceAll('href="css/main.css"', 'href="css/main.min.css"')
+      .replaceAll('src="js/theme-bootstrap.js"', 'src="js/theme-bootstrap.min.js"')
       .replaceAll('src="js/app.js"', 'src="js/app.min.js"');
 
     writeDistFile(page, productionHtml);

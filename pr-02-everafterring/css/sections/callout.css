@@ -1,11 +1,11 @@
 .callout {
-  background: var(--color-rosewood);
-  color: var(--color-white);
+  background: var(--color-callout-bg);
+  color: var(--color-callout-text);
   padding: var(--space-7) 0;
 }
 
 .callout p {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-callout-muted);
 }
 
 .callout__actions {

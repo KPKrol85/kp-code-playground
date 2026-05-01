@@ -12,24 +12,24 @@
 }
 
 .button--primary {
-  background: var(--color-rosewood);
-  color: var(--color-white);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
 }
 
 .button--primary:hover {
-  color: var(--color-white);
-  background: #583b3b;
+  color: var(--color-accent-contrast);
+  background: var(--color-accent-strong);
 }
 
 .button--ghost {
   background: transparent;
-  color: var(--color-rosewood);
-  border-color: var(--color-rosewood);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .button--light {
-  background: var(--color-white);
-  color: var(--color-rosewood);
+  background: var(--color-surface);
+  color: var(--color-accent);
 }
 
 .button--block {
