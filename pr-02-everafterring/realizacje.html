@@ -49,7 +49,11 @@
             <p class="hero__tagline">Każda realizacja jest opowieścią, którą tworzymy wspólnie z parą młodą.</p>
           </div>
           <div class="hero__media" data-hero-image>
-            <img src="assets/img/hero/hero.jpg" width="640" height="480" alt="Stylowe portfolio ślubne" />
+            <picture>
+              <source type="image/avif" srcset="assets/img/hero/hero-400.avif 400w, assets/img/hero/hero-800.avif 800w, assets/img/hero/hero-1080.avif 1080w" sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" />
+              <source type="image/webp" srcset="assets/img/hero/hero-400.webp 400w, assets/img/hero/hero-800.webp 800w, assets/img/hero/hero-1080.webp 1080w" sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" />
+              <img src="assets/img/hero/hero-800.jpg" srcset="assets/img/hero/hero-400.jpg 400w, assets/img/hero/hero-800.jpg 800w, assets/img/hero/hero-1080.jpg 1080w" sizes="(min-width: 900px) 45vw, calc(100vw - 2rem)" width="1080" height="720" alt="Stylowe portfolio ślubne" decoding="async" />
+            </picture>
           </div>
         </div>
       </section>
@@ -74,7 +78,11 @@
             </article>
             <article class="card">
               <div class="card__image">
-                <img src="assets/portfolio-placeholder.svg" width="480" height="360" alt="Wesele plenerowe w ogrodzie" loading="lazy" />
+                <picture>
+                  <source type="image/avif" srcset="assets/img/portfolio-img/garden-elegance-400.avif 400w, assets/img/portfolio-img/garden-elegance-800.avif 800w, assets/img/portfolio-img/garden-elegance-1200.avif 1200w" sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <source type="image/webp" srcset="assets/img/portfolio-img/garden-elegance-400.webp 400w, assets/img/portfolio-img/garden-elegance-800.webp 800w, assets/img/portfolio-img/garden-elegance-1200.webp 1200w" sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" />
+                  <img src="assets/img/portfolio-img/garden-elegance-800.jpg" srcset="assets/img/portfolio-img/garden-elegance-400.jpg 400w, assets/img/portfolio-img/garden-elegance-800.jpg 800w, assets/img/portfolio-img/garden-elegance-1200.jpg 1200w" sizes="(min-width: 900px) 33vw, (min-width: 640px) 50vw, calc(100vw - 2rem)" width="1200" height="900" alt="Wesele plenerowe w ogrodzie" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <h3 class="card__title">Garden Romance</h3>
               <p>Plenerowa ceremonia z pastelową florystyką i naturalnym światłem.</p>

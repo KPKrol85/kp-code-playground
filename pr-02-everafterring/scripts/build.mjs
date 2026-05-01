@@ -1,6 +1,6 @@
 import { build as bundleScript } from "esbuild";
 import { bundle as bundleStyles } from "lightningcss";
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -139,7 +139,16 @@ const buildHtml = () => {
 const copyAssets = () => {
   const assetsSource = path.join(projectRoot, "assets");
   if (existsSync(assetsSource)) {
-    cpSync(assetsSource, path.join(distRoot, "assets"), { recursive: true });
+    const assetsDestination = path.join(distRoot, "assets");
+    ensureDir(assetsDestination);
+
+    readdirSync(assetsSource, { withFileTypes: true }).forEach((entry) => {
+      if (entry.name === "img-src") {
+        return;
+      }
+
+      cpSync(path.join(assetsSource, entry.name), path.join(assetsDestination, entry.name), { recursive: true });
+    });
   }
 
   ["robots.txt", "sitemap.xml"].forEach((file) => {

@@ -1,3 +1,5 @@
+/* Testimonials Section */
+
 .quote {
   background: var(--color-surface);
   padding: var(--space-5);
@@ -6,6 +8,6 @@
 }
 
 .quote__name {
-  font-weight: 600;
+  font-weight: var(--font-weight-medium);
   color: var(--color-text);
 }

@@ -77,9 +77,15 @@
   z-index: 2;
 }
 
+.hero__media picture,
 .hero__media svg,
 .hero__media img {
   width: 100%;
+}
+
+.hero__media picture,
+.hero__media svg,
+.hero__media img {
   height: auto;
   display: block;
   position: relative;
