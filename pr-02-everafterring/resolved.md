@@ -81,6 +81,146 @@ Nie dodano `regulamin.html`, `cookies.html`, bannera cookies, analityki, backend
 
 ----------
 
+## 2026-05-02 — Final audit P1: portfolio image metadata and active navigation build logic
+
+### Data
+
+2026-05-02
+
+### Tytuł problemu
+
+Final audit P1.1 invalid non-ASCII subscript zero characters in `realizacje.html` portfolio image markup oraz P1.2 stale build navigation logic for the `uslugi.html` active navigation state.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`AUDIT.md`, sekcja P1.
+
+### Rozwiązanie
+
+W `realizacje.html` zastąpiono niepoprawne znaki `₀` zwykłymi cyframi ASCII w atrybutach `srcset`, `sizes`, `width` i `height` pięciu kart portfolio. Ścieżki JPG fallbacków wskazują teraz na istniejące pliki `400`, `800` i `1200` w `assets/img/portfolio-img/`.
+
+W `scripts/build.mjs` usunięto przestarzałą gałąź dla dawnego dropdownu usług. Build używa teraz płaskiego linku `.nav__link` jako źródła prawdy i osadza `aria-current="page"` również dla `uslugi.html`.
+
+### Zmienione pliki
+
+- `realizacje.html`
+- `scripts/build.mjs`
+- `resolved.md`
+
+### Notatki
+
+Zweryfikowano brak znaków `₀` w poprawionym markupie, brak brakujących lokalnych referencji obrazów w `realizacje.html`, poprawne wykonanie `npm run build` oraz obecność `aria-current="page"` na linku `Usługi` w wygenerowanym `dist/uslugi.html`.
+
+----------
+
+## 2026-05-02 — Audit P2.2: duplicated `--font-size-xxl` token
+
+### Data
+
+2026-05-02
+
+### Tytuł problemu
+
+P2.2 duplicate token definition for `--font-size-xxl` in `css/tokens.css`.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`AUDIT.md`, sekcja P2.
+
+### Rozwiązanie
+
+Zostawiono `--font-size-xxl` jako skalę `2rem`, a większą dotychczas nadpisującą wartość `2.8rem` przeniesiono do nowego tokenu `--font-size-3xl`. Globalny styl `h1` w `css/base.css` używa teraz `--font-size-3xl`, aby zachować dotychczasową wizualną skalę nagłówków pierwszego poziomu.
+
+### Zmienione pliki
+
+- `css/tokens.css`
+- `css/base.css`
+- `resolved.md`
+
+### Notatki
+
+Zweryfikowano, że `--font-size-xxl` występuje w `css/tokens.css` tylko raz, `--font-size-3xl` jest zdefiniowany raz, a jedyna źródłowa referencja do większej skali została przeniesiona na nowy token.
+
+----------
+
+## 2026-05-02 — Audit P2.3: undefined `--color-text-primary` token
+
+### Data
+
+2026-05-02
+
+### Tytuł problemu
+
+P2.3 undefined color token reference in `css/components/cards.css`.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`AUDIT.md`, sekcja P2.
+
+### Rozwiązanie
+
+W `css/components/cards.css` zastąpiono nieistniejący token `--color-text-primary` istniejącym tokenem `--color-text` w stylu elementów `.card__process-list li`.
+
+### Zmienione pliki
+
+- `css/components/cards.css`
+- `resolved.md`
+
+### Notatki
+
+Zweryfikowano, że `--color-text-primary` nie występuje już w nieminifikowanych źródłach CSS, a użyty token `--color-text` jest zdefiniowany w `css/tokens.css` dla jasnego i ciemnego motywu.
+
+----------
+
+## 2026-05-02 — Audit P2.1: stale dropdown navigation code
+
+### Data
+
+2026-05-02
+
+### Tytuł problemu
+
+P2.1 stale dropdown navigation code remains after the header no longer exposes a dropdown.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`AUDIT.md`, sekcja P2.
+
+### Rozwiązanie
+
+Usunięto martwe selektory dropdownu z `js/config.js`, obsługę dawnych dropdownów z `js/modules/nav.js` oraz specjalną logikę `.nav__dropdown-link` z `js/modules/partials.js`. W `css/components/nav.css` usunięto nieużywane selektory dropdown-only z bloku `prefers-reduced-motion`. README opisuje teraz aktualną płaską nawigację z menu mobilnym zamiast dropdownu usług.
+
+### Zmienione pliki
+
+- `js/config.js`
+- `js/modules/nav.js`
+- `js/modules/partials.js`
+- `css/components/nav.css`
+- `README.md`
+- `resolved.md`
+
+### Notatki
+
+Zweryfikowano, że w aktywnych źródłach nie pozostały referencje do `data-dropdown-*`, `.nav__dropdown`, `.dropdown__icon` ani `.nav__dropdown-link`. Zachowano istniejące zachowanie menu mobilnego: toggle, `aria-expanded`, zamykanie linkiem i klawiszem `Escape`, focus trap oraz reset responsywny.
+
+----------
+
 ## Szablon wpisu
 
 ### Data

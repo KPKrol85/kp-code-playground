@@ -81,26 +81,16 @@ const buildJs = async () => {
 
 const getHeaderMarkupForPage = (page) => {
   let headerMarkup = readProjectFile(path.join("partials", "header.html")).trimEnd();
+  const activeLinkPattern = `class="nav__link" href="${page}"`;
 
-  if (page !== "uslugi.html") {
-    const activeLinkPattern = `class="nav__link" href="${page}"`;
-
-    if (headerMarkup.includes(activeLinkPattern)) {
-      headerMarkup = headerMarkup.replace(
-        activeLinkPattern,
-        `class="nav__link" href="${page}" aria-current="page"`
-      );
-    }
-
-    return headerMarkup;
+  if (headerMarkup.includes(activeLinkPattern)) {
+    headerMarkup = headerMarkup.replace(
+      activeLinkPattern,
+      `class="nav__link" href="${page}" aria-current="page"`
+    );
   }
 
-  headerMarkup = headerMarkup.replace(
-    'href="uslugi.html" class="nav__dropdown-link"',
-    'href="uslugi.html" class="nav__dropdown-link" aria-current="page"'
-  );
-
-  return headerMarkup.replaceAll('href="uslugi.html#', 'href="#');
+  return headerMarkup;
 };
 
 const replacePartialHost = (html, tagName, partialName, partialMarkup) => {
