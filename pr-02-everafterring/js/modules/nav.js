@@ -4,7 +4,6 @@ import { SELECTORS } from "../config.js";
 export const initNav = () => {
   const navToggle = qs(SELECTORS.navToggle);
   const navPanel = qs(SELECTORS.navPanel);
-  const primaryNav = qs("#primary-navigation");
   const dropdownToggles = qsa(SELECTORS.dropdownToggle);
   const dropdownMenus = qsa(SELECTORS.dropdownMenu);
   let releaseFocusTrap = null;
