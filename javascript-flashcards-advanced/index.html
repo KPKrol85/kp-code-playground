@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Flashcards — Advanced</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app" id="app">
+    <header class="app__header">
+      <h1>JavaScript Flashcards — Advanced</h1>
+      <p>Level 03: language mechanics, architecture habits, and performance-aware frontend thinking.</p>
+    </header>
+
+    <section id="view-login" class="view" aria-labelledby="login-title">
+      <div class="panel">
+        <h2 id="login-title">Welcome, advanced learner</h2>
+        <p>Build deeper JavaScript instincts with 100 professional-level flashcards.</p>
+        <form id="login-form" class="form">
+          <label for="learner-name">Learner name</label>
+          <input id="learner-name" name="learnerName" type="text" required maxlength="40" placeholder="e.g. Alex" />
+
+          <fieldset>
+            <legend>Choose an avatar (optional)</legend>
+            <div id="avatar-options" class="avatar-grid" role="radiogroup" aria-label="Avatar choices"></div>
+          </fieldset>
+
+          <button type="submit" class="btn btn--primary">Start learning</button>
+        </form>
+        <p class="note">Self-study mode: profile and progress are stored only in your browser.</p>
+      </div>
+    </section>
+
+    <section id="view-dashboard" class="view hidden" aria-labelledby="dashboard-title"></section>
+    <section id="view-learning" class="view hidden" aria-labelledby="learning-title"></section>
+    <section id="view-quiz" class="view hidden" aria-labelledby="quiz-title"></section>
+    <section id="view-progress" class="view hidden" aria-labelledby="progress-title"></section>
+
+    <p id="live-region" class="sr-only" aria-live="polite"></p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
