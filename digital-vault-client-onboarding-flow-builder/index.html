@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Onboarding Flow Builder | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="vault-app">
+      <header class="vault-app__hero">
+        <p class="vault-app__brand">KP_Code Digital Vault</p>
+        <span class="vault-app__badge">Client workflow tool</span>
+        <h1 class="vault-app__title">Client Onboarding Flow Builder</h1>
+        <p class="vault-app__description">
+          Build a practical onboarding flow in minutes. Turn scattered project details into a structured first-week plan,
+          clear client questions, risk notes, and a copy-ready welcome email.
+        </p>
+      </header>
+
+      <section class="vault-app__workspace" aria-label="Onboarding plan builder">
+        <form id="onboarding-form" class="panel panel--input" aria-label="Client onboarding inputs">
+          <h2 class="panel__title">Project Inputs</h2>
+          <p class="panel__subtitle">Define project conditions to generate a reliable onboarding workflow.</p>
+
+          <div class="form-grid">
+            <label class="form-field">
+              <span class="form-field__label">Project type</span>
+              <select name="projectType">
+                <option value="businessWebsite">Business website</option>
+                <option value="landingPage">Landing page</option>
+                <option value="wordpress">WordPress website</option>
+                <option value="seoStarter">SEO starter package</option>
+                <option value="redesign">Redesign</option>
+                <option value="customProject">Custom web project</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Project urgency</span>
+              <select name="urgency">
+                <option value="relaxed">Relaxed</option>
+                <option value="standard" selected>Standard</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Client content status</span>
+              <select name="contentStatus">
+                <option value="ready">Ready</option>
+                <option value="partial" selected>Partial</option>
+                <option value="missing">Missing</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Branding status</span>
+              <select name="brandingStatus">
+                <option value="ready">Ready</option>
+                <option value="partial" selected>Partial</option>
+                <option value="missing">Missing</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Domain / hosting status</span>
+              <select name="domainStatus">
+                <option value="ready">Ready</option>
+                <option value="needsSetup" selected>Needs setup</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Integration needs</span>
+              <select name="integrationNeeds">
+                <option value="none">None</option>
+                <option value="contactForm" selected>Contact form</option>
+                <option value="booking">Booking</option>
+                <option value="newsletter">Newsletter</option>
+                <option value="analytics">Analytics</option>
+                <option value="custom">Custom</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Project complexity</span>
+              <select name="complexity">
+                <option value="simple">Simple</option>
+                <option value="standard" selected>Standard</option>
+                <option value="premium">Premium</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Client decision speed</span>
+              <select name="decisionSpeed">
+                <option value="fast">Fast</option>
+                <option value="normal" selected>Normal</option>
+                <option value="slow">Slow / unclear</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Budget clarity</span>
+              <select name="budgetClarity">
+                <option value="clear">Clear</option>
+                <option value="rough" selected>Rough estimate</option>
+                <option value="unclear">Unclear</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label">Communication preference</span>
+              <select name="communicationPref">
+                <option value="email" selected>Email</option>
+                <option value="call">Call</option>
+                <option value="asyncDocs">Async docs</option>
+                <option value="mixed">Mixed</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel__actions">
+            <button type="reset" class="button button--ghost">Reset</button>
+          </div>
+        </form>
+
+        <section class="panel panel--output" aria-label="Generated onboarding output">
+          <div class="panel__header-row">
+            <h2 class="panel__title">Generated Onboarding Plan</h2>
+            <div class="panel__actions">
+              <button id="copy-plan-btn" type="button" class="button button--secondary">Copy full plan</button>
+              <button id="copy-email-btn" type="button" class="button">Copy welcome email</button>
+            </div>
+          </div>
+
+          <p id="readiness-score" class="readiness" aria-live="polite"></p>
+          <p id="copy-status" class="copy-status" aria-live="polite"></p>
+
+          <article class="output-group">
+            <h3>Onboarding summary</h3>
+            <p id="summary-output"></p>
+          </article>
+
+          <article class="output-group">
+            <h3>Recommended first step</h3>
+            <p id="first-step-output"></p>
+          </article>
+
+          <article class="output-group">
+            <h3>First 7-day action plan</h3>
+            <ol id="week-plan-output"></ol>
+          </article>
+
+          <article class="output-group">
+            <h3>Missing-assets checklist</h3>
+            <ul id="missing-assets-output"></ul>
+          </article>
+
+          <article class="output-group">
+            <h3>Questions to ask the client</h3>
+            <ul id="questions-output"></ul>
+          </article>
+
+          <article class="output-group">
+            <h3>Risk warnings</h3>
+            <ul id="risk-output"></ul>
+          </article>
+
+          <article class="output-group output-group--split">
+            <div>
+              <h3>Preparation level</h3>
+              <p id="preparation-output"></p>
+            </div>
+            <div>
+              <h3>Communication approach</h3>
+              <p id="communication-output"></p>
+            </div>
+          </article>
+
+          <article class="output-group">
+            <h3>Ready-to-copy welcome email</h3>
+            <pre id="email-output" class="email-box"></pre>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
