@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP_Code Digital Vault • Project Handoff Pack Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__badge">Client delivery tool</div>
+      <p class="hero__brand">KP_Code Digital Vault</p>
+      <h1 class="hero__title">Project Handoff Pack Builder</h1>
+      <p class="hero__description">
+        Build a complete, client-ready handoff package in minutes—checklists,
+        ownership clarity, post-launch actions, and a polished handoff email.
+      </p>
+    </header>
+
+    <main class="layout" aria-label="Project handoff generator">
+      <section class="panel panel--inputs" aria-labelledby="inputs-title">
+        <div class="panel__head">
+          <h2 id="inputs-title">Project setup</h2>
+          <p>Define delivery scope, technical setup, and post-launch context.</p>
+        </div>
+
+        <form id="handoff-form" class="form" novalidate>
+          <div class="form__group">
+            <label for="projectType">Project type</label>
+            <select id="projectType" name="projectType"></select>
+          </div>
+          <div class="form__group">
+            <label for="websiteStatus">Website status</label>
+            <select id="websiteStatus" name="websiteStatus"></select>
+          </div>
+          <div class="form__group">
+            <label for="cmsIncluded">CMS included</label>
+            <select id="cmsIncluded" name="cmsIncluded"></select>
+          </div>
+          <div class="form__group">
+            <label for="formsIncluded">Forms included</label>
+            <select id="formsIncluded" name="formsIncluded"></select>
+          </div>
+          <div class="form__group">
+            <label for="hostingDomain">Hosting/domain status</label>
+            <select id="hostingDomain" name="hostingDomain"></select>
+          </div>
+          <div class="form__group">
+            <label for="analyticsTracking">Analytics/tracking</label>
+            <select id="analyticsTracking" name="analyticsTracking"></select>
+          </div>
+          <div class="form__group">
+            <label for="seoScope">SEO scope</label>
+            <select id="seoScope" name="seoScope"></select>
+          </div>
+
+          <fieldset class="form__group form__group--checkboxes">
+            <legend>Included assets</legend>
+            <div id="includedAssets" class="checkbox-list"></div>
+          </fieldset>
+
+          <div class="form__group">
+            <label for="maintenancePlan">Maintenance plan</label>
+            <select id="maintenancePlan" name="maintenancePlan"></select>
+          </div>
+          <div class="form__group">
+            <label for="clientTechLevel">Client technical level</label>
+            <select id="clientTechLevel" name="clientTechLevel"></select>
+          </div>
+          <div class="form__group">
+            <label for="projectComplexity">Project complexity</label>
+            <select id="projectComplexity" name="projectComplexity"></select>
+          </div>
+
+          <div class="form__actions">
+            <button type="reset" class="button button--ghost">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel panel--output" aria-labelledby="output-title">
+        <div class="panel__head">
+          <h2 id="output-title">Generated handoff pack</h2>
+          <p>Live output updates as you refine project details.</p>
+        </div>
+
+        <article class="score" aria-live="polite">
+          <h3>Handoff readiness</h3>
+          <p class="score__value"><span id="readinessScore">0</span>/100</p>
+          <p class="score__label" id="readinessLabel"></p>
+          <p class="score__explanation" id="scoreExplanation"></p>
+        </article>
+
+        <div class="output" id="handoffOutput" aria-live="polite"></div>
+
+        <div class="panel__actions">
+          <button id="copyEmailBtn" type="button" class="button">Copy handoff email</button>
+          <button id="copyPackBtn" type="button" class="button button--secondary">Copy full handoff pack</button>
+        </div>
+        <p id="copyStatus" class="copy-status" aria-live="assertive"></p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
