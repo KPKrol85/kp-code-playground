@@ -56,6 +56,37 @@
   box-shadow: none;
 }
 
+.card__map {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.card__map iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 220px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-alt);
+}
+
+.card__map-link {
+  width: fit-content;
+  color: var(--color-accent);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-compact);
+}
+
+.card__map-link:hover,
+.card__map-link:focus-visible {
+  color: var(--color-accent-strong);
+}
+
 /* Process Card Styles */
 
 .card__process {

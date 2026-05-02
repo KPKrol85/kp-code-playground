@@ -33,8 +33,6 @@ nie wykryto
 
 Aktywne: brak.
 
-Rozwiązane: usunięto nieużywaną deklarację `primaryNav` z `js/modules/nav.js`.
-
 ## 6. Dodatkowe ulepszenia jakościowe
 
 brak nowych opcjonalnych rekomendacji bez potwierdzenia pomiarami lub realnym defektem.
