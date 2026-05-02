@@ -32,9 +32,8 @@ none detected.
 
 ## 6. Extra quality improvements
 
-- Add a lightweight HTML/source validation step that catches invalid image descriptors, invalid `width`/`height` values, and missing local `srcset` files before build output is generated.
+
 - Add a small assertion around `getHeaderMarkupForPage()` so build-time active navigation cannot silently drift when the header partial changes.
-- Consider adding CSS `aspect-ratio` to reusable card image containers as a fallback against future image-dimension mistakes.
 - Consider a computed contrast pass in a browser-based audit for both light and dark themes; static token review alone is not enough to certify contrast.
 - Consider adding a small source check for stale selector references when shared partial markup changes.
 

@@ -221,6 +221,72 @@ Zweryfikowano, że w aktywnych źródłach nie pozostały referencje do `data-dr
 
 ----------
 
+## 2026-05-02 — Extra quality improvement: card image aspect-ratio fallback
+
+### Data
+
+2026-05-02
+
+### Tytuł problemu
+
+Opcjonalne usprawnienie stabilności layoutu dla reusable card image containers.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`AUDIT.md`, sekcja Extra quality improvements.
+
+### Rozwiązanie
+
+Dodano `aspect-ratio: 4 / 3` do `.card__image` w `css/components/cards.css`, zgodnie z proporcją istniejących obrazów portfolio `1200x900`. Dodano też tło `--color-surface-alt`, aby kontener miał spójny placeholder przed załadowaniem obrazu.
+
+### Zmienione pliki
+
+- `css/components/cards.css`
+- `resolved.md`
+
+### Notatki
+
+Nie zmieniano HTML, ścieżek obrazów, `picture/source/img`, JavaScriptu ani `dist/`. Obrazy nadal zachowują naturalne proporcje przez istniejące `width: 100%` i `height: auto`.
+
+----------
+
+## 2026-05-02 — Extra quality improvement: build-time active navigation assertion
+
+### Data
+
+2026-05-02
+
+### Tytuł problemu
+
+Opcjonalne zabezpieczenie builda przed cichym rozjazdem `aria-current` w primary navigation.
+
+### Status
+
+Rozwiązane.
+
+### Źródło
+
+`AUDIT.md`, sekcja Extra quality improvements.
+
+### Rozwiązanie
+
+Dodano w `scripts/build.mjs` jawny zestaw stron primary navigation oraz asercję `assertPrimaryNavActiveState()`. Build sprawdza teraz, czy dla `index.html`, `oferta.html`, `uslugi.html`, `realizacje.html`, `o-nas.html` i `kontakt.html` wygenerowany header zawiera dokładnie jeden oczekiwany link `.nav__link` z `aria-current="page"`.
+
+### Zmienione pliki
+
+- `scripts/build.mjs`
+- `resolved.md`
+
+### Notatki
+
+Zweryfikowano przez `npm run build`, że obecne źródła przechodzą nową asercję. Strony prawne i użytkowe pozostają poza ścisłą kontrolą primary navigation, ponieważ nie mają odpowiadających linków w płaskiej głównej nawigacji.
+
+----------
+
 ## Szablon wpisu
 
 ### Data
