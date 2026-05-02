@@ -4,7 +4,9 @@
   padding: var(--space-5);
   box-shadow: var(--shadow-card);
   border: 1px solid transparent;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .card:hover {
@@ -52,4 +54,16 @@
 .card--outline {
   border-color: var(--color-border-subtle);
   box-shadow: none;
+}
+
+.card--package {
+  display: flex;
+  flex-direction: column;
+}
+
+.card--package .card__price {
+  margin-top: auto;
+  padding-top: var(--space-4);
+   font-size: var(--font-size-md);
+     color: var(--color-success);
 }
