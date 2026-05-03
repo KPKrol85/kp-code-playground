@@ -34,8 +34,6 @@ none detected.
 ## 6. Extra quality improvements
 
 - Rendered contrast verification: not detected in project. Tokeny kolorystyczne i `prefers-reduced-motion` są obecne, ale repo nie zawiera renderowanego pomiaru kontrastu ani automatycznych testów wizualnych dostępności. To opcjonalne rozszerzenie QA, nie potwierdzony defekt.
-- Automatyczna walidacja heading hierarchy i landmark integrity: not detected in project. Obecne QA sprawdza output, składanie HTML, lokalne referencje, metadane, runtime PHP i placeholder links, ale nie semantyczną hierarchię nagłówków.
-- Automatyczna walidacja `srcset` względem istniejących assetów źródłowych: not detected in project. Repo ma pipeline obrazów i responsive images, ale nie wykryto osobnego source-level checka porównującego kandydatów `srcset` z realnymi plikami.
 - Runtime `console.log` w publicznych modułach aplikacji: not detected in project. W runtime wykryto tylko kontrolowany `console.error` przy nieudanej rejestracji service workera; pozostałe logi należą do skryptów build/preview/QA.
 
 ## 7. Senior rating (1–10)
