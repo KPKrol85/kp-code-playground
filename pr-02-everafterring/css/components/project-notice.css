@@ -70,7 +70,7 @@
   font-size: var(--font-size-xs);
   background-color: var(--color-callout-bg);
   color: var(--color-white);
-  letter-spacing: var(--letter-spacing-widest);
+  letter-spacing: var(--letter-spacing-wide);
   padding-inline: var(--space-6);
 }
 .project-notice .project-notice__button:hover {
