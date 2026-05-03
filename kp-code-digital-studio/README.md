@@ -215,7 +215,11 @@ Repozytorium nie zawiera wyników pomiarów Lighthouse ani Core Web Vitals.
 
 ### Licencja
 
-Repozytorium deklaruje licencję `MIT` w `package.json`.
+Projekt KP_Code Digital Studio nie jest udostępniany jako projekt open source.
+
+Kod źródłowy, struktura projektu, treści, układ, identyfikacja wizualna oraz materiały graficzne stanowią własność autora i nie są przeznaczone do kopiowania, redystrybucji, modyfikacji ani wykorzystania komercyjnego bez uprzedniej zgody.
+
+W `package.json` projekt oznaczono jako `UNLICENSED`.
 
 ## EN
 
@@ -432,4 +436,8 @@ The repository does not include Lighthouse or Core Web Vitals measurement result
 
 ### License
 
-The repository declares the `MIT` license in `package.json`.
+The KP_Code Digital Studio project is not distributed as an open-source project.
+
+The source code, project structure, content, layout, visual identity, and graphic assets are the property of the author and are not intended for copying, redistribution, modification, or commercial use without prior permission.
+
+The project is marked as `UNLICENSED` in `package.json`.
