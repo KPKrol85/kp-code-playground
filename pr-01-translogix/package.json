@@ -24,7 +24,9 @@
     "build:js": "node scripts/build-js.js",
     "build:assets": "npm run build:css && npm run build:js",
     "build:dist": "npm run build:assets && node scripts/build-dist.js",
-    "build": "npm run build:dist"
+    "build": "npm run build:dist",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "preview:dist": "http-server dist -p 8181 -c-1"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",
