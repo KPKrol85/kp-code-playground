@@ -23,7 +23,7 @@
     <meta name="apple-mobile-web-app-title" content="TransLogix" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="/assets/icons/site.webmanifest" />
-<link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Cennik i kalkulator transportu | TransLogix" />
     <meta property="og:description" content="Zobacz aktualny cennik usług transportowych i oblicz koszt przewozu dzięki kalkulatorowi TransLogix. Przewozy krajowe i międzynarodowe." />
@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="Sprawdź cennik transportu i skorzystaj z kalkulatora kosztów dostępnego w systemie TransLogix." />
     <meta name="twitter:image" content="https://transport-pr01-translogix.netlify.app/assets/img/og-img/og-1200x630.jpg" />
     <script type="application/ld+json">
-{
+      {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Cennik usług – TransLogix",
@@ -60,9 +60,9 @@
     <a class="skip-link" href="#main">Przejdź do treści głównej</a>
 
     <!-- Header -->
-    {{> header}}
+    <div data-partial="header"></div>
 
-<!-- Main -->
+    <!-- Main -->
     <main id="main">
       <section class="section">
         <div class="container reveal">
@@ -162,9 +162,9 @@
     </main>
 
     <!-- Footer -->
-    {{> footer}}
+    <div data-partial="footer"></div>
 
-<!-- Script -->
+    <!-- Script -->
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

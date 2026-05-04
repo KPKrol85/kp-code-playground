@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl" class="no-js">
   <head>
     <meta charset="UTF-8" />
@@ -21,7 +21,7 @@
     <meta name="apple-mobile-web-app-title" content="TransLogix" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="/assets/icons/site.webmanifest" />
-<link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Kontakt i szybka wycena transportu | TransLogix" />
     <meta property="og:description" content="Napisz do TransLogix lub zamów szybką wycenę transportu. Działamy 24/7, obsługujemy klientów w Polsce i UE." />
@@ -37,7 +37,7 @@
     <meta name="twitter:description" content="Skontaktuj się z zespołem TransLogix – szybkie odpowiedzi, wsparcie techniczne, wyceny 24/7." />
     <meta name="twitter:image" content="https://transport-pr01-translogix.netlify.app/assets/img/og-img/og-1200x630.jpg" />
     <script type="application/ld+json">
-{
+      {
         "@context": "https://schema.org",
         "@type": "ContactPage",
         "name": "Kontakt – TransLogix",
@@ -65,9 +65,9 @@
     <a class="skip-link" href="#main">Przejdź do treści głównej</a>
 
     <!-- Header -->
-    {{> header}}
+    <div data-partial="header"></div>
 
-<!-- Main -->
+    <!-- Main -->
     <main id="main">
       <section class="section">
         <div class="container reveal">
@@ -94,15 +94,7 @@
               </div>
             </div>
             <div class="stack contact-panel" id="quote">
-              <form
-                class="form"
-                id="contact-form"
-                name="contact"
-                method="POST"
-                action="/contact.html?success=1"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-                novalidate>
+              <form class="form" id="contact-form" name="contact" method="POST" action="/contact.html?success=1" data-netlify="true" netlify-honeypot="bot-field" novalidate>
                 <div class="form__honeypot" aria-hidden="true">
                   <label for="bot-field">Nie wypelniaj tego pola</label>
                   <input type="text" id="bot-field" name="bot-field" tabindex="-1" />
@@ -196,7 +188,10 @@
                 </button>
               </h3>
               <div class="accordion__panel" role="region" aria-labelledby="faq4-label" id="faq4" hidden>
-                <p>Standardowo prosimy o dane firmy, specyfikacje ladunku, warunki INCOTERMS, adresy zaladunku i dostawy oraz oczekiwane okna czasowe. Przy ADR lub chlodni dolaczamy karty charakterystyki i wymagania temperaturowe.</p>
+                <p>
+                  Standardowo prosimy o dane firmy, specyfikacje ladunku, warunki INCOTERMS, adresy zaladunku i dostawy oraz oczekiwane okna czasowe. Przy ADR lub chlodni dolaczamy karty
+                  charakterystyki i wymagania temperaturowe.
+                </p>
               </div>
             </div>
             <div class="accordion__item">
@@ -218,16 +213,21 @@
                 </button>
               </h3>
               <div class="accordion__panel" role="region" aria-labelledby="faq6-label" id="faq6" hidden>
-                <p>Pracujemy na pasach, matach antyposlizgowych i zabezpieczeniach zgodnych z EN 12195. Posiadamy OCP i dodatkowe ubezpieczenia cargo do 500k EUR; w razie potrzeby organizujemy rozszerzone klauzule pod konkretny ladunek.</p>
+                <p>
+                  Pracujemy na pasach, matach antyposlizgowych i zabezpieczeniach zgodnych z EN 12195. Posiadamy OCP i dodatkowe ubezpieczenia cargo do 500k EUR; w razie potrzeby organizujemy
+                  rozszerzone klauzule pod konkretny ladunek.
+                </p>
               </div>
             </div>
           </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
-    {{> footer}}
+    <div data-partial="footer"></div>
 
-<!-- Script -->
+    <!-- Script -->
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

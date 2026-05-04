@@ -24,7 +24,7 @@
     <link rel="manifest" href="/assets/icons/site.webmanifest" />
     <script src="assets/js/theme-init.js"></script>
     <script src="assets/js/boot.js"></script>
-<link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="TransLogix – Transport i logistyka B2B" />
     <meta property="og:description" content="Profesjonalne usługi transportu i logistyki B2B. Monitoring floty, terminowe dostawy i przejrzyste raportowanie w jednym systemie." />
@@ -41,8 +41,9 @@
     <meta name="twitter:image" content="https://transport-pr01-translogix.netlify.app/assets/img/og-img/og-1200x630.jpg" />
     <meta name="twitter:site" content="@kp_code" />
     <meta name="twitter:creator" content="@kp_code" />
+    <!-- JSON-LD -->
     <script type="application/ld+json">
-{
+      {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "TransLogix",
@@ -73,9 +74,9 @@
     <a class="skip-link" href="#main">Przejdź do treści głównej</a>
 
     <!-- Header -->
-    {{> header}}
+    <div data-partial="header"></div>
 
-<!-- Main -->
+    <!-- Main -->
     <main id="main">
       <section class="hero">
         <div class="hero__content reveal">
@@ -98,28 +99,28 @@
           <div class="grid grid-3">
             <article class="card">
               <div class="card__icon" aria-hidden="true">
-                <img src="assets/img/svg/icon-fleet.svg" alt=""  width="128" height="128" />
+                <img src="assets/img/svg/icon-fleet.svg" alt="" width="128" height="128" />
               </div>
               <h3>Pełna flota</h3>
               <p>Dostęp do busów, chłodni, plandek i zestawów ADR. Dobieramy pojazd do ładunku i terminów.</p>
             </article>
             <article class="card">
               <div class="card__icon" aria-hidden="true">
-                <img src="assets/img/svg/icon-response-time.svg" alt=""  width="128" height="128" />
+                <img src="assets/img/svg/icon-response-time.svg" alt="" width="128" height="128" />
               </div>
               <h3>Czas reakcji</h3>
               <p>Załadunek nawet w 90 minut od zgłoszenia. Stałe SLA i monitoring postępu online.</p>
             </article>
             <article class="card">
               <div class="card__icon" aria-hidden="true">
-                <img src="assets/img/svg/icon-security.svg" alt=""  width="128" height="128" />
+                <img src="assets/img/svg/icon-security.svg" alt="" width="128" height="128" />
               </div>
               <h3>Bezpieczeństwo</h3>
               <p>System podwójnego potwierdzenia, śledzenie GPS, ubezpieczenie cargo do 500k EUR.</p>
             </article>
             <article class="card">
               <div class="card__icon" aria-hidden="true">
-                <img src="assets/img/svg/icon-global.svg" alt=""  width="128" height="128" />
+                <img src="assets/img/svg/icon-global.svg" alt="" width="128" height="128" />
               </div>
               <h3>Międzynarodowo</h3>
               <p>Obsługa w całej UE i UK, kierowcy z uprawnieniami ADR, wsparcie celne i dokumenty.</p>
@@ -177,28 +178,28 @@
           <div class="fleet-grid">
             <article class="card fleet-card">
               <div class="fleet-card__icon">
-                <img src="assets/img/svg/fleet-solo.svg" alt="Bus dostawczy" loading="lazy"  width="240" height="120" />
+                <img src="assets/img/svg/fleet-solo.svg" alt="Bus dostawczy" loading="lazy" width="240" height="120" />
               </div>
               <h3>Bus dostawczy</h3>
               <p>Ładowność do 3,5t, winda, idealny do dostaw miejskich.</p>
             </article>
             <article class="card fleet-card">
               <div class="fleet-card__icon">
-                <img src="assets/img/svg/fleet-boxtruck-tarpaulin.svg" alt="Bus plandeka 10 palet" loading="lazy"  width="240" height="120" />
+                <img src="assets/img/svg/fleet-boxtruck-tarpaulin.svg" alt="Bus plandeka 10 palet" loading="lazy" width="240" height="120" />
               </div>
               <h3>Ciężarówka plandeka</h3>
               <p>18 europalet, do 10t ładowności, pasy i plandeka XL.</p>
             </article>
             <article class="card fleet-card">
               <div class="fleet-card__icon">
-                <img src="assets/img/svg/fleet-refrigerated.svg" alt="Chłodnia solo 18 palet" loading="lazy"  width="240" height="120" />
+                <img src="assets/img/svg/fleet-refrigerated.svg" alt="Chłodnia solo 18 palet" loading="lazy" width="240" height="120" />
               </div>
               <h3>Ciężarówka chlodnia</h3>
               <p>18 europalet, chłodnia 2–8°C, rejestracja temperatury, plandeka XL.</p>
             </article>
             <article class="card fleet-card">
               <div class="fleet-card__icon">
-                <img src="assets/img/svg/fleet-mega-set.svg" alt="Zestaw Mega 100 m3" loading="lazy"  width="240" height="120" />
+                <img src="assets/img/svg/fleet-mega-set.svg" alt="Zestaw Mega 100 m3" loading="lazy" width="240" height="120" />
               </div>
               <h3>Zestaw Mega</h3>
               <p>100 m³, kurtyny XL, możliwość dopięcia dodatkowej przyczepy, zabezpieczenia i monitoring.</p>
@@ -265,9 +266,9 @@
     </main>
 
     <!-- Footer -->
-    {{> footer}}
+    <div data-partial="footer"></div>
 
-<!-- Script -->
+    <!-- Script -->
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

@@ -60,6 +60,8 @@ function inlineHtmlPartials(htmlPath) {
   replaceInFile(htmlPath, [
     ['{{> header}}', header],
     ['{{> footer}}', footer],
+    ['<div data-partial="header"></div>', header],
+    ['<div data-partial="footer"></div>', footer],
   ]);
 }
 
