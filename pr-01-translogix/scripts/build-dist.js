@@ -3,6 +3,7 @@ const path = require('path');
 
 const projectRoot = path.resolve(__dirname, '..');
 const distRoot = path.join(projectRoot, 'dist');
+const partialsRoot = path.join(projectRoot, 'partials');
 
 const rootFilesToCopy = [
   '404.html',
@@ -52,11 +53,24 @@ function replaceInFile(filePath, replacements) {
   fs.writeFileSync(filePath, content);
 }
 
+function inlineHtmlPartials(htmlPath) {
+  const header = fs.readFileSync(path.join(partialsRoot, 'header.html'), 'utf8').trimEnd();
+  const footer = fs.readFileSync(path.join(partialsRoot, 'footer.html'), 'utf8').trimEnd();
+
+  replaceInFile(htmlPath, [
+    ['{{> header}}', header],
+    ['{{> footer}}', footer],
+  ]);
+}
+
 function rewriteDistHtmlReferences() {
   for (const rootFile of rootFilesToCopy) {
     if (!rootFile.endsWith('.html')) continue;
 
     const htmlPath = path.join(distRoot, rootFile);
+
+    inlineHtmlPartials(htmlPath);
+
     replaceInFile(htmlPath, [
       ['/assets/css/style.css', '/assets/css/style.min.css'],
       ['assets/css/style.css', 'assets/css/style.min.css'],
@@ -68,9 +82,7 @@ function rewriteDistHtmlReferences() {
 
 function rewriteDistServiceWorkerReferences() {
   const swPath = path.join(distRoot, 'sw.js');
-  replaceInFile(swPath, [
-    ['/assets/js/main.js', '/assets/js/main.min.js'],
-  ]);
+  replaceInFile(swPath, [['/assets/js/main.js', '/assets/js/main.min.js']]);
 }
 
 function buildDist() {
