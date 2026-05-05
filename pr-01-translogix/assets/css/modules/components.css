@@ -543,9 +543,6 @@ html.theme-dark .pill {
     background-position: center top;
     filter: brightness(0.9) contrast(1.08) saturate(1.05);
   }
-  .hero__content {
-    padding-inline: var(--space-4);
-  }
 }
 
 /* Section */
