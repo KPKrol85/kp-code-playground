@@ -1,16 +1,21 @@
 
 /* Header */
-header {
+[data-partial="header"],
+body > header {
   position: sticky;
   top: 0;
   z-index: 900;
+}
+[data-partial="header"] > header,
+body > header {
   background: linear-gradient(to bottom, rgba(224, 242, 254, 0.96) 0%, rgba(255, 255, 255, 0.94) 45%, rgba(255, 255, 255, 0.88) 100%);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
-  transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
-html.theme-dark header {
+html.theme-dark [data-partial="header"] > header,
+html.theme-dark body > header {
   background: linear-gradient(to bottom, rgba(15, 23, 42, 0.94) 0%, rgba(15, 23, 42, 0.88) 50%, rgba(15, 23, 42, 0.82) 100%);
   backdrop-filter: blur(12px);
 }
@@ -23,8 +28,9 @@ html.theme-dark header {
   transition: padding var(--transition);
   position: relative;
 }
-header.header--compact .header-inner {
-  padding: 0.5rem 5vw;
+[data-partial="header"] > header.header--compact .header-inner,
+body > header.header--compact .header-inner {
+  padding: 0.65rem 5vw;
 }
 .brand {
   display: inline-flex;
@@ -174,9 +180,6 @@ html.theme-dark .nav__links a[aria-current="page"] {
 .nav__panel .nav__cta {
   display: none;
 }
-header.header--compact .nav__panel a {
-  font-size: var(--fs-base);
-}
 .header-actions {
   display: flex;
   align-items: center;
@@ -244,8 +247,10 @@ html.theme-dark .header-actions .btn:hover {
   color: var(--color-accent);
   box-shadow: 0 2px 6px rgba(34, 211, 238, 0.18);
 }
-.header--compact {
+[data-partial="header"] > .header--compact,
+body > .header--compact {
   box-shadow: var(--color-shadow);
+  border-bottom-color: color-mix(in srgb, var(--color-border) 90%, var(--color-accent) 10%);
 }
 @media (min-width: 900px) {
   .nav__toggle,
@@ -372,6 +377,19 @@ html.theme-dark .header-actions .btn:hover {
   .nav__panel .nav__cta:focus-visible {
     outline: 2px solid var(--color-accent-strong);
     outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-partial="header"],
+  [data-partial="header"] > header,
+  body > header,
+  .header-inner,
+  .nav__panel,
+  .js .nav__panel.nav__panel--open,
+  .js .nav__panel.is-open,
+  .nav__panel a {
+    transition-duration: 1ms;
   }
 }
 
