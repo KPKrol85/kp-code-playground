@@ -31,12 +31,6 @@ none detected.
 
 ## 5. P2 — Minor refinements
 
-- **Performance budget checks do not measure the effective CSS/JS footprint.** `perf-budgets.json` budgets `assets/css/style.css` and `assets/js/main.js`; `npm run qa:budget` passes with `style.css` at 99 B gzip and `main.js` at 464 B gzip. Those files mostly import other CSS/JS modules, so the current budget check does not represent the actual loaded source module footprint or production CSS/JS payload.
-
-- **Focused source HTML validation still has validator cleanup items.** The old real ARIA/button/lightbox defects are resolved, and lowercase `<!doctype html>` is accepted by configuration. The focused source validation command still fails on remaining `void-style` and `prefer-native-element` findings, which should be handled as separate validator policy or markup review work.
-
-- **Some dynamic UI copy lacks Polish diacritics.** `assets/js/services-filters.js` renders strings like `Wyswietlono` and `Brak wynikow dla wybranych filtrow.` This is minor, but visible user-facing copy should match the professional Polish language standard used elsewhere.
-
 - **Service worker precache focuses on core pages but omits some root pages.** `sw.js` precaches `/`, `index`, `services`, `fleet`, `pricing`, `contact`, `404`, and `offline`, but not `privacy.html`, `terms.html`, `cookies.html`, or `service.html`. Network-first navigation can cache visited pages, so this is a conscious lightweight cache shape rather than a defect; broader precache would improve offline consistency for legal/detail pages.
 
 ## 6. Extra quality improvements
@@ -63,6 +57,14 @@ The HTML validator configuration was aligned with the project's Prettier-style l
 ## 2026-05-06 update — asset verification scope
 
 The asset verifier now scans project-owned source/public HTML contexts only: root source pages, `partials/`, `templates/`, and service worker precache URLs. Generated and third-party folders are excluded by path, including `node_modules`, `dist`, `playwright-report`, `test-results`, `coverage`, and `.git`. `npm run assets:verify` now passes and remains focused on real TransLogix asset references.
+
+## 2026-05-06 update — effective performance budgets
+
+The performance budget check now measures effective generated payloads instead of tiny source entry files. CSS is checked against `assets/css/style.min.css`, and JavaScript is checked as the static module graph loaded from `assets/js/main.min.js`. Current gzip measurements pass with `8621 B` for CSS and `15500 B` for the JS module graph.
+
+## 2026-05-06 update — focused HTML validation cleanup
+
+Focused source HTML validation now passes for the root source pages. `void-style` was aligned with the project's self-closing void element formatting, and all remaining `prefer-native-element` findings were reviewed and resolved with minimal semantic changes: FAQ panels now use native `<section>` elements, and the lightbox thumbnail list now uses a native `<ul>` with list items rendered by JavaScript.
 
 ---
 
@@ -99,12 +101,6 @@ nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
-- **Checki budżetów wydajnościowych nie mierzą efektywnego footprintu CSS/JS.** `perf-budgets.json` ustawia budżety dla `assets/css/style.css` i `assets/js/main.js`; `npm run qa:budget` przechodzi z `style.css` na poziomie 99 B gzip i `main.js` na poziomie 464 B gzip. Te pliki głównie importują inne moduły CSS/JS, więc obecny check budżetu nie reprezentuje faktycznie ładowanego footprintu modułów źródłowych ani produkcyjnego payloadu CSS/JS.
-
-- **Skupiona walidacja źródłowego HTML nadal ma tematy porządkowe walidatora.** Dawne realne defekty ARIA/przycisków/lightboxa są rozwiązane, a mały `<!doctype html>` jest akceptowany przez konfigurację. Skupiona komenda walidacji źródeł nadal nie przechodzi przez pozostałe wyniki `void-style` i `prefer-native-element`, które należy traktować jako osobną decyzję polityki walidatora albo przegląd markupowy.
-
-- **Część dynamicznej treści UI nie ma polskich znaków.** `assets/js/services-filters.js` renderuje teksty takie jak `Wyswietlono` i `Brak wynikow dla wybranych filtrow.` To drobne, ale widoczna treść dla użytkownika powinna odpowiadać profesjonalnemu standardowi języka polskiego stosowanemu w innych miejscach.
-
 - **Precache service workera skupia się na stronach głównych, ale pomija część stron root.** `sw.js` precache’uje `/`, `index`, `services`, `fleet`, `pricing`, `contact`, `404` i `offline`, ale nie `privacy.html`, `terms.html`, `cookies.html` ani `service.html`. Strategia network-first dla nawigacji może cache’ować odwiedzone strony, więc jest to świadomy, lekki kształt cache, a nie defekt; szerszy precache poprawiłby spójność offline dla stron prawnych i szczegółowych.
 
 ## 6. Dodatkowe usprawnienia jakościowe
@@ -131,3 +127,15 @@ Konfiguracja walidatora HTML została dopasowana do używanego w projekcie forma
 ## Aktualizacja 2026-05-06 — zakres weryfikacji assetów
 
 Weryfikator assetów skanuje teraz wyłącznie konteksty HTML należące do projektu: główne strony źródłowe, `partials/`, `templates/` oraz URL-e precache service workera. Katalogi generowane i third-party są wykluczane po ścieżce, w tym `node_modules`, `dist`, `playwright-report`, `test-results`, `coverage` i `.git`. `npm run assets:verify` przechodzi i pozostaje skupiony na realnych referencjach assetów TransLogix.
+
+## Aktualizacja 2026-05-06 — efektywne budżety wydajnościowe
+
+Check budżetów wydajnościowych mierzy teraz efektywne wygenerowane payloady zamiast małych plików wejściowych źródeł. CSS jest sprawdzany na `assets/css/style.min.css`, a JavaScript jako statyczny graf modułów ładowany z `assets/js/main.min.js`. Aktualne pomiary gzip przechodzą z `8621 B` dla CSS i `15500 B` dla grafu modułów JS.
+
+## Aktualizacja 2026-05-06 — domknięcie skupionej walidacji HTML
+
+Skupiona walidacja źródłowego HTML przechodzi teraz dla głównych stron źródłowych. `void-style` został dopasowany do projektowego stylu samozamykających elementów void, a wszystkie pozostałe wyniki `prefer-native-element` zostały przejrzane i rozwiązane minimalnymi zmianami semantycznymi: panele FAQ używają natywnych elementów `<section>`, a lista miniatur lightboxa używa natywnego `<ul>` z elementami listy renderowanymi przez JavaScript.
+
+## Aktualizacja 2026-05-06 — polskie znaki w dynamicznej treści usług
+
+Dynamiczne komunikaty listy usług renderowane przez `assets/js/services-filters.js` zostały poprawione językowo: licznik wyników i komunikat pustego stanu używają teraz pełnych polskich znaków. Zmiana dotyczy wyłącznie widocznych stringów UI i nie zmienia logiki filtrowania.

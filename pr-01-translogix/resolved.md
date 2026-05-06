@@ -1,5 +1,64 @@
 # Resolved audit items
 
+## 2026-05-06 — Focused source HTML validation cleanup
+
+Resolved scope:
+
+- `.htmlvalidate.json`
+- `contact.html`
+- `fleet.html`
+- `assets/js/lightbox.js`
+- `assets/css/modules/pages.css`
+- focused source HTML validation command
+
+Outcome:
+
+- `void-style` now matches the project's self-closing void element formatting.
+- FAQ accordion panels now use native `<section>` elements while preserving IDs, classes, `hidden`, and `aria-labelledby`.
+- The lightbox thumbnail container now uses a native `<ul>`, with JavaScript rendering each thumbnail inside an `<li>`.
+- Focused validation for the root source pages now passes.
+
+Notes:
+
+- No minified files or `dist/` files were edited.
+- This resolves only the focused source HTML validation cleanup.
+
+## 2026-05-06 — Effective performance budget measurement
+
+Resolved scope:
+
+- `perf-budgets.json`
+- `scripts/check-budgets.js`
+- `npm run qa:budget`
+
+Outcome:
+
+- CSS budget now measures `assets/css/style.min.css`.
+- JS budget now measures the static module graph loaded from `assets/js/main.min.js`.
+- `npm run qa:budget` passes with realistic generated payload measurements.
+
+Notes:
+
+- No minified files or `dist/` files were edited manually.
+- This resolves only the budget measurement accuracy issue.
+
+## 2026-05-06 — Services filter Polish UI copy
+
+Resolved scope:
+
+- `assets/js/services-filters.js`
+- dynamic services filter result messages
+
+Outcome:
+
+- The visible result counter now renders `Wyświetlono`.
+- The empty-state message now renders `Brak wyników dla wybranych filtrów.`
+- Filtering logic, DOM hooks, ARIA state handling, and event handling were unchanged.
+
+Notes:
+
+- This resolves only the dynamic services filter copy issue.
+
 ## 2026-05-06 — Asset verifier source scope
 
 Resolved scope:
