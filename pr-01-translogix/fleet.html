@@ -85,12 +85,12 @@
           <p class="eyebrow">Flota</p>
           <h1>Sprzęt, który dowozi wyniki</h1>
           <p class="lead">Od lekkich busów po zestawy Mega i chłodnie. Każdy pojazd z GPS, telematyką i pełnym serwisem.</p>
-          <div class="filters" aria-label="Filtry floty">
-            <button class="filter-chip" data-filter="all">Wszystko</button>
-            <button class="filter-chip" data-filter="solo">Busy</button>
-            <button class="filter-chip" data-filter="truck">Ciężarówki</button>
-            <button class="filter-chip" data-filter="chlodnia">Chłodnie</button>
-            <button class="filter-chip" data-filter="set">Zestawy</button>
+          <div class="filters" role="group" aria-label="Filtry floty">
+            <button class="filter-chip" type="button" data-filter="all">Wszystko</button>
+            <button class="filter-chip" type="button" data-filter="solo">Busy</button>
+            <button class="filter-chip" type="button" data-filter="truck">Ciężarówki</button>
+            <button class="filter-chip" type="button" data-filter="chlodnia">Chłodnie</button>
+            <button class="filter-chip" type="button" data-filter="set">Zestawy</button>
           </div>
           <h2 class="visually-hidden">Dostępne typy pojazdów</h2>
           <div class="fleet-grid" id="fleet-grid" aria-live="polite">
@@ -400,7 +400,7 @@
         <h3 class="lightbox__title" id="lightbox-title">Galeria pojazdu</h3>
         <button class="btn lightbox__close" type="button" data-lightbox-close aria-label="Zamknij"></button>
         <div class="lightbox__hero-frame" aria-hidden="true">
-          <img class="lightbox__hero" alt="" src="" style="aspect-ratio: 4 / 3" />
+          <img class="lightbox__hero" alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" />
         </div>
         <div class="lightbox__grid" role="list"></div>
         <div class="lightbox__controls">
@@ -409,7 +409,7 @@
         </div>
         <div class="lightbox__zoom" aria-hidden="true" hidden>
           <button class="lightbox__zoom-close" type="button" aria-label="Zamknij podgląd"></button>
-          <img class="lightbox__zoom-img" alt="" src="" style="aspect-ratio: 4 / 3" />
+          <img class="lightbox__zoom-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" />
         </div>
       </div>
     </div>

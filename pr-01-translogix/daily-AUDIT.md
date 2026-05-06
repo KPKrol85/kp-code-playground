@@ -2,7 +2,7 @@
 
 ## 1. Short overall assessment
 
-TransLogix is a credible static multi-page front-end project with modular CSS/JS, realistic transport/logistics content on most business pages, SEO metadata, JSON-LD, deployment files, a service worker, and automated QA scripts. The implementation is stronger than a throwaway static site, but the current source still has production-readiness gaps: the no-JS navigation/footer baseline depends on client-side partial loading, HTML validation currently fails on real source files, the terms page still describes the site as a demo/portfolio project, and some QA tooling scans too broadly or measures incomplete assets.
+TransLogix is a credible static multi-page front-end project with modular CSS/JS, realistic transport/logistics content on most business pages, SEO metadata, JSON-LD, deployment files, a service worker, and automated QA scripts. The implementation is stronger than a throwaway static site, but the current source still has production-readiness gaps: HTML validation currently fails on real source files, and some QA tooling scans too broadly or measures incomplete assets.
 
 Documentation read first: `README.md` was present and reviewed. `AUDIT.md`, `settings.md`, and `BUILD-PIPELINE.md`: not detected in project.
 
@@ -27,19 +27,13 @@ none detected.
 
 ## 4. P1 — Important issues worth fixing next
 
-- **No-JS baseline is incomplete for primary navigation and footer.** Root pages render only empty partial hosts such as `index.html:88` and `index.html:280` (`<div data-partial="header"></div>`, `<div data-partial="footer"></div>`). The actual header/footer are injected by `assets/js/partials.js` through `await initPartials()` in `assets/js/main.js`. With JavaScript unavailable or partial fetch failing, users lose the primary site navigation and footer links. This conflicts with the README claim that baseline content works without JS.
-
-- **Source HTML validation currently fails on real semantic and accessibility issues.** Running `npx html-validate ...` against the root source pages reports 404 errors. Many are style-rule mismatches (`doctype-style`, `void-style`), but there are also real source issues worth fixing: invalid `aria-label` on generic containers (`contact.html:101`, `fleet.html:88`, `services.html:89`, `service.html:131`), missing explicit `type` on non-submit buttons (`fleet.html:89-93`, `services.html:90-95`, `services.html:125-129`, `contact.html:165+`), empty `src=""` on lightbox images (`fleet.html:403`, `fleet.html:412`), and inline styles on those lightbox images. This makes the configured HTML QA gate fail on implementation evidence, not just generated artifacts.
-
-- **The terms page still presents the project as a demo/portfolio instead of a production-facing transport company site.** Evidence: `terms.html:13` contains `KP_Code_ Demo` in the title, `terms.html:83` says `Regulamin projektu demonstracyjnego (portfolio)`, and sections such as `terms.html:123`, `terms.html:136`, and `terms.html:145` describe demo functionality and lack of service provision. That directly weakens business credibility and conflicts with the rest of the site’s production-style transport company positioning.
-
-- **Asset verification tooling is currently unreliable because it scans too broadly.** `scripts/verify-assets.js` recursively reads every HTML file under the project root without excluding `node_modules`, reports, or generated folders. `npm run assets:verify` currently fails with missing references from third-party/generated HTML contexts such as Mocha, Playwright UI, socket.io, and Vite-style assets. This is a tooling defect in the current project workflow; it does not prove those app assets are missing from the public source pages.
+none detected.
 
 ## 5. P2 — Minor refinements
 
-- **`offline.html` contains partial placeholders but does not load the partial loader.** It includes `data-partial="header"` and `data-partial="footer"` at `offline.html:83` and `offline.html:95`, but it does not include `assets/js/main.js`. The offline main content still works, so this is not critical, but the empty placeholders are dead markup in the source page.
-
 - **Performance budget checks do not measure the effective CSS/JS footprint.** `perf-budgets.json` budgets `assets/css/style.css` and `assets/js/main.js`; `npm run qa:budget` passes with `style.css` at 99 B gzip and `main.js` at 464 B gzip. Those files mostly import other CSS/JS modules, so the current budget check does not represent the actual loaded source module footprint or production CSS/JS payload.
+
+- **Focused source HTML validation still has validator cleanup items.** The old real ARIA/button/lightbox defects are resolved, and lowercase `<!doctype html>` is accepted by configuration. The focused source validation command still fails on remaining `void-style` and `prefer-native-element` findings, which should be handled as separate validator policy or markup review work.
 
 - **Some dynamic UI copy lacks Polish diacritics.** `assets/js/services-filters.js` renders strings like `Wyswietlono` and `Brak wynikow dla wybranych filtrow.` This is minor, but visible user-facing copy should match the professional Polish language standard used elsewhere.
 
@@ -51,14 +45,24 @@ none detected.
 - Decide whether the HTML style should be XHTML-like self-closing void tags or standard HTML omitted end tags, then align `.htmlvalidate.json` with that decision.
 - Add JSON-LD validation to CI for pages that intentionally include structured data.
 - Expand `pa11y-ci` coverage beyond the five configured URLs if legal/detail pages are expected to be audited before release.
-- Make the asset verifier scope explicit, for example root pages plus partials plus service worker precache, instead of every HTML file under the project root.
-- Consider adding fallback static header/footer markup for no-JS, or generate/inject partials at build time for source preview as well as `dist`.
 
 ## 7. Senior rating (1-10)
 
 **7.2 / 10**
 
-The project has a solid static architecture, credible multi-page scope, structured metadata, thoughtful modular CSS/JS, accessibility-aware patterns, and deployment/runtime files. The score is held back by the incomplete no-JS navigation/footer baseline, failing source HTML validation with real ARIA/button/lightbox issues, demo-oriented legal copy, and QA tooling that currently gives misleading or noisy signals. These are fixable issues, not architecture collapse.
+The project has a solid static architecture, credible multi-page scope, structured metadata, thoughtful modular CSS/JS, accessibility-aware patterns, and deployment/runtime files. The score is held back by failing source HTML validation with real ARIA/button/lightbox issues and QA tooling that currently gives misleading or noisy signals. These are fixable issues, not architecture collapse.
+
+## 2026-05-06 update — P1 source HTML validation defects
+
+The real source-level P1 validation defects were corrected in the active source files: invalid `aria-label` usage on generic containers, missing explicit `type="button"` on non-submit UI controls, and invalid static lightbox image markup with empty `src=""` and inline styles. Remaining HTML validation output should be reviewed separately as validator style/config scope, such as `doctype-style`, `void-style`, and generated/template scan noise.
+
+## 2026-05-06 update — HTML validator doctype policy
+
+The HTML validator configuration was aligned with the project's Prettier-style lowercase `<!doctype html>` formatting by setting `doctype-style` to lowercase. This was a validator policy alignment only; source HTML files were not changed for this item, and remaining `void-style` or `prefer-native-element` findings stay out of scope.
+
+## 2026-05-06 update — asset verification scope
+
+The asset verifier now scans project-owned source/public HTML contexts only: root source pages, `partials/`, `templates/`, and service worker precache URLs. Generated and third-party folders are excluded by path, including `node_modules`, `dist`, `playwright-report`, `test-results`, `coverage`, and `.git`. `npm run assets:verify` now passes and remains focused on real TransLogix asset references.
 
 ---
 
@@ -66,7 +70,7 @@ The project has a solid static architecture, credible multi-page scope, structur
 
 ## 1. Krótka ocena ogólna
 
-TransLogix to wiarygodny, statyczny, wielostronicowy projekt front-endowy z modułowym CSS/JS, realistyczną treścią transportowo-logistyczną na większości stron biznesowych, metadanymi SEO, JSON-LD, plikami wdrożeniowymi, service workerem i automatycznymi skryptami QA. Implementacja jest mocniejsza niż tymczasowa strona statyczna, ale obecne źródła nadal mają luki względem gotowości produkcyjnej: bazowa nawigacja i stopka bez JS zależą od ładowania partiali po stronie klienta, walidacja HTML obecnie nie przechodzi na realnych plikach źródłowych, strona regulaminu nadal opisuje serwis jako projekt demo/portfolio, a część narzędzi QA skanuje zbyt szeroko albo mierzy niepełne assety.
+TransLogix to wiarygodny, statyczny, wielostronicowy projekt front-endowy z modułowym CSS/JS, realistyczną treścią transportowo-logistyczną na większości stron biznesowych, metadanymi SEO, JSON-LD, plikami wdrożeniowymi, service workerem i automatycznymi skryptami QA. Implementacja jest mocniejsza niż tymczasowa strona statyczna, ale obecne źródła nadal mają luki względem gotowości produkcyjnej: walidacja HTML obecnie nie przechodzi na realnych plikach źródłowych, a część narzędzi QA skanuje zbyt szeroko albo mierzy niepełne assety.
 
 Dokumentacja przeczytana w pierwszej kolejności: `README.md` był obecny i został przejrzany. `AUDIT.md`, `settings.md` i `BUILD-PIPELINE.md`: nie wykryto w projekcie.
 
@@ -91,19 +95,13 @@ nie wykryto.
 
 ## 4. P1 — Ważne problemy do naprawy w następnej kolejności
 
-- **Baseline bez JS jest niepełny dla głównej nawigacji i stopki.** Strony główne renderują tylko puste hosty partiali, np. `index.html:88` i `index.html:280` (`<div data-partial="header"></div>`, `<div data-partial="footer"></div>`). Rzeczywisty header/footer są wstrzykiwane przez `assets/js/partials.js` poprzez `await initPartials()` w `assets/js/main.js`. Gdy JavaScript jest niedostępny albo fetch partiala zawiedzie, użytkownicy tracą główną nawigację serwisu i linki w stopce. To jest sprzeczne z deklaracją w README, że bazowa treść działa bez JS.
-
-- **Walidacja źródłowego HTML obecnie nie przechodzi z powodu realnych problemów semantycznych i dostępnościowych.** Uruchomienie `npx html-validate ...` na głównych stronach źródłowych zgłasza 404 błędy. Wiele z nich to rozbieżności stylu reguł (`doctype-style`, `void-style`), ale są też realne problemy źródłowe warte naprawy: nieprawidłowe `aria-label` na generycznych kontenerach (`contact.html:101`, `fleet.html:88`, `services.html:89`, `service.html:131`), brak jawnego `type` na przyciskach niebędących submitami (`fleet.html:89-93`, `services.html:90-95`, `services.html:125-129`, `contact.html:165+`), puste `src=""` na obrazach lightboxa (`fleet.html:403`, `fleet.html:412`) oraz style inline na tych obrazach. To powoduje, że skonfigurowana bramka HTML QA nie przechodzi na podstawie realnej implementacji, nie tylko artefaktów generowanych.
-
-- **Strona regulaminu nadal przedstawia projekt jako demo/portfolio zamiast produkcyjnie wyglądającego serwisu firmy transportowej.** Dowody: `terms.html:13` zawiera `KP_Code_ Demo` w tytule, `terms.html:83` mówi `Regulamin projektu demonstracyjnego (portfolio)`, a sekcje takie jak `terms.html:123`, `terms.html:136` i `terms.html:145` opisują funkcjonalność demonstracyjną oraz brak świadczenia usług. To bezpośrednio osłabia wiarygodność biznesową i koliduje z produkcyjnym pozycjonowaniem firmy transportowej na reszcie serwisu.
-
-- **Narzędzie weryfikacji assetów jest obecnie niewiarygodne, ponieważ skanuje zbyt szeroko.** `scripts/verify-assets.js` rekurencyjnie czyta każdy plik HTML pod rootem projektu bez wykluczania `node_modules`, raportów ani folderów generowanych. `npm run assets:verify` obecnie nie przechodzi z brakującymi referencjami z kontekstów HTML third-party/generowanych, takich jak Mocha, Playwright UI, socket.io i assety w stylu Vite. To jest wada narzędziowa w obecnym workflow projektu; nie dowodzi, że te assety aplikacyjne są brakujące na publicznych stronach źródłowych.
+nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
-- **`offline.html` zawiera placeholdery partiali, ale nie ładuje loadera partiali.** Plik zawiera `data-partial="header"` i `data-partial="footer"` w `offline.html:83` i `offline.html:95`, ale nie zawiera `assets/js/main.js`. Główna treść offline nadal działa, więc nie jest to krytyczne, ale puste placeholdery są martwym markupiem w stronie źródłowej.
-
 - **Checki budżetów wydajnościowych nie mierzą efektywnego footprintu CSS/JS.** `perf-budgets.json` ustawia budżety dla `assets/css/style.css` i `assets/js/main.js`; `npm run qa:budget` przechodzi z `style.css` na poziomie 99 B gzip i `main.js` na poziomie 464 B gzip. Te pliki głównie importują inne moduły CSS/JS, więc obecny check budżetu nie reprezentuje faktycznie ładowanego footprintu modułów źródłowych ani produkcyjnego payloadu CSS/JS.
+
+- **Skupiona walidacja źródłowego HTML nadal ma tematy porządkowe walidatora.** Dawne realne defekty ARIA/przycisków/lightboxa są rozwiązane, a mały `<!doctype html>` jest akceptowany przez konfigurację. Skupiona komenda walidacji źródeł nadal nie przechodzi przez pozostałe wyniki `void-style` i `prefer-native-element`, które należy traktować jako osobną decyzję polityki walidatora albo przegląd markupowy.
 
 - **Część dynamicznej treści UI nie ma polskich znaków.** `assets/js/services-filters.js` renderuje teksty takie jak `Wyswietlono` i `Brak wynikow dla wybranych filtrow.` To drobne, ale widoczna treść dla użytkownika powinna odpowiadać profesjonalnemu standardowi języka polskiego stosowanemu w innych miejscach.
 
@@ -115,11 +113,21 @@ nie wykryto.
 - Zdecydować, czy styl HTML ma używać samozamykających tagów void w stylu XHTML, czy standardowych tagów HTML bez końcówek, a potem dopasować `.htmlvalidate.json` do tej decyzji.
 - Dodać walidację JSON-LD do CI dla stron, które celowo zawierają dane strukturalne.
 - Rozszerzyć pokrycie `pa11y-ci` poza pięć skonfigurowanych URL-i, jeśli strony prawne/szczegółowe mają być audytowane przed releasem.
-- Jawnie określić zakres weryfikatora assetów, na przykład główne strony plus partiale plus precache service workera, zamiast każdego pliku HTML pod rootem projektu.
-- Rozważyć dodanie statycznego fallbacku header/footer dla trybu bez JS albo generowanie/wstrzykiwanie partiali podczas builda zarówno dla podglądu źródłowego, jak i `dist`.
 
 ## 7. Ocena seniorska (1-10)
 
 **7.2 / 10**
 
-Projekt ma solidną architekturę statyczną, wiarygodny zakres wielostronicowy, uporządkowane metadane, przemyślany modułowy CSS/JS, wzorce uwzględniające dostępność oraz pliki wdrożeniowe/runtime. Ocenę obniżają niepełny baseline nawigacji/stopki bez JS, nieprzechodząca walidacja źródłowego HTML z realnymi problemami ARIA/przycisków/lightboxa, demo-oriented treść prawna oraz narzędzia QA, które obecnie dają mylące lub zaszumione sygnały. To są problemy naprawialne, nie załamanie architektury.
+Projekt ma solidną architekturę statyczną, wiarygodny zakres wielostronicowy, uporządkowane metadane, przemyślany modułowy CSS/JS, wzorce uwzględniające dostępność oraz pliki wdrożeniowe/runtime. Ocenę obniżają nieprzechodząca walidacja źródłowego HTML z realnymi problemami ARIA/przycisków/lightboxa oraz narzędzia QA, które obecnie dają mylące lub zaszumione sygnały. To są problemy naprawialne, nie załamanie architektury.
+
+## Aktualizacja 2026-05-06 — defekty P1 walidacji HTML źródeł
+
+Realne źródłowe defekty P1 walidacji HTML zostały poprawione w aktywnych plikach źródłowych: nieprawidłowe `aria-label` na generycznych kontenerach, brak jawnego `type="button"` na kontrolkach UI niebędących submitami oraz nieprawidłowy statyczny markup obrazów lightboxa z pustym `src=""` i stylami inline. Pozostały output walidacji HTML należy rozpatrywać osobno jako zakres stylu/konfiguracji walidatora, m.in. `doctype-style`, `void-style` i szum ze skanowania plików generowanych lub szablonowych.
+
+## Aktualizacja 2026-05-06 — polityka doctype w walidatorze HTML
+
+Konfiguracja walidatora HTML została dopasowana do używanego w projekcie formatowania Prettier z małym `<!doctype html>` przez ustawienie `doctype-style` na lowercase. To była wyłącznie zmiana polityki walidatora; pliki źródłowe HTML nie były zmieniane w tym zakresie, a pozostałe wyniki `void-style` lub `prefer-native-element` pozostają poza zakresem.
+
+## Aktualizacja 2026-05-06 — zakres weryfikacji assetów
+
+Weryfikator assetów skanuje teraz wyłącznie konteksty HTML należące do projektu: główne strony źródłowe, `partials/`, `templates/` oraz URL-e precache service workera. Katalogi generowane i third-party są wykluczane po ścieżce, w tym `node_modules`, `dist`, `playwright-report`, `test-results`, `coverage` i `.git`. `npm run assets:verify` przechodzi i pozostaje skupiony na realnych referencjach assetów TransLogix.

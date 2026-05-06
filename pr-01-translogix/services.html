@@ -86,13 +86,13 @@
           <h1>Transport i logistyka szyte na miarę</h1>
           <p class="lead">Wybierz rodzaj przewozu, a my pokażemy dostępne trasy, czasy i stawki. Filtry zawężą wyniki do konkretnych wymagań.</p>
           <h2 class="visually-hidden">Filtry i lista dostępnych usług</h2>
-          <div class="filters" aria-label="Filtry usług">
-            <button class="filter-chip" data-filter="all">Wszystkie</button>
-            <button class="filter-chip" data-filter="krajowy">Krajowy</button>
-            <button class="filter-chip" data-filter="miedzynarodowy">Międzynarodowy</button>
-            <button class="filter-chip" data-filter="express">Express</button>
-            <button class="filter-chip" data-filter="adr">ADR</button>
-            <button class="filter-chip" data-filter="chlodnia">Chłodnia</button>
+          <div class="filters" role="group" aria-label="Filtry usług">
+            <button class="filter-chip" type="button" data-filter="all">Wszystkie</button>
+            <button class="filter-chip" type="button" data-filter="krajowy">Krajowy</button>
+            <button class="filter-chip" type="button" data-filter="miedzynarodowy">Międzynarodowy</button>
+            <button class="filter-chip" type="button" data-filter="express">Express</button>
+            <button class="filter-chip" type="button" data-filter="adr">ADR</button>
+            <button class="filter-chip" type="button" data-filter="chlodnia">Chłodnia</button>
           </div>
           <label for="priceRange">Maksymalna cena (PLN)</label>
           <input type="range" id="priceRange" min="1000" max="10000" step="500" value="10000" />
@@ -122,11 +122,11 @@
           <h2 class="visually-hidden">Porównanie usług i standardów realizacji</h2>
           <div class="tabs" data-tabs>
             <div class="tablist" role="tablist" aria-label="Zestawienia usług">
-              <button role="tab" aria-selected="true" aria-controls="tab1" id="tab-btn1">Najpopularniejsze</button>
-              <button role="tab" aria-selected="false" aria-controls="tab2" id="tab-btn2">Proces</button>
-              <button role="tab" aria-selected="false" aria-controls="tab3" id="tab-btn3">Bezpieczeństwo</button>
-              <button role="tab" aria-selected="false" aria-controls="tab4" id="tab-btn4">Ładunki</button>
-              <button role="tab" aria-selected="false" aria-controls="tab5" id="tab-btn5">Dokumenty &amp; SLA</button>
+              <button type="button" role="tab" aria-selected="true" aria-controls="tab1" id="tab-btn1">Najpopularniejsze</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="tab2" id="tab-btn2">Proces</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="tab3" id="tab-btn3">Bezpieczeństwo</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="tab4" id="tab-btn4">Ładunki</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="tab5" id="tab-btn5">Dokumenty &amp; SLA</button>
             </div>
             <div id="tab1" role="tabpanel" tabindex="0" aria-labelledby="tab-btn1" class="tabpanel">
               <p>Ekspresowe przewozy do Niemiec i Francji, chłodnia EU oraz ADR Polska. Wybierane przez e-commerce, pharma, automotive i high-value retail.</p>
