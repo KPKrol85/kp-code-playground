@@ -4,7 +4,7 @@
 
 TransLogix is a credible static multi-page front-end project with modular CSS/JS, realistic transport/logistics content, SEO metadata, JSON-LD coverage on business/legal pages, deployment files, a service worker, and automated QA scripts. Today's implementation review confirms that several earlier findings have been resolved: focused root-page HTML validation passes, local link and asset verification pass, performance budgets measure generated payloads, Polish dynamic service-filter copy is corrected, and `sw.js` now precaches the previously omitted real root pages.
 
-The current production-readiness gaps are narrower than in the previous audit, but still evidence-based: the configured accessibility check now passes all five audited URLs, while the broad `qa:html` script still fails because it scans generated/third-party HTML plus a real source partial typography finding.
+The current production-readiness gaps are narrower than in the previous audit: the configured accessibility check now passes all five audited URLs, and `qa:html` now validates source-owned HTML instead of generated, third-party, or report output.
 
 Documentation read first: `README.md`, `daily-AUDIT.md`, and `resolved.md` were present and reviewed. `AUDIT.md`, `settings.md`, and `BUILD-PIPELINE.md`: not detected in project.
 
@@ -21,7 +21,7 @@ Documentation read first: `README.md`, `daily-AUDIT.md`, and `resolved.md` were 
 - Accessibility foundations are visible in code: skip target via `main#main`, `:focus-visible` styles, ARIA state management for navigation/tabs/accordion, form error states with `aria-invalid`, and `aria-live` feedback.
 - Reduced motion is considered in CSS and JS: `assets/css/modules/pages.css` and `assets/css/modules/components.css` contain `prefers-reduced-motion` handling, and `assets/js/reveal.js`, `assets/js/stats.js`, and `assets/js/site-consent.js` check reduced-motion preferences.
 - Contact form uses Netlify form attributes plus honeypot protection in `contact.html`, and client-side validation preserves native submit behavior after validation.
-- Current checks: focused root-page HTML validation passes; `npm run qa:a11y`, `npm run qa:links`, `npm run assets:verify`, and `npm run qa:budget` pass.
+- Current checks: `npm run qa`, `npm run qa:html`, `npm run qa:a11y`, `npm run qa:links`, `npm run assets:verify`, and `npm run qa:budget` pass.
 - Secrets exposure: none detected in project.
 - TODO/FIXME/debugger in source: none detected in project.
 - Dead commented code: none detected in project.
@@ -32,7 +32,7 @@ none detected.
 
 ## 4. P1 — Important issues worth fixing next
 
-- **The configured HTML QA script still fails as a project command.** `npm run qa:html` uses `html-validate "**/*.html"`, which scans `dist/`, reports, and `node_modules`; that creates noisy third-party/generated failures. A real source finding also remains in `partials/footer.html` and `templates/partials/footer.html`: `tel-non-breaking` flags the visible phone number `+48 533 537 091`. Focused root-page validation passes, so this is a QA-scope/source-partial cleanup issue rather than a broad HTML architecture failure.
+none detected.
 
 ## 5. P2 — Minor refinements
 
@@ -41,16 +41,15 @@ none detected.
 
 ## 6. Extra quality improvements
 
-- Add a source-owned HTML validation script that excludes `dist/`, reports, and dependency folders while intentionally including root source pages, `partials/`, and `templates/`.
 - Add JSON-LD validation to CI for pages that intentionally include structured data.
 - Add a focused service worker/offline smoke test that verifies precached root pages and the `/offline.html` fallback after install.
-- Consider refreshing README roadmap entries after the remaining P1/P2 audit items are closed.
+- Consider refreshing README roadmap entries after the remaining audit items are closed.
 
 ## 7. Senior rating (1-10)
 
-**7.8 / 10**
+**8.1 / 10**
 
-The project has a solid static architecture, credible multi-page scope, structured metadata, modular CSS/JS, production-minded build/deploy files, accessibility-aware patterns, and improved QA around accessibility, assets, and budgets. The rating improves because the configured pa11y contrast and footer social-link issues now pass. The score is still held back by current evidence from `qa:html`: noisy HTML QA scope and the remaining source partial phone-number typography finding should be fixed before treating the project as fully release-polished.
+The project has a solid static architecture, credible multi-page scope, structured metadata, modular CSS/JS, production-minded build/deploy files, accessibility-aware patterns, and improved QA around source HTML, accessibility, assets, and budgets. The rating improves because both configured P1 QA blockers now pass. The score is still held back by smaller production-hardening items: broader pa11y coverage, JSON-LD validation, service worker smoke testing, and stale README roadmap entries.
 
 ## 2026-05-06 update — P1 source HTML validation defects
 
@@ -84,6 +83,10 @@ Dynamic service-list messages rendered by `assets/js/services-filters.js` now us
 
 The configured `pa11y-ci` accessibility check now passes all five URLs in `.pa11yci.json`. Shared light-theme accent text contrast was strengthened through the existing color token, the home hero now has a dark fallback background behind its image overlay, and footer social links include visually hidden names while their icon images remain decorative.
 
+## 2026-05-07 update — source-owned HTML QA scope
+
+`npm run qa:html` now validates root source HTML pages, `partials/`, and `templates/` through `scripts/validate-source-html.js` instead of scanning `dist/`, reports, dependencies, or third-party HTML. The visible footer phone number now uses non-breaking spaces while preserving the clean `tel:+48533537091` href. `npm run qa:html` and the full `npm run qa` pipeline pass.
+
 ---
 
 # TransLogix — Codzienny audyt front-endu
@@ -92,7 +95,7 @@ The configured `pa11y-ci` accessibility check now passes all five URLs in `.pa11
 
 TransLogix to wiarygodny, statyczny, wielostronicowy projekt front-endowy z modułowym CSS/JS, realistyczną treścią transportowo-logistyczną, metadanymi SEO, pokryciem JSON-LD na stronach biznesowych i prawnych, plikami wdrożeniowymi, service workerem oraz zautomatyzowanymi skryptami QA. Dzisiejszy przegląd implementacji potwierdza, że kilka wcześniejszych ustaleń zostało rozwiązanych: skupiona walidacja głównych stron HTML przechodzi, lokalny check linków i weryfikacja assetów przechodzą, budżety wydajnościowe mierzą wygenerowane payloady, polskie komunikaty dynamicznego filtrowania usług zostały poprawione, a `sw.js` precache’uje teraz wcześniej pominięte realne strony root.
 
-Obecne luki względem gotowości produkcyjnej są węższe niż w poprzednim audycie, ale nadal potwierdzone dowodami: skonfigurowany check dostępności przechodzi teraz na wszystkich pięciu audytowanych URL-ach, natomiast szeroki skrypt `qa:html` nadal nie przechodzi, ponieważ skanuje HTML generowany/third-party oraz ujawnia realny problem typograficzny w partialu źródłowym.
+Obecne luki względem gotowości produkcyjnej są węższe niż w poprzednim audycie: skonfigurowany check dostępności przechodzi teraz na wszystkich pięciu audytowanych URL-ach, a `qa:html` waliduje teraz HTML należący do źródeł zamiast outputu generowanego, third-party albo raportowego.
 
 Dokumentacja przeczytana w pierwszej kolejności: `README.md`, `daily-AUDIT.md` i `resolved.md` były obecne i zostały przejrzane. `AUDIT.md`, `settings.md` i `BUILD-PIPELINE.md`: nie wykryto w projekcie.
 
@@ -109,7 +112,7 @@ Dokumentacja przeczytana w pierwszej kolejności: `README.md`, `daily-AUDIT.md` 
 - Fundamenty dostępności są widoczne w kodzie: cel skip linka przez `main#main`, style `:focus-visible`, zarządzanie stanami ARIA dla nawigacji/zakładek/akordeonu, stany błędów formularza przez `aria-invalid` oraz feedback przez `aria-live`.
 - Ograniczenie ruchu jest uwzględnione w CSS i JS: `assets/css/modules/pages.css` oraz `assets/css/modules/components.css` zawierają obsługę `prefers-reduced-motion`, a `assets/js/reveal.js`, `assets/js/stats.js` i `assets/js/site-consent.js` sprawdzają preferencję reduced motion.
 - Formularz kontaktowy używa atrybutów Netlify Forms oraz zabezpieczenia honeypot w `contact.html`, a walidacja po stronie klienta zachowuje natywne wysłanie formularza po przejściu walidacji.
-- Aktualne checki: skupiona walidacja głównych stron HTML przechodzi; `npm run qa:a11y`, `npm run qa:links`, `npm run assets:verify` i `npm run qa:budget` przechodzą.
+- Aktualne checki: `npm run qa`, `npm run qa:html`, `npm run qa:a11y`, `npm run qa:links`, `npm run assets:verify` i `npm run qa:budget` przechodzą.
 - Ekspozycja sekretów: nie wykryto w projekcie.
 - TODO/FIXME/debugger w źródłach: nie wykryto w projekcie.
 - Martwy zakomentowany kod: nie wykryto w projekcie.
@@ -120,7 +123,7 @@ nie wykryto.
 
 ## 4. P1 — Ważne problemy do naprawy w następnej kolejności
 
-- **Skonfigurowany skrypt HTML QA nadal nie przechodzi jako komenda projektowa.** `npm run qa:html` używa `html-validate "**/*.html"`, co skanuje `dist/`, raporty i `node_modules`; generuje to zaszumione błędy z plików third-party/generowanych. Pozostaje też realny problem źródłowy w `partials/footer.html` i `templates/partials/footer.html`: reguła `tel-non-breaking` zgłasza widoczny numer telefonu `+48 533 537 091`. Skupiona walidacja głównych stron root przechodzi, więc jest to problem zakresu QA oraz cleanupu partiala źródłowego, a nie szeroka awaria architektury HTML.
+nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
@@ -129,16 +132,15 @@ nie wykryto.
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
-- Dodać źródłowy skrypt walidacji HTML, który wyklucza `dist/`, raporty i foldery zależności, a celowo obejmuje strony root, `partials/` i `templates/`.
 - Dodać walidację JSON-LD do CI dla stron, które celowo zawierają dane strukturalne.
 - Dodać skupiony smoke test service workera/offline, który weryfikuje precache stron root oraz fallback `/offline.html` po instalacji.
-- Rozważyć odświeżenie wpisów roadmapy w README po zamknięciu pozostałych punktów P1/P2 z audytu.
+- Rozważyć odświeżenie wpisów roadmapy w README po zamknięciu pozostałych punktów audytu.
 
 ## 7. Ocena seniorska (1-10)
 
-**7.8 / 10**
+**8.1 / 10**
 
-Projekt ma solidną architekturę statyczną, wiarygodny zakres wielostronicowy, uporządkowane metadane, modułowy CSS/JS, produkcyjnie myślące pliki build/deploy, wzorce uwzględniające dostępność oraz poprawione QA wokół dostępności, assetów i budżetów. Ocena rośnie, ponieważ skonfigurowane problemy kontrastu pa11y oraz linków social w stopce teraz przechodzą. Wynik nadal ograniczają aktualne dowody z `qa:html`: zaszumiony zakres HTML QA i pozostały problem typografii numeru telefonu w partialu źródłowym powinny zostać poprawione, zanim projekt będzie można traktować jako w pełni dopracowany release.
+Projekt ma solidną architekturę statyczną, wiarygodny zakres wielostronicowy, uporządkowane metadane, modułowy CSS/JS, produkcyjnie myślące pliki build/deploy, wzorce uwzględniające dostępność oraz poprawione QA wokół źródłowego HTML, dostępności, assetów i budżetów. Ocena rośnie, ponieważ oba skonfigurowane blokery QA P1 teraz przechodzą. Wynik nadal ograniczają mniejsze elementy produkcyjnego utwardzania: szersze pokrycie pa11y, walidacja JSON-LD, smoke test service workera oraz nieaktualne wpisy roadmapy w README.
 
 ## Aktualizacja 2026-05-06 — defekty P1 walidacji HTML źródeł
 
@@ -171,3 +173,7 @@ Dynamiczne komunikaty listy usług renderowane przez `assets/js/services-filters
 ## Aktualizacja 2026-05-07 — skonfigurowane QA dostępności
 
 Skonfigurowany check dostępności `pa11y-ci` przechodzi teraz na wszystkich pięciu URL-ach z `.pa11yci.json`. Kontrast współdzielonego tekstu akcentowego w jasnym motywie został wzmocniony przez istniejący token koloru, hero strony głównej ma teraz ciemny fallback tła za nakładką obrazu, a linki social w stopce zawierają wizualnie ukryte nazwy przy ikonach pozostających dekoracyjnymi.
+
+## Aktualizacja 2026-05-07 — źródłowy zakres HTML QA
+
+`npm run qa:html` waliduje teraz główne strony źródłowe, `partials/` i `templates/` przez `scripts/validate-source-html.js` zamiast skanować `dist/`, raporty, zależności albo HTML third-party. Widoczny numer telefonu w stopce używa teraz spacji nierozdzielających, zachowując czysty `href` `tel:+48533537091`. `npm run qa:html` oraz pełny pipeline `npm run qa` przechodzą.

@@ -1,5 +1,27 @@
 # Resolved audit items
 
+## 2026-05-07 — Source-owned HTML QA scope and footer phone typography
+
+Resolved scope:
+
+- `package.json`
+- `scripts/validate-source-html.js`
+- `partials/footer.html`
+- `templates/partials/footer.html`
+- `npm run qa:html`
+
+Outcome:
+
+- `qa:html` now validates root source HTML pages, `partials/`, and `templates/` through a source-owned Node script instead of scanning generated, report, dependency, and third-party HTML.
+- The footer phone link keeps the clean `tel:+48533537091` href while rendering the visible number with non-breaking spaces.
+- `npm run qa:html` now passes as a project command.
+- The full `npm run qa` pipeline now passes when Chromium is allowed to launch for `pa11y-ci`.
+
+Notes:
+
+- No minified files or `dist/` files were edited manually.
+- This resolves only the HTML QA scope and footer phone typography P1 item.
+
 ## 2026-05-07 — Configured accessibility QA failures
 
 Resolved scope:

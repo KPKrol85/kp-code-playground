@@ -15,7 +15,7 @@
     "preview:dist": "http-server dist -p 8182 -c-1",
     "assets:verify": "node scripts/verify-assets.js",
     "assets:optimize": "node scripts/optimize-images.js",
-    "qa:html": "html-validate \"**/*.html\"",
+    "qa:html": "node scripts/validate-source-html.js",
     "qa:links": "node scripts/check-local-links.js",
     "qa:a11y": "start-server-and-test \"http-server . -p 8080\" http://127.0.0.1:8080 \"pa11y-ci --config .pa11yci.json\"",
     "qa:budget": "node scripts/check-budgets.js",
