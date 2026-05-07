@@ -1,5 +1,24 @@
 # Resolved audit items
 
+## 2026-05-07 — Expanded pa11y root page coverage
+
+Resolved scope:
+
+- `.pa11yci.json`
+- `npm run qa:a11y`
+- accessibility QA coverage for remaining real root-level pages
+
+Outcome:
+
+- `pa11y-ci` now audits the business pages, service detail page, legal pages, `404.html`, and `offline.html`.
+- Existing WCAG standard, timeout, wait, and Chromium launch settings were preserved.
+- `npm run qa:a11y` now passes for all 11 configured URLs.
+
+Notes:
+
+- No minified files or `dist/` files were edited manually.
+- This resolves only the pa11y coverage P2 item.
+
 ## 2026-05-07 — Source-owned HTML QA scope and footer phone typography
 
 Resolved scope:
