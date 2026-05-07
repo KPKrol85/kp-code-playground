@@ -1,5 +1,44 @@
 # Resolved audit items
 
+## 2026-05-07 — Configured accessibility QA failures
+
+Resolved scope:
+
+- `assets/css/modules/settings.css`
+- `assets/css/modules/components.css`
+- `partials/footer.html`
+- `templates/partials/footer.html`
+- `npm run qa:a11y`
+
+Outcome:
+
+- Light-theme accent text now uses a darker `--color-accent-strong` value so shared UI states meet WCAG AA contrast in the configured pa11y pages.
+- The home hero keeps its visual image overlay while also exposing a dark fallback background for reliable text contrast analysis.
+- Footer social links now include visually hidden text labels, while their decorative icon images are hidden from assistive technology.
+- `npm run qa:a11y` now passes for all five configured URLs.
+
+Notes:
+
+- No minified files or `dist/` files were edited manually.
+- This resolves only the configured accessibility QA P1 item.
+
+## 2026-05-07 — Service worker root page precache coverage
+
+Resolved scope:
+
+- `sw.js`
+- service worker precache coverage for omitted root-level pages
+
+Outcome:
+
+- The service worker precache list now includes `service.html`, `privacy.html`, `terms.html`, and `cookies.html`.
+- Existing cache naming, install/activate logic, navigation strategy, runtime asset strategy, and offline fallback behavior were unchanged.
+
+Notes:
+
+- No minified files or `dist/` files were edited manually.
+- This resolves only the root page precache coverage P2 item.
+
 ## 2026-05-06 — Focused source HTML validation cleanup
 
 Resolved scope:
