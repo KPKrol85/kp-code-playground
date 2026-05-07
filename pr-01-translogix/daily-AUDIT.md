@@ -130,7 +130,7 @@ nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
-- **Roadmap w README zawiera nieaktualne elementy wynikające z audytu.** `README.md` nadal wymienia wcześniejsze zadania, takie jak dopasowanie walidatora i cleanup ARIA, które są już rozwiązane w `resolved.md` oraz aktualnej implementacji. To drobny problem utrzymania dokumentacji, nie defekt implementacyjny.
+nie wykryto.
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
@@ -143,6 +143,10 @@ nie wykryto.
 **8.2 / 10**
 
 Projekt ma solidną architekturę statyczną, wiarygodny zakres wielostronicowy, uporządkowane metadane, modułowy CSS/JS, produkcyjnie myślące pliki build/deploy, wzorce uwzględniające dostępność oraz poprawione QA wokół źródłowego HTML, dostępności, assetów i budżetów. Ocena rośnie, ponieważ oba skonfigurowane blokery QA P1 przechodzą, a pokrycie pa11y obejmuje teraz pełny realny zestaw stron root. Wynik nadal ograniczają mniejsze elementy produkcyjnego utwardzania: walidacja JSON-LD, smoke test service workera oraz nieaktualne wpisy roadmapy w README.
+
+---
+
+## Aktualizacje:
 
 ## Aktualizacja 2026-05-06 — defekty P1 walidacji HTML źródeł
 
