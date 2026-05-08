@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="KP_Code Digital Vault: 100 fiszek CSS na poziomie intermediate." />
+    <title>KP_Code Digital Vault • CSS Flashcards Intermediate</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header header">
+        <p class="header__brand">KP_Code Digital Vault</p>
+        <h1 class="header__title">CSS Flashcards — Intermediate</h1>
+        <p class="header__description">100 praktycznych fiszek dla osób, które znają podstawy CSS i chcą pisać bardziej przewidywalne, skalowalne i responsywne style.</p>
+        <div class="header__meta-wrap">
+          <span class="badge badge--level">Poziom: Intermediate</span>
+          <p class="header__meta">100 fiszek • HTML/CSS/JS • nauka praktyczna</p>
+        </div>
+      </header>
+
+      <section class="panel intro" aria-labelledby="intro-title">
+        <h2 id="intro-title" class="panel__title">Jak pracować z tym zestawem</h2>
+        <p>Ten zestaw jest dla osób, które rozumieją selektory, podstawowe właściwości i prosty layout. Celem jest wejście na poziom „produkcyjny”: lepszy layout, responsywność, reużywalność i świadome decyzje w kaskadzie.</p>
+        <p>Pracuj aktywnie: najpierw odpowiedz własnymi słowami, potem odwróć fiszkę i porównaj. Testuj przykłady w DevTools i oznaczaj znane karty, aby monitorować postęp.</p>
+      </section>
+
+      <section class="panel controls" aria-label="Filtry nauki">
+        <div class="controls__group">
+          <label for="categoryFilter">Kategoria</label>
+          <select id="categoryFilter"></select>
+        </div>
+        <div class="controls__group">
+          <label for="difficultyFilter">Trudność</label>
+          <select id="difficultyFilter">
+            <option value="all">Wszystkie</option>
+            <option value="medium">Medium</option>
+            <option value="harder">Harder</option>
+          </select>
+        </div>
+        <div class="controls__group controls__group--switch">
+          <label for="modeToggle">Tryb challenge</label>
+          <button id="modeToggle" type="button" class="btn btn--secondary" aria-pressed="false">Wyłączony</button>
+        </div>
+      </section>
+
+      <section class="panel dashboard" aria-label="Postęp nauki">
+        <h2 class="panel__title">Dashboard postępu</h2>
+        <dl class="dashboard__grid">
+          <div><dt>Łącznie</dt><dd id="totalCards">0</dd></div>
+          <div><dt>Znane</dt><dd id="knownCards">0</dd></div>
+          <div><dt>Pozostało</dt><dd id="leftCards">0</dd></div>
+          <div><dt>Postęp</dt><dd id="progressPct">0%</dd></div>
+          <div><dt>Bieżąca kategoria</dt><dd id="currentCategory">—</dd></div>
+          <div><dt>Trudność karty</dt><dd id="currentDifficulty">—</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel flashcards" aria-labelledby="flashcards-title">
+        <div class="flashcards__head">
+          <h2 id="flashcards-title" class="panel__title">Fiszka</h2>
+          <p id="cardCounter" class="flashcards__counter">0 / 0</p>
+        </div>
+
+        <article id="card" class="card" aria-live="polite">
+          <p id="cardCategory" class="badge badge--category">Kategoria</p>
+          <p id="cardDifficulty" class="badge badge--difficulty">Medium</p>
+          <h3 class="card__question-label">Pytanie</h3>
+          <p id="cardQuestion" class="card__question"></p>
+          <div id="cardAnswerWrap" class="card__answer-wrap" hidden>
+            <h3 class="card__answer-label">Odpowiedź</h3>
+            <p id="cardAnswer" class="card__answer"></p>
+            <pre id="cardCode" class="card__code" hidden><code></code></pre>
+            <p id="cardNote" class="card__note" hidden></p>
+          </div>
+        </article>
+
+        <div class="flashcards__actions">
+          <button id="prevBtn" type="button" class="btn">Poprzednia</button>
+          <button id="flipBtn" type="button" class="btn btn--primary">Odwróć</button>
+          <button id="nextBtn" type="button" class="btn">Następna</button>
+          <button id="randomBtn" type="button" class="btn btn--secondary">Losowa</button>
+          <button id="knownBtn" type="button" class="btn btn--success">Oznacz jako znaną</button>
+          <button id="resetBtn" type="button" class="btn btn--danger">Reset postępu</button>
+        </div>
+        <p id="emptyState" class="flashcards__empty" hidden>Brak fiszek dla wybranych filtrów. Zmień kategorię lub trudność.</p>
+      </section>
+
+      <section class="panel tips" aria-labelledby="tips-title">
+        <h2 id="tips-title" class="panel__title">Praktyczne wskazówki</h2>
+        <ul>
+          <li>Analizuj układ w DevTools (overlay Grid/Flex, computed styles, box model).</li>
+          <li>Regularnie odtwarzaj małe komponenty od zera, zamiast kopiować gotowe fragmenty.</li>
+          <li>Testuj responsywność często: szerokość, wysokość, zoom i długie treści.</li>
+          <li>Ucz się kaskady i specyficzności — to stabilniejsze niż „nadpisywanie na siłę”.</li>
+          <li>Dziel CSS na małe, reużywalne sekcje i trzymaj spójne tokeny design systemu.</li>
+        </ul>
+      </section>
+    </main>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
