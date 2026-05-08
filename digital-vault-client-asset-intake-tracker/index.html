@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Asset Intake Tracker | KP_Code Digital Vault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="vault-layout">
+    <header class="vault-header card">
+      <p class="vault-header__badge">KP_Code Digital Vault</p>
+      <h1 class="vault-header__title">Client Asset Intake Tracker</h1>
+      <p class="vault-header__description">
+        A premium intake worksheet and project readiness dashboard to collect, validate, and track client assets before website or digital production begins.
+      </p>
+      <ul class="vault-header__meta" aria-label="Product metadata">
+        <li><strong>Format:</strong> Interactive one-page tracker</li>
+        <li><strong>Use case:</strong> Client asset readiness management</li>
+        <li><strong>Audience:</strong> Freelancers, studios, agencies</li>
+        <li><strong>Stage:</strong> Pre-production planning and handoff</li>
+      </ul>
+      <p class="vault-header__note">Designed for website and digital project preparation workflows.</p>
+    </header>
+
+    <main class="vault-main">
+      <section class="card section" aria-labelledby="snapshot-title">
+        <h2 id="snapshot-title">Project Intake Snapshot</h2>
+        <div class="grid grid--three">
+          <label class="field"><span>Client Name</span><input type="text" name="client-name" /></label>
+          <label class="field"><span>Company Name</span><input type="text" name="company-name" /></label>
+          <label class="field"><span>Project Name</span><input type="text" name="project-name" /></label>
+          <label class="field"><span>Project Type</span><input type="text" name="project-type" /></label>
+          <label class="field"><span>Project Owner</span><input type="text" name="project-owner" /></label>
+          <label class="field"><span>Main Contact Person</span><input type="text" name="main-contact" /></label>
+          <label class="field"><span>Intake Start Date</span><input type="date" name="intake-start" /></label>
+          <label class="field"><span>Target Delivery Date</span><input type="date" name="target-delivery" /></label>
+          <label class="field"><span>Production Start Date</span><input type="date" name="production-start" /></label>
+        </div>
+      </section>
+
+      <section class="card section" aria-labelledby="dashboard-title">
+        <h2 id="dashboard-title">Readiness Dashboard</h2>
+        <div class="dashboard" role="status" aria-live="polite">
+          <article class="dashboard__card"><h3>Total Tracked Assets</h3><p id="total-assets">0</p></article>
+          <article class="dashboard__card"><h3>Received Assets</h3><p id="received-assets">0</p></article>
+          <article class="dashboard__card"><h3>Approved Assets</h3><p id="approved-assets">0</p></article>
+          <article class="dashboard__card"><h3>Blocked Assets</h3><p id="blocked-assets">0</p></article>
+          <article class="dashboard__card dashboard__card--accent"><h3>Overall Readiness</h3><p id="readiness-percent">0%</p></article>
+          <article class="dashboard__card dashboard__card--label"><h3>Readiness Label</h3><p id="readiness-label">Not ready to start</p></article>
+        </div>
+        <p class="section__helper" id="readiness-recommendation">Track asset statuses to calculate project readiness.</p>
+      </section>
+
+      <section class="card section" aria-labelledby="checklist-title">
+        <h2 id="checklist-title">Asset Intake Checklist</h2>
+        <p class="section__helper">Set priority, update status, and note any follow-up details for each required item.</p>
+        <div class="asset-groups" id="asset-groups"></div>
+      </section>
+
+      <section class="card section" aria-labelledby="blockers-title">
+        <h2 id="blockers-title">Project Blockers</h2>
+        <p class="section__helper">Resolve blockers before full production begins to prevent schedule slips and quality risk.</p>
+        <div class="grid grid--two">
+          <label class="field"><span>Critical Missing Assets</span><textarea rows="4"></textarea></label>
+          <label class="field"><span>Blocked Access</span><textarea rows="4"></textarea></label>
+          <label class="field"><span>Client Decisions Needed</span><textarea rows="4"></textarea></label>
+          <label class="field"><span>Legal or Approval Issues</span><textarea rows="4"></textarea></label>
+        </div>
+        <label class="field"><span>Production Risks</span><textarea rows="4"></textarea></label>
+      </section>
+
+      <section class="card section" aria-labelledby="client-summary-title">
+        <h2 id="client-summary-title">Client Request Summary</h2>
+        <div class="grid grid--two">
+          <label class="field"><span>Top Missing Assets</span><textarea rows="3"></textarea></label>
+          <label class="field"><span>Next Client Action</span><textarea rows="3"></textarea></label>
+          <label class="field"><span>Deadline for Missing Materials</span><input type="date" /></label>
+          <label class="field"><span>Preferred Delivery Method</span><input type="text" placeholder="Shared drive, secure portal, email links" /></label>
+        </div>
+        <label class="field"><span>Notes for the Client</span><textarea rows="4"></textarea></label>
+      </section>
+
+      <section class="card section" aria-labelledby="instructions-title">
+        <h2 id="instructions-title">Intake Instructions for the Client</h2>
+        <ul class="instruction-list">
+          <li>Provide original source files whenever possible (vector logos, editable docs, and export-ready media).</li>
+          <li>Avoid low-resolution screenshots as final project assets.</li>
+          <li>Group files clearly by category (brand, copy, media, access, legal).</li>
+          <li>Use clear naming conventions so each file can be matched to its page or function.</li>
+          <li>Share technical access through secure methods and verify credentials are current.</li>
+          <li>Confirm ownership and usage rights for all images, videos, fonts, and media before submission.</li>
+        </ul>
+      </section>
+
+      <section class="card section" aria-labelledby="action-plan-title">
+        <h2 id="action-plan-title">After-Intake Action Plan</h2>
+        <div class="action-plan">
+          <label><input type="checkbox" /> Review received assets</label>
+          <label><input type="checkbox" /> Request missing files</label>
+          <label><input type="checkbox" /> Confirm content ownership</label>
+          <label><input type="checkbox" /> Verify technical access</label>
+          <label><input type="checkbox" /> Approve project readiness</label>
+          <label><input type="checkbox" /> Move to production</label>
+        </div>
+        <p class="section__helper">Use the readiness score and blockers list to decide whether the project should move fully into production.</p>
+      </section>
+    </main>
+
+    <footer class="vault-footer">
+      <p>KP_Code Digital Vault · Reusable asset intake and project readiness tool for client website and digital project workflows.</p>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
