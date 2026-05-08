@@ -134,9 +134,8 @@ nie wykryto.
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
-- Dodać walidację JSON-LD do CI dla stron, które celowo zawierają dane strukturalne.
 - Dodać skupiony smoke test service workera/offline, który weryfikuje precache stron root oraz fallback `/offline.html` po instalacji.
-- Rozważyć odświeżenie wpisów roadmapy w README po zamknięciu pozostałych punktów audytu.
+
 
 ## 7. Ocena seniorska (1-10)
 
