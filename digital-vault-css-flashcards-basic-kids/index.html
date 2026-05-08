@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KP_Code Digital Vault: 100 fiszek CSS dla dzieci i początkujących." />
+  <title>KP_Code Digital Vault | CSS Flashcards Basic Kids</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <p class="app-header__brand">KP_Code Digital Vault</p>
+    <h1 class="app-header__title">CSS Flashcards — Basic / Kids</h1>
+    <p class="app-header__subtitle">Przyjazne fiszki, które pomogą Ci zrozumieć podstawy CSS krok po kroku.</p>
+    <div class="app-header__meta">
+      <span class="badge">Poziom: Basic / Kids</span>
+      <span>100 fiszek</span>
+      <span>HTML / CSS / JS</span>
+      <span>Początkujący</span>
+    </div>
+  </header>
+
+  <main class="layout" id="app">
+    <section class="panel panel--intro" aria-labelledby="intro-heading">
+      <h2 id="intro-heading">Start nauki</h2>
+      <p>CSS to język stylów. Dzięki niemu strona może mieć kolory, odstępy, ramki i wygodny układ.</p>
+      <p>W tych fiszkach poćwiczysz selektory, kolory, tekst, odstępy, proste układy i dobre nawyki pracy.</p>
+      <p>Jak korzystać? Czytaj pytanie, odwróć fiszkę, sprawdź odpowiedź, a gdy temat jest jasny — oznacz kartę jako znaną.</p>
+    </section>
+
+    <section class="panel panel--controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading">Sterowanie nauką</h2>
+      <div class="filter">
+        <label for="categoryFilter">Filtr kategorii</label>
+        <select id="categoryFilter" class="filter__select" aria-label="Wybierz kategorię fiszek"></select>
+      </div>
+      <div class="dashboard" aria-live="polite">
+        <p><strong>Wszystkie fiszki:</strong> <span id="totalCards">0</span></p>
+        <p><strong>Znane:</strong> <span id="knownCards">0</span></p>
+        <p><strong>Zostało:</strong> <span id="leftCards">0</span></p>
+        <p><strong>Postęp:</strong> <span id="progressPercent">0%</span></p>
+        <p><strong>Aktualna kategoria:</strong> <span id="currentCategory">-</span></p>
+      </div>
+    </section>
+
+    <section class="panel panel--flashcard" aria-labelledby="flashcard-heading">
+      <h2 id="flashcard-heading">Fiszka</h2>
+      <article class="flashcard" id="flashcard" aria-live="polite">
+        <p class="flashcard__position"><span id="cardPosition">1</span> / <span id="cardTotal">100</span></p>
+        <p class="flashcard__category" id="cardCategory">Kategoria</p>
+        <div class="flashcard__face flashcard__face--front" id="cardQuestion"></div>
+        <div class="flashcard__face flashcard__face--back is-hidden" id="cardAnswerWrap">
+          <p id="cardAnswer"></p>
+          <pre class="flashcard__example is-hidden" id="cardExample"></pre>
+        </div>
+      </article>
+
+      <div class="flashcard-actions" role="group" aria-label="Nawigacja fiszek">
+        <button type="button" id="prevBtn">Poprzednia</button>
+        <button type="button" id="flipBtn">Odwróć</button>
+        <button type="button" id="nextBtn">Następna</button>
+        <button type="button" id="randomBtn">Losowa</button>
+        <button type="button" id="knownBtn">Oznacz jako znaną</button>
+        <button type="button" id="resetBtn" class="button--danger">Resetuj postęp</button>
+      </div>
+    </section>
+
+    <section class="panel panel--tips" aria-labelledby="tips-heading">
+      <h2 id="tips-heading">Wskazówki do nauki</h2>
+      <ul>
+        <li>Ćwicz codziennie po kilka fiszek.</li>
+        <li>Przepisuj przykłady do własnego pliku i sprawdzaj efekt.</li>
+        <li>Nie ucz się na pamięć bez zrozumienia.</li>
+        <li>Obserwuj, co dokładnie zmienia się na stronie.</li>
+      </ul>
+    </section>
+
+    <section class="panel panel--print" aria-labelledby="print-heading">
+      <h2 id="print-heading">Tryb wydruku</h2>
+      <p>Użyj opcji drukowania w przeglądarce, aby przygotować spokojną kartę nauki na A4.</p>
+      <div id="printSheet" class="print-sheet"></div>
+    </section>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
