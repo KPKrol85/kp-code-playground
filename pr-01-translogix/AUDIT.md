@@ -42,7 +42,6 @@ none detected.
 
 ## 6. Extra quality improvements
 
-- Add a dedicated release-check command that composes the commands already present but not all included in `qa`, such as `assets:verify`, `qa:budget`, `qa:lighthouse`, and `test:e2e`. This would be a workflow enhancement, not a current defect; current scripts are visible in `package.json:16-28`.
 - Consider adding computed visual regression or contrast checks for the most important pages if the project needs stronger proof beyond static tokens and pa11y coverage.
 - Consider replacing generic footer social URLs with brand-specific or intentionally omitted links before treating the site as public-release content.
 
@@ -97,8 +96,8 @@ nie wykryto.
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
-- Dodać dedykowaną komendę release-check, która składa już istniejące komendy nieuwzględnione w całości w `qa`, np. `assets:verify`, `qa:budget`, `qa:lighthouse` i `test:e2e`. Byłoby to usprawnienie workflow, nie bieżący defekt; aktualne skrypty są widoczne w `package.json:16-28`.
 - Rozważyć dodanie testów wizualnych albo sprawdzania kontrastu na podstawie stylów wyliczonych dla najważniejszych stron, jeśli projekt ma wymagać mocniejszego dowodu niż statyczne tokeny i pokrycie pa11y.
+
 - Rozważyć zastąpienie ogólnych URL-i social linkami brandowymi albo celowe pominięcie tych linków przed traktowaniem strony jako treści gotowej do publicznej publikacji.
 
 ## 7. Ocena seniorska (1–10)

@@ -1,5 +1,26 @@
 # Resolved audit items
 
+## 2026-05-09 — Release-check verification workflow
+
+Resolved scope:
+
+- `package.json`
+- `README.md`
+- `AUDIT.md`
+- `npm run release-check`
+
+Outcome:
+
+- Added `release-check` as a heavier local pre-release gate composed from existing project scripts: `qa`, `assets:verify`, `qa:budget`, and `test:e2e`.
+- Kept the regular `qa` command unchanged for daily development checks.
+- Documented the command in the existing README QA command lists.
+- `npm run release-check` passes with `8 passed` Playwright tests after the aggregate QA, asset, and budget checks.
+
+Notes:
+
+- No dependencies, source HTML/CSS/JS implementation files, Playwright tests, Lighthouse config, minified files, or `dist/` files were changed intentionally.
+- This resolves only the dedicated release-check workflow improvement.
+
 ## 2026-05-09 — Services E2E Polish counter assertion
 
 Resolved scope:

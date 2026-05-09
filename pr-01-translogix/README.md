@@ -158,6 +158,7 @@ npm run qa:a11y
 npm run qa:budget
 npm run assets:verify
 npm run test:e2e
+npm run release-check
 ```
 
 Zakres:
@@ -168,6 +169,7 @@ Zakres:
 - `assets:verify` sprawdza referencje do assetów w źródłach projektu i precache service workera.
 - `qa:budget` sprawdza budżety dla wygenerowanego CSS i grafu modułów JS.
 - `test:e2e` uruchamia testy Playwright dla wybranych przepływów UI.
+- `release-check` uruchamia cięższą bramkę przed wydaniem: `qa`, `assets:verify`, `qa:budget` i `test:e2e`.
 
 ### Utrzymanie projektu
 
@@ -348,6 +350,7 @@ npm run qa:a11y
 npm run qa:budget
 npm run assets:verify
 npm run test:e2e
+npm run release-check
 ```
 
 Scope:
@@ -358,6 +361,7 @@ Scope:
 - `assets:verify` checks asset references in project sources and service worker precache.
 - `qa:budget` checks budgets for generated CSS and the JS module graph.
 - `test:e2e` runs Playwright tests for selected UI flows.
+- `release-check` runs the heavier pre-release gate: `qa`, `assets:verify`, `qa:budget`, and `test:e2e`.
 
 ### Project Maintenance
 
