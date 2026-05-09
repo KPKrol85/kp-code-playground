@@ -1,5 +1,24 @@
 # Resolved audit items
 
+## 2026-05-09 — Services E2E Polish counter assertion
+
+Resolved scope:
+
+- `tests/e2e/services.spec.js`
+- services filter Playwright smoke coverage
+
+Outcome:
+
+- Updated the stale services E2E assertions from `Wyswietlono` to the current runtime UI copy `Wyświetlono`.
+- Test behavior was otherwise unchanged.
+- `npx playwright test tests/e2e/services.spec.js` passes with `1 passed (21.8s)`.
+
+Notes:
+
+- Runtime UI copy in `assets/js/services-filters.js` was preserved unchanged.
+- No npm scripts, Playwright config, minified files, or `dist/` files were changed intentionally.
+- This resolves only the services E2E QA drift item.
+
 ## 2026-05-09 — Service worker offline smoke test
 
 Resolved scope:
