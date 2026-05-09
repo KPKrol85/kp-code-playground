@@ -92,7 +92,7 @@ nie wykryto.
 
 ## 5. P2 — Drobne usprawnienia
 
-- **Roadmapa README jest nieaktualna względem bieżącej implementacji.** `README.md:373-374` nadal wymienia automatyczną walidację JSON-LD i smoke test service workera jako przyszłe prace, ale `package.json:19` i `package.json:24` pokazują, że walidacja JSON-LD jest już podłączona do `qa`, a `tests/e2e/service-worker-offline.spec.js:9-56` oraz `resolved.md:3-21` pokazują, że smoke test service worker/offline jest rozwiązany. To drift dokumentacji, nie defekt implementacji.
+---
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
