@@ -94,7 +94,6 @@ nie wykryto.
 ## 5. P2 — Drobne usprawnienia
 
 - **Roadmapa README jest nieaktualna względem bieżącej implementacji.** `README.md:373-374` nadal wymienia automatyczną walidację JSON-LD i smoke test service workera jako przyszłe prace, ale `package.json:19` i `package.json:24` pokazują, że walidacja JSON-LD jest już podłączona do `qa`, a `tests/e2e/service-worker-offline.spec.js:9-56` oraz `resolved.md:3-21` pokazują, że smoke test service worker/offline jest rozwiązany. To drift dokumentacji, nie defekt implementacji.
-- **Linki social w stopce prowadzą do ogólnych stron platform.** `partials/footer.html:67-79` i `templates/partials/footer.html:67-79` linkują do `https://www.facebook.com/`, `https://www.instagram.com/`, `https://www.linkedin.com/` i `https://github.com/`. Linki są bezpieczne (`target="_blank"` z `rel="noopener noreferrer"`), ale ogólne destynacje obniżają produkcyjną wiarygodność biznesowego reference site.
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
