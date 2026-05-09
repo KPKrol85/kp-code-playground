@@ -1,5 +1,25 @@
 # Resolved audit items
 
+## 2026-05-09 — Service worker offline smoke test
+
+Resolved scope:
+
+- `tests/e2e/service-worker-offline.spec.js`
+- service worker/offline Playwright smoke coverage
+
+Outcome:
+
+- Added a focused Playwright smoke test for service worker readiness and control.
+- The test verifies that a cached root page remains available while offline.
+- The test verifies the current offline fallback behavior for unknown navigation.
+- `npx playwright test tests/e2e/service-worker-offline.spec.js` passes with `1 passed (19.4s)`.
+
+Notes:
+
+- Production `sw.js` was preserved unchanged.
+- No npm scripts, Playwright config, minified files, or `dist/` files were changed.
+- This resolves only the service worker/offline smoke-test audit item.
+
 ## 2026-05-07 — Expanded pa11y root page coverage
 
 Resolved scope:
