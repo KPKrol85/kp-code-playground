@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Questionnaire Builder | KP_Code Digital Vault</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="badge">KP_Code Digital Vault</p>
+      <h1>Client Questionnaire Builder</h1>
+      <p class="subtitle">Generate tailored client discovery questions for scoping, proposals, and kickoff planning.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel form-panel" aria-label="Project context builder">
+      <h2>1) Project Context</h2>
+      <form id="builderForm" class="form-grid">
+        <label>Client Name<input type="text" id="clientName" /></label>
+        <label>Project Name<input type="text" id="projectName" /></label>
+        <label>Project Type
+          <select id="projectType"></select>
+        </label>
+        <label>Industry<input type="text" id="industry" /></label>
+        <label>Business Model<input type="text" id="businessModel" /></label>
+        <label>Current Website Status
+          <select id="websiteStatus"></select>
+        </label>
+        <label>Main Project Goal<input type="text" id="mainGoal" /></label>
+        <label>Questionnaire Depth
+          <select id="depth"></select>
+        </label>
+        <label>Questionnaire Tone
+          <select id="tone"></select>
+        </label>
+        <label class="full">Internal Notes
+          <textarea id="internalNotes" rows="4" placeholder="Your private notes before proposal/scoping."></textarea>
+        </label>
+      </form>
+
+      <h2>2) Questionnaire Modules</h2>
+      <fieldset>
+        <legend>Select included modules</legend>
+        <div id="moduleGrid" class="module-grid"></div>
+      </fieldset>
+
+      <div class="actions">
+        <button id="copyQuestionnaire" type="button">Copy Questionnaire</button>
+        <button id="copyIntro" type="button">Copy Intro Message</button>
+        <button id="printDoc" type="button">Print / Save PDF</button>
+        <button id="saveLocal" type="button">Save Locally</button>
+        <button id="resetBuilder" type="button" class="danger">Reset Builder</button>
+      </div>
+      <p id="statusLive" class="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="panel summary-panel" aria-label="Live summary">
+      <h2>Live Summary</h2>
+      <ul id="summaryList"></ul>
+    </aside>
+
+    <section class="panel output-panel" aria-label="Generated questionnaire">
+      <h2>3) Generated Questionnaire</h2>
+      <article id="output"></article>
+    </section>
+  </main>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
