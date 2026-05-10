@@ -1,0 +1,13 @@
+:root{--bg:#f4f7fb;--surface:#fff;--text:#1a2433;--muted:#5a6b82;--primary:#1d4ed8;--border:#d8e0ee;--radius:14px;--space:clamp(.75rem,1.5vw,1rem);--shadow:0 8px 24px rgba(10,35,80,.08);--healthy:#137333;--watch:#a16300;--risk:#b54708;--critical:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.container{max-width:1100px;margin:auto;padding:var(--space)}.hero{background:linear-gradient(120deg,#0f172a,#1d4ed8);color:#fff}.badge{display:inline-block;background:#ffffff22;padding:.2rem .6rem;border-radius:999px}
+.subtitle{max-width:70ch}.layout{display:grid;gap:var(--space)}.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(1rem,2vw,1.25rem);box-shadow:var(--shadow)}
+.form-grid{display:grid;gap:var(--space)}label{display:grid;gap:.35rem;font-weight:600}input,select,textarea,button{font:inherit}input,select,textarea{padding:.6rem;border:1px solid #b8c5dd;border-radius:10px}.full{grid-column:1/-1}
+.category{border:1px solid var(--border);border-radius:10px;padding:.75rem;margin:.8rem 0}.question{display:grid;gap:.3rem;padding:.45rem 0;border-top:1px dashed #e1e7f2}.question:first-of-type{border-top:0}
+.summary{position:sticky;top:1rem;align-self:start}.kpi{font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:700}.progress{height:10px;background:#e5eaf4;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:var(--primary)}
+.status{padding:.15rem .5rem;border-radius:999px;border:1px solid currentColor;font-weight:700}.healthy{color:var(--healthy)}.watch{color:var(--watch)}.at-risk{color:var(--risk)}.critical{color:var(--critical)}
+.output{white-space:pre-wrap;background:#f8fbff;border:1px solid var(--border);padding:.8rem;border-radius:10px;max-height:420px;overflow:auto}.actions{display:flex;flex-wrap:wrap;gap:.6rem}button{background:#0f3fb8;color:#fff;border:0;border-radius:10px;padding:.65rem .9rem;cursor:pointer}button.danger{background:#8f1d1d}
+.small{font-size:.9rem;color:var(--muted)}:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+@media (min-width:900px){.layout{grid-template-columns:1fr 320px}.layout>section:nth-of-type(1),.layout>section:nth-of-type(2),.layout>section:nth-of-type(3),.layout>section:nth-of-type(4){grid-column:1}.summary{grid-column:2;grid-row:1/span 2}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none}}
+@media print{body{background:#fff}.hero,.actions,#assessment-categories,.summary{display:none !important}.card{box-shadow:none;border:0;padding:0;margin:0 0 1rem}.output{max-height:none;border:0;background:#fff}h2{border-bottom:1px solid #ccc;padding-bottom:.25rem}}
