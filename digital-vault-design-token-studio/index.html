@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KP_Code Digital Vault · Design Token Studio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="vault-skip-link" href="#workspace">Skip to workspace</a>
+  <header class="vault-header">
+    <div>
+      <p class="vault-header__eyebrow">KP_Code Digital Vault</p>
+      <h1>Design Token Studio</h1>
+    </div>
+    <div class="vault-header__actions">
+      <select id="presetSelect" aria-label="Apply preset theme"></select>
+      <button id="printReportBtn" class="vault-btn vault-btn--ghost">Print Report</button>
+    </div>
+  </header>
+
+  <main class="vault-layout" id="workspace">
+    <aside class="vault-sidebar" aria-label="Token configuration panel">
+      <section class="vault-card">
+        <h2>Project Setup</h2>
+        <div class="vault-form-grid">
+          <label>Project Name<input id="projectName" type="text" value="Nebula Commerce UI" /></label>
+          <label>Brand/System Name<input id="brandName" type="text" value="Nebula DS" /></label>
+          <label>Project Type<select id="projectType"><option>SaaS Platform</option><option>Dashboard</option><option>Marketing Site</option><option>Enterprise App</option></select></label>
+          <label>Interface Style<select id="interfaceStyle"><option>Minimal</option><option>Enterprise</option><option>Editorial</option><option>Luxury</option><option>Developer Tooling</option></select></label>
+          <label>Token Naming Convention<select id="namingConvention"><option>semantic-kebab</option><option>tiered-scale</option><option>component-first</option></select></label>
+          <label>Base Accent<input id="accentColor" type="color" value="#7c3aed" /></label>
+        </div>
+      </section>
+
+      <section class="vault-card">
+        <h2>System Controls</h2>
+        <div class="vault-form-grid">
+          <label>Foundation Theme<select id="foundation"><option value="dark">Dark</option><option value="light">Light</option></select></label>
+          <label>Typography Mood<select id="typographyMood"><option>Balanced SaaS</option><option>Editorial Contrast</option><option>Technical Compact</option></select></label>
+          <label>Spacing Density<input id="spacingDensity" type="range" min="0" max="2" value="1" /></label>
+          <label>Radius Style<input id="radiusIntensity" type="range" min="0" max="2" value="1" /></label>
+          <label>Shadow Intensity<input id="shadowIntensity" type="range" min="0" max="2" value="1" /></label>
+          <label>Motion Intensity<input id="motionIntensity" type="range" min="0" max="2" value="1" /></label>
+        </div>
+      </section>
+
+      <section class="vault-card">
+        <h2>Exports</h2>
+        <div class="vault-export-grid">
+          <button data-export="css" class="vault-btn">Copy CSS</button>
+          <button data-export="json" class="vault-btn">Copy JSON</button>
+          <button data-export="md" class="vault-btn">Copy Markdown</button>
+          <button data-download="css" class="vault-btn vault-btn--ghost">Download .css</button>
+          <button data-download="json" class="vault-btn vault-btn--ghost">Download .json</button>
+          <button data-download="md" class="vault-btn vault-btn--ghost">Download .md</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="vault-main">
+      <article class="vault-card">
+        <h2>Live Component Preview</h2>
+        <div class="vault-preview-grid" id="previewGrid"></div>
+      </article>
+
+      <article class="vault-card">
+        <h2>Token Output</h2>
+        <div class="vault-tabs" role="tablist" aria-label="Token output types">
+          <button class="vault-tab is-active" data-tab="css">CSS</button>
+          <button class="vault-tab" data-tab="json">JSON</button>
+          <button class="vault-tab" data-tab="md">Markdown</button>
+        </div>
+        <pre class="vault-output" id="tokenOutput"></pre>
+      </article>
+
+      <article class="vault-card vault-report" id="reportPanel">
+        <h2>Engineering Documentation Report</h2>
+        <div id="reportContent"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
