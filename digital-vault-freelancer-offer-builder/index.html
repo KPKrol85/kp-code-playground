@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freelancer Offer Builder | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content wrap">
+        <p class="badge">KP_Code Digital Vault Tool</p>
+        <h1>Freelancer Offer Builder</h1>
+        <p class="hero__subtitle">
+          Build polished, proposal-ready client offers with clear scope, deliverables,
+          terms, timeline assumptions, and practical next steps.
+        </p>
+      </div>
+    </header>
+
+    <main class="wrap layout" id="appRoot">
+      <section class="builder" aria-label="Offer builder form">
+        <form id="offerForm" novalidate>
+          <section class="panel">
+            <h2>Offer Context</h2>
+            <div class="grid fields-2">
+              <label>Client name <input name="clientName" type="text" placeholder="Acme Studio" /></label>
+              <label>Project name <input name="projectName" type="text" placeholder="Website Refresh 2026" /></label>
+              <label>Offer title <input name="offerTitle" type="text" placeholder="Website Design & Development Proposal" /></label>
+              <label>Business industry <input name="industry" type="text" placeholder="Professional services" /></label>
+              <label>Offer validity date <input name="validUntil" type="date" /></label>
+              <label>Prepared by <input name="preparedBy" type="text" placeholder="Your Name / Studio" /></label>
+              <label>Contact email <input name="contactEmail" type="email" placeholder="hello@yourstudio.com" /></label>
+              <label>Project type
+                <select name="projectType" id="projectType"></select>
+              </label>
+            </div>
+            <label>Investment / price note
+              <input name="investmentNote" type="text" placeholder="From 3500 PLN" />
+            </label>
+            <label>Internal notes
+              <textarea name="internalNotes" rows="3" placeholder="Discovery insights, constraints, call notes..."></textarea>
+            </label>
+          </section>
+
+          <section class="panel">
+            <h2>Offer Package Selection</h2>
+            <div id="packageCards" class="package-grid" role="radiogroup" aria-label="Offer packages"></div>
+          </section>
+
+          <section class="panel">
+            <h2>Core Deliverables</h2>
+            <div id="deliverablesRoot" class="option-sections"></div>
+          </section>
+
+          <section class="panel">
+            <h2>Optional Add-ons</h2>
+            <div id="addonsRoot" class="option-grid"></div>
+          </section>
+
+          <section class="panel">
+            <h2>Timeline & Milestones</h2>
+            <div class="grid fields-3">
+              <label>Estimated project duration
+                <select name="duration" id="duration"></select>
+              </label>
+              <label>Revision rounds
+                <select name="revisions" id="revisions"></select>
+              </label>
+              <label>Launch window
+                <input name="launchWindow" type="text" placeholder="Mid June 2026" />
+              </label>
+            </div>
+            <fieldset>
+              <legend>Milestones</legend>
+              <div id="milestonesRoot" class="option-grid compact"></div>
+            </fieldset>
+          </section>
+
+          <section class="panel"><h2>Payment & Collaboration Terms</h2><div id="termsRoot" class="option-grid"></div></section>
+          <section class="panel"><h2>Client Responsibilities</h2><div id="responsibilitiesRoot" class="option-grid"></div></section>
+          <section class="panel"><h2>Exclusions</h2><div id="exclusionsRoot" class="option-grid"></div></section>
+
+          <section class="panel">
+            <h2>Offer Tone</h2>
+            <fieldset>
+              <legend>Choose offer tone</legend>
+              <div id="toneRoot" class="tone-group"></div>
+            </fieldset>
+          </section>
+        </form>
+      </section>
+
+      <aside class="summary panel" id="summaryPanel">
+        <h2>Live Summary</h2>
+        <ul id="summaryList" class="summary-list"></ul>
+        <h3>Attention Notes</h3>
+        <ul id="riskPreview" class="risk-list"></ul>
+        <h3>Next Step Preview</h3>
+        <ul id="stepsPreview" class="steps-list"></ul>
+      </aside>
+    </main>
+
+    <section class="wrap panel output" id="outputArea">
+      <div class="actions" role="toolbar" aria-label="Offer actions">
+        <button type="button" id="copyOfferBtn">Copy full offer</button>
+        <button type="button" id="copyEmailBtn">Copy client email intro</button>
+        <button type="button" id="printBtn">Print / save as PDF</button>
+        <button type="button" id="saveBtn">Save locally</button>
+        <button type="button" id="resetBtn" class="ghost">Reset builder</button>
+      </div>
+
+      <article>
+        <h2>Generated Offer</h2>
+        <pre id="offerOutput" class="text-output" aria-live="polite"></pre>
+      </article>
+      <article>
+        <h2>Client Email Intro</h2>
+        <pre id="emailOutput" class="text-output" aria-live="polite"></pre>
+      </article>
+      <article class="internal-block">
+        <h2>Internal Freelancer Notes</h2>
+        <pre id="internalOutput" class="text-output" aria-live="polite"></pre>
+      </article>
+      <p class="sr-only" id="statusLive" aria-live="polite"></p>
+    </section>
+  </body>
+</html>
