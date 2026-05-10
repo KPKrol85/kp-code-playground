@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Readiness Scorecard | KP_Code Digital Vault</title>
+    <meta
+      name="description"
+      content="Assess website client readiness before you commit to scope, timeline, and pricing."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container hero__inner">
+        <p class="eyebrow">KP_Code Digital Vault</p>
+        <h1>Client Readiness Scorecard</h1>
+        <p class="subtitle">
+          A practical pre-project assessment tool for freelancers and studios to validate client readiness before kickoff.
+        </p>
+      </div>
+    </header>
+
+    <main class="container app-layout" id="app">
+      <section class="panel" aria-labelledby="project-info-heading">
+        <h2 id="project-info-heading">Client &amp; Project Information</h2>
+        <form id="project-info-form" class="form-grid">
+          <label>
+            Client name
+            <input type="text" id="clientName" name="clientName" autocomplete="organization" />
+          </label>
+          <label>
+            Project name
+            <input type="text" id="projectName" name="projectName" />
+          </label>
+          <label>
+            Website type
+            <select id="websiteType" name="websiteType">
+              <option value="">Select website type</option>
+              <option>Business website</option>
+              <option>Landing page</option>
+              <option>E-commerce</option>
+              <option>Portfolio</option>
+              <option>Blog / content site</option>
+              <option>Web app / dashboard</option>
+              <option>Existing website redesign</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>
+            Planned start date
+            <input type="date" id="plannedStartDate" name="plannedStartDate" />
+          </label>
+          <label>
+            Estimated budget
+            <input type="text" id="estimatedBudget" name="estimatedBudget" placeholder="e.g., $6,000 - $9,000" />
+          </label>
+          <label>
+            Decision maker
+            <input type="text" id="decisionMaker" name="decisionMaker" />
+          </label>
+          <label class="full-width">
+            Freelancer notes
+            <textarea id="freelancerNotes" name="freelancerNotes" rows="4" placeholder="Context, concerns, or call notes."></textarea>
+          </label>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="scorecard-heading">
+        <h2 id="scorecard-heading">Readiness Assessment</h2>
+        <p class="help-text">Score each question: 0 = not ready, 1 = partially ready, 2 = ready.</p>
+        <div id="scorecard-categories" class="categories"></div>
+      </section>
+
+      <aside class="panel summary" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Live Summary</h2>
+        <div class="score-display">
+          <strong id="scoreTotal">0 / 80</strong>
+          <span id="scorePercent">0%</span>
+        </div>
+        <p id="readinessStatus" class="status-badge">High Risk Client</p>
+        <p id="statusMessage" class="status-message"></p>
+        <div class="progress" role="img" aria-label="Readiness percentage progress">
+          <div id="progressBar" class="progress__bar" style="width: 0%"></div>
+        </div>
+        <div class="summary-block">
+          <h3>Strongest Categories</h3>
+          <ul id="strongestCategories"></ul>
+        </div>
+        <div class="summary-block">
+          <h3>Weakest Categories</h3>
+          <ul id="weakestCategories"></ul>
+        </div>
+        <div class="summary-block">
+          <h3>Recommendation Preview</h3>
+          <ul id="quickRecommendations"></ul>
+        </div>
+        <div id="liveAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+      </aside>
+
+      <section class="panel report" aria-labelledby="report-heading" id="reportSection">
+        <h2 id="report-heading">Assessment Report</h2>
+        <div id="reportOutput" class="report-output"></div>
+        <div class="actions no-print">
+          <button type="button" id="copyReportBtn">Copy report</button>
+          <button type="button" id="printReportBtn">Print report</button>
+          <button type="button" id="saveLocalBtn">Save locally</button>
+          <button type="button" id="resetBtn" class="danger">Reset assessment</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
