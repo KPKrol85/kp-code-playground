@@ -46,7 +46,7 @@
   --fs-03: 0.75rem; /* 12px */
   --fs-04: 0.875rem; /* 14px */
   --fs-05: 1rem; /* 16px */
-  --fs-06: 1.125rem; /* 18px */
+  --fs-06: 1.15rem; /* 18px */
   --fs-07: 1.25rem; /* 20px */
   --fs-08: clamp(1.5rem, 1.3rem + 0.6vw, 1.75rem);
   --fs-09: clamp(2rem, 1.6rem + 1.2vw, 2.75rem);
@@ -58,6 +58,20 @@
   --fw-semibold: 600;
   --fw-bold: 700;
   --fw-extrabold: 800;
+
+  /* Line height */
+  --lh-tight: 1;
+  --lh-heading: 1.1;
+  --lh-title: 1.2;
+  --lh-base: 1.5;
+  --lh-relaxed: 1.7;
+
+  /* Letter spacing */
+  --ls-tight: -0.03em;
+  --ls-compact: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.04em;
+  --ls-wider: 0.08em;
 
   /* Transition */
   --transition: 200ms ease;
