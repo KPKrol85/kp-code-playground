@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Travel Compass | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="hero-travel-compass.js" defer></script>
+  </head>
+  <body class="hero-page hero-travel-compass-page">
+    <main>
+      <section class="hero-travel-compass" aria-labelledby="hero-travel-compass-title">
+        <div class="hero-travel-compass__ambient" aria-hidden="true"></div>
+
+        <div class="hero-travel-compass__content hero-travel-compass-reveal">
+          <p class="hero-travel-compass__eyebrow">Curated Journeys • Destination Concierge</p>
+          <h1 id="hero-travel-compass-title">Follow your compass to extraordinary stays and stories.</h1>
+          <p class="hero-travel-compass__lead">
+            From rooftop city escapes to hidden coastal retreats, design your next chapter with expert-built
+            itineraries, elevated accommodations, and seamless booking support.
+          </p>
+
+          <div class="hero-travel-compass__cta-group">
+            <a href="#booking-card" class="hero-travel-compass-btn hero-travel-compass-btn--primary">Start Planning</a>
+            <a href="#itinerary-preview" class="hero-travel-compass-btn hero-travel-compass-btn--ghost">View Itineraries</a>
+          </div>
+
+          <section class="hero-travel-compass__destination-selector" aria-label="Choose your destination style">
+            <h2 class="hero-travel-compass__subhead">Choose a destination lens</h2>
+            <div class="hero-travel-compass__chips" role="group" aria-label="Destination options">
+              <button type="button" class="hero-travel-compass__chip" data-destination="amalfi" aria-pressed="true">Amalfi Coast</button>
+              <button type="button" class="hero-travel-compass__chip" data-destination="kyoto" aria-pressed="false">Kyoto</button>
+              <button type="button" class="hero-travel-compass__chip" data-destination="patagonia" aria-pressed="false">Patagonia</button>
+              <button type="button" class="hero-travel-compass__chip" data-destination="marrakech" aria-pressed="false">Marrakech</button>
+            </div>
+          </section>
+
+          <ul class="hero-travel-compass__stats hero-travel-compass-reveal" aria-label="Travel highlights">
+            <li><strong data-stat="years">14+</strong><span>Years of premium trip design</span></li>
+            <li><strong data-stat="partners">220</strong><span>Vetted hospitality partners</span></li>
+            <li><strong data-stat="rating">4.9/5</strong><span>Average guest satisfaction</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-travel-compass__visual hero-travel-compass-reveal" data-scenic-card>
+          <article id="itinerary-preview" class="hero-travel-compass__itinerary" aria-live="polite">
+            <p class="hero-travel-compass__itinerary-label">Signature itinerary</p>
+            <h2 data-itinerary-title>Azure Coastline Escape</h2>
+            <p data-itinerary-description>
+              Sail between cliffside villages, reserve sunset terraces, and sleep in a restored palazzo above the sea.
+            </p>
+            <ul data-itinerary-highlights>
+              <li>Private transfer from Naples to Positano</li>
+              <li>Chef-led limoncello and coastal cuisine evening</li>
+              <li>Sunrise yacht route through Li Galli islands</li>
+            </ul>
+          </article>
+
+          <aside id="booking-card" class="hero-travel-compass__booking" aria-labelledby="booking-title">
+            <h2 id="booking-title">Journey Snapshot</h2>
+            <dl>
+              <div>
+                <dt>Best travel window</dt>
+                <dd data-booking-window>April – June</dd>
+              </div>
+              <div>
+                <dt>Ideal duration</dt>
+                <dd data-booking-duration>6 nights</dd>
+              </div>
+              <div>
+                <dt>Starting from</dt>
+                <dd data-booking-price>$3,200 / guest</dd>
+              </div>
+            </dl>
+            <button type="button" class="hero-travel-compass-btn hero-travel-compass-btn--primary">Check Availability</button>
+            <p class="hero-travel-compass__booking-note" data-booking-note>
+              Includes concierge planning call and personalized activity map.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
