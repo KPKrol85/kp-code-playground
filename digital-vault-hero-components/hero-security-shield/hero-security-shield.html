@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Security Shield | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="hero-security-shield.js" defer></script>
+  </head>
+  <body class="hero-page hero-security-shield-page">
+    <main>
+      <section class="hero-security-shield" aria-labelledby="hero-security-shield-title">
+        <div class="hero-security-shield__backdrop" aria-hidden="true"></div>
+        <div class="hero-security-shield__layout">
+          <div class="hero-security-shield__content hero-security-shield-reveal">
+            <p class="hero-security-shield-eyebrow">Trusted Security Operations Platform</p>
+            <h1 id="hero-security-shield-title">Protect critical data with continuous, auditable defense.</h1>
+            <p class="hero-security-shield__lead">
+              Hero Security Shield helps teams reduce exposure across cloud workloads, endpoints, and
+              customer data pipelines with real-time monitoring and governance aligned to modern compliance needs.
+            </p>
+
+            <div class="hero-security-shield__cta-group">
+              <a class="hero-security-shield-btn hero-security-shield-btn--primary" href="#">Start Security Assessment</a>
+              <a class="hero-security-shield-btn hero-security-shield-btn--ghost" href="#audit-preview">View Audit Preview</a>
+              <button class="hero-security-shield-btn hero-security-shield-btn--subtle" type="button" data-copy-report>
+                Copy Sample Report Summary
+              </button>
+            </div>
+
+            <ul class="hero-security-shield__status-cards" aria-label="Security status highlights">
+              <li class="hero-security-shield-status-card hero-security-shield-reveal">
+                <p class="hero-security-shield-status-card__label">Mean Time to Detect</p>
+                <p class="hero-security-shield-status-card__value">2m 31s</p>
+                <p class="hero-security-shield-status-card__meta">Correlated alert pipelines across cloud and endpoint telemetry.</p>
+              </li>
+              <li class="hero-security-shield-status-card hero-security-shield-reveal">
+                <p class="hero-security-shield-status-card__label">Policy Coverage</p>
+                <p class="hero-security-shield-status-card__value">98.4%</p>
+                <p class="hero-security-shield-status-card__meta">Baseline guardrails enforced in production and staging environments.</p>
+              </li>
+              <li class="hero-security-shield-status-card hero-security-shield-reveal">
+                <p class="hero-security-shield-status-card__label">Open Critical Findings</p>
+                <p class="hero-security-shield-status-card__value">03</p>
+                <p class="hero-security-shield-status-card__meta">Prioritized with automated remediation playbooks and owner routing.</p>
+              </li>
+            </ul>
+          </div>
+
+          <aside class="hero-security-shield__panel hero-security-shield-reveal" aria-label="Security risk panel">
+            <div class="hero-security-shield-panel__header">
+              <h2>Live Risk Posture</h2>
+              <p>Set scenario level to preview current operating posture.</p>
+            </div>
+
+            <div class="hero-security-shield-risk-controls" role="group" aria-label="Select simulated risk level">
+              <button class="hero-security-shield-risk-btn is-selected" type="button" data-risk-level="low" aria-pressed="true">Low</button>
+              <button class="hero-security-shield-risk-btn" type="button" data-risk-level="moderate" aria-pressed="false">Moderate</button>
+              <button class="hero-security-shield-risk-btn" type="button" data-risk-level="high" aria-pressed="false">High</button>
+            </div>
+
+            <div class="hero-security-shield-shieldbox" aria-live="polite">
+              <p class="hero-security-shield-shieldbox__label">Current Status</p>
+              <p class="hero-security-shield-shieldbox__status" data-security-status>Hardened Monitoring Active</p>
+              <p class="hero-security-shield-shieldbox__detail" data-security-detail>
+                Primary controls are healthy. Continuous scans are passing with no active incident escalation.
+              </p>
+              <div class="hero-security-shield-scanline" aria-hidden="true">
+                <span data-scan-progress></span>
+              </div>
+            </div>
+
+            <div id="audit-preview" class="hero-security-shield-audit-preview">
+              <h3>Audit Checklist Preview</h3>
+              <ul>
+                <li>Access controls verified for privileged roles.</li>
+                <li>Encryption at rest and in transit validated.</li>
+                <li>Incident response runbooks tested this quarter.</li>
+                <li>Vendor risk and privacy impact assessments documented.</li>
+              </ul>
+            </div>
+
+            <div class="hero-security-shield-badges" aria-label="Compliance and trust badges">
+              <span>SOC 2 Type II Ready</span>
+              <span>ISO 27001 Aligned</span>
+              <span>GDPR Privacy Controls</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+      <p class="hero-security-shield-announcer" role="status" aria-live="polite" data-copy-feedback></p>
+    </main>
+  </body>
+</html>
