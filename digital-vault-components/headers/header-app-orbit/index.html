@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Header App Orbit: premium app-style header with orbital navigation interactions and theme control." />
+    <title>Header App Orbit | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <a class="orbit-skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="orbit-header" data-orbit-header>
+      <div class="orbit-header__inner">
+        <a class="orbit-header__brand" href="#" aria-label="OrbitApp home">
+          <span class="orbit-header__mark" aria-hidden="true">
+            <span class="orbit-header__mark-core"></span>
+          </span>
+          <span class="orbit-header__brand-copy">
+            <span class="orbit-header__name">OrbitApp</span>
+            <span class="orbit-header__label">Launch System</span>
+          </span>
+        </a>
+
+        <nav class="orbit-header__nav" aria-label="Primary navigation">
+          <a class="orbit-header__nav-link" href="#overview">
+            <span class="orbit-header__nav-orb" aria-hidden="true"></span>
+            <span>Overview</span>
+          </a>
+          <a class="orbit-header__nav-link" href="#features" aria-current="page">
+            <span class="orbit-header__nav-orb" aria-hidden="true"></span>
+            <span>Features</span>
+          </a>
+          <a class="orbit-header__nav-link" href="#integrations">
+            <span class="orbit-header__nav-orb" aria-hidden="true"></span>
+            <span>Integrations</span>
+          </a>
+          <a class="orbit-header__nav-link" href="#roadmap">
+            <span class="orbit-header__nav-orb" aria-hidden="true"></span>
+            <span>Roadmap</span>
+          </a>
+          <a class="orbit-header__nav-link" href="#pricing">
+            <span class="orbit-header__nav-orb" aria-hidden="true"></span>
+            <span>Pricing</span>
+          </a>
+        </nav>
+
+        <div class="orbit-header__actions">
+          <button class="orbit-header__theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme">
+            <span class="orbit-header__theme-track" aria-hidden="true">
+              <span class="orbit-header__theme-thumb"></span>
+            </span>
+          </button>
+
+          <a class="orbit-header__cta" href="#join-beta">Join beta</a>
+
+          <button
+            class="orbit-header__menu-button"
+            type="button"
+            data-menu-button
+            aria-expanded="false"
+            aria-controls="orbit-mobile-menu"
+            aria-label="Open menu"
+          >
+            <span class="orbit-header__menu-lines" aria-hidden="true"></span>
+            <span class="orbit-header__menu-dot" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="orbit-overlay" data-menu-overlay hidden></div>
+
+    <section class="orbit-menu" id="orbit-mobile-menu" data-menu-panel hidden>
+      <div class="orbit-menu__panel">
+        <div class="orbit-menu__header">
+          <p class="orbit-menu__title">Navigation Orbit</p>
+          <div class="orbit-menu__orbit-map" aria-hidden="true">
+            <span class="orbit-menu__orbit-ring orbit-menu__orbit-ring--outer"></span>
+            <span class="orbit-menu__orbit-ring orbit-menu__orbit-ring--inner"></span>
+            <span class="orbit-menu__orbit-core"></span>
+            <span class="orbit-menu__orbit-node orbit-menu__orbit-node--active"></span>
+            <span class="orbit-menu__orbit-node orbit-menu__orbit-node--two"></span>
+          </div>
+        </div>
+
+        <nav class="orbit-menu__nav" aria-label="Mobile navigation">
+          <a class="orbit-menu__link" href="#overview">Overview</a>
+          <a class="orbit-menu__link" href="#features" aria-current="page">Features</a>
+          <a class="orbit-menu__link" href="#integrations">Integrations</a>
+          <a class="orbit-menu__link" href="#roadmap">Roadmap</a>
+          <a class="orbit-menu__link" href="#pricing">Pricing</a>
+        </nav>
+
+        <a class="orbit-menu__cta" href="#join-beta">Join beta</a>
+
+        <p class="orbit-menu__status">Beta orbit active · 12 integrations ready</p>
+      </div>
+    </section>
+
+    <main id="main-content" class="orbit-demo-main">
+      <section class="orbit-demo-hero" id="overview">
+        <p class="orbit-demo-hero__eyebrow">KP_Code Digital Vault</p>
+        <h1>App Orbit Header</h1>
+        <p>
+          A dynamic navigation component with orbital indicators for modern web apps, startups, and launch pages.
+        </p>
+        <ul class="orbit-demo-hero__features" id="features">
+          <li>Orb indicator</li>
+          <li>Radial mobile panel</li>
+          <li>Orbit theme control</li>
+        </ul>
+      </section>
+
+      <aside class="orbit-status-card" id="integrations" aria-label="Product status">
+        <h2>Launch System Status</h2>
+        <p>Early access stream is open and integration routing remains stable for this release cycle.</p>
+        <dl>
+          <div>
+            <dt>Roadmap</dt>
+            <dd id="roadmap">Q3 rollout</dd>
+          </div>
+          <div>
+            <dt>Pricing</dt>
+            <dd id="pricing">Starter + Growth tiers</dd>
+          </div>
+          <div>
+            <dt id="join-beta">Beta window</dt>
+            <dd>Active now</dd>
+          </div>
+        </dl>
+      </aside>
+    </main>
+  </body>
+</html>
