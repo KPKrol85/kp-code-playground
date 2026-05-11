@@ -1,0 +1,134 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.hero-app-orbit-page {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at top right, #21386f 0%, #090d1a 45%, #05070f 100%);
+  color: #ecf1ff;
+  min-height: 100vh;
+}
+
+.hero-app-orbit-selector {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.hero-app-orbit-selector__header p,
+.hero-app-orbit-selector__header h1 { margin: 0 0 0.75rem; }
+.hero-app-orbit-selector__eyebrow { letter-spacing: 0.08em; text-transform: uppercase; color: #9eb3ff; font-weight: 700; }
+.hero-app-orbit-selector__grid { display: grid; gap: 1rem; }
+.hero-app-orbit-card {
+  background: linear-gradient(145deg, #111930, #0a0f20);
+  border: 1px solid #334d9a;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 20px 60px rgba(8, 13, 30, 0.45);
+}
+.hero-app-orbit-card__tag { color: #9db4ff; font-size: 0.75rem; letter-spacing: 0.06em; }
+
+.hero-app-orbit {
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.hero-app-orbit__surface {
+  max-width: 76rem;
+  margin: 0 auto;
+  border-radius: 1.8rem;
+  border: 1px solid rgba(181, 198, 255, 0.2);
+  background: linear-gradient(150deg, rgba(26, 41, 85, 0.88), rgba(10, 15, 34, 0.92));
+  padding: clamp(1.2rem, 3vw, 2.4rem);
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 2rem);
+  overflow: clip;
+}
+
+.hero-app-orbit__badge { display: inline-block; padding: 0.35rem 0.7rem; border-radius: 999px; background: rgba(159, 182, 255, 0.18); font-weight: 600; }
+.hero-app-orbit h1 { font-size: clamp(1.9rem, 4vw, 3.4rem); line-height: 1.1; margin: 0.95rem 0; }
+.hero-app-orbit__lead { font-size: clamp(1rem, 1.8vw, 1.22rem); color: #d6e0ff; max-width: 60ch; }
+
+.hero-app-orbit__cta-group,
+.hero-app-orbit__store-links,
+.hero-app-orbit__proof { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
+
+.hero-app-orbit-button,
+.hero-app-orbit-store-link {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 0.9rem;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.hero-app-orbit-button { background: #c5d4ff; color: #101a37; }
+.hero-app-orbit-button--ghost { background: transparent; color: #dbe5ff; border-color: rgba(210, 224, 255, 0.5); }
+.hero-app-orbit-store-link { background: rgba(15, 23, 49, 0.9); border-color: rgba(161, 185, 255, 0.42); }
+.hero-app-orbit-store-link span { display: block; font-size: 0.75rem; color: #afc3ff; }
+
+.hero-app-orbit__proof p { margin: 0; background: rgba(12, 19, 39, 0.8); border: 1px solid rgba(155, 176, 241, 0.24); padding: 0.55rem 0.75rem; border-radius: 0.8rem; }
+
+.hero-app-orbit__visual { position: relative; display: grid; justify-items: center; gap: 1rem; }
+.hero-app-orbit__mockup {
+  width: min(22rem, 100%);
+  border-radius: 1.45rem;
+  padding: 1rem;
+  border: 1px solid rgba(190, 206, 255, 0.32);
+  background: linear-gradient(145deg, #121b39, #0a1021);
+  box-shadow: 0 24px 50px rgba(6, 9, 18, 0.55);
+}
+.hero-app-orbit__mockup-label { margin: 0; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75rem; color: #93a9e9; }
+.hero-app-orbit__mockup h2 { margin: 0.65rem 0 0.3rem; font-size: clamp(1.2rem, 2.3vw, 1.6rem); }
+.hero-app-orbit__mockup p { margin: 0; color: #d2ddff; }
+.hero-app-orbit__metric-list { margin: 1rem 0 0; display: grid; gap: 0.65rem; }
+.hero-app-orbit__metric-list div { display: flex; justify-content: space-between; padding: 0.55rem; border-radius: 0.7rem; background: rgba(154, 177, 255, 0.1); }
+
+.hero-app-orbit__feature-ring { display: grid; width: 100%; gap: 0.7rem; }
+.hero-app-orbit-feature {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(174, 194, 255, 0.36);
+  background: rgba(13, 21, 47, 0.92);
+  color: #eaf1ff;
+  padding: 0.8rem;
+  border-radius: 0.9rem;
+}
+.hero-app-orbit-feature__title { display: block; font-weight: 700; margin-bottom: 0.2rem; }
+.hero-app-orbit-feature__text { color: #c2d2ff; font-size: 0.92rem; }
+.hero-app-orbit-feature.is-active { border-color: #d6e2ff; background: linear-gradient(130deg, rgba(73, 104, 203, 0.5), rgba(16, 27, 58, 0.95)); transform: translateY(-2px); }
+
+.hero-app-orbit-button:focus-visible,
+.hero-app-orbit-store-link:focus-visible,
+.hero-app-orbit-feature:focus-visible,
+.hero-app-orbit-skip-link:focus-visible { outline: 3px solid #b3cbff; outline-offset: 2px; }
+
+.hero-app-orbit-skip-link { position: absolute; left: -999px; top: 0; background: #e8efff; color: #111a36; padding: 0.6rem; border-radius: 0.4rem; }
+.hero-app-orbit-skip-link:focus-visible { left: 0.6rem; top: 0.6rem; }
+
+.hero-app-orbit-reveal { opacity: 0; transform: translateY(10px); }
+.hero-app-orbit-reveal.is-visible { opacity: 1; transform: translateY(0); transition: opacity 600ms ease, transform 600ms ease; }
+
+@media (min-width: 56rem) {
+  .hero-app-orbit__surface { grid-template-columns: 1fr 1fr; align-items: center; }
+  .hero-app-orbit__feature-ring { position: absolute; inset: auto; top: -0.4rem; left: 50%; transform: translateX(-50%); width: min(36rem, 100%); min-height: 22rem; pointer-events: none; }
+  .hero-app-orbit-feature { width: 13.5rem; position: absolute; pointer-events: auto; }
+  .hero-app-orbit-feature[data-feature='insights'] { top: 0; left: 50%; transform: translate(-50%, 0); }
+  .hero-app-orbit-feature[data-feature='flows'] { top: 46%; left: 0; transform: translate(-5%, -50%); }
+  .hero-app-orbit-feature[data-feature='team'] { top: 46%; right: 0; transform: translate(5%, -50%); }
+  .hero-app-orbit-feature[data-feature='security'] { bottom: 0; left: 50%; transform: translate(-50%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-app-orbit-reveal,
+  .hero-app-orbit-reveal.is-visible,
+  .hero-app-orbit-feature,
+  .hero-app-orbit-feature.is-active {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
