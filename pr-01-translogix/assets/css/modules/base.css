@@ -129,26 +129,26 @@ h1 {
 }
 
 h2 {
-  font-size: var(--fs-09);
-}
-
-h3 {
   font-size: var(--fs-08);
 }
 
-h4 {
+h3 {
   font-size: var(--fs-07);
+}
+
+h4 {
+  font-size: var(--fs-06);
 }
 
 p {
   margin: 0 0 var(--space-04);
+  font-size: var(--fs-04);
   color: var(--color-muted);
   line-height: var(--lh-base);
   text-wrap: pretty;
 }
 
 .lead {
-  font-size: var(--fs-05);
   color: var(--color-muted);
   line-height: var(--lh-relaxed);
   text-wrap: pretty;

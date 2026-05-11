@@ -495,50 +495,7 @@ html.theme-dark .accordion__item.is-open {
   color: var(--color-accent-strong);
 }
 
-/* Service page */
-.section__header {
-  top: 0.75rem;
-  padding: clamp(1.25rem, 3vw, 2rem);
-  padding-bottom: 1rem;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--color-surface-soft), transparent);
-  text-align: center;
-}
-.section__header .eyebrow {
-  font-size: 0.85rem;
-  font-weight: var(--fw-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-accent-strong);
-}
-.section__header h1 {
-  margin: 0.5rem 0 0;
-  font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
-}
-.section__header p {
-  margin: 0.5rem 0 0;
-  color: var(--color-muted);
-  font-size: clamp(0.75rem, 0.7vw + 0.5rem, 0.875rem);
-  line-height: 1;
-}
-@media (max-width: 768px) {
-  .section__header {
-    padding: 1.25rem;
-    padding-bottom: 1rem;
-  }
-}
-@media (max-width: 480px) {
-  .section__header {
-    padding: 1rem 1.1rem;
-    padding-bottom: 0.9rem;
-  }
-  .section__header h1 {
-    margin-top: 0.35rem;
-  }
-  .section__header .eyebrow {
-    font-size: 0.7rem;
-  }
-}
+
 
 /* Legal page */
 
