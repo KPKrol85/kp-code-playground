@@ -1,0 +1,118 @@
+:root {
+  --hero-agency-horizon-bg: #060917;
+  --hero-agency-horizon-surface: #0d1328;
+  --hero-agency-horizon-surface-soft: #111a34;
+  --hero-agency-horizon-text: #eef2ff;
+  --hero-agency-horizon-muted: #b8c2ea;
+  --hero-agency-horizon-accent: #74d5ff;
+  --hero-agency-horizon-accent-strong: #66ffd2;
+  --hero-agency-horizon-border: rgba(255, 255, 255, 0.16);
+  --hero-agency-horizon-shadow: 0 20px 55px rgba(3, 6, 15, 0.45);
+}
+
+* { box-sizing: border-box; }
+
+body.hero-agency-horizon-page {
+  margin: 0;
+  font-family: Inter, Avenir, "Segoe UI", sans-serif;
+  color: var(--hero-agency-horizon-text);
+  background:
+    radial-gradient(circle at 15% 12%, rgba(116, 213, 255, 0.2), transparent 48%),
+    radial-gradient(circle at 90% 5%, rgba(102, 255, 210, 0.14), transparent 42%),
+    linear-gradient(165deg, #040612 0%, #080d1b 48%, #0a1530 100%);
+  min-height: 100vh;
+}
+
+.hero-agency-horizon-vault {
+  width: min(68rem, 92vw);
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 4rem) 0;
+}
+
+.hero-agency-horizon-vault__header h1,
+.hero-agency-horizon h1 {
+  font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.hero-agency-horizon-vault-card,
+.hero-agency-horizon__panel,
+.hero-agency-horizon__metric,
+.hero-agency-horizon__service-card {
+  border: 1px solid var(--hero-agency-horizon-border);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  box-shadow: var(--hero-agency-horizon-shadow);
+}
+
+.hero-agency-horizon-vault__grid { display: grid; margin-top: 2rem; }
+
+.hero-agency-horizon-vault-card { padding: 1.5rem; max-width: 28rem; }
+.hero-agency-horizon-vault-card__kicker { color: var(--hero-agency-horizon-accent); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; }
+
+.hero-agency-horizon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid transparent;
+}
+
+.hero-agency-horizon-btn--primary { background: linear-gradient(115deg, var(--hero-agency-horizon-accent), var(--hero-agency-horizon-accent-strong)); color: #062328; }
+.hero-agency-horizon-btn--ghost { color: var(--hero-agency-horizon-text); border-color: var(--hero-agency-horizon-border); }
+
+.hero-agency-horizon-btn:focus-visible,
+.hero-agency-horizon__service-card:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.hero-agency-horizon {
+  position: relative;
+  overflow: clip;
+  width: min(76rem, 95vw);
+  margin: 0 auto;
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+  display: grid;
+  gap: 1.2rem;
+}
+
+.hero-agency-horizon__content, .hero-agency-horizon__panel { padding: 1.25rem; position: relative; z-index: 2; }
+.hero-agency-horizon__badge { width: fit-content; padding: 0.3rem 0.7rem; border-radius: 999px; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--hero-agency-horizon-border); color: var(--hero-agency-horizon-accent); }
+.hero-agency-horizon h1 { font-size: clamp(1.8rem, 5vw, 3.8rem); margin: 0.85rem 0; line-height: 1.05; max-width: 18ch; }
+.hero-agency-horizon__lead { color: var(--hero-agency-horizon-muted); max-width: 60ch; line-height: 1.7; }
+.hero-agency-horizon__cta-row { display: flex; flex-wrap: wrap; gap: 0.85rem; margin: 1.2rem 0; }
+.hero-agency-horizon__metrics { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.8rem; }
+.hero-agency-horizon__metric { padding: 0.9rem; opacity: 0; transform: translateY(12px); transition: opacity .45s ease, transform .45s ease; }
+.hero-agency-horizon__metric.is-visible { opacity: 1; transform: translateY(0); }
+.hero-agency-horizon__metric-value { display: block; font-size: 1.4rem; font-weight: 700; }
+.hero-agency-horizon__metric-label { color: var(--hero-agency-horizon-muted); font-size: .9rem; }
+.hero-agency-horizon__service-grid { display: grid; gap: .75rem; }
+.hero-agency-horizon__service-card { text-align: left; color: inherit; padding: .95rem; cursor: pointer; transition: transform .2s ease, border-color .2s ease, background-color .2s ease; }
+.hero-agency-horizon__service-card.is-active { border-color: rgba(116, 213, 255, 0.72); background: linear-gradient(180deg, rgba(116, 213, 255, 0.2), rgba(255, 255, 255, 0.04)); transform: translateY(-2px); }
+.hero-agency-horizon__service-title { display: block; font-weight: 700; }
+.hero-agency-horizon__service-copy { display: block; margin-top: .35rem; color: var(--hero-agency-horizon-muted); }
+.hero-agency-horizon__proof { margin-top: 1rem; color: var(--hero-agency-horizon-accent-strong); min-height: 2.8rem; }
+.hero-agency-horizon__clients { display: flex; flex-wrap: wrap; gap: .6rem; padding: .6rem .2rem .2rem; z-index: 2; }
+.hero-agency-horizon__clients span { font-size: .84rem; color: var(--hero-agency-horizon-muted); border: 1px solid var(--hero-agency-horizon-border); border-radius: 999px; padding: .3rem .65rem; }
+
+.hero-agency-horizon__glow, .hero-agency-horizon__mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hero-agency-horizon__glow { background: radial-gradient(320px circle at var(--x, 75%) var(--y, 25%), rgba(102,255,210,0.16), transparent 68%); z-index: 1; }
+.hero-agency-horizon__mesh { background: linear-gradient(180deg, transparent 56%, rgba(116,213,255,0.09)); }
+
+@media (min-width: 62rem) {
+  .hero-agency-horizon { grid-template-columns: 1.3fr 1fr; padding: 2.5rem; }
+  .hero-agency-horizon__clients { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
