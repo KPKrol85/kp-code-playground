@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Commerce Spotlight</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="hero-commerce-spotlight.js"></script>
+  </head>
+  <body class="hero-page hero-commerce-spotlight-page">
+    <main>
+      <section class="hero-commerce-spotlight" aria-labelledby="hero-commerce-spotlight-title">
+        <div class="hero-commerce-spotlight__content hero-commerce-spotlight__reveal">
+          <p class="hero-commerce-spotlight__badge">Limited Spring Offer · Save 30%</p>
+          <h1 id="hero-commerce-spotlight-title">Elevate Your Workflow with the Aurora Desk Pro</h1>
+          <p class="hero-commerce-spotlight__lead">
+            The modular productivity desk setup built for creators and operators—featuring
+            premium finish options, ergonomic accessories, and a smart cable system.
+          </p>
+
+          <div class="hero-commerce-spotlight__offer" aria-live="polite">
+            <p class="hero-commerce-spotlight__price-wrap">
+              <span class="hero-commerce-spotlight__price-label" id="variant-label">Starter Kit</span>
+              <strong class="hero-commerce-spotlight__price" id="variant-price">$299</strong>
+            </p>
+            <p class="hero-commerce-spotlight__meta" id="variant-meta">Includes desk mat, stand, and delivery in 3-5 business days.</p>
+          </div>
+
+          <div class="hero-commerce-spotlight__variants" role="group" aria-label="Choose product package">
+            <button type="button" class="hero-commerce-spotlight__variant is-selected" data-label="Starter Kit" data-price="$299" data-meta="Includes desk mat, stand, and delivery in 3-5 business days." aria-pressed="true">
+              Starter
+            </button>
+            <button type="button" class="hero-commerce-spotlight__variant" data-label="Creator Bundle" data-price="$429" data-meta="Adds monitor arm, cable dock, and 2-year premium support." aria-pressed="false">
+              Creator
+            </button>
+            <button type="button" class="hero-commerce-spotlight__variant" data-label="Studio Signature" data-price="$579" data-meta="Full setup with ambient light bar, pro dock, and white-glove shipping." aria-pressed="false">
+              Studio
+            </button>
+          </div>
+
+          <div class="hero-commerce-spotlight__cta-group">
+            <a href="#" class="hero-commerce-spotlight-btn hero-commerce-spotlight-btn--primary">Add to Cart</a>
+            <a href="#" class="hero-commerce-spotlight-btn hero-commerce-spotlight-btn--secondary">See Full Specs</a>
+          </div>
+
+          <ul class="hero-commerce-spotlight__trust" aria-label="Payment and delivery reassurance">
+            <li>🔒 Secure checkout (SSL + tokenized payments)</li>
+            <li>🚚 Free expedited shipping over $250</li>
+            <li>↩️ 30-day risk-free returns</li>
+          </ul>
+        </div>
+
+        <aside class="hero-commerce-spotlight__preview hero-commerce-spotlight__reveal" aria-label="Product preview panel">
+          <div class="hero-commerce-spotlight__preview-shell" id="product-preview-shell">
+            <div class="hero-commerce-spotlight__product-card">
+              <p class="hero-commerce-spotlight__card-badge">Best Seller</p>
+              <div class="hero-commerce-spotlight__mock-image" role="img" aria-label="Aurora Desk Pro modular setup preview">
+                <span class="hero-commerce-spotlight__mock-image-chip">4K Display Support</span>
+                <span class="hero-commerce-spotlight__mock-image-chip">Ergo Height Rail</span>
+              </div>
+              <div class="hero-commerce-spotlight__card-footer">
+                <p>Rated 4.9/5 by 1,240+ teams</p>
+                <p>In stock · Ships this week</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
