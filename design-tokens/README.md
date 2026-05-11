@@ -53,6 +53,7 @@ Zaimportuj jeden plik tokenów przed stylami komponentów:
 ```
 
 Możesz też skopiować CSS bezpośrednio z panelu w `index.html`.
+Panel ma przełącznik `Light` / `Dark`, który zapisuje wybór użytkownika w `localStorage`.
 
 ## Rekomendowany workflow
 

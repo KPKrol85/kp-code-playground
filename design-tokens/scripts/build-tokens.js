@@ -1013,26 +1013,66 @@ function previewSource(system) {
 }
 
 function indexHtml() {
+  const categoryCount = new Set(systems.map((system) => system.category)).size;
   return `<!doctype html>
 <html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KP_Code Digital Vault - Design Tokens</title>
+    <script>
+      (() => {
+        try {
+          const storedTheme = localStorage.getItem("vault-theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
     <style>
       :root {
         --vault-bg: #f4f5f7;
+        --vault-page-start: #ffffff;
         --vault-ink: #111827;
         --vault-muted: #667085;
         --vault-surface: #ffffff;
         --vault-panel: #ebeef2;
+        --vault-chip-bg: #ffffff;
+        --vault-input-bg: #ffffff;
         --vault-line: #d7dce3;
         --vault-strong: #1f4e79;
         --vault-strong-hover: #173b5d;
         --vault-accent: #2d8478;
         --vault-warn: #9b6b24;
+        --vault-mark-bg: #111827;
+        --vault-mark-ink: #ffffff;
         --vault-radius: 8px;
         --vault-shadow: 0 16px 42px rgb(17 24 39 / 0.08);
+        --vault-focus: rgb(31 78 121 / 0.22);
+        color-scheme: light;
+      }
+
+      :root[data-theme="dark"] {
+        --vault-bg: #0f141b;
+        --vault-page-start: #151b24;
+        --vault-ink: #eef3f8;
+        --vault-muted: #a8b3c2;
+        --vault-surface: #171f2a;
+        --vault-panel: #202a37;
+        --vault-chip-bg: #151d27;
+        --vault-input-bg: #111821;
+        --vault-line: #2f3b4c;
+        --vault-strong: #6aa6d8;
+        --vault-strong-hover: #8abce5;
+        --vault-accent: #4ab6a8;
+        --vault-warn: #d0a85f;
+        --vault-mark-bg: #eef3f8;
+        --vault-mark-ink: #0f141b;
+        --vault-shadow: 0 20px 52px rgb(0 0 0 / 0.34);
+        --vault-focus: rgb(106 166 216 / 0.32);
+        color-scheme: dark;
       }
 
       * {
@@ -1047,7 +1087,7 @@ function indexHtml() {
         margin: 0;
         color: var(--vault-ink);
         background:
-          linear-gradient(180deg, #ffffff 0, var(--vault-bg) 420px),
+          linear-gradient(180deg, var(--vault-page-start) 0, var(--vault-bg) 420px),
           var(--vault-bg);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
@@ -1074,6 +1114,14 @@ function indexHtml() {
         border-bottom: 1px solid var(--vault-line);
       }
 
+      .vault-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
       .vault-brand {
         display: flex;
         align-items: center;
@@ -1087,8 +1135,8 @@ function indexHtml() {
         height: 36px;
         place-items: center;
         border-radius: 8px;
-        background: var(--vault-ink);
-        color: #ffffff;
+        background: var(--vault-mark-bg);
+        color: var(--vault-mark-ink);
         font-weight: 800;
       }
 
@@ -1115,10 +1163,38 @@ function indexHtml() {
         border: 1px solid var(--vault-line);
         border-radius: 999px;
         padding: 6px 10px;
-        background: #ffffff;
+        background: var(--vault-chip-bg);
         color: var(--vault-muted);
         font-size: 0.78rem;
         font-weight: 700;
+      }
+
+      .vault-theme-toggle {
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+        min-height: 36px;
+        border: 1px solid var(--vault-line);
+        border-radius: 999px;
+        padding: 3px;
+        background: var(--vault-chip-bg);
+      }
+
+      .vault-theme-toggle__option {
+        min-width: 58px;
+        border: 0;
+        border-radius: 999px;
+        padding: 0 10px;
+        background: transparent;
+        color: var(--vault-muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .vault-theme-toggle__option[aria-pressed="true"] {
+        background: var(--vault-strong);
+        color: var(--vault-page-start);
       }
 
       .vault-hero {
@@ -1173,6 +1249,13 @@ function indexHtml() {
         font-weight: 850;
       }
 
+      .vault-summary__value--action {
+        color: var(--vault-strong);
+        font-size: 1rem;
+        font-weight: 750;
+        line-height: 1.3;
+      }
+
       .vault-summary__label {
         display: block;
         margin-top: 4px;
@@ -1191,7 +1274,7 @@ function indexHtml() {
         border: 1px solid var(--vault-line);
         border-radius: var(--vault-radius);
         padding: 10px;
-        background: rgb(255 255 255 / 0.94);
+        background: color-mix(in srgb, var(--vault-surface) 94%, transparent);
         box-shadow: 0 10px 24px rgb(17 24 39 / 0.06);
         backdrop-filter: blur(10px);
       }
@@ -1216,14 +1299,15 @@ function indexHtml() {
         border: 1px solid var(--vault-line);
         border-radius: 7px;
         padding: 0 12px;
-        background: #ffffff;
+        background: var(--vault-input-bg);
         color: var(--vault-ink);
       }
 
       .vault-input:focus,
       .vault-select:focus,
-      .vault-copy:focus-visible {
-        outline: 3px solid rgb(31 78 121 / 0.22);
+      .vault-copy:focus-visible,
+      .vault-theme-toggle__option:focus-visible {
+        outline: 3px solid var(--vault-focus);
         outline-offset: 2px;
       }
 
@@ -1341,7 +1425,7 @@ function indexHtml() {
         border: 1px dashed var(--vault-line);
         border-radius: var(--vault-radius);
         padding: 28px;
-        background: #ffffff;
+        background: var(--vault-surface);
         color: var(--vault-muted);
         text-align: center;
       }
@@ -1381,6 +1465,10 @@ function indexHtml() {
           justify-content: flex-start;
         }
 
+        .vault-actions {
+          justify-content: flex-start;
+        }
+
         .vault-summary,
         .vault-toolbar {
           grid-template-columns: 1fr;
@@ -1398,7 +1486,7 @@ function indexHtml() {
   </head>
   <body>
     <main class="vault-shell">
-      <nav class="vault-topbar" aria-label="Product">
+      <nav class="vault-topbar" aria-label="Produkt">
         <div class="vault-brand">
           <span class="vault-brand__mark">KP</span>
           <span>
@@ -1406,10 +1494,16 @@ function indexHtml() {
             <span class="vault-brand__meta">Biblioteka produktów z tokenami CSS</span>
           </span>
         </div>
-        <div class="vault-status" aria-label="Library stats">
-          <span class="vault-status__item">20 zestawów tokenów</span>
-          <span class="vault-status__item">Podglądy BEM</span>
-          <span class="vault-status__item">CSS do skopiowania</span>
+        <div class="vault-actions">
+          <div class="vault-status" aria-label="Statystyki biblioteki">
+            <span class="vault-status__item">20 zestawów tokenów</span>
+            <span class="vault-status__item">Podglądy BEM</span>
+            <span class="vault-status__item">CSS do skopiowania</span>
+          </div>
+          <div class="vault-theme-toggle" aria-label="Motyw panelu">
+            <button class="vault-theme-toggle__option" type="button" data-theme-option="light" aria-pressed="true">Light</button>
+            <button class="vault-theme-toggle__option" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+          </div>
         </div>
       </nav>
 
@@ -1422,9 +1516,9 @@ function indexHtml() {
           </p>
         </div>
         <section class="vault-summary" aria-label="Podsumowanie produktu">
-          <div class="vault-summary__item"><span class="vault-summary__value">20</span><span class="vault-summary__label">zestawów</span></div>
-          <div class="vault-summary__item"><span class="vault-summary__value">13</span><span class="vault-summary__label">kategorii</span></div>
-          <div class="vault-summary__item"><span class="vault-summary__value">1</span><span class="vault-summary__label">klik do CSS</span></div>
+          <div class="vault-summary__item"><span class="vault-summary__value">${systems.length}</span><span class="vault-summary__label">zestawów</span></div>
+          <div class="vault-summary__item"><span class="vault-summary__value">${categoryCount}</span><span class="vault-summary__label">kategorii</span></div>
+          <div class="vault-summary__item"><span class="vault-summary__value vault-summary__value--action">Kopiuj CSS</span><span class="vault-summary__label">gotowe tokeny w schowku</span></div>
         </section>
       </header>
 
@@ -1463,6 +1557,22 @@ function indexHtml() {
       const categoryFilter = document.querySelector("#categoryFilter");
       const sortFilter = document.querySelector("#sortFilter");
       const emptyState = document.querySelector("#emptyState");
+      const themeButtons = Array.from(document.querySelectorAll("[data-theme-option]"));
+
+      function setTheme(theme) {
+        const nextTheme = theme === "dark" ? "dark" : "light";
+        document.documentElement.dataset.theme = nextTheme;
+        themeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeOption === nextTheme));
+        });
+        try {
+          localStorage.setItem("vault-theme", nextTheme);
+        } catch (error) {
+          // localStorage can be unavailable in some embedded previews.
+        }
+      }
+
+      setTheme(document.documentElement.dataset.theme);
 
       const categories = ["Wszystkie", ...Array.from(new Set(systems.map((system) => system.category))).sort()];
       categoryFilter.innerHTML = categories.map((category) => '<option value="' + category + '">' + category + '</option>').join("");
@@ -1559,6 +1669,9 @@ function indexHtml() {
       searchInput.addEventListener("input", render);
       categoryFilter.addEventListener("change", render);
       sortFilter.addEventListener("change", render);
+      themeButtons.forEach((button) => {
+        button.addEventListener("click", () => setTheme(button.dataset.themeOption));
+      });
       render();
     </script>
   </body>
@@ -1604,6 +1717,7 @@ Zaimportuj jeden plik tokenów przed stylami komponentów:
 \`\`\`
 
 Możesz też skopiować CSS bezpośrednio z panelu w \`index.html\`.
+Panel ma przełącznik \`Light\` / \`Dark\`, który zapisuje wybór użytkownika w \`localStorage\`.
 
 ## Rekomendowany workflow
 
