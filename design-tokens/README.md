@@ -1,6 +1,6 @@
 # KP_Code Digital Vault - CSS Design Token Systems
 
-Ten folder produktu zawiera 60 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
+Ten folder produktu zawiera 80 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
 Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz warstwę podglądu komponentów w strukturze BEM.
 
 ## Dostępne zestawy tokenów
@@ -65,6 +65,26 @@ Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz 
 - `tokens-58.css` - Streamer Studio (Panele streamera, overlaye eventów, donacje live i profile społeczności graczy)
 - `tokens-59.css` - Public Program (Programy miejskie, inicjatywy lokalne, zgłoszenia mieszkańców i tablice informacji)
 - `tokens-60.css` - Operations Board (Tablice operacyjne, sprint planning, zadania zespołów i statusy priorytetów)
+- `tokens-61.css` - Publisher Desk (CMS-y redakcyjne, harmonogramy publikacji i workflow akceptacji treści)
+- `tokens-62.css` - Customer Success (Panele success, health score, segmentacja klientów i alerty churn)
+- `tokens-63.css` - Gallery Maison (Galerie sztuki, portfolio premium, showroomy i karty kolekcji)
+- `tokens-64.css` - Family Hub (Aplikacje rodzinne, listy zakupów, planowanie domu i współdzielone notatki)
+- `tokens-65.css` - Civic Accessibility (Serwisy miejskie, deklaracje online, mapy usług i formularze kontaktu)
+- `tokens-66.css` - Wealth Advisory (Doradztwo majątkowe, widoki klientów premium, strategie portfela i raporty rekomendacji)
+- `tokens-67.css` - Telemedicine Desk (Teleporady, czaty medyczne, plany opieki i zdalna obsługa pacjentów)
+- `tokens-68.css` - SDK Portal (Portale SDK, biblioteki integracji, changelogi techniczne i przykłady implementacji)
+- `tokens-69.css` - Design Studio (Narzędzia projektowe, boards kreatywne, moodboardy i biblioteki elementów)
+- `tokens-70.css` - Subscription Store (Produkty subskrypcyjne, pricing tables, plany licencji i upgrade flows)
+- `tokens-71.css` - Workshop Kit (Warsztaty online, materiały szkoleniowe, checklisty i zadania zespołowe)
+- `tokens-72.css` - Identity Shield (Logowanie, MFA, zarządzanie sesjami i ochrona kont użytkowników)
+- `tokens-73.css` - Metrics Console (Konsole metryk technicznych, telemetry, alerty danych i monitoring KPI)
+- `tokens-74.css` - Carbon Ledger (Ślad węglowy, księgi emisji, dashboardy kompensacji i raporty zgodności)
+- `tokens-75.css` - Procurement Portal (Zakupy firmowe, akceptacje vendorów, budżety działów i zamówienia wewnętrzne)
+- `tokens-76.css` - Model Registry (Rejestry modeli, ewaluacje, wersjonowanie promptów i porównania wyników AI)
+- `tokens-77.css` - Rental Manager (Najem długoterminowy, obsługa lokatorów, płatności czynszu i zgłoszenia serwisowe)
+- `tokens-78.css` - Game Storefront (Sklepy z grami, DLC, promocje sezonowe i strony premier)
+- `tokens-79.css` - Volunteer Network (Koordynacja wolontariuszy, grafiki dyżurów, wydarzenia lokalne i listy zadań)
+- `tokens-80.css` - Team Workflow (Workflow zespołów, kanbany operacyjne, handoffy i automatyzacje procesów)
 
 ## Struktura tokenów
 
