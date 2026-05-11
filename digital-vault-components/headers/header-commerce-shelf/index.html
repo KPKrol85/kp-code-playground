@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Header Commerce Shelf: premium category-first navigation for digital goods storefronts and product catalogs."
+    />
+    <title>Header Commerce Shelf • VaultMarket</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="commerce-header" data-commerce-header>
+      <div class="commerce-header__inner">
+        <a class="commerce-header__brand" href="#" aria-label="VaultMarket home">
+          <span class="commerce-header__mark" aria-hidden="true">VM</span>
+          <span class="commerce-header__brand-copy">
+            <strong class="commerce-header__name">VaultMarket</strong>
+            <span class="commerce-header__label">Digital Goods</span>
+          </span>
+        </a>
+
+        <nav class="commerce-header__nav" aria-label="Product categories">
+          <a class="commerce-header__nav-link" href="#">Templates</a>
+          <a class="commerce-header__nav-link is-active" href="#" aria-current="page">Components</a>
+          <a class="commerce-header__nav-link" href="#">Bundles</a>
+          <a class="commerce-header__nav-link" href="#">Resources</a>
+          <a class="commerce-header__nav-link" href="#">Deals</a>
+        </nav>
+
+        <div class="commerce-header__actions">
+          <button class="commerce-header__theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme">
+            <span class="commerce-header__toggle-track" aria-hidden="true">
+              <span class="commerce-header__toggle-thumb"></span>
+            </span>
+            <span class="commerce-header__toggle-icon" aria-hidden="true">☀︎</span>
+          </button>
+
+          <button class="commerce-header__vault" type="button" aria-label="Open saved items, 2 items">
+            <span>Vault</span>
+            <span class="commerce-header__vault-count" aria-hidden="true">2</span>
+          </button>
+
+          <a class="commerce-header__cta" href="#">Browse products</a>
+
+          <button
+            class="commerce-header__menu-button"
+            type="button"
+            data-shelf-toggle
+            aria-expanded="false"
+            aria-controls="commerce-shelf-panel"
+            aria-label="Open product shelf"
+          >
+            <span class="commerce-header__menu-lines" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="commerce-overlay" data-shelf-overlay hidden></div>
+
+    <aside class="commerce-shelf" id="commerce-shelf-panel" data-commerce-shelf hidden>
+      <div class="commerce-shelf__panel" role="dialog" aria-modal="true" aria-label="Product shelf menu" tabindex="-1">
+        <div class="commerce-shelf__header">
+          <h2>Product Shelf</h2>
+          <button type="button" data-shelf-close aria-label="Close product shelf">✕</button>
+        </div>
+
+        <p class="commerce-shelf__intro">
+          Browse curated digital products for faster frontend and client work.
+        </p>
+
+        <nav class="commerce-shelf__categories" aria-label="Mobile categories">
+          <a class="commerce-shelf__link" href="#">Templates</a>
+          <a class="commerce-shelf__link is-active" href="#" aria-current="page">Components</a>
+          <a class="commerce-shelf__link" href="#">Bundles</a>
+          <a class="commerce-shelf__link" href="#">Resources</a>
+          <a class="commerce-shelf__link" href="#">Deals</a>
+        </nav>
+
+        <article class="commerce-shelf__featured">
+          <p class="eyebrow">Featured Bundle</p>
+          <h3>Premium UI Bundle</h3>
+          <p>20 polished components</p>
+          <a href="#">View bundle</a>
+        </article>
+
+        <div class="commerce-shelf__quick-links">
+          <a href="#">Latest drops</a>
+          <a href="#">Top-rated kits</a>
+          <a href="#">License guide</a>
+        </div>
+
+        <div class="commerce-shelf__summary" aria-label="Vault summary">
+          <strong>2 saved items</strong>
+          <span>Ready to review</span>
+        </div>
+
+        <div class="commerce-shelf__footer">
+          <a class="commerce-header__cta" href="#">Browse products</a>
+        </div>
+      </div>
+    </aside>
+
+    <main id="main-content" class="demo-main">
+      <section class="demo-hero">
+        <p class="demo-kicker">Premium Navigation Component</p>
+        <h1>Commerce Shelf Header</h1>
+        <p>
+          A conversion-aware navigation component for digital shops, marketplaces, and premium product catalogs.
+        </p>
+        <ul class="demo-tags" aria-label="Core highlights">
+          <li>Category nav</li>
+          <li>Vault action</li>
+          <li>Mobile product shelf</li>
+        </ul>
+      </section>
+
+      <section class="demo-grid" aria-label="Product previews">
+        <article class="demo-card">
+          <h2>Client Portal Template</h2>
+          <p>Multi-page workflow template with reusable account and billing views.</p>
+        </article>
+        <article class="demo-card">
+          <h2>Pricing Blocks Pack</h2>
+          <p>Conversion-oriented pricing sections with trust badges and comparison rows.</p>
+        </article>
+        <article class="demo-card">
+          <h2>Launch Checklist Kit</h2>
+          <p>Delivery resources for handoff, QA, deployment, and post-launch support.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
