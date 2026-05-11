@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hero Event Pulse · KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="hero-event-pulse.js" defer></script>
+  </head>
+  <body class="hero-page hero-event-pulse-page">
+    <main>
+      <section class="hero-event-pulse" aria-labelledby="event-headline">
+        <div class="hero-event-pulse__backdrop" aria-hidden="true"></div>
+        <div class="hero-event-pulse__shell">
+          <div class="hero-event-pulse__content hero-event-pulse-reveal">
+            <p class="hero-event-pulse__badge">Live Experience · 2026 Edition</p>
+            <h1 id="event-headline">Pulse Summit: The Next Era of Intelligent Product Experiences</h1>
+
+            <ul class="hero-event-pulse__meta" aria-label="Event details">
+              <li><strong>Date</strong><span>September 18, 2026</span></li>
+              <li><strong>Time</strong><span>9:30 AM – 4:30 PM PT</span></li>
+              <li><strong>Location</strong><span>Online + San Francisco Studio</span></li>
+            </ul>
+
+            <p class="hero-event-pulse__lead">
+              Join product leaders, AI builders, and growth strategists for a one-day summit packed with practical
+              playbooks, live teardown sessions, and launch-ready frameworks.
+            </p>
+
+            <div class="hero-event-pulse__cta-row">
+              <a class="hero-event-pulse-btn hero-event-pulse-btn--primary js-hero-event-pulse-cta" href="#register">
+                Reserve your seat
+              </a>
+              <a class="hero-event-pulse-btn hero-event-pulse-btn--ghost js-hero-event-pulse-cta" href="#agenda">
+                View full agenda
+              </a>
+            </div>
+          </div>
+
+          <aside class="hero-event-pulse__panel hero-event-pulse-reveal" aria-label="Event timing and featured session">
+            <section class="hero-event-pulse-countdown" aria-labelledby="countdown-heading" data-event-date="2026-09-18T16:30:00Z">
+              <h2 id="countdown-heading">Countdown to kickoff</h2>
+              <p id="hero-event-pulse-countdown-status" class="hero-event-pulse-countdown__status">Registration closes in:</p>
+              <div class="hero-event-pulse-countdown__grid" role="timer" aria-describedby="hero-event-pulse-countdown-status" aria-live="off">
+                <div><span data-unit="days">00</span><small>Days</small></div>
+                <div><span data-unit="hours">00</span><small>Hours</small></div>
+                <div><span data-unit="minutes">00</span><small>Minutes</small></div>
+                <div><span data-unit="seconds">00</span><small>Seconds</small></div>
+              </div>
+            </section>
+
+            <section class="hero-event-pulse-sessions" aria-label="Featured sessions" id="agenda">
+              <div class="hero-event-pulse-sessions__controls" role="tablist" aria-label="Select featured session">
+                <button type="button" role="tab" aria-selected="true" aria-controls="session-panel" id="session-tab-1" data-session="0">Keynote</button>
+                <button type="button" role="tab" aria-selected="false" aria-controls="session-panel" id="session-tab-2" data-session="1">Workshop</button>
+                <button type="button" role="tab" aria-selected="false" aria-controls="session-panel" id="session-tab-3" data-session="2">Panel</button>
+              </div>
+              <article id="session-panel" role="tabpanel" aria-labelledby="session-tab-1" class="hero-event-pulse-sessions__panel">
+                <p class="hero-event-pulse-sessions__time">10:00 AM PT</p>
+                <h3 data-session-title>Designing AI Products People Trust</h3>
+                <p data-session-summary>
+                  Mira Chen unpacks how category-defining teams ship fast while preserving trust, clarity, and customer confidence.
+                </p>
+                <p class="hero-event-pulse-sessions__speaker" data-session-speaker>Speaker: Mira Chen · VP Product, Aether Labs</p>
+              </article>
+            </section>
+          </aside>
+        </div>
+
+        <section class="hero-event-pulse-agenda hero-event-pulse-reveal" id="register" aria-label="Agenda preview">
+          <h2>Agenda Preview</h2>
+          <ul>
+            <li><span class="chip">09:30</span>Arrival, networking coffee, and partner demo lounge.</li>
+            <li><span class="chip">11:45</span>Breakout tracks: Activation, Monetization, and Retention systems.</li>
+            <li><span class="chip">14:15</span>Live teardown: High-converting product launch pages.</li>
+            <li><span class="chip">16:00</span>Closing roadmap + VIP Q&A for registered attendees.</li>
+          </ul>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
