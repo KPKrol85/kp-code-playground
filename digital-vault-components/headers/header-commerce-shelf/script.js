@@ -1,132 +1,129 @@
 (() => {
+  const doc = document;
+  const root = doc.documentElement;
+  const body = doc.body;
   const storageKey = 'header-commerce-shelf-theme';
-  const desktopBreakpoint = window.matchMedia('(min-width: 56.25rem)');
-  const root = document.documentElement;
-  const body = document.body;
+  const desktopQuery = window.matchMedia('(min-width: 56.25rem)');
 
-  const header = document.querySelector('[data-commerce-header]');
-  const menuButton = document.querySelector('[data-menu-button]');
-  const shelf = document.querySelector('[data-shelf-panel]');
-  const overlay = document.querySelector('[data-overlay]');
-  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const toggleBtn = doc.querySelector('[data-shelf-toggle]');
+  const closeBtn = doc.querySelector('[data-shelf-close]');
+  const shelf = doc.querySelector('[data-commerce-shelf]');
+  const panel = shelf?.querySelector('.commerce-shelf__panel');
+  const overlay = doc.querySelector('[data-shelf-overlay]');
+  const themeToggle = doc.querySelector('[data-theme-toggle]');
+  const header = doc.querySelector('[data-commerce-header]');
 
-  if (!menuButton || !shelf || !overlay || !themeToggle) return;
+  let lastFocus = null;
+  let isOpen = false;
+  let ticking = false;
 
-  const panel = shelf.querySelector('.commerce-shelf__panel');
-  const closeSelectors = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  let lastFocused = null;
+  const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-  const getFocusable = () => Array.from(panel.querySelectorAll(closeSelectors));
+  function setShelfFocusable(active) {
+    if (!shelf) return;
+    shelf.querySelectorAll(focusableSelector).forEach((el) => {
+      if (!active) {
+        el.dataset.prevTabindex = el.getAttribute('tabindex') ?? '';
+        el.setAttribute('tabindex', '-1');
+      } else {
+        const prev = el.dataset.prevTabindex;
+        if (prev === '') el.removeAttribute('tabindex');
+        else if (prev) el.setAttribute('tabindex', prev);
+        delete el.dataset.prevTabindex;
+      }
+    });
+  }
 
-  const setShelfInteractivity = (isOpen) => {
-    shelf.hidden = !isOpen;
-    overlay.hidden = !isOpen;
-    shelf.inert = !isOpen;
-  };
+  function closeShelf(returnFocus = false) {
+    if (!isOpen || !shelf || !overlay) return;
+    isOpen = false;
+    body.classList.remove('is-shelf-open');
+    shelf.hidden = true;
+    overlay.hidden = true;
+    toggleBtn?.setAttribute('aria-expanded', 'false');
+    setShelfFocusable(false);
+    if (returnFocus && lastFocus instanceof HTMLElement) lastFocus.focus();
+  }
 
-  const openShelf = () => {
-    lastFocused = document.activeElement;
-    body.dataset.shelfOpen = 'true';
-    body.style.overflow = 'hidden';
-    menuButton.setAttribute('aria-expanded', 'true');
-    menuButton.setAttribute('aria-label', 'Close product shelf menu');
-    setShelfInteractivity(true);
-    getFocusable()[0]?.focus();
-  };
+  function openShelf() {
+    if (!shelf || !overlay || !panel) return;
+    lastFocus = doc.activeElement;
+    isOpen = true;
+    shelf.hidden = false;
+    overlay.hidden = false;
+    body.classList.add('is-shelf-open');
+    toggleBtn?.setAttribute('aria-expanded', 'true');
+    setShelfFocusable(true);
+    panel.focus();
+  }
 
-  const closeShelf = (returnToButton = false) => {
-    body.dataset.shelfOpen = 'false';
-    body.style.overflow = '';
-    menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.setAttribute('aria-label', 'Open product shelf menu');
-    setShelfInteractivity(false);
-
-    if (returnToButton) {
-      menuButton.focus();
-    } else if (lastFocused instanceof HTMLElement) {
-      lastFocused.focus();
+  function trapFocus(event) {
+    if (!isOpen || event.key !== 'Tab' || !shelf) return;
+    const focusables = [...shelf.querySelectorAll(focusableSelector)].filter((el) => el.offsetParent !== null);
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && doc.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && doc.activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
-  };
+  }
 
-  const toggleShelf = () => (body.dataset.shelfOpen === 'true' ? closeShelf() : openShelf());
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    const nextLabel = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    const icon = theme === 'dark' ? '☾' : '☀︎';
+    themeToggle?.setAttribute('aria-label', nextLabel);
+    const iconEl = themeToggle?.querySelector('.commerce-header__toggle-icon');
+    if (iconEl) iconEl.textContent = icon;
+  }
 
-  menuButton.addEventListener('click', toggleShelf);
-  overlay.addEventListener('click', () => closeShelf());
+  function initTheme() {
+    const saved = localStorage.getItem(storageKey);
+    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    applyTheme(saved || preferred);
+  }
 
-  shelf.addEventListener('click', (event) => {
-    if (event.target.closest('.commerce-shelf__link, .commerce-shelf__quick-links a, .commerce-header__cta--mobile')) {
-      closeShelf();
+  toggleBtn?.addEventListener('click', () => (isOpen ? closeShelf(false) : openShelf()));
+  closeBtn?.addEventListener('click', () => closeShelf(true));
+  overlay?.addEventListener('click', () => closeShelf(true));
+
+  shelf?.addEventListener('click', (event) => {
+    if (event.target instanceof HTMLElement && event.target.closest('.commerce-shelf__link')) {
+      closeShelf(false);
     }
   });
 
-  document.addEventListener('keydown', (event) => {
-    if (body.dataset.shelfOpen !== 'true') return;
-
-    if (event.key === 'Escape') {
+  doc.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen) {
       event.preventDefault();
       closeShelf(true);
-      return;
     }
-
-    if (event.key === 'Tab') {
-      const focusable = getFocusable();
-      if (!focusable.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
+    trapFocus(event);
   });
 
-  const syncDesktop = () => {
-    if (desktopBreakpoint.matches && body.dataset.shelfOpen === 'true') {
-      closeShelf();
-    }
-  };
-  desktopBreakpoint.addEventListener('change', syncDesktop);
-  window.addEventListener('resize', syncDesktop, { passive: true });
-
-  const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const savedTheme = localStorage.getItem(storageKey);
-  const initialTheme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : preferredTheme;
-
-  const applyTheme = (theme) => {
-    root.dataset.theme = theme;
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    themeToggle.setAttribute('aria-label', `Switch to ${nextTheme} mode`);
-    localStorage.setItem(storageKey, theme);
-  };
-
-  applyTheme(initialTheme);
-
-  themeToggle.addEventListener('click', () => {
-    const updated = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(updated);
+  desktopQuery.addEventListener('change', (event) => {
+    if (event.matches) closeShelf(false);
   });
 
-  let ticking = false;
-  const setScrolled = () => {
-    header.classList.toggle('is-scrolled', window.scrollY > 8);
-    ticking = false;
-  };
+  themeToggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(storageKey, next);
+    applyTheme(next);
+  });
 
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(setScrolled);
-    },
-    { passive: true }
-  );
+  doc.addEventListener('scroll', () => {
+    if (!header || ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      header.classList.toggle('is-scrolled', window.scrollY > 8);
+      ticking = false;
+    });
+  }, { passive: true });
 
-  setShelfInteractivity(false);
-  body.dataset.shelfOpen = 'false';
+  setShelfFocusable(false);
+  initTheme();
 })();
