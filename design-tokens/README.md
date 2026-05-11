@@ -1,6 +1,6 @@
 # KP_Code Digital Vault - CSS Design Token Systems
 
-Ten folder produktu zawiera 40 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
+Ten folder produktu zawiera 60 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
 Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz warstwę podglądu komponentów w strukturze BEM.
 
 ## Dostępne zestawy tokenów
@@ -45,6 +45,26 @@ Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz 
 - `tokens-38.css` - Esports Arena (Turnieje, rankingi, profile drużyn i strony wydarzeń esportowych)
 - `tokens-39.css` - Donation Platform (Platformy darowizn, kampanie społeczne i strony zbiórek)
 - `tokens-40.css` - Focus Planner (Planery dnia, focus time, widoki priorytetów i lekkie narzędzia pracy)
+- `tokens-41.css` - Editorial Archive (Archiwa artykułów, biblioteki publikacji i kolekcje długich form)
+- `tokens-42.css` - Growth Metrics (Widoki MRR, aktywacji, retencji i eksperymentów produktowych)
+- `tokens-43.css` - Heritage Brand (Marki rzemieślnicze, galerie, wina premium i historie marek)
+- `tokens-44.css` - Lifestyle App (Aplikacje nawyków, listy osobiste, mikrospołeczności i profile lifestyle)
+- `tokens-45.css` - Readable Forms (Rejestracje, ankiety, formularze urzędowe i procesy wieloetapowe)
+- `tokens-46.css` - Trading Desk (Portfele inwestycyjne, alerty rynkowe, watchlisty i widoki tradingowe)
+- `tokens-47.css` - Wellness Tracker (Trackery zdrowia, aplikacje profilaktyczne, plany nawyków i check-iny)
+- `tokens-48.css` - DevOps Monitor (Statusy deployów, health checks, pipeline CI i dashboardy infrastruktury)
+- `tokens-49.css` - Media Dashboard (Dashboardy wydawnicze, biblioteki assets, statusy produkcji i kalendarze publikacji)
+- `tokens-50.css` - Product Catalog (Katalogi produktów, listy wariantów, porównywarki i kolekcje cyfrowe)
+- `tokens-51.css` - Assessment Flow (Quizy, testy kompetencji, wyniki egzaminów i oceny modułów)
+- `tokens-52.css` - Access Control (Role użytkowników, uprawnienia, audyt logowań i panele kontroli dostępu)
+- `tokens-53.css` - Research Lab (Notebooki badawcze, porównania danych, eksperymenty i raporty ad hoc)
+- `tokens-54.css` - Impact Report (Raporty wpływu, strony ESG, podsumowania projektów i dane środowiskowe)
+- `tokens-55.css` - Boardroom Suite (Raporty zarządcze, prezentacje wyników, notatki strategiczne i widoki decyzyjne)
+- `tokens-56.css` - Agent Operations (Monitoring agentów AI, kolejki zadań, statusy automatyzacji i logi wykonania)
+- `tokens-57.css` - Listing Premium (Prezentacje apartamentów premium, strony inwestycji i galerie ofert)
+- `tokens-58.css` - Streamer Studio (Panele streamera, overlaye eventów, donacje live i profile społeczności graczy)
+- `tokens-59.css` - Public Program (Programy miejskie, inicjatywy lokalne, zgłoszenia mieszkańców i tablice informacji)
+- `tokens-60.css` - Operations Board (Tablice operacyjne, sprint planning, zadania zespołów i statusy priorytetów)
 
 ## Struktura tokenów
 
