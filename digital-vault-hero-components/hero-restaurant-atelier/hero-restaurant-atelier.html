@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Restaurant Atelier</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="hero-page hero-restaurant-atelier-page">
+    <main>
+      <section class="hero-restaurant-atelier" aria-labelledby="hero-restaurant-atelier-title">
+        <div class="hero-restaurant-atelier__shell">
+          <div class="hero-restaurant-atelier__content hero-restaurant-atelier-reveal">
+            <p class="hero-restaurant-atelier__eyebrow">Chef's Table Atelier · Est. 2012</p>
+            <h1 id="hero-restaurant-atelier-title" class="hero-restaurant-atelier__title">Seasonal Fire, Coastal Grace, Unforgettable Evenings</h1>
+            <p class="hero-restaurant-atelier__lead">
+              Discover a tasting journey shaped by open-flame techniques, hand-selected growers, and a cellar curated for
+              intimate nights, milestone dinners, and elevated hospitality experiences.
+            </p>
+
+            <div class="hero-restaurant-atelier__cta-group">
+              <a href="#reserve" class="hero-restaurant-atelier-btn hero-restaurant-atelier-btn--primary">Reserve a Table</a>
+              <a href="#menu" class="hero-restaurant-atelier-btn hero-restaurant-atelier-btn--ghost">Explore Menu</a>
+            </div>
+
+            <div class="hero-restaurant-atelier__notes" aria-label="Opening details">
+              <p><strong>Open:</strong> Tue–Sun · 5:30 PM – 11:00 PM</p>
+              <p><strong>Location:</strong> 28 Copper Lane, Harbor Quarter</p>
+            </div>
+
+            <div class="hero-restaurant-atelier__reviews" aria-label="Guest trust indicators">
+              <p>4.9/5 guest experience score</p>
+              <p>Featured in City Table Guide 2026</p>
+              <p>1,200+ reservations this season</p>
+            </div>
+          </div>
+
+          <aside class="hero-restaurant-atelier__panel hero-restaurant-atelier-reveal" aria-labelledby="spotlight-title">
+            <h2 id="spotlight-title" class="hero-restaurant-atelier__panel-title">Dish Spotlight</h2>
+
+            <div class="hero-restaurant-atelier__selector-group" role="group" aria-label="Choose featured dish">
+              <button type="button" class="hero-restaurant-atelier-dish-btn" data-dish="ember-salmon" aria-pressed="true">Ember Salmon</button>
+              <button type="button" class="hero-restaurant-atelier-dish-btn" data-dish="garden-risotto" aria-pressed="false">Garden Risotto</button>
+              <button type="button" class="hero-restaurant-atelier-dish-btn" data-dish="citrus-tart" aria-pressed="false">Citrus Tart</button>
+            </div>
+
+            <article id="menu" class="hero-restaurant-atelier__dish-card" aria-live="polite" aria-atomic="true">
+              <p class="hero-restaurant-atelier__dish-tag" data-dish-tag>Chef Signature</p>
+              <h3 class="hero-restaurant-atelier__dish-name" data-dish-name>Ember Salmon</h3>
+              <p class="hero-restaurant-atelier__dish-description" data-dish-description>
+                Oak-charred king salmon, smoked fennel cream, confit citrus, and herb oil.
+              </p>
+              <p class="hero-restaurant-atelier__dish-price" data-dish-price>$38</p>
+            </article>
+
+            <div class="hero-restaurant-atelier__menu-highlights" id="reserve">
+              <article class="hero-restaurant-atelier__menu-item">
+                <h3>Artisan Bread Ritual</h3>
+                <p>Cultured butter, sea salt flakes, seasonal olive oil infusion.</p>
+              </article>
+              <article class="hero-restaurant-atelier__menu-item">
+                <h3>Sommelier Pairing</h3>
+                <p>Three-course pairing featuring small-vineyard coastal labels.</p>
+              </article>
+              <article class="hero-restaurant-atelier__menu-item">
+                <h3>Chef's Dessert Flight</h3>
+                <p>Miniature plated sweets inspired by orchard and spice markets.</p>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <script src="hero-restaurant-atelier.js" defer></script>
+  </body>
+</html>
