@@ -1,6 +1,6 @@
 # KP_Code Digital Vault - CSS Design Token Systems
 
-Ten folder produktu zawiera 20 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
+Ten folder produktu zawiera 40 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
 Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz warstwę podglądu komponentów w strukturze BEM.
 
 ## Dostępne zestawy tokenów
@@ -25,6 +25,26 @@ Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz 
 - `tokens-18.css` - Gaming Interface (Launchery gier, profile graczy i dashboardy eventów)
 - `tokens-19.css` - Nonprofit Civic (Strony nonprofit, programy publiczne i ścieżki darowizn)
 - `tokens-20.css` - Productivity OS (Managery zadań, przestrzenie pracy i narzędzia operacyjne)
+- `tokens-21.css` - Documentation Pro (Portale wiedzy, bazy pomocy i dokumentacja produktów B2B)
+- `tokens-22.css` - SaaS Control (Panele kontroli, settings pages i narzędzia administracyjne SaaS)
+- `tokens-23.css` - Luxury Editorial (Magazyny premium, lookbooki i strony marek osobistych)
+- `tokens-24.css` - Community Care (Aplikacje społecznościowe, profile użytkowników i lekkie feedy)
+- `tokens-25.css` - Accessible Utility (Formularze publiczne, procesy wniosków i narzędzia samoobsługowe)
+- `tokens-26.css` - Finance Operations (Backoffice finansowy, rozliczenia, faktury i widoki statusów płatności)
+- `tokens-27.css` - Clinic Portal (Panele placówek medycznych, grafiki wizyt i karty pacjenta)
+- `tokens-28.css` - API Reference (Dokumentacja API, przykłady kodu i eksploratory endpointów)
+- `tokens-29.css` - Campaign Builder (Kreatory kampanii, kalendarze contentu i panele publikacji)
+- `tokens-30.css` - Checkout Flow (Koszyki, płatności, formularze dostawy i potwierdzenia zamówień)
+- `tokens-31.css` - Learning Academy (Akademie online, ścieżki nauki i strony modułów kursowych)
+- `tokens-32.css` - Threat Monitor (Monitoring zagrożeń, widoki incydentów i listy alertów operacyjnych)
+- `tokens-33.css` - Insights Hub (Centra insightów, dashboardy zespołowe i widoki KPI dla zarządu)
+- `tokens-34.css` - Energy Grid (Panele energii, mapy zużycia, raporty produkcji i prognozy zasobów)
+- `tokens-35.css` - Compliance Desk (Centra compliance, listy audytowe i workflow zatwierdzania dokumentów)
+- `tokens-36.css` - Prompt Studio (Edytory promptów, biblioteki automatyzacji i testy wariantów AI)
+- `tokens-37.css` - Property CRM (CRM agentów, pipeline sprzedaży, kontakty klientów i statusy ofert)
+- `tokens-38.css` - Esports Arena (Turnieje, rankingi, profile drużyn i strony wydarzeń esportowych)
+- `tokens-39.css` - Donation Platform (Platformy darowizn, kampanie społeczne i strony zbiórek)
+- `tokens-40.css` - Focus Planner (Planery dnia, focus time, widoki priorytetów i lekkie narzędzia pracy)
 
 ## Struktura tokenów
 

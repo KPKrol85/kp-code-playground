@@ -706,6 +706,709 @@ const systems = [
   }
 ];
 
+systems.push(
+  {
+    id: "21",
+    file: "tokens-21.css",
+    name: "Documentation Pro",
+    category: "Treści",
+    useCase: "Portale wiedzy, bazy pomocy i dokumentacja produktów B2B",
+    description: "Czytelny system dokumentacyjny z mocniejszą nawigacją, spokojnymi neutralami i wyraźnym stanem linków.",
+    primaryAction: "Otwórz artykuł",
+    secondaryAction: "Zapisz sekcję",
+    tags: ["knowledge base", "docs", "support"],
+    colors: {
+      background: "#f5f7f9",
+      surface: "#ffffff",
+      surfaceRaised: "#e8edf2",
+      text: "#1b2430",
+      textMuted: "#5f6d7d",
+      border: "#d3dbe5",
+      primary: "#2b5d84",
+      primaryHover: "#214766",
+      primaryContrast: "#ffffff",
+      secondary: "#58724f",
+      accent: "#9a6b2f",
+      success: "#2f7a48",
+      warning: "#a86518",
+      danger: "#a83e3e",
+      focus: "#2b5d84",
+      shadowRgb: "43 93 132"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Source Sans 3', 'Inter', sans-serif",
+      mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.2rem", "0.375rem", "0.625rem", "0.875rem"]
+  },
+  {
+    id: "22",
+    file: "tokens-22.css",
+    name: "SaaS Control",
+    category: "SaaS",
+    useCase: "Panele kontroli, settings pages i narzędzia administracyjne SaaS",
+    description: "Operacyjny zestaw SaaS z bardziej technicznym rytmem, chłodnymi powierzchniami i mocnym kolorem akcji.",
+    primaryAction: "Zapisz zmiany",
+    secondaryAction: "Zobacz plan",
+    tags: ["settings", "admin", "subscription"],
+    colors: {
+      background: "#f2f6fb",
+      surface: "#ffffff",
+      surfaceRaised: "#e5edf7",
+      text: "#152033",
+      textMuted: "#5d6a7d",
+      border: "#cfdae8",
+      primary: "#2563c9",
+      primaryHover: "#1d4f9f",
+      primaryContrast: "#ffffff",
+      secondary: "#0e8a83",
+      accent: "#b1539b",
+      success: "#168052",
+      warning: "#b06a00",
+      danger: "#c43c4f",
+      focus: "#2563c9",
+      shadowRgb: "37 99 201"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Manrope', 'Inter', sans-serif",
+      mono: "'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.75rem", "1rem"]
+  },
+  {
+    id: "23",
+    file: "tokens-23.css",
+    name: "Luxury Editorial",
+    category: "Marka",
+    useCase: "Magazyny premium, lookbooki i strony marek osobistych",
+    description: "Jasny luksusowy kierunek z eleganckim kontrastem, subtelnym złotem i spokojną przestrzenią.",
+    primaryAction: "Zobacz kolekcję",
+    secondaryAction: "Pobierz katalog",
+    tags: ["editorial", "luxury", "lookbook"],
+    colors: {
+      background: "#f8f5ef",
+      surface: "#fffdf9",
+      surfaceRaised: "#eee7db",
+      text: "#28231d",
+      textMuted: "#71685d",
+      border: "#ded4c2",
+      primary: "#8b672f",
+      primaryHover: "#6f5225",
+      primaryContrast: "#ffffff",
+      secondary: "#314a59",
+      accent: "#b18a4a",
+      success: "#3d7a53",
+      warning: "#a86518",
+      danger: "#a64545",
+      focus: "#314a59",
+      shadowRgb: "40 35 29"
+    },
+    fonts: {
+      sans: "'Inter', 'Avenir Next', 'Segoe UI', sans-serif",
+      heading: "'Libre Baskerville', Georgia, serif",
+      mono: "'IBM Plex Mono', Consolas, monospace"
+    },
+    radius: ["0.125rem", "0.25rem", "0.5rem", "0.75rem"]
+  },
+  {
+    id: "24",
+    file: "tokens-24.css",
+    name: "Community Care",
+    category: "Konsumenckie",
+    useCase: "Aplikacje społecznościowe, profile użytkowników i lekkie feedy",
+    description: "Miękki społecznościowy system z przyjazną zielenią, ciepłymi tłami i bezpiecznymi akcentami.",
+    primaryAction: "Dołącz",
+    secondaryAction: "Zobacz profil",
+    tags: ["community", "social", "profiles"],
+    colors: {
+      background: "#f6fbf6",
+      surface: "#ffffff",
+      surfaceRaised: "#e8f4e8",
+      text: "#202b24",
+      textMuted: "#637269",
+      border: "#d2e2d4",
+      primary: "#3d8b5a",
+      primaryHover: "#2f6d46",
+      primaryContrast: "#ffffff",
+      secondary: "#5d6bd8",
+      accent: "#d17755",
+      success: "#2f8f64",
+      warning: "#b86d0e",
+      danger: "#c84b62",
+      focus: "#5d6bd8",
+      shadowRgb: "61 139 90"
+    },
+    fonts: {
+      sans: "'Nunito Sans', 'Inter', 'Segoe UI', sans-serif",
+      heading: "'Nunito Sans', 'Inter', sans-serif",
+      mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.625rem", "0.875rem", "1.25rem", "1.625rem"]
+  },
+  {
+    id: "25",
+    file: "tokens-25.css",
+    name: "Accessible Utility",
+    category: "Dostępność",
+    useCase: "Formularze publiczne, procesy wniosków i narzędzia samoobsługowe",
+    description: "Użytkowy system dostępnościowy z mocnymi etykietami, prostymi stanami i bezpiecznymi kontrastami.",
+    primaryAction: "Wyślij formularz",
+    secondaryAction: "Sprawdź dane",
+    tags: ["forms", "public", "wcag"],
+    colors: {
+      background: "#f7f7f7",
+      surface: "#ffffff",
+      surfaceRaised: "#eeeeee",
+      text: "#121212",
+      textMuted: "#383838",
+      border: "#2d3748",
+      primary: "#004a99",
+      primaryHover: "#003870",
+      primaryContrast: "#ffffff",
+      secondary: "#00704a",
+      accent: "#8a1f7a",
+      success: "#0f7a32",
+      warning: "#8f4a00",
+      danger: "#b00020",
+      focus: "#004a99",
+      shadowRgb: "18 18 18"
+    },
+    fonts: {
+      sans: "'Atkinson Hyperlegible', 'Inter', Arial, sans-serif",
+      heading: "'Atkinson Hyperlegible', 'Segoe UI', Arial, sans-serif",
+      mono: "'Source Code Pro', Consolas, monospace"
+    },
+    radius: ["0", "0.125rem", "0.25rem", "0.5rem"]
+  },
+  {
+    id: "26",
+    file: "tokens-26.css",
+    name: "Finance Operations",
+    category: "Finanse",
+    useCase: "Backoffice finansowy, rozliczenia, faktury i widoki statusów płatności",
+    description: "Operacyjny system finansowy z kompaktowym rytmem, neutralnymi tabelami i stabilnym kolorem decyzji.",
+    primaryAction: "Zatwierdź płatność",
+    secondaryAction: "Pobierz fakturę",
+    tags: ["billing", "backoffice", "payments"],
+    colors: {
+      background: "#f4f6f6",
+      surface: "#ffffff",
+      surfaceRaised: "#e6eceb",
+      text: "#14201f",
+      textMuted: "#586664",
+      border: "#cad6d4",
+      primary: "#0c625d",
+      primaryHover: "#084b47",
+      primaryContrast: "#ffffff",
+      secondary: "#294f86",
+      accent: "#966a10",
+      success: "#137a4b",
+      warning: "#956111",
+      danger: "#aa3535",
+      focus: "#294f86",
+      shadowRgb: "12 98 93"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'IBM Plex Sans', 'Inter', sans-serif",
+      mono: "'IBM Plex Mono', Consolas, monospace"
+    },
+    radius: ["0.125rem", "0.25rem", "0.375rem", "0.625rem"]
+  },
+  {
+    id: "27",
+    file: "tokens-27.css",
+    name: "Clinic Portal",
+    category: "Zdrowie",
+    useCase: "Panele placówek medycznych, grafiki wizyt i karty pacjenta",
+    description: "Profesjonalny system kliniczny z chłodnym błękitem, spokojnym tłem i czytelnymi blokami danych.",
+    primaryAction: "Dodaj wizytę",
+    secondaryAction: "Karta pacjenta",
+    tags: ["clinic", "schedule", "patient"],
+    colors: {
+      background: "#f2f8fb",
+      surface: "#ffffff",
+      surfaceRaised: "#e3f0f5",
+      text: "#172b34",
+      textMuted: "#5b6f78",
+      border: "#c9dde6",
+      primary: "#1976a2",
+      primaryHover: "#125a7c",
+      primaryContrast: "#ffffff",
+      secondary: "#138071",
+      accent: "#bf6b4b",
+      success: "#23845a",
+      warning: "#aa6515",
+      danger: "#bf3f4d",
+      focus: "#1976a2",
+      shadowRgb: "25 118 162"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Source Sans 3', 'Inter', sans-serif",
+      mono: "'Roboto Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.75rem", "1rem"]
+  },
+  {
+    id: "28",
+    file: "tokens-28.css",
+    name: "API Reference",
+    category: "Dla devów",
+    useCase: "Dokumentacja API, przykłady kodu i eksploratory endpointów",
+    description: "Techniczny system referencyjny z ciemnym kodem, wysoką czytelnością i akcentami terminalowymi.",
+    primaryAction: "Kopiuj endpoint",
+    secondaryAction: "Uruchom test",
+    tags: ["api", "reference", "code"],
+    colors: {
+      background: "#0d1321",
+      surface: "#121a2a",
+      surfaceRaised: "#1d2738",
+      text: "#edf4ff",
+      textMuted: "#a7b5ca",
+      border: "#344258",
+      primary: "#60a5fa",
+      primaryHover: "#3b82f6",
+      primaryContrast: "#07111f",
+      secondary: "#2dd4bf",
+      accent: "#fbbf24",
+      success: "#34d399",
+      warning: "#fbbf24",
+      danger: "#fb7185",
+      focus: "#60a5fa",
+      shadowRgb: "0 0 0"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Space Grotesk', 'Inter', sans-serif",
+      mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.125rem", "0.25rem", "0.5rem", "0.75rem"]
+  },
+  {
+    id: "29",
+    file: "tokens-29.css",
+    name: "Campaign Builder",
+    category: "Kreatywne",
+    useCase: "Kreatory kampanii, kalendarze contentu i panele publikacji",
+    description: "Dynamiczny system dla kampanii z wyrazistym fioletem, świeżym tłem i kontrolowanym kontrastem.",
+    primaryAction: "Zaplanuj post",
+    secondaryAction: "Zobacz kreację",
+    tags: ["campaign", "content", "publishing"],
+    colors: {
+      background: "#f8f5ff",
+      surface: "#ffffff",
+      surfaceRaised: "#eee7ff",
+      text: "#251f35",
+      textMuted: "#686078",
+      border: "#ddd2f1",
+      primary: "#7c3bb8",
+      primaryHover: "#633094",
+      primaryContrast: "#ffffff",
+      secondary: "#0e8f9a",
+      accent: "#df6b36",
+      success: "#278353",
+      warning: "#bd6b00",
+      danger: "#c73545",
+      focus: "#7c3bb8",
+      shadowRgb: "124 59 184"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Manrope', 'Inter', sans-serif",
+      mono: "'DM Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.625rem", "0.875rem", "1.25rem"]
+  },
+  {
+    id: "30",
+    file: "tokens-30.css",
+    name: "Checkout Flow",
+    category: "Handel",
+    useCase: "Koszyki, płatności, formularze dostawy i potwierdzenia zamówień",
+    description: "Skoncentrowany system checkout z jasną hierarchią kroków, spokojnymi tłami i silnym CTA.",
+    primaryAction: "Przejdź do płatności",
+    secondaryAction: "Edytuj koszyk",
+    tags: ["checkout", "payment", "cart"],
+    colors: {
+      background: "#f8faf7",
+      surface: "#ffffff",
+      surfaceRaised: "#edf4ea",
+      text: "#1f2a20",
+      textMuted: "#5f6d61",
+      border: "#d4dfd0",
+      primary: "#2f7d44",
+      primaryHover: "#246134",
+      primaryContrast: "#ffffff",
+      secondary: "#8a5a24",
+      accent: "#2f5f9f",
+      success: "#2d7d46",
+      warning: "#a86518",
+      danger: "#b83b3b",
+      focus: "#2f5f9f",
+      shadowRgb: "47 125 68"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Libre Franklin', 'Inter', sans-serif",
+      mono: "'Roboto Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.625rem", "0.875rem"]
+  },
+  {
+    id: "31",
+    file: "tokens-31.css",
+    name: "Learning Academy",
+    category: "Edukacja",
+    useCase: "Akademie online, ścieżki nauki i strony modułów kursowych",
+    description: "Akademicki system nauki z przyjazną typografią, miękkim niebieskim tłem i wyraźnym postępem.",
+    primaryAction: "Kontynuuj kurs",
+    secondaryAction: "Zobacz sylabus",
+    tags: ["academy", "lessons", "progress"],
+    colors: {
+      background: "#f6f8ff",
+      surface: "#ffffff",
+      surfaceRaised: "#eaf0ff",
+      text: "#1b2438",
+      textMuted: "#626d86",
+      border: "#d5def2",
+      primary: "#4568d8",
+      primaryHover: "#344fac",
+      primaryContrast: "#ffffff",
+      secondary: "#2c8b78",
+      accent: "#c07a22",
+      success: "#23845a",
+      warning: "#ad6800",
+      danger: "#bf3f4d",
+      focus: "#4568d8",
+      shadowRgb: "69 104 216"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Nunito Sans', 'Inter', sans-serif",
+      mono: "'Source Code Pro', Consolas, monospace"
+    },
+    radius: ["0.5rem", "0.75rem", "1rem", "1.375rem"]
+  },
+  {
+    id: "32",
+    file: "tokens-32.css",
+    name: "Threat Monitor",
+    category: "Bezpieczeństwo",
+    useCase: "Monitoring zagrożeń, widoki incydentów i listy alertów operacyjnych",
+    description: "Ciemny system monitoringu z czerwonym alertem, zielonym statusem i bardzo czytelnymi panelami.",
+    primaryAction: "Izoluj alert",
+    secondaryAction: "Historia zdarzeń",
+    tags: ["threats", "alerts", "incident"],
+    colors: {
+      background: "#111318",
+      surface: "#181c24",
+      surfaceRaised: "#232936",
+      text: "#f0f4fa",
+      textMuted: "#a9b3c0",
+      border: "#384253",
+      primary: "#ef4444",
+      primaryHover: "#dc2626",
+      primaryContrast: "#ffffff",
+      secondary: "#22c55e",
+      accent: "#38bdf8",
+      success: "#22c55e",
+      warning: "#f59e0b",
+      danger: "#ef4444",
+      focus: "#38bdf8",
+      shadowRgb: "0 0 0"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Space Grotesk', 'Inter', sans-serif",
+      mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.125rem", "0.25rem", "0.375rem", "0.5rem"]
+  },
+  {
+    id: "33",
+    file: "tokens-33.css",
+    name: "Insights Hub",
+    category: "Analityka",
+    useCase: "Centra insightów, dashboardy zespołowe i widoki KPI dla zarządu",
+    description: "Zbalansowany system insightów z bardziej premium powierzchniami i kolorem wspierającym analizę.",
+    primaryAction: "Dodaj insight",
+    secondaryAction: "Eksportuj widok",
+    tags: ["insights", "kpi", "teams"],
+    colors: {
+      background: "#f6f7fb",
+      surface: "#ffffff",
+      surfaceRaised: "#ebeff7",
+      text: "#192233",
+      textMuted: "#5d687b",
+      border: "#d5ddea",
+      primary: "#355c9f",
+      primaryHover: "#29487d",
+      primaryContrast: "#ffffff",
+      secondary: "#6f4bb8",
+      accent: "#0f9f6e",
+      success: "#168052",
+      warning: "#a86518",
+      danger: "#ba3434",
+      focus: "#355c9f",
+      shadowRgb: "53 92 159"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'IBM Plex Sans', 'Inter', sans-serif",
+      mono: "'IBM Plex Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.75rem", "1rem"]
+  },
+  {
+    id: "34",
+    file: "tokens-34.css",
+    name: "Energy Grid",
+    category: "Zrównoważony rozwój",
+    useCase: "Panele energii, mapy zużycia, raporty produkcji i prognozy zasobów",
+    description: "Techniczny system energii z chłodnym zielonym, niebieskim akcentem i czytelnymi blokami raportów.",
+    primaryAction: "Analizuj zużycie",
+    secondaryAction: "Porównaj okres",
+    tags: ["energy", "grid", "forecast"],
+    colors: {
+      background: "#f3f8f4",
+      surface: "#ffffff",
+      surfaceRaised: "#e5f0e8",
+      text: "#1d2b22",
+      textMuted: "#5d6f63",
+      border: "#ccdecf",
+      primary: "#2f8050",
+      primaryHover: "#24643e",
+      primaryContrast: "#ffffff",
+      secondary: "#2671a8",
+      accent: "#b7791f",
+      success: "#2f7a48",
+      warning: "#a86518",
+      danger: "#b34545",
+      focus: "#2671a8",
+      shadowRgb: "47 128 80"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Aptos Display', 'Inter', sans-serif",
+      mono: "'Roboto Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.75rem", "1rem"]
+  },
+  {
+    id: "35",
+    file: "tokens-35.css",
+    name: "Compliance Desk",
+    category: "Enterprise",
+    useCase: "Centra compliance, listy audytowe i workflow zatwierdzania dokumentów",
+    description: "Surowy enterprise desk z mocnym granatem, dyskretnym bursztynem i formalnym układem kontroli.",
+    primaryAction: "Zatwierdź rekord",
+    secondaryAction: "Dodaj komentarz",
+    tags: ["audit", "approval", "policy"],
+    colors: {
+      background: "#f5f6f8",
+      surface: "#ffffff",
+      surfaceRaised: "#eaedf1",
+      text: "#1d232b",
+      textMuted: "#5d6570",
+      border: "#d0d7df",
+      primary: "#1f3656",
+      primaryHover: "#162840",
+      primaryContrast: "#ffffff",
+      secondary: "#7b6236",
+      accent: "#426a86",
+      success: "#23704b",
+      warning: "#956111",
+      danger: "#a63d40",
+      focus: "#426a86",
+      shadowRgb: "31 54 86"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Merriweather Sans', 'Inter', sans-serif",
+      mono: "'Source Code Pro', Consolas, monospace"
+    },
+    radius: ["0.125rem", "0.25rem", "0.375rem", "0.5rem"]
+  },
+  {
+    id: "36",
+    file: "tokens-36.css",
+    name: "Prompt Studio",
+    category: "AI",
+    useCase: "Edytory promptów, biblioteki automatyzacji i testy wariantów AI",
+    description: "Studyjny system AI z neutralnym płótnem, miękkim fioletem i technicznym akcentem teal.",
+    primaryAction: "Testuj wariant",
+    secondaryAction: "Zapisz prompt",
+    tags: ["prompting", "variants", "automation"],
+    colors: {
+      background: "#f8f7fc",
+      surface: "#ffffff",
+      surfaceRaised: "#efecf8",
+      text: "#1d1b2d",
+      textMuted: "#666177",
+      border: "#ddd7ea",
+      primary: "#6b55c8",
+      primaryHover: "#5442a2",
+      primaryContrast: "#ffffff",
+      secondary: "#0f8f8a",
+      accent: "#b155a0",
+      success: "#18835a",
+      warning: "#b06a00",
+      danger: "#c83f54",
+      focus: "#6b55c8",
+      shadowRgb: "107 85 200"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Manrope', 'Inter', sans-serif",
+      mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.375rem", "0.625rem", "0.875rem", "1.125rem"]
+  },
+  {
+    id: "37",
+    file: "tokens-37.css",
+    name: "Property CRM",
+    category: "Nieruchomości",
+    useCase: "CRM agentów, pipeline sprzedaży, kontakty klientów i statusy ofert",
+    description: "Operacyjny system nieruchomości z bardziej biznesową paletą, czytelnymi statusami i spokojnym tłem.",
+    primaryAction: "Dodaj lead",
+    secondaryAction: "Zobacz pipeline",
+    tags: ["crm", "leads", "pipeline"],
+    colors: {
+      background: "#f5f6f3",
+      surface: "#ffffff",
+      surfaceRaised: "#e8ebe3",
+      text: "#24271f",
+      textMuted: "#646b5e",
+      border: "#d4dacd",
+      primary: "#4d6f45",
+      primaryHover: "#3d5937",
+      primaryContrast: "#ffffff",
+      secondary: "#846334",
+      accent: "#3f6f8f",
+      success: "#2f7a48",
+      warning: "#9a6419",
+      danger: "#b24646",
+      focus: "#3f6f8f",
+      shadowRgb: "77 111 69"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Libre Baskerville', Georgia, serif",
+      mono: "'Roboto Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.375rem", "0.625rem", "0.875rem"]
+  },
+  {
+    id: "38",
+    file: "tokens-38.css",
+    name: "Esports Arena",
+    category: "Gry",
+    useCase: "Turnieje, rankingi, profile drużyn i strony wydarzeń esportowych",
+    description: "Energetyczny system esportowy z mocnym fioletem, neonowym akcentem i czytelnymi kartami wyników.",
+    primaryAction: "Zapisz drużynę",
+    secondaryAction: "Tabela wyników",
+    tags: ["esports", "ranking", "teams"],
+    colors: {
+      background: "#0f1020",
+      surface: "#181a2e",
+      surfaceRaised: "#242642",
+      text: "#f2f3ff",
+      textMuted: "#b4b7d4",
+      border: "#393d63",
+      primary: "#8b5cf6",
+      primaryHover: "#7c3aed",
+      primaryContrast: "#ffffff",
+      secondary: "#22d3ee",
+      accent: "#f43f5e",
+      success: "#48c774",
+      warning: "#f9c74f",
+      danger: "#ff5f6d",
+      focus: "#22d3ee",
+      shadowRgb: "0 0 0"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Rajdhani', 'Inter', sans-serif",
+      mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace"
+    },
+    radius: ["0.125rem", "0.25rem", "0.375rem", "0.625rem"]
+  },
+  {
+    id: "39",
+    file: "tokens-39.css",
+    name: "Donation Platform",
+    category: "Społeczne",
+    useCase: "Platformy darowizn, kampanie społeczne i strony zbiórek",
+    description: "Ciepły system społeczny z bezpośrednim CTA, zaufanymi powierzchniami i optymistycznym akcentem.",
+    primaryAction: "Wesprzyj cel",
+    secondaryAction: "Udostępnij zbiórkę",
+    tags: ["donations", "campaign", "impact"],
+    colors: {
+      background: "#fbf8f3",
+      surface: "#ffffff",
+      surfaceRaised: "#f0eadf",
+      text: "#28231d",
+      textMuted: "#70675d",
+      border: "#ded5c8",
+      primary: "#b65a2a",
+      primaryHover: "#914720",
+      primaryContrast: "#ffffff",
+      secondary: "#2f6f4e",
+      accent: "#4267a5",
+      success: "#2f7a48",
+      warning: "#a86518",
+      danger: "#b23a48",
+      focus: "#4267a5",
+      shadowRgb: "182 90 42"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Source Sans 3', 'Inter', sans-serif",
+      mono: "'IBM Plex Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.75rem", "1rem"]
+  },
+  {
+    id: "40",
+    file: "tokens-40.css",
+    name: "Focus Planner",
+    category: "Produktywność",
+    useCase: "Planery dnia, focus time, widoki priorytetów i lekkie narzędzia pracy",
+    description: "Skupiony system produktywności z miękkim niebieskim, kompaktowymi blokami i spokojnym stanem aktywnym.",
+    primaryAction: "Zaplanuj blok",
+    secondaryAction: "Otwórz dzień",
+    tags: ["focus", "planning", "tasks"],
+    colors: {
+      background: "#f6f8fb",
+      surface: "#ffffff",
+      surfaceRaised: "#eaf0f7",
+      text: "#1b2330",
+      textMuted: "#606c7a",
+      border: "#d4dde8",
+      primary: "#3d6ea8",
+      primaryHover: "#2f5684",
+      primaryContrast: "#ffffff",
+      secondary: "#3a8a78",
+      accent: "#99662f",
+      success: "#287a52",
+      warning: "#a86518",
+      danger: "#b43d4a",
+      focus: "#3d6ea8",
+      shadowRgb: "61 110 168"
+    },
+    fonts: {
+      sans: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      heading: "'Inter', 'Segoe UI', Roboto, Arial, sans-serif",
+      mono: "'Roboto Mono', Consolas, monospace"
+    },
+    radius: ["0.25rem", "0.5rem", "0.75rem", "1rem"]
+  }
+);
+
 function tokenCss(system) {
   const c = system.colors;
   const r = system.radius;
@@ -1013,6 +1716,7 @@ function previewSource(system) {
 }
 
 function indexHtml() {
+  const systemCount = systems.length;
   const categoryCount = new Set(systems.map((system) => system.category)).size;
   return `<!doctype html>
 <html lang="pl">
@@ -1496,7 +2200,7 @@ function indexHtml() {
         </div>
         <div class="vault-actions">
           <div class="vault-status" aria-label="Statystyki biblioteki">
-            <span class="vault-status__item">20 zestawów tokenów</span>
+            <span class="vault-status__item">${systemCount} zestawów tokenów</span>
             <span class="vault-status__item">Podglądy BEM</span>
             <span class="vault-status__item">CSS do skopiowania</span>
           </div>
@@ -1516,7 +2220,7 @@ function indexHtml() {
           </p>
         </div>
         <section class="vault-summary" aria-label="Podsumowanie produktu">
-          <div class="vault-summary__item"><span class="vault-summary__value">${systems.length}</span><span class="vault-summary__label">zestawów</span></div>
+          <div class="vault-summary__item"><span class="vault-summary__value">${systemCount}</span><span class="vault-summary__label">zestawów</span></div>
           <div class="vault-summary__item"><span class="vault-summary__value">${categoryCount}</span><span class="vault-summary__label">kategorii</span></div>
           <div class="vault-summary__item"><span class="vault-summary__value vault-summary__value--action">Kopiuj CSS</span><span class="vault-summary__label">gotowe tokeny w schowku</span></div>
         </section>
@@ -1683,7 +2387,7 @@ function readme() {
   const list = systems.map((system) => `- \`${system.file}\` - ${system.name} (${system.useCase})`).join("\n");
   return `# KP_Code Digital Vault - CSS Design Token Systems
 
-Ten folder produktu zawiera 20 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
+Ten folder produktu zawiera ${systems.length} gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
 Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz warstwę podglądu komponentów w strukturze BEM.
 
 ## Dostępne zestawy tokenów
