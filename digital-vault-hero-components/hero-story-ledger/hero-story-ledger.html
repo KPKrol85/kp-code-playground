@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Story Ledger · KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="hero-story-ledger.js" defer></script>
+  </head>
+  <body class="hero-page hero-story-ledger-page">
+    <a class="hero-story-ledger-skip-link" href="#hero-story-ledger-main">Skip to hero content</a>
+
+    <header class="hero-story-ledger-topbar" aria-label="Component navigation">
+      <a href="index.html" class="hero-story-ledger-topbar__back">← Back to selector</a>
+    </header>
+
+    <main id="hero-story-ledger-main">
+      <section class="hero-story-ledger" aria-labelledby="hero-story-ledger-title">
+        <div class="hero-story-ledger__progress" aria-hidden="true">
+          <span class="hero-story-ledger__progress-bar" data-ledger-progress></span>
+        </div>
+
+        <div class="hero-story-ledger__content hero-story-ledger-reveal">
+          <p class="hero-story-ledger__eyebrow">2026 Transformation Chronicle · Northline Systems</p>
+          <h1 id="hero-story-ledger-title" class="hero-story-ledger__title">
+            How a legacy operations network became a trusted, real-time decision platform in 180 days.
+          </h1>
+          <p class="hero-story-ledger__lead">
+            This founder-led case narrative follows the sequence that mattered most: diagnosing friction,
+            rebuilding trust in data, and deploying a phased interface strategy that increased executive
+            reporting confidence from quarterly lag to same-day action.
+          </p>
+
+          <div class="hero-story-ledger__cta-group">
+            <a href="#story-timeline" class="hero-story-ledger-button">Read the story arc</a>
+            <a href="#featured-insights" class="hero-story-ledger-button hero-story-ledger-button--ghost">Download executive brief</a>
+          </div>
+        </div>
+
+        <div class="hero-story-ledger__layout">
+          <section id="story-timeline" class="hero-story-ledger-timeline hero-story-ledger-reveal" aria-labelledby="timeline-title">
+            <h2 id="timeline-title">Story Timeline Preview</h2>
+            <p class="hero-story-ledger-timeline__intro">Select a chapter to preview the turning points, outcomes, and leadership voice.</p>
+            <div class="hero-story-ledger-timeline__steps" role="group" aria-label="Story chapters">
+              <button type="button" class="hero-story-ledger-timeline__step is-active" data-ledger-step="0" aria-pressed="true">
+                <span>Chapter 01</span> Discovery Audit
+              </button>
+              <button type="button" class="hero-story-ledger-timeline__step" data-ledger-step="1" aria-pressed="false">
+                <span>Chapter 02</span> Narrative Reframe
+              </button>
+              <button type="button" class="hero-story-ledger-timeline__step" data-ledger-step="2" aria-pressed="false">
+                <span>Chapter 03</span> Product Deployment
+              </button>
+              <button type="button" class="hero-story-ledger-timeline__step" data-ledger-step="3" aria-pressed="false">
+                <span>Chapter 04</span> Governance Continuity
+              </button>
+            </div>
+          </section>
+
+          <aside id="featured-insights" class="hero-story-ledger-insights hero-story-ledger-reveal" aria-live="polite" aria-atomic="true">
+            <h2>Key Insights</h2>
+            <div class="hero-story-ledger-insights__grid" data-ledger-insights></div>
+          </aside>
+        </div>
+
+        <figure class="hero-story-ledger-quote hero-story-ledger-reveal" aria-live="polite" aria-atomic="true">
+          <blockquote data-ledger-quote>
+            We didn’t need louder dashboards—we needed a shared language for action. Once teams could read the same story, execution accelerated naturally.
+          </blockquote>
+          <figcaption data-ledger-attribution>Elena Park, Founder & CEO, Northline Systems</figcaption>
+        </figure>
+      </section>
+    </main>
+  </body>
+</html>
