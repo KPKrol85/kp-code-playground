@@ -1,0 +1,101 @@
+:root {
+  --hero-real-estate-vista-bg: #f6f2eb;
+  --hero-real-estate-vista-bg-soft: #efe6d9;
+  --hero-real-estate-vista-surface: #fffdfa;
+  --hero-real-estate-vista-ink: #26231f;
+  --hero-real-estate-vista-muted: #655d53;
+  --hero-real-estate-vista-accent: #b78b42;
+  --hero-real-estate-vista-accent-strong: #8f6a2f;
+  --hero-real-estate-vista-border: #d9ccba;
+  --hero-real-estate-vista-shadow: 0 20px 60px rgba(38, 35, 31, 0.14);
+}
+
+* { box-sizing: border-box; }
+
+body.hero-real-estate-vista-page {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+  color: var(--hero-real-estate-vista-ink);
+  background: linear-gradient(145deg, var(--hero-real-estate-vista-bg), #f9f7f3 40%, var(--hero-real-estate-vista-bg-soft));
+}
+
+.hero-real-estate-vista-selector,
+.hero-real-estate-vista {
+  width: min(1160px, 100% - 2rem);
+  margin-inline: auto;
+}
+
+.hero-real-estate-vista-selector { min-height: 100svh; display: grid; place-items: center; padding-block: 3rem; }
+.hero-real-estate-vista-selector__panel,
+.hero-real-estate-vista-product-card,
+.hero-real-estate-vista__content,
+.hero-real-estate-vista__visual-main,
+.hero-real-estate-vista__mini-card,
+.hero-real-estate-vista__detail-panel {
+  background: var(--hero-real-estate-vista-surface);
+  border: 1px solid var(--hero-real-estate-vista-border);
+  border-radius: 1.1rem;
+}
+.hero-real-estate-vista-selector__panel { padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: var(--hero-real-estate-vista-shadow); max-width: 760px; }
+.hero-real-estate-vista-selector__title { font-size: clamp(1.9rem, 3vw, 2.8rem); margin: 0.3rem 0 0.8rem; }
+.hero-real-estate-vista-selector__eyebrow,
+.hero-real-estate-vista-product-card__tag,
+.hero-real-estate-vista__eyebrow { letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.78rem; color: var(--hero-real-estate-vista-muted); }
+.hero-real-estate-vista-product-card { margin-top: 1.5rem; padding: 1.2rem; }
+.hero-real-estate-vista-product-card__title { margin: 0.5rem 0; font-size: clamp(1.3rem, 2vw, 1.8rem); }
+.hero-real-estate-vista-product-card__link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--hero-real-estate-vista-accent-strong); font-weight: 600; text-decoration: none; }
+
+.hero-real-estate-vista { display: grid; gap: 1.2rem; padding: clamp(1.2rem, 4vw, 3rem) 0 2rem; }
+.hero-real-estate-vista__content { padding: clamp(1.2rem, 3vw, 2.4rem); }
+.hero-real-estate-vista__headline { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4.4vw, 3.85rem); line-height: 1.1; margin: 0.5rem 0 1rem; }
+.hero-real-estate-vista__lead { font-size: clamp(1rem, 1.8vw, 1.22rem); color: var(--hero-real-estate-vista-muted); max-width: 62ch; }
+.hero-real-estate-vista__cta-group { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.4rem 0 1rem; }
+.hero-real-estate-vista__cta { padding: 0.75rem 1.1rem; border-radius: 999px; border: 1px solid transparent; text-decoration: none; font-weight: 600; transition: 180ms ease; }
+.hero-real-estate-vista__cta--primary { background: var(--hero-real-estate-vista-accent); color: #201507; }
+.hero-real-estate-vista__cta--ghost { border-color: var(--hero-real-estate-vista-border); color: var(--hero-real-estate-vista-ink); }
+.hero-real-estate-vista__cta:hover { transform: translateY(-1px); }
+.hero-real-estate-vista__highlights { display: flex; flex-wrap: wrap; gap: 0.55rem 1rem; padding: 0; list-style: none; color: var(--hero-real-estate-vista-muted); }
+.hero-real-estate-vista__chip-group { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hero-real-estate-vista__chip { border: 1px solid var(--hero-real-estate-vista-border); background: #fff; color: var(--hero-real-estate-vista-ink); padding: 0.55rem 0.85rem; border-radius: 999px; cursor: pointer; }
+.hero-real-estate-vista__chip.is-active { background: #f4e7d1; border-color: var(--hero-real-estate-vista-accent); }
+.hero-real-estate-vista__detail-panel { margin-top: 0.8rem; padding: 1rem; }
+.hero-real-estate-vista__detail-title { margin-top: 0; }
+.hero-real-estate-vista__detail-meta { color: var(--hero-real-estate-vista-accent-strong); font-weight: 600; }
+.hero-real-estate-vista__availability { margin-top: 1rem; padding: 0.8rem 1rem; border-left: 4px solid var(--hero-real-estate-vista-accent); background: #f7efe1; }
+
+.hero-real-estate-vista__visual { display: grid; gap: 0.8rem; }
+.hero-real-estate-vista__visual-main { padding: clamp(1.2rem, 2.5vw, 2rem); min-height: 280px; position: relative; overflow: hidden; box-shadow: var(--hero-real-estate-vista-shadow); }
+.hero-real-estate-vista__visual-main::after {
+  content: "";
+  position: absolute;
+  inset: -35% -15% auto auto;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(183, 139, 66, 0.23), rgba(183, 139, 66, 0));
+  pointer-events: none;
+}
+.hero-real-estate-vista__visual-main[data-visual-state="interior"] { background: linear-gradient(160deg, #fdf8f2, #efe2d1); }
+.hero-real-estate-vista__visual-main[data-visual-state="amenities"] { background: linear-gradient(160deg, #f8f6f2, #e9ece9); }
+.hero-real-estate-vista__visual-main[data-visual-state="location"] { background: linear-gradient(160deg, #f7f3ea, #dfe8ef); }
+.hero-real-estate-vista__visual-cards { display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.hero-real-estate-vista__mini-card { padding: 1rem; }
+
+.hero-real-estate-vista__reveal { opacity: 0; transform: translateY(24px); transition: opacity 450ms ease, transform 450ms ease; }
+.hero-real-estate-vista__reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.hero-real-estate-vista button:focus-visible,
+.hero-real-estate-vista a:focus-visible,
+.hero-real-estate-vista-selector a:focus-visible {
+  outline: 3px solid var(--hero-real-estate-vista-accent-strong);
+  outline-offset: 2px;
+}
+
+@media (min-width: 980px) {
+  .hero-real-estate-vista { grid-template-columns: 1.1fr 0.9fr; align-items: stretch; gap: 1.25rem; min-height: 100svh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-real-estate-vista__reveal,
+  .hero-real-estate-vista__cta,
+  .hero-real-estate-vista__visual-main { transition: none !important; transform: none !important; }
+}
