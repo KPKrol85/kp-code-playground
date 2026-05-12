@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Lexora Legal Trust header component demo with formal navigation, trust bar, and accessible mobile documentation panel."
+    />
+    <title>Header Legal Trust Bar | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="legal-header" data-legal-header>
+      <div class="legal-header__trustbar" role="note" aria-label="Trust note">
+        <div class="legal-header__meta">
+          <p class="legal-header__trust-note">
+            Clear policies. Formal documentation. Trusted guidance.
+          </p>
+        </div>
+      </div>
+
+      <div class="legal-header__inner">
+        <a class="legal-header__brand" href="#" aria-label="Lexora home">
+          <span class="legal-header__mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" focusable="false" aria-hidden="true">
+              <rect x="3" y="3" width="34" height="34" rx="6"></rect>
+              <path d="M12 10v20M20 10v20M28 10v20M10 30h20"></path>
+            </svg>
+          </span>
+          <span class="legal-header__brand-copy">
+            <span class="legal-header__name">Lexora</span>
+            <span class="legal-header__label">Legal Trust</span>
+          </span>
+        </a>
+
+        <nav class="legal-header__nav" aria-label="Primary">
+          <a class="legal-header__nav-link" href="#">Services</a>
+          <a class="legal-header__nav-link" href="#" aria-current="page">Documents</a>
+          <a class="legal-header__nav-link" href="#">Compliance</a>
+          <a class="legal-header__nav-link" href="#">About</a>
+          <a class="legal-header__nav-link" href="#">Contact</a>
+        </nav>
+
+        <div class="legal-header__actions">
+          <button
+            class="legal-header__contrast-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch to dark contrast mode"
+          >
+            <span aria-hidden="true">Aa</span>
+            <span>Contrast</span>
+          </button>
+          <a class="legal-header__cta" href="#">Request consultation</a>
+          <button
+            class="legal-header__menu-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="legal-panel"
+            data-menu-toggle
+          >
+            <span class="visually-hidden">Open legal panel</span>
+            <span class="legal-header__menu-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="legal-overlay" data-overlay hidden></div>
+
+      <aside class="legal-panel" id="legal-panel" data-panel hidden>
+        <div class="legal-panel__sheet" role="dialog" aria-modal="true" aria-labelledby="legal-panel-title">
+          <div class="legal-panel__header">
+            <p class="legal-panel__title" id="legal-panel-title">Lexora Legal Trust</p>
+            <p class="legal-panel__notice">
+              Clear policies. Formal documentation. Trusted guidance.
+            </p>
+          </div>
+
+          <nav class="legal-panel__nav" aria-label="Mobile primary">
+            <a class="legal-panel__link" href="#">Services</a>
+            <a class="legal-panel__link" href="#" aria-current="page">Documents</a>
+            <a class="legal-panel__link" href="#">Compliance</a>
+            <a class="legal-panel__link" href="#">About</a>
+            <a class="legal-panel__link" href="#">Contact</a>
+          </nav>
+
+          <section class="legal-panel__documents" aria-labelledby="document-links-title">
+            <h2 id="document-links-title">Key documents</h2>
+            <a class="legal-panel__link" href="#">Privacy Policy</a>
+            <a class="legal-panel__link" href="#">Terms of Service</a>
+            <a class="legal-panel__link" href="#">Cookie Policy</a>
+          </section>
+
+          <a class="legal-panel__cta" href="#">Request consultation</a>
+
+          <p class="legal-panel__footer">Structured for policy pages and enterprise legal documentation.</p>
+        </div>
+      </aside>
+    </header>
+
+    <main id="main-content" class="demo-main">
+      <section class="demo-hero" aria-labelledby="demo-title">
+        <p class="demo-hero__eyebrow">KP_Code Digital Vault</p>
+        <h1 id="demo-title">Legal Trust Bar Header</h1>
+        <p>
+          A formal navigation component for legal websites, compliance centers, policy pages, and trusted
+          documentation systems.
+        </p>
+        <ul class="demo-hero__features" aria-label="Feature highlights">
+          <li>Trust bar</li>
+          <li>Formal contrast</li>
+          <li>Document panel</li>
+        </ul>
+      </section>
+
+      <section class="demo-card" aria-labelledby="doc-card-title">
+        <h2 id="doc-card-title">Document access</h2>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+        <p>Policy-ready structure</p>
+      </section>
+    </main>
+  </body>
+</html>
