@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Header Vault Navigator: premium KP_Code Vault header for digital product libraries, templates, prompts, and tools."
+    />
+    <title>Header Vault Navigator | KP_Code Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="vault-header" data-vault-header>
+      <div class="vault-header__inner">
+        <a class="vault-header__brand" href="#" aria-label="KP_Code Vault home">
+          <span class="vault-header__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img" focusable="false">
+              <rect x="3" y="3" width="42" height="42" rx="12" />
+              <rect x="11" y="11" width="11" height="11" rx="3" />
+              <rect x="26" y="11" width="11" height="11" rx="3" />
+              <rect x="11" y="26" width="11" height="11" rx="3" />
+              <rect x="26" y="26" width="11" height="11" rx="3" />
+            </svg>
+          </span>
+          <span class="vault-header__brand-copy">
+            <span class="vault-header__name">KP_Code Vault</span>
+            <span class="vault-header__label">Digital Products</span>
+          </span>
+        </a>
+
+        <nav class="vault-header__nav" aria-label="Primary">
+          <a class="vault-header__nav-link" href="#" aria-current="page">Components</a>
+          <a class="vault-header__nav-link" href="#">Templates</a>
+          <a class="vault-header__nav-link" href="#">Checklists</a>
+          <a class="vault-header__nav-link" href="#">Prompts</a>
+          <a class="vault-header__nav-link" href="#">Tools</a>
+        </nav>
+
+        <div class="vault-header__actions">
+          <button
+            type="button"
+            class="vault-header__search"
+            aria-label="Search the product library"
+          >
+            <span>Search library</span>
+            <kbd class="vault-header__search-key">⌘K</kbd>
+          </button>
+
+          <button
+            type="button"
+            class="vault-header__theme-toggle"
+            data-theme-toggle
+            aria-label="Switch to dark vault mode"
+          >
+            <span class="vault-header__theme-dot" aria-hidden="true"></span>
+            <span>Vault</span>
+          </button>
+
+          <a class="vault-header__cta" href="#">Open Vault</a>
+
+          <button
+            type="button"
+            class="vault-header__menu-button"
+            data-menu-button
+            aria-label="Open mini vault panel"
+            aria-controls="vault-panel"
+            aria-expanded="false"
+          >
+            <span class="vault-header__menu-grid" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="vault-overlay" data-vault-overlay hidden></div>
+
+    <aside
+      class="vault-panel"
+      id="vault-panel"
+      data-vault-panel
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <div class="vault-panel__sheet">
+        <div class="vault-panel__header">
+          <p>Mini Vault</p>
+        </div>
+
+        <button type="button" class="vault-panel__search" aria-label="Search the product library">
+          <span>Search library</span>
+          <kbd class="vault-header__search-key">⌘K</kbd>
+        </button>
+
+        <section class="vault-panel__categories" aria-label="Product categories">
+          <h2>Categories</h2>
+          <a class="vault-panel__category" href="#" aria-current="page">Components</a>
+          <a class="vault-panel__category" href="#">Templates</a>
+          <a class="vault-panel__category" href="#">Checklists</a>
+          <a class="vault-panel__category" href="#">Prompts</a>
+          <a class="vault-panel__category" href="#">Tools</a>
+        </section>
+
+        <section class="vault-panel__products" aria-label="Featured products">
+          <h2>Featured products</h2>
+          <a class="vault-panel__product" href="#">Header Components</a>
+          <a class="vault-panel__product" href="#">CSS Token Systems</a>
+          <a class="vault-panel__product" href="#">Client Brief Templates</a>
+        </section>
+
+        <div class="vault-panel__actions">
+          <a class="vault-panel__cta" href="#">Open Vault</a>
+          <a class="vault-panel__secondary" href="#">View Pro</a>
+        </div>
+
+        <p class="vault-panel__footer">Built for reusable product systems and Free/Pro-ready delivery.</p>
+      </div>
+    </aside>
+
+    <main id="main-content" class="demo-main">
+      <section class="demo-hero" aria-labelledby="demo-title">
+        <p class="demo-kicker">KP_Code Digital Vault</p>
+        <h1 id="demo-title">Vault Navigator Header</h1>
+        <p>
+          A product-library navigation component for KP_Code Digital Vault, component categories,
+          templates, prompts, and digital tools.
+        </p>
+        <ul class="demo-features" aria-label="Key header features">
+          <li>Category nav</li>
+          <li>Search slot</li>
+          <li>Mini vault panel</li>
+        </ul>
+      </section>
+
+      <article class="demo-library-card" aria-label="Featured library">
+        <p class="demo-library-card__eyebrow">Featured library</p>
+        <h2>Header Components</h2>
+        <ul>
+          <li>CSS Token Systems</li>
+          <li>Client Brief Templates</li>
+          <li>Free and Pro-ready structure</li>
+        </ul>
+      </article>
+    </main>
+  </body>
+</html>
