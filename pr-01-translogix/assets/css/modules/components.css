@@ -211,21 +211,21 @@ html.theme-dark #why .card__icon {
   gap: var(--space-04);
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
+
 .card.fleet-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-02);
+  gap: var(--space-03);
   padding: var(--space-04);
 }
-.card.fleet-card h3 {
-  padding-top: var(--space-02);
-}
+
 html.theme-dark .card.fleet-card {
   background: var(--color-surface-elevated, rgba(15, 23, 42, 0.96));
 }
+
 .fleet-card__icon {
   margin-bottom: var(--space-02);
-  padding: var(--space-02);
+  padding: var(--space-06);
   border-radius: var(--radius-lg);
   background: linear-gradient(to bottom, rgba(14, 165, 233, 0.2), rgba(14, 165, 233, 0.1));
   display: flex;
@@ -233,14 +233,17 @@ html.theme-dark .card.fleet-card {
   justify-content: center;
   min-height: 96px;
 }
+
 html.theme-dark .fleet-card__icon {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.75));
 }
+
 .fleet-card__icon img {
-  max-width: 100%;
+  width: min(68%, 220px);
   height: auto;
   display: block;
 }
+
 .fleet-card__icon .lightbox-trigger {
   appearance: none;
   border: 0;
@@ -251,6 +254,7 @@ html.theme-dark .fleet-card__icon {
 }
 
 /* Calculator */
+
 .calculator {
   margin-top: var(--space-05);
   padding: var(--space-05);
@@ -263,9 +267,11 @@ html.theme-dark .fleet-card__icon {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   align-items: flex-start;
 }
+
 html.theme-dark .calculator {
   background: var(--color-surface-elevated, rgba(15, 23, 42, 0.98));
 }
+
 #quote .summary {
   border-radius: var(--radius-lg);
   background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.03), rgba(14, 165, 233, 0.03));
@@ -273,20 +279,25 @@ html.theme-dark .calculator {
   padding: var(--space-05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+
 html.theme-dark #quote .summary {
   background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.03), rgba(14, 165, 233, 0.04));
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
+
 #quote .summary h3 {
   font-weight: var(--fw-bold);
   letter-spacing: -0.2px;
   margin-bottom: var(--space-02);
+  font-size: var(--fs-06);
 }
+
 #quick-quote {
   display: grid;
   gap: var(--space-04);
 }
+
 #quick-quote fieldset {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -294,54 +305,65 @@ html.theme-dark #quote .summary {
   margin-bottom: var(--space-02);
   background: var(--color-surface);
 }
+
 html.theme-dark #quick-quote fieldset {
   background: var(--color-surface-elevated, rgba(15, 23, 42, 0.9));
 }
+
 #quick-quote fieldset legend {
   padding: 0 var(--space-02);
   font-weight: var(--fw-semibold);
   color: var(--color-text);
 }
+
 #quick-quote fieldset label {
   display: flex;
   align-items: center;
   gap: var(--space-02);
-  line-height: 1.4;
+  line-height: var(--lh-base);
+  font-size: var(--fs-04);
 }
+
 #quick-quote fieldset input[type="checkbox"] {
   width: 18px;
   height: 18px;
 }
+
 .quote-history {
   margin-top: var(--space-04);
   border-top: 1px solid rgba(148, 163, 184, 0.25);
   padding-top: var(--space-04);
 }
+
 .quote-history__title {
-  font-size: 0.9rem;
+  font-size: var(--fs-04);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-wider);
   font-weight: var(--fw-semibold);
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   margin-bottom: var(--space-02);
 }
+
 .quote-history__list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 0.25rem;
-  font-size: 0.9rem;
+  gap: var(--space-01);
+  font-size: var(--fs-04);
 }
+
 .quote-history__item {
   display: flex;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--space-03);
   color: var(--color-text-muted);
 }
+
 .quote-history__meta {
   opacity: 0.9;
 }
+
 .quote-history__price {
   font-weight: var(--fw-semibold);
   white-space: nowrap;
@@ -406,7 +428,7 @@ html.theme-dark #quick-quote fieldset {
   align-items: center;
   justify-content: center;
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-04);
+  font-size: var(--fs-03);
   padding: 0;
   border: none;
   background: none;
@@ -480,7 +502,7 @@ html.theme-dark #quick-quote fieldset {
   justify-content: center;
   background: var(--color-accent-soft);
   color: var(--color-accent-strong);
-  padding: var(--space-01) var(--space-03);
+  padding: var(--space-02) var(--space-03);
   border-radius: var(--radius-sm);
   font-size: var(--fs-03);
   line-height: var(--lh-tight);
