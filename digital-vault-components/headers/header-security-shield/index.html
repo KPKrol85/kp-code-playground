@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Header Security Shield demo for trust-focused security, privacy, compliance, and monitoring products."
+    />
+    <title>Header Security Shield • ShieldBase</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="security-header" data-security-header>
+      <div class="security-header__inner">
+        <a class="security-header__brand" href="#" aria-label="ShieldBase home">
+          <span class="security-header__mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path class="security-header__shield" d="M32 4 10 12v18c0 13.8 8.7 24.8 22 30 13.3-5.2 22-16.2 22-30V12L32 4Z" />
+              <rect class="security-header__lock-body" x="23" y="29" width="18" height="15" rx="3" />
+              <path class="security-header__lock-shackle" d="M27 29v-4a5 5 0 0 1 10 0v4" />
+              <circle class="security-header__lock-core" cx="32" cy="36.5" r="1.8" />
+            </svg>
+          </span>
+          <span class="security-header__brand-copy">
+            <span class="security-header__name">ShieldBase</span>
+            <span class="security-header__label">Security Platform</span>
+          </span>
+        </a>
+
+        <nav class="security-header__nav" aria-label="Primary">
+          <a class="security-header__nav-link" href="#">Platform</a>
+          <a class="security-header__nav-link" href="#" aria-current="page">Protection</a>
+          <a class="security-header__nav-link" href="#">Compliance</a>
+          <a class="security-header__nav-link" href="#">Monitoring</a>
+          <a class="security-header__nav-link" href="#">Resources</a>
+        </nav>
+
+        <div class="security-header__actions">
+          <button
+            class="security-header__mode-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="Activate dark secure mode"
+          >
+            <span class="security-header__mode-icon" aria-hidden="true"></span>
+            <span class="security-header__mode-text">Secure</span>
+          </button>
+
+          <p class="security-header__trust-badge" aria-label="Status: Protected">
+            <span class="security-header__trust-dot" aria-hidden="true"></span>
+            <span>Protected</span>
+          </p>
+
+          <a class="security-header__cta" href="#">Run security scan</a>
+
+          <button
+            class="security-header__menu-button"
+            type="button"
+            data-menu-toggle
+            aria-controls="security-panel"
+            aria-expanded="false"
+            aria-label="Open secure access panel"
+          >
+            <span class="security-header__menu-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <span class="security-header__menu-text">Access</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="security-overlay" data-overlay hidden></div>
+
+    <aside
+      class="security-panel"
+      id="security-panel"
+      data-security-panel
+      hidden
+      tabindex="-1"
+      aria-label="Secure access panel"
+      aria-modal="true"
+      role="dialog"
+      inert
+    >
+      <div class="security-panel__sheet">
+        <div class="security-panel__header">
+          <p class="security-panel__title">Secure Access</p>
+          <button class="security-panel__close" type="button" data-panel-close aria-label="Close secure access panel">
+            Close
+          </button>
+        </div>
+
+        <div class="security-panel__status" aria-label="Session status">
+          <p><span aria-hidden="true">•</span> Protected session</p>
+          <p><span aria-hidden="true">•</span> Threat monitoring active</p>
+          <p><span aria-hidden="true">•</span> Audit-ready structure</p>
+        </div>
+
+        <nav class="security-panel__nav" aria-label="Mobile primary">
+          <a class="security-panel__link" href="#">Platform</a>
+          <a class="security-panel__link" href="#" aria-current="page">Protection</a>
+          <a class="security-panel__link" href="#">Compliance</a>
+          <a class="security-panel__link" href="#">Monitoring</a>
+          <a class="security-panel__link" href="#">Resources</a>
+        </nav>
+
+        <ul class="security-panel__trust-list" aria-label="Trust indicators">
+          <li>Protected navigation session</li>
+          <li>Clear audit-friendly hierarchy</li>
+          <li>Accessible interaction controls</li>
+        </ul>
+
+        <a class="security-panel__cta" href="#">Run security scan</a>
+      </div>
+    </aside>
+
+    <main id="main-content" class="security-demo">
+      <section class="security-hero" aria-labelledby="security-hero-title">
+        <p class="security-hero__eyebrow">KP_Code Digital Vault</p>
+        <h1 id="security-hero-title">Security Shield Header</h1>
+        <p class="security-hero__copy">
+          A trust-focused navigation component for security platforms, compliance tools, and protected SaaS products.
+        </p>
+        <ul class="security-hero__features" aria-label="Component features">
+          <li>Shield menu</li>
+          <li>Secure mode</li>
+          <li>Trust signals</li>
+        </ul>
+      </section>
+
+      <section class="security-card" aria-label="Protection snapshot">
+        <h2>Protection snapshot</h2>
+        <p>Session integrity is active. Navigation controls are tuned for clarity, accessibility, and enterprise readiness.</p>
+      </section>
+    </main>
+  </body>
+</html>
