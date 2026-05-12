@@ -5,25 +5,25 @@
      ========================================== */
 
   /* Prymitywy kolorów */
-  --dt-color-background: #f5f6f8;
+  --dt-color-background: #f7f4ed;
   --dt-color-surface: #ffffff;
-  --dt-color-surface-raised: #eaedf1;
-  --dt-color-text: #1f252d;
-  --dt-color-text-muted: #606873;
-  --dt-color-border: #d3d9e1;
-  --dt-color-primary: #263d5f;
-  --dt-color-primary-hover: #1c2d47;
+  --dt-color-surface-raised: #eee5d4;
+  --dt-color-text: #29251d;
+  --dt-color-text-muted: #71695c;
+  --dt-color-border: #ded2bc;
+  --dt-color-primary: #735a25;
+  --dt-color-primary-hover: #5a461c;
   --dt-color-primary-contrast: #ffffff;
-  --dt-color-secondary: #7b6236;
-  --dt-color-accent: #476a82;
+  --dt-color-secondary: #315f73;
+  --dt-color-accent: #8a4f5f;
   --dt-color-success: #23704b;
   --dt-color-warning: #956111;
   --dt-color-danger: #a63d40;
-  --dt-color-focus: #476a82;
+  --dt-color-focus: #315f73;
 
   /* Typografia */
   --dt-font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  --dt-font-heading: 'Merriweather Sans', 'Inter', sans-serif;
+  --dt-font-heading: 'Libre Franklin', 'Inter', sans-serif;
   --dt-font-mono: 'Source Code Pro', Consolas, monospace;
   --dt-text-xs: 0.75rem;
   --dt-text-sm: 0.875rem;
@@ -50,17 +50,17 @@
   --dt-space-8: 4rem;
 
   /* Zaokrąglenia */
-  --dt-radius-sm: 0.125rem;
-  --dt-radius-md: 0.25rem;
-  --dt-radius-lg: 0.375rem;
-  --dt-radius-xl: 0.5rem;
+  --dt-radius-sm: 0.25rem;
+  --dt-radius-md: 0.5rem;
+  --dt-radius-lg: 0.625rem;
+  --dt-radius-xl: 0.875rem;
   --dt-radius-pill: 999px;
 
   /* Cienie i głębia */
-  --dt-shadow-sm: 0 1px 2px rgb(38 61 95 / 0.08);
-  --dt-shadow-md: 0 8px 20px rgb(38 61 95 / 0.12);
-  --dt-shadow-lg: 0 18px 42px rgb(38 61 95 / 0.16);
-  --dt-shadow-xl: 0 28px 60px rgb(38 61 95 / 0.22);
+  --dt-shadow-sm: 0 1px 2px rgb(115 90 37 / 0.08);
+  --dt-shadow-md: 0 8px 20px rgb(115 90 37 / 0.12);
+  --dt-shadow-lg: 0 18px 42px rgb(115 90 37 / 0.16);
+  --dt-shadow-xl: 0 28px 60px rgb(115 90 37 / 0.22);
 
   /* Układ */
   --dt-container-sm: 36rem;

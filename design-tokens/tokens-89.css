@@ -5,25 +5,25 @@
      ========================================== */
 
   /* Prymitywy kolorów */
-  --dt-color-background: #fbf7f9;
+  --dt-color-background: #f6f8fc;
   --dt-color-surface: #ffffff;
-  --dt-color-surface-raised: #f1e6ed;
-  --dt-color-text: #2d2230;
-  --dt-color-text-muted: #726477;
-  --dt-color-border: #e2d2df;
-  --dt-color-primary: #b93472;
-  --dt-color-primary-hover: #93295b;
+  --dt-color-surface-raised: #e8eef8;
+  --dt-color-text: #20283a;
+  --dt-color-text-muted: #626d80;
+  --dt-color-border: #d4deec;
+  --dt-color-primary: #4058a8;
+  --dt-color-primary-hover: #314486;
   --dt-color-primary-contrast: #ffffff;
-  --dt-color-secondary: #2e75a8;
+  --dt-color-secondary: #b65b72;
   --dt-color-accent: #d27739;
   --dt-color-success: #278353;
   --dt-color-warning: #bd6b00;
   --dt-color-danger: #c73545;
-  --dt-color-focus: #2e75a8;
+  --dt-color-focus: #4058a8;
 
   /* Typografia */
   --dt-font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  --dt-font-heading: 'Manrope', 'Inter', sans-serif;
+  --dt-font-heading: 'Sora', 'Inter', sans-serif;
   --dt-font-mono: 'DM Mono', Consolas, monospace;
   --dt-text-xs: 0.75rem;
   --dt-text-sm: 0.875rem;
@@ -50,17 +50,17 @@
   --dt-space-8: 4rem;
 
   /* Zaokrąglenia */
-  --dt-radius-sm: 0.25rem;
-  --dt-radius-md: 0.5rem;
-  --dt-radius-lg: 0.875rem;
-  --dt-radius-xl: 1.25rem;
+  --dt-radius-sm: 0.125rem;
+  --dt-radius-md: 0.25rem;
+  --dt-radius-lg: 0.5rem;
+  --dt-radius-xl: 0.75rem;
   --dt-radius-pill: 999px;
 
   /* Cienie i głębia */
-  --dt-shadow-sm: 0 1px 2px rgb(185 52 114 / 0.08);
-  --dt-shadow-md: 0 8px 20px rgb(185 52 114 / 0.12);
-  --dt-shadow-lg: 0 18px 42px rgb(185 52 114 / 0.16);
-  --dt-shadow-xl: 0 28px 60px rgb(185 52 114 / 0.22);
+  --dt-shadow-sm: 0 1px 2px rgb(64 88 168 / 0.08);
+  --dt-shadow-md: 0 8px 20px rgb(64 88 168 / 0.12);
+  --dt-shadow-lg: 0 18px 42px rgb(64 88 168 / 0.16);
+  --dt-shadow-xl: 0 28px 60px rgb(64 88 168 / 0.22);
 
   /* Układ */
   --dt-container-sm: 36rem;
