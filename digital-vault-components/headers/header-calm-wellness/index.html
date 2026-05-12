@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Header Calm Wellness — a premium soft navigation component for wellness brands and mindful apps."
+    />
+    <title>Header Calm Wellness | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="wellness-header" data-wellness-header>
+      <div class="wellness-header__inner">
+        <a class="wellness-header__brand" href="#" aria-label="LumaCare Wellness Studio home">
+          <span class="wellness-header__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img" focusable="false">
+              <circle cx="24" cy="24" r="18" class="mark-ring" />
+              <path class="mark-wave" d="M12 25c4.5-7 8-9 12-9s7.5 2 12 9" />
+              <path class="mark-leaf" d="M20 31c3.5-.8 6-3.4 8-7 1.2 4.2-.5 8.5-4.1 10.6-1.4.8-2.7.9-3.9.4" />
+            </svg>
+          </span>
+          <span class="wellness-header__brand-copy">
+            <span class="wellness-header__name">LumaCare</span>
+            <span class="wellness-header__label">Wellness Studio</span>
+          </span>
+        </a>
+
+        <nav class="wellness-header__nav" aria-label="Primary navigation">
+          <a class="wellness-header__nav-link" href="#">Practice</a>
+          <a class="wellness-header__nav-link" href="#" aria-current="page">Programs</a>
+          <a class="wellness-header__nav-link" href="#">Stories</a>
+          <a class="wellness-header__nav-link" href="#">Guides</a>
+          <a class="wellness-header__nav-link" href="#">Contact</a>
+        </nav>
+
+        <div class="wellness-header__actions">
+          <button
+            class="wellness-header__theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-live="polite"
+          >
+            <span class="wellness-header__theme-track" aria-hidden="true"></span>
+            <span class="wellness-header__theme-state" data-theme-state>Day</span>
+          </button>
+          <a class="wellness-header__cta" href="#">Book session</a>
+          <button
+            class="wellness-header__menu-button"
+            type="button"
+            data-menu-toggle
+            aria-expanded="false"
+            aria-controls="wellness-mobile-menu"
+          >
+            <span class="sr-only">Open wellness menu</span>
+            <span class="wellness-header__menu-lines" aria-hidden="true">
+              <span></span><span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="wellness-overlay" data-overlay hidden></div>
+
+    <section class="wellness-menu" id="wellness-mobile-menu" data-mobile-menu hidden>
+      <div class="wellness-menu__panel" role="region" aria-label="Mobile wellness navigation">
+        <header class="wellness-menu__header">
+          <h2>Wellness navigation</h2>
+          <p class="wellness-menu__note">A calmer way to navigate your daily practice.</p>
+        </header>
+
+        <nav class="wellness-menu__nav" aria-label="Mobile primary navigation">
+          <a class="wellness-menu__link" href="#">Practice</a>
+          <a class="wellness-menu__link" href="#" aria-current="page">Programs</a>
+          <a class="wellness-menu__link" href="#">Stories</a>
+          <a class="wellness-menu__link" href="#">Guides</a>
+          <a class="wellness-menu__link" href="#">Contact</a>
+        </nav>
+
+        <article class="wellness-menu__routine" aria-label="Today routine">
+          <h3>Today’s rhythm</h3>
+          <ul>
+            <li>5 min breathing</li>
+            <li>Gentle evening reset</li>
+          </ul>
+        </article>
+
+        <a class="wellness-menu__cta" href="#">Book session</a>
+        <p class="wellness-menu__footer">Made for calm habits, one mindful step at a time.</p>
+      </div>
+    </section>
+
+    <main id="main-content" class="demo-main">
+      <section class="demo-hero" aria-labelledby="hero-title">
+        <p class="demo-kicker">KP_Code Digital Vault</p>
+        <h1 id="hero-title">Calm Wellness Header</h1>
+        <p>
+          A soft navigation component for wellness brands, mindful apps, health studios, and calm
+          premium experiences.
+        </p>
+        <ul class="demo-features" aria-label="Key header traits">
+          <li>Soft rhythm</li>
+          <li>Day/night switch</li>
+          <li>Slow morph menu</li>
+        </ul>
+      </section>
+
+      <section class="demo-card" aria-label="Sample routine status">
+        <h2>Today’s rhythm</h2>
+        <p>Steady progress, warm focus, and space to breathe through your evening sequence.</p>
+        <ul>
+          <li><strong>5 min breathing</strong> before lunch</li>
+          <li><strong>Gentle evening reset</strong> after sunset</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
