@@ -2,6 +2,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const rootDir = path.resolve(__dirname, "..");
+const tokenDirName = "tokens";
+const tokenDir = path.join(rootDir, tokenDirName);
 
 const systems = [
   {
@@ -3791,7 +3793,7 @@ function previewSource(system) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="${system.file}" />
+    <link rel="stylesheet" href="tokens/${system.file}" />
   </head>
   <body>
     <main class="dt-preview">
@@ -4492,8 +4494,12 @@ function indexHtml() {
 `;
 }
 
+function tokenPath(system) {
+  return `${tokenDirName}/${system.file}`;
+}
+
 function readme() {
-  const list = systems.map((system) => `- \`${system.file}\` - ${system.name} (${system.useCase})`).join("\n");
+  const list = systems.map((system) => `- \`${tokenPath(system)}\` - ${system.name} (${system.useCase})`).join("\n");
   return `# KP_Code Digital Vault - CSS Design Token Systems
 
 Ten folder produktu zawiera ${systems.length} gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
@@ -4525,7 +4531,7 @@ Każdy plik \`tokens-xx.css\` zawiera:
 Zaimportuj jeden plik tokenów przed stylami komponentów:
 
 \`\`\`html
-<link rel="stylesheet" href="./design-tokens/tokens-02.css" />
+<link rel="stylesheet" href="./design-tokens/tokens/tokens-02.css" />
 <link rel="stylesheet" href="./styles/components.css" />
 \`\`\`
 
@@ -4550,8 +4556,10 @@ node scripts/build-tokens.js
 `;
 }
 
+fs.mkdirSync(tokenDir, { recursive: true });
+
 for (const system of systems) {
-  fs.writeFileSync(path.join(rootDir, system.file), tokenCss(system), "utf8");
+  fs.writeFileSync(path.join(tokenDir, system.file), tokenCss(system), "utf8");
 }
 
 fs.writeFileSync(path.join(rootDir, "index.html"), indexHtml(), "utf8");
