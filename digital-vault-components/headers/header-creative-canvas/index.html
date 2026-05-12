@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Header Creative Canvas: premium creative navigation component with canvas-stroke interactions and responsive mobile panel."
+    />
+    <title>Header Creative Canvas | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <a class="canvas-skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="canvas-header" data-canvas-header>
+      <div class="canvas-header__inner">
+        <a class="canvas-header__brand" href="#" aria-label="Canvasly home">
+          <span class="canvas-header__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="presentation" focusable="false">
+              <rect x="7" y="8" width="34" height="32" rx="10" class="mark-frame"></rect>
+              <path d="M12 31c7-8 16-13 25-14" class="mark-stroke"></path>
+              <circle cx="35" cy="16" r="3" class="mark-dot"></circle>
+            </svg>
+          </span>
+          <span class="canvas-header__brand-copy">
+            <strong class="canvas-header__name">Canvasly</strong>
+            <span class="canvas-header__label">Creative System</span>
+          </span>
+        </a>
+
+        <nav class="canvas-header__nav" aria-label="Primary">
+          <a class="canvas-header__nav-link" href="#">Work</a>
+          <a class="canvas-header__nav-link" href="#">Tools</a>
+          <a class="canvas-header__nav-link" href="#" aria-current="page">Gallery</a>
+          <a class="canvas-header__nav-link" href="#">Process</a>
+          <a class="canvas-header__nav-link" href="#">Contact</a>
+        </nav>
+
+        <div class="canvas-header__actions">
+          <button class="canvas-header__theme-toggle" type="button" data-theme-toggle>
+            <span class="canvas-header__theme-swatch" aria-hidden="true"></span>
+            <span data-theme-label>Canvas: Light</span>
+          </button>
+
+          <a class="canvas-header__cta" href="#">Open studio</a>
+
+          <button
+            class="canvas-header__menu-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="creative-canvas-menu"
+            data-menu-toggle
+          >
+            <span class="visually-hidden">Open creative menu</span>
+            <span class="canvas-header__menu-strokes" aria-hidden="true">
+              <span></span><span></span><span></span><i></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="canvas-overlay" hidden data-overlay></div>
+
+    <section class="canvas-menu" id="creative-canvas-menu" hidden data-menu-panel>
+      <div class="canvas-menu__panel" role="dialog" aria-modal="true" aria-label="Creative navigation panel">
+        <div class="canvas-menu__header">
+          <p>Canvasly Navigation</p>
+          <span>Quick studio access</span>
+        </div>
+
+        <nav class="canvas-menu__nav" aria-label="Mobile primary">
+          <a class="canvas-menu__link" href="#"><span>01</span>Work</a>
+          <a class="canvas-menu__link" href="#"><span>02</span>Tools</a>
+          <a class="canvas-menu__link" href="#" aria-current="page"><span>03</span>Gallery</a>
+          <a class="canvas-menu__link" href="#"><span>04</span>Process</a>
+          <a class="canvas-menu__link" href="#"><span>05</span>Contact</a>
+        </nav>
+
+        <article class="canvas-menu__feature" aria-label="Feature highlights">
+          <h2>Portfolio system</h2>
+          <ul>
+            <li>Motion-ready components</li>
+            <li>Reusable creative blocks</li>
+          </ul>
+        </article>
+
+        <a class="canvas-menu__cta" href="#">Open studio</a>
+        <p class="canvas-menu__footer">Crafted for visual teams and creator products.</p>
+      </div>
+    </section>
+
+    <main id="main-content" class="canvas-demo-main">
+      <section class="canvas-demo-hero">
+        <p class="canvas-demo-hero__eyebrow">Header Series · #10</p>
+        <h1>Creative Canvas Header</h1>
+        <p>
+          A playful but polished navigation component for creative portfolios, design tools, and creator
+          products.
+        </p>
+      </section>
+
+      <section class="canvas-demo-card" aria-label="Component highlights">
+        <h2>Component highlights</h2>
+        <div class="canvas-demo-card__tags">
+          <span>Canvas strokes</span>
+          <span>Art mode toggle</span>
+          <span>Creative mobile panel</span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
