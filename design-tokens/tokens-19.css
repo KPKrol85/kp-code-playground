@@ -5,26 +5,26 @@
      ========================================== */
 
   /* Prymitywy kolorów */
-  --dt-color-background: #f8fbf8;
+  --dt-color-background: #f6faf4;
   --dt-color-surface: #ffffff;
-  --dt-color-surface-raised: #eaf3ea;
-  --dt-color-text: #1f2a24;
-  --dt-color-text-muted: #5e6d64;
-  --dt-color-border: #d2dfd5;
-  --dt-color-primary: #2f6f4e;
-  --dt-color-primary-hover: #25583f;
+  --dt-color-surface-raised: #e6f0df;
+  --dt-color-text: #1e2a20;
+  --dt-color-text-muted: #5d6d5f;
+  --dt-color-border: #cfddc8;
+  --dt-color-primary: #3b7a45;
+  --dt-color-primary-hover: #2d5f35;
   --dt-color-primary-contrast: #ffffff;
-  --dt-color-secondary: #bf5b2c;
-  --dt-color-accent: #4267a5;
+  --dt-color-secondary: #2f6f73;
+  --dt-color-accent: #b7791f;
   --dt-color-success: #2f7a48;
   --dt-color-warning: #a86518;
   --dt-color-danger: #b23a48;
-  --dt-color-focus: #4267a5;
+  --dt-color-focus: #2f6f73;
 
   /* Typografia */
   --dt-font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  --dt-font-heading: 'Source Sans 3', 'Inter', sans-serif;
-  --dt-font-mono: 'IBM Plex Mono', Consolas, monospace;
+  --dt-font-heading: 'Aptos Display', 'Inter', sans-serif;
+  --dt-font-mono: 'Roboto Mono', Consolas, monospace;
   --dt-text-xs: 0.75rem;
   --dt-text-sm: 0.875rem;
   --dt-text-md: 1rem;
@@ -57,10 +57,10 @@
   --dt-radius-pill: 999px;
 
   /* Cienie i głębia */
-  --dt-shadow-sm: 0 1px 2px rgb(47 111 78 / 0.08);
-  --dt-shadow-md: 0 8px 20px rgb(47 111 78 / 0.12);
-  --dt-shadow-lg: 0 18px 42px rgb(47 111 78 / 0.16);
-  --dt-shadow-xl: 0 28px 60px rgb(47 111 78 / 0.22);
+  --dt-shadow-sm: 0 1px 2px rgb(59 122 69 / 0.08);
+  --dt-shadow-md: 0 8px 20px rgb(59 122 69 / 0.12);
+  --dt-shadow-lg: 0 18px 42px rgb(59 122 69 / 0.16);
+  --dt-shadow-xl: 0 28px 60px rgb(59 122 69 / 0.22);
 
   /* Układ */
   --dt-container-sm: 36rem;

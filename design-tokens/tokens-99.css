@@ -5,26 +5,26 @@
      ========================================== */
 
   /* Prymitywy kolorów */
-  --dt-color-background: #f7fbf8;
+  --dt-color-background: #f6f5fb;
   --dt-color-surface: #ffffff;
-  --dt-color-surface-raised: #e8f2eb;
-  --dt-color-text: #1f2b24;
-  --dt-color-text-muted: #5e6e64;
-  --dt-color-border: #d1dfd5;
-  --dt-color-primary: #34744c;
-  --dt-color-primary-hover: #285b3a;
+  --dt-color-surface-raised: #ebe8f5;
+  --dt-color-text: #1f1d2e;
+  --dt-color-text-muted: #666176;
+  --dt-color-border: #d8d2e6;
+  --dt-color-primary: #4f46a3;
+  --dt-color-primary-hover: #3d367f;
   --dt-color-primary-contrast: #ffffff;
-  --dt-color-secondary: #b45f31;
-  --dt-color-accent: #4267a5;
-  --dt-color-success: #2f7a48;
-  --dt-color-warning: #a86518;
-  --dt-color-danger: #b23a48;
-  --dt-color-focus: #4267a5;
+  --dt-color-secondary: #16736a;
+  --dt-color-accent: #b06a2c;
+  --dt-color-success: #23704b;
+  --dt-color-warning: #956111;
+  --dt-color-danger: #a63d40;
+  --dt-color-focus: #4f46a3;
 
   /* Typografia */
   --dt-font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  --dt-font-heading: 'Source Sans 3', 'Inter', sans-serif;
-  --dt-font-mono: 'IBM Plex Mono', Consolas, monospace;
+  --dt-font-heading: 'Merriweather Sans', 'Inter', sans-serif;
+  --dt-font-mono: 'Source Code Pro', Consolas, monospace;
   --dt-text-xs: 0.75rem;
   --dt-text-sm: 0.875rem;
   --dt-text-md: 1rem;
@@ -50,17 +50,17 @@
   --dt-space-8: 4rem;
 
   /* Zaokrąglenia */
-  --dt-radius-sm: 0.25rem;
-  --dt-radius-md: 0.5rem;
-  --dt-radius-lg: 0.75rem;
-  --dt-radius-xl: 1rem;
+  --dt-radius-sm: 0.125rem;
+  --dt-radius-md: 0.25rem;
+  --dt-radius-lg: 0.5rem;
+  --dt-radius-xl: 0.75rem;
   --dt-radius-pill: 999px;
 
   /* Cienie i głębia */
-  --dt-shadow-sm: 0 1px 2px rgb(52 116 76 / 0.08);
-  --dt-shadow-md: 0 8px 20px rgb(52 116 76 / 0.12);
-  --dt-shadow-lg: 0 18px 42px rgb(52 116 76 / 0.16);
-  --dt-shadow-xl: 0 28px 60px rgb(52 116 76 / 0.22);
+  --dt-shadow-sm: 0 1px 2px rgb(79 70 163 / 0.08);
+  --dt-shadow-md: 0 8px 20px rgb(79 70 163 / 0.12);
+  --dt-shadow-lg: 0 18px 42px rgb(79 70 163 / 0.16);
+  --dt-shadow-xl: 0 28px 60px rgb(79 70 163 / 0.22);
 
   /* Układ */
   --dt-container-sm: 36rem;

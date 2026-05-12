@@ -5,25 +5,25 @@
      ========================================== */
 
   /* Prymitywy kolorów */
-  --dt-color-background: #fbf8f3;
+  --dt-color-background: #fff7f1;
   --dt-color-surface: #ffffff;
-  --dt-color-surface-raised: #f0eadf;
-  --dt-color-text: #28231d;
-  --dt-color-text-muted: #70675d;
-  --dt-color-border: #ded5c8;
-  --dt-color-primary: #b65a2a;
-  --dt-color-primary-hover: #914720;
+  --dt-color-surface-raised: #f5e6dc;
+  --dt-color-text: #2b211d;
+  --dt-color-text-muted: #75645b;
+  --dt-color-border: #e4cfc2;
+  --dt-color-primary: #c45334;
+  --dt-color-primary-hover: #9e3f28;
   --dt-color-primary-contrast: #ffffff;
-  --dt-color-secondary: #2f6f4e;
-  --dt-color-accent: #4267a5;
+  --dt-color-secondary: #2e806f;
+  --dt-color-accent: #7b5ab6;
   --dt-color-success: #2f7a48;
   --dt-color-warning: #a86518;
   --dt-color-danger: #b23a48;
-  --dt-color-focus: #4267a5;
+  --dt-color-focus: #7b5ab6;
 
   /* Typografia */
   --dt-font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  --dt-font-heading: 'Source Sans 3', 'Inter', sans-serif;
+  --dt-font-heading: 'Libre Franklin', 'Inter', sans-serif;
   --dt-font-mono: 'IBM Plex Mono', Consolas, monospace;
   --dt-text-xs: 0.75rem;
   --dt-text-sm: 0.875rem;
@@ -50,17 +50,17 @@
   --dt-space-8: 4rem;
 
   /* Zaokrąglenia */
-  --dt-radius-sm: 0.25rem;
-  --dt-radius-md: 0.5rem;
-  --dt-radius-lg: 0.75rem;
-  --dt-radius-xl: 1rem;
+  --dt-radius-sm: 0.375rem;
+  --dt-radius-md: 0.75rem;
+  --dt-radius-lg: 1rem;
+  --dt-radius-xl: 1.25rem;
   --dt-radius-pill: 999px;
 
   /* Cienie i głębia */
-  --dt-shadow-sm: 0 1px 2px rgb(182 90 42 / 0.08);
-  --dt-shadow-md: 0 8px 20px rgb(182 90 42 / 0.12);
-  --dt-shadow-lg: 0 18px 42px rgb(182 90 42 / 0.16);
-  --dt-shadow-xl: 0 28px 60px rgb(182 90 42 / 0.22);
+  --dt-shadow-sm: 0 1px 2px rgb(196 83 52 / 0.08);
+  --dt-shadow-md: 0 8px 20px rgb(196 83 52 / 0.12);
+  --dt-shadow-lg: 0 18px 42px rgb(196 83 52 / 0.16);
+  --dt-shadow-xl: 0 28px 60px rgb(196 83 52 / 0.22);
 
   /* Układ */
   --dt-container-sm: 36rem;
