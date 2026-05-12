@@ -1,6 +1,6 @@
 # KP_Code Digital Vault - CSS Design Token Systems
 
-Ten folder produktu zawiera 80 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
+Ten folder produktu zawiera 100 gotowych do skopiowania systemów tokenów CSS dla projektów developerskich.
 Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz warstwę podglądu komponentów w strukturze BEM.
 
 ## Dostępne zestawy tokenów
@@ -85,6 +85,26 @@ Każdy plik jest samodzielny i zawiera namespacowane CSS custom properties oraz 
 - `tokens-78.css` - Game Storefront (Sklepy z grami, DLC, promocje sezonowe i strony premier)
 - `tokens-79.css` - Volunteer Network (Koordynacja wolontariuszy, grafiki dyżurów, wydarzenia lokalne i listy zadań)
 - `tokens-80.css` - Team Workflow (Workflow zespołów, kanbany operacyjne, handoffy i automatyzacje procesów)
+- `tokens-81.css` - Content Ops (Kalendarze redakcyjne, kolejki publikacji i operacje contentowe)
+- `tokens-82.css` - Retention Suite (Narzędzia retencji, automatyzacje lifecycle i segmenty użytkowników)
+- `tokens-83.css` - Atelier Launch (Premiery kolekcji, strony atelier i ekskluzywne zapisy klientów)
+- `tokens-84.css` - Daily Companion (Aplikacje osobiste, rutyny dnia, przypomnienia i lekkie widoki profilu)
+- `tokens-85.css` - Service Kiosk (Kioski samoobsługowe, punkty obsługi i proste ścieżki zgłoszeń publicznych)
+- `tokens-86.css` - Treasury Console (Zarządzanie płynnością, cashflow, limity i widoki skarbowe firm)
+- `tokens-87.css` - Care Triage (Triage pacjentów, kolejki zgłoszeń, priorytety opieki i eskalacje)
+- `tokens-88.css` - Build Pipeline (Panele buildów, kolejki CI, artefakty wydań i statusy środowisk)
+- `tokens-89.css` - Creative Brief (Briefy kreatywne, akceptacje koncepcji i biblioteki kierunków wizualnych)
+- `tokens-90.css` - Vendor Marketplace (Marketplace B2B, profile sprzedawców, zapytania ofertowe i koszyki hurtowe)
+- `tokens-91.css` - Cohort Classroom (Programy cohort-based, sesje live, zadania grupowe i postępy mentorów)
+- `tokens-92.css` - Risk Command (Centra ryzyka, priorytety podatności, score zasobów i remediacje)
+- `tokens-93.css` - Forecast Studio (Prognozy biznesowe, scenariusze, modele trendów i widoki wariantów)
+- `tokens-94.css` - Circular Supply (Łańcuchy dostaw circular economy, odzysk materiałów i raporty zasobów)
+- `tokens-95.css` - Governance Hub (Zarządzanie politykami, komitety decyzyjne, rejestry ryzyk i akceptacje)
+- `tokens-96.css` - Inference Console (Monitoring inferencji, koszty modeli, kolejki requestów i jakość odpowiedzi)
+- `tokens-97.css` - Facility Leasing (Najem komercyjny, powierzchnie biurowe, terminy oględzin i warunki umów)
+- `tokens-98.css` - Quest Hub (Dzienniki zadań, progres sezonowy, nagrody graczy i wydarzenia live)
+- `tokens-99.css` - Grant Management (Nabory grantowe, oceny wniosków, komisje społeczne i raportowanie wpływu)
+- `tokens-100.css` - Decision Log (Rejestry decyzji, asynchroniczne uzgodnienia, właściciele tematów i follow-upy)
 
 ## Struktura tokenów
 
