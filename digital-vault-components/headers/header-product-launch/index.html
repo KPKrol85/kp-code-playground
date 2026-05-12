@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Header Product Launch: a premium, conversion-focused header component for SaaS launches, beta products, and high-impact product landing pages."
+    />
+    <title>Header Product Launch | KP_Code Digital Vault</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="launch-header" data-launch-header>
+      <div class="launch-header__inner">
+        <a class="launch-header__brand" href="#" aria-label="LaunchPad home">
+          <span class="launch-header__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img" focusable="false">
+              <circle cx="36" cy="12" r="4" class="mark-dot" />
+              <path d="M10 34 24 20l6 6 8-8" class="mark-line" />
+              <path d="M30 18h8v8" class="mark-arrow" />
+            </svg>
+          </span>
+          <span class="launch-header__brand-copy">
+            <span class="launch-header__name">LaunchPad</span>
+            <span class="launch-header__label">Product Beta</span>
+          </span>
+        </a>
+
+        <nav class="launch-header__nav" aria-label="Primary navigation">
+          <a class="launch-header__nav-link is-active" href="#" aria-current="page">Features</a>
+          <a class="launch-header__nav-link" href="#">How it works</a>
+          <a class="launch-header__nav-link" href="#">Use cases</a>
+          <a class="launch-header__nav-link" href="#">Pricing</a>
+          <a class="launch-header__nav-link" href="#">FAQ</a>
+        </nav>
+
+        <div class="launch-header__actions">
+          <span class="launch-header__badge" role="status" aria-label="Launch status: Beta open">
+            <span aria-hidden="true">●</span>
+            Beta open
+          </span>
+          <button class="launch-header__theme-toggle" type="button" data-theme-toggle>
+            <span>Mode</span>
+            <span class="launch-header__theme-indicator" aria-hidden="true"></span>
+          </button>
+          <a class="launch-header__cta" href="#">Get early access</a>
+          <button
+            class="launch-header__menu-button"
+            type="button"
+            aria-controls="launch-panel"
+            aria-expanded="false"
+            aria-label="Open launch actions"
+            data-menu-button
+          >
+            <span class="launch-header__menu-lines" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="launch-overlay" data-launch-overlay hidden></div>
+
+    <aside class="launch-panel" id="launch-panel" data-launch-panel hidden>
+      <div class="launch-panel__sheet" role="dialog" aria-modal="true" aria-label="Launch actions panel">
+        <div class="launch-panel__header">
+          <p class="launch-panel__status"><strong>Beta open</strong><span>Early access available</span></p>
+        </div>
+        <nav class="launch-panel__nav" aria-label="Mobile navigation">
+          <a class="launch-panel__link" href="#">Features</a>
+          <a class="launch-panel__link" href="#">How it works</a>
+          <a class="launch-panel__link" href="#">Use cases</a>
+          <a class="launch-panel__link" href="#">Pricing</a>
+          <a class="launch-panel__link" href="#">FAQ</a>
+        </nav>
+        <div class="launch-panel__actions">
+          <a class="launch-panel__cta" href="#">Get early access</a>
+          <a class="launch-panel__secondary" href="#">Watch demo</a>
+        </div>
+        <p class="launch-panel__footer">Demo-ready navigation for focused product launch pages.</p>
+      </div>
+    </aside>
+
+    <main id="main-content" class="launch-demo">
+      <section class="launch-demo__hero">
+        <p class="launch-demo__eyebrow">Demo-ready navigation</p>
+        <h1>Product Launch Header</h1>
+        <p>
+          A conversion-focused navigation component for SaaS launches, beta products, and high-impact
+          landing pages.
+        </p>
+        <ul class="launch-demo__chips" aria-label="Feature highlights">
+          <li>Sticky CTA</li>
+          <li>Launch actions</li>
+          <li>Polished pill switch</li>
+        </ul>
+      </section>
+      <section class="launch-demo__card" aria-label="Launch status card">
+        <h2>Launch status</h2>
+        <p><strong>Beta open</strong> · Early access available</p>
+      </section>
+    </main>
+  </body>
+</html>
