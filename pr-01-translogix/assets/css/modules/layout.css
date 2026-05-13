@@ -43,6 +43,7 @@
 .section__lead {
   max-width: 42rem;
   font-size: var(--fs-04);
+  line-height: var(--lh-relaxed);
 }
 
 @media (min-width: 760px) {
