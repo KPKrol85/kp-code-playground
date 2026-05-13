@@ -1,0 +1,228 @@
+:root {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at 20% -10%, #182538 0%, #0d1118 48%, #090c11 100%);
+  color: #e6edf8;
+}
+
+.demo-shell {
+  padding: clamp(2rem, 4vw, 4rem) 1rem 1.5rem;
+}
+
+.demo-shell__inner {
+  max-width: 68rem;
+  margin: 0 auto;
+}
+
+.demo-shell__eyebrow {
+  margin: 0 0 0.75rem;
+  color: #8ba3c5;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.demo-shell__title { margin: 0; font-size: clamp(1.35rem, 3vw, 2.2rem); }
+.demo-shell__description { color: #b6c5da; max-width: 60ch; }
+
+.dev-console-footer {
+  --console-bg: linear-gradient(180deg, #0d131c 0%, #0a0f17 100%);
+  --console-border: #253347;
+  --console-accent: #76e3a8;
+  --console-accent-soft: rgba(118, 227, 168, 0.18);
+  --console-text-muted: #9bb0cd;
+  --console-key: #1a2738;
+  --console-danger: #f67e7e;
+
+  border-top: 1px solid #202c3f;
+  background: #090e14;
+  position: relative;
+}
+
+.dev-console-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.015),
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.dev-console-footer__surface {
+  position: relative;
+  z-index: 1;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.dev-console-footer__header,
+.dev-console-footer__command,
+.dev-console-footer__nav,
+.dev-console-footer__system,
+.dev-console-footer__meta {
+  background: var(--console-bg);
+  border: 1px solid var(--console-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.dev-console-footer__identity { display: flex; align-items: baseline; gap: 0.6rem; }
+.dev-console-footer__prompt,
+.dev-console-footer__command-text,
+.dev-console-footer__stats dt,
+.dev-console-footer__stats dd,
+.dev-console-footer__meta-status,
+.dev-console-footer__key-chip {
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.dev-console-footer__prompt { margin: 0; color: var(--console-accent); }
+.dev-console-footer__brand { margin: 0; font-size: 1.25rem; }
+.dev-console-footer__tagline { margin: 0.4rem 0 0; color: var(--console-text-muted); }
+.dev-console-footer__section-title { margin: 0 0 0.8rem; font-size: 0.92rem; color: #dce6f7; }
+
+.dev-console-footer__command-shell {
+  border: 1px solid #2c3d55;
+  background: #0b121a;
+  border-radius: 0.65rem;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dev-console-footer__command-text {
+  overflow-wrap: anywhere;
+  font-size: 0.95rem;
+  color: #d5f2e4;
+}
+
+.dev-console-footer__copy-btn,
+.dev-console-footer__group-toggle {
+  border: 1px solid #385073;
+  background: #102033;
+  color: #d4e7ff;
+  border-radius: 0.55rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dev-console-footer__copy-btn {
+  align-self: flex-start;
+  padding: 0.5rem 0.8rem;
+}
+
+.dev-console-footer__copy-btn.is-copied {
+  background: var(--console-accent-soft);
+  border-color: var(--console-accent);
+  color: #caffdf;
+}
+
+.dev-console-footer__copy-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.dev-console-footer__helper,
+.dev-console-footer__feedback { margin: 0.45rem 0 0; color: var(--console-text-muted); font-size: 0.86rem; }
+.dev-console-footer__feedback { min-height: 1.2em; color: #bce8cd; }
+
+.dev-console-footer__groups {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.dev-console-footer__group {
+  border: 1px solid #2a394d;
+  border-radius: 0.65rem;
+  padding: 0.7rem;
+  background: rgba(15, 24, 36, 0.92);
+}
+
+.dev-console-footer__group.is-active {
+  border-color: var(--console-accent);
+  box-shadow: inset 0 0 0 1px var(--console-accent-soft);
+}
+
+.dev-console-footer__group h4 { margin: 0 0 0.5rem; }
+.dev-console-footer__group-toggle { width: 100%; text-align: left; padding: 0.45rem 0.55rem; display: flex; justify-content: space-between; }
+.dev-console-footer__key-chip { font-size: 0.75rem; color: #8ebce7; background: var(--console-key); padding: 0.15rem 0.45rem; border-radius: 0.4rem; border: 1px solid #344f6d; }
+.dev-console-footer__group ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.35rem; }
+.dev-console-footer a { color: #cddfff; text-decoration: none; }
+.dev-console-footer a:hover { color: #ffffff; text-decoration: underline; text-underline-offset: 0.15em; }
+
+.dev-console-footer__stats { margin: 0; display: grid; gap: 0.5rem; }
+.dev-console-footer__stats div { display: flex; justify-content: space-between; gap: 0.8rem; border-bottom: 1px dashed #2a3a50; padding-bottom: 0.35rem; }
+.dev-console-footer__stats dt { color: var(--console-text-muted); }
+.dev-console-footer__stats dd { margin: 0; color: #e7f0ff; text-transform: lowercase; display: inline-flex; gap: 0.4rem; align-items: center; }
+.dev-console-footer__status-dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--console-accent); box-shadow: 0 0 0 0.2rem rgba(118, 227, 168, 0.18); }
+
+.dev-console-footer__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: #b8c9e0;
+  font-size: 0.85rem;
+}
+
+.dev-console-footer :focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+@media (min-width: 480px) {
+  .dev-console-footer__command-shell { flex-direction: row; align-items: center; justify-content: space-between; }
+  .dev-console-footer__command-text { padding-right: 1rem; }
+}
+
+@media (min-width: 760px) {
+  .dev-console-footer__layout {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 1rem;
+  }
+
+  .dev-console-footer__groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .dev-console-footer__surface { padding: 1.25rem 1.25rem 1.5rem; }
+  .dev-console-footer__groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dev-console-footer__meta {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
