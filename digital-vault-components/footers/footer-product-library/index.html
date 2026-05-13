@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Footer Product Library | Component Vault</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="library-demo" aria-labelledby="demo-title">
+      <div class="library-demo__shell">
+        <p class="library-demo__kicker">KP_Code Digital Vault • Demo Surface</p>
+        <h1 id="demo-title">Component Library Workspace</h1>
+        <p>
+          This page previews a production-style footer component for component libraries,
+          documentation hubs, and developer resource platforms.
+        </p>
+      </div>
+    </main>
+
+    <footer class="footer-product-library" aria-label="Component Vault footer">
+      <div class="footer-product-library__inner">
+        <section class="footer-product-library__top" aria-labelledby="library-brand-title">
+          <div class="footer-product-library__brand">
+            <p class="footer-product-library__eyebrow">Product Library Footer</p>
+            <h2 id="library-brand-title" class="footer-product-library__title">Component Vault</h2>
+            <p class="footer-product-library__positioning">
+              Reusable interface patterns for fast, accessible product builds.
+            </p>
+            <ul class="footer-product-library__badges" aria-label="Library summary">
+              <li>128 components</li>
+              <li>24 categories</li>
+              <li>Free + Pro assets</li>
+              <li>MIT-style demo license</li>
+            </ul>
+          </div>
+
+          <aside class="footer-product-library__license-panel" aria-labelledby="license-panel-title">
+            <h3 id="license-panel-title">License & Package Notes</h3>
+            <p>
+              Demo package path:
+              <code>digital-vault-components/footers/footer-product-library</code>
+            </p>
+            <button
+              type="button"
+              class="footer-product-library__copy-btn"
+              data-copy-target="digital-vault-components/footers/footer-product-library"
+            >
+              Copy package path
+            </button>
+            <p class="footer-product-library__copy-feedback" aria-live="polite"></p>
+
+            <button
+              type="button"
+              class="footer-product-library__disclosure-btn"
+              aria-expanded="false"
+              aria-controls="license-summary-panel"
+            >
+              View license summary
+            </button>
+            <div id="license-summary-panel" class="footer-product-library__disclosure" hidden>
+              <p>
+                Demo license copy for interface preview purposes only. Validate legal text and
+                commercial terms before production use.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="footer-product-library__nav-grid" aria-label="Footer link groups">
+          <nav class="footer-product-library__group" aria-labelledby="group-categories-title">
+            <button class="footer-product-library__group-toggle" aria-expanded="true">
+              <span id="group-categories-title">Categories</span>
+            </button>
+            <ul>
+              <li><a href="#">Headers</a></li>
+              <li><a href="#">Footers</a></li>
+              <li><a href="#">Cards</a></li>
+              <li><a href="#">Accordions</a></li>
+              <li><a href="#">Heroes</a></li>
+              <li><a href="#">Modals</a></li>
+            </ul>
+          </nav>
+
+          <nav class="footer-product-library__group" aria-labelledby="group-resources-title">
+            <button class="footer-product-library__group-toggle" aria-expanded="true">
+              <span id="group-resources-title">Resources</span>
+            </button>
+            <ul>
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Usage Guides</a></li>
+              <li><a href="#">Design Tokens</a></li>
+              <li><a href="#">Starter Templates</a></li>
+            </ul>
+          </nav>
+
+          <nav class="footer-product-library__group" aria-labelledby="group-developers-title">
+            <button class="footer-product-library__group-toggle" aria-expanded="true">
+              <span id="group-developers-title">Developers</span>
+            </button>
+            <ul>
+              <li><a href="#">Code Examples</a></li>
+              <li><a href="#">Accessibility Notes</a></li>
+              <li><a href="#">Integration Tips</a></li>
+              <li><a href="#">Changelog</a></li>
+            </ul>
+          </nav>
+
+          <nav class="footer-product-library__group" aria-labelledby="group-license-title">
+            <button class="footer-product-library__group-toggle" aria-expanded="true">
+              <span id="group-license-title">License</span>
+            </button>
+            <ul>
+              <li><a href="#">License Overview</a></li>
+              <li><a href="#">Free Assets</a></li>
+              <li><a href="#">Pro Access</a></li>
+              <li><a href="#">Commercial Use</a></li>
+            </ul>
+          </nav>
+
+          <nav class="footer-product-library__group" aria-labelledby="group-support-title">
+            <button class="footer-product-library__group-toggle" aria-expanded="true">
+              <span id="group-support-title">Support</span>
+            </button>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Report Issue</a></li>
+              <li><a href="#">Request Component</a></li>
+            </ul>
+          </nav>
+        </section>
+
+        <div class="footer-product-library__bottom">
+          <p>© <span data-current-year>2026</span> Component Vault.</p>
+          <p>Library v1.0</p>
+          <p class="footer-product-library__status">Curated release</p>
+          <ul class="footer-product-library__legal-links" aria-label="Legal links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
