@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Footer Compact App Bar | PocketPanel</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="pp-demo">
+      <header class="pp-demo__header">
+        <p class="pp-demo__eyebrow">KP_Code Digital Vault</p>
+        <h1 class="pp-demo__title">PocketPanel workspace</h1>
+        <p class="pp-demo__subtitle">
+          Lightweight product panel for creators and teams. This demo keeps the content intentionally short to showcase the compact app footer behavior.
+        </p>
+      </header>
+
+      <main class="pp-demo__main" id="main-content" tabindex="-1">
+        <section class="pp-demo__card">
+          <h2>Today</h2>
+          <p>2 items scheduled, 1 draft pending review, and background sync is standing by.</p>
+        </section>
+        <section class="pp-demo__card">
+          <h2>Highlights</h2>
+          <ul>
+            <li>Template library updated with 8 new starter blocks.</li>
+            <li>Search latency improved in EU and US regions.</li>
+            <li>Compact app bar now supports a utility “More” panel.</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <footer class="pp-footer" aria-label="PocketPanel footer app bar">
+      <div class="pp-footer__top">
+        <div class="pp-footer__brand">
+          <a href="#" class="pp-footer__brand-link">
+            <span class="pp-footer__brand-mark" aria-hidden="true">PP</span>
+            <span class="pp-footer__brand-text">
+              <strong>PocketPanel</strong>
+              <small>mobile-first app footer</small>
+            </span>
+          </a>
+        </div>
+
+        <nav class="pp-footer__nav" aria-label="Primary app navigation">
+          <a class="pp-footer__nav-item" href="#" aria-current="page">
+            <span class="pp-footer__icon" aria-hidden="true">⌂</span>
+            <span>Home</span>
+          </a>
+          <a class="pp-footer__nav-item" href="#">
+            <span class="pp-footer__icon" aria-hidden="true">▦</span>
+            <span>Library</span>
+          </a>
+          <a class="pp-footer__nav-item" href="#">
+            <span class="pp-footer__icon" aria-hidden="true">⌕</span>
+            <span>Search</span>
+          </a>
+          <a class="pp-footer__nav-item" href="#">
+            <span class="pp-footer__icon" aria-hidden="true">◴</span>
+            <span>Activity</span>
+          </a>
+        </nav>
+
+        <div class="pp-footer__actions">
+          <button class="pp-footer__quick-action" type="button" id="quickActionBtn">
+            <span aria-hidden="true">＋</span>
+            <span>Create</span>
+          </button>
+          <button
+            class="pp-footer__more-toggle"
+            type="button"
+            id="moreToggle"
+            aria-expanded="false"
+            aria-controls="morePanel"
+          >
+            More
+          </button>
+        </div>
+      </div>
+
+      <div class="pp-footer__more-panel" id="morePanel" hidden>
+        <nav aria-label="Secondary footer links" class="pp-footer__secondary-nav">
+          <a href="#">Docs</a>
+          <a href="#">Support</a>
+          <a href="#">Status</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </nav>
+      </div>
+
+      <div class="pp-footer__meta">
+        <p><span id="currentYear">2026</span> PocketPanel · v1.8</p>
+        <p class="pp-footer__sync">Sync ready</p>
+      </div>
+      <p class="pp-footer__feedback" id="quickActionFeedback" aria-live="polite"></p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
