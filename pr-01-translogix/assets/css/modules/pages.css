@@ -309,6 +309,23 @@ html.theme-dark .fleet-card__brand .logo--dark {
   gap: var(--space-02);
 }
 
+.service-card > .btn {
+  width: min(100%, max(11rem, 50%));
+  justify-self: center;
+  padding: var(--space-01) var(--space-03);
+  border-color: color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent-soft) 45%, var(--color-surface));
+  color: var(--color-accent-strong);
+  font-size: var(--fs-03);
+  font-weight: var(--fw-semibold);
+  box-shadow: none;
+}
+
+.service-card > .btn:hover {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+}
+
 .service-card__header {
   display: flex;
   justify-content: space-between;
