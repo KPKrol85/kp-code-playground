@@ -810,27 +810,34 @@ html.theme-dark .lightbox__hero-frame {
 }
 
 @media (max-width: 700px) {
+
   .lightbox {
     padding: var(--space-02);
   }
+
   .lightbox__dialog {
     width: calc(100vw - (var(--space-02) * 2));
     max-height: calc(100dvh - (var(--space-02) * 2));
   }
+
   .lightbox__hero-frame {
     min-height: auto;
     padding: 0;
   }
+
   .lightbox__hero {
     width: 180px;
     max-height: 80px;
   }
+
   .lightbox__controls .btn[data-lightbox-prev] {
     left: var(--space-02);
   }
+
   .lightbox__controls .btn[data-lightbox-next] {
     right: var(--space-02);
   }
+
   .lightbox__zoom {
     padding-top: max(var(--space-02), env(safe-area-inset-top));
     padding-right: max(var(--space-02), env(safe-area-inset-right));
@@ -839,6 +846,7 @@ html.theme-dark .lightbox__hero-frame {
     box-sizing: border-box;
     overflow: hidden;
   }
+
   .lightbox__zoom-img {
     max-width: 100%;
     max-height: 100%;
@@ -848,6 +856,7 @@ html.theme-dark .lightbox__hero-frame {
     border-radius: calc(var(--radius-lg) - 2px);
     box-sizing: border-box;
   }
+
   .lightbox__zoom-close {
     top: var(--space-02);
     right: var(--space-02);
@@ -855,13 +864,16 @@ html.theme-dark .lightbox__hero-frame {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .lightbox {
     transition: none;
   }
+
   .lightbox__thumb img,
   .lightbox__thumb::after {
     transition: none;
   }
+
   .lightbox__controls .btn,
   .lightbox__close,
   .lightbox__zoom-close {
@@ -870,9 +882,11 @@ html.theme-dark .lightbox__hero-frame {
 }
 
 @media (hover: none) and (pointer: coarse) {
+
   .lightbox__thumb:hover img {
     transform: none;
   }
+
   .lightbox__thumb:hover::after {
     opacity: 0;
   }

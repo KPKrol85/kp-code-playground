@@ -306,7 +306,19 @@ html.theme-dark .fleet-card__brand .logo--dark {
 
 .service-card {
   display: grid;
+  gap: var(--space-03);
+}
+
+.service-card .filters {
+  align-items: flex-start;
+  align-content: flex-start;
   gap: var(--space-02);
+  margin-bottom: 0;
+}
+
+.service-card .tag {
+  flex: 0 0 auto;
+  align-self: flex-start;
 }
 
 .service-card > .btn {
