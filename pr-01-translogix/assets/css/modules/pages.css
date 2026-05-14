@@ -898,7 +898,7 @@ html.theme-dark .system-page__card {
 
 .site-consent__title {
   margin: var(--space-04) 0 var(--space-02);
-  font-size: clamp(1.4rem, 2vw + 0.4rem, 2rem);
+  font-size: var(--fs-03);
 }
 
 .site-consent__text {

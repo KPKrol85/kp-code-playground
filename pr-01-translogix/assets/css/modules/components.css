@@ -668,10 +668,9 @@ html.theme-dark .lightbox__hero-frame {
   width: 44px;
   height: 44px;
   padding: 0;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   display: grid;
   place-items: center;
-  font-size: 0;
 }
 
 .lightbox__controls .btn[data-lightbox-prev] {
@@ -690,13 +689,13 @@ html.theme-dark .lightbox__hero-frame {
 
 .lightbox__controls .btn[data-lightbox-prev]::before {
   content: "←";
-  font-size: 18px;
+  font-size: var(--fs-03);
   transform: translateY(-2.5px);
 }
 
 .lightbox__controls .btn[data-lightbox-next]::before {
   content: "→";
-  font-size: 18px;
+  font-size: var(--fs-03);
   transform: translateY(-2.5px);
 }
 
@@ -709,7 +708,7 @@ html.theme-dark .lightbox__hero-frame {
 
 .lightbox__close::before {
   content: "×";
-  font-size: 22px;
+  font-size: var(--fs-03);
   line-height: 1;
   transform: translateY(-1px);
 }
@@ -789,7 +788,7 @@ html.theme-dark .lightbox__hero-frame {
 
 .lightbox__zoom-close::before {
   content: "×";
-  font-size: 22px;
+  font-size: var(--fs-03);
   line-height: 1;
   color: #fff;
   transform: translateY(-1px);
