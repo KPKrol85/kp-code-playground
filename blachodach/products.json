@@ -1,0 +1,93 @@
+[
+  {
+    "id": "dashki-drzwi-ds100",
+    "name": "Daszek nad drzwi DS-100",
+    "category": "daszki nad drzwi",
+    "shortDescription": "Kompaktowy daszek wejściowy z profilem aluminiowym.",
+    "longDescription": "System DS-100 zapewnia skuteczną ochronę wejścia przed opadami i poprawia estetykę elewacji budynku jednorodzinnego lub biurowego.",
+    "material": "Aluminium + poliwęglan komorowy",
+    "finish": "Antracyt RAL 7016",
+    "priceLabel": "od 890 zł / szt.",
+    "leadTime": "5-7 dni roboczych",
+    "tags": ["wejście", "dom", "nowoczesny"],
+    "recommendedUse": "Domy jednorodzinne i budynki usługowe"
+  },
+  {
+    "id": "dashki-balkon-db240",
+    "name": "Daszek balkonowy DB-240",
+    "category": "daszki balkonowe",
+    "shortDescription": "Rozbudowany system osłonowy dla balkonów i tarasów.",
+    "longDescription": "Model DB-240 minimalizuje zacieki na ścianie i poprawia komfort użytkowania balkonu przez cały rok.",
+    "material": "Stal ocynkowana + szkło bezpieczne",
+    "finish": "Mat grafitowy",
+    "priceLabel": "od 2350 zł / kpl.",
+    "leadTime": "8-12 dni roboczych",
+    "tags": ["balkon", "taras", "deweloper"],
+    "recommendedUse": "Budownictwo wielorodzinne i apartamentowe"
+  },
+  {
+    "id": "obrobki-ob180",
+    "name": "Obróbki blacharskie OB-180",
+    "category": "obróbki blacharskie",
+    "shortDescription": "Precyzyjne obróbki gzymsów, kominów i attyk.",
+    "longDescription": "Wykonywane na zamówienie obróbki zwiększają szczelność i wydłużają żywotność całego pokrycia dachowego.",
+    "material": "Blacha stalowa powlekana",
+    "finish": "Połysk / mat, RAL",
+    "priceLabel": "od 45 zł / mb",
+    "leadTime": "3-6 dni roboczych",
+    "tags": ["detal", "szczelność", "dach"],
+    "recommendedUse": "Nowe dachy i modernizacje"
+  },
+  {
+    "id": "blachodachowka-bd350",
+    "name": "Blachodachówka BD-350",
+    "category": "blachodachówka",
+    "shortDescription": "Modułowa blachodachówka o wysokiej odporności powłoki.",
+    "longDescription": "BD-350 łączy estetykę klasycznej dachówki z szybkim montażem i niską masą systemu.",
+    "material": "Stal 0,5 mm, powłoka poliuretanowa",
+    "finish": "RAL 8017, 7016, 9005",
+    "priceLabel": "od 62 zł / m²",
+    "leadTime": "6-10 dni roboczych",
+    "tags": ["pokrycie", "moduł", "premium"],
+    "recommendedUse": "Domy jednorodzinne i segmenty"
+  },
+  {
+    "id": "panele-pd510",
+    "name": "Panele dachowe PD-510",
+    "category": "panele dachowe",
+    "shortDescription": "Panel na rąbek zatrzaskowy do nowoczesnych brył.",
+    "longDescription": "System PD-510 tworzy minimalistyczny efekt wizualny i zapewnia trwałą ochronę połaci dachowej.",
+    "material": "Stal z powłoką hybrydową",
+    "finish": "Mat strukturalny",
+    "priceLabel": "od 78 zł / m²",
+    "leadTime": "7-11 dni roboczych",
+    "tags": ["rąbek", "minimalizm", "architekt"],
+    "recommendedUse": "Nowoczesne domy i obiekty komercyjne"
+  },
+  {
+    "id": "rynny-ra200",
+    "name": "Rynny i akcesoria RA-200",
+    "category": "rynny i akcesoria",
+    "shortDescription": "System odwodnienia dachu z kompletem akcesoriów.",
+    "longDescription": "Kompletny zestaw rynien, narożników i obejm pozwala szybko zrealizować sprawny system odprowadzania wody.",
+    "material": "Stal ocynkowana lakierowana",
+    "finish": "Brąz / grafit / ceglasty",
+    "priceLabel": "od 39 zł / mb",
+    "leadTime": "4-8 dni roboczych",
+    "tags": ["odwodnienie", "akcesoria", "renowacja"],
+    "recommendedUse": "Domy, hale i budynki usługowe"
+  },
+  {
+    "id": "konstrukcje-kw900",
+    "name": "Konstrukcje na wymiar KW-900",
+    "category": "konstrukcje na wymiar",
+    "shortDescription": "Indywidualne konstrukcje stalowe pod zadaszenia i osłony.",
+    "longDescription": "Projektujemy i wykonujemy konstrukcje wsporcze zgodnie z wymaganiami inwestora oraz lokalnymi warunkami obciążeniowymi.",
+    "material": "Stal konstrukcyjna S235/S355",
+    "finish": "Ocynk ogniowy + malowanie proszkowe",
+    "priceLabel": "wycena indywidualna",
+    "leadTime": "10-20 dni roboczych",
+    "tags": ["indywidualne", "przemysł", "duże formaty"],
+    "recommendedUse": "Inwestycje komercyjne i przemysłowe"
+  }
+]
