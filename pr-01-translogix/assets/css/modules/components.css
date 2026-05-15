@@ -414,6 +414,14 @@ html.theme-dark #quick-quote fieldset {
   transform: translateY(-2px);
 }
 
+.quote-form__submit {
+  align-self: flex-start;
+  justify-self: center;
+  width: fit-content;
+  min-width: 12rem;
+  padding-inline: var(--space-05);
+}
+
 /* Buttons */
 
 .btn {

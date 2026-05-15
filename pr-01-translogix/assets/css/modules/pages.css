@@ -204,22 +204,31 @@ html.theme-dark .fleet-card__brand .logo--dark {
 
 .tabs {
   display: grid;
-  gap: var(--space-02);
+  gap: var(--space-04);
+}
+
+.tabs__intro {
+  margin-bottom: var(--space-04);
 }
 
 .tablist {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-02);
+  align-items: center;
 }
 
 .tablist button {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
-  padding: var(--space-02) var(--space-04);
+  color: var(--color-text);
+  padding: var(--space-02) var(--space-03);
   cursor: pointer;
-  box-shadow: var(--color-shadow);
+  font-size: var(--fs-03);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  box-shadow: var(--shadow-sm);
   transition:
     color var(--transition),
     border-color var(--transition),
@@ -232,14 +241,93 @@ html.theme-dark .fleet-card__brand .logo--dark {
   background: var(--color-accent-soft);
   border-color: var(--color-accent);
   color: var(--color-accent-strong);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
 }
 
 .tabpanel {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-03) var(--space-04);
-  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 46%),
+    var(--color-surface);
+  box-shadow: var(--color-shadow);
+  overflow: hidden;
+}
+
+.tabpanel:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  box-shadow:
+    var(--color-shadow),
+    0 0 0 4px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+.tabs__panel-card {
+  display: grid;
+  gap: var(--space-04);
+  padding: var(--space-04);
+}
+
+.tabs__panel-header {
+  display: grid;
+  gap: var(--space-02);
+}
+
+.tabs__panel-header h3 {
+  margin-bottom: 0;
+  font-size: var(--fs-07);
+}
+
+.tabs__kicker {
+  margin: 0;
+  color: var(--color-accent-strong);
+  font-size: var(--fs-03);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+}
+
+.tabs__summary {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.tabs__points {
+  display: grid;
+  gap: var(--space-02);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tabs__points li {
+  position: relative;
+  padding-left: var(--space-04);
+  color: var(--color-muted);
+  font-size: var(--fs-04);
+  line-height: var(--lh-base);
+}
+
+.tabs__points li::before {
+  content: "";
+  position: absolute;
+  top: 0.65em;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 14%, transparent);
+}
+
+.tabs__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-02);
+  align-items: center;
+  padding-top: var(--space-02);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 72%, transparent);
 }
 
 .tablist button:hover {
@@ -252,6 +340,28 @@ html.theme-dark .fleet-card__brand .logo--dark {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+@media (min-width: 760px) {
+  .tabs__panel-card {
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+    align-items: start;
+    padding: var(--space-05);
+  }
+
+  .tabs__panel-header,
+  .tabs__summary {
+    grid-column: 1;
+  }
+
+  .tabs__points,
+  .tabs__meta {
+    grid-column: 2;
+  }
+
+  .tabs__meta {
+    padding-top: var(--space-03);
+  }
 }
 
 .filters {
@@ -304,6 +414,7 @@ html.theme-dark .fleet-card__brand .logo--dark {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 20%, transparent);
 }
 
+/* Service card */
 .service-card {
   display: grid;
   gap: var(--space-03);
@@ -313,7 +424,7 @@ html.theme-dark .fleet-card__brand .logo--dark {
   align-items: flex-start;
   align-content: flex-start;
   gap: var(--space-02);
-  margin-bottom: 0;
+  margin-bottom: var(--space-02);
 }
 
 .service-card .tag {
@@ -340,10 +451,9 @@ html.theme-dark .fleet-card__brand .logo--dark {
 
 .service-card__header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
   gap: var(--space-02);
-  flex-wrap: wrap;
   min-width: 0;
 }
 
