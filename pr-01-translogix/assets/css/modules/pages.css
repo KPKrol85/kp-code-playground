@@ -16,6 +16,206 @@ main > .section:first-child .lead {
   margin-bottom: var(--space-05);
 }
 
+.service-detail {
+  display: grid;
+  gap: var(--space-04);
+}
+
+.service-detail__header {
+  max-width: 46rem;
+  margin-bottom: var(--space-04);
+  padding: 0;
+  background: none;
+}
+
+.service-detail__breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-01);
+  align-items: center;
+  color: var(--color-muted);
+  font-size: var(--fs-04);
+  line-height: var(--lh-base);
+}
+
+.service-detail__breadcrumb a {
+  color: var(--color-text);
+  text-decoration-color: color-mix(in srgb, var(--color-accent) 34%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+.service-detail__breadcrumb a:hover {
+  color: var(--color-accent-strong);
+}
+
+.service-detail__grid {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: var(--space-04);
+}
+
+.service-detail__card {
+  align-content: start;
+  gap: var(--space-04);
+  padding: var(--space-04);
+  border-color: color-mix(in srgb, var(--color-border) 86%, var(--color-accent) 14%);
+  box-shadow: var(--shadow-sm);
+}
+
+.service-detail__card:hover,
+.service-detail__card:focus-within {
+  transform: none;
+  border-color: color-mix(in srgb, var(--color-border) 68%, var(--color-accent) 32%);
+  box-shadow: var(--shadow-sm);
+}
+
+.service-detail__card:focus-within {
+  outline: none;
+}
+
+.service-detail__card h2,
+.service-detail__card h3,
+.service-detail__card p {
+  margin-bottom: 0;
+}
+
+.service-detail__card h2 {
+  font-size: var(--fs-07);
+}
+
+.service-detail__card h3 {
+  font-size: var(--fs-06);
+}
+
+.service-detail__specs {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.service-detail__spec {
+  display: grid;
+  gap: var(--space-01);
+  padding-block: var(--space-02);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 72%, transparent);
+}
+
+.service-detail__spec:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.service-detail__spec dt,
+.service-detail__spec dd {
+  margin: 0;
+}
+
+.service-detail__spec dt {
+  color: var(--color-text);
+  font-size: var(--fs-04);
+  font-weight: var(--fw-semibold);
+}
+
+.service-detail__spec dd {
+  color: var(--color-muted);
+  font-size: var(--fs-04);
+  line-height: var(--lh-base);
+}
+
+.service-detail__tags {
+  gap: var(--space-02);
+  margin-bottom: 0;
+  padding-top: var(--space-01);
+}
+
+.service-detail .service-details {
+  gap: var(--space-02);
+  margin: 0;
+}
+
+.service-detail .service-details li {
+  position: relative;
+  padding-left: var(--space-04);
+}
+
+.service-detail .service-details li::before {
+  content: "";
+  position: absolute;
+  top: 0.65em;
+  left: 0;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.service-detail__card--next {
+  align-content: start;
+}
+
+.service-detail__cta {
+  display: grid;
+  gap: var(--space-02);
+  margin-top: var(--space-01);
+  padding-top: var(--space-03);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 72%, transparent);
+}
+
+.service-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-02);
+  align-items: center;
+}
+
+.service-detail__btn {
+  min-height: 2.25rem;
+  padding: var(--space-01) var(--space-03);
+  border-color: color-mix(in srgb, var(--color-border) 78%, var(--color-accent) 22%);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--fs-04);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  box-shadow: none;
+}
+
+.service-detail__btn--primary {
+  background: color-mix(in srgb, var(--color-accent-soft) 55%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
+  color: var(--color-accent-strong);
+}
+
+.service-detail__btn:hover {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+}
+
+.service-detail__btn:active {
+  transform: translateY(0);
+}
+
+.service-detail__btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+@media (min-width: 480px) {
+  .service-detail__spec {
+    grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
+    gap: var(--space-03);
+  }
+}
+
+@media (min-width: 1024px) {
+  .service-detail__grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.92fr);
+  }
+}
+
 .fleet-card__single {
   display: none;
 }
