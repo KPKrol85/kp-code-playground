@@ -404,7 +404,6 @@ html.theme-dark #quote .summary {
   margin: var(--space-01) 0;
   background: var(--color-surface);
   display: grid;
-  gap: var(--space-02);
 }
 
 html.theme-dark #quick-quote fieldset {
