@@ -529,7 +529,7 @@ html.theme-dark #quick-quote fieldset {
   gap: var(--space-01);
   padding: var(--space-01) var(--space-03);
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--color-accent-soft) 40%, transparent);
+  background: var(--color-accent);
   color: var(--color-text);
   font-weight: var(--fw-bold);
   font-size: var(--fs-04);
