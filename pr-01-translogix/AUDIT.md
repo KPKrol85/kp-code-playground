@@ -32,9 +32,12 @@ nie wykryto.
 
 ## 6. Dodatkowe usprawnienia jakościowe
 
-- Pełnej zgodności kontrastu nie da się potwierdzić wyłącznie statycznym przeglądem tokenów i CSS; jeśli projekt ma wymagać silniejszego dowodu, warto dodać computed-style contrast checks dla kluczowych widoków.
-- Obecna konfiguracja Lighthouse obejmuje ograniczony zestaw URL-i (`lighthouserc.json:4-17`). Można rozszerzyć ją o `fleet.html`, `pricing.html` i strony legalne, jeśli mają być formalnie objęte tym samym gate'em jakości.
+
+
+
+
 - Warto utrzymywać service worker razem z checklistą release, szczególnie przy zmianach w `PRECACHE_URLS` i numerze cache (`sw.js:1-27`).
+
 - Rekomendowane komendy kontrolne przed releasem są już dostępne w repozytorium: `npm run qa:html`, `npm run qa:jsonld`, `npm run qa:links`, `npm run qa:a11y`, `npm run test:e2e`.
 
 ## 7. Ocena seniorska (1–10)
