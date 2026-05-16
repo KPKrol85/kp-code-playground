@@ -1292,26 +1292,78 @@ html.theme-dark .system-page__card {
 
 /* Pricing page */
 
-.pricing-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--color-surface);
+.pricing-overview {
+  margin-top: var(--space-05);
+  overflow-x: auto;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  background: var(--color-surface);
   box-shadow: var(--color-shadow);
+}
+
+.pricing-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  background: transparent;
 }
 
 .pricing-table th,
 .pricing-table td {
-  padding: var(--space-03) var(--space-04);
+  padding: var(--space-04);
   text-align: left;
   border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
 }
 
-.pricing-table th {
+.pricing-table thead th {
   background: var(--color-accent-soft);
   color: var(--color-accent-strong);
+  font-size: var(--fs-03);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+}
+
+.pricing-table tbody th {
+  width: 9.5rem;
+  color: var(--color-text);
+  font-weight: var(--fw-bold);
+}
+
+.pricing-table tbody td {
+  color: var(--color-muted);
+}
+
+.pricing-table tbody td:last-child {
+  width: 8.5rem;
+  color: var(--color-text);
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
+}
+
+.pricing-table tbody tr:last-child th,
+.pricing-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.pricing-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+html.theme-dark .pricing-overview {
+  background: var(--color-surface-elevated, rgba(15, 23, 42, 0.96));
+}
+
+@media (max-width: 760px) {
+  .pricing-overview {
+    margin-top: var(--space-04);
+  }
+
+  .pricing-table th,
+  .pricing-table td {
+    padding: var(--space-03);
+  }
 }
 
 /* Legal page */
