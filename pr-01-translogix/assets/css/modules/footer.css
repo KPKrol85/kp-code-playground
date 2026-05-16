@@ -23,6 +23,7 @@
 }
 
 .footer__stats .stats {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: clamp(var(--space-04), 3vw, var(--space-05));
   margin-block: var(--space-06);
 }
@@ -34,6 +35,13 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(var(--space-04), 3vw, var(--space-05));
+}
+
+.stat {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-04);
+  background: var(--color-surface);
 }
 
 .footer__stats .stat {
