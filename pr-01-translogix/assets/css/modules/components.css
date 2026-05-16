@@ -199,7 +199,7 @@ html.theme-dark .card:focus-within {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
 }
 
 /* Component: Fleet cards */
@@ -232,36 +232,6 @@ html.theme-dark .card:focus-within {
 
 html.theme-dark .card.fleet-card {
   background: var(--color-surface-elevated, rgba(15, 23, 42, 0.96));
-}
-
-.fleet-card__icon {
-  margin-bottom: var(--space-02);
-  padding: var(--space-04);
-  border-radius: var(--radius-md);
-  background: linear-gradient(to bottom, rgba(14, 165, 233, 0.14), rgba(14, 165, 233, 0.06));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 8.75rem;
-}
-
-html.theme-dark .fleet-card__icon {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.75));
-}
-
-.fleet-card__icon img {
-  width: min(62%, 220px);
-  height: auto;
-  display: block;
-}
-
-.fleet-card__icon .lightbox-trigger {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  border-radius: var(--radius-md);
 }
 
 /* Component: Quote calculator */
@@ -362,7 +332,7 @@ html.theme-dark #quick-quote fieldset {
   text-transform: uppercase;
   letter-spacing: var(--ls-wider);
   font-weight: var(--fw-semibold);
-  color: var(--text-muted);
+  color: var(--color-muted);
   margin-bottom: var(--space-02);
 }
 
@@ -379,7 +349,7 @@ html.theme-dark #quick-quote fieldset {
   display: flex;
   justify-content: space-between;
   gap: var(--space-03);
-  color: var(--color-text-muted);
+  color: var(--color-muted);
 }
 
 .quote-history__meta {
@@ -665,9 +635,7 @@ html.theme-dark #quick-quote fieldset {
   display: grid;
   place-items: center;
   padding: clamp(var(--space-02), 2vw, var(--space-04));
-  background:
-    radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.18), transparent 34%),
-    rgba(0, 0, 0, 0.2);
+  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.18), transparent 34%), rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   visibility: hidden;
   opacity: 0;
@@ -727,9 +695,7 @@ html.theme-dark .lightbox__dialog {
   overflow: hidden;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 42%),
-    rgba(0, 0, 0, 0.9);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 42%), rgba(0, 0, 0, 0.9);
 }
 
 .lightbox__hero {
@@ -749,49 +715,6 @@ html.theme-dark .lightbox__dialog {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.lightbox__thumb {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.02);
-  cursor: zoom-in;
-  appearance: none;
-  padding: 0;
-}
-
-.lightbox__thumb img {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  display: block;
-  border-radius: inherit;
-  transition: transform 300ms ease;
-}
-
-.lightbox__thumb::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.18) 100%);
-  opacity: 0;
-  transition: opacity 300ms ease;
-  pointer-events: none;
-}
-
-.lightbox__thumb:hover img,
-.lightbox__thumb:focus-visible img {
-  transform: scale(1.06);
-}
-
-.lightbox__thumb:hover::after,
-.lightbox__thumb:focus-visible::after {
-  opacity: 1;
 }
 
 .lightbox__controls {
@@ -884,7 +807,8 @@ html.theme-dark .lightbox__dialog {
   z-index: 1400;
   display: grid;
   place-items: center;
-  padding: max(var(--space-02), env(safe-area-inset-top)) max(var(--space-02), env(safe-area-inset-right)) max(var(--space-02), env(safe-area-inset-bottom)) max(var(--space-02), env(safe-area-inset-left));
+  padding: max(var(--space-02), env(safe-area-inset-top)) max(var(--space-02), env(safe-area-inset-right)) max(var(--space-02), env(safe-area-inset-bottom))
+    max(var(--space-02), env(safe-area-inset-left));
   background: #000;
   overflow: hidden;
   cursor: zoom-out;
@@ -904,7 +828,9 @@ html.theme-dark .lightbox__dialog {
   border-radius: calc(var(--radius-lg) - 2px);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.44);
   cursor: zoom-in;
-  transition: transform 180ms ease, object-fit 180ms ease;
+  transition:
+    transform 180ms ease,
+    object-fit 180ms ease;
 }
 
 .lightbox__zoom.is-zoomed .lightbox__zoom-img {
@@ -918,7 +844,7 @@ html.theme-dark .lightbox__dialog {
   right: max(var(--space-03), env(safe-area-inset-right));
   width: 48px;
   height: 48px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   display: grid;
   place-items: center;
   padding: 0;
@@ -972,7 +898,6 @@ html.theme-dark .lightbox__dialog {
 }
 
 @media (max-width: 700px) {
-
   .lightbox {
     padding: var(--space-02);
   }
@@ -983,10 +908,6 @@ html.theme-dark .lightbox__dialog {
     max-height: calc(100dvh - (var(--space-02) * 2));
     gap: var(--space-02);
     padding: var(--space-02);
-  }
-
-  .lightbox__title {
-    padding-right: 3.25rem;
   }
 
   .lightbox__hero-frame {
@@ -1044,13 +965,7 @@ html.theme-dark .lightbox__dialog {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .lightbox {
-    transition: none;
-  }
-
-  .lightbox__thumb img,
-  .lightbox__thumb::after {
     transition: none;
   }
 
@@ -1058,17 +973,6 @@ html.theme-dark .lightbox__dialog {
   .lightbox__close,
   .lightbox__zoom-close {
     transition: none;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-
-  .lightbox__thumb:hover img {
-    transform: none;
-  }
-
-  .lightbox__thumb:hover::after {
-    opacity: 0;
   }
 }
 
@@ -1119,7 +1023,7 @@ html.theme-dark .lightbox__dialog {
   padding: var(--space-01) var(--space-03);
   background: var(--color-accent-soft);
   color: var(--color-accent-strong);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-weight: var(--fw-bold);
   font-size: var(--fs-04);
   letter-spacing: var(--ls-normal);
