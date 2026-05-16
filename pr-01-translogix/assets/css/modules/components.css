@@ -667,7 +667,7 @@ html.theme-dark #quick-quote fieldset {
   padding: clamp(var(--space-02), 2vw, var(--space-04));
   background:
     radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.18), transparent 34%),
-    rgba(0, 0, 0, 0.86);
+    rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   visibility: hidden;
   opacity: 0;
@@ -680,30 +680,27 @@ html.theme-dark #quick-quote fieldset {
 }
 
 .lightbox__dialog {
-  position: relative;
-  width: min(1360px, calc(100vw - (var(--space-04) * 2)));
   height: min(92dvh, 900px);
-  max-height: calc(100dvh - (var(--space-04) * 2));
+  max-height: calc(100dvh - (var(--space-02) * 2));
   overflow: hidden;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   gap: var(--space-03);
-  padding: clamp(var(--space-03), 2vw, var(--space-05));
+  padding: clamp(var(--space-02), 2vw, var(--space-04));
   border-radius: var(--radius-lg);
   border: 1px solid color-mix(in srgb, var(--color-border) 58%, transparent);
-  background: color-mix(in srgb, var(--color-surface) 90%, #000 10%);
+  background: color-mix(in srgb, var(--color-surface) 60%, #000 6%);
   box-shadow:
     0 30px 90px rgba(0, 0, 0, 0.38),
     0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 html.theme-dark .lightbox__dialog {
-  background: color-mix(in srgb, var(--color-surface-elevated, #0f172a) 86%, #000 14%);
+  background: color-mix(in srgb, var(--color-surface-elevated, #0f172a) 60%, #000 7%);
 }
 
 .lightbox__title {
   margin: 0;
-  padding-right: 4rem;
   font-size: clamp(var(--fs-04), 1.8vw, var(--fs-06));
   font-weight: var(--fw-extrabold);
   line-height: var(--lh-title);
@@ -712,7 +709,7 @@ html.theme-dark .lightbox__dialog {
 .lightbox__meta {
   margin: calc(var(--space-02) * -0.5) 0 0;
   color: var(--color-muted);
-  font-size: var(--fs-01);
+  font-size: var(--fs-03);
   font-weight: var(--fw-semibold);
   letter-spacing: 0;
 }
@@ -859,9 +856,10 @@ html.theme-dark .lightbox__hero-frame {
 
 .lightbox__close::before {
   content: "×";
-  font-size: var(--fs-03);
+  font-size: var(--fs-08);
   line-height: 1;
   transform: translateY(-1px);
+  opacity: 0.6;
 }
 
 .lightbox__controls .btn,
