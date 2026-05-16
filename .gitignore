@@ -25,3 +25,9 @@ Thumbs.db
 
 # Netlify/inne
 .netlify/
+
+# test reports / generated QA output
+playwright-report/
+test-results/
+blob-report/
+coverage/
