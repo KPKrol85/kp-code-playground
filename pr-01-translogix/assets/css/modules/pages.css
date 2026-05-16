@@ -1137,7 +1137,7 @@ html.theme-dark .accordion__item.is-open {
 
 .accordion__panel p {
   margin: 0;
-  padding: 0 0 var(--space-04);
+  padding: var(--space-03) 0;
   max-width: 72ch;
   line-height: var(--lh-base);
   color: var(--color-muted);
