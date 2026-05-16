@@ -237,9 +237,97 @@ main > .section:first-child .lead {
 }
 
 .fleet-card__media {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-03);
+  display: grid;
+}
+
+.fleet-card__gallery {
+  display: grid;
+  gap: var(--space-02);
+}
+
+.fleet-card__main,
+.fleet-card__thumb {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.fleet-card__main {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.fleet-card__main picture,
+.fleet-card__main img,
+.fleet-card__thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fleet-card__main img,
+.fleet-card__thumb img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.fleet-card__main:hover img,
+.fleet-card__main:focus-visible img {
+  transform: scale(1.02);
+}
+
+.fleet-card__main:focus-visible,
+.fleet-card__thumb:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.fleet-card__main img {
+  transition: transform var(--transition);
+}
+
+.fleet-card__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-02);
+}
+
+.fleet-card__thumb {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  opacity: 0.72;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    opacity var(--transition),
+    transform var(--transition);
+}
+
+.fleet-card__thumb:hover,
+.fleet-card__thumb:focus-visible,
+.fleet-card__thumb.is-active {
+  opacity: 1;
+}
+
+.fleet-card__thumb.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 24%, transparent);
+}
+
+.fleet-card__thumb:hover {
+  transform: translateY(-1px);
 }
 
 .fleet-card__summary {
@@ -254,16 +342,6 @@ main > .section:first-child .lead {
   gap: var(--space-04);
   align-items: start;
   padding: var(--space-04);
-}
-
-.fleet-grid.is-single .fleet-card__icon {
-  min-height: 13rem;
-  padding: var(--space-04);
-}
-
-.fleet-grid.is-single .fleet-card__icon img {
-  max-width: 440px;
-  transform: none;
 }
 
 .fleet-grid.is-single .fleet-card .badge:not(.badge--subtle) {
@@ -440,6 +518,18 @@ html.theme-dark .fleet-card__brand .logo--dark {
   .fleet-grid.is-single .fleet-card {
     grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1fr);
     gap: var(--space-05);
+    align-items: stretch;
+  }
+
+  .fleet-grid.is-single .fleet-card__media {
+    align-self: stretch;
+    height: 100%;
+  }
+
+  .fleet-grid.is-single .fleet-card__gallery {
+    height: 100%;
+    align-content: space-between;
+    gap: var(--space-03);
   }
 
   .fleet-card__lead {
