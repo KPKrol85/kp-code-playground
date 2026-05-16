@@ -223,14 +223,27 @@ html.theme-dark #why .card__icon {
 .fleet-grid {
   display: grid;
   gap: var(--space-04);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 760px) {
+  .fleet-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .card.fleet-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: var(--space-03);
   padding: var(--space-04);
+  align-content: start;
+}
+
+.card.fleet-card:hover,
+.card.fleet-card:focus-within {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-border) 70%, var(--color-accent) 30%);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
 }
 
 html.theme-dark .card.fleet-card {
@@ -239,13 +252,13 @@ html.theme-dark .card.fleet-card {
 
 .fleet-card__icon {
   margin-bottom: var(--space-02);
-  padding: var(--space-06);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(to bottom, rgba(14, 165, 233, 0.2), rgba(14, 165, 233, 0.1));
+  padding: var(--space-04);
+  border-radius: var(--radius-md);
+  background: linear-gradient(to bottom, rgba(14, 165, 233, 0.14), rgba(14, 165, 233, 0.06));
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 96px;
+  min-height: 8.75rem;
 }
 
 html.theme-dark .fleet-card__icon {
@@ -253,7 +266,7 @@ html.theme-dark .fleet-card__icon {
 }
 
 .fleet-card__icon img {
-  width: min(68%, 220px);
+  width: min(62%, 220px);
   height: auto;
   display: block;
 }
@@ -539,8 +552,11 @@ html.theme-dark #quick-quote fieldset {
   padding: var(--space-01) var(--space-03);
   background: var(--color-accent-soft);
   color: var(--color-accent-strong);
-  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-03);
   font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
   text-align: center;
   white-space: nowrap;
 }
