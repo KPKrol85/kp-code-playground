@@ -1,9 +1,4 @@
-/* ==================================
-   FleetOps CSS Source
-   01 - Base / Reset / Typography / Accessibility
-   Generated from current source CSS for staged architecture migration.
-   Runtime loading is unchanged in this step.
-   ================================== */
+
 /* === 01 - Global Reset & Selection === */
 
 * {
@@ -116,4 +111,3 @@ ul {
 main {
   min-height: 60vh;
 }
-
