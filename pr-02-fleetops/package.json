@@ -1,8 +1,9 @@
 {
   "name": "fleetops",
   "version": "1.0.0",
-  "description": "FleetOps is a **conceptual frontend-only SaaS dashboard** for transport and fleet operations management. The project is part of a larger professional portfolio and focuses on **application architecture, UI state management, and SaaS-style navigation patterns**, rather than backend implementation.",
-  "main": "sw.js",
+  "description": "FleetOps is a conceptual frontend-only SaaS dashboard for transport and fleet operations management. The project is part of a larger professional portfolio and focuses on application architecture, UI state management, and SaaS-style navigation patterns, rather than backend implementation.",
+  "private": true,
+  "main": "index.html",
   "directories": {
     "doc": "doc"
   },
@@ -11,9 +12,17 @@
     "optimize:images": "node optimize-images.js",
     "preview": "python -m http.server 8181",
     "preview:dist": "python -m http.server 8182 --directory dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "fleet-management",
+    "transport",
+    "logistics",
+    "saas-dashboard",
+    "frontend",
+    "vanilla-javascript",
+    "portfolio"
+  ],
   "author": "KP_Code Digital Studio",
   "license": "UNLICENSED",
   "devDependencies": {

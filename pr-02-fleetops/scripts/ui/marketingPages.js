@@ -217,7 +217,7 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
       <header class="container navbar" role="banner">
         <a class="logo flex" href="#/" aria-label="FleetOps — Strona główna" data-scroll-top="home">
 
-          <img class="logo__icon" src="${themeAsset("assets/icons/logo-black.svg", "assets/icons/logo-white.svg")}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
+          <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
 
           <span>FleetOps</span>
         </a>
@@ -276,7 +276,7 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
           <div class="footer__grid">
             <div class="footer__brand">
               <a class="footer__logo" href="#/" aria-label="FleetOps home" data-scroll-top="home">
-                <img class="logo__icon" src="${themeAsset("assets/icons/logo-black.svg", "assets/icons/logo-white.svg")}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
+                <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
               </a>
               <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
               <span class="footer__eyebrow">Stworzone dla zespołów operacyjnych</span>
@@ -515,7 +515,7 @@ function renderProductPage() {
     mark.setAttribute("aria-hidden", "true");
     mark.setAttribute("role", "presentation");
     mark.innerHTML = `
-      <img class="logo__icon" src="${themeAsset("assets/icons/logo-black.svg", "assets/icons/logo-white.svg")}" data-theme-src-light="assets/icons/logo-black.svg" data-theme-src-dark="assets/icons/logo-white.svg" alt="" aria-hidden="true" />
+      <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="" aria-hidden="true" />
     `;
     hero.appendChild(mark);
   }
