@@ -65,6 +65,12 @@ function renderLanding() {
   const theme = preferences.theme || "light";
   document.documentElement.setAttribute("data-theme", theme);
   const themeAsset = (light, dark) => (theme === "dark" ? dark : light);
+  const menuToggleIcon = `
+            <span class="menu-toggle-icon" aria-hidden="true">
+              <span class="menu-toggle-icon__line menu-toggle-icon__line--top"></span>
+              <span class="menu-toggle-icon__line menu-toggle-icon__line--middle"></span>
+              <span class="menu-toggle-icon__line menu-toggle-icon__line--bottom"></span>
+            </span>`;
 
   app.innerHTML = `
     <div class="landing">
@@ -77,10 +83,10 @@ function renderLanding() {
         </a>
         <nav class="nav" aria-label="Nawigacja glowna">
           <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przelacz nawigacje">
-            <img class="nav-toggle__icon" src="${themeAsset("assets/icons/hamburger-light.svg", "assets/icons/hamburger-dark.svg")}" data-theme-src-light="assets/icons/hamburger-light.svg" data-theme-src-dark="assets/icons/hamburger-dark.svg" alt="" aria-hidden="true" />
+${menuToggleIcon}
           </button>
           <div class="nav-backdrop" data-nav-close></div>
-          <div class="nav-drawer" id="mobileNav" role="dialog" aria-modal="true" aria-label="Nawigacja mobilna">
+          <div class="nav-drawer" id="mobileNav" role="dialog" aria-modal="true" aria-label="Nawigacja mobilna" aria-hidden="true">
             <ul class="nav-links">
               <li><a href="#/product">Produkt</a></li>
               <li><a href="#/features">Funkcje</a></li>
@@ -399,6 +405,7 @@ function renderLanding() {
     if (!navToggle || !navDrawer) return;
     document.documentElement.classList.add("is-nav-open");
     navToggle.setAttribute("aria-expanded", "true");
+    navDrawer.setAttribute("aria-hidden", "false");
     navOpen = true;
     window.requestAnimationFrame(() => {
       const focusables = getDrawerFocusables();
@@ -411,6 +418,7 @@ function renderLanding() {
     if (!navToggle) return;
     document.documentElement.classList.remove("is-nav-open");
     navToggle.setAttribute("aria-expanded", "false");
+    if (navDrawer) navDrawer.setAttribute("aria-hidden", "true");
     navOpen = false;
     navToggle.focus();
   };

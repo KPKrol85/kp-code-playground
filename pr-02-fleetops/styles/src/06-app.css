@@ -152,20 +152,6 @@
   gap: 6px;
 }
 
-.drawer-toggle__icon {
-  display: block;
-  width: 22px;
-  height: 22px;
-}
-
-html[data-theme="light"] .drawer-toggle__icon--light {
-  display: block;
-}
-
-html[data-theme="dark"] .drawer-toggle__icon--dark {
-  display: block;
-}
-
 .theme-toggle__icon {
   display: none;
 }

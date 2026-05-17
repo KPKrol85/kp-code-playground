@@ -31,7 +31,11 @@ function renderAppShell(viewTitle, contentNode) {
         </svg>
       </button>
       <button class="button ghost" id="drawerToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="appDrawer">
-        <img class="drawer-toggle__icon" src="${theme === "dark" ? "assets/icons/hamburger-dark.svg" : "assets/icons/hamburger-light.svg"}" data-theme-src-light="assets/icons/hamburger-light.svg" data-theme-src-dark="assets/icons/hamburger-dark.svg" alt="Menu" width="22" height="22" />
+        <span class="menu-toggle-icon" aria-hidden="true">
+          <span class="menu-toggle-icon__line menu-toggle-icon__line--top"></span>
+          <span class="menu-toggle-icon__line menu-toggle-icon__line--middle"></span>
+          <span class="menu-toggle-icon__line menu-toggle-icon__line--bottom"></span>
+        </span>
       </button>
     </div>
   `;
