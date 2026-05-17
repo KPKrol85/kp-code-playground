@@ -186,6 +186,22 @@ body > #app {
   min-height: 100vh;
 }
 
+.noscript-fallback {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.noscript-fallback__card {
+  width: min(640px, 100%);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.noscript-fallback__card .button {
+  justify-self: start;
+}
+
 /* === 06 - Accessibility === */
 
 .skip-link {

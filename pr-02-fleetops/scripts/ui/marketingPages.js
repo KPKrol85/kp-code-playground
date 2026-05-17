@@ -361,7 +361,7 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
           </div>
 
           <div class="footer__bottom">
-            <span>© 2025 kp_code_ — Wszelkie prawa zastrzeżone</span>
+            <span>© 2026 KP_Code Digital Studio | Wszelkie prawa zastrzeżone.</span>
           </div>
         </div>
       </footer>

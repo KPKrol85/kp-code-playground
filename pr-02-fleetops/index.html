@@ -49,6 +49,19 @@
   <body>
     <a class="skip-link" href="#main-content">Pomiń do treści</a>
     <div id="app" aria-live="polite"></div>
+    <noscript>
+      <main id="main-content" class="container section noscript-fallback" role="main">
+        <section class="card noscript-fallback__card" aria-labelledby="noscript-title">
+          <p class="tag">FleetOps</p>
+          <h1 id="noscript-title">JavaScript jest wymagany</h1>
+          <p>
+            FleetOps używa JavaScriptu do wyświetlenia landing page, logowania demo oraz widoków dashboardu SaaS.
+            Włącz JavaScript w przeglądarce i odśwież stronę, aby uruchomić aplikację.
+          </p>
+          <a class="button secondary" href="./">Odśwież stronę</a>
+        </section>
+      </main>
+    </noscript>
 
     <!-- Scripts -->
     <script src="./scripts/utils/storage.js" defer></script>

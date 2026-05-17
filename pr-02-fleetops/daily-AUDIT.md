@@ -204,21 +204,6 @@ Rekomendacja:
 
 Renderować wartości edytowalne przez użytkownika przez `textContent`, budować wiersze tabel przez DOM API albo wprowadzić mały helper do escapowania i stosować go konsekwentnie przed interpolacją.
 
-### P1. Skrót Dashboard w zainstalowanej aplikacji wskazuje nieobsługiwaną trasę
-
-Dowody:
-
-- `assets/favicon/site.webmanifest:57` definiuje URL skrótu Dashboard jako `/app/dashboard`.
-- `scripts/router.js:176-191` obsługuje `/app`, `/app/orders`, `/app/fleet`, `/app/drivers`, `/app/reports` i `/app/settings`, ale nie obsługuje `/app/dashboard`.
-- Nieznane trasy `/app/*` renderują widok not-found w `scripts/router.js:193-195`.
-
-Ryzyko:
-
-Skrót manifestu może otworzyć zainstalowaną aplikację bezpośrednio w stanie not-found zamiast w dashboardzie.
-
-Rekomendacja:
-
-Zmienić URL skrótu na `/app` albo dodać `/app/dashboard` jako alias trasy dashboardu.
 
 ### P1. Baseline bez JavaScriptu jest pusty dla głównego doświadczenia
 
