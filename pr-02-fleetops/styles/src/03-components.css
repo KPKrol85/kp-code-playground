@@ -16,6 +16,7 @@
   padding: var(--space-0) var(--space-2);
   border-radius: var(--radius);
   font-size: var(--fs-01);
+  font-variant-numeric: tabular-nums;
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
@@ -545,6 +546,7 @@ textarea:invalid:focus-visible {
 .price-card,
 .marketing-card,
 .stat-card {
+  font-variant-numeric: tabular-nums;
   transition:
     transform 140ms ease,
     box-shadow 160ms ease,
