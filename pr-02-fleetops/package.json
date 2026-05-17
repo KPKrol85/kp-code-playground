@@ -7,6 +7,7 @@
     "doc": "doc"
   },
   "scripts": {
+    "build": "node build-dist.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "min:css": "postcss \"styles/!(*.min).css\" --dir styles --ext .min.css",
     "min:js": "node minify-js.js",
