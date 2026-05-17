@@ -83,7 +83,7 @@ hr {
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
 }
@@ -320,7 +320,7 @@ textarea:invalid:focus-visible {
 /* Helpers */
 .label {
   display: inline-block;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   margin-bottom: 6px;
 }
 
@@ -333,13 +333,13 @@ textarea:invalid:focus-visible {
 .form-hint {
   font-size: var(--fs-01);
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: var(--lh-normal);
 }
 
 .form-error {
   font-size: var(--fs-01);
   color: var(--danger);
-  line-height: 1.4;
+  line-height: var(--lh-normal);
 }
 
 /* === 03 - Navbar === */
@@ -409,7 +409,7 @@ textarea:invalid:focus-visible {
   color: var(--accent);
   background: var(--accent-ghost);
   border-color: transparent;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 
 .nav-links a[aria-current="page"]::after {
@@ -589,7 +589,7 @@ html[data-theme="dark"] .stat-card:focus-within {
   align-items: center;
   justify-content: space-between;
   text-align: left;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text);
   cursor: pointer;
 }
@@ -693,7 +693,7 @@ html[data-theme="dark"] .stat-card:focus-within {
 .dropdown-item[aria-current="page"] {
   color: var(--accent);
   background: var(--accent-ghost);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 /* === 10 - Toast === */

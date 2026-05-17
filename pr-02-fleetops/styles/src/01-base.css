@@ -89,13 +89,13 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   letter-spacing: -0.02em;
 }
 
 p {
   margin: 0;
-  line-height: 1.6;
+  line-height: var(--lh-relaxed);
   color: var(--text-muted);
 }
 

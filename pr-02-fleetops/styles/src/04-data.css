@@ -23,7 +23,7 @@
 
 /* Head */
 .table th {
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-muted);
 }
 
@@ -36,7 +36,7 @@
 
 .badge.status {
   border: 0;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: #0b0d10;
 }
 
