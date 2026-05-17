@@ -1,10 +1,4 @@
-/* ==================================
-   FleetOps CSS Source
-   02 - Layout / App Root / Helpers
-   Generated from current source CSS for staged architecture migration.
-   Runtime loading is unchanged in this step.
-   ================================== */
-/* === 05 - App Root === */
+/* App Root */
 
 body > #app {
   min-height: 100vh;
@@ -26,7 +20,7 @@ body > #app {
   justify-self: start;
 }
 
-/* === 07 - Layout Utilities === */
+/* Layout Utilities */
 
 .container {
   width: min(1120px, 92vw);
@@ -56,7 +50,7 @@ body > #app {
   color: var(--text-muted);
 }
 
-/* === 11 - Tables / Overflow Helpers === */
+/* Tables / Overflow Helpers */
 
 .table-responsive,
 .table-wrap,
@@ -67,7 +61,7 @@ body > #app {
   -webkit-overflow-scrolling: touch;
 }
 
-/* === 12 - Responsive === */
+/* Responsive */
 
 @media (max-width: 1024px) {
   .section {
@@ -86,3 +80,41 @@ body > #app {
   }
 }
 
+/* system pages */
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) 0;
+}
+
+.error-card {
+  width: min(560px, 92vw);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: var(--space-5);
+  text-align: center;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.error-code {
+  font-size: clamp(48px, 8vw, 96px);
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.error-title {
+  font-size: clamp(20px, 3vw, 28px);
+  margin: 0;
+}
+
+.error-actions {
+  margin-top: var(--space-2);
+  display: flex;
+  justify-content: center;
+}
