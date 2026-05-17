@@ -54,7 +54,11 @@ function copyFile(sourceRelativePath, outputRelativePath = sourceRelativePath) {
   fs.copyFileSync(sourcePath, outputPath);
 }
 
-function copyDirectory(sourceRelativePath, outputRelativePath = sourceRelativePath) {
+function copyDirectory(sourceRelativePath, outputRelativePath = sourceRelativePath, excludedRelativePaths = new Set()) {
+  if (excludedRelativePaths.has(sourceRelativePath.replace(/\\/g, "/"))) {
+    return;
+  }
+
   const sourcePath = path.join(rootDir, sourceRelativePath);
   const outputPath = path.join(distDir, outputRelativePath);
 
@@ -69,7 +73,7 @@ function copyDirectory(sourceRelativePath, outputRelativePath = sourceRelativePa
     const outputChild = path.join(outputRelativePath, entry.name);
 
     if (entry.isDirectory()) {
-      copyDirectory(sourceChild, outputChild);
+      copyDirectory(sourceChild, outputChild, excludedRelativePaths);
     } else if (entry.isFile()) {
       copyFile(sourceChild, outputChild);
     }
@@ -169,7 +173,7 @@ function buildHtml() {
 async function build() {
   cleanDist();
 
-  copyDirectory("assets");
+  copyDirectory("assets", "assets", new Set(["assets/img-src"]));
 
   for (const file of staticFiles) {
     copyFile(file);

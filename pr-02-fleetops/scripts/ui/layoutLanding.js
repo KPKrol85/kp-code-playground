@@ -130,12 +130,12 @@ function renderLanding() {
           <div class="hero-visual">
             <div class="hero-image">
               <picture class="img-swap">
-                <source srcset="${themeAsset("assets/images/hero/hero-light.avif", "assets/images/hero/hero-dark.avif")}" data-theme-srcset-light="assets/images/hero/hero-light.avif" data-theme-srcset-dark="assets/images/hero/hero-dark.avif" type="image/avif">
-                <source srcset="${themeAsset("assets/images/hero/hero-light.webp", "assets/images/hero/hero-dark.webp")}" data-theme-srcset-light="assets/images/hero/hero-light.webp" data-theme-srcset-dark="assets/images/hero/hero-dark.webp" type="image/webp">
+                <source srcset="${themeAsset("assets/img/hero/hero-light.avif", "assets/img/hero/hero-dark.avif")}" data-theme-srcset-light="assets/img/hero/hero-light.avif" data-theme-srcset-dark="assets/img/hero/hero-dark.avif" type="image/avif">
+                <source srcset="${themeAsset("assets/img/hero/hero-light.webp", "assets/img/hero/hero-dark.webp")}" data-theme-srcset-light="assets/img/hero/hero-light.webp" data-theme-srcset-dark="assets/img/hero/hero-dark.webp" type="image/webp">
                 <img
-                  src="${themeAsset("assets/images/hero/hero-light.jpg", "assets/images/hero/hero-dark.jpg")}"
-                  data-theme-src-light="assets/images/hero/hero-light.jpg"
-                  data-theme-src-dark="assets/images/hero/hero-dark.jpg"
+                  src="${themeAsset("assets/img/hero/hero-light.jpg", "assets/img/hero/hero-dark.jpg")}"
+                  data-theme-src-light="assets/img/hero/hero-light.jpg"
+                  data-theme-src-dark="assets/img/hero/hero-dark.jpg"
                   alt="FleetOps Panel"
                   loading="eager"
                   fetchpriority="high"
