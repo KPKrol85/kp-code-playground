@@ -158,6 +158,14 @@ Produkcja używa wygenerowanego pliku:
 dist/styles/main.min.css
 ```
 
+System tokenów CSS:
+
+- `--fs-01` do `--fs-08` definiują skalę font-size;
+- `--fw-regular`, `--fw-medium`, `--fw-semibold`, `--fw-bold` definiują font-weight;
+- `--lh-tight`, `--lh-snug`, `--lh-normal`, `--lh-relaxed` definiują line-height;
+- `--space-0` do `--space-8` definiują rem-based spacing scale;
+- bezpieczne użycia `font-size`, `font-weight` i `line-height` w source CSS zostały podpięte pod tokeny.
+
 ### Deployment
 
 Repozytorium zawiera konfigurację dla statycznego hostingu:
@@ -211,6 +219,7 @@ W kodzie widoczne są:
 - `assets/img-src/` zawiera edytowalne źródła obrazów.
 - `assets/img/` zawiera zoptymalizowane obrazy runtime.
 - `assets/logos/` zawiera logo, a `assets/icons/` zawiera ikony UI.
+- `styles/src/00-settings.css` zawiera tokeny kolorów, typografii, spacingu, promieni, cieni i motywów.
 - `npm audit` zwraca obecnie `0 vulnerabilities`.
 
 ### Licencja
@@ -375,6 +384,14 @@ Production uses the generated file:
 dist/styles/main.min.css
 ```
 
+CSS token system:
+
+- `--fs-01` through `--fs-08` define the font-size scale;
+- `--fw-regular`, `--fw-medium`, `--fw-semibold`, and `--fw-bold` define font weights;
+- `--lh-tight`, `--lh-snug`, `--lh-normal`, and `--lh-relaxed` define line heights;
+- `--space-0` through `--space-8` define the rem-based spacing scale;
+- safe `font-size`, `font-weight`, and `line-height` usages in source CSS are wired to tokens.
+
 ### Deployment
 
 The repository includes static hosting configuration:
@@ -428,6 +445,7 @@ The code includes:
 - `assets/img-src/` contains editable image sources.
 - `assets/img/` contains optimized runtime images.
 - `assets/logos/` contains logos, while `assets/icons/` contains UI icons.
+- `styles/src/00-settings.css` contains color, typography, spacing, radius, shadow, and theme tokens.
 - `npm audit` currently reports `0 vulnerabilities`.
 
 ### License

@@ -43,6 +43,7 @@
   --radius-md: 14px;
   --radius-lg: 18px;
   --radius-xl: 22px;
+  --radius-pill: 9999px;
 
   /* font sizes */
   --fs-01: 0.75rem;

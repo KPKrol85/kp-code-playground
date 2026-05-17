@@ -9,6 +9,7 @@ The project now separates editable image sources from optimized runtime images:
 - `assets/img-src/` contains editable source images.
 - `assets/img/` contains optimized runtime output.
 - `assets/img-src/` is excluded from production `dist/`.
+- `assets/logos/` contains logo assets, while `assets/icons/` contains UI icons.
 
 ## Current Asset Structure
 

@@ -2,7 +2,7 @@
 
 ## 1. Short overall assessment
 
-FleetOps is a mature static frontend reference project with a clean source/dist workflow, modular CSS sources, a repeatable production build, optimized hero images, separated logo/icon assets, and a clean npm audit result.
+FleetOps is a mature static frontend reference project with a clean source/dist workflow, modular CSS sources, a repeatable production build, optimized hero images, separated logo/icon assets, a refined typography token system, and a clean npm audit result.
 
 The main remaining production-facing risk is client-side HTML injection from user-editable local demo data rendered through `innerHTML`. Service worker behavior is also not active because registration is not detected.
 
@@ -10,6 +10,8 @@ The main remaining production-facing risk is client-side HTML injection from use
 
 - Source organization is clear: routing, initialization, state, seed data, layouts, views, and shared UI components are separated under `scripts/`.
 - CSS architecture is now source-based: `styles/main.css` imports modular files from `styles/src/`, while production CSS is generated into `dist/styles/main.min.css`.
+- The CSS settings layer defines typography tokens for font size, font weight and line height, plus a rem-based `--space-0` to `--space-8` spacing scale.
+- Safe source CSS typography usage has been refactored to token references while keeping intentional special values for logo weight, icon alignment and responsive hero headings.
 - Production build is repeatable through `npm run build`, which runs image optimization and generates `dist/`.
 - Hero images have a source/output split: editable JPG sources live under `assets/img-src/hero/`, and optimized AVIF/WebP/JPG runtime files live under `assets/img/hero/`.
 - Asset taxonomy is clearer: logos are under `assets/logos/`, UI icons are under `assets/icons/`, and specialized favicon/OG/screenshot/shortcut assets remain separate.
@@ -80,9 +82,9 @@ Remove `minify-js.js` in a dedicated cleanup step if it is no longer needed.
 
 ## 7. Senior rating (1–10)
 
-8.4/10
+8.5/10
 
-FleetOps now has strong static frontend architecture, a clean source/dist workflow, modular CSS, optimized runtime assets, and a healthy dependency audit. The rating is held back mainly by the remaining `innerHTML` rendering risk for user-editable local data and the inactive service worker file.
+FleetOps now has strong static frontend architecture, a clean source/dist workflow, modular CSS, tokenized typography foundations, optimized runtime assets, and a healthy dependency audit. The rating is held back mainly by the remaining `innerHTML` rendering risk for user-editable local data and the inactive service worker file.
 
 ---
 
@@ -90,7 +92,7 @@ FleetOps now has strong static frontend architecture, a clean source/dist workfl
 
 ## 1. Krótka ocena ogólna
 
-FleetOps to dojrzały statyczny projekt referencyjny frontendu z czystym workflow source/dist, modularnymi źródłami CSS, powtarzalnym buildem produkcyjnym, zoptymalizowanymi obrazami hero, rozdzielonymi assetami logo/ikon oraz czystym wynikiem `npm audit`.
+FleetOps to dojrzały statyczny projekt referencyjny frontendu z czystym workflow source/dist, modularnymi źródłami CSS, powtarzalnym buildem produkcyjnym, zoptymalizowanymi obrazami hero, rozdzielonymi assetami logo/ikon, dopracowanym systemem tokenów typografii oraz czystym wynikiem `npm audit`.
 
 Główne pozostałe ryzyko produkcyjne dotyczy client-side HTML injection: lokalne dane demo edytowalne przez użytkownika są renderowane przez `innerHTML`. Zachowanie service workera również nie jest aktywne, ponieważ nie wykryto jego rejestracji.
 
@@ -98,6 +100,8 @@ Główne pozostałe ryzyko produkcyjne dotyczy client-side HTML injection: lokal
 
 - Organizacja źródeł jest czytelna: routing, inicjalizacja, stan, dane seed, layouty, widoki i współdzielone komponenty UI są rozdzielone w `scripts/`.
 - Architektura CSS jest oparta o źródła: `styles/main.css` importuje moduły z `styles/src/`, a CSS produkcyjny jest generowany do `dist/styles/main.min.css`.
+- Warstwa settings CSS definiuje tokeny typografii dla font-size, font-weight i line-height oraz rem-based skalę spacingu `--space-0` do `--space-8`.
+- Bezpieczne użycia typografii w source CSS zostały przepisane na tokeny, przy zachowaniu intencjonalnych wartości specjalnych dla logo, wyrównania ikon i responsywnych nagłówków hero.
 - Build produkcyjny jest powtarzalny przez `npm run build`, który uruchamia optymalizację obrazów i generuje `dist/`.
 - Obrazy hero mają podział source/output: edytowalne źródła JPG są w `assets/img-src/hero/`, a zoptymalizowane runtime AVIF/WebP/JPG są w `assets/img/hero/`.
 - Taksonomia assetów jest czytelniejsza: logo są w `assets/logos/`, ikony UI w `assets/icons/`, a favicony/OG/screenshoty/skróty pozostają osobno.
@@ -168,6 +172,6 @@ Usunąć `minify-js.js` w osobnym kroku cleanupu, jeśli nie jest już potrzebny
 
 ## 7. Senior rating (1–10)
 
-8.4/10
+8.5/10
 
-FleetOps ma teraz mocną statyczną architekturę frontendu, czysty workflow source/dist, modularny CSS, zoptymalizowane assety runtime i zdrowy audyt zależności. Ocenę obniża głównie pozostałe ryzyko renderowania danych edytowalnych przez `innerHTML` oraz nieaktywny plik service workera.
+FleetOps ma teraz mocną statyczną architekturę frontendu, czysty workflow source/dist, modularny CSS, tokenizowane fundamenty typografii, zoptymalizowane assety runtime i zdrowy audyt zależności. Ocenę obniża głównie pozostałe ryzyko renderowania danych edytowalnych przez `innerHTML` oraz nieaktywny plik service workera.
