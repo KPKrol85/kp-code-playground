@@ -54,7 +54,7 @@
       "name": "Dashboard",
       "short_name": "Dashboard",
       "description": "Główny panel aplikacji",
-      "url": "/app/dashboard",
+      "url": "/app",
       "icons": [
         {
           "src": "https://transport-project-02.netlify.app/assets/shortcuts/dashboard.png",
