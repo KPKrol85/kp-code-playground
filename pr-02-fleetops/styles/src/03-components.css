@@ -13,8 +13,8 @@
 }
 
 .badge {
-  padding: 4px 8px;
-  border-radius: 10px;
+  padding: var(--space-0) var(--space-2);
+  border-radius: var(--radius);
   font-size: var(--fs-01);
   border: 1px solid var(--border);
   background: var(--surface-2);
@@ -51,7 +51,7 @@ hr {
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-compact);
 }
@@ -268,7 +268,7 @@ html[data-theme="dark"] #themeToggle .theme-toggle__icon--dark {
 select,
 textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface-2);
@@ -333,13 +333,13 @@ textarea:invalid:focus-visible {
 .label {
   display: inline-block;
   font-weight: var(--fw-semibold);
-  margin-bottom: 6px;
+  margin-bottom: var(--space-1);
 }
 
 .form-control {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-1);
 }
 
 .form-hint {
@@ -361,8 +361,8 @@ textarea:invalid:focus-visible {
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  gap: 16px;
-  padding: 12px 0;
+  gap: var(--space-3);
+  padding: var(--space-2);
   border-bottom: 1px solid var(--border);
 }
 
@@ -669,7 +669,7 @@ html[data-theme="dark"] .stat-card:focus-within {
   top: 120%;
   right: 0;
   min-width: 180px;
-  padding: 8px;
+  padding: var(--SPACE-2);
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -683,8 +683,8 @@ html[data-theme="dark"] .stat-card:focus-within {
 }
 
 .dropdown-item {
-  padding: 10px;
-  border-radius: 8px;
+  padding: var(--space-2);
+  border-radius: var(--radius);
   cursor: pointer;
   color: var(--text);
 }
@@ -713,14 +713,14 @@ html[data-theme="dark"] .stat-card:focus-within {
   right: 18px;
   z-index: 950;
   display: grid;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .toast {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: var(--space-2);
+  padding: var(--sapce-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -731,6 +731,6 @@ html[data-theme="dark"] .stat-card:focus-within {
 
 .form-inline {
   display: flex;
-  gap: 10px;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }

@@ -113,19 +113,26 @@ function initMarketingShell() {
   if (navbar) {
     let lastY = 0;
     let ticking = false;
-    const addAt = 18;
-    const removeAt = 6;
+    let isScrolled = navbar.classList.contains("is-scrolled");
+    const SHRINK_ADD_Y = 72;
+    const SHRINK_REMOVE_Y = 24;
     const scrollOptions = { passive: true };
+
+    const setScrolled = (next) => {
+      if (next === isScrolled) return;
+      isScrolled = next;
+      navbar.classList.toggle("is-scrolled", next);
+    };
 
     const onScroll = () => {
       lastY = window.scrollY || 0;
       if (ticking) return;
       ticking = true;
       window.requestAnimationFrame(() => {
-        if (lastY > addAt) {
-          navbar.classList.add("is-scrolled");
-        } else if (lastY < removeAt) {
-          navbar.classList.remove("is-scrolled");
+        if (lastY > SHRINK_ADD_Y) {
+          setScrolled(true);
+        } else if (lastY < SHRINK_REMOVE_Y) {
+          setScrolled(false);
         }
         ticking = false;
       });
