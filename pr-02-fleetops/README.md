@@ -1,431 +1,299 @@
-# 🇬🇧 English version below | 🇵🇱 Wersja polska na dole
+# FleetOps
 
-# 🇬🇧 English version
+## PL
 
-# FleetOps — transport-02
+### Przegląd projektu
 
-FleetOps is a modern, app-like **frontend-only SaaS dashboard** for transport and fleet operations management, created as a professional portfolio project.
-The application focuses on clean UI architecture, predictable state management, and real-world SaaS navigation patterns — without backend integration.
+FleetOps to statyczna, frontendowa aplikacja demonstracyjna dla operacji transportowych i flotowych. Repozytorium zawiera landing page, strony informacyjne, ekran logowania demo oraz panel aplikacyjny renderowany po stronie przeglądarki.
 
-🔗 **Live demo:** *(add Netlify URL after deploy)*
+Aplikacja działa bez backendu. Dane domenowe, preferencje użytkownika, stan logowania demo, filtry, ustawienia list i zmiany w rekordach są obsługiwane lokalnie w przeglądarce.
 
-This project is part of a larger professional portfolio aimed at demonstrating
-production-ready frontend structure, performance awareness,
-and scalable application design using **Vanilla JavaScript**.
+### Kluczowe funkcje
 
----
-
-## Project Goals
-
-This project was created to practice and demonstrate:
-
-- SaaS-style frontend architecture (app shell + views)
-- UI state management without frameworks
-- Auth-aware routing and navigation flows
-- Session persistence and UX patterns used in real-world SaaS products
-- Clean separation between layout, views, components, and state
-- Portfolio-level frontend engineering using **Vanilla JavaScript**
-
-There is **no backend by design**. All data and authentication are mocked to keep the focus on frontend logic and structure.
-
----
-
-## Core Features
-
-### Landing & Marketing
-
-- Marketing landing page with hero, features, pricing, FAQ, testimonials
-- Dark / light theme support
-- Accessible structure (skip link, semantic markup)
-
-### Authentication (Mock)
-
-- Email/password mock login
-- Demo login mode
-- Auth state persisted in `localStorage`
-- Auth-aware route guarding for `/app/*`
-
-### SaaS Dashboard
-
-- App-like UI with sidebar and top navigation
-- Dashboard overview with KPIs and activity feed
-- Orders management with:
-  - Table view
-  - Filters and status badges
-  - Details modal
-  - CSV export
-- Fleet and Drivers sections with filters and modals
-- Reports view with basic charts and summary tables
-- Settings panel:
-  - Theme toggle (light/dark)
-  - Compact mode
-  - Demo data reset
-
-### Navigation & UX Logic
-
-- Hash-based routing (`#/...`) with refresh-safe navigation
-- Protected application routes (`/app/*`)
-- Redirect back to intended route after login
-- Persisted last visited app view (restored on refresh or fresh load)
-- User preferences and UI state stored in `localStorage`
-
-### Legal & Info Pages
-
-- About
-- Contact
-- Privacy Policy
-- Terms of Service
-- Cookies information
-
----
-
-## Technical Overview
-
-### Stack
-
-- HTML5
-- CSS3 (custom design system, modular architecture)
-- Vanilla JavaScript (ES6)
-- Service Worker (offline-ready app shell)
-- Netlify (hosting & production configuration)
-
-### Architecture Highlights
-
-- Centralized state store (`store.js`)
-- Stateless UI components (modals, tables, dropdowns, toasts)
-- Clear separation of:
-  - layout
-  - views
-  - components
-  - state
-  - routing
-- Predictable app bootstrap and session restore flow
-
-### Build & Tooling
-
-- PostCSS + cssnano for production CSS minification
-- Optional Terser-based JavaScript minification (no bundling, no mangling)
-- Dist-based build structure (`styles/dist`, `js/dist`)
-- Netlify configuration:
-  - `_headers`
-  - `_redirects`
-  - `robots.txt`
-  - `sitemap.xml`
-  - custom `404.html`
-
----
-
-## File Structure (Simplified)
-
-scripts/
-├── utils/ # storage, DOM helpers, formatting
-├── state/ # global store and UI state
-├── data/ # mock seed data
-├── ui/
-│ ├── components/ # modal, toast, table, dropdown, etc.
-│ ├── views/ # dashboard, orders, fleet, drivers, reports, settings
-│ └── layouts/ # landing and app shell layouts
-├── router.js # hash router and route guards
-└── main.js # application bootstrap
-
-
----
-
-## Running the Project Locally
-
-1. Open the `transport-02` directory in your editor.
-2. Start any static server, for example:
-   - **VS Code Live Server**
-   - or:
-     ```
-     python -m http.server 3000
-     ```
-3. Open `index.html` in the browser.
-
-Routing is hash-based, so no additional server configuration is required.
-
----
-
-## Available Routes
-
-### Public
-
-- `#/` — landing page
-- `#/login` — login
-- `#/about`
-- `#/contact`
-- `#/privacy`
-- `#/terms`
-- `#/cookies`
-
-### Application (requires mock authentication)
-
-- `#/app` — dashboard overview
-- `#/app/orders`
-- `#/app/fleet`
-- `#/app/drivers`
-- `#/app/reports`
-- `#/app/settings`
-
----
-
-## Notes
-
-- This project intentionally has **no backend**.
-- All data and authentication are stored locally using `localStorage`.
-- The **Reset demo** option in Settings clears all stored state.
-- The codebase is designed to be extended later with a real API or framework if needed.
-
----
-
-## Status
-
-✔ Completed (v1)
-
-Possible future improvements:
-
-- UI polish and branding refinements
-- UX micro-interactions
-- Extended accessibility (a11y)
-- Optional backend or mock API integration
-- Further performance fine-tuning
-
----
-
-## Disclaimer
-
-FleetOps is a fictional demo project created solely for portfolio and educational purposes.
-All names, data, branding, and UI elements are illustrative and do not represent a real transport or logistics company.
-
----
-
-## Author
-
-Kamil Król
-**KP_Code**
-Front-End Developer
-Portfolio project — 2025
-
----
-
-## License
-
-This project is provided for portfolio and educational purposes only.
-
----
-
----
-
-# 🇵🇱 Wersja polska
-
-# FleetOps — transport-02
-
-FleetOps to nowoczesny, aplikacyjny **frontend-only dashboard typu SaaS** do zarządzania transportem i flotą, stworzony jako profesjonalny projekt portfolio.
-Aplikacja skupia się na czystej architekturze interfejsu, przewidywalnym zarządzaniu stanem oraz wzorcach nawigacji znanych z realnych systemów SaaS — bez integracji backendowej.
-
-🔗 **Demo online:** *(uzupełnij po wdrożeniu na Netlify)*
-
-Projekt jest częścią większego, profesjonalnego portfolio, którego celem jest pokazanie
-struktury frontendu gotowej do produkcji, świadomości wydajnościowej
-oraz skalowalnego projektowania aplikacji przy użyciu **czystego JavaScriptu (Vanilla JS)**.
-
----
-
-## Cel projektu
-
-Projekt został stworzony w celu ćwiczenia i zaprezentowania:
-
-- architektury frontendu w stylu SaaS (app shell + widoki)
-- zarządzania stanem interfejsu bez użycia frameworków
-- routingu i nawigacji świadomej stanu autoryzacji
-- mechanizmów sesji i wzorców UX spotykanych w realnych produktach SaaS
-- wyraźnego podziału na layout, widoki, komponenty i stan
-- inżynierii frontendu na poziomie portfolio z użyciem **Vanilla JavaScript**
-
-Projekt **celowo nie posiada backendu**. Dane oraz autoryzacja są mockowane,
-aby cała uwaga była skupiona na logice i strukturze frontendu.
-
----
-
-## Główne funkcjonalności
-
-### Landing & marketing
-
-- Landing marketingowy z sekcjami: hero, funkcje, cennik, FAQ, referencje
-- Obsługa trybu jasnego i ciemnego
-- Dostępna struktura (skip link, semantyczny HTML)
-
-### Autoryzacja (mock)
-
-- Logowanie email/hasło (mock)
-- Tryb logowania demo
-- Stan autoryzacji zapisywany w `localStorage`
-- Ochrona tras aplikacyjnych `/app/*` w zależności od stanu logowania
-
-### Dashboard SaaS
-
-- Interfejs aplikacyjny z bocznym menu i górną nawigacją
-- Widok główny z KPI oraz feedem aktywności
-- Zarządzanie zamówieniami:
-  - widok tabelaryczny
-  - filtry i statusy
-  - modal ze szczegółami
-  - eksport do CSV
-- Sekcje Flota i Kierowcy z filtrami i modalami
-- Widok raportów z prostymi wykresami i tabelami podsumowującymi
-- Panel ustawień:
-  - przełącznik motywu (jasny/ciemny)
-  - tryb kompaktowy
-  - reset danych demo
-
-### Nawigacja i logika UX
-
-- Routing oparty o hash (`#/...`) odporny na odświeżenie strony
-- Chronione trasy aplikacyjne (`/app/*`)
-- Przekierowanie do pierwotnej trasy po zalogowaniu
-- Zapamiętywanie ostatniego widoku aplikacji
-- Preferencje użytkownika i stan UI zapisywane w `localStorage`
-
-### Strony informacyjne i prawne
-
-- O projekcie
-- Kontakt
-- Polityka prywatności
-- Regulamin
-- Informacja o cookies
-
----
-
-## Przegląd techniczny
+- Routing oparty o hash URL dla stron marketingowych, logowania i widoków aplikacyjnych.
+- Widoki panelu: przegląd KPI, zlecenia, flota, kierowcy, raporty i ustawienia.
+- Dane demo dla zleceń, pojazdów, kierowców, aktywności, alertów i raportów.
+- Lokalne zarządzanie rekordami zleceń, pojazdów i kierowców: dodawanie, edycja i usuwanie.
+- Filtrowanie, sortowanie, wyszukiwanie i przyrostowe ładowanie list.
+- Role demo oraz blokowanie wybranych akcji na podstawie uprawnień.
+- Motyw jasny/ciemny, tryb kompaktowy i reset danych demo.
+- Eksport raportów do JSON; eksport CSV zleceń jest obecny w kodzie, ale zablokowany w interfejsie demo.
+- Manifest aplikacji, plik źródłowy service workera oraz statyczna strona `404.html`.
 
 ### Stack technologiczny
 
+Runtime:
+
 - HTML5
-- CSS3 (własny system projektowy, architektura modularna)
-- JavaScript (ES6, vanilla)
-- Service Worker (app shell gotowy do pracy offline)
-- Netlify (hosting i konfiguracja produkcyjna)
+- CSS3
+- Vanilla JavaScript
+- Web Storage API
+- Service Worker API
+- Web App Manifest
 
-### Architektura
+Tooling:
 
-- Centralny store stanu (`store.js`)
-- Bezstanowe komponenty UI (modale, tabele, dropdowny, toasty)
-- Wyraźny podział na:
-  - layout
-  - widoki
-  - komponenty
-  - stan
-  - routing
-- Przewidywalny proces inicjalizacji aplikacji i odtwarzania sesji
+- Node.js / npm
+- PostCSS
+- cssnano
+- postcss-cli
+- terser
 
-### Build & tooling
+### Struktura projektu
 
-- PostCSS + cssnano do produkcyjnej minifikacji CSS
-- Opcjonalna minifikacja JavaScriptu oparta o Terser (bez bundlingu i manglingu)
-- Struktura build oparta o katalogi `dist` (`styles/dist`, `js/dist`)
-- Konfiguracja Netlify:
-  - `_headers`
-  - `_redirects`
-  - `robots.txt`
-  - `sitemap.xml`
-  - własna strona `404.html`
+```text
+.
+├── index.html              # Główny dokument HTML i punkt wejścia aplikacji
+├── 404.html                # Statyczna strona błędu
+├── sw.js                   # Service worker dla shell/cache
+├── _headers                # Nagłówki dla statycznego hostingu Netlify
+├── _redirects              # Reguły fallback dla aplikacji statycznej
+├── robots.txt              # Reguły indeksowania
+├── sitemap.xml             # Mapa witryny
+├── assets/                 # Ikony, fonty, obrazy hero, OG, screeny i skróty manifestu
+├── styles/                 # Warstwy CSS oraz wygenerowane pliki .min.css
+├── scripts/                # Logika aplikacji, routing, stan, dane demo i komponenty UI
+├── doc/                    # Dokumentacja projektowa
+├── minify-js.js            # Skrypt minifikacji JS dla katalogu js/
+├── postcss.config.js       # Konfiguracja cssnano dla PostCSS
+├── package.json            # Skrypty npm i zależności developerskie
+└── LICENSE                 # Treść licencji MIT
+```
 
----
+Główna logika aplikacji znajduje się w `scripts/`:
 
-## Struktura plików (uproszczona)
+- `scripts/router.js` obsługuje routing hash-based i ochronę widoków `/app`.
+- `scripts/main.js` inicjalizuje stan, motyw, status online/offline i routing.
+- `scripts/state/store.js` zarządza stanem aplikacji i zapisem do `localStorage`.
+- `scripts/data/seed.js` dostarcza dane demonstracyjne.
+- `scripts/ui/layoutLanding.js` i `scripts/ui/layoutApp.js` renderują główne układy.
+- `scripts/ui/views/` zawiera widoki modułów aplikacyjnych.
+- `scripts/ui/components/` zawiera komponenty modal, dropdown, accordion, toast i table.
 
-scripts/
-├── utils/ # storage, helpery DOM, formatowanie
-├── state/ # globalny store i stan UI
-├── data/ # mockowane dane startowe
-├── ui/
-│ ├── components/ # modale, toasty, tabele, dropdowny itd.
-│ ├── views/ # dashboard, orders, fleet, drivers, reports, settings
-│ └── layouts/ # layout landingowy i app shell
-├── router.js # routing hash + ochrona tras
-└── main.js # bootstrap aplikacji
+### Instalacja i konfiguracja
 
----
+Repozytorium zawiera zależności developerskie używane do minifikacji zasobów.
 
-## Uruchomienie lokalne
+```bash
+npm install
+```
 
-1. Otwórz katalog `transport-02` w edytorze.
-2. Uruchom dowolny serwer statyczny, np.:
-   - **VS Code Live Server**
-   - lub:
-     ```
-     python -m http.server 3000
-     ```
-3. Otwórz `index.html` w przeglądarce.
+### Development lokalny
 
-Routing oparty o hash nie wymaga dodatkowej konfiguracji serwera.
+Projekt jest statyczny. Głównym punktem wejścia jest `index.html`, a `package.json` nie definiuje skryptu uruchamiającego lokalny serwer developerski.
 
----
+### Build produkcyjny
 
-## Dostępne trasy
+Dostępne skrypty npm:
 
-### Publiczne
+```bash
+npm run min:css
+npm run min:js
+npm run min:all
+```
 
-- `#/` — landing
-- `#/login` — logowanie
-- `#/about`
-- `#/contact`
-- `#/privacy`
-- `#/terms`
-- `#/cookies`
+`npm run min:css` minifikuje pliki CSS w `styles/` do wariantów `.min.css`, które są ładowane przez `index.html`. `npm run min:js` uruchamia `minify-js.js`, który minifikuje pliki z katalogu `js/` do `js/dist/`, jeśli takie pliki są obecne.
 
-### Aplikacja (wymaga mockowanej autoryzacji)
+### Deployment
 
-- `#/app` — dashboard główny
-- `#/app/orders`
-- `#/app/fleet`
-- `#/app/drivers`
-- `#/app/reports`
-- `#/app/settings`
+Repozytorium zawiera statyczną konfigurację kompatybilną z Netlify:
 
----
+- `_redirects` kieruje ruch do `index.html`, co wspiera routing po stronie klienta.
+- `_headers` definiuje nagłówki bezpieczeństwa oraz cache dla zasobów statycznych.
+- `sitemap.xml`, `robots.txt`, metadane canonical i Open Graph wskazują domenę `transport-project-02.netlify.app`.
 
-## Uwagi
+### Dostępność
 
-- Projekt **celowo nie posiada backendu**.
-- Wszystkie dane i autoryzacja są przechowywane lokalnie w `localStorage`.
-- Opcja **Reset demo** w ustawieniach czyści cały zapisany stan.
-- Kod jest przygotowany pod przyszłą integrację z API lub frameworkiem.
+W kodzie widoczne są następujące mechanizmy dostępności:
 
----
+- link pomijania do `#main-content`;
+- semantyczne role i etykiety ARIA w nawigacji, drawerach, menu, modalach i statusach;
+- obsługa `aria-current`, `aria-expanded`, `aria-controls`, `aria-modal`, `aria-live` i `aria-invalid`;
+- pułapka fokusu i zamykanie klawiszem Escape w modalach oraz mobilnych drawerach;
+- widoczne style fokusu dla linków, przycisków i pól formularzy;
+- obsługa `prefers-reduced-motion` w warstwie CSS.
 
-## Status
+### SEO
 
-✔ Zakończony (v1)
+Repozytorium zawiera:
 
-Możliwe dalsze usprawnienia:
+- meta description i title w `index.html`;
+- canonical URL;
+- metadane Open Graph i Twitter Card;
+- favicony i manifest aplikacji;
+- `robots.txt`;
+- `sitemap.xml`;
+- osobną stronę `404.html`.
 
-- dopracowanie UI i brandingu
-- mikro-interakcje UX
-- rozszerzona dostępność (a11y)
-- opcjonalna integracja backendowa lub mock API
-- dalsze optymalizacje wydajności
+### Wydajność
 
----
+W kodzie widoczne są następujące rozwiązania:
 
-## Informacja prawna
+- preload lokalnego fontu Inter w formacie WOFF2;
+- obrazy hero w wariantach AVIF, WebP i JPG przez element `picture`;
+- ustawione wymiary oraz `decoding="async"` dla obrazu hero;
+- ładowanie CSS w wariantach `.min.css`;
+- `sw.js` definiuje strategie cache dla shell aplikacji i zasobów statycznych;
+- reguły cache dla `/assets/*` w `_headers`.
 
-FleetOps jest fikcyjnym projektem demonstracyjnym stworzonym wyłącznie
-w celach portfolio i edukacyjnych.
-Wszystkie nazwy, dane, branding i elementy interfejsu mają charakter przykładowy
-i nie odnoszą się do rzeczywistej firmy transportowej.
+### Utrzymanie projektu
 
----
+- Style są podzielone na `base.css`, `components.css`, `landing.css` i `app.css`; warianty `.min.css` są generowane przez PostCSS.
+- Stan aplikacji i trwałość danych są scentralizowane w `scripts/state/store.js`.
+- Dane demonstracyjne są odseparowane w `scripts/data/seed.js`.
+- Uprawnienia ról demo są zdefiniowane w `scripts/core/permissions.js`.
+- Widoki aplikacyjne są rozdzielone w `scripts/ui/views/`, a współdzielone komponenty w `scripts/ui/components/`.
+- Metadane licencji są niespójne: `LICENSE` zawiera MIT License, a `package.json` deklaruje `ISC`.
 
-## Autor
+### Licencja
 
-Kamil Król
-**KP_Code**
-Front-End Developer
-Projekt portfolio — 2025
+Repozytorium zawiera plik `LICENSE` z treścią MIT License.
 
----
+## EN
 
-## Licencja
+### Project Overview
 
-Projekt udostępniony wyłącznie w celach portfolio i edukacyjnych.
+FleetOps is a static frontend demo application for transport and fleet operations. The repository includes a landing page, informational pages, a demo login screen, and a browser-rendered application dashboard.
+
+The application runs without a backend. Domain data, user preferences, demo authentication state, filters, list settings, and record changes are handled locally in the browser.
+
+### Key Features
+
+- Hash-based URL routing for marketing pages, login, and application views.
+- Dashboard views: KPI overview, orders, fleet, drivers, reports, and settings.
+- Demo data for orders, vehicles, drivers, activity, alerts, and reports.
+- Local record management for orders, vehicles, and drivers: create, edit, and delete.
+- Filtering, sorting, search, and incremental list loading.
+- Demo roles and action blocking based on permissions.
+- Light/dark theme, compact mode, and demo data reset.
+- JSON report export; CSV order export exists in the code but is disabled in the demo UI.
+- Application manifest, service worker source file, and static `404.html` page.
+
+### Tech Stack
+
+Runtime:
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Web Storage API
+- Service Worker API
+- Web App Manifest
+
+Tooling:
+
+- Node.js / npm
+- PostCSS
+- cssnano
+- postcss-cli
+- terser
+
+### Project Structure
+
+```text
+.
+├── index.html              # Main HTML document and application entry point
+├── 404.html                # Static error page
+├── sw.js                   # Service worker for shell/cache behavior
+├── _headers                # Headers for Netlify static hosting
+├── _redirects              # Static-app fallback rules
+├── robots.txt              # Indexing rules
+├── sitemap.xml             # Sitemap
+├── assets/                 # Icons, fonts, hero images, OG assets, screenshots, manifest shortcuts
+├── styles/                 # CSS layers and generated .min.css files
+├── scripts/                # App logic, routing, state, demo data, and UI components
+├── doc/                    # Project documentation
+├── minify-js.js            # JS minification script for the js/ directory
+├── postcss.config.js       # cssnano configuration for PostCSS
+├── package.json            # npm scripts and development dependencies
+└── LICENSE                 # MIT License text
+```
+
+The main application logic is located in `scripts/`:
+
+- `scripts/router.js` handles hash-based routing and `/app` view protection.
+- `scripts/main.js` initializes state, theme, online/offline status, and routing.
+- `scripts/state/store.js` manages application state and `localStorage` persistence.
+- `scripts/data/seed.js` provides demo data.
+- `scripts/ui/layoutLanding.js` and `scripts/ui/layoutApp.js` render the main layouts.
+- `scripts/ui/views/` contains application module views.
+- `scripts/ui/components/` contains modal, dropdown, accordion, toast, and table components.
+
+### Setup and Installation
+
+The repository includes development dependencies used for asset minification.
+
+```bash
+npm install
+```
+
+### Local Development
+
+The project is static. The main entry point is `index.html`, and `package.json` does not define a local development server script.
+
+### Production Build
+
+Available npm scripts:
+
+```bash
+npm run min:css
+npm run min:js
+npm run min:all
+```
+
+`npm run min:css` minifies CSS files in `styles/` into `.min.css` variants loaded by `index.html`. `npm run min:js` runs `minify-js.js`, which minifies files from the `js/` directory into `js/dist/` when such files are present.
+
+### Deployment
+
+The repository includes static configuration compatible with Netlify:
+
+- `_redirects` routes traffic to `index.html`, supporting client-side routing.
+- `_headers` defines security headers and static asset caching.
+- `sitemap.xml`, `robots.txt`, canonical metadata, and Open Graph metadata reference the `transport-project-02.netlify.app` domain.
+
+### Accessibility
+
+The code includes the following accessibility mechanisms:
+
+- skip link to `#main-content`;
+- semantic roles and ARIA labels in navigation, drawers, menus, modals, and status elements;
+- usage of `aria-current`, `aria-expanded`, `aria-controls`, `aria-modal`, `aria-live`, and `aria-invalid`;
+- focus trapping and Escape-key closing in modals and mobile drawers;
+- visible focus styles for links, buttons, and form fields;
+- `prefers-reduced-motion` handling in CSS.
+
+### SEO
+
+The repository includes:
+
+- meta description and title in `index.html`;
+- canonical URL;
+- Open Graph and Twitter Card metadata;
+- favicons and application manifest;
+- `robots.txt`;
+- `sitemap.xml`;
+- separate `404.html` page.
+
+### Performance
+
+The code includes the following implementation details:
+
+- preload for the local Inter WOFF2 font;
+- hero images served through `picture` with AVIF, WebP, and JPG variants;
+- explicit dimensions and `decoding="async"` for the hero image;
+- CSS loaded through `.min.css` variants;
+- `sw.js` defines cache strategies for the application shell and static assets;
+- cache rules for `/assets/*` in `_headers`.
+
+### Project Maintenance
+
+- Styles are split into `base.css`, `components.css`, `landing.css`, and `app.css`; `.min.css` variants are generated through PostCSS.
+- Application state and persistence are centralized in `scripts/state/store.js`.
+- Demo data is isolated in `scripts/data/seed.js`.
+- Demo role permissions are defined in `scripts/core/permissions.js`.
+- Application views are split under `scripts/ui/views/`, with shared components under `scripts/ui/components/`.
+- License metadata is inconsistent: `LICENSE` contains the MIT License, while `package.json` declares `ISC`.
+
+### License
+
+The repository includes a `LICENSE` file with the MIT License text.
