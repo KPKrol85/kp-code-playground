@@ -100,7 +100,7 @@
 }
 
 .topbar h2 {
-  font-size: 18px;
+  font-size: var(--fs-04);
 }
 
 .search {
@@ -133,7 +133,7 @@
   background: color-mix(in srgb, var(--accent) 12%, var(--bg-elevated));
   border-bottom: 1px solid var(--border);
   color: var(--text);
-  font-size: 13px;
+  font-size: var(--fs-02);
 }
 
 .offline-banner.is-visible {
@@ -485,7 +485,7 @@ body[data-compact="true"] .topbar {
     gap: 12px;
   }
   .app-topbar__brand span {
-    font-size: 14px;
+    font-size: var(--fs-02);
   }
   .sidebar {
     position: fixed;

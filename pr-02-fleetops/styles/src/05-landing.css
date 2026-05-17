@@ -312,7 +312,7 @@
 
 .landing .hero-cta .muted.small {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: var(--fs-01);
   flex-basis: 100%;
   padding-left: 4px;
   margin-top: var(--space-1);
@@ -640,7 +640,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 
 .landing .footer__eyebrow,
 .landing .footer__title {
-  font-size: 12px;
+  font-size: var(--fs-01);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);

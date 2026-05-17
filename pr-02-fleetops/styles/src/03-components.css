@@ -13,7 +13,7 @@
   padding: 4px 10px;
   margin-bottom: var(--space-2);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: var(--fs-01);
   background: var(--accent-ghost);
   color: var(--accent);
 }
@@ -21,7 +21,7 @@
 .badge {
   padding: 4px 8px;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: var(--fs-01);
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
@@ -29,7 +29,7 @@
 
 /* Text helpers */
 .small {
-  font-size: 14px;
+  font-size: var(--fs-02);
 }
 
 /* Separators */
@@ -229,7 +229,7 @@ html[data-theme="dark"] .button.secondary:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: var(--fs-02);
   line-height: 1;
 }
 
@@ -331,13 +331,13 @@ textarea:invalid:focus-visible {
 }
 
 .form-hint {
-  font-size: 12px;
+  font-size: var(--fs-01);
   color: var(--text-muted);
   line-height: 1.4;
 }
 
 .form-error {
-  font-size: 12px;
+  font-size: var(--fs-01);
   color: var(--danger);
   line-height: 1.4;
 }

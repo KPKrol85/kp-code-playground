@@ -1,5 +1,5 @@
 
-/* === 01 - Global Reset & Selection === */
+/* Global Reset & Selection */
 
 * {
   box-sizing: border-box;
@@ -10,7 +10,7 @@
   color: var(--text);
 }
 
-/* === 02 - Document Base === */
+/* Document Base */
 
 html,
 body {
@@ -25,7 +25,7 @@ body {
   overflow-x: clip;
 }
 
-/* === 03 - Links & Media === */
+/* Links & Media */
 
 a {
   color: inherit;
@@ -41,7 +41,7 @@ img {
   max-width: 100%;
 }
 
-/* === 04 - Form Elements & Focus Styles === */
+/* Form Elements & Focus Styles */
 
 button,
 input,
@@ -53,7 +53,6 @@ textarea {
   border: none;
 }
 
-/* Focus */
 button:focus,
 input:focus,
 select:focus,
@@ -64,7 +63,7 @@ a:focus-visible {
   border-radius: 6px;
 }
 
-/* === 06 - Accessibility === */
+/* Accessibility */
 
 .skip-link {
   position: absolute;
@@ -81,7 +80,7 @@ a:focus-visible {
   left: 16px;
 }
 
-/* === 08 - Typography Base === */
+/* Typography Base */
 
 h1,
 h2,
@@ -100,7 +99,7 @@ p {
   color: var(--text-muted);
 }
 
-/* === 09 - Lists & Content Defaults === */
+/* Lists & Content Defaults */
 
 ul {
   margin: 0;
