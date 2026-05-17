@@ -8,11 +8,9 @@
   },
   "scripts": {
     "build": "node build-dist.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "min:css": "postcss \"styles/!(*.min).css\" --dir styles --ext .min.css",
-    "min:js": "node minify-js.js",
-    "min:all": "npm run min:css && npm run min:js",
-    "preview:dist": "cd dist && python -m http.server 8182"
+    "preview": "python -m http.server 8181",
+    "preview:dist": "python -m http.server 8182 --directory dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "KP_Code Digital Studio",

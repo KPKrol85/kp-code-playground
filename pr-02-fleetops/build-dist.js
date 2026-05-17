@@ -94,10 +94,15 @@ function getActiveScriptSources(html) {
 
 function replaceStylesheets(html) {
   const stylesheet = '<link rel="stylesheet" href="/styles/main.min.css" />';
+  const sourceStylesheetPattern = /(\n[ \t]*)<link rel="stylesheet" href="\/styles\/main\.css" \/>\r?\n/;
   const legacyStylesheetPattern =
     /(\n[ \t]*)(?:<link rel="stylesheet" href="\/styles\/(?:base|components|landing|app)\.min\.css" \/>\r?\n[ \t]*)+/;
 
-  const updated = html.replace(legacyStylesheetPattern, `$1${stylesheet}\n`);
+  let updated = html.replace(sourceStylesheetPattern, `$1${stylesheet}\n`);
+
+  if (updated === html) {
+    updated = html.replace(legacyStylesheetPattern, `$1${stylesheet}\n`);
+  }
 
   if (updated === html || !updated.includes(stylesheet)) {
     throw new Error("Could not replace legacy stylesheet links");
