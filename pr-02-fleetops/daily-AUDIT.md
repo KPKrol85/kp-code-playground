@@ -162,3 +162,170 @@ Remove obsolete commented blocks once the active layout rules are settled.
 7.5/10
 
 FleetOps has strong static frontend structure, readable module separation, practical accessibility work, responsive styling, and deployment-aware metadata/configuration. The score is held back by important production-facing gaps: unescaped user-editable content rendered through `innerHTML`, a broken manifest shortcut route, a blank no-JS baseline, and build/PWA metadata that is not fully aligned with the active implementation.
+
+---
+
+# FleetOps — Dzienny audyt front-end
+
+## 1. Krótka ocena ogólna
+
+FleetOps to dobrze uporządkowane statyczne demo frontendowe z czytelnym podziałem na HTML shell, warstwy CSS, routing, stan aplikacji, dane seed, layouty, widoki i współdzielone komponenty UI. Implementacja pokazuje solidną dbałość o responsywny layout, stany fokusu klawiatury, użycie ARIA, lokalną trwałość stanu oraz konfigurację statycznego deploymentu.
+
+Główne ryzyka produkcyjne koncentrują się w ścieżkach renderowania HTML po stronie klienta: lokalne dane edytowalne przez użytkownika są interpolowane do `innerHTML`, baseline bez JavaScriptu jest praktycznie pusty, a jeden skrót manifestu wskazuje trasę, której router nie obsługuje. Rejestracja service workera nie została wykryta w projekcie.
+
+## 2. Mocne strony
+
+- Czytelna organizacja źródeł: `scripts/router.js`, `scripts/main.js`, `scripts/state/store.js`, `scripts/data/seed.js`, `scripts/ui/views/` oraz `scripts/ui/components/` rozdzielają routing, inicjalizację, stan, dane demo, widoki i współdzielone UI.
+- Wsparcie dla statycznego deploymentu jest obecne przez `_redirects`, `_headers`, `robots.txt`, `sitemap.xml`, `404.html` oraz metadane w `index.html`.
+- Praca nad dostępnością jest widoczna w kodzie: skip link w `index.html:50`, root aplikacji z `aria-live` w `index.html:51`, pułapka fokusu w modalu w `scripts/ui/components/modal.js`, pułapki fokusu w drawerach w `scripts/ui/layoutLanding.js` i `scripts/ui/layoutApp.js` oraz style `focus-visible` w `styles/base.css`, `styles/components.css` i `styles/app.css`.
+- Style responsywne i obsługa reduced motion są zaimplementowane w warstwach CSS, w tym reguły `prefers-reduced-motion` w `styles/landing.css`, `styles/components.css` i `styles/app.css`.
+- Obsługa obrazów obejmuje preload lokalnego fontu WOFF2, źródła hero w AVIF/WebP/JPG, jawne wymiary obrazu hero, `fetchpriority="high"` oraz `decoding="async"` w `scripts/ui/layoutLanding.js`.
+- Lokalny stan aplikacji jest scentralizowany w `scripts/state/store.js`, a dane demo są odseparowane w `scripts/data/seed.js`.
+
+## 3. P0 — Ryzyka krytyczne
+
+nie wykryto
+
+## 4. P1 — Ważne problemy do naprawy w następnej kolejności
+
+### P1. Lokalne dane edytowalne przez użytkownika są renderowane przez `innerHTML`
+
+Dowody:
+
+- Wartości formularza zleceń są pobierane z inputów użytkownika w `scripts/ui/views/ordersView.js:180-181`, a następnie zapisywane do lokalnego stanu w `scripts/ui/views/ordersView.js:291-292`.
+- Te wartości są później interpolowane do stringów HTML w `scripts/ui/views/ordersView.js:418-419`, `scripts/ui/views/ordersView.js:489-490` i renderowane przez `tableWrap.innerHTML` w `scripts/ui/views/ordersView.js:435`.
+- Ten sam wzorzec występuje dla danych floty i kierowców w `scripts/ui/views/fleetView.js:404`, `scripts/ui/views/fleetView.js:418-419`, `scripts/ui/views/driversView.js:410-414` oraz w markupie modali szczegółów/usuwania.
+
+Ryzyko:
+
+Tworzy to ryzyko client-side HTML injection dla danych wpisanych w formularzach demo lub odtworzonych z `localStorage`. CSP Netlify w `_headers` ogranicza część ścieżek wykonania skryptów, ale warstwa renderowania nadal traktuje edytowalne stringi jako HTML zamiast tekstu.
+
+Rekomendacja:
+
+Renderować wartości edytowalne przez użytkownika przez `textContent`, budować wiersze tabel przez DOM API albo wprowadzić mały helper do escapowania i stosować go konsekwentnie przed interpolacją.
+
+### P1. Skrót Dashboard w zainstalowanej aplikacji wskazuje nieobsługiwaną trasę
+
+Dowody:
+
+- `assets/favicon/site.webmanifest:57` definiuje URL skrótu Dashboard jako `/app/dashboard`.
+- `scripts/router.js:176-191` obsługuje `/app`, `/app/orders`, `/app/fleet`, `/app/drivers`, `/app/reports` i `/app/settings`, ale nie obsługuje `/app/dashboard`.
+- Nieznane trasy `/app/*` renderują widok not-found w `scripts/router.js:193-195`.
+
+Ryzyko:
+
+Skrót manifestu może otworzyć zainstalowaną aplikację bezpośrednio w stanie not-found zamiast w dashboardzie.
+
+Rekomendacja:
+
+Zmienić URL skrótu na `/app` albo dodać `/app/dashboard` jako alias trasy dashboardu.
+
+### P1. Baseline bez JavaScriptu jest pusty dla głównego doświadczenia
+
+Dowody:
+
+- `index.html:49-51` zawiera w body tylko skip link oraz `<div id="app" aria-live="polite"></div>`.
+- Landing, strony marketingowe, login i widoki aplikacji są generowane przez JavaScript w `scripts/ui/layoutLanding.js`, `scripts/ui/marketingPages.js` i `scripts/router.js`.
+- Fallback `<noscript>` nie został wykryty w projekcie.
+
+Ryzyko:
+
+Jeśli JavaScript nie zadziała, zostanie zablokowany albo załaduje się częściowo, publiczna strona nie ma sensownej treści fallback. To realna luka w progressive enhancement dla statycznej publicznej witryny.
+
+Rekomendacja:
+
+Dodać zwięzły fallback `<noscript>` z nazwą projektu, opisem i podstawowymi informacjami kontaktowymi/nawigacyjnymi albo wyrenderować minimalny landing shell bezpośrednio w `index.html`.
+
+## 5. P2 — Drobne usprawnienia
+
+### P2. Plik service workera istnieje, ale nie jest rejestrowany
+
+Dowody:
+
+- `sw.js` definiuje handlery install, activate i fetch.
+- Rejestracja service workera przez `navigator.serviceWorker.register(...)` nie została wykryta w projekcie.
+
+Wpływ:
+
+Strategia cache w `sw.js` nie ma efektu runtime, chyba że rejestracja jest obsługiwana poza tym repozytorium.
+
+Rekomendacja:
+
+Zarejestrować `sw.js` intencjonalnie podczas startu aplikacji albo usunąć plik, jeśli zachowanie offline/cache nie jest częścią aktualnego zakresu.
+
+### P2. Skrypt minifikacji JavaScriptu nie targetuje aktywnego katalogu źródłowego
+
+Dowody:
+
+- `minify-js.js:6-7` targetuje `js/` oraz `js/dist/`.
+- `index.html:54-77` ładuje pliki źródłowe z `scripts/`.
+- Aktywna implementacja JavaScriptu repozytorium znajduje się w `scripts/`; `js/dist/` istnieje, ale nie wykryto tam aktywnych plików źródłowych.
+
+Wpływ:
+
+`npm run min:js` nie minifikuje plików JavaScript używanych przez aplikację.
+
+Rekomendacja:
+
+Zaktualizować skrypt tak, aby targetował `scripts/`, albo usunąć/zmienić nazwę skryptu, jeśli minifikacja JavaScriptu jest celowo poza zakresem.
+
+### P2. Metadane licencji są niespójne
+
+Dowody:
+
+- `LICENSE:1` zawiera MIT License.
+- `package.json:17` deklaruje `"license": "ISC"`.
+- `README.md` dokumentuje tę niespójność.
+
+Wpływ:
+
+Nie jest to problem runtime, ale tworzy niejednoznaczność metadanych repozytorium dla użytkowników i narzędzi automatycznych.
+
+Rekomendacja:
+
+Uzgodnić `package.json` z plikiem licencji albo zaktualizować plik licencji, jeśli intencją jest ISC.
+
+### P2. Nieużywany helper odwołuje się do brakującego assetu logo
+
+Dowody:
+
+- `scripts/router.js:1` definiuje `renderInfoPage`.
+- `scripts/router.js:7` odwołuje się do `assets/icons/logo-02.svg`.
+- `assets/icons/logo-02.svg` nie został wykryty w projekcie.
+- Wywołania `renderInfoPage(...)` nie zostały wykryte w projekcie.
+
+Wpływ:
+
+To obecnie martwy/nieużywany kod, ale po ponownym użyciu helpera wyrenderowałby uszkodzony obraz.
+
+Rekomendacja:
+
+Usunąć nieużywany helper albo zaktualizować referencję do istniejącego pliku logo.
+
+### P2. W źródłach CSS pozostały zakomentowane bloki
+
+Dowody:
+
+- `styles/app.css:289-306` zawiera starszy zakomentowany blok `panel` / `module-header`.
+- `styles/app.css:447-452` zawiera zakomentowaną regułę spacingu raportów.
+
+Wpływ:
+
+Brak wpływu runtime, ale zwiększa szum utrzymaniowy w pliku, który poza tym ma czytelną strukturę sekcji.
+
+Rekomendacja:
+
+Usunąć przestarzałe zakomentowane bloki po ustabilizowaniu aktywnych reguł layoutu.
+
+## 6. Dodatkowe usprawnienia jakościowe
+
+- Dane strukturalne JSON-LD: nie wykryto w projekcie. To opcjonalne, nie defekt.
+- Warto rozważyć mały skrypt smoke-check dla pokrycia tras, URL-i skrótów manifestu i istnienia wymaganych assetów.
+- Warto rozważyć helper do escapowania HTML albo helper renderujący DOM jako współdzieloną konwencję dla wartości edytowalnych przez użytkownika.
+- Warto udokumentować, czy zachowanie service workera jest celowo oczekujące, czy powinno być aktywne w produkcji.
+
+## 7. Senior rating (1–10)
+
+7.5/10
+
+FleetOps ma mocną statyczną strukturę frontendu, czytelny podział modułów, praktyczne elementy dostępności, responsywne style oraz metadane/konfigurację świadome deploymentu. Ocena jest obniżona przez ważne luki produkcyjne: nieescapowane dane edytowalne przez użytkownika renderowane przez `innerHTML`, błędną trasę skrótu manifestu, pusty baseline bez JS oraz metadane build/PWA, które nie są w pełni zgodne z aktywną implementacją.
