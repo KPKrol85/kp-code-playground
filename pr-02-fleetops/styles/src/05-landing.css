@@ -231,7 +231,7 @@
 /* Hero */
 
 .landing-home .section:not(.hero) {
-  padding-block: var(--space-section-lg);
+  padding-block: var(--space-6);
 }
 
 .landing .section.hero {
@@ -283,6 +283,15 @@
   flex-basis: 100%;
   padding-left: var(--space-0);
   margin-top: var(--space-1);
+}
+
+.landing-home .hero-cta {
+  gap: var(--space-2);
+}
+
+.landing-home .hero-cta .button {
+  flex: 1 1 132px;
+  min-width: 0;
 }
 
 .landing .hero-visual {
@@ -393,17 +402,19 @@
 .landing-home .landing-section-header {
   display: grid;
   gap: var(--space-1);
+  justify-items: center;
   max-width: 720px;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
+  text-align: center;
 }
 
 .landing-home .landing-section-header .tag {
-  justify-self: start;
+  justify-self: center;
   margin-bottom: var(--space-1);
 }
 
 .landing-home .landing-section-header h2 {
-  font-size: var(--fs-07);
+  font-size: var(--fs-06);
   line-height: var(--lh-tight);
 }
 
@@ -415,13 +426,26 @@
 
 .landing-home .landing-section-header--split {
   display: flex;
+  flex-wrap: wrap;
   max-width: none;
   align-items: end;
-  gap: var(--space-4);
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
 }
 
 .landing-home .landing-section-header--split > :first-child {
+  flex-basis: 100%;
   max-width: 760px;
+}
+
+.landing-home .landing-section-header--split > :last-child {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+  max-width: 140px;
 }
 
 .landing-home .landing-section-header--split > .button {
@@ -433,7 +457,7 @@
 .landing-home .how-grid,
 .landing-home .pricing,
 .landing-home .testimonials {
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .landing-home .feature-card,
@@ -448,7 +472,7 @@
   display: grid;
   align-content: start;
   gap: var(--space-1);
-  min-height: 132px;
+  min-height: 0;
 }
 
 .landing-home .feature-card p,
@@ -534,35 +558,6 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   }
 }
 
-@media (max-width: 1024px) {
-  .landing-home .landing-section-header--split {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-3);
-    text-align: center;
-  }
-
-  .landing-home .landing-section-header--split > :first-child {
-    flex-basis: 100%;
-  }
-
-  .landing-home .landing-section-header--split > :last-child {
-    flex-basis: 100%;
-    display: flex;
-    justify-content: center;
-    width: fit-content;
-    margin: 0 auto;
-    max-width: 140px;
-  }
-
-  .landing-home .landing-section-header,
-  .landing-home .landing-section-header .tag {
-    justify-items: center;
-    justify-self: center;
-    text-align: center;
-  }
-}
-
 /* Pricing */
 
 .landing .pricing {
@@ -584,7 +579,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 
 .landing-home .price-card {
   gap: var(--space-2);
-  min-height: 196px;
+  min-height: 0;
   align-content: start;
 }
 
@@ -627,7 +622,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 .landing-home .testimonial {
   display: grid;
   gap: var(--space-2);
-  min-height: 124px;
+  min-height: 0;
   align-content: start;
 }
 
@@ -654,42 +649,77 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   box-shadow: var(--shadow);
 }
 
-@media (max-width: 768px) {
+@media (min-width: 480px) {
+  .landing-home .hero-cta {
+    gap: var(--space-3);
+  }
+
+  .landing-home .hero-cta .button {
+    flex: 0 0 auto;
+    min-width: 140px;
+  }
+}
+
+@media (min-width: 760px) {
   .landing-home .section:not(.hero) {
-    padding-block: var(--space-6);
+    padding-block: var(--space-section-lg);
   }
 
   .landing-home .landing-section-header {
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
 
   .landing-home .landing-section-header h2 {
-    font-size: var(--fs-06);
+    font-size: var(--fs-07);
   }
 
   .landing-home .feature-grid,
   .landing-home .how-grid,
   .landing-home .pricing,
   .landing-home .testimonials {
-    gap: var(--space-3);
+    gap: var(--space-4);
   }
 
   .landing-home .feature-card,
-  .landing-home .step,
-  .landing-home .price-card,
+  .landing-home .step {
+    min-height: 132px;
+  }
+
+  .landing-home .price-card {
+    min-height: 196px;
+  }
+
   .landing-home .testimonial {
-    min-height: 0;
+    min-height: 124px;
   }
 }
 
-@media (max-width: 480px) {
-  .landing-home .hero-cta {
-    gap: var(--space-2);
+@media (min-width: 1024px) {
+  .landing-home .landing-section-header {
+    justify-items: start;
+    text-align: left;
   }
 
-  .landing-home .hero-cta .button {
-    flex: 1 1 132px;
-    min-width: 0;
+  .landing-home .landing-section-header .tag {
+    justify-self: start;
+  }
+
+  .landing-home .landing-section-header--split {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    text-align: left;
+  }
+
+  .landing-home .landing-section-header--split > :first-child {
+    flex-basis: auto;
+  }
+
+  .landing-home .landing-section-header--split > :last-child {
+    flex-basis: auto;
+    width: auto;
+    margin: 0 0 var(--space-0);
+    max-width: none;
   }
 }
 
