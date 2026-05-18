@@ -90,7 +90,7 @@ h5,
 h6 {
   margin: 0;
   font-weight: var(--fw-semibold);
-  line-height: var(--lh-tight);
+  line-height: var(--lh-snug);
   letter-spacing: var(--ls-compact);
   color: var(--text);
   text-wrap: balance;
