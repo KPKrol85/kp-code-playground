@@ -28,7 +28,7 @@ body > #app {
 }
 
 .section {
-  padding: var(--space-6) 0;
+  padding: var(--space-section-xl) 0;
 }
 
 .grid {

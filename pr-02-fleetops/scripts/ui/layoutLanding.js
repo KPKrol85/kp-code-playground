@@ -81,8 +81,8 @@ function renderLanding() {
 
           <span>FleetOps</span>
         </a>
-        <nav class="nav" aria-label="Nawigacja glowna">
-          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przelacz nawigacje">
+        <nav class="nav" aria-label="Nawigacja główna">
+          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
 ${menuToggleIcon}
           </button>
           <div class="nav-backdrop" data-nav-close></div>
@@ -98,14 +98,14 @@ ${menuToggleIcon}
                   Zasoby
                 </button>
                 <div class="dropdown-menu" id="resourcesMenu" role="menu" aria-label="Zasoby">
-                  <a class="dropdown-item" href="#/privacy">Polityka prywatnosci</a>
+                  <a class="dropdown-item" href="#/privacy">Polityka prywatności</a>
                   <a class="dropdown-item" href="#/terms">Regulamin</a>
                   <a class="dropdown-item" href="#/cookies">Polityka cookies</a>
                 </div>
               </li>
-              <li><a class="button ghost" href="#/login">Zaloguj sie</a></li>
+              <li><a class="button ghost" href="#/login">Zaloguj się</a></li>
               <li>
-                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przelacz motyw">
+                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
                   <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
                     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
@@ -154,17 +154,17 @@ ${menuToggleIcon}
         </section>
 
         <section class="container section">
-          <div class="flex-between" style="margin-bottom: var(--space-3);">
-            <div>
+          <div class="landing-section-header landing-section-header--split flex-between">
+            <div class="landing-section-header__content">
               <p class="tag">Funkcje</p>
-              <h2>Usprawnij dyspozycje, kondycje floty i SLA.</h2>
-              <p>Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
+              <h2 class="landing-section-header__title">Usprawnij dyspozycje, kondycję floty i SLA.</h2>
+              <p class="landing-section-header__lead">Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
             </div>
-            <a class="button ghost" href="#/login">Otworz panel</a>
+            <a class="landing-section-header__action button ghost" href="#/login">Otwórz panel</a>
           </div>
           <div class="grid feature-grid">
             <div class="feature-card">
-              <h3>Rozwojces dyspozycji</h3>
+              <h3>Rozwój dyspozycji</h3>
               <p>Przydzielaj kursy, śledź postęp i reaguj na zakłócenia z jednego widoku.</p>
             </div>
             <div class="feature-card">
@@ -183,12 +183,16 @@ ${menuToggleIcon}
         </section>
 
         <section class="container section">
-          <p class="tag">Jak to dziala</p>
-          <h2>3 kroki do kontroli nad transportem</h2>
-          <div class="grid how-grid" style="margin-top: var(--space-3);">
+          <div class="landing-section-header">
+            <div class="landing-section-header__content">
+              <p class="tag">Jak to działa</p>
+              <h2 class="landing-section-header__title">3 kroki do kontroli nad transportem</h2>
+            </div>
+          </div>
+          <div class="landing-section-body grid how-grid">
             <div class="step">
               <h3>1. Podłącz dane</h3>
-              <p>Dodaj zlecenia i flote lub skorzystaj z danych demo.</p>
+              <p>Dodaj zlecenia i flotę lub skorzystaj z danych demo.</p>
             </div>
             <div class="step">
               <h3>2. Ustaw reguły</h3>
@@ -202,56 +206,68 @@ ${menuToggleIcon}
         </section>
 
         <section class="container section">
-          <p class="tag">Cennik</p>
-          <h2>Lekki cennik na start</h2>
-          <div class="pricing" style="margin-top: var(--space-3);">
+          <div class="landing-section-header">
+            <div class="landing-section-header__content">
+              <p class="tag">Cennik</p>
+              <h2 class="landing-section-header__title">Lekki cennik na start</h2>
+            </div>
+          </div>
+          <div class="landing-section-body pricing">
             <div class="price-card">
               <div class="badge">Start</div>
               <div class="price">199 PLN</div>
-              <p>miesiecznie, do 15 pojazdow</p>
+              <p>miesięcznie, do 15 pojazdów</p>
               <a class="button secondary" href="#/login">Zacznij za darmo</a>
             </div>
             <div class="price-card">
-              <div class="badge">Rozwoj</div>
+              <div class="badge">Rozwój</div>
               <div class="price">499 PLN</div>
-              <p>miesiecznie, do 60 pojazdow</p>
-              <a class="button secondary" href="#/contact">Umow demo</a>
+              <p>miesięcznie, do 60 pojazdów</p>
+              <a class="button secondary" href="#/contact">Umów demo</a>
             </div>
             <div class="price-card">
               <div class="badge">Korporacyjny</div>
               <p>Indywidualnie</p>
-              <p>dla flot 60+ pojazdow</p>
+              <p>dla flot 60+ pojazdów</p>
               <a class="button secondary" href="#/contact">Porozmawiajmy</a>
             </div>
           </div>
         </section>
 
         <section class="container section">
-          <p class="tag">Opinie</p>
-          <h2>Operatorzy o FleetOps</h2>
-          <div class="testimonials" style="margin-top: var(--space-3);">
+          <div class="landing-section-header">
+            <div class="landing-section-header__content">
+              <p class="tag">Opinie</p>
+              <h2 class="landing-section-header__title">Operatorzy o FleetOps</h2>
+            </div>
+          </div>
+          <div class="landing-section-body testimonials">
             <div class="testimonial">
               <p>"Planowanie tras skróciło się o 40%. Alerty SLA są bardzo klarowne."</p>
               <p class="muted small">COO, CargoNord</p>
             </div>
             <div class="testimonial">
-              <p>"Kierowcy wiedzą, co robić. Wsparcie klienta widzi statusy na zywo."</p>
+              <p>"Kierowcy wiedzą, co robić. Wsparcie klienta widzi statusy na żywo."</p>
               <p class="muted small">Lider operacji, FreshLine</p>
             </div>
             <div class="testimonial">
-              <p>"Profesjonalne rozwiązania, i jedno zrodlo prawdy. Dziekujemy, zespół pokochał."</p>
+              <p>"Profesjonalne rozwiązania i jedno źródło prawdy. Dziękujemy, zespół pokochał."</p>
               <p class="muted small">Flota Manager, AeroParts</p>
             </div>
           </div>
         </section>
 
         <section class="container section faq">
-          <p class="tag">Pytania</p>
-          <h2>Najczęstsze pytania</h2>
-          <div class="accordion" id="faq">
+          <div class="landing-section-header">
+            <div class="landing-section-header__content">
+              <p class="tag">Pytania</p>
+              <h2 class="landing-section-header__title">Najczęstsze pytania</h2>
+            </div>
+          </div>
+          <div class="landing-section-body accordion" id="faq">
             <div class="accordion-item">
               <button class="accordion-header">Czy mogę używać trybu dark?<span aria-hidden="true">▾</span></button>
-              <div class="accordion-content"><p>Tak, FleetOps ma wbudowany przelacznik, który zapamiętuje wybór.</p></div>
+              <div class="accordion-content"><p>Tak, FleetOps ma wbudowany przełącznik, który zapamiętuje wybór.</p></div>
             </div>
             <div class="accordion-item">
               <button class="accordion-header">Czy dane to produkcja?<span aria-hidden="true">▾</span></button>
