@@ -48,8 +48,8 @@ assets/
 │   ├── og-1200x1200.png
 │   └── og-1200x630.png
 ├── screenshots/
-│   ├── desktop.jpg
-│   └── mobile.jpg
+│   ├── screenshot-desktop.png
+│   └── screenshot-mobile.png
 └── shortcuts/
     ├── dashboard.png
     ├── flota.png
