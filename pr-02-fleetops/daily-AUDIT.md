@@ -1,177 +1,93 @@
-# FleetOps — Daily Front-End Audit
+# FleetOps Daily Front-End Audit
 
-## 1. Short overall assessment
+## EN
 
-FleetOps is a mature static frontend reference project with a clean source/dist workflow, modular CSS sources, a repeatable production build, optimized hero images, separated logo/icon assets, a refined typography token system, and a clean npm audit result.
+### 1. Short Overall Assessment
 
-The main remaining production-facing risk is client-side HTML injection from user-editable local demo data rendered through `innerHTML`. Service worker behavior is also not active because registration is not detected.
+FleetOps is a well-structured static SaaS reference project with clear separation between source CSS, JavaScript modules, demo state, runtime assets, and generated production output. The implementation shows serious front-end craft: hash routing, local persistence, demo RBAC, accessible modal/drawer patterns, reduced-motion handling, image optimization, and a build pipeline are all visible in source. The main issues are not architectural failures, but remaining hardening and consistency gaps around shell-rendered local data and production metadata.
 
-## 2. Strengths
+Documentation read: `README.md` and `IMAGE-ASSET-PIPELINE-MAP.md`. `AUDIT.md`, `settings.md`, and `CSS-ARCHITECTURE-MAP.md` are not detected in project.
 
-- Source organization is clear: routing, initialization, state, seed data, layouts, views, and shared UI components are separated under `scripts/`.
-- CSS architecture is now source-based: `styles/main.css` imports modular files from `styles/src/`, while production CSS is generated into `dist/styles/main.min.css`.
-- The CSS settings layer defines typography tokens for font size, font weight and line height, plus a rem-based `--space-0` to `--space-8` spacing scale.
-- Safe source CSS typography usage has been refactored to token references while keeping intentional special values for logo weight, icon alignment and responsive hero headings.
-- Production build is repeatable through `npm run build`, which runs image optimization and generates `dist/`.
-- Hero images have a source/output split: editable JPG sources live under `assets/img-src/hero/`, and optimized AVIF/WebP/JPG runtime files live under `assets/img/hero/`.
-- Asset taxonomy is clearer: logos are under `assets/logos/`, UI icons are under `assets/icons/`, and specialized favicon/OG/screenshot/shortcut assets remain separate.
-- Accessibility implementation includes a skip link, `<noscript>` fallback, ARIA states, focus trapping, Escape handling, visible focus states, and `prefers-reduced-motion` CSS.
-- Static deployment support is present through `_redirects`, `_headers`, `robots.txt`, `sitemap.xml`, `404.html`, and metadata in `index.html`.
-- Dependency audit is clean: `npm audit` reports `0 vulnerabilities`.
+### 2. Strengths
 
-## 3. P0 — Critical risks
+- Clear static architecture: `index.html` loads ordered source scripts, `scripts/router.js` owns hash routing, `scripts/state/store.js` owns local state, and `scripts/ui/views/` contains feature views.
+- Build pipeline is explicit and conservative: `build-dist.js` creates `dist/`, minifies CSS/active JS, copies runtime assets, and excludes `assets/img-src/`.
+- Accessibility foundations are real: skip link in `index.html`, `<noscript>` fallback, focus trapping in `scripts/ui/components/modal.js`, mobile drawer focus trapping in layout files, visible focus styles, and `aria-current` route updates.
+- CSS source is modular and tokenized through `styles/main.css` imports and `styles/src/00-settings.css` design tokens.
+- Motion reduction is implemented in source CSS through multiple `prefers-reduced-motion` blocks.
+- Image handling is production-aware: local font preload, hero `picture` with AVIF/WebP/JPG, explicit hero dimensions, `fetchpriority="high"`, and a `sharp` optimization script.
+- Static hosting basics are present: `_redirects`, `_headers`, `robots.txt`, `sitemap.xml`, manifest, favicons, and a static `404.html`.
+- User-editable orders/fleet/drivers render paths now use `FleetUI.escapeHtml()` in the relevant source views.
+- TODO/FIXME/debugger markers and obvious committed secrets are not detected in project. Console usage is limited to build/error logging and local storage cleanup warnings.
+
+### 3. P0 - Critical Risks
 
 none detected
 
-## 4. P1 — Important issues worth fixing next
+### 4. P1 - Important Issues Worth Fixing Next
 
-### P1. User-editable local data is rendered through `innerHTML`
+- **App shell still renders locally persisted user/session values through raw HTML.** `scripts/ui/layoutApp.js:67`, `scripts/ui/layoutApp.js:99`, and `scripts/ui/layoutApp.js:100` interpolate `auth.user.email`, `auth.user.name`, and `currentUser.displayName/currentUser.role` into `innerHTML`. Those values can come from login input or `localStorage`. `scripts/ui/components/toast.js:13` also interpolates toast `message` into `innerHTML`. This is the same class of render-time HTML injection risk already addressed in order/fleet/driver views; fix by escaping shell/user/toast text at render time or using text nodes.
+- **Production hostname metadata is inconsistent.** `index.html` and `404.html` use `https://saas-pr02-fleetops.netlify.app` for canonical, Open Graph, and Twitter metadata, while `sitemap.xml` uses `https://transport-project-02.netlify.app` and `assets/favicon/site.webmanifest` uses `https://transport-project-02.netlify.app` for screenshots and shortcut icons. `robots.txt` points the sitemap to the `saas-pr02-fleetops` hostname. This can split SEO/PWA signals across two domains.
 
-Evidence:
+### 5. P2 - Minor Refinements
 
-- Orders, fleet, and drivers views read user-editable form values and store them in local application state.
-- Those values are later interpolated into HTML strings and rendered through `innerHTML` in `scripts/ui/views/ordersView.js`, `scripts/ui/views/fleetView.js`, and `scripts/ui/views/driversView.js`.
-- Shared helpers and modal rendering also allow string-based HTML insertion through `scripts/utils/dom.js` and `scripts/ui/components/modal.js`.
+- **Accordion state is not exposed with ARIA.** `scripts/ui/components/accordion.js` toggles `.open` and `maxHeight`, but does not set `aria-expanded`, `aria-controls`, or stable content IDs for accordion buttons/content. The controls are native buttons, so this is a refinement rather than a blocker.
+- **Malformed extra quote appears in marketing markup.** `scripts/ui/marketingPages.js:455`, `scripts/ui/marketingPages.js:960`, and `scripts/ui/marketingPages.js:1014` contain `<div class="grid marketing-grid"">`. Browsers will usually recover, but it is invalid source markup and should be cleaned up.
+- **Service worker source exists but registration is not detected in project.** `sw.js` defines install/activate/fetch handlers, but no `navigator.serviceWorker.register(...)` call is detected in `index.html` or source scripts. If offline/PWA caching is expected, the worker is currently inactive.
 
-Risk:
+### 6. Extra Quality Improvements
 
-This creates a client-side HTML injection risk for data entered through demo forms or restored from `localStorage`. The project is frontend-only, but the rendering layer still treats user-editable strings as HTML instead of text.
+- Add one stable per-route primary heading strategy for app views. The app shell currently renders the view title as `h2` and module headers commonly start at `h3`; this is acceptable for a dashboard shell, but a route-level `h1` would strengthen semantics.
+- Consider adding a small automated smoke test for the known demo flows: login, route navigation, create/edit/delete record, and escaped text rendering. No test runner is configured beyond `npm test` aliasing the production build.
+- JSON-LD is not detected in project. This is not a defect for this SPA-style portfolio project, but a single Organization/WebSite schema could be an optional SEO enhancement if the canonical production domain is settled first.
 
-Recommendation:
+### 7. Senior Rating
 
-Render user-editable values with `textContent`, build dynamic rows with DOM APIs, or introduce a small escaping helper and use it consistently before interpolation.
-
-## 5. P2 — Minor refinements
-
-### P2. Service worker file is present but not registered
-
-Evidence:
-
-- `sw.js` defines install, activate, and fetch handlers.
-- `navigator.serviceWorker.register(...)` is not detected in the source.
-
-Impact:
-
-The cache strategy in `sw.js` has no runtime effect unless registration is handled outside this repository.
-
-Recommendation:
-
-Register `sw.js` intentionally during startup or remove the file if offline/cache behavior is not part of the current project scope.
-
-### P2. Legacy `minify-js.js` remains but is not part of the active workflow
-
-Evidence:
-
-- `package.json` no longer exposes `min:js`.
-- `npm run build` minifies active scripts from `scripts/` through `build-dist.js`.
-- `minify-js.js` still exists at the repository root.
-
-Impact:
-
-No runtime impact, but the unused script can confuse future maintenance.
-
-Recommendation:
-
-Remove `minify-js.js` in a dedicated cleanup step if it is no longer needed.
-
-## 6. Extra quality improvements
-
-- Add a small smoke-check script for required asset references, manifest shortcut URLs, and route coverage.
-- Add a shared HTML escaping or DOM rendering convention for user-editable values.
-- Decide whether service worker behavior should be active production behavior or removed from the repository.
-
-## 7. Senior rating (1–10)
-
-8.5/10
-
-FleetOps now has strong static frontend architecture, a clean source/dist workflow, modular CSS, tokenized typography foundations, optimized runtime assets, and a healthy dependency audit. The rating is held back mainly by the remaining `innerHTML` rendering risk for user-editable local data and the inactive service worker file.
+**8/10.** The project is above typical portfolio-demo quality: modular source structure, static deployment discipline, accessibility work, image pipeline, and local app behavior are all implemented with care. The score is held back by remaining render-time escaping gaps in the app shell/toast layer and inconsistent production-domain metadata, both of which are concrete but contained fixes.
 
 ---
 
-# FleetOps — Dzienny audyt front-end
+## PL
 
-## 1. Krótka ocena ogólna
+### 1. Krótka Ocena Ogólna
 
-FleetOps to dojrzały statyczny projekt referencyjny frontendu z czystym workflow source/dist, modularnymi źródłami CSS, powtarzalnym buildem produkcyjnym, zoptymalizowanymi obrazami hero, rozdzielonymi assetami logo/ikon, dopracowanym systemem tokenów typografii oraz czystym wynikiem `npm audit`.
+FleetOps to dobrze uporządkowany statyczny projekt referencyjny SaaS z czytelnym podziałem na źródłowy CSS, moduły JavaScript, stan demo, assety runtime i generowany output produkcyjny. W implementacji widać solidny warsztat frontendowy: hash routing, lokalną persystencję, demo RBAC, dostępne modale i drawery, obsługę reduced motion, optymalizację obrazów oraz pipeline builda. Główne problemy nie są awariami architektury, tylko pozostałymi lukami w hardeningu danych lokalnych i spójności metadanych produkcyjnych.
 
-Główne pozostałe ryzyko produkcyjne dotyczy client-side HTML injection: lokalne dane demo edytowalne przez użytkownika są renderowane przez `innerHTML`. Zachowanie service workera również nie jest aktywne, ponieważ nie wykryto jego rejestracji.
+Przeczytana dokumentacja: `README.md` i `IMAGE-ASSET-PIPELINE-MAP.md`. `AUDIT.md`, `settings.md` oraz `CSS-ARCHITECTURE-MAP.md`: not detected in project.
 
-## 2. Mocne strony
+### 2. Mocne Strony
 
-- Organizacja źródeł jest czytelna: routing, inicjalizacja, stan, dane seed, layouty, widoki i współdzielone komponenty UI są rozdzielone w `scripts/`.
-- Architektura CSS jest oparta o źródła: `styles/main.css` importuje moduły z `styles/src/`, a CSS produkcyjny jest generowany do `dist/styles/main.min.css`.
-- Warstwa settings CSS definiuje tokeny typografii dla font-size, font-weight i line-height oraz rem-based skalę spacingu `--space-0` do `--space-8`.
-- Bezpieczne użycia typografii w source CSS zostały przepisane na tokeny, przy zachowaniu intencjonalnych wartości specjalnych dla logo, wyrównania ikon i responsywnych nagłówków hero.
-- Build produkcyjny jest powtarzalny przez `npm run build`, który uruchamia optymalizację obrazów i generuje `dist/`.
-- Obrazy hero mają podział source/output: edytowalne źródła JPG są w `assets/img-src/hero/`, a zoptymalizowane runtime AVIF/WebP/JPG są w `assets/img/hero/`.
-- Taksonomia assetów jest czytelniejsza: logo są w `assets/logos/`, ikony UI w `assets/icons/`, a favicony/OG/screenshoty/skróty pozostają osobno.
-- Dostępność obejmuje skip link, fallback `<noscript>`, stany ARIA, pułapki fokusu, obsługę Escape, widoczne focus states i `prefers-reduced-motion`.
-- Wsparcie statycznego deploymentu jest obecne przez `_redirects`, `_headers`, `robots.txt`, `sitemap.xml`, `404.html` i metadane w `index.html`.
-- Audyt zależności jest czysty: `npm audit` raportuje `0 vulnerabilities`.
+- Czytelna architektura statyczna: `index.html` ładuje skrypty źródłowe w kolejności, `scripts/router.js` obsługuje hash routing, `scripts/state/store.js` obsługuje stan lokalny, a `scripts/ui/views/` zawiera widoki funkcjonalne.
+- Pipeline builda jest jawny i konserwatywny: `build-dist.js` tworzy `dist/`, minifikuje CSS/aktywne JS, kopiuje assety runtime i wyklucza `assets/img-src/`.
+- Dostępność ma realne podstawy: skip link w `index.html`, fallback `<noscript>`, focus trap w `scripts/ui/components/modal.js`, focus trap drawerów mobilnych, widoczne focus styles oraz aktualizacja `aria-current`.
+- CSS jest modularny i oparty o tokeny przez importy w `styles/main.css` oraz tokeny w `styles/src/00-settings.css`.
+- Redukcja ruchu jest zaimplementowana w źródłowym CSS przez kilka bloków `prefers-reduced-motion`.
+- Obsługa obrazów jest przygotowana produkcyjnie: preload lokalnego fontu, hero `picture` z AVIF/WebP/JPG, jawne wymiary hero, `fetchpriority="high"` oraz skrypt optymalizacji przez `sharp`.
+- Podstawy hostingu statycznego są obecne: `_redirects`, `_headers`, `robots.txt`, `sitemap.xml`, manifest, favicony i statyczny `404.html`.
+- Ścieżki renderowania edytowalnych danych orders/fleet/drivers używają już `FleetUI.escapeHtml()` w odpowiednich widokach źródłowych.
+- TODO/FIXME/debugger oraz oczywiste sekrety w repozytorium nie zostały wykryte. Użycie console ogranicza się do logowania builda, błędów storage i cleanup.
 
-## 3. P0 — Ryzyka krytyczne
+### 3. P0 - Ryzyka Krytyczne
 
-nie wykryto
+none detected
 
-## 4. P1 — Ważne problemy do naprawy w następnej kolejności
+### 4. P1 - Ważne Problemy Do Naprawy W Następnej Kolejności
 
-### P1. Dane lokalne edytowalne przez użytkownika są renderowane przez `innerHTML`
+- **App shell nadal renderuje lokalnie zapisane dane użytkownika/sesji przez raw HTML.** `scripts/ui/layoutApp.js:67`, `scripts/ui/layoutApp.js:99` i `scripts/ui/layoutApp.js:100` interpolują `auth.user.email`, `auth.user.name` oraz `currentUser.displayName/currentUser.role` do `innerHTML`. Te wartości mogą pochodzić z formularza logowania albo `localStorage`. `scripts/ui/components/toast.js:13` również interpoluje `message` do `innerHTML`. To ta sama klasa ryzyka HTML injection, która została już utwardzona w widokach orders/fleet/drivers; naprawa powinna polegać na escapowaniu przy renderze albo użyciu text nodes.
+- **Metadane domen produkcyjnych są niespójne.** `index.html` i `404.html` używają `https://saas-pr02-fleetops.netlify.app` dla canonical, Open Graph i Twitter, natomiast `sitemap.xml` używa `https://transport-project-02.netlify.app`, a `assets/favicon/site.webmanifest` używa `https://transport-project-02.netlify.app` dla screenshotów i ikon skrótów. `robots.txt` wskazuje sitemapę na hostname `saas-pr02-fleetops`. To może rozdzielać sygnały SEO/PWA między dwie domeny.
 
-Dowody:
+### 5. P2 - Drobne Usprawnienia
 
-- Widoki zleceń, floty i kierowców odczytują wartości z formularzy i zapisują je w lokalnym stanie aplikacji.
-- Te wartości są później interpolowane do stringów HTML i renderowane przez `innerHTML` w `scripts/ui/views/ordersView.js`, `scripts/ui/views/fleetView.js` i `scripts/ui/views/driversView.js`.
-- Współdzielone helpery i modal również dopuszczają stringowe wstawianie HTML przez `scripts/utils/dom.js` i `scripts/ui/components/modal.js`.
+- **Stan akordeonu nie jest wystawiany przez ARIA.** `scripts/ui/components/accordion.js` przełącza `.open` i `maxHeight`, ale nie ustawia `aria-expanded`, `aria-controls` ani stabilnych ID dla przycisków i treści. Kontrolki są natywnymi przyciskami, więc to usprawnienie, nie blocker.
+- **W markup marketingowym występuje dodatkowy cudzysłów.** `scripts/ui/marketingPages.js:455`, `scripts/ui/marketingPages.js:960` i `scripts/ui/marketingPages.js:1014` zawierają `<div class="grid marketing-grid"">`. Przeglądarki zwykle odzyskają poprawny DOM, ale źródłowy markup jest niepoprawny i warto go oczyścić.
+- **Plik service workera istnieje, ale rejestracja nie została wykryta.** `sw.js` definiuje obsługę install/activate/fetch, ale w `index.html` ani skryptach źródłowych nie wykryto `navigator.serviceWorker.register(...)`. Jeżeli oczekiwane jest cache/offline PWA, worker obecnie nie jest aktywny.
 
-Ryzyko:
+### 6. Dodatkowe Ulepszenia Jakościowe
 
-Tworzy to ryzyko client-side HTML injection dla danych wpisanych w formularzach demo albo odtworzonych z `localStorage`. Projekt jest frontend-only, ale warstwa renderowania nadal traktuje edytowalne stringi jako HTML zamiast tekstu.
+- Rozważyć jedną stabilną strategię głównego nagłówka dla tras aplikacyjnych. App shell renderuje tytuł widoku jako `h2`, a nagłówki modułów często zaczynają się od `h3`; dla dashboardu jest to akceptowalne, ale route-level `h1` wzmocniłby semantykę.
+- Dodać mały smoke test dla kluczowych flow demo: logowanie, nawigacja, create/edit/delete rekordów i renderowanie escapowanego tekstu. Obecnie `npm test` jest aliasem do builda produkcyjnego.
+- JSON-LD: not detected in project. To nie jest defekt dla tego portfolio/SPAle, ale pojedynczy schemat Organization/WebSite może być opcjonalnym ulepszeniem SEO po ustaleniu jednej kanonicznej domeny.
 
-Rekomendacja:
+### 7. Ocena Seniorska
 
-Renderować wartości edytowalne przez użytkownika przez `textContent`, budować dynamiczne wiersze przez DOM API albo wprowadzić mały helper do escapowania i stosować go konsekwentnie przed interpolacją.
-
-## 5. P2 — Drobne usprawnienia
-
-### P2. Plik service workera istnieje, ale nie jest rejestrowany
-
-Dowody:
-
-- `sw.js` definiuje handlery install, activate i fetch.
-- `navigator.serviceWorker.register(...)` nie został wykryty w źródłach.
-
-Wpływ:
-
-Strategia cache w `sw.js` nie ma efektu runtime, chyba że rejestracja jest obsługiwana poza tym repozytorium.
-
-Rekomendacja:
-
-Zarejestrować `sw.js` intencjonalnie podczas startu aplikacji albo usunąć plik, jeśli offline/cache nie jest częścią aktualnego zakresu projektu.
-
-### P2. Legacy `minify-js.js` pozostaje w repozytorium, ale nie jest częścią aktywnego workflow
-
-Dowody:
-
-- `package.json` nie wystawia już `min:js`.
-- `npm run build` minifikuje aktywne skrypty z `scripts/` przez `build-dist.js`.
-- `minify-js.js` nadal istnieje w katalogu głównym repozytorium.
-
-Wpływ:
-
-Brak wpływu runtime, ale nieużywany skrypt może utrudniać przyszłe utrzymanie.
-
-Rekomendacja:
-
-Usunąć `minify-js.js` w osobnym kroku cleanupu, jeśli nie jest już potrzebny.
-
-## 6. Dodatkowe usprawnienia jakościowe
-
-- Dodać mały smoke-check dla wymaganych assetów, URL-i skrótów manifestu i pokrycia tras.
-- Wprowadzić wspólną konwencję escapowania HTML albo renderowania DOM dla wartości edytowalnych przez użytkownika.
-- Zdecydować, czy service worker ma być aktywnym zachowaniem produkcyjnym, czy powinien zostać usunięty z repozytorium.
-
-## 7. Senior rating (1–10)
-
-8.5/10
-
-FleetOps ma teraz mocną statyczną architekturę frontendu, czysty workflow source/dist, modularny CSS, tokenizowane fundamenty typografii, zoptymalizowane assety runtime i zdrowy audyt zależności. Ocenę obniża głównie pozostałe ryzyko renderowania danych edytowalnych przez `innerHTML` oraz nieaktywny plik service workera.
+**8/10.** Projekt jest wyraźnie powyżej typowego poziomu demo portfolio: modularne źródła, dyscyplina statycznego deploymentu, praca nad dostępnością, pipeline obrazów i lokalne zachowania aplikacyjne są wykonane starannie. Ocenę obniżają pozostałe luki w escapowaniu app shell/toast oraz niespójne domeny w metadanych produkcyjnych; oba problemy są konkretne, ale ograniczone zakresem.
