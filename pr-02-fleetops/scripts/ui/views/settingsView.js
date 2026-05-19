@@ -1,5 +1,6 @@
 function settingsView() {
   const root = dom.h('div');
+  const escapeHtml = window.FleetUI.escapeHtml;
   const header = dom.h('div', 'module-header');
   header.innerHTML = `<div><h3>Ustawienia</h3><p class="muted small">Personalizacja i demo</p></div>`;
   root.appendChild(header);
@@ -40,10 +41,10 @@ function settingsView() {
   const currentUser = FleetStore.state.currentUser || window.FleetPermissions?.defaultUser;
   accountCard.innerHTML = `
     <h4>Konto</h4>
-    <p>${user.name}</p>
-    <p class="muted small">${user.email}</p>
-    <p class="muted small">Rola: ${currentUser ? currentUser.displayName || currentUser.role : 'Admin'}</p>
-    <p class="muted small">ID: ${currentUser ? currentUser.id : 'u_admin_1'}</p>
+    <p>${escapeHtml(user.name)}</p>
+    <p class="muted small">${escapeHtml(user.email)}</p>
+    <p class="muted small">Rola: ${escapeHtml(currentUser ? currentUser.displayName || currentUser.role : 'Admin')}</p>
+    <p class="muted small">ID: ${escapeHtml(currentUser ? currentUser.id : 'u_admin_1')}</p>
   `;
   grid.appendChild(accountCard);
 

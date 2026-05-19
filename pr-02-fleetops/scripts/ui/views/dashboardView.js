@@ -55,7 +55,7 @@ function dashboardView() {
       card.style.width = "100%";
       card.style.cursor = "pointer";
       card.setAttribute("aria-label", item.label);
-      card.innerHTML = `<p class="muted small">${item.label}</p><h3>${item.value}</h3>`;
+      card.innerHTML = `<p class="muted small">${escapeHtml(item.label)}</p><h3>${escapeHtml(item.value)}</h3>`;
       card.addEventListener("click", () => handleKpiClick(item.action));
       kpis.appendChild(card);
     });
@@ -204,12 +204,13 @@ function dashboardView() {
     const tag = dom.h("span", "badge");
     tag.textContent = alert.type;
 
-    const content = dom.h(
-      "div",
-      "alert-content",
-      `<strong>${alert.message}</strong>
-       <p class="muted small">Priorytet: ${alert.severity}</p>`
-    );
+    const content = dom.h("div", "alert-content");
+    const message = dom.h("strong");
+    message.textContent = alert.message || "";
+    const severity = dom.h("p", "muted small");
+    severity.textContent = `Priorytet: ${alert.severity || ""}`;
+    content.appendChild(message);
+    content.appendChild(severity);
 
     const row = dom.h("div", "alert");
     // dataset -> data-alert-type / data-alert-severity
