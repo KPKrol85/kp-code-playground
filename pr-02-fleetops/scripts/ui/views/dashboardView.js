@@ -1,5 +1,6 @@
 function dashboardView() {
   const root = dom.h("div");
+  const escapeHtml = window.FleetUI.escapeHtml;
   // ===== KPI =====
   const rangeHeader = dom.h("div", "module-header");
   rangeHeader.innerHTML = `
@@ -124,7 +125,7 @@ function dashboardView() {
     : FleetSeed.activities;
   activities.forEach((a) => {
     const row = dom.h("div", "activity-row");
-    row.innerHTML = `<div><strong>${a.title}</strong><p class="muted small">${a.detail}</p></div><span class="muted small">${formatActivityTime(a.time)}</span>`;
+    row.innerHTML = `<div><strong>${escapeHtml(a.title)}</strong><p class="muted small">${escapeHtml(a.detail)}</p></div><span class="muted small">${escapeHtml(formatActivityTime(a.time))}</span>`;
     feed.appendChild(row);
   });
 
@@ -366,4 +367,3 @@ function initAlertsRulesDropdown(scopeEl) {
 
   applyRules();
 }
-

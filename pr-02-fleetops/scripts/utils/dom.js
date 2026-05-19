@@ -19,6 +19,18 @@ const mount = (selector, content) => {
 
 window.dom = { h, clear, mount };
 
+const escapeHtml = (value) =>
+  String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[char]));
+
+window.FleetUI = window.FleetUI || {};
+window.FleetUI.escapeHtml = escapeHtml;
+
 // ===== Scroll-to-top binding =====
 function bindLogoScroll(kind, getContainer) {
   const links = document.querySelectorAll(`[data-scroll-top="${kind}"]`);
