@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Liczby pierwsze — definicja, intuicja, metody sprawdzania i interaktywny sandbox treningowy." />
+  <title>Liczby pierwsze | Matematyka od podstaw</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">Matematyka od podstaw</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav id="main-nav" class="main-nav" aria-label="Główna nawigacja">
+        <a href="index.html">Start</a>
+        <a href="#" class="soon-link">Liczby naturalne <span class="badge">wkrótce</span></a>
+        <a href="liczby-pierwsze.html" aria-current="page">Liczby pierwsze</a>
+        <a href="#" class="soon-link">Ułamki <span class="badge">wkrótce</span></a>
+        <a href="#" class="soon-link">Algebra <span class="badge">wkrótce</span></a>
+        <a href="#" class="soon-link">Geometria <span class="badge">wkrótce</span></a>
+        <a href="#" class="soon-link">Statystyka <span class="badge">wkrótce</span></a>
+        <a href="#sandbox">Sandbox</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-main">
+    <section class="hero compact">
+      <div class="container">
+        <p class="eyebrow">Moduł 01</p>
+        <h1>Liczby pierwsze</h1>
+        <p>Liczby pierwsze to podstawowe „cegiełki” liczb całkowitych — dzięki nim rozumiemy dzielniki, rozkład liczb i fundamenty współczesnego szyfrowania.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container toc-box">
+        <h2>Spis treści</h2>
+        <ul>
+          <li><a href="#definicja">Definicja</a></li><li><a href="#intuicja">Intuicja</a></li><li><a href="#przyklady">Przykłady</a></li>
+          <li><a href="#sprawdzanie">Jak sprawdzić, czy liczba jest pierwsza</a></li><li><a href="#rozklad">Rozkład na czynniki pierwsze</a></li>
+          <li><a href="#sito">Sito Eratostenesa</a></li><li><a href="#zastosowania">Zastosowania</a></li><li><a href="#sandbox">Sandbox treningowy</a></li><li><a href="#cwiczenia">Ćwiczenia</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <article class="section"><div class="container prose">
+      <h2 id="definicja">Definicja</h2>
+      <p><strong>Liczba pierwsza</strong> to liczba naturalna większa od 1, która ma dokładnie dwa dodatnie dzielniki: 1 oraz samą siebie.</p>
+      <ul><li>1 nie jest liczbą pierwszą, bo ma tylko jeden dodatni dzielnik.</li><li>2 jest jedyną parzystą liczbą pierwszą.</li><li>Każda parzysta liczba większa od 2 nie jest pierwsza.</li></ul>
+      <p>Przykłady liczb pierwszych: <code>2, 3, 5, 7, 11, 13, 17, 19</code>. Przykłady liczb niepierwszych: <code>1, 4, 6, 8, 9, 10, 12</code>.</p>
+
+      <h2 id="intuicja">Intuicja</h2>
+      <p>Możesz myśleć o liczbach pierwszych jak o „atomach mnożenia”. Nie da się ich rozdzielić na mniejsze równe części przez mnożenie liczb naturalnych (poza 1 i samą liczbą).</p>
+
+      <h2 id="przyklady">Przykłady</h2>
+      <div class="example-grid">
+        <div class="example-card prime"><h3>7</h3><p>Tylko <code>1 × 7</code>. Liczba pierwsza.</p></div>
+        <div class="example-card composite"><h3>12</h3><p><code>2 × 6</code> i <code>3 × 4</code>. Nie jest pierwsza.</p></div>
+        <div class="example-card composite"><h3>15</h3><p><code>3 × 5</code>. Nie jest pierwsza.</p></div>
+        <div class="example-card prime"><h3>17</h3><p>Brak dzielników poza 1 i 17. Liczba pierwsza.</p></div>
+      </div>
+
+      <h2 id="sprawdzanie">Jak sprawdzić, czy liczba jest pierwsza</h2>
+      <ol><li>Jeśli liczba jest mniejsza od 2 — odrzuć.</li><li>Jeśli liczba to 2 — jest pierwsza.</li><li>Jeśli liczba jest parzysta i większa od 2 — odrzuć.</li><li>Sprawdzaj dzielenie tylko do <code>√n</code>.</li></ol>
+      <p>Dlaczego do pierwiastka? Jeśli liczba ma dzielnik większy niż <code>√n</code>, to drugi musi być mniejszy niż <code>√n</code>. Czyli wystarczy sprawdzić tylko mniejszą połowę par.</p>
+
+      <h2 id="rozklad">Rozkład na czynniki pierwsze</h2>
+      <p>Każdą liczbę złożoną można rozłożyć na iloczyn liczb pierwszych:</p>
+      <ul><li><code>12 = 2 × 2 × 3</code></li><li><code>18 = 2 × 3 × 3</code></li><li><code>84 = 2 × 2 × 3 × 7</code></li></ul>
+      <p>To ważne w skracaniu ułamków, obliczeniach NWD/NWW, projektowaniu algorytmów i zrozumieniu struktury liczb.</p>
+
+      <h2 id="sito">Sito Eratostenesa</h2>
+      <ol><li>Wypisz liczby od 2 do n.</li><li>Zachowaj 2 i skreśl wielokrotności 2.</li><li>Zachowaj 3 i skreśl wielokrotności 3.</li><li>Powtarzaj dla kolejnych nieskreślonych liczb.</li><li>Nieskreślone liczby to liczby pierwsze.</li></ol>
+      <div class="sieve-grid" aria-label="Przykładowa siatka sita Eratostenesa dla liczb 2-30">
+        <span class="prime">2</span><span class="prime">3</span><span class="crossed">4</span><span class="prime">5</span><span class="crossed">6</span><span class="prime">7</span><span class="crossed">8</span><span class="crossed">9</span><span class="crossed">10</span><span class="prime">11</span>
+        <span class="crossed">12</span><span class="prime">13</span><span class="crossed">14</span><span class="crossed">15</span><span class="crossed">16</span><span class="prime">17</span><span class="crossed">18</span><span class="prime">19</span><span class="crossed">20</span><span class="crossed">21</span>
+        <span class="crossed">22</span><span class="prime">23</span><span class="crossed">24</span><span class="crossed">25</span><span class="crossed">26</span><span class="crossed">27</span><span class="crossed">28</span><span class="prime">29</span><span class="crossed">30</span>
+      </div>
+
+      <h2 id="zastosowania">Zastosowania</h2>
+      <p>Liczby pierwsze są używane m.in. w kryptografii (systemy klucza publicznego typu RSA), bezpieczeństwie internetowym, funkcjach haszujących i konstrukcjach algorytmicznych.</p>
+      <p>Pojawiają się też w zadaniach programistycznych, losowaniu i proceduralnym generowaniu zawartości, teorii liczb, strukturach danych oraz projektowaniu łamigłówek i mechanik gier.</p>
+    </div></article>
+
+    <section id="sandbox" class="section alt"><div class="container">
+      <h2>Sandbox treningowy</h2>
+      <div class="sandbox-grid">
+        <section class="sandbox-card"><h3>Sprawdzanie liczby</h3><label for="prime-input">Podaj liczbę</label><input id="prime-input" type="number" min="-999999" step="1" value="17" /><button id="check-prime-btn" class="btn btn-primary" type="button">Sprawdź liczbę</button><div id="prime-result" aria-live="polite" class="live-box"></div></section>
+        <section class="sandbox-card"><h3>Rozkład na czynniki</h3><label for="factor-input">Liczba do rozkładu</label><input id="factor-input" type="number" min="2" step="1" value="84" /><button id="factor-btn" class="btn btn-primary" type="button">Rozłóż na czynniki</button><div id="factor-result" aria-live="polite" class="live-box"></div></section>
+      </div>
+
+      <section class="sandbox-card"><h3>Siatka 1–100 + trening</h3><p>Klikaj liczby, zaznaczaj liczby pierwsze i sprawdzaj wyniki.</p><div class="button-row"><button id="show-primes-btn" type="button" class="btn btn-secondary">Pokaż liczby pierwsze</button><button id="show-composites-btn" type="button" class="btn btn-secondary">Pokaż liczby złożone</button><button id="clear-grid-btn" type="button" class="btn btn-secondary">Wyczyść</button><button id="run-sieve-btn" type="button" class="btn btn-secondary">Uruchom sito Eratostenesa</button><button id="check-training-btn" type="button" class="btn btn-primary">Sprawdź mój wybór</button></div><div id="number-grid" class="number-grid" aria-label="Interaktywna siatka liczb"></div><div id="training-result" aria-live="polite" class="live-box"></div></section>
+
+      <section class="sandbox-card"><h3>Mini quiz</h3><p id="quiz-question">Czy ta liczba jest pierwsza?</p><div class="quiz-number" id="quiz-number">--</div><div class="button-row"><button id="quiz-yes-btn" type="button" class="btn btn-primary">Tak</button><button id="quiz-no-btn" type="button" class="btn btn-secondary">Nie</button><button id="quiz-next-btn" type="button" class="btn btn-secondary">Następne pytanie</button></div><div id="quiz-result" aria-live="polite" class="live-box"></div><p id="quiz-score" class="score">Wynik: 0/0</p></section>
+    </div></section>
+
+    <section id="cwiczenia" class="section"><div class="container prose">
+      <h2>Ćwiczenia</h2>
+      <ol>
+        <li>Wskaż liczby pierwsze z listy: 21, 23, 29, 35, 37, 39.
+          <details><summary>Pokaż odpowiedź</summary><p>Liczby pierwsze: 23, 29, 37.</p></details>
+        </li>
+        <li>Znajdź wszystkie dzielniki dodatnie liczby 24.
+          <details><summary>Pokaż odpowiedź</summary><p>1, 2, 3, 4, 6, 8, 12, 24.</p></details>
+        </li>
+        <li>Rozłóż na czynniki pierwsze liczby 45 i 98.
+          <details><summary>Pokaż odpowiedź</summary><p>45 = 3 × 3 × 5, a 98 = 2 × 7 × 7.</p></details>
+        </li>
+        <li>Wyjaśnij, dlaczego 1 nie jest liczbą pierwszą.
+          <details><summary>Pokaż odpowiedź</summary><p>Bo ma tylko jeden dodatni dzielnik, a liczba pierwsza musi mieć dokładnie dwa.</p></details>
+        </li>
+        <li>Wyjaśnij, dlaczego 2 jest liczbą wyjątkową.
+          <details><summary>Pokaż odpowiedź</summary><p>To jedyna parzysta liczba pierwsza — każda inna parzysta liczba > 2 dzieli się przez 2.</p></details>
+        </li>
+      </ol>
+    </div></section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><p><strong>KP_Code Digital Vault</strong> • Liczby pierwsze</p><p>Materiał edukacyjny pomocniczy — nie stanowi oficjalnego programu szkolnego.</p></div></footer>
+  <script src="js/utils.js"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/prime-sandbox.js" defer></script>
+</body>
+</html>
