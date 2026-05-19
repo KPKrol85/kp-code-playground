@@ -6,9 +6,7 @@
 }
 
 .landing-home {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--bg-elevated) 32%, transparent), transparent 34rem),
-    var(--bg);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-elevated) 32%, transparent), transparent 34rem), var(--bg);
 }
 
 /* Navbar */
@@ -245,16 +243,13 @@
 
 .landing .hero h1 {
   font-size: var(--fs-08);
-  line-height: var(--lh-very-tight);
   max-width: 18ch;
 }
 
 .landing .hero p {
   max-width: 56ch;
   margin: var(--space-3) 0;
-  color: var(--text-muted);
-  line-height: var(--lh-relaxed);
-  font-size: var(--fs-05);
+  font-size: var(--fs-03);
 }
 
 .landing .hero-cta {
@@ -273,6 +268,7 @@
   min-width: 140px;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius);
+  font-size: var(--fs-02);
   line-height: 1;
   text-align: center;
 }
@@ -283,15 +279,6 @@
   flex-basis: 100%;
   padding-left: var(--space-0);
   margin-top: var(--space-1);
-}
-
-.landing-home .hero-cta {
-  gap: var(--space-2);
-}
-
-.landing-home .hero-cta .button {
-  flex: 1 1 132px;
-  min-width: 0;
 }
 
 .landing .hero-visual {
@@ -313,12 +300,6 @@
     box-shadow 180ms ease;
 }
 
-.landing-home .hero-visual {
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--accent) 22%, transparent), color-mix(in srgb, var(--accent-strong) 14%, transparent)),
-    color-mix(in srgb, var(--surface) 70%, transparent);
-}
-
 .landing .hero-image {
   position: relative;
   width: 100%;
@@ -328,10 +309,7 @@
   border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
   box-shadow: var(--shadow-elev-1);
   background: color-mix(in srgb, var(--bg-elevated) 88%, var(--surface));
-}
-
-.landing-home .hero-image img {
-  filter: saturate(1.04) contrast(1.04);
+   filter: saturate(1.04) contrast(1.04);
 }
 
 .img-swap {
@@ -371,22 +349,6 @@
   .landing .section.hero {
     grid-template-columns: 1fr 1.1fr;
     gap: var(--space-8);
-  }
-
-  .landing .hero h1 {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .landing .hero p {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .landing .hero-visual {
-    order: initial;
-    max-width: none;
-    margin: 0;
   }
 }
 
@@ -589,9 +551,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 }
 
 .landing-home .price-card.featured {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-ghost) 38%, transparent), transparent 42%),
-    var(--surface);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-ghost) 38%, transparent), transparent 42%), var(--surface);
 }
 
 .landing .price {
