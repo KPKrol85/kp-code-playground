@@ -1,0 +1,44 @@
+:root {
+  --color-bg: #f3f5f9;
+  --color-surface: #ffffff;
+  --color-primary: #1246b5;
+  --color-primary-soft: #e8efff;
+  --color-text: #1a2233;
+  --color-muted: #5a667f;
+  --color-error: #b91c1c;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(18, 28, 52, 0.08);
+  --space: 1rem;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--color-bg); color: var(--color-text); }
+.container { width: min(1080px, 92%); margin: 0 auto; }
+.hero { background: linear-gradient(135deg, #0f2f7a, #1b57d4); color: white; padding: 2.5rem 0; }
+.hero__badge { display: inline-block; background: rgba(255,255,255,0.14); padding: .35rem .6rem; border-radius: 999px; }
+.hero__title { margin: .75rem 0 .25rem; font-size: clamp(1.5rem, 4vw, 2.4rem); }
+.hero__subtitle, .hero__disclaimer { max-width: 70ch; }
+.hero__disclaimer { background: rgba(255,255,255,.15); padding: .75rem; border-radius: 8px; }
+.layout { display: grid; gap: var(--space); padding: 1rem 0 2rem; }
+.card { background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem; }
+.form { display: grid; gap: 1rem; }
+.form__field { display: grid; gap: .35rem; }
+.form__field input, .form__field select { border: 1px solid #c8cfdd; padding: .6rem .7rem; border-radius: 10px; font: inherit; }
+.form__fieldset { border: 1px solid #d5dbeb; border-radius: 10px; padding: .75rem; display: grid; gap: .45rem; }
+.form__fieldset legend { font-weight: 600; }
+.form__error { color: var(--color-error); min-height: 1.2rem; }
+.form__grid { display: grid; gap: .75rem; }
+.warning { margin-top: 1rem; color: #8a5a00; background: #fff6df; border: 1px solid #f2db9f; padding: .65rem; border-radius: 8px; }
+#results { display: grid; gap: .5rem; }
+.result-row { display: flex; justify-content: space-between; gap: .5rem; padding: .55rem .65rem; border-radius: 8px; background: var(--color-primary-soft); }
+.result-row--highlight { background: #dbe7ff; font-weight: 700; }
+.table-wrapper { overflow-x: auto; }
+.comparison-table { width: 100%; border-collapse: collapse; }
+.comparison-table th, .comparison-table td { text-align: left; padding: .65rem; border-bottom: 1px solid #e5e9f3; }
+@media (min-width: 860px) {
+  .layout { grid-template-columns: 1fr 1fr; }
+  .layout section:last-child { grid-column: 1 / -1; }
+  .form__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto; transition: none !important; }
+}
