@@ -5,7 +5,7 @@ function dashboardView() {
   const rangeHeader = dom.h("div", "module-header");
   rangeHeader.innerHTML = `
     <div>
-      <h3>Przeglad KPI</h3>
+      <h2>Przeglad KPI</h2>
       <p class="muted small">Zakres czasu</p>
     </div>
     <div class="toolbar">
@@ -55,7 +55,7 @@ function dashboardView() {
       card.style.width = "100%";
       card.style.cursor = "pointer";
       card.setAttribute("aria-label", item.label);
-      card.innerHTML = `<p class="muted small">${escapeHtml(item.label)}</p><h3>${escapeHtml(item.value)}</h3>`;
+      card.innerHTML = `<p class="muted small">${escapeHtml(item.label)}</p><strong class="kpi-value">${escapeHtml(item.value)}</strong>`;
       card.addEventListener("click", () => handleKpiClick(item.action));
       kpis.appendChild(card);
     });
@@ -104,7 +104,7 @@ function dashboardView() {
   // ===== Activity =====
   const activity = dom.h("div", "panel");
   activity.id = "dashboard-activity";
-  activity.innerHTML = `<div class="module-header"><h3>Aktywność</h3><span class="muted small">Operacje na żywo</span></div>`;
+  activity.innerHTML = `<div class="module-header"><h2>Aktywność</h2><span class="muted small">Operacje na żywo</span></div>`;
 
   const formatActivityTime = (value) => {
     if (!value) return "";
@@ -137,7 +137,7 @@ function dashboardView() {
 
   alerts.innerHTML = `
     <div class="module-header">
-      <h3>Alerty</h3>
+      <h2>Alerty</h2>
 
       <div class="dropdown" data-dropdown="alerts-rules">
         <button class="button ghost small dropdown-trigger" type="button" aria-expanded="false">

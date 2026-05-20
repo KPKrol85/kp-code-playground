@@ -68,7 +68,7 @@
   gap: 12px;
 }
 
-.topbar h2 {
+.topbar h1 {
   font-size: var(--fs-04);
 }
 
@@ -245,6 +245,26 @@ body.drawer-open {
   height: 1px;
   background: linear-gradient(to right, transparent 0%, var(--border) 30%, var(--border) 70%, transparent 100%);
   opacity: 0.6;
+}
+
+.module-header h2 {
+  font-size: 1.17em;
+}
+
+.setting-card h3,
+.vehicle-card__title,
+.panel-heading {
+  font-size: 1em;
+}
+
+.kpi-value {
+  display: block;
+  font-size: 1.17em;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-compact);
+  color: var(--text);
+  text-wrap: balance;
 }
 
 .panel + .panel.table-responsive {

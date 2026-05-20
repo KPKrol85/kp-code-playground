@@ -79,7 +79,7 @@ function renderAppShell(viewTitle, contentNode) {
   const topbar = dom.h("div", "topbar");
   topbar.innerHTML = `
     <div class="topbar-left">
-      <h2>${safeViewTitle}</h2>
+      <h1>${safeViewTitle}</h1>
       <div class="search"><input aria-label="Szukaj" type="search" placeholder="Szukaj..." /></div>
     </div>
     <div class="topbar-actions">

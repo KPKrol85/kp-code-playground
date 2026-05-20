@@ -77,7 +77,7 @@ none detected
 
 ### 5. P2 - Drobne Usprawnienia
 
-- **Plik service workera istnieje, ale rejestracja nie została wykryta.** `sw.js` definiuje obsługę install/activate/fetch, ale w `index.html` ani skryptach źródłowych nie wykryto `navigator.serviceWorker.register(...)`. Jeżeli oczekiwane jest cache/offline PWA, worker obecnie nie jest aktywny.
+- **Plik service workera istnieje, ale rejestracja nie została wykryta.** `sw.
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
 

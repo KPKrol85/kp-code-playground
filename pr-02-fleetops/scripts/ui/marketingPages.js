@@ -544,6 +544,7 @@ function renderFeaturesPage() {
     description: "Lista funkcji FleetOps: dyspozycja, monitoring, kierowcy, analityka i zgodnosc dla zespolow transportowych.",
     body: `
       <section class="section-tight">
+        <h2 class="sr-only">Funkcje operacyjne</h2>
         <div class="grid marketing-grid">
           <div class="feature-group">
             <h3>Dyspozycja</h3>
