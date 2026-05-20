@@ -77,8 +77,6 @@ none detected
 
 ### 5. P2 - Drobne Usprawnienia
 
-- **Stan akordeonu nie jest wystawiany przez ARIA.** `scripts/ui/components/accordion.js` przełącza `.open` i `maxHeight`, ale nie ustawia `aria-expanded`, `aria-controls` ani stabilnych ID dla przycisków i treści. Kontrolki są natywnymi przyciskami, więc to usprawnienie, nie blocker.
-
 - **W markup marketingowym występuje dodatkowy cudzysłów.** `scripts/ui/marketingPages.js:455`, `scripts/ui/marketingPages.js:960` i `scripts/ui/marketingPages.js:1014` zawierają `<div class="grid marketing-grid"">`. Przeglądarki zwykle odzyskają poprawny DOM, ale źródłowy markup jest niepoprawny i warto go oczyścić.
 
 - **Plik service workera istnieje, ale rejestracja nie została wykryta.** `sw.js` definiuje obsługę install/activate/fetch, ale w `index.html` ani skryptach źródłowych nie wykryto `navigator.serviceWorker.register(...)`. Jeżeli oczekiwane jest cache/offline PWA, worker obecnie nie jest aktywny.
