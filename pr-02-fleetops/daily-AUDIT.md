@@ -73,8 +73,7 @@ none detected
 
 ### 4. P1 - Ważne Problemy Do Naprawy W Następnej Kolejności
 
-- **App shell nadal renderuje lokalnie zapisane dane użytkownika/sesji przez raw HTML.** `scripts/ui/layoutApp.js:67`, `scripts/ui/layoutApp.js:99` i `scripts/ui/layoutApp.js:100` interpolują `auth.user.email`, `auth.user.name` oraz `currentUser.displayName/currentUser.role` do `innerHTML`. Te wartości mogą pochodzić z formularza logowania albo `localStorage`. `scripts/ui/components/toast.js:13` również interpoluje `message` do `innerHTML`. To ta sama klasa ryzyka HTML injection, która została już utwardzona w widokach orders/fleet/drivers; naprawa powinna polegać na escapowaniu przy renderze albo użyciu text nodes.
-- **Metadane domen produkcyjnych są niespójne.** `index.html` i `404.html` używają `https://saas-pr02-fleetops.netlify.app` dla canonical, Open Graph i Twitter, natomiast `sitemap.xml` używa `https://transport-project-02.netlify.app`, a `assets/favicon/site.webmanifest` używa `https://transport-project-02.netlify.app` dla screenshotów i ikon skrótów. `robots.txt` wskazuje sitemapę na hostname `saas-pr02-fleetops`. To może rozdzielać sygnały SEO/PWA między dwie domeny.
+
 
 ### 5. P2 - Drobne Usprawnienia
 
