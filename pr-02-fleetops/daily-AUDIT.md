@@ -81,10 +81,6 @@ none detected
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
 
-- Rozważyć jedną stabilną strategię głównego nagłówka dla tras aplikacyjnych. App shell renderuje tytuł widoku jako `h2`, a nagłówki modułów często zaczynają się od `h3`; dla dashboardu jest to akceptowalne, ale route-level `h1` wzmocniłby semantykę.
-
-- Dodać mały smoke test dla kluczowych flow demo: logowanie, nawigacja, create/edit/delete rekordów i renderowanie escapowanego tekstu. Obecnie `npm test` jest aliasem do builda produkcyjnego.
-
 - JSON-LD: not detected in project. To nie jest defekt dla tego portfolio/SPAle, ale pojedynczy schemat Organization/WebSite może być opcjonalnym ulepszeniem SEO po ustaleniu jednej kanonicznej domeny.
 
 ### 7. Ocena Seniorska

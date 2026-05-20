@@ -17,3 +17,5 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 - 2026-05-20 - [P2] Service worker registration: `sw.js` zostal zweryfikowany i jest rejestrowany progresywnie z `scripts/main.js`.
 
 - 2026-05-20 - [P2] Heading hierarchy: app routes maja route-level `h1`, glowne sekcje widokow `h2`, a karty i zagniezdzone grupy `h3`.
+
+- 2026-05-20 - [P2] Smoke tests: dodano minimalne testy Playwright dla landing/login, routingu aplikacji, CRUD zlecen i bezpiecznego renderowania tekstu.
