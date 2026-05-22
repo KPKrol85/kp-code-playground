@@ -24,9 +24,6 @@ none detected
 
 ### 4. P1 — Important Issues Worth Fixing Next
 
-1. Dynamic feedback is not fully accessible to assistive technologies.
-   Evidence: `Toast.show()` appends a plain `.toast-container` to `document.body` in `scripts/ui/components/toast.js` without `role="status"`, `role="alert"`, `aria-live`, or `aria-atomic`, while toasts are used for login validation, permissions, CRUD success, export, and contact-form feedback. CRUD forms in `ordersView.js`, `fleetView.js`, and `driversView.js` set `form.noValidate`, toggle `aria-invalid`, and write messages into `span[data-error-for]`, but the inputs do not reference those errors with stable IDs and `aria-describedby`.
-
 2. Dropdowns use ARIA menu semantics without the full menu interaction contract.
    Evidence: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js`, and app row actions render `role="menu"` and `aria-haspopup="menu"`, but the menu children are plain anchors, buttons, or informational divs without `role="menuitem"`. `scripts/ui/components/dropdown.js` handles click-outside and Escape only; arrow-key navigation and roving focus are not implemented. Either implement the menu pattern or simplify these to disclosure/list semantics.
 
@@ -81,9 +78,6 @@ Najważniejsze problemy są konkretne, a nie architektoniczne: kilka ścieżek d
 none detected
 
 ### 4. P1 — Ważne Problemy Do Naprawy W Następnej Kolejności
-
-1. Dynamiczny feedback nie jest w pełni dostępny dla technologii asystujących.
-   Dowód: `Toast.show()` dodaje zwykły `.toast-container` do `document.body` w `scripts/ui/components/toast.js` bez `role="status"`, `role="alert"`, `aria-live` ani `aria-atomic`, a toasty są używane do walidacji logowania, uprawnień, sukcesów CRUD, eksportu i formularza kontaktowego. Formularze CRUD w `ordersView.js`, `fleetView.js` i `driversView.js` ustawiają `form.noValidate`, przełączają `aria-invalid` i wpisują komunikaty do `span[data-error-for]`, ale pola nie wskazują tych błędów przez stabilne ID i `aria-describedby`.
 
 2. Dropdowny używają semantyki ARIA menu bez pełnego kontraktu interakcji menu.
    Dowód: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js` i akcje w wierszach aplikacji renderują `role="menu"` oraz `aria-haspopup="menu"`, ale elementy menu są zwykłymi linkami, buttonami albo informacyjnymi divami bez `role="menuitem"`. `scripts/ui/components/dropdown.js` obsługuje tylko kliknięcie poza menu i Escape; nie ma nawigacji strzałkami ani roving focus. Warto albo wdrożyć wzorzec menu, albo uprościć te elementy do semantyki disclosure/list.

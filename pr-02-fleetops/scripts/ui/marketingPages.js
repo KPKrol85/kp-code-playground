@@ -940,7 +940,7 @@ function renderContactPage() {
     event.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
-      Toast.show("Uzupelnij wymagane pola.", "warning");
+      Toast.show("Uzupelnij wymagane pola.", "warning", { assertive: true });
       return;
     }
     form.reset();

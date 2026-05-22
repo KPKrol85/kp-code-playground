@@ -145,21 +145,8 @@ function fleetView() {
     }, 180);
   };
 
-  const clearFormErrors = (form) => {
-    form.querySelectorAll("[data-error-for]").forEach((el) => {
-      el.textContent = "";
-    });
-    form.querySelectorAll("[aria-invalid]").forEach((el) => {
-      el.setAttribute("aria-invalid", "false");
-    });
-  };
-
-  const setFieldError = (form, name, message) => {
-    const field = form.querySelector(`[name="${name}"]`);
-    const error = form.querySelector(`[data-error-for="${name}"]`);
-    if (field) field.setAttribute("aria-invalid", message ? "true" : "false");
-    if (error) error.textContent = message || "";
-  };
+  const clearFormErrors = window.FleetUI.clearFormErrors;
+  const setFieldError = window.FleetUI.setFieldError;
 
   const getVehicleFormValues = (form) => {
     const data = new FormData(form);
@@ -229,6 +216,7 @@ function fleetView() {
         <button class="button primary" type="submit">${isEdit ? "Zapisz zmiany" : "Dodaj pojazd"}</button>
       </div>
     `;
+    window.FleetUI.connectFieldErrors(form, "fleet-form");
 
     const defaultValues = {
       id: "",

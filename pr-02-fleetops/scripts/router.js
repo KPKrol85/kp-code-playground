@@ -59,7 +59,7 @@ function renderLogin() {
     const email = form.email.value;
     const password = form.password.value;
     if (!email || password.length < 4) {
-      Toast.show("Podaj email i hasło (min 4 znaki)");
+      Toast.show("Podaj email i hasło (min 4 znaki)", "warning", { assertive: true });
       return;
     }
     const name = email.split("@")[0];

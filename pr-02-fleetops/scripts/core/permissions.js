@@ -104,7 +104,7 @@ const guard = (action, context = {}) => {
   if (can(action, context)) return true;
   const message = explainDeny(action, context);
   if (window.Toast && typeof Toast.show === "function") {
-    Toast.show(`Brak uprawnien: ${message}`, "warning");
+    Toast.show(`Brak uprawnien: ${message}`, "warning", { assertive: true });
   }
   if (window.FleetStore && typeof FleetStore.addActivity === "function") {
     FleetStore.addActivity({

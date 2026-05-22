@@ -16,6 +16,34 @@ async function loginAsDemo(page) {
   await expect(page.getByRole("heading", { name: "Przegląd", level: 1 })).toBeVisible();
 }
 
+async function expectCrudErrorsLinked(page, scenario) {
+  await page.locator(`.sidebar nav a[data-route="${scenario.route}"]`).click();
+  await expect(page.getByRole("heading", { name: scenario.heading, level: 1 })).toBeVisible();
+  await page.getByRole("button", { name: scenario.addButton }).click();
+  const dialog = page.getByRole("dialog", { name: scenario.dialog });
+  await expect(dialog).toBeVisible();
+
+  for (const name of scenario.fields) {
+    const field = dialog.locator(`[name="${name}"]`);
+    const error = dialog.locator(`[data-error-for="${name}"]`);
+    const fieldId = `${scenario.prefix}-${name}`;
+    const errorId = `${fieldId}-error`;
+
+    await expect(field).toHaveAttribute("id", fieldId);
+    await expect(error).toHaveAttribute("id", errorId);
+    await expect(field).toHaveAttribute("aria-describedby", new RegExp(`(^|\\s)${errorId}(\\s|$)`));
+  }
+
+  await dialog.getByRole("button", { name: scenario.submitButton }).click();
+
+  for (const name of scenario.invalidFields) {
+    await expect(dialog.locator(`[name="${name}"]`)).toHaveAttribute("aria-invalid", "true");
+    await expect(dialog.locator(`[data-error-for="${name}"]`)).not.toHaveText("");
+  }
+
+  await dialog.getByRole("button", { name: "Anuluj" }).click();
+}
+
 test("landing loads and demo login reaches the app shell", async ({ page }) => {
   await openFresh(page);
   await expect(page.locator("#app")).not.toBeEmpty();
@@ -23,6 +51,33 @@ test("landing loads and demo login reaches the app shell", async ({ page }) => {
 
   await loginAsDemo(page);
   await expect(page.locator(".sidebar")).toContainText("demo@fleetops.app");
+});
+
+test("toast feedback exposes stable polite and assertive live regions", async ({ page }) => {
+  await openFresh(page, "#/login");
+  await page.getByLabel("E-mail").fill("smoke@fleetops.app");
+  await page.getByLabel("Haslo").fill("test");
+  await page.getByRole("button", { name: "Zaloguj sie" }).click();
+  await expect(page).toHaveURL(/#\/app$/);
+
+  const statusRegion = page.locator("#fleetops-toast-status");
+  const alertRegion = page.locator("#fleetops-toast-alert");
+
+  await expect(statusRegion).toHaveAttribute("role", "status");
+  await expect(statusRegion).toHaveAttribute("aria-live", "polite");
+  await expect(statusRegion).toHaveAttribute("aria-atomic", "true");
+  await expect(alertRegion).toHaveAttribute("role", "alert");
+  await expect(alertRegion).toHaveAttribute("aria-live", "assertive");
+  await expect(alertRegion).toHaveAttribute("aria-atomic", "true");
+  await expect(statusRegion).toHaveText("Zalogowano");
+
+  await page.locator("#roleSwitcher").selectOption("u_drv_1");
+  await page.locator('.sidebar nav a[data-route="/app/orders"]').click();
+  const firstOrder = page.locator("tr.order-row").first();
+  await expect(firstOrder).toBeVisible();
+  await firstOrder.locator('[data-order-menu] .dropdown-trigger').click();
+  await firstOrder.locator('[data-order-action="edit"]').click({ force: true });
+  await expect(alertRegion).toContainText("Brak uprawnien:");
 });
 
 test("core app routes render route-level headings", async ({ page }) => {
@@ -41,6 +96,47 @@ test("core app routes render route-level headings", async ({ page }) => {
     await page.locator(`.sidebar nav a[data-route="${route.path}"]`).click();
     await expect(page).toHaveURL(new RegExp(`#${route.path}$`));
     await expect(page.getByRole("heading", { name: route.heading, level: 1 })).toBeVisible();
+  }
+});
+
+test("CRUD validation errors are programmatically associated with fields", async ({ page }) => {
+  await loginAsDemo(page);
+
+  const scenarios = [
+    {
+      route: "/app/orders",
+      heading: "Zlecenia",
+      addButton: "Add order",
+      dialog: "Dodaj zlecenie",
+      submitButton: "Dodaj zlecenie",
+      prefix: "orders-form",
+      fields: ["client", "route", "status", "eta", "priority"],
+      invalidFields: ["client", "route", "eta"],
+    },
+    {
+      route: "/app/fleet",
+      heading: "Flota",
+      addButton: "Dodaj pojazd",
+      dialog: "Dodaj pojazd",
+      submitButton: "Dodaj pojazd",
+      prefix: "fleet-form",
+      fields: ["id", "type", "status", "lastCheck", "driver"],
+      invalidFields: ["id", "type", "lastCheck"],
+    },
+    {
+      route: "/app/drivers",
+      heading: "Kierowcy",
+      addButton: "Dodaj kierowce",
+      dialog: "Dodaj kierowce",
+      submitButton: "Dodaj kierowce",
+      prefix: "drivers-form",
+      fields: ["name", "status", "phone", "lastTrip"],
+      invalidFields: ["name", "phone"],
+    },
+  ];
+
+  for (const scenario of scenarios) {
+    await expectCrudErrorsLinked(page, scenario);
   }
 });
 

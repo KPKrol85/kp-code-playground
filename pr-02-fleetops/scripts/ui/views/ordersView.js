@@ -159,21 +159,8 @@ function ordersView() {
     }, FILTER_DELAY);
   };
 
-  const clearFormErrors = (form) => {
-    form.querySelectorAll("[data-error-for]").forEach((el) => {
-      el.textContent = "";
-    });
-    form.querySelectorAll("[aria-invalid]").forEach((el) => {
-      el.setAttribute("aria-invalid", "false");
-    });
-  };
-
-  const setFieldError = (form, name, message) => {
-    const field = form.querySelector(`[name="${name}"]`);
-    const error = form.querySelector(`[data-error-for="${name}"]`);
-    if (field) field.setAttribute("aria-invalid", message ? "true" : "false");
-    if (error) error.textContent = message || "";
-  };
+  const clearFormErrors = window.FleetUI.clearFormErrors;
+  const setFieldError = window.FleetUI.setFieldError;
 
   const getOrderFormValues = (form) => {
     const data = new FormData(form);
@@ -253,6 +240,7 @@ function ordersView() {
         <button class="button primary" type="submit">${isEdit ? "Zapisz zmiany" : "Dodaj zlecenie"}</button>
       </div>
     `;
+    window.FleetUI.connectFieldErrors(form, "orders-form");
 
     const defaultValues = {
       client: "",
@@ -562,7 +550,7 @@ function ordersView() {
     exportBtn.title = "Brak uprawnieä w wersji demo";
     exportBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      Toast.show("Brak uprawnieä w wersji demo", "warning");
+      Toast.show("Brak uprawnieä w wersji demo", "warning", { assertive: true });
     });
   }
 
