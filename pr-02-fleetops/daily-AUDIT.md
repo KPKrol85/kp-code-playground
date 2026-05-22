@@ -47,9 +47,6 @@ none detected
 5. A stale helper script is present.
    Evidence: `minify-js.js` targets a `js/` directory and `js/dist`, but no `js/` directory was detected and `package.json` does not reference this script. Active production minification is handled by `build-dist.js`.
 
-6. Documentation has a small asset-extension mismatch.
-   Evidence: `IMAGE-ASSET-PIPELINE-MAP.md` lists `assets/og-img/og-1200x1200.png` and `og-1200x630.png`, while the actual files and metadata references use `.jpg`.
-
 ### 6. Extra Quality Improvements
 
 - Automate service-worker cache versioning or add fingerprinted CSS/JS filenames to reduce stale first-load risk after deployments. Current `sw.js` uses a manual `CACHE_NAME` and stale-while-revalidate for static assets.
@@ -107,9 +104,6 @@ none detected
 
 5. W repozytorium jest przestarzały helper.
    Dowód: `minify-js.js` celuje w katalog `js/` i `js/dist`, ale katalog `js/` nie został wykryty, a `package.json` nie odwołuje się do tego skryptu. Aktywną minifikację produkcyjną obsługuje `build-dist.js`.
-
-6. Dokumentacja ma drobną niespójność rozszerzeń assetów.
-   Dowód: `IMAGE-ASSET-PIPELINE-MAP.md` wymienia `assets/og-img/og-1200x1200.png` i `og-1200x630.png`, podczas gdy realne pliki i referencje metadata używają `.jpg`.
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
 

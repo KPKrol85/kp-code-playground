@@ -14,6 +14,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 - 2026-05-22 - [P2] Manifest screenshot paths: `assets/favicon/site.webmanifest` uzywa root-relative `src` dla screenshotow, zeby dzialaly lokalnie i produkcyjnie.
 
+- 2026-05-22 - [P2] Open Graph asset map: `IMAGE-ASSET-PIPELINE-MAP.md` wskazuje `.jpg` dla `assets/og-img/og-1200x1200.jpg` i `og-1200x630.jpg`.
+
 - 2026-05-20 - [P2] Accordion ARIA: `scripts/ui/components/accordion.js` synchronizuje `aria-expanded`, `aria-controls` i stabilne ID paneli akordeonu.
 
 - 2026-05-20 - [P2] Marketing markup quotes: `scripts/ui/marketingPages.js` ma usuniete nadmiarowe cudzyslowy w `class="grid marketing-grid"`.

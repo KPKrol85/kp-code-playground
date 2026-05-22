@@ -45,8 +45,8 @@ assets/
 │   ├── logo-black.svg
 │   └── logo-white.svg
 ├── og-img/
-│   ├── og-1200x1200.png
-│   └── og-1200x630.png
+│   ├── og-1200x1200.jpg
+│   └── og-1200x630.jpg
 ├── screenshots/
 │   ├── screenshot-desktop.png
 │   └── screenshot-mobile.png
