@@ -10,6 +10,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 - 2026-05-20 - [P1] Spojna domena produkcyjna: `index.html`, `404.html`, `sitemap.xml`, `robots.txt` i `assets/favicon/site.webmanifest` wskazuja `https://saas-pr02-fleetops.netlify.app`.
 
+- 2026-05-22 - [P1] Manifest shortcuts zgodne z hash routerem: `assets/favicon/site.webmanifest` uzywa `/#/app`, `/#/app/fleet` i `/#/app/orders` dla skrotow PWA.
+
 - 2026-05-20 - [P2] Accordion ARIA: `scripts/ui/components/accordion.js` synchronizuje `aria-expanded`, `aria-controls` i stabilne ID paneli akordeonu.
 
 - 2026-05-20 - [P2] Marketing markup quotes: `scripts/ui/marketingPages.js` ma usuniete nadmiarowe cudzyslowy w `class="grid marketing-grid"`.

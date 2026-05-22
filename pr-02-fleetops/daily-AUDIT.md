@@ -6,7 +6,7 @@
 
 FleetOps is a well-structured static frontend demo with clear documentation, modular CSS and JavaScript, an explicit build pipeline, static hosting files, manifest assets, a service worker source, and smoke tests. No P0 production blocker, serious security issue, or hard runtime breakage was detected from repository evidence.
 
-The main issues worth fixing are focused rather than architectural: manifest shortcut URLs do not match the hash-based router, several dynamic feedback paths are visual but not fully exposed to assistive technologies, and ARIA menu semantics are stronger than the implemented dropdown behavior.
+The main issues worth fixing are focused rather than architectural: several dynamic feedback paths are visual but not fully exposed to assistive technologies, and ARIA menu semantics are stronger than the implemented dropdown behavior.
 
 ### 2. Strengths
 
@@ -24,13 +24,10 @@ none detected
 
 ### 4. P1 — Important Issues Worth Fixing Next
 
-1. Manifest shortcuts do not match the implemented hash router.
-   Evidence: `README.md` documents hash-based routing; `scripts/main.js` routes from `window.location.hash`, and `scripts/router.js` derives routes with `hash.replace("#", "")`. The manifest shortcuts in `assets/favicon/site.webmanifest` use path URLs: `/app`, `/app/fleet`, and `/app/orders`. With the static fallback in `_redirects`, those paths can serve `index.html`, but the router does not read `window.location.pathname`, so shortcut/deep-link entry can miss the intended app route. This is a real manifest/deep-link behavior issue, not a core app architecture failure.
-
-2. Dynamic feedback is not fully accessible to assistive technologies.
+1. Dynamic feedback is not fully accessible to assistive technologies.
    Evidence: `Toast.show()` appends a plain `.toast-container` to `document.body` in `scripts/ui/components/toast.js` without `role="status"`, `role="alert"`, `aria-live`, or `aria-atomic`, while toasts are used for login validation, permissions, CRUD success, export, and contact-form feedback. CRUD forms in `ordersView.js`, `fleetView.js`, and `driversView.js` set `form.noValidate`, toggle `aria-invalid`, and write messages into `span[data-error-for]`, but the inputs do not reference those errors with stable IDs and `aria-describedby`.
 
-3. Dropdowns use ARIA menu semantics without the full menu interaction contract.
+2. Dropdowns use ARIA menu semantics without the full menu interaction contract.
    Evidence: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js`, and app row actions render `role="menu"` and `aria-haspopup="menu"`, but the menu children are plain anchors, buttons, or informational divs without `role="menuitem"`. `scripts/ui/components/dropdown.js` handles click-outside and Escape only; arrow-key navigation and roving focus are not implemented. Either implement the menu pattern or simplify these to disclosure/list semantics.
 
 ### 5. P2 — Minor Refinements
@@ -62,7 +59,7 @@ none detected
 
 ### 7. Senior Rating
 
-8/10. The project has a solid static frontend architecture for a portfolio/demo SaaS app: clear routing, modular source organization, intentional build tooling, good metadata coverage, basic progressive enhancement, and smoke coverage. The rating is held back by the manifest/hash-router mismatch and accessibility semantics around toasts, form errors, and ARIA menus.
+8/10. The project has a solid static frontend architecture for a portfolio/demo SaaS app: clear routing, modular source organization, intentional build tooling, good metadata coverage, basic progressive enhancement, and smoke coverage. The rating is held back by accessibility semantics around toasts, form errors, and ARIA menus.
 
 ## Polski
 
@@ -70,7 +67,7 @@ none detected
 
 FleetOps jest dobrze uporządkowaną statyczną aplikacją demonstracyjną frontendu z czytelną dokumentacją, modularnym CSS i JavaScriptem, jawnym procesem builda, plikami pod hosting statyczny, manifestem, źródłem service workera i testami smoke. Na podstawie repozytorium nie wykryto P0: blokera produkcyjnego, poważnego problemu bezpieczeństwa ani twardego błędu runtime.
 
-Najważniejsze problemy są konkretne, a nie architektoniczne: skróty w manifeście nie pasują do routera opartego o hash, kilka ścieżek dynamicznego feedbacku jest widocznych wizualnie, ale nie w pełni dostępnych dla technologii asystujących, a semantyka ARIA dla menu jest mocniejsza niż realnie zaimplementowane zachowanie dropdownów.
+Najważniejsze problemy są konkretne, a nie architektoniczne: kilka ścieżek dynamicznego feedbacku jest widocznych wizualnie, ale nie w pełni dostępnych dla technologii asystujących, a semantyka ARIA dla menu jest mocniejsza niż realnie zaimplementowane zachowanie dropdownów.
 
 ### 2. Mocne Strony
 
@@ -88,13 +85,10 @@ none detected
 
 ### 4. P1 — Ważne Problemy Do Naprawy W Następnej Kolejności
 
-1. Skróty w manifeście nie pasują do zaimplementowanego routera hash.
-   Dowód: `README.md` dokumentuje routing hash-based; `scripts/main.js` routuje z `window.location.hash`, a `scripts/router.js` buduje ścieżkę przez `hash.replace("#", "")`. Skróty w `assets/favicon/site.webmanifest` używają URL-i ścieżkowych: `/app`, `/app/fleet` i `/app/orders`. Przy fallbacku statycznym w `_redirects` te ścieżki mogą podać `index.html`, ale router nie czyta `window.location.pathname`, więc wejście przez skrót/deep link może nie otworzyć docelowego widoku aplikacji. To realny problem zachowania manifestu/deep linków, nie awaria całej architektury aplikacji.
-
-2. Dynamiczny feedback nie jest w pełni dostępny dla technologii asystujących.
+1. Dynamiczny feedback nie jest w pełni dostępny dla technologii asystujących.
    Dowód: `Toast.show()` dodaje zwykły `.toast-container` do `document.body` w `scripts/ui/components/toast.js` bez `role="status"`, `role="alert"`, `aria-live` ani `aria-atomic`, a toasty są używane do walidacji logowania, uprawnień, sukcesów CRUD, eksportu i formularza kontaktowego. Formularze CRUD w `ordersView.js`, `fleetView.js` i `driversView.js` ustawiają `form.noValidate`, przełączają `aria-invalid` i wpisują komunikaty do `span[data-error-for]`, ale pola nie wskazują tych błędów przez stabilne ID i `aria-describedby`.
 
-3. Dropdowny używają semantyki ARIA menu bez pełnego kontraktu interakcji menu.
+2. Dropdowny używają semantyki ARIA menu bez pełnego kontraktu interakcji menu.
    Dowód: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js` i akcje w wierszach aplikacji renderują `role="menu"` oraz `aria-haspopup="menu"`, ale elementy menu są zwykłymi linkami, buttonami albo informacyjnymi divami bez `role="menuitem"`. `scripts/ui/components/dropdown.js` obsługuje tylko kliknięcie poza menu i Escape; nie ma nawigacji strzałkami ani roving focus. Warto albo wdrożyć wzorzec menu, albo uprościć te elementy do semantyki disclosure/list.
 
 ### 5. P2 — Drobne Usprawnienia
@@ -126,4 +120,4 @@ none detected
 
 ### 7. Ocena Seniorska
 
-8/10. Projekt ma solidną statyczną architekturę frontendu dla portfolio/demo aplikacji SaaS: czytelny routing, modularną organizację źródeł, świadomy tooling builda, dobre metadane, podstawową progresywną degradację i testy smoke. Ocenę obniżają mismatch manifestu z routerem hash oraz semantyka dostępności wokół toastów, błędów formularzy i menu ARIA.
+8/10. Projekt ma solidną statyczną architekturę frontendu dla portfolio/demo aplikacji SaaS: czytelny routing, modularną organizację źródeł, świadomy tooling builda, dobre metadane, podstawową progresywną degradację i testy smoke. Ocenę obniża semantyka dostępności wokół toastów, błędów formularzy i menu ARIA.

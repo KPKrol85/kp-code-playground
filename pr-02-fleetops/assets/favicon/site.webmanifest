@@ -54,7 +54,7 @@
       "name": "Dashboard",
       "short_name": "Dashboard",
       "description": "Główny panel aplikacji",
-      "url": "/app",
+      "url": "/#/app",
       "icons": [
         {
           "src": "https://saas-pr02-fleetops.netlify.app/assets/shortcuts/dashboard.png",
@@ -67,7 +67,7 @@
       "name": "Flota",
       "short_name": "Flota",
       "description": "Zarządzanie pojazdami",
-      "url": "/app/fleet",
+      "url": "/#/app/fleet",
       "icons": [
         {
           "src": "https://saas-pr02-fleetops.netlify.app/assets/shortcuts/flota.png",
@@ -80,7 +80,7 @@
       "name": "Zlecenia",
       "short_name": "Zlecenia",
       "description": "Lista zleceń transportowych",
-      "url": "/app/orders",
+      "url": "/#/app/orders",
       "icons": [
         {
           "src": "https://saas-pr02-fleetops.netlify.app/assets/shortcuts/zlecenia.png",
