@@ -31,6 +31,13 @@ const escapeHtml = (value) =>
 window.FleetUI = window.FleetUI || {};
 window.FleetUI.escapeHtml = escapeHtml;
 
+const getMotionSafeScrollBehavior = () => {
+  if (typeof window.matchMedia !== "function") return "smooth";
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+};
+
+window.FleetUI.getMotionSafeScrollBehavior = getMotionSafeScrollBehavior;
+
 const getNamedFormField = (form, name) => {
   const field = form && form.elements ? form.elements.namedItem(name) : null;
   if (!field) return null;
@@ -106,10 +113,11 @@ function bindLogoScroll(kind, getContainer) {
 
       window.setTimeout(() => {
         const container = getContainer ? getContainer() : null;
+        const behavior = getMotionSafeScrollBehavior();
         if (container && typeof container.scrollTo === "function") {
-          container.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          container.scrollTo({ top: 0, left: 0, behavior });
         } else {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          window.scrollTo({ top: 0, left: 0, behavior });
         }
       }, 0);
     };

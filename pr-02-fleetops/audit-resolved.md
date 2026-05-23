@@ -6,6 +6,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 ## Resolved
 
+- 2026-05-23 - [P2] JavaScript respektuje reduced motion przy scrollu: `scripts/utils/dom.js` udostepnia `FleetUI.getMotionSafeScrollBehavior()`, a logo scroll oraz dashboard alerts uzywaja `auto` przy `prefers-reduced-motion: reduce` i `smooth` w pozostalych przypadkach. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg` i check przegladarkowy dla obu preferencji ruchu.
+
 - 2026-05-23 - [P2] Lokalna sciezka fontu Inter: `styles/src/00-settings.css`, `index.html` i `404.html` wskazuja `/assets/fonts/inter-latin.woff2`, zgodnie z realnym polozeniem pliku w `assets/fonts/`. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg` oraz podglad lokalny bez requestu do `/styles/assets/fonts/...`.
 
 - 2026-05-23 - [P1] Dropdown disclosure semantics: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js`, `dashboardView.js`, `ordersView.js`, `fleetView.js` i `driversView.js` nie renderuja juz niepelnej semantyki ARIA menu; triggery zachowuja `aria-expanded`/`aria-controls`, a zawartosc pozostaje natywnymi linkami, buttonami i kontrolkami. Zweryfikowano targeted `rg` dla `role="menu"` / `aria-haspopup="menu"` / `role="menuitem"` oraz `npm run test:smoke` z regresja Escape i brakiem pulapki fokusu.

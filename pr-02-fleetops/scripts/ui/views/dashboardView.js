@@ -83,7 +83,10 @@ function dashboardView() {
     if (action === "alerts") {
       window.location.hash = "#/app";
       window.setTimeout(() => {
-        document.getElementById("dashboard-alerts")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        const behavior = window.FleetUI.getMotionSafeScrollBehavior
+          ? window.FleetUI.getMotionSafeScrollBehavior()
+          : "smooth";
+        document.getElementById("dashboard-alerts")?.scrollIntoView({ behavior, block: "start" });
       }, 200);
     }
   };
