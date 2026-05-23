@@ -6,7 +6,7 @@
 
 FleetOps is a well-structured static frontend demo with clear documentation, modular CSS and JavaScript, an explicit build pipeline, static hosting files, manifest assets, a service worker source, and smoke tests. No P0 production blocker, serious security issue, or hard runtime breakage was detected from repository evidence.
 
-The remaining issues worth fixing are focused rather than architectural and mostly minor: sitemap cleanup, UI language consistency, and one stale helper script.
+The remaining issues worth fixing are focused rather than architectural and mostly minor: UI language consistency and one stale helper script.
 
 ### 2. Strengths
 
@@ -28,13 +28,10 @@ none detected
 
 ### 5. P2 — Minor Refinements
 
-1. `sitemap.xml` includes URLs that should be reconsidered.
-   Evidence: `404.html` declares `<meta name="robots" content="noindex, follow">`, but `sitemap.xml` includes `https://saas-pr02-fleetops.netlify.app/404.html`. The sitemap also includes both `/` and `/index.html` while `index.html` canonicalizes to `/`.
-
-2. UI language and spelling are inconsistent in visible strings.
+1. UI language and spelling are inconsistent in visible strings.
    Evidence: Polish UI strings are mixed with English labels such as `Add order` and `Load more`, and several visible/ARIA labels use ASCII-only Polish text such as `Zaloguj sie`, `Przelacz`, `Nawigacja glowna`, and `Dostepny`.
 
-3. A stale helper script is present.
+2. A stale helper script is present.
    Evidence: `minify-js.js` targets a `js/` directory and `js/dist`, but no `js/` directory was detected and `package.json` does not reference this script. Active production minification is handled by `build-dist.js`.
 
 ### 6. Extra Quality Improvements
@@ -54,7 +51,7 @@ none detected
 
 FleetOps jest dobrze uporządkowaną statyczną aplikacją demonstracyjną frontendu z czytelną dokumentacją, modularnym CSS i JavaScriptem, jawnym procesem builda, plikami pod hosting statyczny, manifestem, źródłem service workera i testami smoke. Na podstawie repozytorium nie wykryto P0: blokera produkcyjnego, poważnego problemu bezpieczeństwa ani twardego błędu runtime.
 
-Pozostale problemy sa konkretne, a nie architektoniczne, i maja glownie mniejsza wage: porzadek w sitemapie, spojnosc jezyka UI oraz jeden przestarzaly helper.
+Pozostale problemy sa konkretne, a nie architektoniczne, i maja glownie mniejsza wage: spojnosc jezyka UI oraz jeden przestarzaly helper.
 
 ### 2. Mocne Strony
 
@@ -76,13 +73,10 @@ none detected
 
 ### 5. P2 — Drobne Usprawnienia
 
-1. `sitemap.xml` zawiera URL-e do ponownego rozważenia.
-   Dowód: `404.html` deklaruje `<meta name="robots" content="noindex, follow">`, ale `sitemap.xml` zawiera `https://saas-pr02-fleetops.netlify.app/404.html`. Sitemap zawiera też jednocześnie `/` i `/index.html`, mimo że `index.html` canonicalizuje do `/`.
-
-2. Widoczne teksty UI mają niespójny język i pisownię.
+1. Widoczne teksty UI mają niespójny język i pisownię.
    Dowód: polskie teksty UI mieszają się z angielskimi etykietami, np. `Add order` i `Load more`, a część widocznych/ARIA labeli używa polskiego bez znaków diakrytycznych, np. `Zaloguj sie`, `Przelacz`, `Nawigacja glowna`, `Dostepny`.
 
-3. W repozytorium jest przestarzały helper.
+2. W repozytorium jest przestarzały helper.
    Dowód: `minify-js.js` celuje w katalog `js/` i `js/dist`, ale katalog `js/` nie został wykryty, a `package.json` nie odwołuje się do tego skryptu. Aktywną minifikację produkcyjną obsługuje `build-dist.js`.
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
