@@ -100,8 +100,8 @@ function renderAppShell(viewTitle, contentNode) {
       </button>
       <button class="button ghost" aria-label="Powiadomienia" type="button">Powiadomienia</button>
       <div class="dropdown">
-        <button class="button ghost avatar" id="userMenuBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="userMenu">${initials}</button>
-        <div class="dropdown-menu" id="userMenu" role="menu">
+        <button class="button ghost avatar" id="userMenuBtn" type="button" aria-label="Menu użytkownika" aria-expanded="false" aria-controls="userMenu">${initials}</button>
+        <div class="dropdown-menu" id="userMenu">
           <div class="dropdown-item muted">${safeUserName}</div>
           <div class="dropdown-item muted">Rola: ${safeRoleLabel}</div>
           <div class="dropdown-item"><a href="#/about">O projekcie</a></div>

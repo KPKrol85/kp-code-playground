@@ -80,6 +80,36 @@ test("toast feedback exposes stable polite and assertive live regions", async ({
   await expect(alertRegion).toContainText("Brak uprawnien:");
 });
 
+test("dropdowns use disclosure semantics and close with Escape", async ({ page }) => {
+  const ariaMenuSelector = '[role="menu"], [aria-haspopup="menu"], [role="menuitem"]';
+
+  await openFresh(page);
+  await expect(page.locator(ariaMenuSelector)).toHaveCount(0);
+
+  await loginAsDemo(page);
+  await page.locator('.sidebar nav a[data-route="/app/orders"]').click();
+  await expect(page.getByRole("heading", { name: "Zlecenia", level: 1 })).toBeVisible();
+  await expect(page.locator(ariaMenuSelector)).toHaveCount(0);
+
+  const firstDropdown = page.locator("[data-order-menu]").first();
+  const trigger = firstDropdown.locator(".dropdown-trigger");
+  const panel = firstDropdown.locator(".dropdown-menu");
+
+  await expect(trigger).toHaveAttribute("aria-controls", /order-actions-\d+/);
+  await expect(panel).toHaveAttribute("id", /order-actions-\d+/);
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(panel).not.toBeVisible();
+
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await expect(panel).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(panel).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+});
+
 test("core app routes render route-level headings", async ({ page }) => {
   await loginAsDemo(page);
 

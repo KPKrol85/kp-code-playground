@@ -140,11 +140,11 @@ function dashboardView() {
       <h2>Alerty</h2>
 
       <div class="dropdown" data-dropdown="alerts-rules">
-        <button class="button ghost small dropdown-trigger" type="button" aria-expanded="false">
+        <button class="button ghost small dropdown-trigger" type="button" aria-expanded="false" aria-controls="alertsRulesMenu">
           Zobacz reguły
         </button>
 
-        <div class="dropdown-menu" role="menu" aria-label="Reguły alertów">
+        <div class="dropdown-menu" id="alertsRulesMenu">
           <div style="padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
             <span class="muted small">Reguły alertów</span>
             <button class="button ghost small" type="button" data-alerts-reset>Reset</button>

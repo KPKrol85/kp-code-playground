@@ -388,20 +388,21 @@ function fleetView() {
     dom.clear(cards);
     loadMoreWrap.style.display = canLoadMore ? "flex" : "none";
     loadMoreBtn.disabled = !canLoadMore;
-    visibleRows.forEach((vehicle) => {
+    visibleRows.forEach((vehicle, index) => {
       const card = dom.h("div", "panel");
       const safeId = escapeHtml(vehicle.id);
       const safeType = escapeHtml(vehicle.type);
       const safeStatus = escapeHtml(format.statusLabel(vehicle.status));
       const safeDriver = escapeHtml(vehicle.driver);
+      const menuId = `vehicle-actions-${index}`;
       card.innerHTML = `
         <div class="flex-between">
           <h3 class="vehicle-card__title">${safeId}</h3>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="badge">${safeStatus}</span>
             <div class="dropdown" data-vehicle-menu>
-              <button class="button ghost dropdown-trigger" type="button" aria-haspopup="menu" aria-expanded="false">...</button>
-              <div class="dropdown-menu" role="menu" aria-label="Akcje pojazdu">
+              <button class="button ghost dropdown-trigger" type="button" aria-label="Akcje pojazdu ${safeId}" aria-expanded="false" aria-controls="${menuId}">...</button>
+              <div class="dropdown-menu" id="${menuId}">
                 <button class="dropdown-item" type="button" data-vehicle-action="edit">Edytuj</button>
                 <button class="dropdown-item" type="button" data-vehicle-action="delete">Usun</button>
               </div>

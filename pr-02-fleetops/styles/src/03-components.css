@@ -726,11 +726,13 @@ html[data-theme="dark"] .stat-card:focus-within {
   right: 0;
   min-width: 180px;
   padding: var(--SPACE-2);
+  margin: 0;
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   display: none;
+  list-style: none;
   z-index: 880;
 }
 

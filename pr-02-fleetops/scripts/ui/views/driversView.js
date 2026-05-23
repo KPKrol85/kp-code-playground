@@ -394,12 +394,13 @@ function driversView() {
     loadMoreWrap.style.display = canLoadMore ? "flex" : "none";
     loadMoreBtn.disabled = !canLoadMore;
 
-    visibleRows.forEach((driver) => {
+    visibleRows.forEach((driver, index) => {
       const tr = dom.h("tr");
       const safeName = escapeHtml(driver.name);
       const safeStatus = escapeHtml(format.statusLabel(driver.status));
       const safeLastTrip = escapeHtml(driver.lastTrip);
       const safePhone = escapeHtml(driver.phone);
+      const menuId = `driver-actions-${index}`;
       tr.innerHTML = `
         <td>${safeName}</td>
         <td><span class="badge">${safeStatus}</span></td>
@@ -407,8 +408,8 @@ function driversView() {
         <td>${safePhone}</td>
         <td>
           <div class="dropdown" data-driver-menu>
-            <button class="button ghost dropdown-trigger" type="button" aria-haspopup="menu" aria-expanded="false">...</button>
-            <div class="dropdown-menu" role="menu" aria-label="Akcje kierowcy">
+            <button class="button ghost dropdown-trigger" type="button" aria-label="Akcje kierowcy ${safeName}" aria-expanded="false" aria-controls="${menuId}">...</button>
+            <div class="dropdown-menu" id="${menuId}">
               <button class="dropdown-item" type="button" data-driver-action="edit">Edytuj</button>
               <button class="dropdown-item" type="button" data-driver-action="delete">Usun</button>
             </div>

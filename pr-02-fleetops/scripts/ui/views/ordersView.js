@@ -400,13 +400,14 @@ function ordersView() {
       return;
     }
 
-    const renderedRows = visibleRows.map((order) => {
+    const renderedRows = visibleRows.map((order, index) => {
       const safeId = escapeHtml(order.id);
       const safeClient = escapeHtml(order.client);
       const safeRoute = escapeHtml(order.route);
       const safeStatus = escapeHtml(format.statusLabel(order.status));
       const safeEta = escapeHtml(order.eta);
       const safePriority = escapeHtml(priorityLabel(order.priority));
+      const menuId = `order-actions-${index}`;
 
       return `
       <tr class="order-row" data-id="${safeId}">
@@ -418,8 +419,8 @@ function ordersView() {
         <td><span class="badge">${safePriority}</span></td>
         <td>
           <div class="dropdown" data-order-menu>
-            <button class="button ghost dropdown-trigger" type="button" aria-haspopup="menu" aria-expanded="false">...</button>
-            <div class="dropdown-menu" role="menu" aria-label="Akcje zlecenia">
+            <button class="button ghost dropdown-trigger" type="button" aria-label="Akcje zlecenia ${safeId}" aria-expanded="false" aria-controls="${menuId}">...</button>
+            <div class="dropdown-menu" id="${menuId}">
               <button class="dropdown-item" type="button" data-order-action="edit">Edytuj</button>
               <button class="dropdown-item" type="button" data-order-action="delete">Usun</button>
             </div>

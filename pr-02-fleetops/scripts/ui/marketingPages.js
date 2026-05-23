@@ -249,14 +249,14 @@ ${menuToggleIcon}
               <li><a href="#/about">O nas</a></li>
               <li><a href="#/contact">Kontakt</a></li>
               <li class="dropdown">
-                <button class="nav-link" id="resourcesToggle" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="resourcesMenu">
+                <button class="nav-link" id="resourcesToggle" type="button" aria-expanded="false" aria-controls="resourcesMenu">
                   Zasoby
                 </button>
-                <div class="dropdown-menu" id="resourcesMenu" role="menu" aria-label="Zasoby">
-                  <a class="dropdown-item" href="#/privacy">Polityka prywatnosci</a>
-                  <a class="dropdown-item" href="#/terms">Regulamin</a>
-                  <a class="dropdown-item" href="#/cookies">Polityka cookies</a>
-                </div>
+                <ul class="dropdown-menu" id="resourcesMenu" aria-label="Zasoby">
+                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatnosci</a></li>
+                  <li><a class="dropdown-item" href="#/terms">Regulamin</a></li>
+                  <li><a class="dropdown-item" href="#/cookies">Polityka cookies</a></li>
+                </ul>
               </li>
               <li><a class="button ghost" href="#/login">Zaloguj sie</a></li>
               <li>

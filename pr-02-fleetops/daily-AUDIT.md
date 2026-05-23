@@ -6,7 +6,7 @@
 
 FleetOps is a well-structured static frontend demo with clear documentation, modular CSS and JavaScript, an explicit build pipeline, static hosting files, manifest assets, a service worker source, and smoke tests. No P0 production blocker, serious security issue, or hard runtime breakage was detected from repository evidence.
 
-The main issues worth fixing are focused rather than architectural: several dynamic feedback paths are visual but not fully exposed to assistive technologies, and ARIA menu semantics are stronger than the implemented dropdown behavior.
+The remaining issues worth fixing are focused rather than architectural and mostly minor: development preview font loading, reduced-motion handling, sitemap cleanup, UI language consistency, and one stale helper script.
 
 ### 2. Strengths
 
@@ -24,8 +24,7 @@ none detected
 
 ### 4. P1 — Important Issues Worth Fixing Next
 
-2. Dropdowns use ARIA menu semantics without the full menu interaction contract.
-   Evidence: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js`, and app row actions render `role="menu"` and `aria-haspopup="menu"`, but the menu children are plain anchors, buttons, or informational divs without `role="menuitem"`. `scripts/ui/components/dropdown.js` handles click-outside and Escape only; arrow-key navigation and roving focus are not implemented. Either implement the menu pattern or simplify these to disclosure/list semantics.
+none detected
 
 ### 5. P2 — Minor Refinements
 
@@ -53,7 +52,7 @@ none detected
 
 ### 7. Senior Rating
 
-8/10. The project has a solid static frontend architecture for a portfolio/demo SaaS app: clear routing, modular source organization, intentional build tooling, good metadata coverage, basic progressive enhancement, and smoke coverage. The rating is held back by accessibility semantics around toasts, form errors, and ARIA menus.
+8/10. The project has a solid static frontend architecture for a portfolio/demo SaaS app: clear routing, modular source organization, intentional build tooling, good metadata coverage, basic progressive enhancement, and smoke coverage. The rating is held back by smaller quality refinements listed above.
 
 ## Polski
 
@@ -61,7 +60,7 @@ none detected
 
 FleetOps jest dobrze uporządkowaną statyczną aplikacją demonstracyjną frontendu z czytelną dokumentacją, modularnym CSS i JavaScriptem, jawnym procesem builda, plikami pod hosting statyczny, manifestem, źródłem service workera i testami smoke. Na podstawie repozytorium nie wykryto P0: blokera produkcyjnego, poważnego problemu bezpieczeństwa ani twardego błędu runtime.
 
-Najważniejsze problemy są konkretne, a nie architektoniczne: kilka ścieżek dynamicznego feedbacku jest widocznych wizualnie, ale nie w pełni dostępnych dla technologii asystujących, a semantyka ARIA dla menu jest mocniejsza niż realnie zaimplementowane zachowanie dropdownów.
+Pozostale problemy sa konkretne, a nie architektoniczne, i maja glownie mniejsza wage: ladowanie fontu w podgladzie developerskim, reduced motion, porzadek w sitemapie, spojnosc jezyka UI oraz jeden przestarzaly helper.
 
 ### 2. Mocne Strony
 
@@ -79,8 +78,7 @@ none detected
 
 ### 4. P1 — Ważne Problemy Do Naprawy W Następnej Kolejności
 
-2. Dropdowny używają semantyki ARIA menu bez pełnego kontraktu interakcji menu.
-   Dowód: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js` i akcje w wierszach aplikacji renderują `role="menu"` oraz `aria-haspopup="menu"`, ale elementy menu są zwykłymi linkami, buttonami albo informacyjnymi divami bez `role="menuitem"`. `scripts/ui/components/dropdown.js` obsługuje tylko kliknięcie poza menu i Escape; nie ma nawigacji strzałkami ani roving focus. Warto albo wdrożyć wzorzec menu, albo uprościć te elementy do semantyki disclosure/list.
+none detected
 
 ### 5. P2 — Drobne Usprawnienia
 
@@ -108,4 +106,4 @@ none detected
 
 ### 7. Ocena Seniorska
 
-8/10. Projekt ma solidną statyczną architekturę frontendu dla portfolio/demo aplikacji SaaS: czytelny routing, modularną organizację źródeł, świadomy tooling builda, dobre metadane, podstawową progresywną degradację i testy smoke. Ocenę obniża semantyka dostępności wokół toastów, błędów formularzy i menu ARIA.
+8/10. Projekt ma solidna statyczna architekture frontendu dla portfolio/demo aplikacji SaaS: czytelny routing, modularna organizacje zrodel, swiadomy tooling builda, dobre metadane, podstawowa progresywna degradacje i testy smoke. Ocene obnizaja mniejsze usprawnienia jakosciowe wymienione wyzej.
