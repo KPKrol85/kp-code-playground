@@ -6,6 +6,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 ## Resolved
 
+- 2026-05-23 - [P2] Lokalna sciezka fontu Inter: `styles/src/00-settings.css`, `index.html` i `404.html` wskazuja `/assets/fonts/inter-latin.woff2`, zgodnie z realnym polozeniem pliku w `assets/fonts/`. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg` oraz podglad lokalny bez requestu do `/styles/assets/fonts/...`.
+
 - 2026-05-23 - [P1] Dropdown disclosure semantics: `layoutApp.js`, `layoutLanding.js`, `marketingPages.js`, `dashboardView.js`, `ordersView.js`, `fleetView.js` i `driversView.js` nie renderuja juz niepelnej semantyki ARIA menu; triggery zachowuja `aria-expanded`/`aria-controls`, a zawartosc pozostaje natywnymi linkami, buttonami i kontrolkami. Zweryfikowano targeted `rg` dla `role="menu"` / `aria-haspopup="menu"` / `role="menuitem"` oraz `npm run test:smoke` z regresja Escape i brakiem pulapki fokusu.
 
 - 2026-05-22 - [P1] Dostepny feedback dynamiczny: `scripts/ui/components/toast.js` ma stale regiony live `role="status"` i `role="alert"` z `aria-live` oraz `aria-atomic`, blokujace komunikaty w `scripts/router.js`, `scripts/core/permissions.js`, `scripts/ui/marketingPages.js` i `scripts/ui/views/ordersView.js` sa oznaczane jako assertive, a formularze CRUD w `ordersView.js`, `fleetView.js` i `driversView.js` lacza pola z bledami przez stabilne ID i `aria-describedby` przy minimalnych helperach w `scripts/utils/dom.js`. Zweryfikowano `npm run test:smoke` oraz targeted `rg`; dokladny wpis P1 zostal usuniety z `daily-AUDIT.md`.

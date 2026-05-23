@@ -6,7 +6,7 @@
 
 FleetOps is a well-structured static frontend demo with clear documentation, modular CSS and JavaScript, an explicit build pipeline, static hosting files, manifest assets, a service worker source, and smoke tests. No P0 production blocker, serious security issue, or hard runtime breakage was detected from repository evidence.
 
-The remaining issues worth fixing are focused rather than architectural and mostly minor: development preview font loading, reduced-motion handling, sitemap cleanup, UI language consistency, and one stale helper script.
+The remaining issues worth fixing are focused rather than architectural and mostly minor: reduced-motion handling, sitemap cleanup, UI language consistency, and one stale helper script.
 
 ### 2. Strengths
 
@@ -28,19 +28,16 @@ none detected
 
 ### 5. P2 — Minor Refinements
 
-1. The development font path appears incorrect in source CSS.
-   Evidence: `styles/main.css` imports `./src/00-settings.css`; inside that imported file, `@font-face` uses `url("../assets/fonts/inter-latin.woff2")`. In source preview, that resolves relative to `styles/src/` as `styles/assets/fonts/...`, which is not present. The production bundle likely resolves correctly from `dist/styles/main.min.css`, so this is a development-preview issue rather than a production blocker.
-
-2. JavaScript smooth scrolling does not check reduced-motion preference.
+1. JavaScript smooth scrolling does not check reduced-motion preference.
    Evidence: CSS contains several `@media (prefers-reduced-motion: reduce)` rules, but `scripts/utils/dom.js` and `scripts/ui/views/dashboardView.js` call `scrollTo()` / `scrollIntoView()` with `behavior: "smooth"` unconditionally.
 
-3. `sitemap.xml` includes URLs that should be reconsidered.
+2. `sitemap.xml` includes URLs that should be reconsidered.
    Evidence: `404.html` declares `<meta name="robots" content="noindex, follow">`, but `sitemap.xml` includes `https://saas-pr02-fleetops.netlify.app/404.html`. The sitemap also includes both `/` and `/index.html` while `index.html` canonicalizes to `/`.
 
-4. UI language and spelling are inconsistent in visible strings.
+3. UI language and spelling are inconsistent in visible strings.
    Evidence: Polish UI strings are mixed with English labels such as `Add order` and `Load more`, and several visible/ARIA labels use ASCII-only Polish text such as `Zaloguj sie`, `Przelacz`, `Nawigacja glowna`, and `Dostepny`.
 
-5. A stale helper script is present.
+4. A stale helper script is present.
    Evidence: `minify-js.js` targets a `js/` directory and `js/dist`, but no `js/` directory was detected and `package.json` does not reference this script. Active production minification is handled by `build-dist.js`.
 
 ### 6. Extra Quality Improvements
@@ -60,7 +57,7 @@ none detected
 
 FleetOps jest dobrze uporządkowaną statyczną aplikacją demonstracyjną frontendu z czytelną dokumentacją, modularnym CSS i JavaScriptem, jawnym procesem builda, plikami pod hosting statyczny, manifestem, źródłem service workera i testami smoke. Na podstawie repozytorium nie wykryto P0: blokera produkcyjnego, poważnego problemu bezpieczeństwa ani twardego błędu runtime.
 
-Pozostale problemy sa konkretne, a nie architektoniczne, i maja glownie mniejsza wage: ladowanie fontu w podgladzie developerskim, reduced motion, porzadek w sitemapie, spojnosc jezyka UI oraz jeden przestarzaly helper.
+Pozostale problemy sa konkretne, a nie architektoniczne, i maja glownie mniejsza wage: reduced motion, porzadek w sitemapie, spojnosc jezyka UI oraz jeden przestarzaly helper.
 
 ### 2. Mocne Strony
 
@@ -82,19 +79,16 @@ none detected
 
 ### 5. P2 — Drobne Usprawnienia
 
-1. Ścieżka fontu w development CSS wygląda na niepoprawną.
-   Dowód: `styles/main.css` importuje `./src/00-settings.css`; w tym importowanym pliku `@font-face` używa `url("../assets/fonts/inter-latin.woff2")`. W source preview ścieżka rozwiązuje się względem `styles/src/` jako `styles/assets/fonts/...`, a taki katalog nie istnieje. Bundle produkcyjny prawdopodobnie rozwiązuje to poprawnie z `dist/styles/main.min.css`, więc jest to problem preview deweloperskiego, a nie blocker produkcyjny.
-
-2. Smooth scroll w JavaScripcie nie sprawdza preferencji reduced motion.
+1. Smooth scroll w JavaScripcie nie sprawdza preferencji reduced motion.
    Dowód: CSS zawiera kilka reguł `@media (prefers-reduced-motion: reduce)`, ale `scripts/utils/dom.js` i `scripts/ui/views/dashboardView.js` wywołują `scrollTo()` / `scrollIntoView()` z `behavior: "smooth"` bezwarunkowo.
 
-3. `sitemap.xml` zawiera URL-e do ponownego rozważenia.
+2. `sitemap.xml` zawiera URL-e do ponownego rozważenia.
    Dowód: `404.html` deklaruje `<meta name="robots" content="noindex, follow">`, ale `sitemap.xml` zawiera `https://saas-pr02-fleetops.netlify.app/404.html`. Sitemap zawiera też jednocześnie `/` i `/index.html`, mimo że `index.html` canonicalizuje do `/`.
 
-4. Widoczne teksty UI mają niespójny język i pisownię.
+3. Widoczne teksty UI mają niespójny język i pisownię.
    Dowód: polskie teksty UI mieszają się z angielskimi etykietami, np. `Add order` i `Load more`, a część widocznych/ARIA labeli używa polskiego bez znaków diakrytycznych, np. `Zaloguj sie`, `Przelacz`, `Nawigacja glowna`, `Dostepny`.
 
-5. W repozytorium jest przestarzały helper.
+4. W repozytorium jest przestarzały helper.
    Dowód: `minify-js.js` celuje w katalog `js/` i `js/dist`, ale katalog `js/` nie został wykryty, a `package.json` nie odwołuje się do tego skryptu. Aktywną minifikację produkcyjną obsługuje `build-dist.js`.
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
