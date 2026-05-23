@@ -1,54 +1,8 @@
-# FleetOps Daily Audit
-
-## English
-
-### 1. Short Overall Assessment
-
-FleetOps is a well-structured static frontend demo with clear documentation, modular CSS and JavaScript, an explicit build pipeline, static hosting files, manifest assets, a service worker source, and smoke tests. No P0 production blocker, serious security issue, or hard runtime breakage was detected from repository evidence.
-
-The remaining issue worth fixing is focused rather than architectural and minor: one stale helper script.
-
-### 2. Strengths
-
-- Documentation matches the core implementation model: `README.md` describes a frontend-only, hash-routed demo app with local browser state, and the source has `scripts/router.js`, `scripts/state/store.js`, `scripts/data/seed.js`, modular views, smoke tests, and build scripts.
-- The base document includes a skip link and a `<noscript>` fallback in `index.html`; app views render route-level `<h1>` headings through `scripts/ui/layoutApp.js`, with module sections using `<h2>` and nested cards using lower headings.
-- Metadata coverage is broad: `index.html` includes description, canonical URL, Open Graph, Twitter Card, JSON-LD, favicon links, manifest link, and font preload; `robots.txt` and `sitemap.xml` are present.
-- Image handling is deliberate: the landing hero uses AVIF/WebP/JPG sources with explicit dimensions, eager loading, high fetch priority, and async decoding in `scripts/ui/layoutLanding.js`; `optimize-images.js` generates runtime variants from `assets/img-src/`.
-- Build/deploy flow is explicit: `package.json` runs image optimization before `build-dist.js`; the build writes `dist/`, minifies CSS and active scripts, excludes `assets/img-src/`, and copies static hosting files.
-- Repository safety signals are clean in this pass: no `TODO`, `FIXME`, `console.log`, `debugger`, or obvious secret/API key patterns were detected outside ignored/generated folders.
-- User-entered CRUD data is generally escaped before HTML insertion, and `tests/smoke.spec.js` includes a regression test for HTML-like order text.
-
-### 3. P0 — Critical Risks
-
-none detected
-
-### 4. P1 — Important Issues Worth Fixing Next
-
-none detected
-
-### 5. P2 — Minor Refinements
-
-1. A stale helper script is present.
-   Evidence: `minify-js.js` targets a `js/` directory and `js/dist`, but no `js/` directory was detected and `package.json` does not reference this script. Active production minification is handled by `build-dist.js`.
-
-### 6. Extra Quality Improvements
-
-- Automate service-worker cache versioning or add fingerprinted CSS/JS filenames to reduce stale first-load risk after deployments. Current `sw.js` uses a manual `CACHE_NAME` and stale-while-revalidate for static assets.
-- Replace broad `aria-live="polite"` on the entire `#app` root with targeted live regions for route changes and transient messages.
-- Consolidate duplicated landing/marketing shell code, especially shared nav, resources menu, mobile drawer, and footer markup in `layoutLanding.js` and `marketingPages.js`.
-- Consider adding lightweight accessibility assertions to the Playwright smoke tests for route headings, dialogs, live regions, and form error association.
-
-### 7. Senior Rating
-
-8/10. The project has a solid static frontend architecture for a portfolio/demo SaaS app: clear routing, modular source organization, intentional build tooling, good metadata coverage, basic progressive enhancement, and smoke coverage. The rating is held back by smaller quality refinements listed above.
-
-## Polski
-
 ### 1. Krótka Ocena Ogólna
 
 FleetOps jest dobrze uporządkowaną statyczną aplikacją demonstracyjną frontendu z czytelną dokumentacją, modularnym CSS i JavaScriptem, jawnym procesem builda, plikami pod hosting statyczny, manifestem, źródłem service workera i testami smoke. Na podstawie repozytorium nie wykryto P0: blokera produkcyjnego, poważnego problemu bezpieczeństwa ani twardego błędu runtime.
 
-Pozostaly problem jest konkretny, a nie architektoniczny, i ma mniejsza wage: jeden przestarzaly helper.
+Nie wykryto pozostałych problemów P0-P2; zostały tylko opcjonalne usprawnienia jakościowe.
 
 ### 2. Mocne Strony
 
@@ -70,13 +24,14 @@ none detected
 
 ### 5. P2 — Drobne Usprawnienia
 
-1. W repozytorium jest przestarzały helper.
-   Dowód: `minify-js.js` celuje w katalog `js/` i `js/dist`, ale katalog `js/` nie został wykryty, a `package.json` nie odwołuje się do tego skryptu. Aktywną minifikację produkcyjną obsługuje `build-dist.js`.
+none detected
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
 
 - Zautomatyzować wersjonowanie cache service workera albo dodać fingerprintowane nazwy CSS/JS, żeby ograniczyć ryzyko starego pierwszego odczytu po deployu. Obecny `sw.js` używa ręcznego `CACHE_NAME` i stale-while-revalidate dla statycznych assetów.
+
 - Zastąpić szerokie `aria-live="polite"` na całym `#app` celowanymi live regions dla zmian route i komunikatów tymczasowych.
+
 - Skonsolidować zduplikowany shell landing/marketing, szczególnie wspólną nawigację, resources menu, mobile drawer i footer w `layoutLanding.js` oraz `marketingPages.js`.
 - Rozważyć lekkie asercje dostępności w testach Playwright dla nagłówków route, dialogów, live regions i powiązania błędów formularzy z polami.
 
