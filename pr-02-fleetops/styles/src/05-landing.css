@@ -894,9 +894,6 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 }
 
 .landing .page-hero h1 {
-  font-size: clamp(30px, 4vw, 42px);
-  letter-spacing: -0.02em;
-  margin: 0;
   max-width: 20ch;
 }
 
