@@ -56,8 +56,8 @@ test("landing loads and demo login reaches the app shell", async ({ page }) => {
 test("toast feedback exposes stable polite and assertive live regions", async ({ page }) => {
   await openFresh(page, "#/login");
   await page.getByLabel("E-mail").fill("smoke@fleetops.app");
-  await page.getByLabel("Haslo").fill("test");
-  await page.getByRole("button", { name: "Zaloguj sie" }).click();
+  await page.getByLabel("Hasło").fill("test");
+  await page.getByRole("button", { name: "Zaloguj się" }).click();
   await expect(page).toHaveURL(/#\/app$/);
 
   const statusRegion = page.locator("#fleetops-toast-status");
@@ -77,7 +77,7 @@ test("toast feedback exposes stable polite and assertive live regions", async ({
   await expect(firstOrder).toBeVisible();
   await firstOrder.locator('[data-order-menu] .dropdown-trigger').click();
   await firstOrder.locator('[data-order-action="edit"]').click({ force: true });
-  await expect(alertRegion).toContainText("Brak uprawnien:");
+  await expect(alertRegion).toContainText("Brak uprawnień:");
 });
 
 test("dropdowns use disclosure semantics and close with Escape", async ({ page }) => {
@@ -136,7 +136,7 @@ test("CRUD validation errors are programmatically associated with fields", async
     {
       route: "/app/orders",
       heading: "Zlecenia",
-      addButton: "Add order",
+      addButton: "Dodaj zlecenie",
       dialog: "Dodaj zlecenie",
       submitButton: "Dodaj zlecenie",
       prefix: "orders-form",
@@ -156,9 +156,9 @@ test("CRUD validation errors are programmatically associated with fields", async
     {
       route: "/app/drivers",
       heading: "Kierowcy",
-      addButton: "Dodaj kierowce",
-      dialog: "Dodaj kierowce",
-      submitButton: "Dodaj kierowce",
+      addButton: "Dodaj kierowcę",
+      dialog: "Dodaj kierowcę",
+      submitButton: "Dodaj kierowcę",
       prefix: "drivers-form",
       fields: ["name", "status", "phone", "lastTrip"],
       invalidFields: ["name", "phone"],
@@ -185,14 +185,15 @@ test("orders CRUD flow escapes user-entered HTML-like text", async ({ page }) =>
   const htmlLikeClient = "<img src=x onerror=alert(1)>";
   const editedClient = "Smoke Test Edited Client";
 
-  await page.getByRole("button", { name: "Add order" }).click();
-  await expect(page.getByRole("dialog", { name: "Dodaj zlecenie" })).toBeVisible();
+  await page.getByRole("button", { name: "Dodaj zlecenie" }).click();
+  const addOrderDialog = page.getByRole("dialog", { name: "Dodaj zlecenie" });
+  await expect(addOrderDialog).toBeVisible();
   await page.getByLabel("Klient").fill(htmlLikeClient);
   await page.getByLabel("Trasa").fill("Warszawa - Poznan");
   await page.getByLabel("Status").selectOption("in-progress");
   await page.getByLabel("ETA").fill("2026-12-31");
   await page.getByLabel("Priorytet").selectOption("high");
-  await page.getByRole("button", { name: "Dodaj zlecenie" }).click();
+  await addOrderDialog.getByRole("button", { name: "Dodaj zlecenie" }).click();
 
   const createdRow = page.locator("tr.order-row").filter({ hasText: htmlLikeClient }).first();
   await expect(createdRow).toBeVisible();
@@ -211,7 +212,7 @@ test("orders CRUD flow escapes user-entered HTML-like text", async ({ page }) =>
 
   await editedRow.locator('[data-order-menu] .dropdown-trigger').click();
   await editedRow.locator('[data-order-action="delete"]').click();
-  await expect(page.getByRole("dialog", { name: "Potwierdzenie usuniecia" })).toBeVisible();
-  await page.locator(".modal").getByRole("button", { name: "Usun" }).click();
+  await expect(page.getByRole("dialog", { name: "Potwierdzenie usunięcia" })).toBeVisible();
+  await page.locator(".modal").getByRole("button", { name: "Usuń" }).click();
   await expect(page.locator("tr.order-row").filter({ hasText: editedClient })).toHaveCount(0);
 });

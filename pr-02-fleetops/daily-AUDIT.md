@@ -6,7 +6,7 @@
 
 FleetOps is a well-structured static frontend demo with clear documentation, modular CSS and JavaScript, an explicit build pipeline, static hosting files, manifest assets, a service worker source, and smoke tests. No P0 production blocker, serious security issue, or hard runtime breakage was detected from repository evidence.
 
-The remaining issues worth fixing are focused rather than architectural and mostly minor: UI language consistency and one stale helper script.
+The remaining issue worth fixing is focused rather than architectural and minor: one stale helper script.
 
 ### 2. Strengths
 
@@ -28,10 +28,7 @@ none detected
 
 ### 5. P2 — Minor Refinements
 
-1. UI language and spelling are inconsistent in visible strings.
-   Evidence: Polish UI strings are mixed with English labels such as `Add order` and `Load more`, and several visible/ARIA labels use ASCII-only Polish text such as `Zaloguj sie`, `Przelacz`, `Nawigacja glowna`, and `Dostepny`.
-
-2. A stale helper script is present.
+1. A stale helper script is present.
    Evidence: `minify-js.js` targets a `js/` directory and `js/dist`, but no `js/` directory was detected and `package.json` does not reference this script. Active production minification is handled by `build-dist.js`.
 
 ### 6. Extra Quality Improvements
@@ -51,7 +48,7 @@ none detected
 
 FleetOps jest dobrze uporządkowaną statyczną aplikacją demonstracyjną frontendu z czytelną dokumentacją, modularnym CSS i JavaScriptem, jawnym procesem builda, plikami pod hosting statyczny, manifestem, źródłem service workera i testami smoke. Na podstawie repozytorium nie wykryto P0: blokera produkcyjnego, poważnego problemu bezpieczeństwa ani twardego błędu runtime.
 
-Pozostale problemy sa konkretne, a nie architektoniczne, i maja glownie mniejsza wage: spojnosc jezyka UI oraz jeden przestarzaly helper.
+Pozostaly problem jest konkretny, a nie architektoniczny, i ma mniejsza wage: jeden przestarzaly helper.
 
 ### 2. Mocne Strony
 
@@ -73,10 +70,7 @@ none detected
 
 ### 5. P2 — Drobne Usprawnienia
 
-1. Widoczne teksty UI mają niespójny język i pisownię.
-   Dowód: polskie teksty UI mieszają się z angielskimi etykietami, np. `Add order` i `Load more`, a część widocznych/ARIA labeli używa polskiego bez znaków diakrytycznych, np. `Zaloguj sie`, `Przelacz`, `Nawigacja glowna`, `Dostepny`.
-
-2. W repozytorium jest przestarzały helper.
+1. W repozytorium jest przestarzały helper.
    Dowód: `minify-js.js` celuje w katalog `js/` i `js/dist`, ale katalog `js/` nie został wykryty, a `package.json` nie odwołuje się do tego skryptu. Aktywną minifikację produkcyjną obsługuje `build-dist.js`.
 
 ### 6. Dodatkowe Ulepszenia Jakościowe

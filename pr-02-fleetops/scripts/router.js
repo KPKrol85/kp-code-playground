@@ -7,11 +7,11 @@ function renderInfoPage({ title, body }) {
           <img src="assets/logos/logo-black.svg" alt="FleetOps logo" width="24" height="24" />
           <span>FleetOps</span>
         </a>
-        <a class="button ghost" href="#/login">Zaloguj sie</a>
+        <a class="button ghost" href="#/login">Zaloguj się</a>
       </header>
       <main class="container section" id="main-content">
         <div class="hero-card">
-          <p class="tag">Info</p>
+          <p class="tag">Informacja</p>
           <h1>${title}</h1>
           <div class="grid" style="gap:12px; margin-top: var(--space-3);">${body}</div>
         </div>
@@ -33,20 +33,20 @@ function renderLogin() {
             <img class="logo__icon" src="${FleetStore.state.preferences.theme === "dark" ? "assets/logos/logo-white.svg" : "assets/logos/logo-black.svg"}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" style="width: var(--login-logo-size); height: var(--login-logo-size);" />
             <strong>FleetOps</strong>
           </div>
-          <a class="button ghost" href="#/">Wroc</a>
+          <a class="button ghost" href="#/">Wróć</a>
         </div>
         <h1>Zaloguj się</h1>
-        <p class="muted">Uwierzytelnianie demo - dane zapisane w przegladarce.</p>
+        <p class="muted">Uwierzytelnianie demo - dane zapisane w przeglądarce.</p>
         <form id="loginForm" style="display:grid; gap:12px; margin-top: 16px;">
           <label class="form-control">
             <span class="label">E-mail</span>
             <input required type="email" name="email" class="input" placeholder="you@fleetops.app" />
           </label>
           <label class="form-control">
-            <span class="label">Haslo</span>
+            <span class="label">Hasło</span>
             <input required minlength="4" type="password" name="password" class="input" placeholder="••••••" />
           </label>
-          <button class="button primary" type="submit">Zaloguj sie</button>
+          <button class="button primary" type="submit">Zaloguj się</button>
           <button class="button secondary" type="button" id="demoLogin">Kontynuuj jako demo</button>
         </form>
       </div>

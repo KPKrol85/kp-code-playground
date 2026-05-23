@@ -5,7 +5,7 @@ function dashboardView() {
   const rangeHeader = dom.h("div", "module-header");
   rangeHeader.innerHTML = `
     <div>
-      <h2>Przeglad KPI</h2>
+      <h2>Przegląd KPI</h2>
       <p class="muted small">Zakres czasu</p>
     </div>
     <div class="toolbar">
@@ -41,8 +41,8 @@ function dashboardView() {
     const activityInRange = (FleetStore.state.activity || []).filter((a) => isInRange(a.time, rangeDays));
 
     const kpiData = [
-      { label: "Laczna liczba zlecen", value: ordersInRange.length, action: "orders" },
-      { label: "Terminowosc", value: onTimePct, action: "ontime" },
+      { label: "Łączna liczba zleceń", value: ordersInRange.length, action: "orders" },
+      { label: "Terminowość", value: onTimePct, action: "ontime" },
       { label: "Aktywne pojazdy", value: activeVehicles.length, action: "fleet" },
       { label: "Zdarzenia", value: activityInRange.length, action: "alerts" },
     ];
@@ -114,7 +114,7 @@ function dashboardView() {
     const ts = Date.parse(value);
     if (Number.isNaN(ts)) return value;
     const diffMinutes = Math.floor((Date.now() - ts) / 60000);
-    if (diffMinutes < 1) return "przed chwila";
+    if (diffMinutes < 1) return "przed chwilą";
     if (diffMinutes < 60) return `${diffMinutes} min temu`;
     const diffHours = Math.floor(diffMinutes / 60);
     if (diffHours < 24) return `${diffHours} h temu`;

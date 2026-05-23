@@ -81,8 +81,8 @@ function renderLanding() {
 
           <span>FleetOps</span>
         </a>
-        <nav class="nav" aria-label="Nawigacja glowna">
-          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przelacz nawigacje">
+        <nav class="nav" aria-label="Nawigacja główna">
+          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
 ${menuToggleIcon}
           </button>
           <div class="nav-backdrop" data-nav-close></div>
@@ -98,14 +98,14 @@ ${menuToggleIcon}
                   Zasoby
                 </button>
                 <ul class="dropdown-menu" id="resourcesMenu" aria-label="Zasoby">
-                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatnosci</a></li>
+                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatności</a></li>
                   <li><a class="dropdown-item" href="#/terms">Regulamin</a></li>
                   <li><a class="dropdown-item" href="#/cookies">Polityka cookies</a></li>
                 </ul>
               </li>
-              <li><a class="button ghost" href="#/login">Zaloguj sie</a></li>
+              <li><a class="button ghost" href="#/login">Zaloguj się</a></li>
               <li>
-                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przelacz motyw">
+                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
                   <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
                     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
@@ -160,15 +160,15 @@ ${menuToggleIcon}
               <h2>Usprawnij dyspozycje, kondycje floty i SLA.</h2>
               <p class="landing-section-copy">Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
             </div>
-            <a class="button ghost" href="#/login">Otworz panel</a>
+              <a class="button ghost" href="#/login">Otwórz panel</a>
           </div>
           <div class="grid feature-grid">
             <div class="feature-card">
-              <h3>Rozwojces dyspozycji</h3>
+              <h3>Rozwój dyspozycji</h3>
               <p>Przydzielaj kursy, śledź postęp i reaguj na zakłócenia z jednego widoku.</p>
             </div>
             <div class="feature-card">
-              <h3>Flota health</h3>
+              <h3>Kondycja floty</h3>
               <p>Przeglądy, serwisy i awarie pod kontrolą dzięki checklistom i timeline.</p>
             </div>
             <div class="feature-card">
@@ -190,7 +190,7 @@ ${menuToggleIcon}
           <div class="grid how-grid">
             <div class="step">
               <h3>1. Podłącz dane</h3>
-              <p>Dodaj zlecenia i flote lub skorzystaj z danych demo.</p>
+              <p>Dodaj zlecenia i flotę lub skorzystaj z danych demo.</p>
             </div>
             <div class="step">
               <h3>2. Ustaw reguły</h3>
@@ -212,19 +212,19 @@ ${menuToggleIcon}
             <div class="price-card">
               <div class="badge">Start</div>
               <div class="price">199 PLN</div>
-              <p>miesiecznie, do 15 pojazdow</p>
+              <p>miesięcznie, do 15 pojazdów</p>
               <a class="button secondary" href="#/login">Zacznij za darmo</a>
             </div>
             <div class="price-card featured">
               <div class="badge">Rozwoj</div>
               <div class="price">499 PLN</div>
-              <p>miesiecznie, do 60 pojazdow</p>
-              <a class="button secondary" href="#/contact">Umow demo</a>
+              <p>miesięcznie, do 60 pojazdów</p>
+              <a class="button secondary" href="#/contact">Umów demo</a>
             </div>
             <div class="price-card">
               <div class="badge">Korporacyjny</div>
               <p>Indywidualnie</p>
-              <p>dla flot 60+ pojazdow</p>
+              <p>dla flot 60+ pojazdów</p>
               <a class="button secondary" href="#/contact">Porozmawiajmy</a>
             </div>
           </div>
@@ -241,11 +241,11 @@ ${menuToggleIcon}
               <p class="muted small">COO, CargoNord</p>
             </div>
             <div class="testimonial">
-              <p>"Kierowcy wiedzą, co robić. Wsparcie klienta widzi statusy na zywo."</p>
+              <p>"Kierowcy wiedzą, co robić. Wsparcie klienta widzi statusy na żywo."</p>
               <p class="muted small">Lider operacji, FreshLine</p>
             </div>
             <div class="testimonial">
-              <p>"Profesjonalne rozwiązania, i jedno zrodlo prawdy. Dziekujemy, zespół pokochał."</p>
+              <p>"Profesjonalne rozwiązania i jedno źródło prawdy. Dziękujemy, zespół pokochał."</p>
               <p class="muted small">Flota Manager, AeroParts</p>
             </div>
           </div>
@@ -259,7 +259,7 @@ ${menuToggleIcon}
           <div class="accordion" id="faq">
             <div class="accordion-item">
               <button class="accordion-header">Czy mogę używać trybu dark?<span aria-hidden="true">▾</span></button>
-              <div class="accordion-content"><p>Tak, FleetOps ma wbudowany przelacznik, który zapamiętuje wybór.</p></div>
+              <div class="accordion-content"><p>Tak, FleetOps ma wbudowany przełącznik, który zapamiętuje wybór.</p></div>
             </div>
             <div class="accordion-item">
               <button class="accordion-header">Czy dane to produkcja?<span aria-hidden="true">▾</span></button>
@@ -273,11 +273,11 @@ ${menuToggleIcon}
         </section>
       </main>
 
-      <footer class="footer" aria-label="FleetOps footer">
+      <footer class="footer" aria-label="Stopka FleetOps">
         <div class="container footer__inner">
           <div class="footer__grid">
             <div class="footer__brand">
-              <a class="footer__logo" href="#/" aria-label="FleetOps home" data-scroll-top="home">
+              <a class="footer__logo" href="#/" aria-label="FleetOps - strona główna" data-scroll-top="home">
                 <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
               </a>
               <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
@@ -340,9 +340,9 @@ ${menuToggleIcon}
               </address>
 
 
-              <h4 class="footer__title">Social Media</h4>
+              <h4 class="footer__title">Media społecznościowe</h4>
 
-              <div class="footer__social" aria-label="FleetOps social links">
+              <div class="footer__social" aria-label="Linki społecznościowe FleetOps">
                 <a class="footer__social-link" href="https://www.linkedin.com" aria-label="Profil FleetOps na LinkedIn">
                   <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M6 9H3v12h3V9Zm-1.5-6a1.75 1.75 0 1 0 0 3.5A1.75 1.75 0 0 0 4.5 3ZM21 14.5c0-3.1-1.65-5.1-4.6-5.1-1.4 0-2.4.77-2.8 1.5V9H10v12h3v-6.2c0-1.65.6-2.8 2.1-2.8 1.15 0 1.8.77 1.8 2.8V21h3v-6.5Z" fill="currentColor"></path>

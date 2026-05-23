@@ -6,6 +6,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 ## Resolved
 
+- 2026-05-23 - [P2] Spojna polska kopia UI: widoczne etykiety, ARIA labels, komunikaty toast, modale i testy smoke uzywaja naturalnych polskich tekstow z diakrytykami tam, gdzie sa user-facing. Zachowano techniczne identyfikatory i akceptowane terminy SaaS/KPI/SLA/CSV/API/RBAC; usunieto dokladny wpis P2 z `daily-AUDIT.md` i zweryfikowano targeted `rg`.
+
 - 2026-05-23 - [P2] Sitemap zawiera tylko kanoniczne indexowalne URL-e: `sitemap.xml` zostawia homepage `https://saas-pr02-fleetops.netlify.app/`, usuwa duplikat `/index.html` oraz strone `404.html` oznaczona `noindex, follow`. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg`.
 
 - 2026-05-23 - [P2] JavaScript respektuje reduced motion przy scrollu: `scripts/utils/dom.js` udostepnia `FleetUI.getMotionSafeScrollBehavior()`, a logo scroll oraz dashboard alerts uzywaja `auto` przy `prefers-reduced-motion: reduce` i `smooth` w pozostalych przypadkach. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg` i check przegladarkowy dla obu preferencji ruchu.

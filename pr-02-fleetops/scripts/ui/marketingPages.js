@@ -236,8 +236,8 @@ function renderMarketingShell({ title, description, eyebrow, lead, body }) {
 
           <span>FleetOps</span>
         </a>
-        <nav class="nav" aria-label="Nawigacja glowna">
-          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przelacz nawigacje">
+        <nav class="nav" aria-label="Nawigacja główna">
+          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
 ${menuToggleIcon}
           </button>
           <div class="nav-backdrop" data-nav-close></div>
@@ -253,14 +253,14 @@ ${menuToggleIcon}
                   Zasoby
                 </button>
                 <ul class="dropdown-menu" id="resourcesMenu" aria-label="Zasoby">
-                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatnosci</a></li>
+                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatności</a></li>
                   <li><a class="dropdown-item" href="#/terms">Regulamin</a></li>
                   <li><a class="dropdown-item" href="#/cookies">Polityka cookies</a></li>
                 </ul>
               </li>
-              <li><a class="button ghost" href="#/login">Zaloguj sie</a></li>
+              <li><a class="button ghost" href="#/login">Zaloguj się</a></li>
               <li>
-                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przelacz motyw">
+                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
                   <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
                     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
@@ -286,11 +286,11 @@ ${menuToggleIcon}
         ${body}
       </main>
 
-      <footer class="footer" aria-label="FleetOps footer">
+      <footer class="footer" aria-label="Stopka FleetOps">
         <div class="container footer__inner">
           <div class="footer__grid">
             <div class="footer__brand">
-              <a class="footer__logo" href="#/" aria-label="FleetOps home" data-scroll-top="home">
+              <a class="footer__logo" href="#/" aria-label="FleetOps - strona główna" data-scroll-top="home">
                 <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
               </a>
               <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
@@ -353,9 +353,9 @@ ${menuToggleIcon}
               </address>
 
 
-              <h4 class="footer__title">Social Media</h4>
+              <h4 class="footer__title">Media społecznościowe</h4>
 
-              <div class="footer__social" aria-label="FleetOps social links">
+              <div class="footer__social" aria-label="Linki społecznościowe FleetOps">
                 <a class="footer__social-link" href="https://www.linkedin.com" aria-label="Profil FleetOps na LinkedIn">
                   <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M6 9H3v12h3V9Zm-1.5-6a1.75 1.75 0 1 0 0 3.5A1.75 1.75 0 0 0 4.5 3ZM21 14.5c0-3.1-1.65-5.1-4.6-5.1-1.4 0-2.4.77-2.8 1.5V9H10v12h3v-6.2c0-1.65.6-2.8 2.1-2.8 1.15 0 1.8.77 1.8 2.8V21h3v-6.5Z" fill="currentColor"></path>
@@ -393,16 +393,16 @@ function renderProductPage() {
   renderMarketingShell({
     title: "Produkt FleetOps",
     eyebrow: "Produkt",
-    lead: "Jeden system do zarzadzania zleceniami, flota i kierowcami. Klarowny obraz operacji, mniej recznej pracy, szybsze decyzje.",
-    description: "FleetOps to platforma do zarzadzania transportem: zlecenia, flota, kierowcy, raporty i SLA w jednym panelu.",
+    lead: "Jeden system do zarządzania zleceniami, flotą i kierowcami. Klarowny obraz operacji, mniej ręcznej pracy, szybsze decyzje.",
+    description: "FleetOps to platforma do zarządzania transportem: zlecenia, flota, kierowcy, raporty i SLA w jednym panelu.",
     body: `
       <section class="section-tight">
         <div class="marketing-hero">
           <div class="marketing-hero__content">
             <h2>Operacje w czasie rzeczywistym</h2>
-            <p>Widoki Zlecen, Floty i Kierowcow synchronizuja statusy, ETA i alerty. Zespol operacyjny ma jedno zrodlo prawdy.</p>
+            <p>Widoki zleceń, floty i kierowców synchronizują statusy, ETA i alerty. Zespół operacyjny ma jedno źródło prawdy.</p>
             <div class="hero-cta">
-              <a class="button primary" href="#/login">Umow demo</a>
+              <a class="button primary" href="#/login">Umów demo</a>
               <a class="button secondary" href="#/app">Zobacz panel</a>
             </div>
           </div>
@@ -414,7 +414,7 @@ function renderProductPage() {
                 <h3>96.8%</h3>
               </div>
               <div class="stat-card">
-                <p class="muted small">Dostepnosc SLA</p>
+                <p class="muted small">Dostępność SLA</p>
                 <h3>99.6%</h3>
               </div>
               <div class="stat-card">
@@ -432,15 +432,15 @@ function renderProductPage() {
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>1. Zasil dane</h3>
-            <p>Import zlecen, pojazdow i kierowcow lub start na danych demo.</p>
+            <p>Import zleceń, pojazdów i kierowców lub start na danych demo.</p>
           </div>
           <div class="marketing-card">
             <h3>2. Ustaw SLA</h3>
-            <p>Definiuj priorytety, progi opoznien i alerty operacyjne.</p>
+            <p>Definiuj priorytety, progi opóźnień i alerty operacyjne.</p>
           </div>
           <div class="marketing-card">
             <h3>3. Monitoruj</h3>
-            <p>Statusy na zywo, ETA i os czasu serwisow w jednym widoku.</p>
+            <p>Statusy na żywo, ETA i oś czasu serwisów w jednym widoku.</p>
           </div>
           <div class="marketing-card">
             <h3>4. Ulepszaj</h3>
@@ -455,11 +455,11 @@ function renderProductPage() {
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>Zlecenia</h3>
-            <p>Statusy, priorytety, ETA, alerty opoznien i szybkie wyszukiwanie tras.</p>
+            <p>Statusy, priorytety, ETA, alerty opóźnień i szybkie wyszukiwanie tras.</p>
           </div>
           <div class="marketing-card">
             <h3>Flota</h3>
-            <p>Przeglady, zdarzenia, koszty i harmonogramy serwisowe floty.</p>
+            <p>Przeglądy, zdarzenia, koszty i harmonogramy serwisowe floty.</p>
           </div>
           <div class="marketing-card">
             <h3>Kierowcy</h3>
@@ -478,7 +478,7 @@ function renderProductPage() {
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>GPS i telematyka</h3>
-            <p>Pozycje na zywo, predkosci i przestoje w jednej osi czasu.</p>
+            <p>Pozycje na żywo, prędkości i przestoje w jednej osi czasu.</p>
           </div>
           <div class="marketing-card">
             <h3>ERP / TMS</h3>
@@ -497,14 +497,14 @@ function renderProductPage() {
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>RBAC</h3>
-            <p>Role: Dyspozytor, Menedzer floty, Lider operacji, Podglad.</p>
+            <p>Role: Dyspozytor, Menedżer floty, Lider operacji, Podgląd.</p>
           </div>
           <div class="marketing-card">
             <h3>Audyt zmian</h3>
             <p>Historia statusow, notatki i eksport logow do compliance.</p>
           </div>
           <div class="marketing-card">
-            <h3>Kontrola dostepu</h3>
+            <h3>Kontrola dostępu</h3>
             <p>Uprawnienia per modul i widok, idealne dla podwykonawcow.</p>
           </div>
         </div>
@@ -513,10 +513,10 @@ function renderProductPage() {
       <section class="section-tight cta-panel">
         <div>
           <h2>Gotowy na spokojniesza operacje?</h2>
-          <p>Umow demo lub uruchom wersje demonstracyjna w przegladarce.</p>
+          <p>Umów demo lub uruchom wersję demonstracyjną w przeglądarce.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/login">Umow demo</a>
+          <a class="button primary" href="#/login">Umów demo</a>
           <a class="button secondary" href="#/app">Wejdz do aplikacji</a>
         </div>
       </section>
@@ -551,7 +551,7 @@ function renderFeaturesPage() {
             <ul class="list-check">
               <li>Przypisania kursow i priorytetow</li>
               <li>Widok statusow i szybkie filtry</li>
-              <li>Alerty opoznien i SLA</li>
+              <li>Alerty opóźnień i SLA</li>
               <li>Historia zmian i notatki operacyjne</li>
             </ul>
           </div>
@@ -560,7 +560,7 @@ function renderFeaturesPage() {
             <ul class="list-check">
               <li>ETA w czasie rzeczywistym</li>
               <li>Podglad trasy i punktow kontrolnych</li>
-              <li>Wczesne ostrzezenia o ryzyku opoznienia</li>
+              <li>Wczesne ostrzeżenia o ryzyku opóźnienia</li>
               <li>Lista incydentow i eskalacji</li>
             </ul>
           </div>
@@ -569,7 +569,7 @@ function renderFeaturesPage() {
             <ul class="list-check">
               <li>Dyspozycyjnosc i ostatnie kursy</li>
               <li>Kontakt do kierowcy z panelu</li>
-              <li>Wydajnosc kierowcow i rotacja</li>
+              <li>Wydajność kierowców i rotacja</li>
               <li>Notatki i zgodnosc z instrukcjami</li>
             </ul>
           </div>
@@ -578,8 +578,8 @@ function renderFeaturesPage() {
             <ul class="list-check">
               <li>Raporty KPI i SLA</li>
               <li>Eksport CSV do klienta</li>
-              <li>Wydajnosc floty i wykorzystanie pojazdow</li>
-              <li>Trendy opoznien i kosztow</li>
+              <li>Wydajność floty i wykorzystanie pojazdów</li>
+              <li>Trendy opóźnień i kosztów</li>
             </ul>
           </div>
           <div class="feature-group">
@@ -588,7 +588,7 @@ function renderFeaturesPage() {
               <li>Audit log zmian statusow</li>
               <li>Role i uprawnienia RBAC</li>
               <li>Polityki SLA i potwierdzenia</li>
-              <li>Historia serwisow i przegladow</li>
+              <li>Historia serwisów i przeglądów</li>
             </ul>
           </div>
         </div>
@@ -604,7 +604,7 @@ function renderFeaturesPage() {
           </div>
           <div class="marketing-card">
             <h3>Operatorzy logistyczni</h3>
-            <p>Wiele flot, wielu kierowcow, jeden standard SLA i raportowania.</p>
+            <p>Wiele flot, wielu kierowców, jeden standard SLA i raportowania.</p>
           </div>
           <div class="marketing-card">
             <h3>Handel internetowy i detaliczny</h3>
@@ -615,11 +615,11 @@ function renderFeaturesPage() {
 
       <section class="section-tight cta-panel">
         <div>
-          <h2>Chcesz zobaczyc funkcje na zywo?</h2>
-          <p>Wersja demo jest dostepna od razu, bez instalacji.</p>
+          <h2>Chcesz zobaczyć funkcje na żywo?</h2>
+          <p>Wersja demo jest dostępna od razu, bez instalacji.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/app">Otworz demo</a>
+          <a class="button primary" href="#/app">Otwórz demo</a>
           <a class="button secondary" href="#/contact">Porozmawiaj z nami</a>
         </div>
       </section>
@@ -639,7 +639,7 @@ function renderPricingPage() {
           <div class="price-card">
             <div class="badge">Start</div>
             <div class="price">199 PLN</div>
-            <p class="muted small">miesiecznie, do 15 pojazdow</p>
+            <p class="muted small">miesięcznie, do 15 pojazdów</p>
             <ul class="list-check">
               <li>Zlecenia + Flota</li>
               <li>Podstawowe alerty</li>
@@ -650,18 +650,18 @@ function renderPricingPage() {
           <div class="price-card featured">
             <div class="badge">Rozwoj</div>
             <div class="price">499 PLN</div>
-            <p class="muted small">miesiecznie, do 60 pojazdow</p>
+            <p class="muted small">miesięcznie, do 60 pojazdów</p>
             <ul class="list-check">
               <li>Pelny monitoring ETA</li>
               <li>SLA alerts + raporty</li>
               <li>Kierowcy + Role</li>
             </ul>
-            <a class="button primary" href="#/contact">Umow demo</a>
+            <a class="button primary" href="#/contact">Umów demo</a>
           </div>
           <div class="price-card">
             <div class="badge">Korporacyjny</div>
             <div class="price">Indywidualnie</div>
-            <p class="muted small">dla flot 60+ pojazdow</p>
+            <p class="muted small">dla flot 60+ pojazdów</p>
             <ul class="list-check">
               <li>Integracje ERP / TMS</li>
               <li>SLA 99.9% + SSO</li>
@@ -701,10 +701,10 @@ function renderPricingPage() {
       <section class="section-tight cta-panel">
         <div>
           <h2>Potrzebujesz wyceny dla swojej floty?</h2>
-          <p>Skontaktuj sie, przygotujemy oferte dopasowana do skali operacji.</p>
+          <p>Skontaktuj się, przygotujemy ofertę dopasowaną do skali operacji.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Skontaktuj sie</a>
+          <a class="button primary" href="#/contact">Skontaktuj się</a>
           <a class="button secondary" href="#/login">Testuj demo</a>
         </div>
       </section>
@@ -714,19 +714,19 @@ function renderPricingPage() {
 
 function renderSecurityPage() {
   renderMarketingShell({
-    title: "Bezpieczenstwo",
-    eyebrow: "Bezpieczenstwo",
-    lead: "Informacje o standardach bezpieczenstwa FleetOps udostepnimy wkrotce.",
-    description: "Bezpieczenstwo FleetOps - strona w przygotowaniu.",
+    title: "Bezpieczeństwo",
+    eyebrow: "Bezpieczeństwo",
+    lead: "Informacje o standardach bezpieczeństwa FleetOps udostępnimy wkrótce.",
+    description: "Bezpieczeństwo FleetOps - strona w przygotowaniu.",
     body: `
       <section class="section-tight">
         <div class="marketing-card">
-          <p class="tag">Coming soon</p>
-          <h2>Bezpieczenstwo w przygotowaniu</h2>
-          <p>Ta podstrona jest w trakcie przygotowan. Udostepnimy szczegoly o praktykach i certyfikacjach bezpieczenstwa.</p>
-          <p class="muted small">Under construction - wroc wkrotce.</p>
+          <p class="tag">W przygotowaniu</p>
+          <h2>Bezpieczeństwo w przygotowaniu</h2>
+          <p>Ta podstrona jest w trakcie przygotowań. Udostępnimy szczegóły o praktykach i certyfikacjach bezpieczeństwa.</p>
+          <p class="muted small">W przygotowaniu - wróć wkrótce.</p>
           <div class="hero-cta" style="margin-top: var(--space-2);">
-            <a class="button primary" href="#/contact">Skontaktuj sie</a>
+            <a class="button primary" href="#/contact">Skontaktuj się</a>
             <a class="button secondary" href="#/app">Zobacz demo</a>
           </div>
         </div>
@@ -739,17 +739,17 @@ function renderCareersPage() {
   renderMarketingShell({
     title: "Kariera",
     eyebrow: "Kariera",
-    lead: "Otwarte role i informacje o zespolach FleetOps pojawia sie wkrotce.",
+    lead: "Otwarte role i informacje o zespołach FleetOps pojawią się wkrótce.",
     description: "Kariera w FleetOps - strona w przygotowaniu.",
     body: `
       <section class="section-tight">
         <div class="marketing-card">
-          <p class="tag">Coming soon</p>
+          <p class="tag">W przygotowaniu</p>
           <h2>Kariera w przygotowaniu</h2>
-          <p>Budujemy sekcje z ofertami pracy i opisem zespolu. Jesli chcesz porozmawiac wczesniej, odezwij sie.</p>
-          <p class="muted small">Under construction - sprawdz ponownie niebawem.</p>
+          <p>Budujemy sekcję z ofertami pracy i opisem zespołu. Jeśli chcesz porozmawiać wcześniej, odezwij się.</p>
+          <p class="muted small">W przygotowaniu - sprawdź ponownie niebawem.</p>
           <div class="hero-cta" style="margin-top: var(--space-2);">
-            <a class="button primary" href="#/contact">Skontaktuj sie</a>
+            <a class="button primary" href="#/contact">Skontaktuj się</a>
             <a class="button secondary" href="#/app">Zobacz demo</a>
           </div>
         </div>
@@ -762,24 +762,24 @@ function renderAboutPage() {
   renderMarketingShell({
     title: "O nas",
     eyebrow: "O FleetOps",
-    lead: "Budujemy produkt dla zespolow, ktore musza dowozic na czas. Transparentnosc, szybkosc reakcji i spokoj operacji.",
-    description: "Poznaj zespol FleetOps i nasza misje budowania operacyjnej przejrzystosci w transporcie.",
+    lead: "Budujemy produkt dla zespołów, które muszą dowozić na czas. Transparentność, szybkość reakcji i spokój operacji.",
+    description: "Poznaj zespół FleetOps i naszą misję budowania operacyjnej przejrzystości w transporcie.",
     body: `
       <section class="section-tight">
         <div class="marketing-hero">
           <div class="marketing-hero__content">
             <h2>Nasza misja</h2>
-            <p>Uproscic zarzadzanie transportem tak, by zespoly operacyjne mogly skupic sie na decyzjach, a nie na szukaniu danych.</p>
+            <p>Uprościć zarządzanie transportem tak, by zespoły operacyjne mogły skupić się na decyzjach, a nie na szukaniu danych.</p>
             <ul class="list-check">
-              <li>Jedno zrodlo prawdy dla statusow</li>
+              <li>Jedno źródło prawdy dla statusów</li>
               <li>Operacje oparte o SLA i fakty</li>
-              <li>Przejrzysta wspolpraca z klientami</li>
+              <li>Przejrzysta współpraca z klientami</li>
             </ul>
           </div>
           <div class="marketing-hero__panel">
             <p class="tag">Historia</p>
-            <p class="muted">FleetOps powstal z potrzeb operatorow logistycznych, ktorzy chcieli jednego, uporzadkowanego panelu do pracy dziennej.</p>
-            <p class="muted">Laczymy produktowe podejscie z praktyka branzy transportowej.</p>
+            <p class="muted">FleetOps powstał z potrzeb operatorów logistycznych, którzy chcieli jednego, uporządkowanego panelu do pracy dziennej.</p>
+            <p class="muted">Łączymy produktowe podejście z praktyką branży transportowej.</p>
           </div>
         </div>
       </section>
@@ -789,30 +789,30 @@ function renderAboutPage() {
         <h2>Operacje bez chaosu</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
-            <h3>Transparentnosc</h3>
-            <p>Jasne statusy, ETA i alerty dla calego zespolu.</p>
+            <h3>Transparentność</h3>
+            <p>Jasne statusy, ETA i alerty dla całego zespołu.</p>
           </div>
           <div class="marketing-card">
             <h3>Szybkie decyzje</h3>
-            <p>Fakty zamiast telefonow i arkuszy, bez opoznien w reakcjach.</p>
+            <p>Fakty zamiast telefonów i arkuszy, bez opóźnień w reakcjach.</p>
           </div>
           <div class="marketing-card">
             <h3>Skalowalnosc</h3>
-            <p>Ten sam proces dla 10 i 500 pojazdow.</p>
+            <p>Ten sam proces dla 10 i 500 pojazdów.</p>
           </div>
         </div>
       </section>
 
       <section class="section-tight">
-        <p class="tag">Podejscie</p>
+        <p class="tag">Podejście</p>
         <h2>Praca w iteracjach</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>Diagnoza</h3>
-            <p>Mapujemy procesy dispatch i SLA, by dobrze ustawic priorytety.</p>
+            <p>Mapujemy procesy dispatch i SLA, by dobrze ustawić priorytety.</p>
           </div>
           <div class="marketing-card">
-            <h3>Wdrozenie</h3>
+            <h3>Wdrożenie</h3>
             <p>Konfigurujemy role, alerty i raporty zgodnie z operacjami.</p>
           </div>
           <div class="marketing-card">
@@ -824,11 +824,11 @@ function renderAboutPage() {
 
       <section class="section-tight cta-panel">
         <div>
-          <h2>Chcesz poznac nasz zespol?</h2>
-          <p>Porozmawiajmy o twojej flocie i pokazmy, jak pracuje FleetOps.</p>
+          <h2>Chcesz poznać nasz zespół?</h2>
+          <p>Porozmawiajmy o twojej flocie i pokażmy, jak pracuje FleetOps.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Skontaktuj sie</a>
+          <a class="button primary" href="#/contact">Skontaktuj się</a>
           <a class="button secondary" href="#/pricing">Zobacz cennik</a>
         </div>
       </section>
@@ -841,40 +841,40 @@ function renderContactPage() {
     title: "Kontakt",
     eyebrow: "Kontakt",
     lead: "Opowiedz nam o swojej flocie. Odpowiadamy szybko i konkretnie.",
-    description: "Skontaktuj sie z zespolem FleetOps. Demo, integracje i pytania o cennik.",
+    description: "Skontaktuj się z zespołem FleetOps. Demo, integracje i pytania o cennik.",
     body: `
       <section class="section-tight">
         <div class="contact-grid">
           <div class="form-card">
             <h2>Formularz kontaktowy</h2>
-            <p class="muted">Zostaw dane, a odezwiemy sie w ciagu 1 dnia roboczego.</p>
+            <p class="muted">Zostaw dane, a odezwiemy się w ciągu 1 dnia roboczego.</p>
             <form id="contactForm" style="display:grid; gap: 12px; margin-top: var(--space-3);">
               <label class="form-control">
-                <span class="label">Imie i nazwisko</span>
+                <span class="label">Imię i nazwisko</span>
                 <input class="input" name="name" type="text" required minlength="3" placeholder="Jan Kowalski" />
               </label>
               <label class="form-control">
-                <span class="label">E-mail sluzbowy</span>
+                <span class="label">E-mail służbowy</span>
                 <input class="input" name="email" type="email" required placeholder="twoja@firma.pl" />
               </label>
               <label class="form-control">
-                <span class="label">Wielkosc floty</span>
+                <span class="label">Wielkość floty</span>
                 <select class="input" name="fleet" required>
                   <option value="">Wybierz</option>
-                  <option value="1-15">1-15 pojazdow</option>
-                  <option value="16-60">16-60 pojazdow</option>
-                  <option value="60+">60+ pojazdow</option>
+                  <option value="1-15">1-15 pojazdów</option>
+                  <option value="16-60">16-60 pojazdów</option>
+                  <option value="60+">60+ pojazdów</option>
                 </select>
               </label>
               <label class="form-control">
-                <span class="label">Wiadomosc</span>
+                <span class="label">Wiadomość</span>
                 <textarea class="input" name="message" rows="4" required minlength="10" placeholder="Opisz wyzwania operacyjne lub cele..."></textarea>
               </label>
               <label class="form-control">
                 <span class="label">Zgoda</span>
-                <span class="muted small">Wysylajac formularz zgadzasz sie na kontakt w sprawie FleetOps.</span>
+                <span class="muted small">Wysyłając formularz, zgadzasz się na kontakt w sprawie FleetOps.</span>
               </label>
-              <button class="button primary" type="submit">Wyslij zapytanie</button>
+              <button class="button primary" type="submit">Wyślij zapytanie</button>
             </form>
           </div>
           <div class="marketing-card">
@@ -906,7 +906,7 @@ function renderContactPage() {
 
             <div class="card-soft">
               <p class="muted small">FleetOps to projekt demonstracyjny. Kontakt dotyczy twórcy projektu.</p>
-              <p class="muted small">Projekt i interfejs: Kamil Krol (kp_code_).</p>
+              <p class="muted small">Projekt i interfejs: Kamil Król (kp_code_).</p>
               <a class="button secondary" href="#/pricing" style="margin-top: var(--space-2);">Zobacz cennik</a>
             </div>
           </div>
@@ -915,19 +915,19 @@ function renderContactPage() {
 
       <section class="section-tight">
         <p class="tag">Pytania</p>
-        <h2>Najczestsze pytania</h2>
+        <h2>Najczęstsze pytania</h2>
         <div class="accordion" id="faq" style="margin-top: var(--space-3);">
           <div class="accordion-item">
             <button class="accordion-header">Jak szybko odpowiadacie?<span aria-hidden="true">?</span></button>
-            <div class="accordion-content"><p>Najczesciej w ciagu 24h w dni robocze.</p></div>
+            <div class="accordion-content"><p>Najczęściej w ciągu 24h w dni robocze.</p></div>
           </div>
           <div class="accordion-item">
             <button class="accordion-header">Czy jest demo?<span aria-hidden="true">?</span></button>
-            <div class="accordion-content"><p>Tak, wersja demo jest dostepna online bez instalacji.</p></div>
+            <div class="accordion-content"><p>Tak, wersja demo jest dostępna online bez instalacji.</p></div>
           </div>
           <div class="accordion-item">
-            <button class="accordion-header">Czy sa integracje?<span aria-hidden="true">?</span></button>
-            <div class="accordion-content"><p>Integrujemy sie z GPS, telematyka oraz ERP/TMS. Szczegoly uzgadniamy w czasie wdrozenia.</p></div>
+            <button class="accordion-header">Czy są integracje?<span aria-hidden="true">?</span></button>
+            <div class="accordion-content"><p>Integrujemy się z GPS, telematyką oraz ERP/TMS. Szczegóły uzgadniamy w czasie wdrożenia.</p></div>
           </div>
         </div>
       </section>
@@ -940,20 +940,20 @@ function renderContactPage() {
     event.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
-      Toast.show("Uzupelnij wymagane pola.", "warning", { assertive: true });
+      Toast.show("Uzupełnij wymagane pola.", "warning", { assertive: true });
       return;
     }
     form.reset();
-    Toast.show("Dziekujemy! Wkrotce sie odezwiemy.", "success");
+    Toast.show("Dziękujemy! Wkrótce się odezwiemy.", "success");
   });
 }
 
 function renderPrivacyPage() {
   renderMarketingShell({
-    title: "Polityka prywatnosci",
-    eyebrow: "Polityka prywatnosci",
-    lead: "Szanujemy prywatnosc uzytkownikow wersji demonstracyjnej FleetOps. Ponizej opisujemy zakres danych i sposob ich przetwarzania w modelu demo.",
-    description: "Polityka prywatnosci FleetOps (wersja demo). Dane lokalne, brak backendu i jasne zasady przetwarzania informacji.",
+    title: "Polityka prywatności",
+    eyebrow: "Polityka prywatności",
+    lead: "Szanujemy prywatność użytkowników wersji demonstracyjnej FleetOps. Poniżej opisujemy zakres danych i sposób ich przetwarzania w modelu demo.",
+    description: "Polityka prywatności FleetOps (wersja demo). Dane lokalne, brak backendu i jasne zasady przetwarzania informacji.",
     body: `
       <section class="section-tight">
         <p class="tag">Informacja o wersji demo</p>
@@ -961,15 +961,15 @@ function renderPrivacyPage() {
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>Brak kont produkcyjnych</h3>
-            <p>FleetOps to projekt portfolio / demo. Nie tworzymy kont w chmurze ani nie udostepniamy panelu klientom komercyjnym.</p>
+            <p>FleetOps to projekt portfolio / demo. Nie tworzymy kont w chmurze ani nie udostępniamy panelu klientom komercyjnym.</p>
           </div>
           <div class="marketing-card">
-            <h3>Dane w przegladarce</h3>
-            <p>Wszelkie dane sa zapisywane lokalnie w przegladarce uzytkownika (localStorage) i nie sa wysylane na serwer.</p>
+            <h3>Dane w przeglądarce</h3>
+            <p>Wszelkie dane są zapisywane lokalnie w przeglądarce użytkownika (localStorage) i nie są wysyłane na serwer.</p>
           </div>
           <div class="marketing-card">
             <h3>Brak integracji z osobami trzecimi</h3>
-            <p>Demo nie przekazuje danych do zewnetrznych systemow ani narzedzi analitycznych poza standardowymi funkcjami przegladarki.</p>
+            <p>Demo nie przekazuje danych do zewnętrznych systemów ani narzędzi analitycznych poza standardowymi funkcjami przeglądarki.</p>
           </div>
         </div>
       </section>
@@ -1011,23 +1011,23 @@ function renderPrivacyPage() {
 
       <section class="section-tight">
         <p class="tag">Zakres danych</p>
-        <h2>Jakie dane moga wystapic w demo</h2>
+        <h2>Jakie dane mogą wystąpić w demo</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>Formularz kontaktowy</h3>
             <ul class="list-check">
-              <li>Imie i nazwisko</li>
-              <li>E-mail sluzbowy</li>
-              <li>Wiadomosc i wielkosc floty</li>
+              <li>Imię i nazwisko</li>
+              <li>E-mail służbowy</li>
+              <li>Wiadomość i wielkość floty</li>
             </ul>
-            <p class="muted small">Formularz dziala lokalnie i nie wysyla danych na serwer. Dane wpisane w formularzu pozostaja wyłącznie w przegladarce uzytkownika.</p>
+            <p class="muted small">Formularz działa lokalnie i nie wysyła danych na serwer. Dane wpisane w formularzu pozostają wyłącznie w przeglądarce użytkownika.</p>
           </div>
           <div class="marketing-card">
             <h3>Dane demo w aplikacji</h3>
             <ul class="list-check">
               <li>Mockowe zlecenia, pojazdy i kierowcy</li>
               <li>Ustawienia SLA i statusy operacyjne</li>
-              <li>Preferencje uzytkownika (np. motyw)</li>
+              <li>Preferencje użytkownika (np. motyw)</li>
             </ul>
           </div>
           <div class="marketing-card">
@@ -1045,45 +1045,45 @@ function renderPrivacyPage() {
         <p class="tag">Cookies i technologie podobne</p>
         <h2>Pliki cookies oraz localStorage</h2>
         <div class="marketing-card">
-          <p>W wersji demo nie korzystamy z cookies marketingowych ani narzedzi analitycznych. Serwis moze wykorzystywac localStorage w celu zapisania preferencji (np. motyw) oraz danych demo generowanych lokalnie w przegladarce.</p>
+          <p>W wersji demo nie korzystamy z cookies marketingowych ani narzędzi analitycznych. Serwis może wykorzystywać localStorage w celu zapisania preferencji (np. motyw) oraz danych demo generowanych lokalnie w przeglądarce.</p>
         </div>
       </section>
 
       <section class="section-tight">
-        <p class="tag">Prawa uzytkownika</p>
+        <p class="tag">Prawa użytkownika</p>
         <h2>Kontrola nad danymi w wersji demo</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
-            <h3>Dostep i poprawa</h3>
-            <p>Masz prawo uzyskac informacje o danych zapisanych lokalnie. W wersji demo wystarczy przejrzec dane w przegladarce.</p>
+            <h3>Dostęp i poprawa</h3>
+            <p>Masz prawo uzyskać informacje o danych zapisanych lokalnie. W wersji demo wystarczy przejrzeć dane w przeglądarce.</p>
           </div>
           <div class="marketing-card">
-            <h3>Usuniecie danych</h3>
-            <p>Mozesz wyczyscic localStorage w ustawieniach przegladarki, aby usunac dane demo i preferencje.</p>
+            <h3>Usunięcie danych</h3>
+            <p>Możesz wyczyścić localStorage w ustawieniach przeglądarki, aby usunąć dane demo i preferencje.</p>
           </div>
           <div class="marketing-card">
             <h3>Kontakt z administratorem</h3>
-            <p>Jesli potrzebujesz wsparcia, napisz na kontakt@kp-code.pl. Uwaga: wiadomosc wyslana e-mailem (mailto) trafia do administratora i jest przetwarzana w celu odpowiedzi na zapytanie.</p>
+            <p>Jeśli potrzebujesz wsparcia, napisz na kontakt@kp-code.pl. Uwaga: wiadomość wysłana e-mailem (mailto) trafia do administratora i jest przetwarzana w celu odpowiedzi na zapytanie.</p>
           </div>
         </div>
       </section>
 
       <section class="section-tight">
-        <p class="tag">Bezpieczenstwo</p>
-        <h2>Jak dbamy o bezpieczenstwo</h2>
+        <p class="tag">Bezpieczeństwo</p>
+        <h2>Jak dbamy o bezpieczeństwo</h2>
         <div class="marketing-card">
-          <p>Wersja demo dziala wylacznie po stronie klienta. Nie przechowujemy danych na serwerze, nie profilujemy i nie sprzedajemy informacji. Stosujemy podstawowe praktyki bezpieczenstwa: aktualne zaleznosci, brak publicznego API / endpointow do przesylania danych oraz minimalny zakres danych.</p>
+          <p>Wersja demo działa wyłącznie po stronie klienta. Nie przechowujemy danych na serwerze, nie profilujemy i nie sprzedajemy informacji. Stosujemy podstawowe praktyki bezpieczeństwa: aktualne zależności, brak publicznego API / endpointów do przesyłania danych oraz minimalny zakres danych.</p>
         </div>
       </section>
 
       <section class="section-tight cta-panel">
         <div>
-          <h2>Masz pytania o prywatnosc?</h2>
-          <p>Skontaktuj sie z nami, odpowiemy w sprawie wersji demo FleetOps.</p>
+          <h2>Masz pytania o prywatność?</h2>
+          <p>Skontaktuj się z nami, odpowiemy w sprawie wersji demo FleetOps.</p>
         </div>
         <div class="hero-cta">
           <a class="button primary" href="#/contact">Kontakt</a>
-          <a class="button secondary" href="#/app">Przejdz do demo</a>
+          <a class="button secondary" href="#/app">Przejdź do demo</a>
         </div>
       </section>
     `,
@@ -1094,24 +1094,24 @@ function renderTermsPage() {
   renderMarketingShell({
     title: "Regulamin",
     eyebrow: "Regulamin",
-    lead: "Regulamin okresla zasady korzystania z demonstracyjnej wersji FleetOps. To projekt demo bez backendu i bez gwarancji produkcyjnej.",
-    description: "Regulamin korzystania z wersji demo FleetOps. Zasady uzytkowania, ograniczenia odpowiedzialnosci i prawa autorskie.",
+    lead: "Regulamin określa zasady korzystania z demonstracyjnej wersji FleetOps. To projekt demo bez backendu i bez gwarancji produkcyjnej.",
+    description: "Regulamin korzystania z wersji demo FleetOps. Zasady użytkowania, ograniczenia odpowiedzialności i prawa autorskie.",
     body: `
       <section class="section-tight">
         <p class="tag">Zakres</p>
-        <h2>Charakter uslugi</h2>
+        <h2>Charakter usługi</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>Projekt demonstracyjny</h3>
-            <p>FleetOps jest projektem demonstracyjnym (demo). Aplikacja sluzy do prezentacji interfejsu i funkcji i nie stanowi komercyjnego produktu produkcyjnego.</p>
+            <p>FleetOps jest projektem demonstracyjnym (demo). Aplikacja służy do prezentacji interfejsu i funkcji i nie stanowi komercyjnego produktu produkcyjnego.</p>
           </div>
           <div class="marketing-card">
             <h3>Brak gwarancji SLA</h3>
-            <p>Nie gwarantujemy ciaglosci dzialania, dostepnosci, kompletnosci funkcji ani okreslonego poziomu wsparcia. Dostep do demo moze byc zmieniany lub wstrzymany.</p>
+            <p>Nie gwarantujemy ciągłości działania, dostępności, kompletności funkcji ani określonego poziomu wsparcia. Dostęp do demo może być zmieniany lub wstrzymany.</p>
           </div>
           <div class="marketing-card">
             <h3>Tryb lokalny</h3>
-            <p>Dane demo zapisywane sa lokalnie w przegladarce uzytkownika (np. localStorage), bez synchronizacji z serwerem.</p>
+            <p>Dane demo zapisywane są lokalnie w przeglądarce użytkownika (np. localStorage), bez synchronizacji z serwerem.</p>
           </div>
         </div>
       </section>
@@ -1122,44 +1122,44 @@ function renderTermsPage() {
         <div class="marketing-card">
           <ul class="list-check">
             <li>Korzystanie z demo w celach edukacyjnych i prezentacyjnych.</li>
-            <li>Przegladanie interfejsu, funkcji i przykladowych danych.</li>
-            <li>Kontakt w celu omowienia wspolpracy lub wdrozenia.</li>
+            <li>Przeglądanie interfejsu, funkcji i przykładowych danych.</li>
+            <li>Kontakt w celu omówienia współpracy lub wdrożenia.</li>
           </ul>
         </div>
       </section>
 
       <section class="section-tight">
-        <p class="tag">Naduzycia</p>
+        <p class="tag">Nadużycia</p>
         <h2>Czego zabrania regulamin</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
-            <h3>Proby lamania zabezpieczen</h3>
-            <p>Zakazane sa proby obejscia zabezpieczen, ingerencja w dzialanie aplikacji, testy penetracyjne oraz dzialania zmierzajace do uzyskania nieuprawnionego dostepu.</p>
+            <h3>Próby łamania zabezpieczeń</h3>
+            <p>Zakazane są próby obejścia zabezpieczeń, ingerencja w działanie aplikacji, testy penetracyjne oraz działania zmierzające do uzyskania nieuprawnionego dostępu.</p>
           </div>
           <div class="marketing-card">
             <h3>Automaty i spam</h3>
-            <p>Zakazane jest generowanie sztucznego ruchu, wysylanie automatycznych zgloszen oraz naduzywanie formularzy kontaktowych.</p>
+            <p>Zakazane jest generowanie sztucznego ruchu, wysyłanie automatycznych zgłoszeń oraz nadużywanie formularzy kontaktowych.</p>
           </div>
           <div class="marketing-card">
-            <h3>Uzycie komercyjne</h3>
-            <p>Zakazane jest wykorzystywanie wersji demo jako gotowego systemu produkcyjnego, w tym do obslugi realnych procesow firmy lub danych osobowych.</p>
+            <h3>Użycie komercyjne</h3>
+            <p>Zakazane jest wykorzystywanie wersji demo jako gotowego systemu produkcyjnego, w tym do obsługi realnych procesów firmy lub danych osobowych.</p>
           </div>
         </div>
       </section>
 
       <section class="section-tight">
-        <p class="tag">Odpowiedzialnosc</p>
-        <h2>Ograniczenie odpowiedzialnosci</h2>
+        <p class="tag">Odpowiedzialność</p>
+        <h2>Ograniczenie odpowiedzialności</h2>
         <div class="marketing-card">
-          <p>Wersja demo jest udostepniana "tak jak jest" (as is). W najszerszym zakresie dopuszczalnym przez prawo wlasciciel projektu nie ponosi odpowiedzialnosci za szkody wynikajace z korzystania z demo, w tym za utrate danych lokalnych, przerwy w dostepie, bledy interfejsu lub decyzje podjete na podstawie prezentowanych informacji.</p>
+          <p>Wersja demo jest udostępniana "tak jak jest" (as is). W najszerszym zakresie dopuszczalnym przez prawo właściciel projektu nie ponosi odpowiedzialności za szkody wynikające z korzystania z demo, w tym za utratę danych lokalnych, przerwy w dostępie, błędy interfejsu lub decyzje podjęte na podstawie prezentowanych informacji.</p>
         </div>
       </section>
 
       <section class="section-tight">
         <p class="tag">Prawa autorskie</p>
-        <h2>Wlasnosc intelektualna</h2>
+        <h2>Własność intelektualna</h2>
         <div class="marketing-card">
-          <p>Interfejs, tresci, layout, grafiki oraz kod zrodlowy FleetOps sa chronione prawem autorskim i naleza do wlasciciela projektu: Kamil Krol (KP_Code_). Zabronione jest kopiowanie, rozpowszechnianie lub udostepnianie bez uprzedniej pisemnej zgody.</p>
+          <p>Interfejs, treści, layout, grafiki oraz kod źródłowy FleetOps są chronione prawem autorskim i należą do właściciela projektu: Kamil Król (KP_Code_). Zabronione jest kopiowanie, rozpowszechnianie lub udostępnianie bez uprzedniej pisemnej zgody.</p>
         </div>
       </section>
 
@@ -1169,7 +1169,7 @@ function renderTermsPage() {
 
         <div class="card-soft">
           <address class="contact-address">
-            <div><strong>Imię i nazwisko:</strong> Kamil Krol (KP_Code_)</div>
+            <div><strong>Imię i nazwisko:</strong> Kamil Król (KP_Code_)</div>
 
             <div>
               <strong>Adres:</strong>
@@ -1200,12 +1200,12 @@ function renderTermsPage() {
 
       <section class="section-tight cta-panel">
         <div>
-          <h2>Chcesz poznac FleetOps blizej?</h2>
-          <p>Przetestuj demo lub napisz do nas z pytaniami o wdrozenie.</p>
+          <h2>Chcesz poznać FleetOps bliżej?</h2>
+          <p>Przetestuj demo lub napisz do nas z pytaniami o wdrożenie.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/app">Otworz demo</a>
-          <a class="button secondary" href="#/contact">Skontaktuj sie</a>
+          <a class="button primary" href="#/app">Otwórz demo</a>
+          <a class="button secondary" href="#/contact">Skontaktuj się</a>
         </div>
       </section>
     `,
@@ -1216,63 +1216,63 @@ function renderCookiesPage() {
   renderMarketingShell({
     title: "Polityka cookies",
     eyebrow: "Polityka cookies",
-    lead: "Wersja demo FleetOps nie stosuje sledzacych plikow cookies. Wyjasniamy, jakie dane techniczne moga byc zapisane lokalnie.",
-    description: "Polityka cookies FleetOps (wersja demo). Informacje o danych technicznych, localStorage i sposobach zarzadzania ustawieniami.",
+    lead: "Wersja demo FleetOps nie stosuje śledzących plików cookies. Wyjaśniamy, jakie dane techniczne mogą być zapisane lokalnie.",
+    description: "Polityka cookies FleetOps (wersja demo). Informacje o danych technicznych, localStorage i sposobach zarządzania ustawieniami.",
     body: `
       <section class="section-tight">
         <p class="tag">Podstawy</p>
-        <h2>Jakich mechanizmow uzywamy</h2>
+        <h2>Jakich mechanizmów używamy</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
             <h3>Brak tracking cookies</h3>
-            <p>FleetOps nie wykorzystuje marketingowych ani analitycznych ciasteczek sledzacych.</p>
+            <p>FleetOps nie wykorzystuje marketingowych ani analitycznych ciasteczek śledzących.</p>
           </div>
           <div class="marketing-card">
             <h3>LocalStorage</h3>
-            <p>Preferencje interfejsu i dane demo sa przechowywane lokalnie w przegladarce uzytkownika.</p>
+            <p>Preferencje interfejsu i dane demo są przechowywane lokalnie w przeglądarce użytkownika.</p>
           </div>
           <div class="marketing-card">
-            <h3>Dane techniczne przegladarki</h3>
-            <p>Przegladarka moze zapisywac dane niezbedne do poprawnego dzialania strony (np. cache), zgodnie z jej wlasnymi zasadami.</p>
+            <h3>Dane techniczne przeglądarki</h3>
+            <p>Przeglądarka może zapisywać dane niezbędne do poprawnego działania strony (np. cache), zgodnie z jej własnymi zasadami.</p>
           </div>
         </div>
       </section>
 
       <section class="section-tight">
         <p class="tag">Kategorie</p>
-        <h2>Jakie dane techniczne moga wystapic</h2>
+        <h2>Jakie dane techniczne mogą wystąpić</h2>
         <div class="marketing-card">
           <ul class="list-check">
             <li>Ustawienia motywu i preferencje interfejsu</li>
-            <li>Historia ostatnich widokow w demo</li>
+            <li>Historia ostatnich widoków w demo</li>
             <li>Mockowe dane operacyjne zapisane lokalnie</li>
           </ul>
-          <p class="muted small">Wersja demo nie wykorzystuje zewnetrznych skryptow analitycznych ani reklamowych.</p>
+          <p class="muted small">Wersja demo nie wykorzystuje zewnętrznych skryptów analitycznych ani reklamowych.</p>
         </div>
       </section>
 
       <section class="section-tight">
-        <p class="tag">Zarzadzanie</p>
-        <h2>Jak kontrolowac dane w przegladarce</h2>
+        <p class="tag">Zarządzanie</p>
+        <h2>Jak kontrolować dane w przeglądarce</h2>
         <div class="grid marketing-grid">
           <div class="marketing-card">
-            <h3>Ustawienia przegladarki</h3>
-            <p>W ustawieniach przegladarki mozesz wyczyscic dane strony oraz ograniczyc zapisywanie danych lokalnych.</p>
+            <h3>Ustawienia przeglądarki</h3>
+            <p>W ustawieniach przeglądarki możesz wyczyścić dane strony oraz ograniczyć zapisywanie danych lokalnych.</p>
           </div>
           <div class="marketing-card">
             <h3>Czyszczenie localStorage</h3>
-            <p>Usuniecie danych lokalnych przywroci demo do stanu poczatkowego (np. motyw, ustawienia, dane demo).</p>
+            <p>Usunięcie danych lokalnych przywróci demo do stanu początkowego (np. motyw, ustawienia, dane demo).</p>
           </div>
           <div class="marketing-card">
-            <h3>Brak narzedzi stron trzecich</h3>
-            <p>Nie korzystamy z zewnetrznych narzedzi analitycznych ani reklamowych, ktore moglyby ustawic cookies sledzace.</p>
+            <h3>Brak narzędzi stron trzecich</h3>
+            <p>Nie korzystamy z zewnętrznych narzędzi analitycznych ani reklamowych, które mogłyby ustawić cookies śledzące.</p>
           </div>
         </div>
       </section>
 
       <section class="section-tight">
         <p class="tag">Kontakt</p>
-        <h2>Masz pytania o polityke cookies?</h2>
+        <h2>Masz pytania o politykę cookies?</h2>
         <div class="card-soft">
           <address class="contact-address">
             <div>
@@ -1296,7 +1296,7 @@ function renderCookiesPage() {
             </div>
           </address>
           <p class="muted small">
-            Dane kontaktowe dotycza twórcy projektu demonstracyjnego FleetOps.
+            Dane kontaktowe dotyczą twórcy projektu demonstracyjnego FleetOps.
           </p>
         </div>
       </section>
