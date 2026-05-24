@@ -380,7 +380,7 @@ ${renderLandingHeader(themeAsset)}
         <section class="container section hero">
           <div>
             <div class="tag">Centrum operacji floty i transportu</div>
-            <h1>FleetOps — zarządzanie transportem bez tarcia.</h1>
+            <h1>FleetOps - zarządzanie transportem bez tarcia.</h1>
             <p>Monitoruj zlecenia, pojazdy i kierowców w jednym widoku. Alerty SLA, realtime ETA i szybkie decyzje wspierane przez przejrzysty interfejs.</p>
             <div class="hero-cta">
               <a class="button primary" href="#/login">Zacznij</a>

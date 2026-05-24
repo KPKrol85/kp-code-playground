@@ -5,6 +5,13 @@ function setPageMeta(title, description) {
   if (meta && description) meta.setAttribute("content", description);
 }
 
+function renderPageHeroMark(themeAsset) {
+  return `
+          <div class="page-hero__mark" aria-hidden="true" role="presentation">
+            <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="" aria-hidden="true" />
+          </div>`;
+}
+
 function renderMarketingShell({ title, description, eyebrow, lead, body }) {
   const app = document.getElementById("app");
   if (!app) return;
@@ -24,6 +31,7 @@ ${FleetUI.renderLandingHeader(themeAsset)}
             <h1>${title}</h1>
             <p>${lead}</p>
           </div>
+${renderPageHeroMark(themeAsset)}
         </div>
         ${body}
       </main>
@@ -36,9 +44,6 @@ ${FleetUI.renderLandingFooter(themeAsset)}
 }
 
 function renderProductPage() {
-  const theme = FleetStore.state.preferences.theme || "light";
-  const themeAsset = (light, dark) => (theme === "dark" ? dark : light);
-
   renderMarketingShell({
     title: "Produkt FleetOps",
     eyebrow: "Produkt",
@@ -179,18 +184,6 @@ function renderProductPage() {
       </section>
     `,
   });
-
-  const hero = document.querySelector(".landing .page-hero");
-  if (hero && !hero.querySelector(".page-hero__mark")) {
-    const mark = document.createElement("div");
-    mark.className = "page-hero__mark";
-    mark.setAttribute("aria-hidden", "true");
-    mark.setAttribute("role", "presentation");
-    mark.innerHTML = `
-      <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="" aria-hidden="true" />
-    `;
-    hero.appendChild(mark);
-  }
 }
 
 function renderFeaturesPage() {

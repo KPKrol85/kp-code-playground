@@ -152,16 +152,6 @@
     flex-shrink: 0;
   }
 
-  .landing .nav-links {
-    gap: var(--space-3);
-  }
-
-  .landing .nav-links a {
-    padding: var(--space-1) var(--space-2);
-  }
-}
-
-@media (max-width: 768px) {
   .landing .nav-toggle {
     display: inline-flex;
   }
@@ -238,16 +228,17 @@
   grid-template-columns: 1fr;
   align-items: center;
   gap: var(--space-5);
-  text-align: left;
+  text-align: center;
 }
 
 .landing .hero h1 {
-  max-width: 18ch;
+  max-width: 16ch;
+  margin: 0 auto;
 }
 
 .landing .hero p {
   max-width: 56ch;
-  margin: var(--space-3) 0;
+  margin: var(--space-3) auto;
 }
 
 .landing .hero-cta {
@@ -260,8 +251,8 @@
 }
 
 .landing .section.hero .hero-cta {
-  justify-content: flex-start;
-  text-align: left;
+  justify-content: center;
+  text-align: center;
 }
 
 .landing .hero-cta .button {
@@ -349,6 +340,13 @@
   }
 }
 
+@media (min-width: 760px) {
+  .landing .section.hero {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+}
+
 @media (min-width: 1024px) {
   .landing .section.hero {
     grid-template-columns: 1fr 1.1fr;
@@ -369,7 +367,6 @@
   display: grid;
   gap: var(--space-1);
   justify-items: center;
-  max-width: 720px;
   margin-bottom: var(--space-3);
   text-align: center;
 }
@@ -377,10 +374,6 @@
 .landing .landing-section-header .tag {
   justify-self: center;
   margin-bottom: var(--space-1);
-}
-
-.landing .landing-section-header h2 {
-  font-size: var(--fs-06);
 }
 
 .landing .landing-section-copy,
@@ -719,7 +712,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   justify-content: center;
   gap: var(--space-2);
   font-weight: var(--fw-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--ls-compact);
   margin-inline: auto;
 }
 
@@ -735,8 +728,8 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 
 .landing .footer__eyebrow,
 .landing .footer__title {
-  font-size: var(--fs-01);
-  letter-spacing: 0.08em;
+  font-size: var(--fs-02);
+  letter-spacing: var(--ls-tight);
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -771,7 +764,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   display: block;
   padding: var(--space-0) 0;
   color: var(--text-muted);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   transition:
     color 140ms ease,
     background-color 140ms ease;
@@ -820,7 +813,7 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  font-size: 8px;
+  font-size: var(--fs-01);
 }
 
 @media (max-width: 1024px) {
@@ -1015,22 +1008,22 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
 
 .landing .contact-address {
   display: grid;
-  gap: 10px;
+  gap: var(--space-2);
   margin-top: var(--space-2);
   font-style: normal;
 }
 
 .landing .list-check {
   display: grid;
-  gap: 8px;
-  margin: 12px 0 0;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
   padding: 0;
   list-style: none;
 }
 
 .landing .list-check li {
   position: relative;
-  padding-left: 22px;
+  padding-left: var(--space-4);
   color: var(--text-muted);
 }
 
