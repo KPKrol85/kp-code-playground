@@ -28,7 +28,6 @@ none detected
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
 
-- Skonsolidować zduplikowany shell landing/marketing, szczególnie wspólną nawigację, resources menu, mobile drawer i footer w `layoutLanding.js` oraz `marketingPages.js`.
 - Rozważyć lekkie asercje dostępności w testach Playwright dla nagłówków route, dialogów, live regions i powiązania błędów formularzy z polami.
 
 ### 7. Ocena Seniorska

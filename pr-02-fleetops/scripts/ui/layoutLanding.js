@@ -1,3 +1,168 @@
+function getLandingTheme() {
+  const { preferences } = FleetStore.state;
+  const theme = preferences.theme || "light";
+  document.documentElement.setAttribute("data-theme", theme);
+  return theme;
+}
+
+function getLandingThemeAsset(theme = getLandingTheme()) {
+  return (light, dark) => (theme === "dark" ? dark : light);
+}
+
+function renderLandingHeader(themeAsset = getLandingThemeAsset()) {
+  const menuToggleIcon = `
+            <span class="menu-toggle-icon" aria-hidden="true">
+              <span class="menu-toggle-icon__line menu-toggle-icon__line--top"></span>
+              <span class="menu-toggle-icon__line menu-toggle-icon__line--middle"></span>
+              <span class="menu-toggle-icon__line menu-toggle-icon__line--bottom"></span>
+            </span>`;
+
+  return `
+      <header class="container navbar" role="banner">
+        <a class="logo flex" href="#/" aria-label="FleetOps — Strona główna" data-scroll-top="home">
+
+          <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
+
+          <span>FleetOps</span>
+        </a>
+        <nav class="nav" aria-label="Nawigacja główna">
+          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
+${menuToggleIcon}
+          </button>
+          <div class="nav-backdrop" data-nav-close></div>
+          <div class="nav-drawer" id="mobileNav" role="dialog" aria-modal="true" aria-label="Nawigacja mobilna" aria-hidden="true">
+            <ul class="nav-links">
+              <li><a href="#/product">Produkt</a></li>
+              <li><a href="#/features">Funkcje</a></li>
+              <li><a href="#/pricing">Cennik</a></li>
+              <li><a href="#/about">O nas</a></li>
+              <li><a href="#/contact">Kontakt</a></li>
+              <li class="dropdown">
+                <button class="nav-link" id="resourcesToggle" type="button" aria-expanded="false" aria-controls="resourcesMenu">
+                  Zasoby
+                </button>
+                <ul class="dropdown-menu" id="resourcesMenu" aria-label="Zasoby">
+                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatności</a></li>
+                  <li><a class="dropdown-item" href="#/terms">Regulamin</a></li>
+                  <li><a class="dropdown-item" href="#/cookies">Polityka cookies</a></li>
+                </ul>
+              </li>
+              <li><a class="button ghost" href="#/login">Zaloguj się</a></li>
+              <li>
+                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
+                  <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  </svg>
+                  <svg class="theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M20 12.5A7.5 7.5 0 1 1 11.5 4a6 6 0 0 0 8.5 8.5Z" fill="currentColor"></path>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>`;
+}
+
+function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
+  return `
+      <footer class="footer" aria-label="Stopka FleetOps">
+        <div class="container footer__inner">
+          <div class="footer__grid">
+            <div class="footer__brand">
+              <a class="footer__logo" href="#/" aria-label="FleetOps - strona główna" data-scroll-top="home">
+                <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
+              </a>
+              <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
+              <span class="footer__eyebrow">Stworzone dla zespołów operacyjnych</span>
+            </div>
+
+            <div class="footer__col">
+              <h3 class="footer__title">Produkt</h3>
+              <ul class="footer__list">
+                <li><a href="#/app">Panel</a></li>
+                <li><a href="#/app/fleet">Flota</a></li>
+                <li><a href="#/app/orders">Dyspozytornia</a></li>
+                <li><a href="#/app/reports">Analityka</a></li>
+                <li><a href="#/app/settings">Ustawienia</a></li>
+              </ul>
+            </div>
+
+            <div class="footer__col">
+              <h3 class="footer__title">Firma</h3>
+              <ul class="footer__list">
+                <li><a href="#/about">O nas</a></li>
+                <li><a href="#/pricing">Cennik</a></li>
+                <li><a href="#/security">Bezpieczeństwo</a></li>
+                <li><a href="#/contact">Kontakt</a></li>
+                <li><a href="#/careers">Kariera</a></li>
+              </ul>
+            </div>
+
+            <div class="footer__col">
+              <h3 class="footer__title">Informacje prawne</h3>
+              <ul class="footer__list">
+                <li><a href="#/terms">Regulamin</a></li>
+                <li><a href="#/privacy">Polityka prywatności</a></li>
+                <li><a href="#/cookies">Polityka cookies</a></li>
+              </ul>
+            </div>
+
+            <div class="footer__col footer__contact">
+              <h3 class="footer__title">Kontakt</h3>
+
+               <address class="footer__contact">
+                  <ul class="footer__list footer__contact-list">
+                    <li>
+                      <span class="footer__contact-text">
+                      ul. Marynarki Wojennej 12<br>
+                       33-100 Tarnów, Polska
+                      </span>
+                    </li>
+                    <li>
+                      <a href="tel:+48533537091" aria-label="Zadzwoń">
+                      +48 533 537 091
+                      </a>
+                    </li>
+                    <li>
+                      <a href="mailto:kontakt@kp-code.pl" aria-label="Napisz emaila">
+                      kontakt@kp-code.pl
+                      </a>
+                    </li>
+                  </ul>
+              </address>
+
+
+              <h4 class="footer__title">Media społecznościowe</h4>
+
+              <div class="footer__social" aria-label="Linki społecznościowe FleetOps">
+                <a class="footer__social-link" href="https://www.linkedin.com" aria-label="Profil FleetOps na LinkedIn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M6 9H3v12h3V9Zm-1.5-6a1.75 1.75 0 1 0 0 3.5A1.75 1.75 0 0 0 4.5 3ZM21 14.5c0-3.1-1.65-5.1-4.6-5.1-1.4 0-2.4.77-2.8 1.5V9H10v12h3v-6.2c0-1.65.6-2.8 2.1-2.8 1.15 0 1.8.77 1.8 2.8V21h3v-6.5Z" fill="currentColor"></path>
+                  </svg>
+                </a>
+                <a class="footer__social-link" href="https://github.com" aria-label="Profil FleetOps na GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.5v-1.75c-2.78.6-3.36-1.18-3.36-1.18-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.08 1.56 1.06 1.56 1.06.9 1.56 2.36 1.1 2.94.84.1-.67.35-1.1.64-1.36-2.22-.25-4.56-1.12-4.56-4.98 0-1.1.4-2 .98-2.72-.1-.25-.42-1.28.1-2.66 0 0 .8-.26 2.62 1a9.1 9.1 0 0 1 4.78 0c1.82-1.26 2.62-1 2.62-1 .52 1.38.2 2.4.1 2.66.62.72 1 1.62 1 2.72 0 3.88-2.34 4.72-4.58 4.98.36.32.68.94.68 1.9v2.82c0 .28.18.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"></path>
+                  </svg>
+                </a>
+                <a class="footer__social-link" href="https://x.com" aria-label="Profil FleetOps na X">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M18.3 3H21l-6.6 7.5L22 21h-6.9l-4.5-5.9L4.8 21H2.1l7.1-8.2L2 3h7l4.1 5.4L18.3 3Zm-1.2 16h1.7L8.8 5H7.1l10 14Z" fill="currentColor"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer__bottom">
+            <span>© 2026 KP_Code Digital Studio | Wszelkie prawa zastrzeżone.</span>
+          </div>
+        </div>
+      </footer>`;
+}
+
 function initResourcesMenu() {
   const toggle = document.getElementById("resourcesToggle");
   const menu = document.getElementById("resourcesMenu");
@@ -57,68 +222,159 @@ function initResourcesMenu() {
   });
 }
 
+function initLandingShell() {
+  const logoCleanup = FleetUI.bindLogoScroll("home");
+  CleanupRegistry.add(logoCleanup);
+
+  const tBtn = document.getElementById("themeToggleLanding");
+  if (tBtn) {
+    tBtn.addEventListener("click", () => {
+      FleetStore.toggleTheme();
+      getLandingTheme();
+    });
+  }
+
+  const navToggle = document.getElementById("navToggle");
+  const navDrawer = document.getElementById("mobileNav");
+  const navBackdrop = document.querySelector(".nav-backdrop");
+  let navOpen = false;
+
+  const getDrawerFocusables = () => {
+    if (!navDrawer) return [];
+    return Array.from(navDrawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+  };
+
+  const trapDrawerFocus = (event) => {
+    if (!navOpen || event.key !== "Tab") return;
+    const focusables = getDrawerFocusables();
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+
+    if (event.shiftKey) {
+      if (active === first || !navDrawer.contains(active)) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else if (active === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  const openNav = () => {
+    if (!navToggle || !navDrawer) return;
+    document.documentElement.classList.add("is-nav-open");
+    navToggle.setAttribute("aria-expanded", "true");
+    navDrawer.setAttribute("aria-hidden", "false");
+    navOpen = true;
+    window.requestAnimationFrame(() => {
+      const focusables = getDrawerFocusables();
+      const firstItem = focusables[0];
+      if (firstItem) firstItem.focus();
+    });
+  };
+
+  const closeNav = () => {
+    if (!navToggle) return;
+    document.documentElement.classList.remove("is-nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    if (navDrawer) navDrawer.setAttribute("aria-hidden", "true");
+    navOpen = false;
+    navToggle.focus();
+  };
+
+  if (navToggle) {
+    navToggle.addEventListener("click", () => {
+      if (navOpen) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+  }
+
+  if (navBackdrop) {
+    navBackdrop.addEventListener("click", () => {
+      if (navOpen) closeNav();
+    });
+  }
+
+  if (navDrawer) {
+    navDrawer.addEventListener("click", (event) => {
+      if (event.target && event.target.closest("a")) {
+        closeNav();
+      }
+    });
+  }
+
+  initResourcesMenu();
+
+  const handleKeydown = (event) => {
+    if (event.key === "Escape" && navOpen) {
+      closeNav();
+      return;
+    }
+    trapDrawerFocus(event);
+  };
+  document.addEventListener("keydown", handleKeydown);
+
+  CleanupRegistry.add(() => {
+    document.removeEventListener("keydown", handleKeydown);
+  });
+
+  const navbar = document.querySelector(".landing .navbar");
+  if (navbar) {
+    let lastY = 0;
+    let ticking = false;
+    let isScrolled = navbar.classList.contains("is-scrolled");
+    const SHRINK_ADD_Y = 72;
+    const SHRINK_REMOVE_Y = 24;
+    const scrollOptions = { passive: true };
+
+    const setScrolled = (next) => {
+      if (next === isScrolled) return;
+      isScrolled = next;
+      navbar.classList.toggle("is-scrolled", next);
+    };
+
+    const onScroll = () => {
+      lastY = window.scrollY || 0;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        if (lastY > SHRINK_ADD_Y) {
+          setScrolled(true);
+        } else if (lastY < SHRINK_REMOVE_Y) {
+          setScrolled(false);
+        }
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, scrollOptions);
+    onScroll();
+
+    CleanupRegistry.add(() => {
+      window.removeEventListener("scroll", onScroll, scrollOptions);
+    });
+  }
+
+  document.querySelectorAll(".accordion").forEach((el) => Accordion.init(el));
+}
+
 function renderLanding() {
   const app = document.getElementById("app");
   if (!app) return;
 
-  const { preferences } = FleetStore.state;
-  const theme = preferences.theme || "light";
-  document.documentElement.setAttribute("data-theme", theme);
-  const themeAsset = (light, dark) => (theme === "dark" ? dark : light);
-  const menuToggleIcon = `
-            <span class="menu-toggle-icon" aria-hidden="true">
-              <span class="menu-toggle-icon__line menu-toggle-icon__line--top"></span>
-              <span class="menu-toggle-icon__line menu-toggle-icon__line--middle"></span>
-              <span class="menu-toggle-icon__line menu-toggle-icon__line--bottom"></span>
-            </span>`;
+  const theme = getLandingTheme();
+  const themeAsset = getLandingThemeAsset(theme);
 
   app.innerHTML = `
     <div class="landing landing-home">
-      <header class="container navbar" role="banner">
-        <a class="logo flex" href="#/" aria-label="FleetOps — Strona główna" data-scroll-top="home">
-
-          <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
-
-          <span>FleetOps</span>
-        </a>
-        <nav class="nav" aria-label="Nawigacja główna">
-          <button class="button ghost nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
-${menuToggleIcon}
-          </button>
-          <div class="nav-backdrop" data-nav-close></div>
-          <div class="nav-drawer" id="mobileNav" role="dialog" aria-modal="true" aria-label="Nawigacja mobilna" aria-hidden="true">
-            <ul class="nav-links">
-              <li><a href="#/product">Produkt</a></li>
-              <li><a href="#/features">Funkcje</a></li>
-              <li><a href="#/pricing">Cennik</a></li>
-              <li><a href="#/about">O nas</a></li>
-              <li><a href="#/contact">Kontakt</a></li>
-              <li class="dropdown">
-                <button class="nav-link" id="resourcesToggle" type="button" aria-expanded="false" aria-controls="resourcesMenu">
-                  Zasoby
-                </button>
-                <ul class="dropdown-menu" id="resourcesMenu" aria-label="Zasoby">
-                  <li><a class="dropdown-item" href="#/privacy">Polityka prywatności</a></li>
-                  <li><a class="dropdown-item" href="#/terms">Regulamin</a></li>
-                  <li><a class="dropdown-item" href="#/cookies">Polityka cookies</a></li>
-                </ul>
-              </li>
-              <li><a class="button ghost" href="#/login">Zaloguj się</a></li>
-              <li>
-                <button class="button ghost" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
-                  <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                  </svg>
-                  <svg class="theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M20 12.5A7.5 7.5 0 1 1 11.5 4a6 6 0 0 0 8.5 8.5Z" fill="currentColor"></path>
-                  </svg>
-                </button>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
+${renderLandingHeader(themeAsset)}
 
       <main id="main-content">
         <section class="container section hero">
@@ -273,245 +529,18 @@ ${menuToggleIcon}
         </section>
       </main>
 
-      <footer class="footer" aria-label="Stopka FleetOps">
-        <div class="container footer__inner">
-          <div class="footer__grid">
-            <div class="footer__brand">
-              <a class="footer__logo" href="#/" aria-label="FleetOps - strona główna" data-scroll-top="home">
-                <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
-              </a>
-              <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
-              <span class="footer__eyebrow">Stworzone dla zespołów operacyjnych</span>
-            </div>
-
-            <div class="footer__col">
-              <h3 class="footer__title">Produkt</h3>
-              <ul class="footer__list">
-                <li><a href="#/app">Panel</a></li>
-                <li><a href="#/app/fleet">Flota</a></li>
-                <li><a href="#/app/orders">Dyspozytornia</a></li>
-                <li><a href="#/app/reports">Analityka</a></li>
-                <li><a href="#/app/settings">Ustawienia</a></li>
-              </ul>
-            </div>
-
-            <div class="footer__col">
-              <h3 class="footer__title">Firma</h3>
-              <ul class="footer__list">
-                <li><a href="#/about">O nas</a></li>
-                <li><a href="#/pricing">Cennik</a></li>
-                <li><a href="#/security">Bezpieczeństwo</a></li>
-                <li><a href="#/contact">Kontakt</a></li>
-                <li><a href="#/careers">Kariera</a></li>
-              </ul>
-            </div>
-
-            <div class="footer__col">
-              <h3 class="footer__title">Informacje prawne</h3>
-              <ul class="footer__list">
-                <li><a href="#/terms">Regulamin</a></li>
-                <li><a href="#/privacy">Polityka prywatności</a></li>
-                <li><a href="#/cookies">Polityka cookies</a></li>
-              </ul>
-            </div>
-
-            <div class="footer__col footer__contact">
-              <h3 class="footer__title">Kontakt</h3>
-
-               <address class="footer__contact">
-                  <ul class="footer__list footer__contact-list">
-                    <li>
-                      <span class="footer__contact-text">
-                      ul. Marynarki Wojennej 12<br>
-                       33-100 Tarnów, Polska
-                      </span>
-                    </li>
-                    <li>
-                      <a href="tel:+48533537091" aria-label="Zadzwoń">
-                      +48 533 537 091
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mailto:kontakt@kp-code.pl" aria-label="Napisz emaila">
-                      kontakt@kp-code.pl
-                      </a>
-                    </li>
-                  </ul>
-              </address>
-
-
-              <h4 class="footer__title">Media społecznościowe</h4>
-
-              <div class="footer__social" aria-label="Linki społecznościowe FleetOps">
-                <a class="footer__social-link" href="https://www.linkedin.com" aria-label="Profil FleetOps na LinkedIn">
-                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M6 9H3v12h3V9Zm-1.5-6a1.75 1.75 0 1 0 0 3.5A1.75 1.75 0 0 0 4.5 3ZM21 14.5c0-3.1-1.65-5.1-4.6-5.1-1.4 0-2.4.77-2.8 1.5V9H10v12h3v-6.2c0-1.65.6-2.8 2.1-2.8 1.15 0 1.8.77 1.8 2.8V21h3v-6.5Z" fill="currentColor"></path>
-                  </svg>
-                </a>
-                <a class="footer__social-link" href="https://github.com" aria-label="Profil FleetOps na GitHub">
-                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.5v-1.75c-2.78.6-3.36-1.18-3.36-1.18-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.08 1.56 1.06 1.56 1.06.9 1.56 2.36 1.1 2.94.84.1-.67.35-1.1.64-1.36-2.22-.25-4.56-1.12-4.56-4.98 0-1.1.4-2 .98-2.72-.1-.25-.42-1.28.1-2.66 0 0 .8-.26 2.62 1a9.1 9.1 0 0 1 4.78 0c1.82-1.26 2.62-1 2.62-1 .52 1.38.2 2.4.1 2.66.62.72 1 1.62 1 2.72 0 3.88-2.34 4.72-4.58 4.98.36.32.68.94.68 1.9v2.82c0 .28.18.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"></path>
-                  </svg>
-                </a>
-                <a class="footer__social-link" href="https://x.com" aria-label="Profil FleetOps na X">
-                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M18.3 3H21l-6.6 7.5L22 21h-6.9l-4.5-5.9L4.8 21H2.1l7.1-8.2L2 3h7l4.1 5.4L18.3 3Zm-1.2 16h1.7L8.8 5H7.1l10 14Z" fill="currentColor"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="footer__bottom">
-            <span>© 2026 KP_Code Digital Studio | Wszelkie prawa zastrzeżone.</span>
-          </div>
-        </div>
-      </footer>
+${renderLandingFooter(themeAsset)}
     </div>
   `;
 
-  const tBtn = document.getElementById("themeToggleLanding");
-  if (tBtn) {
-    tBtn.addEventListener("click", () => {
-      FleetStore.toggleTheme();
-      const next = FleetStore.state.preferences.theme || "light";
-      document.documentElement.setAttribute("data-theme", next);
-    });
-  }
-
-  const navToggle = document.getElementById("navToggle");
-  const navDrawer = document.getElementById("mobileNav");
-  const navBackdrop = document.querySelector(".nav-backdrop");
-  let navOpen = false;
-
-  const getDrawerFocusables = () => {
-    if (!navDrawer) return [];
-    return Array.from(navDrawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
-  };
-
-  const trapDrawerFocus = (event) => {
-    if (!navOpen || event.key !== "Tab") return;
-    const focusables = getDrawerFocusables();
-    if (!focusables.length) return;
-
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-    const active = document.activeElement;
-
-    if (event.shiftKey) {
-      if (active === first || !navDrawer.contains(active)) {
-        event.preventDefault();
-        last.focus();
-      }
-    } else if (active === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  };
-
-  const openNav = () => {
-    if (!navToggle || !navDrawer) return;
-    document.documentElement.classList.add("is-nav-open");
-    navToggle.setAttribute("aria-expanded", "true");
-    navDrawer.setAttribute("aria-hidden", "false");
-    navOpen = true;
-    window.requestAnimationFrame(() => {
-      const focusables = getDrawerFocusables();
-      const firstItem = focusables[0];
-      if (firstItem) firstItem.focus();
-    });
-  };
-
-  const closeNav = () => {
-    if (!navToggle) return;
-    document.documentElement.classList.remove("is-nav-open");
-    navToggle.setAttribute("aria-expanded", "false");
-    if (navDrawer) navDrawer.setAttribute("aria-hidden", "true");
-    navOpen = false;
-    navToggle.focus();
-  };
-
-  if (navToggle) {
-    navToggle.addEventListener("click", () => {
-      if (navOpen) {
-        closeNav();
-      } else {
-        openNav();
-      }
-    });
-  }
-
-  if (navBackdrop) {
-    navBackdrop.addEventListener("click", () => {
-      if (navOpen) closeNav();
-    });
-  }
-
-  if (navDrawer) {
-    navDrawer.addEventListener("click", (event) => {
-      if (event.target && event.target.closest("a")) {
-        closeNav();
-      }
-    });
-  }
-
-  initResourcesMenu();
-
-  const handleKeydown = (event) => {
-    if (event.key === "Escape" && navOpen) {
-      closeNav();
-      return;
-    }
-    trapDrawerFocus(event);
-  };
-  document.addEventListener("keydown", handleKeydown);
-
-  CleanupRegistry.add(() => {
-    document.removeEventListener("keydown", handleKeydown);
-  });
-
-  const navbar = document.querySelector(".landing .navbar");
-  if (navbar) {
-    let lastY = 0;
-    let ticking = false;
-    let isScrolled = navbar.classList.contains("is-scrolled");
-    const SHRINK_ADD_Y = 72;
-    const SHRINK_REMOVE_Y = 24;
-    const scrollOptions = { passive: true };
-
-    const setScrolled = (next) => {
-      if (next === isScrolled) return;
-      isScrolled = next;
-      navbar.classList.toggle("is-scrolled", next);
-    };
-
-    const onScroll = () => {
-      lastY = window.scrollY || 0;
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        if (lastY > SHRINK_ADD_Y) {
-          setScrolled(true);
-        } else if (lastY < SHRINK_REMOVE_Y) {
-          setScrolled(false);
-        }
-        ticking = false;
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, scrollOptions);
-    onScroll();
-
-    CleanupRegistry.add(() => {
-      window.removeEventListener("scroll", onScroll, scrollOptions);
-    });
-  }
-
-  const faq = document.getElementById("faq");
-  if (faq) Accordion.init(faq);
-
-  const logoCleanup = FleetUI.bindLogoScroll("home");
-  CleanupRegistry.add(logoCleanup);
+  initLandingShell();
 }
 
+window.FleetUI = window.FleetUI || {};
+window.FleetUI.getLandingTheme = getLandingTheme;
+window.FleetUI.getLandingThemeAsset = getLandingThemeAsset;
+window.FleetUI.renderLandingHeader = renderLandingHeader;
+window.FleetUI.renderLandingFooter = renderLandingFooter;
+window.FleetUI.initResourcesMenu = initResourcesMenu;
+window.FleetUI.initLandingShell = initLandingShell;
 window.renderLanding = renderLanding;
