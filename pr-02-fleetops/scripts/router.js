@@ -114,10 +114,50 @@ function applyAriaCurrent() {
   updateGroup(document.querySelectorAll(".footer-links a"));
 }
 
+const routeLabels = {
+  "/": "Strona główna",
+  "/login": "Logowanie",
+  "/about": "O nas",
+  "/contact": "Kontakt",
+  "/product": "Produkt FleetOps",
+  "/features": "Funkcje FleetOps",
+  "/pricing": "Cennik FleetOps",
+  "/security": "Bezpieczeństwo",
+  "/careers": "Kariera",
+  "/privacy": "Polityka prywatności",
+  "/terms": "Regulamin",
+  "/cookies": "Polityka cookies",
+  "/app": "Przegląd",
+  "/app/orders": "Zlecenia",
+  "/app/fleet": "Flota",
+  "/app/drivers": "Kierowcy",
+  "/app/reports": "Raporty",
+  "/app/settings": "Ustawienia",
+};
+
+let lastAnnouncedPath = "";
+let routeAnnounceTimer = null;
+
+function announceRouteChange(path, label) {
+  if (!label || path === lastAnnouncedPath) return;
+
+  const region = document.getElementById("fleetops-route-status");
+  if (!region) return;
+
+  lastAnnouncedPath = path;
+  if (routeAnnounceTimer) window.clearTimeout(routeAnnounceTimer);
+  region.textContent = "";
+  routeAnnounceTimer = window.setTimeout(() => {
+    region.textContent = `Widok: ${label}`;
+  }, 0);
+}
+
 function routeTo(hash) {
   const returnToKey = "auth:returnTo";
   const path = hash.replace("#", "") || "/";
   const requiresAuth = path.startsWith("/app");
+  let renderedPath = path;
+  let renderedLabel = routeLabels[path];
 
   if (window.CleanupRegistry) CleanupRegistry.runAll();
 
@@ -193,15 +233,19 @@ function routeTo(hash) {
       break;
     default:
       if (path.startsWith("/app")) {
+        renderedLabel = "Nie znaleziono";
         renderAppShell("Nie znaleziono", notFoundView());
       } else {
         window.location.hash = "#/";
+        renderedPath = "/";
+        renderedLabel = routeLabels["/"];
         renderLanding();
       }
   }
 
   // <<< TO JEST JEDYNE MIEJSCE, GDZIE USTAWIAMY aria-current >>>
   applyAriaCurrent();
+  announceRouteChange(renderedPath, renderedLabel);
 }
 
 window.FleetRouter = { routeTo };

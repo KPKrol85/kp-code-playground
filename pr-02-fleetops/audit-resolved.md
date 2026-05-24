@@ -6,6 +6,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 ## Resolved
 
+- 2026-05-24 - [P2] Celowane live regions: `index.html` nie ustawia juz `aria-live="polite"` na calym `#app`, dodaje dedykowany ukryty `#fleetops-route-status`, `scripts/router.js` oglasza krotkie komunikaty `Widok: ...` po udanym renderze route, a komunikaty tymczasowe pozostaja w dedykowanych regionach toast `role="status"` / `role="alert"`. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg` oraz `npm run test:smoke`.
+
 - 2026-05-23 - [P2] Przestarzaly helper minifikacji JS usuniety: `minify-js.js` nie mial referencji w `package.json`, dokumentacji ani aktywnym workflow, celowal w nieistniejace `js/` i `js/dist`, a produkcyjna minifikacja pozostaje w `build-dist.js`. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano targeted `rg`.
 
 - 2026-05-23 - [P2] Spojna polska kopia UI: widoczne etykiety, ARIA labels, komunikaty toast, modale i testy smoke uzywaja naturalnych polskich tekstow z diakrytykami tam, gdzie sa user-facing. Zachowano techniczne identyfikatory i akceptowane terminy SaaS/KPI/SLA/CSV/API/RBAC; usunieto dokladny wpis P2 z `daily-AUDIT.md` i zweryfikowano targeted `rg`.

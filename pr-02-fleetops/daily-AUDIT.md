@@ -28,10 +28,6 @@ none detected
 
 ### 6. Dodatkowe Ulepszenia Jakościowe
 
-- Zautomatyzować wersjonowanie cache service workera albo dodać fingerprintowane nazwy CSS/JS, żeby ograniczyć ryzyko starego pierwszego odczytu po deployu. Obecny `sw.js` używa ręcznego `CACHE_NAME` i stale-while-revalidate dla statycznych assetów.
-
-- Zastąpić szerokie `aria-live="polite"` na całym `#app` celowanymi live regions dla zmian route i komunikatów tymczasowych.
-
 - Skonsolidować zduplikowany shell landing/marketing, szczególnie wspólną nawigację, resources menu, mobile drawer i footer w `layoutLanding.js` oraz `marketingPages.js`.
 - Rozważyć lekkie asercje dostępności w testach Playwright dla nagłówków route, dialogów, live regions i powiązania błędów formularzy z polami.
 
