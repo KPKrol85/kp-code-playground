@@ -78,7 +78,7 @@ hr {
   justify-content: center;
   gap: 8px;
   border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  padding: var(--space-2) var(--space-3);
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
@@ -522,8 +522,6 @@ textarea:invalid:focus-visible {
 }
 
 .nav-links .button {
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius);
   font-size: var(--fs-02);
 }
 

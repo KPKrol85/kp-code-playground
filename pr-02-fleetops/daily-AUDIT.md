@@ -79,13 +79,7 @@ none detected
 
 ## 5. P2 - Drobne Usprawnienia
 
-1. Dwie literówki w custom properties CSS unieważniają padding komponentów.
-
-   Dowód: token spacingu `--space-2` jest zdefiniowany w `styles/src/00-settings.css:82-86`, ale `.dropdown-menu` używa `var(--SPACE-2)` w `styles/src/03-components.css:723-729`, a `.toast` używa `var(--sapce-2)` w `styles/src/03-components.css:777-785`. Custom properties CSS są case-sensitive, a nierozwiązane wartości `var()` unieważniają dotknięte deklaracje paddingu.
-
-   Wpływ: odstępy dropdownów i toastów mogą renderować się ciaśniej niż planowano. To drobny defekt polish UI.
-   ---
-   fixed
+none detected
 
 ## 6. Dodatkowe Ulepszenia Jakościowe
 
