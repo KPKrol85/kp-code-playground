@@ -678,6 +678,12 @@ html[data-theme="dark"] .stat-card:focus-within {
   padding-bottom: var(--space-3);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content {
+    transition: none;
+  }
+}
+
 /* Modal */
 
 .modal-backdrop {

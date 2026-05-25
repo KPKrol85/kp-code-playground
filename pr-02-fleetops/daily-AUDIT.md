@@ -25,11 +25,7 @@ none detected
 
 ## 4. P1 - Important Issues Worth Fixing Next
 
-1. Reduced-motion support is incomplete for remaining animations.
-
-   Evidence: CSS includes several `prefers-reduced-motion` blocks, but not all motion paths are covered. Skeleton loaders animate infinitely via `animation: sk-shimmer 1.1s infinite` in `styles/src/04-data.css:127-133`, with no reduced-motion override in that file. The landing hero image wrapper applies `animation: heroFade 0.4s ease-out` in `styles/src/05-landing.css:310-314`; nearby reduced-motion blocks cover navbar, cards, footer links, and the page hero mark (`styles/src/05-landing.css:127-134`, `494-505`, `871-875`, `1153-1157`) but not `.img-swap`. Accordion panels still transition `max-height` in `styles/src/03-components.css:669-673`, while the reduced-motion block at `styles/src/03-components.css:613-634` covers card hover/focus motion only.
-
-   Impact: users who request reduced motion can still receive an infinite shimmer and other UI transitions. This is an accessibility gap, not an architecture failure.
+none detected
 
 ## 5. P2 - Minor Refinements
 
@@ -54,7 +50,7 @@ none detected
 
 ## 7. Senior Rating
 
-8/10. The project is solid for a production-facing static frontend demo: clear structure, accessible routing patterns, good metadata coverage, sensible image handling, explicit static-hosting files, and a conservative build pipeline. The rating is held back by incomplete reduced-motion coverage and a few small semantic/CSS polish defects, not by architecture-level risk.
+8/10. The project is solid for a production-facing static frontend demo: clear structure, accessible routing patterns, good metadata coverage, sensible image handling, explicit static-hosting files, and a conservative build pipeline. The rating is held back by a few small semantic/CSS polish defects, not by architecture-level risk.
 
 ---
 
@@ -85,11 +81,7 @@ none detected
 
 ## 4. P1 - Ważne Problemy Do Naprawy W Następnej Kolejności
 
-1. Obsługa reduced motion jest niepełna dla pozostałych animacji.
-
-   Dowód: CSS zawiera kilka bloków `prefers-reduced-motion`, ale nie wszystkie ścieżki ruchu są nimi objęte. Skeleton loadery animują się bez końca przez `animation: sk-shimmer 1.1s infinite` w `styles/src/04-data.css:127-133`, bez override reduced-motion w tym pliku. Wrapper obrazu hero na landingu ma `animation: heroFade 0.4s ease-out` w `styles/src/05-landing.css:310-314`; pobliskie bloki reduced-motion obejmują navbar, karty, linki stopki i znak page hero (`styles/src/05-landing.css:127-134`, `494-505`, `871-875`, `1153-1157`), ale nie `.img-swap`. Panele akordeonu nadal przechodzą przez `max-height` w `styles/src/03-components.css:669-673`, podczas gdy blok reduced-motion w `styles/src/03-components.css:613-634` obejmuje tylko ruch hover/focus kart.
-
-   Wpływ: użytkownicy z preferencją ograniczonego ruchu nadal mogą dostawać nieskończony shimmer i inne przejścia UI. To luka dostępnościowa, nie awaria architektury.
+none detected
 
 ## 5. P2 - Drobne Usprawnienia
 
@@ -116,4 +108,4 @@ none detected
 
 ## 7. Ocena Seniorska
 
-8/10. Projekt jest solidny jak na produkcyjnie prezentowane demo statycznego frontendu: ma czytelną strukturę, dostępne wzorce routingu, dobre pokrycie metadanych, sensowną obsługę obrazów, jawne pliki hostingu statycznego i konserwatywny pipeline builda. Ocenę obniża niepełne pokrycie reduced-motion oraz kilka drobnych defektów semantycznych i CSS polish, nie ryzyko architektoniczne.
+8/10. Projekt jest solidny jak na produkcyjnie prezentowane demo statycznego frontendu: ma czytelną strukturę, dostępne wzorce routingu, dobre pokrycie metadanych, sensowną obsługę obrazów, jawne pliki hostingu statycznego i konserwatywny pipeline builda. Ocenę obniża kilka drobnych defektów semantycznych i CSS polish, nie ryzyko architektoniczne.

@@ -143,6 +143,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
 .skeleton-table {
   display: grid;
   gap: 10px;
