@@ -35,12 +35,6 @@ none detected
 
    Impact: dropdown and toast spacing can render tighter than intended. This is a small UI polish defect.
 
-2. The contact form uses a `<label>` element for consent text without a labellable control.
-
-   Evidence: `scripts/ui/marketingPages.js:531-534` renders a `label.form-control` containing only text spans for "Zgoda"; no input, select, textarea, or other labellable element is associated with it. The form submission itself is local-only and guarded by native validation in `scripts/ui/marketingPages.js:597-607`.
-
-   Impact: minor semantic cleanup. If this is only explanatory copy, use neutral text markup; if consent must be explicit, add a real checkbox and validation.
-
 ## 6. Extra Quality Improvements
 
 - Add a small CSS quality check for unresolved custom properties or token-name typos, so mistakes like `--SPACE-2` and `--sapce-2` are caught before visual review.
@@ -93,17 +87,14 @@ none detected
    ---
    fixed
 
-2. Formularz kontaktowy używa elementu `<label>` dla tekstu zgody bez kontrolki, którą da się etykietować.
-
-   Dowód: `scripts/ui/marketingPages.js:531-534` renderuje `label.form-control` zawierający tylko tekstowe spany dla "Zgoda"; nie ma tam inputa, selecta, textarea ani innego elementu, z którym label mógłby być powiązany. Sam formularz wysyła dane tylko lokalnie i jest zabezpieczony natywną walidacją w `scripts/ui/marketingPages.js:597-607`.
-
-   Wpływ: drobne czyszczenie semantyczne. Jeśli to tylko tekst informacyjny, lepszy będzie neutralny markup tekstowy; jeśli zgoda ma być jawna, warto dodać realny checkbox i walidację.
-
 ## 6. Dodatkowe Ulepszenia Jakościowe
 
 - Dodać mały check jakości CSS dla nierozwiązanych custom properties lub literówek w nazwach tokenów, żeby błędy takie jak `--SPACE-2` i `--sapce-2` były wykrywane przed review wizualnym.
+
 - Dodać smoke albo unit check dla reduced motion obejmujący skeleton, hero, drawer, accordion i scrollowanie tras, żeby chronić istniejącą intencję dostępnościową.
+
 - Rozważyć bezpieczniejsze domyślne zachowanie wspólnych helperów: `Modal.open` i `dom.h` akceptują string jako HTML (`scripts/ui/components/modal.js:82`, `scripts/utils/dom.js:5`). Obecne tytuły modali i wiersze CRUD pochodzące od użytkownika są escapowane, ale domyślne wstawianie tekstu zmniejszyłoby ryzyko przyszłych błędów.
+
 - Jeśli hash-based marketing routes mają być osobno udostępniane, rozważyć route-aware Open Graph/canonical. Obecne metadane runtime aktualizują title i description przez `scripts/ui/marketingPages.js:1-4`, natomiast statyczne tagi OG/canonical w `index.html:12-30` pozostają skupione na stronie głównej.
 
 ## 7. Ocena Seniorska

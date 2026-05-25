@@ -6,6 +6,8 @@ Format wpisu: `YYYY-MM-DD - [Priorytet] Temat: krotki opis dowodu lub decyzji.`
 
 ## Resolved
 
+- 2026-05-25 - [P2] Jawna zgoda w formularzu kontaktowym: `scripts/ui/marketingPages.js` renderuje teraz wymagany checkbox `#contactConsent` / `name="consent"` z widoczna etykieta informujaca, ze formularz dotyczy demonstracyjnego projektu portfolio, a `styles/src/03-components.css` dodaje maly styl dla `.checkbox-control`. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano `node --check`, targeted `rg` i check natywnej walidacji formularza.
+
 - 2026-05-25 - [P1] Pelne reduced-motion dla pozostalych animacji: `styles/src/04-data.css` wylacza shimmer skeleton loaderow przy `prefers-reduced-motion: reduce`, `styles/src/05-landing.css` wylacza `heroFade` dla `.img-swap`, a `styles/src/03-components.css` usuwa przejscie `max-height` paneli accordion w reduced motion bez zmiany normalnego ruchu. Usunieto dokladny wpis P1 z `daily-AUDIT.md`; zweryfikowano targeted `rg`.
 
 - 2026-05-24 - [P2] Wspolny shell landing/marketing: `scripts/ui/layoutLanding.js` udostepnia wspolne helpery dla headera, footera, resources menu, mobile drawer, theme toggle, scroll state, logo scroll i accordion init, a `scripts/ui/marketingPages.js` renderuje publiczne strony przez te same helpery bez osobnej kopii nawigacji i stopki. Usunieto dokladny wpis P2 z `daily-AUDIT.md`; zweryfikowano `node --check`, targeted `rg` oraz `npm run test:smoke`.

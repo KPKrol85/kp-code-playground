@@ -528,10 +528,13 @@ function renderContactPage() {
                 <span class="label">Wiadomość</span>
                 <textarea class="input" name="message" rows="4" required minlength="10" placeholder="Opisz wyzwania operacyjne lub cele..."></textarea>
               </label>
-              <label class="form-control">
+              <div class="form-control">
                 <span class="label">Zgoda</span>
-                <span class="muted small">Wysyłając formularz, zgadzasz się na kontakt w sprawie FleetOps.</span>
-              </label>
+                <label class="checkbox-control" for="contactConsent">
+                  <input id="contactConsent" name="consent" type="checkbox" required />
+                  <span>Zgadzam się na kontakt w sprawie FleetOps. Formularz jest częścią demonstracyjnego projektu portfolio.</span>
+                </label>
+              </div>
               <button class="button primary" type="submit">Wyślij zapytanie</button>
             </form>
           </div>
