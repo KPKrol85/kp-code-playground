@@ -439,11 +439,11 @@ textarea:invalid:focus-visible {
 
 .navbar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   min-height: 64px;
   gap: var(--space-3);
-  padding: var(--space-2);
+  padding: 14px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -463,7 +463,7 @@ textarea:invalid:focus-visible {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -473,7 +473,7 @@ textarea:invalid:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-2) var(--space-3);
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   color: var(--text-muted);
   border: 1px solid transparent;
@@ -525,19 +525,19 @@ textarea:invalid:focus-visible {
   font-size: var(--fs-02);
 }
 
-@media (max-width: 768px) {
+@media (min-width: 760px) {
   .navbar {
-    align-items: flex-start;
-    padding: 14px 0;
+    align-items: center;
+    padding: var(--space-2);
   }
 
   .nav-links {
-    gap: 8px;
+    gap: var(--space-1);
   }
 
   .nav-links a,
   .nav-links button {
-    padding: 8px 10px;
+    padding: var(--space-2) var(--space-3);
   }
 }
 

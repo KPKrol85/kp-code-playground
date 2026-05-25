@@ -229,8 +229,7 @@ function dashboardView() {
   alerts.appendChild(alertsList);
 
   // ===== Layout columns =====
-  const columns = dom.h("div", "grid");
-  columns.style.gridTemplateColumns = "2fr 1fr";
+  const columns = dom.h("div", "grid dashboard-columns");
   columns.style.gap = "16px";
   columns.appendChild(activity);
   columns.appendChild(alerts);
