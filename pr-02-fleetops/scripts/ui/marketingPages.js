@@ -178,8 +178,8 @@ function renderProductPage() {
           <p>Umów demo lub uruchom wersję demonstracyjną w przeglądarce.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/login">Umów demo</a>
-          <a class="button secondary" href="#/app">Wejdz do aplikacji</a>
+          <a class="button primary" href="#/contact">Skontaktuj się</a>
+          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -271,8 +271,8 @@ function renderFeaturesPage() {
           <p>Wersja demo jest dostępna od razu, bez instalacji.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/app">Otwórz demo</a>
-          <a class="button secondary" href="#/contact">Porozmawiaj z nami</a>
+          <a class="button primary" href="#/contact">Skontaktuj się</a>
+          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -359,7 +359,7 @@ function renderPricingPage() {
         </div>
         <div class="hero-cta">
           <a class="button primary" href="#/contact">Skontaktuj się</a>
-          <a class="button secondary" href="#/login">Testuj demo</a>
+          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -487,7 +487,7 @@ function renderAboutPage() {
         </div>
         <div class="hero-cta">
           <a class="button primary" href="#/contact">Skontaktuj się</a>
-          <a class="button secondary" href="#/pricing">Zobacz cennik</a>
+          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,

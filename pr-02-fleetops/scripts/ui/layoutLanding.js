@@ -410,13 +410,10 @@ ${renderLandingHeader(themeAsset)}
         </section>
 
         <section class="container section landing-home__section">
-          <div class="landing-section-header landing-section-header--split">
-            <div>
-              <p class="tag">Funkcje</p>
-              <h2>Usprawnij dyspozycje, kondycje floty i SLA.</h2>
-              <p class="landing-section-copy">Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
-            </div>
-              <a class="button ghost" href="#/login">Otwórz panel</a>
+          <div class="landing-section-header">
+            <p class="tag">Funkcje</p>
+            <h2>Usprawnij dyspozycje, kondycje floty i SLA.</h2>
+            <p class="landing-section-copy">Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
           </div>
           <div class="grid feature-grid">
             <div class="feature-card">
