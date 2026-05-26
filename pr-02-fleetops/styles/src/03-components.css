@@ -234,17 +234,6 @@ html[data-theme="dark"] .button.secondary:hover {
 
 /* Theme toggles */
 
-.nav-toggle {
-  display: inline-flex;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border-radius: var(--radius-sm);
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-}
-
 #themeToggle,
 #themeToggleLanding {
   width: 36px;
@@ -444,107 +433,6 @@ textarea:invalid:focus-visible {
   font-size: var(--fs-01);
   color: var(--danger);
   line-height: var(--lh-normal);
-}
-
-/* Navbar */
-
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 64px;
-  gap: var(--space-3);
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.navbar nav {
-  display: flex;
-  align-items: center;
-}
-
-.navbar .nav-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-/* Links */
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.nav-links a,
-.nav-links button {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  border: 1px solid transparent;
-  background: transparent;
-  font: inherit;
-  cursor: pointer;
-  transition:
-    background 140ms ease,
-    color 140ms ease,
-    border-color 140ms ease;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-  color: var(--text);
-  background: var(--bg-muted);
-  border-color: var(--border);
-}
-
-.nav-links a:focus-visible,
-.nav-links button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  background: var(--accent-ghost);
-  color: var(--text);
-  border-color: transparent;
-}
-
-.nav-links a[aria-current="page"] {
-  color: var(--accent);
-  background: var(--accent-ghost);
-  border-color: transparent;
-  font-weight: var(--fw-medium);
-}
-
-.nav-links a[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 4px;
-  height: 1px;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  opacity: 0.4;
-}
-
-.nav-links .button {
-  font-size: var(--fs-02);
-}
-
-@media (min-width: 760px) {
-  .nav-links {
-    gap: var(--space-1);
-  }
-
-  .nav-links a,
-  .nav-links button {
-    padding: var(--space-2) var(--space-3);
-  }
 }
 
 /* Landing Cards */
