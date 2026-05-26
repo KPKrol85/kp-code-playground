@@ -71,11 +71,12 @@ function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
         <div class="container footer__inner">
           <div class="footer__grid">
             <div class="footer__brand">
+
               <a class="footer__logo" href="#/" aria-label="FleetOps - strona główna" data-scroll-top="home">
                 <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
+                <span class="footer__name">FleetOps</span>
               </a>
-              <p class="footer__desc">Zarządzaj flotą, dyspozytornią i SLA w jednym, spokojnym środowisku pracy dla zespołów operacyjnych.</p>
-              <span class="footer__eyebrow">Stworzone dla zespołów operacyjnych</span>
+              <p class="footer__desc">Jeden przejrzysty panel do kontroli floty, zleceń i alertów SLA — zaprojektowany dla szybkiej pracy zespołów operacyjnych.</p>
             </div>
 
             <div class="footer__col">
@@ -100,14 +101,7 @@ function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
               </ul>
             </div>
 
-            <div class="footer__col">
-              <h3 class="footer__title">Informacje prawne</h3>
-              <ul class="footer__list">
-                <li><a href="#/terms">Regulamin</a></li>
-                <li><a href="#/privacy">Polityka prywatności</a></li>
-                <li><a href="#/cookies">Polityka cookies</a></li>
-              </ul>
-            </div>
+
 
             <div class="footer__col footer__contact">
               <h3 class="footer__title">Kontakt</h3>
@@ -155,7 +149,14 @@ function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
               </div>
             </div>
           </div>
-
+          <nav class="footer__legal" aria-label="Informacje prawne">
+            <span class="footer__legal-label">Informacje prawne</span>
+            <ul class="footer__legal-list">
+              <li><a href="#/terms">Regulamin</a></li>
+              <li><a href="#/privacy">Polityka prywatności</a></li>
+              <li><a href="#/cookies">Polityka cookies</a></li>
+            </ul>
+          </nav>
           <div class="footer__bottom">
             <span>© 2026 KP_Code Digital Studio | Wszelkie prawa zastrzeżone.</span>
           </div>
