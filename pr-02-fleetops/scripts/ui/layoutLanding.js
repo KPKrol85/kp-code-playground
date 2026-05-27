@@ -71,7 +71,6 @@ function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
         <div class="container footer__inner">
           <div class="footer__grid">
             <div class="footer__brand">
-
               <a class="footer__logo" href="#/" aria-label="FleetOps - strona główna" data-scroll-top="home">
                 <img class="logo__icon" src="${themeAsset("assets/logos/logo-black.svg", "assets/logos/logo-white.svg")}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" width="52" height="52" />
                 <span class="footer__name">FleetOps</span>
@@ -101,54 +100,60 @@ function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
               </ul>
             </div>
 
-
-
-            <div class="footer__col footer__contact">
+            <div class="footer__col footer__col--contact">
               <h3 class="footer__title">Kontakt</h3>
 
-               <address class="footer__contact">
-                  <ul class="footer__list footer__contact-list">
-                    <li>
-                      <span class="footer__contact-text">
+              <address class="footer__address">
+                <ul class="footer__list footer__contact-list">
+                  <li>
+                    <span class="footer__contact-text">
                       ul. Marynarki Wojennej 12<br>
-                       33-100 Tarnów, Polska
-                      </span>
-                    </li>
-                    <li>
-                      <a href="tel:+48533537091" aria-label="Zadzwoń">
-                      +48 533 537 091
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mailto:kontakt@kp-code.pl" aria-label="Napisz emaila">
-                      kontakt@kp-code.pl
-                      </a>
-                    </li>
-                  </ul>
+                      33-100 Tarnów, Polska
+                    </span>
+                  </li>
+                  <li>
+                    <a href="tel:+48533537091" aria-label="Zadzwoń pod numer +48 533 537 091">
+                      <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                      </svg>
+                      <span class="footer__contact-label">+48 533 537 091</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="mailto:kontakt@kp-code.pl" aria-label="Napisz email na kontakt@kp-code.pl">
+                      <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                      </svg>
+                      <span class="footer__contact-label">kontakt@kp-code.pl</span>
+                    </a>
+                  </li>
+                </ul>
               </address>
 
+              <div class="footer__social-block">
+                <h3 class="footer__title">Media społecznościowe</h3>
 
-              <h4 class="footer__title">Media społecznościowe</h4>
-
-              <div class="footer__social" aria-label="Linki społecznościowe FleetOps">
-                <a class="footer__social-link" href="https://www.linkedin.com" aria-label="Profil FleetOps na LinkedIn">
-                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M6 9H3v12h3V9Zm-1.5-6a1.75 1.75 0 1 0 0 3.5A1.75 1.75 0 0 0 4.5 3ZM21 14.5c0-3.1-1.65-5.1-4.6-5.1-1.4 0-2.4.77-2.8 1.5V9H10v12h3v-6.2c0-1.65.6-2.8 2.1-2.8 1.15 0 1.8.77 1.8 2.8V21h3v-6.5Z" fill="currentColor"></path>
-                  </svg>
-                </a>
-                <a class="footer__social-link" href="https://github.com" aria-label="Profil FleetOps na GitHub">
-                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.5v-1.75c-2.78.6-3.36-1.18-3.36-1.18-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.08 1.56 1.06 1.56 1.06.9 1.56 2.36 1.1 2.94.84.1-.67.35-1.1.64-1.36-2.22-.25-4.56-1.12-4.56-4.98 0-1.1.4-2 .98-2.72-.1-.25-.42-1.28.1-2.66 0 0 .8-.26 2.62 1a9.1 9.1 0 0 1 4.78 0c1.82-1.26 2.62-1 2.62-1 .52 1.38.2 2.4.1 2.66.62.72 1 1.62 1 2.72 0 3.88-2.34 4.72-4.58 4.98.36.32.68.94.68 1.9v2.82c0 .28.18.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"></path>
-                  </svg>
-                </a>
-                <a class="footer__social-link" href="https://x.com" aria-label="Profil FleetOps na X">
-                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M18.3 3H21l-6.6 7.5L22 21h-6.9l-4.5-5.9L4.8 21H2.1l7.1-8.2L2 3h7l4.1 5.4L18.3 3Zm-1.2 16h1.7L8.8 5H7.1l10 14Z" fill="currentColor"></path>
-                  </svg>
-                </a>
+                <div class="footer__social" aria-label="Linki społecznościowe FleetOps">
+                  <a class="footer__social-link" href="https://www.linkedin.com" aria-label="Profil FleetOps na LinkedIn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M6 9H3v12h3V9Zm-1.5-6a1.75 1.75 0 1 0 0 3.5A1.75 1.75 0 0 0 4.5 3ZM21 14.5c0-3.1-1.65-5.1-4.6-5.1-1.4 0-2.4.77-2.8 1.5V9H10v12h3v-6.2c0-1.65.6-2.8 2.1-2.8 1.15 0 1.8.77 1.8 2.8V21h3v-6.5Z" fill="currentColor"></path>
+                    </svg>
+                  </a>
+                  <a class="footer__social-link" href="https://github.com" aria-label="Profil FleetOps na GitHub">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.5v-1.75c-2.78.6-3.36-1.18-3.36-1.18-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.08 1.56 1.06 1.56 1.06.9 1.56 2.36 1.1 2.94.84.1-.67.35-1.1.64-1.36-2.22-.25-4.56-1.12-4.56-4.98 0-1.1.4-2 .98-2.72-.1-.25-.42-1.28.1-2.66 0 0 .8-.26 2.62 1a9.1 9.1 0 0 1 4.78 0c1.82-1.26 2.62-1 2.62-1 .52 1.38.2 2.4.1 2.66.62.72 1 1.62 1 2.72 0 3.88-2.34 4.72-4.58 4.98.36.32.68.94.68 1.9v2.82c0 .28.18.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"></path>
+                    </svg>
+                  </a>
+                  <a class="footer__social-link" href="https://x.com" aria-label="Profil FleetOps na X">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M18.3 3H21l-6.6 7.5L22 21h-6.9l-4.5-5.9L4.8 21H2.1l7.1-8.2L2 3h7l4.1 5.4L18.3 3Zm-1.2 16h1.7L8.8 5H7.1l10 14Z" fill="currentColor"></path>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
+
           <nav class="footer__legal" aria-label="Informacje prawne">
             <span class="footer__legal-label">Informacje prawne</span>
             <ul class="footer__legal-list">
@@ -157,6 +162,7 @@ function renderLandingFooter(themeAsset = getLandingThemeAsset()) {
               <li><a href="#/cookies">Polityka cookies</a></li>
             </ul>
           </nav>
+
           <div class="footer__bottom">
             <span>© 2026 KP_Code Digital Studio | Wszelkie prawa zastrzeżone.</span>
           </div>
