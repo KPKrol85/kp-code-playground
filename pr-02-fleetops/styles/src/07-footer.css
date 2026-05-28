@@ -30,34 +30,28 @@
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-3);
+  gap: var(--space-4);
   width: fit-content;
   color: var(--text);
 }
 
 .landing .footer__logo img {
-  width: 92px;
-  height: 92px;
+  width: clamp(64px, 6vw, 72px);
+  height: clamp(64px, 6vw, 72px);
 }
 
 .landing .footer__name {
   font-size: var(--fs-04);
   font-weight: var(--fw-bold);
-  color: var(--text);
 }
 
 .landing .footer__desc {
-  max-width: 30ch;
-  margin: 0;
-  color: var(--text-muted);
-  line-height: 1.65;
+  max-width: 26ch;
 }
 
 .landing .footer__title {
-  margin: 0;
   color: var(--text-muted);
   font-size: var(--fs-02);
-  font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-tight);
   text-transform: uppercase;
 }
@@ -67,7 +61,6 @@
   gap: var(--space-2);
   margin: 0;
   padding: 0;
-  list-style: none;
 }
 
 .landing .footer__list a {
@@ -94,9 +87,7 @@ background: color-mix(in srgb, var(--bg-muted) 15%, transparent);
   font-style: normal;
 }
 
-.landing .footer__contact-list {
-  gap: var(--space-2);
-}
+
 
 .landing .footer__contact-list a {
   display: inline-flex;
@@ -124,7 +115,7 @@ background: color-mix(in srgb, var(--bg-muted) 15%, transparent);
 }
 
 .landing .footer__social-block {
-  margin-top: var(--space-4);
+  margin-top: var(--space-6);
 }
 
 .landing .footer__social {
@@ -140,13 +131,24 @@ background: color-mix(in srgb, var(--bg-muted) 15%, transparent);
   align-items: center;
   justify-content: center;
   color: var(--text);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: var(--radius-sm);
   background: var(--surface-2);
   transition:
     color 140ms ease,
     background-color 140ms ease,
     border-color 140ms ease;
+}
+
+.landing .footer__social-link img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+html[data-theme="dark"] .landing .footer__social-link img {
+  filter: invert(1);
 }
 
 .landing .footer__social-link:hover,
@@ -162,7 +164,7 @@ background: color-mix(in srgb, var(--bg-muted) 15%, transparent);
   width: 100%;
   color: var(--text-muted);
   font-size: var(--fs-01);
-  margin-top: var(--space-4);
+  margin-top: var(--space-6);
 }
 
 .landing .footer__legal-label {
