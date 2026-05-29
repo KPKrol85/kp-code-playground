@@ -234,8 +234,7 @@ html[data-theme="dark"] .button.secondary:hover {
 
 /* Theme toggles */
 
-#themeToggle,
-#themeToggleLanding {
+.theme-toggle {
   width: 36px;
   height: 36px;
   padding: 0;
@@ -252,13 +251,11 @@ html[data-theme="dark"] .button.secondary:hover {
   display: none;
 }
 
-html[data-theme="light"] #themeToggleLanding .theme-toggle__icon--light,
-html[data-theme="light"] #themeToggle .theme-toggle__icon--light {
+html[data-theme="light"] .theme-toggle .theme-toggle__icon--light {
   display: block;
 }
 
-html[data-theme="dark"] #themeToggleLanding .theme-toggle__icon--dark,
-html[data-theme="dark"] #themeToggle .theme-toggle__icon--dark {
+html[data-theme="dark"] .theme-toggle .theme-toggle__icon--dark {
   display: block;
 }
 

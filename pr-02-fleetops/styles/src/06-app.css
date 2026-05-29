@@ -116,7 +116,7 @@
   margin-left: 0;
 }
 
-.topbar-actions #themeToggle {
+.topbar-actions > .theme-toggle {
   display: none;
 }
 
@@ -204,18 +204,6 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-}
-
-.theme-toggle__icon {
-  display: none;
-}
-
-html[data-theme="light"] #themeToggleMobile .theme-toggle__icon--light {
-  display: block;
-}
-
-html[data-theme="dark"] #themeToggleMobile .theme-toggle__icon--dark {
-  display: block;
 }
 
 .drawer {
@@ -611,7 +599,7 @@ body[data-compact="true"] .topbar {
     padding: 14px var(--space-4);
   }
 
-  .topbar-actions #themeToggle {
+  .topbar-actions > .theme-toggle {
     display: inline-flex;
   }
 

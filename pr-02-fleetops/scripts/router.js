@@ -2,12 +2,14 @@ function renderInfoPage({ title, body }) {
   const app = document.getElementById("app");
   app.innerHTML = `
     <div class="landing">
-      <header class="container navbar">
-        <a class="logo flex" href="#/" aria-label="FleetOps — Strona główna" data-scroll-top="home">
-          <img src="assets/logos/logo-black.svg" alt="FleetOps logo" width="24" height="24" />
+      <header class="container site-header">
+        <a class="site-header__brand logo flex" href="#/" aria-label="FleetOps — Strona główna" data-scroll-top="home">
+          <img class="site-header__logo logo__icon" src="assets/logos/logo-black.svg" alt="FleetOps logo" width="44" height="44" />
           <span>FleetOps</span>
         </a>
-        <a class="button ghost" href="#/login">Zaloguj się</a>
+        <div class="site-header__actions">
+          <a class="button ghost site-header__action" href="#/login">Zaloguj się</a>
+        </div>
       </header>
       <main class="container section" id="main-content">
         <div class="hero-card">
@@ -29,7 +31,7 @@ function renderLogin() {
     <main class="container section" id="main-content">
       <div class="hero-card" style="max-width: 520px; margin: 40px auto;">
         <div class="flex-between" style="margin-bottom: 12px;">
-          <div class="logo flex" style="--login-logo-size: 32px;">
+          <div class="logo flex" style="--login-logo-size: var(--logo-size-2);">
             <img class="logo__icon" src="${FleetStore.state.preferences.theme === "dark" ? "assets/logos/logo-white.svg" : "assets/logos/logo-black.svg"}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" style="width: var(--login-logo-size); height: var(--login-logo-size);" />
             <strong>FleetOps</strong>
           </div>
@@ -98,10 +100,10 @@ function applyAriaCurrent() {
     return matched;
   };
 
-  const navLinks = document.querySelectorAll(".nav-links a");
+  const navLinks = document.querySelectorAll(".site-header__links a");
   const hasNavMatch = updateGroup(navLinks);
 
-  const homeLogo = document.querySelector('.navbar .logo[data-scroll-top="home"]');
+  const homeLogo = document.querySelector('.site-header__brand[data-scroll-top="home"]');
   if (homeLogo) {
     if (!hasNavMatch && normalizedHash === "#/") {
       homeLogo.setAttribute("aria-current", "page");

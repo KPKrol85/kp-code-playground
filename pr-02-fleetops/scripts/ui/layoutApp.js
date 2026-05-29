@@ -22,12 +22,12 @@ function renderAppShell(viewTitle, contentNode) {
 
   const appTopbar = dom.h("div", "app-topbar");
   appTopbar.innerHTML = `
-    <a class="app-topbar__brand logo flex" href="#/app" aria-label="FleetOps - Panel" data-scroll-top="app" style="--app-logo-size: 26px;">
+    <a class="app-topbar__brand logo flex" href="#/app" aria-label="FleetOps - Panel" data-scroll-top="app" style="--app-logo-size: var(--logo-size-1);">
       <img class="logo__icon" src="${theme === "dark" ? "assets/logos/logo-white.svg" : "assets/logos/logo-black.svg"}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
       <span>FleetOps</span>
     </a>
     <div class="app-topbar__actions">
-      <button class="button ghost" id="themeToggleMobile" type="button" aria-label="Przełącz motyw">
+      <button class="button ghost theme-toggle" id="themeToggleMobile" type="button" aria-label="Przełącz motyw">
         <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
@@ -58,7 +58,7 @@ function renderAppShell(viewTitle, contentNode) {
   sidebar.setAttribute("aria-label", "Nawigacja aplikacji");
   sidebar.setAttribute("aria-hidden", "true");
   sidebar.innerHTML = `
-    <a class="logo flex" href="#/app" aria-label="FleetOps - Panel" data-scroll-top="app" style="--app-logo-size: 30px;">
+    <a class="logo flex" href="#/app" aria-label="FleetOps - Panel" data-scroll-top="app" style="--app-logo-size: var(--logo-size-2);">
       <img class="logo__icon" src="${theme === "dark" ? "assets/logos/logo-white.svg" : "assets/logos/logo-black.svg"}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" style="width: var(--app-logo-size); height: var(--app-logo-size);" />
       <span>FleetOps</span>
     </a>
@@ -89,7 +89,7 @@ function renderAppShell(viewTitle, contentNode) {
           ${roleOptions}
         </select>
       </label>
-      <button class="button ghost" id="themeToggle" type="button" aria-label="Przełącz motyw">
+      <button class="button ghost theme-toggle" id="themeToggle" type="button" aria-label="Przełącz motyw">
         <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
