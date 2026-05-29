@@ -202,7 +202,6 @@ html[data-theme="dark"] .landing .footer__social-link img {
   color: var(--text-muted);
   border-radius: var(--radius-sm);
   text-underline-offset: 4px;
-
   transition:
     color 140ms ease,
     background-color 140ms ease;
