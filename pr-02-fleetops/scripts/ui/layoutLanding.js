@@ -419,11 +419,16 @@ ${renderLandingHeader(themeAsset)}
           </div>
         </section>
 
-        <section class="container section landing-home__section">
-          <div class="landing-section-header">
+
+
+
+
+
+        <section class="container section">
+          <div class="landing-section__header">
             <p class="tag">Funkcje</p>
-            <h2>Usprawnij dyspozycje, kondycje floty i SLA.</h2>
-            <p class="landing-section-copy">Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
+            <h2 class="landing-section__title">Usprawnij dyspozycje, kondycje floty i SLA.</h2>
+            <p class="landing-section__lead">Pracuj szybciej dzięki jasnym statusom, filtrom i alertom prosto z panelu.</p>
           </div>
           <div class="grid feature-grid">
             <div class="feature-card">
@@ -445,10 +450,10 @@ ${renderLandingHeader(themeAsset)}
           </div>
         </section>
 
-        <section class="container section landing-home__section">
-          <div class="landing-section-header">
+        <section class="container section">
+          <div class="landing-section__header">
             <p class="tag">Jak to dziala</p>
-            <h2>3 kroki do kontroli nad transportem</h2>
+            <h2 class="landing-section__title">3 kroki do kontroli nad transportem</h2>
           </div>
           <div class="grid how-grid">
             <div class="step">
@@ -466,10 +471,10 @@ ${renderLandingHeader(themeAsset)}
           </div>
         </section>
 
-        <section class="container section landing-home__section">
-          <div class="landing-section-header">
+        <section class="container section">
+          <div class="landing-section__header">
             <p class="tag">Cennik</p>
-            <h2>Lekki cennik na start</h2>
+            <h2 class="landing-section__title">Lekki cennik na start</h2>
           </div>
           <div class="pricing">
             <div class="price-card">
@@ -493,10 +498,10 @@ ${renderLandingHeader(themeAsset)}
           </div>
         </section>
 
-        <section class="container section landing-home__section">
-          <div class="landing-section-header">
+        <section class="container section">
+          <div class="landing-section__header">
             <p class="tag">Opinie</p>
-            <h2>Operatorzy o FleetOps</h2>
+            <h2 class="landing-section__title">Operatorzy o FleetOps</h2>
           </div>
           <div class="testimonials">
             <div class="testimonial">
@@ -514,10 +519,10 @@ ${renderLandingHeader(themeAsset)}
           </div>
         </section>
 
-        <section class="container section landing-home__section faq">
-          <div class="landing-section-header">
+        <section class="container section faq">
+          <div class="landing-section__header">
             <p class="tag">Pytania</p>
-            <h2>Najczęstsze pytania</h2>
+            <h2 class="landing-section__title">Najczęstsze pytania</h2>
           </div>
           <div class="accordion" id="faq">
             <div class="accordion-item">
