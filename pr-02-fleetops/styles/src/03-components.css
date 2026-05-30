@@ -46,16 +46,6 @@ hr {
   box-shadow: var(--shadow);
 }
 
-/* Logo */
-
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-compact);
-}
-
 /* Theme swap */
 
 .logo__icon--dark {
@@ -76,7 +66,7 @@ hr {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-1);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--border);
@@ -115,7 +105,7 @@ hr {
 
 /* Variants */
 
-.button.primary {
+.button--primary {
   background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 88%, white 12%), color-mix(in srgb, var(--accent-strong) 88%, white 12%));
   color: #ffffff;
   border-color: transparent;
@@ -128,7 +118,7 @@ hr {
     filter 140ms ease;
 }
 
-.button.primary:hover {
+.button--primary:hover {
   filter: brightness(1.12) saturate(1.08);
   transform: translateY(-1px);
   box-shadow:
@@ -136,7 +126,7 @@ hr {
     inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
-.button.primary:active {
+.button--primary:active {
   filter: brightness(0.98) saturate(1.02);
   transform: translateY(0);
   box-shadow:
@@ -144,21 +134,21 @@ hr {
     inset 0 2px 8px rgba(0, 0, 0, 0.22);
 }
 
-html[data-theme="dark"] .button.primary {
+html[data-theme="dark"] .button--primary {
   color: #0b0d10;
 }
 
-.button.ghost {
+.button--ghost {
   background: transparent;
   color: var(--text-muted);
   border-color: var(--border);
 }
 
-.button.ghost:hover {
+.button--ghost:hover {
   color: var(--text);
 }
 
-.button.secondary {
+.button--secondary {
   position: relative;
   overflow: hidden;
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-ghost) 72%, white 28%), var(--accent-ghost));
@@ -175,7 +165,7 @@ html[data-theme="dark"] .button.primary {
     color 140ms ease;
 }
 
-.button.secondary::before {
+.button--secondary::before {
   content: "";
   position: absolute;
   inset: -40% -60%;
@@ -188,7 +178,7 @@ html[data-theme="dark"] .button.primary {
   pointer-events: none;
 }
 
-.button.secondary:hover {
+.button--secondary:hover {
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-ghost) 62%, white 38%), color-mix(in srgb, var(--accent-ghost) 88%, var(--bg) 12%));
   border-color: color-mix(in srgb, var(--accent) 34%, var(--border) 66%);
   box-shadow:
@@ -197,19 +187,19 @@ html[data-theme="dark"] .button.primary {
   transform: translateY(-1px);
 }
 
-.button.secondary:hover::before {
+.button--secondary:hover::before {
   opacity: 1;
   transform: translateX(55%) rotate(14deg);
 }
 
-.button.secondary:active {
+.button--secondary:active {
   transform: translateY(0);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.55),
     0 8px 18px rgba(15, 23, 42, 0.08);
 }
 
-.button.secondary:focus-visible {
+.button--secondary:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--accent) 78%, white 22%);
   outline-offset: 3px;
   box-shadow:
@@ -217,7 +207,7 @@ html[data-theme="dark"] .button.primary {
     inset 0 1px 0 rgba(255, 255, 255, 0.65);
 }
 
-html[data-theme="dark"] .button.secondary {
+html[data-theme="dark"] .button--secondary {
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-ghost) 74%, #0b0d10 26%), color-mix(in srgb, var(--accent-ghost) 92%, #0b0d10 8%));
   border-color: color-mix(in srgb, var(--accent) 26%, var(--border) 74%);
   box-shadow:
@@ -225,7 +215,7 @@ html[data-theme="dark"] .button.secondary {
     0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
-html[data-theme="dark"] .button.secondary:hover {
+html[data-theme="dark"] .button--secondary:hover {
   border-color: color-mix(in srgb, var(--accent) 36%, var(--border) 64%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -442,6 +432,30 @@ textarea:invalid:focus-visible {
   box-shadow: var(--shadow);
 }
 
+.login-card {
+  max-width: 520px;
+  margin: 40px auto;
+}
+
+.login-card__header {
+  margin-bottom: 12px;
+}
+
+.login-card__logo {
+  --login-logo-size: var(--logo-size-2);
+}
+
+.login-card__logo-icon {
+  width: var(--login-logo-size);
+  height: var(--login-logo-size);
+}
+
+.login-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 .feature-grid {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
@@ -632,6 +646,25 @@ html[data-theme="dark"] .stat-card:focus-within {
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
+}
+
+.modal-form {
+  display: grid;
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions--form {
+  margin-top: 4px;
+}
+
+.modal-actions--confirm {
+  margin-top: 16px;
 }
 
 /* Dropdown */

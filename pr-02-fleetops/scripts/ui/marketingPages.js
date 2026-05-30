@@ -56,8 +56,8 @@ function renderProductPage() {
             <h2>Operacje w czasie rzeczywistym</h2>
             <p>Widoki zleceń, floty i kierowców synchronizują statusy, ETA i alerty. Zespół operacyjny ma jedno źródło prawdy.</p>
             <div class="hero-cta">
-              <a class="button primary" href="#/login">Umów demo</a>
-              <a class="button secondary" href="#/app">Zobacz panel</a>
+              <a class="button button--primary" href="#/login">Umów demo</a>
+              <a class="button button--secondary" href="#/app">Zobacz panel</a>
             </div>
           </div>
           <div class="marketing-hero__panel">
@@ -178,8 +178,8 @@ function renderProductPage() {
           <p>Umów demo lub uruchom wersję demonstracyjną w przeglądarce.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Skontaktuj się</a>
-          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
+          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -271,8 +271,8 @@ function renderFeaturesPage() {
           <p>Wersja demo jest dostępna od razu, bez instalacji.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Skontaktuj się</a>
-          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
+          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -297,7 +297,7 @@ function renderPricingPage() {
               <li>Podstawowe alerty</li>
               <li>Raporty CSV</li>
             </ul>
-            <a class="button secondary" href="#/login">Zacznij za darmo</a>
+            <a class="button button--secondary" href="#/login">Zacznij za darmo</a>
           </div>
           <div class="price-card featured">
             <div class="badge">Rozwoj</div>
@@ -308,7 +308,7 @@ function renderPricingPage() {
               <li>SLA alerts + raporty</li>
               <li>Kierowcy + Role</li>
             </ul>
-            <a class="button primary" href="#/contact">Umów demo</a>
+            <a class="button button--primary" href="#/contact">Umów demo</a>
           </div>
           <div class="price-card">
             <div class="badge">Korporacyjny</div>
@@ -319,7 +319,7 @@ function renderPricingPage() {
               <li>SLA 99.9% + SSO</li>
               <li>Dedykowane wsparcie</li>
             </ul>
-            <a class="button ghost" href="#/contact">Porozmawiajmy</a>
+            <a class="button button--ghost" href="#/contact">Porozmawiajmy</a>
           </div>
         </div>
       </section>
@@ -349,7 +349,7 @@ function renderPricingPage() {
             </tbody>
           </table>
         </div>
-        <p class="muted small" style="margin-top: var(--space-2);">Faktura VAT, SLA i wsparcie w cenie. Ceny netto.</p>
+        <p class="muted small pricing-note">Faktura VAT, SLA i wsparcie w cenie. Ceny netto.</p>
       </section>
 
       <section class="section-tight cta-panel">
@@ -358,8 +358,8 @@ function renderPricingPage() {
           <p>Skontaktuj się, przygotujemy ofertę dopasowaną do skali operacji.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Skontaktuj się</a>
-          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
+          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -380,8 +380,8 @@ function renderSecurityPage() {
           <p>Ta podstrona jest w trakcie przygotowań. Udostępnimy szczegóły o praktykach i certyfikacjach bezpieczeństwa.</p>
           <p class="muted small">W przygotowaniu - wróć wkrótce.</p>
           <div class="hero-cta">
-            <a class="button primary" href="#/contact">Skontaktuj się</a>
-            <a class="button secondary" href="#/app">Zobacz demo</a>
+            <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+            <a class="button button--secondary" href="#/app">Zobacz demo</a>
           </div>
         </div>
       </section>
@@ -403,8 +403,8 @@ function renderCareersPage() {
           <p>Budujemy sekcję z ofertami pracy i opisem zespołu. Jeśli chcesz porozmawiać wcześniej, odezwij się.</p>
           <p class="muted small">W przygotowaniu - sprawdź ponownie niebawem.</p>
           <div class="hero-cta">
-            <a class="button primary" href="#/contact">Skontaktuj się</a>
-            <a class="button secondary" href="#/app">Zobacz demo</a>
+            <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+            <a class="button button--secondary" href="#/app">Zobacz demo</a>
           </div>
         </div>
       </section>
@@ -486,8 +486,8 @@ function renderAboutPage() {
           <p>Porozmawiajmy o twojej flocie i pokażmy, jak pracuje FleetOps.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Skontaktuj się</a>
-          <a class="button secondary" href="#/app">Zobacz demo aplikacji</a>
+          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
         </div>
       </section>
     `,
@@ -506,7 +506,7 @@ function renderContactPage() {
           <div class="form-card">
             <h2>Formularz kontaktowy</h2>
             <p class="muted">Zostaw dane, a odezwiemy się w ciągu 1 dnia roboczego.</p>
-            <form id="contactForm" style="display:grid; gap: 12px; margin-top: var(--space-3);">
+            <form id="contactForm" class="contact-form">
               <label class="form-control">
                 <span class="label">Imię i nazwisko</span>
                 <input class="input" name="name" type="text" required minlength="3" placeholder="Jan Kowalski" />
@@ -535,7 +535,7 @@ function renderContactPage() {
                   <span>Zgadzam się na kontakt w sprawie FleetOps. Formularz jest częścią demonstracyjnego projektu portfolio.</span>
                 </label>
               </div>
-              <button class="button primary" type="submit">Wyślij zapytanie</button>
+              <button class="button button--primary" type="submit">Wyślij zapytanie</button>
             </form>
           </div>
           <div class="marketing-card">
@@ -568,7 +568,7 @@ function renderContactPage() {
             <div class="card-soft">
               <p class="muted small">FleetOps to projekt demonstracyjny. Kontakt dotyczy twórcy projektu.</p>
               <p class="muted small">Projekt i interfejs: Kamil Król (kp_code_).</p>
-              <a class="button secondary" href="#/pricing">Zobacz cennik</a>
+              <a class="button button--secondary" href="#/pricing">Zobacz cennik</a>
             </div>
           </div>
         </div>
@@ -757,8 +757,8 @@ function renderPrivacyPage() {
           <p>Skontaktuj się z nami, odpowiemy w sprawie wersji demo FleetOps.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/contact">Kontakt</a>
-          <a class="button secondary" href="#/app">Przejdź do demo</a>
+          <a class="button button--primary" href="#/contact">Kontakt</a>
+          <a class="button button--secondary" href="#/app">Przejdź do demo</a>
         </div>
       </section>
     `,
@@ -891,8 +891,8 @@ function renderTermsPage() {
           <p>Przetestuj demo lub napisz do nas z pytaniami o wdrożenie.</p>
         </div>
         <div class="hero-cta">
-          <a class="button primary" href="#/app">Otwórz demo</a>
-          <a class="button secondary" href="#/contact">Skontaktuj się</a>
+          <a class="button button--primary" href="#/app">Otwórz demo</a>
+          <a class="button button--secondary" href="#/contact">Skontaktuj się</a>
         </div>
       </section>
     `,

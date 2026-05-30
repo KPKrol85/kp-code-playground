@@ -26,7 +26,7 @@ function renderLandingHeader(themeAsset = getLandingThemeAsset()) {
           <span>FleetOps</span>
         </a>
         <nav class="site-header__nav" aria-label="Nawigacja główna">
-          <button class="button ghost site-header__menu-button" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
+          <button class="button button--ghost site-header__menu-button" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Przełącz nawigację">
 ${menuToggleIcon}
           </button>
           <div class="site-header__backdrop" data-nav-close></div>
@@ -49,8 +49,8 @@ ${menuToggleIcon}
               </li>
             </ul>
             <div class="site-header__actions">
-              <a class="button ghost site-header__action" href="#/login">Zaloguj się</a>
-              <button class="button ghost theme-toggle site-header__theme-toggle" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
+              <a class="button button--ghost site-header__action" href="#/login">Zaloguj się</a>
+              <button class="button button--ghost theme-toggle site-header__theme-toggle" id="themeToggleLanding" type="button" aria-label="Przełącz motyw">
                 <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
                   <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
@@ -390,8 +390,8 @@ ${renderLandingHeader(themeAsset)}
             <h1>FleetOps - zarządzanie transportem bez tarcia.</h1>
             <p>Monitoruj zlecenia, pojazdy i kierowców w jednym widoku. Alerty SLA, realtime ETA i szybkie decyzje wspierane przez przejrzysty interfejs.</p>
             <div class="hero-cta">
-              <a class="button primary" href="#/login">Zacznij</a>
-              <a class="button secondary" href="#/app">Zobacz demo</a>
+              <a class="button button--primary" href="#/login">Zacznij</a>
+              <a class="button button--secondary" href="#/app">Zobacz demo</a>
               <span class="muted small">Bez instalacji. Dane demo.</span>
             </div>
           </div>
@@ -473,19 +473,19 @@ ${renderLandingHeader(themeAsset)}
               <div class="badge">Start</div>
               <div class="price">199 PLN</div>
               <p>miesięcznie, do 15 pojazdów</p>
-              <a class="button secondary" href="#/login">Zacznij za darmo</a>
+              <a class="button button--secondary" href="#/login">Zacznij za darmo</a>
             </div>
             <div class="price-card featured">
               <div class="badge">Rozwoj</div>
               <div class="price">499 PLN</div>
               <p>miesięcznie, do 60 pojazdów</p>
-              <a class="button secondary" href="#/contact">Umów demo</a>
+              <a class="button button--secondary" href="#/contact">Umów demo</a>
             </div>
             <div class="price-card">
               <div class="badge">Korporacyjny</div>
               <p>Indywidualnie</p>
               <p>dla flot 60+ pojazdów</p>
-              <a class="button secondary" href="#/contact">Porozmawiajmy</a>
+              <a class="button button--secondary" href="#/contact">Porozmawiajmy</a>
             </div>
           </div>
         </section>

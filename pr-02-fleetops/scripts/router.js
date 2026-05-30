@@ -8,14 +8,14 @@ function renderInfoPage({ title, body }) {
           <span>FleetOps</span>
         </a>
         <div class="site-header__actions">
-          <a class="button ghost site-header__action" href="#/login">Zaloguj się</a>
+          <a class="button button--ghost site-header__action" href="#/login">Zaloguj się</a>
         </div>
       </header>
       <main class="container section" id="main-content">
         <div class="hero-card">
           <p class="tag">Informacja</p>
           <h1>${title}</h1>
-          <div class="grid" style="gap:12px; margin-top: var(--space-3);">${body}</div>
+          <div class="grid info-page__body">${body}</div>
         </div>
       </main>
     </div>
@@ -29,17 +29,17 @@ function renderLogin() {
   const app = document.getElementById("app");
   app.innerHTML = `
     <main class="container section" id="main-content">
-      <div class="hero-card" style="max-width: 520px; margin: 40px auto;">
-        <div class="flex-between" style="margin-bottom: 12px;">
-          <div class="logo flex" style="--login-logo-size: var(--logo-size-2);">
-            <img class="logo__icon" src="${FleetStore.state.preferences.theme === "dark" ? "assets/logos/logo-white.svg" : "assets/logos/logo-black.svg"}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" style="width: var(--login-logo-size); height: var(--login-logo-size);" />
+      <div class="hero-card login-card">
+        <div class="flex-between login-card__header">
+          <div class="logo flex login-card__logo">
+            <img class="logo__icon login-card__logo-icon" src="${FleetStore.state.preferences.theme === "dark" ? "assets/logos/logo-white.svg" : "assets/logos/logo-black.svg"}" data-theme-src-light="assets/logos/logo-black.svg" data-theme-src-dark="assets/logos/logo-white.svg" alt="FleetOps logo" />
             <strong>FleetOps</strong>
           </div>
-          <a class="button ghost" href="#/">Wróć</a>
+          <a class="button button--ghost" href="#/">Wróć</a>
         </div>
         <h1>Zaloguj się</h1>
         <p class="muted">Uwierzytelnianie demo - dane zapisane w przeglądarce.</p>
-        <form id="loginForm" style="display:grid; gap:12px; margin-top: 16px;">
+        <form id="loginForm" class="login-form">
           <label class="form-control">
             <span class="label">E-mail</span>
             <input required type="email" name="email" class="input" placeholder="you@fleetops.app" />
@@ -48,8 +48,8 @@ function renderLogin() {
             <span class="label">Hasło</span>
             <input required minlength="4" type="password" name="password" class="input" placeholder="••••••" />
           </label>
-          <button class="button primary" type="submit">Zaloguj się</button>
-          <button class="button secondary" type="button" id="demoLogin">Kontynuuj jako demo</button>
+          <button class="button button--primary" type="submit">Zaloguj się</button>
+          <button class="button button--secondary" type="button" id="demoLogin">Kontynuuj jako demo</button>
         </form>
       </div>
     </main>

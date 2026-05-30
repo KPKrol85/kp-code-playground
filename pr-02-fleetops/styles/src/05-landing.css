@@ -515,6 +515,11 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   gap: var(--space-3);
 }
 
+.landing .info-page__body {
+  gap: 12px;
+  margin-top: var(--space-3);
+}
+
 .landing .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -588,6 +593,16 @@ html[data-theme="dark"] .landing .testimonial:focus-within {
   gap: var(--space-2);
   margin-top: var(--space-2);
   font-style: normal;
+}
+
+.landing .contact-form {
+  display: grid;
+  gap: 12px;
+  margin-top: var(--space-3);
+}
+
+.landing .pricing-note {
+  margin-top: var(--space-2);
 }
 
 .landing .list-check {
