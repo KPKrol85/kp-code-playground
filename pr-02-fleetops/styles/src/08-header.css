@@ -81,7 +81,7 @@
 .site-header__backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(8, 12, 18, 0.55);
+  background: rgba(8, 12, 18, 0.35);
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms ease;
@@ -114,8 +114,9 @@
 .site-header__links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
+  font-size: var(--fs-02);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -126,8 +127,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
   color: var(--text-muted);
   border: 1px solid transparent;
   background: transparent;
@@ -160,23 +161,12 @@
   font-weight: var(--fw-medium);
 }
 
-.site-header__link[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 4px;
-  height: 1px;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  opacity: 0.4;
-}
-
 /* Header Actions */
 
 .site-header__actions {
-  display: inline-flex;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-2);
 }
 
@@ -187,7 +177,6 @@
 .site-header__drawer .site-header__links {
   flex-direction: column;
   align-items: stretch;
-  gap: var(--space-2);
 }
 
 .site-header__drawer .site-header__link {
@@ -196,9 +185,6 @@
 }
 
 .site-header__drawer .site-header__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
   width: 100%;
 }
 
@@ -243,16 +229,6 @@
   }
 }
 
-@media (min-width: 760px) {
-  .site-header__links {
-    gap: var(--space-1);
-  }
-
-  .site-header__link {
-    padding: var(--space-2) var(--space-3);
-  }
-}
-
 @media (min-width: 1025px) {
   .site-header__nav {
     min-width: 0;
@@ -277,7 +253,6 @@
     padding: 0;
     flex-direction: row;
     align-items: center;
-    gap: 0;
     background: transparent;
     border-right: 0;
     box-shadow: none;
@@ -290,12 +265,10 @@
 
   .site-header__drawer .site-header__links {
     flex-direction: row;
-    align-items: center;
-    gap: var(--space-1);
   }
 
   .site-header__drawer .site-header__actions {
-    margin-left: var(--space-1);
+   flex-direction: row;
     width: auto;
   }
 
