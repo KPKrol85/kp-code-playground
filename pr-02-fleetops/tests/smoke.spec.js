@@ -16,6 +16,18 @@ async function loginAsDemo(page) {
   await expect(page.getByRole("heading", { name: "Przegląd", level: 1 })).toBeVisible();
 }
 
+async function scrollPageDown(page) {
+  await page.evaluate(() => {
+    const root = document.scrollingElement || document.documentElement;
+    window.scrollTo(0, root.scrollHeight);
+  });
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+}
+
+async function expectPageTop(page) {
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+}
+
 async function expectCrudErrorsLinked(page, scenario) {
   await page.locator(`.sidebar nav a[data-route="${scenario.route}"]`).click();
   await expect(page.getByRole("heading", { name: scenario.heading, level: 1 })).toBeVisible();
@@ -51,6 +63,30 @@ test("landing loads and demo login reaches the app shell", async ({ page }) => {
 
   await loginAsDemo(page);
   await expect(page.locator(".sidebar")).toContainText("demo@fleetops.app");
+});
+
+test("route changes reset scroll position after rendering", async ({ page }) => {
+  await openFresh(page);
+  await scrollPageDown(page);
+  await page.getByRole("link", { name: "Porozmawiajmy" }).click();
+  await expect(page).toHaveURL(/#\/contact$/);
+  await expect(page.getByRole("heading", { name: "Kontakt", level: 1 })).toBeVisible();
+  await expectPageTop(page);
+
+  await scrollPageDown(page);
+  await page.locator('a.site-header__action[href="#/login"]').click();
+  await expect(page).toHaveURL(/#\/login$/);
+  await expect(page.getByRole("heading", { name: "Zaloguj się", level: 1 })).toBeVisible();
+  await expectPageTop(page);
+
+  await page.getByRole("button", { name: "Kontynuuj jako demo" }).click();
+  await expect(page).toHaveURL(/#\/app$/);
+  await expect(page.getByRole("heading", { name: "Przegląd", level: 1 })).toBeVisible();
+  await scrollPageDown(page);
+  await page.locator('.sidebar nav a[data-route="/app/reports"]').click();
+  await expect(page).toHaveURL(/#\/app\/reports$/);
+  await expect(page.getByRole("heading", { name: "Raporty", level: 1 })).toBeVisible();
+  await expectPageTop(page);
 });
 
 test("toast feedback exposes stable polite and assertive live regions", async ({ page }) => {

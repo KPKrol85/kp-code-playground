@@ -139,6 +139,7 @@ const routeLabels = {
 
 let lastAnnouncedPath = "";
 let routeAnnounceTimer = null;
+let lastScrolledPath = "";
 
 function announceRouteChange(path, label) {
   if (!label || path === lastAnnouncedPath) return;
@@ -152,6 +153,27 @@ function announceRouteChange(path, label) {
   routeAnnounceTimer = window.setTimeout(() => {
     region.textContent = `Widok: ${label}`;
   }, 0);
+}
+
+function scrollRouteToTop(path) {
+  if (!path || path === lastScrolledPath) return;
+
+  lastScrolledPath = path;
+  const run = () => {
+    if (typeof window.scrollTo !== "function") return;
+
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  if (typeof window.requestAnimationFrame === "function") {
+    window.requestAnimationFrame(run);
+  } else {
+    window.setTimeout(run, 0);
+  }
 }
 
 function routeTo(hash) {
@@ -248,6 +270,7 @@ function routeTo(hash) {
   // <<< TO JEST JEDYNE MIEJSCE, GDZIE USTAWIAMY aria-current >>>
   applyAriaCurrent();
   announceRouteChange(renderedPath, renderedLabel);
+  scrollRouteToTop(renderedPath);
 }
 
 window.FleetRouter = { routeTo };
