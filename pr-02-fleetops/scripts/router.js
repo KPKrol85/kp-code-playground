@@ -159,15 +159,45 @@ function scrollRouteToTop(path) {
   if (!path || path === lastScrolledPath) return;
 
   lastScrolledPath = path;
-  const run = () => {
-    if (typeof window.scrollTo !== "function") return;
+  const resetElementScroll = (element) => {
+    if (!element) return;
 
-    try {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    } catch (e) {
-      window.scrollTo(0, 0);
+    if (typeof element.scrollTo === "function") {
+      try {
+        element.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        return;
+      } catch (e) {
+        element.scrollTo(0, 0);
+        return;
+      }
     }
+
+    if ("scrollTop" in element) element.scrollTop = 0;
+    if ("scrollLeft" in element) element.scrollLeft = 0;
   };
+
+  const run = () => {
+    if (typeof window.scrollTo === "function") {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
+    }
+
+    const scrollTargets = [
+      document.scrollingElement,
+      document.documentElement,
+      document.body,
+      document.getElementById("app"),
+      document.querySelector("main"),
+      document.querySelector(".app-main"),
+    ];
+
+    scrollTargets.forEach(resetElementScroll);
+  };
+
+  run();
 
   if (typeof window.requestAnimationFrame === "function") {
     window.requestAnimationFrame(run);
