@@ -48,7 +48,8 @@ body > #app {
   }
 }
 
-.grid--pricing {
+.grid--pricing,
+.grid--testimonials {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
