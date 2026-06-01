@@ -558,39 +558,47 @@ ${renderLandingHeader(themeAsset)}
           </div>
         </section>
 
-
-
-
-        <section class="container section faq">
+        <section class="container section section-faq">
           <div class="landing-section__header">
             <p class="tag">Pytania</p>
             <h2 class="landing-section__title">Najczęstsze pytania</h2>
+            <p class="landing-section__lead">
+            Krótkie odpowiedzi na najważniejsze pytania dotyczące działania panelu demonstracyjnego FleetOps.
+            </p>
           </div>
           <div class="accordion" id="faq">
             <div class="accordion-item">
-              <button class="accordion-header">Czy mogę używać trybu dark?<span aria-hidden="true">▾</span></button>
-              <div class="accordion-content"><p>Tak, FleetOps ma wbudowany przełącznik, który zapamiętuje wybór.</p></div>
+              <button class="accordion-header">Czy FleetOps działa bez instalacji?<span aria-hidden="true">▾</span></button>
+              <div class="accordion-content">
+                <p class="accordion-text">Tak. FleetOps działa w przeglądarce i pozwala szybko przejść do panelu demonstracyjnego bez konfiguracji.</p>
+              </div>
             </div>
             <div class="accordion-item">
-              <button class="accordion-header">Czy dane to produkcja?<span aria-hidden="true">▾</span></button>
-              <div class="accordion-content"><p>To mocki bez backendu. Idealne do demo i portfolio.</p></div>
+              <button class="accordion-header">Czy dane w panelu są prawdziwe?<span aria-hidden="true">▾</span></button>
+              <div class="accordion-content">
+                <p class="accordion-text">Nie. Panel korzysta z bezpiecznych danych przykładowych, przygotowanych do prezentacji przepływów, widoków i funkcji aplikacji.</p>
+              </div>
             </div>
             <div class="accordion-item">
-              <button class="accordion-header">Jak zacząć?<span aria-hidden="true">▾</span></button>
-              <div class="accordion-content"><p>Wejdź na "Zacznij" lub "Zobacz demo" i odkryj panel.</p></div>
+              <button class="accordion-header">Czy mogę zmienić motyw interfejsu?<span aria-hidden="true">▾</span></button>
+              <div class="accordion-content">
+                <p class="accordion-text">Tak. Aplikacja ma przełącznik jasnego i ciemnego motywu, a wybrana opcja zostaje zapamiętana w przeglądarce.</p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">Co mogę sprawdzić w wersji demo?<span aria-hidden="true">▾</span></button>
+              <div class="accordion-content">
+                <p class="accordion-text">Możesz przejrzeć dashboard, zlecenia, flotę, kierowców, raporty oraz przykładowe interakcje typowe dla panelu operacyjnego.</p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">Jak rozpocząć testowanie panelu?<span aria-hidden="true">▾</span></button>
+              <div class="accordion-content">
+                <p class="accordion-text">Wybierz „Zobacz demo” lub „Zacznij”, aby przejść do panelu i sprawdzić przykładowy przepływ pracy.</p>
+              </div>
             </div>
           </div>
         </section>
-
-
-
-
-
-
-
-
-
-
 
       </main>
 
