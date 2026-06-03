@@ -54,28 +54,28 @@ function renderProductPage() {
         <div class="marketing-hero">
           <div class="marketing-hero__content">
             <h2 class="marketing-hero__title">Operacje w czasie rzeczywistym</h2>
-            <p>Widoki zleceń, floty i kierowców synchronizują statusy, ETA i alerty. Zespół operacyjny ma jedno źródło prawdy.</p>
-            <div class="hero-cta">
+            <p class="marketing-hero__text">Widoki zleceń, floty i kierowców synchronizują statusy, ETA i alerty. Zespół operacyjny ma jedno źródło prawdy.</p>
+            <div class="marketing-hero__cta">
               <a class="button button--primary" href="#/login">Umów demo</a>
               <a class="button button--secondary" href="#/app">Zobacz panel</a>
             </div>
           </div>
           <div class="marketing-hero__panel">
             <p class="tag">Wskazniki zaufania</p>
-            <div class="stat-grid">
-              <div class="stat-card">
-                <p class="muted small">Dokladnosc ETA</p>
-                <h3>96.8%</h3>
+            <dl class="marketing-hero__stats">
+              <div class="marketing-hero__stat-card">
+                <dt class="marketing-hero__stat-label">Dokładność ETA</dt>
+                <dd class="marketing-hero__stat-value">96.8%</dd>
               </div>
-              <div class="stat-card">
-                <p class="muted small">Dostępność SLA</p>
-                <h3>99.6%</h3>
+              <div class="marketing-hero__stat-card">
+                <dt class="marketing-hero__stat-label">Dostępność SLA</dt>
+                <dd class="marketing-hero__stat-value">99.6%</dd>
               </div>
-              <div class="stat-card">
-                <p class="muted small">Reakcja na alert</p>
-                <h3>12 min</h3>
+              <div class="marketing-hero__stat-card">
+                <dt class="marketing-hero__stat-label">Reakcja na alert</dt>
+                <dd class="marketing-hero__stat-value">12 min</dd>
               </div>
-            </div>
+            </dl>
           </div>
         </div>
       </section>
