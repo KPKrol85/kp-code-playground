@@ -225,7 +225,6 @@
     justify-content: flex-start;
     text-align: left;
   }
-
 }
 
 @media (min-width: 760px) {
@@ -237,10 +236,6 @@
     display: flex;
     width: fit-content;
     margin-inline: auto;
-  }
-
-   .marketing-hero__stat-card {
-    text-align: center;
   }
 }
 
