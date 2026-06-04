@@ -171,20 +171,8 @@
   margin-top: var(--space-3);
 }
 
-.landing .contact-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-3);
-}
 
-.form-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--space-3);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  min-width: 0;
-}
+
 
 .card-soft {
   margin-top: auto;
@@ -215,21 +203,13 @@
   font-style: normal;
 }
 
-.landing .contact-form {
-  display: grid;
-  gap: 12px;
-  margin-top: var(--space-3);
-}
 
 
 
 
 
-@media (min-width: 760px) {
-  .landing .contact-grid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  }
-}
+
+
 
 @media (min-width: 1024px) {
   .landing .card-soft {

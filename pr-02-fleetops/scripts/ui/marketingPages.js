@@ -89,22 +89,22 @@ function renderProductPage() {
           </p>
         </div>
         <div class="grid">
-          <div class="card marketing-card">
+          <div class="card card--step">
           <span class="card__step-number" aria-hidden="true">1</span>
             <h3 class="card__title">Zasil dane</h3>
             <p class="card__text">Import zleceń, pojazdów i kierowców lub start na danych demo.</p>
           </div>
-          <div class="card marketing-card">
+          <div class="card card--step">
           <span class="card__step-number" aria-hidden="true">2</span>
             <h3 class="card__title">Ustaw SLA</h3>
             <p class="card__text">Definiuj priorytety, progi opóźnień i alerty operacyjne.</p>
           </div>
-          <div class="card marketing-card">
+          <div class="card card--step">
           <span class="card__step-number" aria-hidden="true">3</span>
             <h3 class="card__title">Monitoruj</h3>
             <p class="card__text">Statusy na żywo, ETA i oś czasu serwisów w jednym widoku.</p>
           </div>
-          <div class="card marketing-card">
+          <div class="card card--step">
           <span class="card__step-number" aria-hidden="true">4</span>
             <h3 class="card__title">Ulepszaj</h3>
             <p class="card__text">Raporty KPI i eksporty pomagaja zamykac petle operacyjna.</p>
@@ -543,15 +543,15 @@ function renderContactPage() {
   renderMarketingShell({
     title: "Kontakt",
     eyebrow: "Kontakt",
-    lead: "Opowiedz nam o swojej flocie. Odpowiadamy szybko i konkretnie.",
+    lead: "Opisz potrzeby swojej floty, a wrócimy z konkretną odpowiedzią dotyczącą demo, wdrożenia lub zakresu funkcji.",
     description: "Skontaktuj się z zespołem FleetOps. Demo, integracje i pytania o cennik.",
     body: `
       <section class="section-tight">
-        <div class="contact-grid">
-          <div class="form-card">
-            <h2>Formularz kontaktowy</h2>
-            <p class="muted">Zostaw dane, a odezwiemy się w ciągu 1 dnia roboczego.</p>
-            <form id="contactForm" class="contact-form">
+        <div class="grid grid--contact">
+          <div class="contact-form">
+            <h2 class="contact-form__title">Formularz kontaktowy</h2>
+            <p class="contact-form__lead">Zostaw dane, a odezwiemy się w ciągu 1 dnia roboczego.</p>
+            <form id="contactForm" class="contact-form__body">
               <label class="form-control">
                 <span class="label">Imię i nazwisko</span>
                 <input class="input" name="name" type="text" required minlength="3" placeholder="Jan Kowalski" />
@@ -586,7 +586,6 @@ function renderContactPage() {
           <div class="marketing-card">
             <h2>Dane kontaktowe</h2>
             <p class="muted">Kontakt do twórcy projektu</p>
-
               <address class="contact-address">
                 <div>
                   <p class="muted small">E-mail</p>
@@ -609,7 +608,6 @@ function renderContactPage() {
                   </p>
                 </div>
               </address>
-
             <div class="card-soft">
               <p class="muted small">FleetOps to projekt demonstracyjny. Kontakt dotyczy twórcy projektu.</p>
               <p class="muted small">Projekt i interfejs: Kamil Król (kp_code_).</p>
