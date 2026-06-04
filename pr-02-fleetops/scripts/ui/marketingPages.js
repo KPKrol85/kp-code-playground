@@ -188,14 +188,17 @@ function renderProductPage() {
         </div>
       </section>
 
-      <section class="section-tight cta-panel">
-        <div>
-          <h2 class="section-header__title">Gotowy na spokojniesza operacje?</h2>
-          <p>Umów demo lub uruchom wersję demonstracyjną w przeglądarce.</p>
-        </div>
-        <div class="hero-cta">
-          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
-          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
+      <section class="section-tight">
+        <div class="cta-panel">
+          <div class="cta-panel__header">
+            <h2 class="cta-panel__title">Gotowy uporządkować pracę floty?</h2>
+            <p class="cta-panel__lead">Sprawdź FleetOps w wersji demonstracyjnej lub umów rozmowę o wdrożeniu dla zespołu operacyjnego.</p>
+          </div>
+
+          <div class="cta-panel__actions">
+            <a class="button button--primary" href="#/contact">Umów rozmowę</a>
+            <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
+          </div>
         </div>
       </section>
     `,
