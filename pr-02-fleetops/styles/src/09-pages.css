@@ -239,7 +239,7 @@
   }
 }
 
-/* Feature Pages */
+/* Feature Page */
 
 .grid--features {
   grid-template-columns: 1fr;
@@ -272,6 +272,24 @@
   .grid--features {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+/* Pricing Page */
+
+.pricing-table {
+  margin-top: var(--space-6);
+  border-radius: var(--radius);
+  overflow: auto;
+  border: 1px solid var(--border);
+}
+
+.pricing-table .table {
+  margin: 0;
+}
+
+.pricing-note {
+  margin-top: var(--space-2);
+  font-size: var(--fs-01);
 }
 
 /* System pages */

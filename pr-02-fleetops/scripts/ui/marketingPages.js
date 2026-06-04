@@ -354,14 +354,16 @@ function renderPricingPage() {
               </ul>
               <a class="button button--secondary" href="#/contact">Porozmawiajmy</a>
             </div>
+        </div>
       </section>
 
       <section class="section-tight">
         <div class="section-header">
           <p class="tag">Porownanie</p>
-          <h2 class="section-header__title">Funkcje w planach</h2>
+          <h2 class="section-header__title">Porównanie planów FleetOps</h2>
+          <p class="section-header__lead">Zobacz, które funkcje są dostępne w każdym planie i wybierz zakres dopasowany do skali pracy zespołu.</p>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive pricing-table">
           <table class="table">
             <thead>
               <tr>
@@ -381,17 +383,19 @@ function renderPricingPage() {
             </tbody>
           </table>
         </div>
-        <p class="muted small pricing-note">Faktura VAT, SLA i wsparcie w cenie. Ceny netto.</p>
+        <p class="pricing-note">Faktura VAT, SLA i wsparcie w cenie. Ceny netto.</p>
       </section>
 
-      <section class="section-tight cta-panel">
-        <div>
-          <h2>Potrzebujesz wyceny dla swojej floty?</h2>
-          <p>Skontaktuj się, przygotujemy ofertę dopasowaną do skali operacji.</p>
-        </div>
-        <div class="hero-cta">
-          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
-          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
+      <section class="section-tight">
+        <div class="cta-panel">
+          <div class="cta-panel__header">
+            <h2 class="cta-panel__title">Potrzebujesz wyceny dla swojej floty?</h2>
+            <p class="cta-panel__lead">Skontaktuj się, przygotujemy ofertę dopasowaną do skali operacji.</p>
+          </div>
+          <div class="cta-panel__actions">
+            <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+            <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
+          </div>
         </div>
       </section>
     `,
