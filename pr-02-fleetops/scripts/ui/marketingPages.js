@@ -452,15 +452,15 @@ function renderAboutPage() {
   renderMarketingShell({
     title: "O nas",
     eyebrow: "O FleetOps",
-    lead: "Budujemy produkt dla zespołów, które muszą dowozić na czas. Transparentność, szybkość reakcji i spokój operacji.",
+    lead: "Budujemy FleetOps dla zespołów transportowych, które potrzebują przejrzystości, szybkiej reakcji i większego spokoju w codziennej operacji.",
     description: "Poznaj zespół FleetOps i naszą misję budowania operacyjnej przejrzystości w transporcie.",
     body: `
       <section class="section-tight">
         <div class="marketing-hero">
           <div class="marketing-hero__content">
             <h2 class="marketing-hero__title">Nasza misja</h2>
-            <p>Uprościć zarządzanie transportem tak, by zespoły operacyjne mogły skupić się na decyzjach, a nie na szukaniu danych.</p>
-            <ul class="list-check">
+            <p class="marketing-hero__text">Upraszczamy zarządzanie transportem, żeby zespoły operacyjne szybciej widziały statusy, ryzyka i dane potrzebne do decyzji.</p>
+            <ul class="marketing-hero__list">
               <li>Jedno źródło prawdy dla statusów</li>
               <li>Operacje oparte o SLA i fakty</li>
               <li>Przejrzysta współpraca z klientami</li>
@@ -468,8 +468,11 @@ function renderAboutPage() {
           </div>
           <div class="marketing-hero__panel">
             <p class="tag">Historia</p>
-            <p class="muted">FleetOps powstał z potrzeb operatorów logistycznych, którzy chcieli jednego, uporządkowanego panelu do pracy dziennej.</p>
-            <p class="muted">Łączymy produktowe podejście z praktyką branży transportowej.</p>
+            <div class="marketing-hero__panel-copy">
+              <p class="marketing-hero__panel-text marketing-hero__panel-text--strong">FleetOps powstał z potrzeby uporządkowania codziennej pracy operatorów logistycznych w jednym panelu.</p>
+              <p class="marketing-hero__panel-text">Łączymy produktowe podejście z praktyką branży transportowej, żeby wspierać realne procesy operacyjne.</p>
+              <p class="marketing-hero__panel-text">Projektujemy FleetOps tak, żeby codzienne decyzje były szybsze, dane bardziej dostępne, a odpowiedzialność w zespole jasno widoczna.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -478,19 +481,20 @@ function renderAboutPage() {
         <div class="section-header">
           <p class="tag">Dlaczego FleetOps</p>
           <h2 class="section-header__title">Operacje bez chaosu</h2>
+          <p class="section-header__lead">FleetOps porządkuje statusy, dane i odpowiedzialność, żeby zespół mógł szybciej reagować na zmiany w codziennej pracy.</p>
         </div>
         <div class="grid">
-          <div class="marketing-card">
-            <h3>Transparentność</h3>
-            <p>Jasne statusy, ETA i alerty dla całego zespołu.</p>
+          <div class="card marketing-card">
+            <h3 class="card__title">Transparentność</h3>
+            <p class="card__text">Jasne statusy, ETA i alerty dla całego zespołu.</p>
           </div>
-          <div class="marketing-card">
-            <h3>Szybkie decyzje</h3>
-            <p>Fakty zamiast telefonów i arkuszy, bez opóźnień w reakcjach.</p>
+          <div class="card marketing-card">
+            <h3 class="card__title">Szybkie decyzje</h3>
+            <p class="card__text">Fakty zamiast telefonów i arkuszy, bez opóźnień w reakcjach.</p>
           </div>
-          <div class="marketing-card">
-            <h3>Skalowalnosc</h3>
-            <p>Ten sam proces dla 10 i 500 pojazdów.</p>
+          <div class="card marketing-card">
+            <h3 class="card__title">Skalowalność</h3>
+            <p class="card__text">Ten sam proces dla 10 i 500 pojazdów.</p>
           </div>
         </div>
       </section>
@@ -501,29 +505,34 @@ function renderAboutPage() {
           <h2 class="section-header__title">Praca w iteracjach</h2>
         </div>
         <div class="grid">
-          <div class="marketing-card">
+          <div class="card card--step">
+            <span class="card__step-number" aria-hidden="true">1</span>
             <h3>Diagnoza</h3>
             <p>Mapujemy procesy dispatch i SLA, by dobrze ustawić priorytety.</p>
           </div>
-          <div class="marketing-card">
+          <div class="card card--step">
+            <span class="card__step-number" aria-hidden="true">2</span>
             <h3>Wdrożenie</h3>
             <p>Konfigurujemy role, alerty i raporty zgodnie z operacjami.</p>
           </div>
-          <div class="marketing-card">
+          <div class="card card--step">
+            <span class="card__step-number" aria-hidden="true">3</span>
             <h3>Ulepszanie</h3>
             <p>Regularnie pracujemy nad KPI, trendami i automatyzacjami.</p>
           </div>
         </div>
       </section>
 
-      <section class="section-tight cta-panel">
-        <div>
-          <h2>Chcesz poznać nasz zespół?</h2>
-          <p>Porozmawiajmy o twojej flocie i pokażmy, jak pracuje FleetOps.</p>
-        </div>
-        <div class="hero-cta">
-          <a class="button button--primary" href="#/contact">Skontaktuj się</a>
-          <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
+      <section class="section-tight">
+        <div class="cta-panel">
+          <div class="cta-panel__header">
+            <h2 class="cta-panel__title">Chcesz poznać nasz zespół?</h2>
+            <p class="cta-panel__lead">Porozmawiajmy o twojej flocie i pokażmy, jak pracuje FleetOps.</p>
+          </div>
+          <div class="cta-panel__actions">
+            <a class="button button--primary" href="#/contact">Skontaktuj się</a>
+            <a class="button button--secondary" href="#/app">Zobacz demo aplikacji</a>
+          </div>
         </div>
       </section>
     `,
