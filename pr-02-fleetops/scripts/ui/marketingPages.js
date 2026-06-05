@@ -899,134 +899,227 @@ function renderTermsPage() {
   renderMarketingShell({
     title: "Regulamin",
     eyebrow: "Regulamin",
-    lead: "Regulamin określa zasady korzystania z demonstracyjnej wersji FleetOps. To projekt demo bez backendu i bez gwarancji produkcyjnej.",
-    description: "Regulamin korzystania z wersji demo FleetOps. Zasady użytkowania, ograniczenia odpowiedzialności i prawa autorskie.",
+    lead: "Zasady korzystania z projektu FleetOps, prezentowanych funkcji panelu oraz materiałów przygotowanych przez KP_Code Digital Studio.",
+    description: "Regulamin FleetOps. Zasady korzystania z projektu SaaS-style dla transportu i floty, prawa autorskie KP_Code Digital Studio oraz ograniczenia odpowiedzialności.",
     body: `
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Zakres</p>
-          <h2 class="section-header__title">Charakter usługi</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Projekt demonstracyjny</h3>
-            <p>FleetOps jest projektem demonstracyjnym (demo). Aplikacja służy do prezentacji interfejsu i funkcji i nie stanowi komercyjnego produktu produkcyjnego.</p>
+        <nav class="legal-nav" aria-label="Spis treści regulaminu">
+          <div class="legal-nav__box">
+            <p class="tag">Spis treści</p>
+            <ol class="legal-nav__list">
+              <li><a class="legal-nav__link" href="#terms-definitions">Definicje</a></li>
+              <li><a class="legal-nav__link" href="#terms-general">Postanowienia ogólne</a></li>
+              <li><a class="legal-nav__link" href="#terms-character">Charakter projektu FleetOps</a></li>
+              <li><a class="legal-nav__link" href="#terms-functionality">Funkcjonalności i panel aplikacji</a></li>
+              <li><a class="legal-nav__link" href="#terms-intellectual-property">Własność intelektualna</a></li>
+              <li><a class="legal-nav__link" href="#terms-contact">Formularz kontaktowy i komunikacja</a></li>
+              <li><a class="legal-nav__link" href="#terms-liability">Odpowiedzialność</a></li>
+              <li><a class="legal-nav__link" href="#terms-external-links">Linki zewnętrzne</a></li>
+              <li><a class="legal-nav__link" href="#terms-security">Bezpieczeństwo i zasady korzystania</a></li>
+              <li><a class="legal-nav__link" href="#terms-changes">Zmiany regulaminu</a></li>
+              <li><a class="legal-nav__link" href="#terms-final">Postanowienia końcowe</a></li>
+            </ol>
           </div>
-          <div class="marketing-card">
-            <h3>Brak gwarancji SLA</h3>
-            <p>Nie gwarantujemy ciągłości działania, dostępności, kompletności funkcji ani określonego poziomu wsparcia. Dostęp do demo może być zmieniany lub wstrzymany.</p>
-          </div>
-          <div class="marketing-card">
-            <h3>Tryb lokalny</h3>
-            <p>Dane demo zapisywane są lokalnie w przeglądarce użytkownika (np. localStorage), bez synchronizacji z serwerem.</p>
-          </div>
-        </div>
+        </nav>
       </section>
 
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Zasady korzystania</p>
-          <h2 class="section-header__title">Co jest dozwolone</h2>
-        </div>
-        <div class="marketing-card">
-          <ul class="list-check">
-            <li>Korzystanie z demo w celach edukacyjnych i prezentacyjnych.</li>
-            <li>Przeglądanie interfejsu, funkcji i przykładowych danych.</li>
-            <li>Kontakt w celu omówienia współpracy lub wdrożenia.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Nadużycia</p>
-          <h2 class="section-header__title">Czego zabrania regulamin</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Próby łamania zabezpieczeń</h3>
-            <p>Zakazane są próby obejścia zabezpieczeń, ingerencja w działanie aplikacji, testy penetracyjne oraz działania zmierzające do uzyskania nieuprawnionego dostępu.</p>
+        <article class="legal-doc" aria-labelledby="terms-document-title">
+          <div class="section-header">
+            <p class="tag">Dokument</p>
+            <h2 class="section-header__title" id="terms-document-title">Zasady korzystania z FleetOps</h2>
+            <p class="section-header__lead">
+              Dokument określa zasady korzystania z projektu FleetOps, prezentowanych treści oraz funkcjonalności front-end.
+            </p>
           </div>
-          <div class="marketing-card">
-            <h3>Automaty i spam</h3>
-            <p>Zakazane jest generowanie sztucznego ruchu, wysyłanie automatycznych zgłoszeń oraz nadużywanie formularzy kontaktowych.</p>
+
+          <div class="legal-doc__content">
+            <section class="legal-doc__section" id="terms-definitions" tabindex="-1">
+              <h3>1. Definicje</h3>
+              <p>Na potrzeby niniejszego regulaminu przyjmuje się następujące znaczenie pojęć:</p>
+              <ul>
+                <li>Serwis - publiczna strona FleetOps oraz powiązany panel aplikacyjny dostępny w przeglądarce.</li>
+                <li>Projekt - FleetOps jako profesjonalny projekt referencyjny typu SaaS dla obszaru transportu, floty i operacji logistycznych.</li>
+                <li>Operator - KP_Code Digital Studio oraz Kamil Król jako projektant, twórca, właściciel i dysponent praw do projektu.</li>
+                <li>Użytkownik - każda osoba odwiedzająca Serwis lub korzystająca z prezentowanych funkcjonalności.</li>
+                <li>Funkcjonalności - elementy interfejsu, widoki panelu, formularze, przykładowe dane i mechanizmy front-end prezentowane w ramach FleetOps.</li>
+              </ul>
+            </section>
+
+            <section class="legal-doc__section" id="terms-general" tabindex="-1">
+              <h3>2. Postanowienia ogólne</h3>
+              <p>
+                Niniejszy regulamin określa zasady korzystania z Serwisu FleetOps przygotowanego przez KP_Code Digital Studio. Dokument ma charakter informacyjny i projektowy, a jego celem jest opisanie warunków korzystania z publicznie prezentowanej realizacji.
+              </p>
+              <p>
+                Korzystanie z Serwisu oznacza akceptację niniejszego regulaminu oraz zobowiązanie do korzystania z FleetOps zgodnie z jego przeznaczeniem, obowiązującymi przepisami prawa i zasadami bezpieczeństwa.
+              </p>
+              <p>
+                FleetOps może być wykorzystywany jako punkt odniesienia przy rozmowie o podobnych projektach komercyjnych zamawianych w KP_Code Digital Studio, ale sam Serwis nie stanowi gotowego systemu produkcyjnego dla przedsiębiorstwa transportowego.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="terms-character" tabindex="-1">
+              <h3>3. Charakter projektu FleetOps</h3>
+              <p>
+                FleetOps prezentuje koncepcję produktu typu SaaS dla firm transportowych i flotowych. Projekt pokazuje przykładową architekturę informacji, układ marketingowej strony produktu oraz panel do pracy z flotą, zleceniami, kierowcami, raportami i ustawieniami.
+              </p>
+              <ul>
+                <li>prezentowane treści, dane operacyjne, statusy, nazwy i procesy mają charakter przykładowy,</li>
+                <li>Serwis nie reprezentuje realnego operatora transportowego ani działającej usługi przewozowej,</li>
+                <li>prezentowane informacje nie stanowią oferty w rozumieniu przepisów Kodeksu cywilnego,</li>
+                <li>Serwis nie umożliwia zawierania umów, dokonywania płatności ani obsługi rzeczywistych procesów firmy.</li>
+              </ul>
+              <p>
+                Projekt nie posiada produkcyjnego backendu FleetOps, rzeczywistych kont klientów, komercyjnych integracji GPS, TMS, ERP ani innych systemów operacyjnych.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="terms-functionality" tabindex="-1">
+              <h3>4. Funkcjonalności i panel aplikacji</h3>
+              <p>
+                Serwis może zawierać widoki i funkcje charakterystyczne dla panelu SaaS, takie jak dashboard, zlecenia, flota, kierowcy, raporty, ustawienia, filtry, formularze i przykładowe akcje na danych.
+              </p>
+              <p>
+                Wskazane elementy służą prezentacji rozwiązań projektowych, interfejsu użytkownika oraz implementacji front-end. Dane wprowadzane w panelu albo formularzach powinny mieć wyłącznie charakter testowy i nie powinny dotyczyć realnych klientów, kierowców, pojazdów ani zleceń.
+              </p>
+              <p>
+                Dane lokalne i preferencje mogą być zapisywane w przeglądarce użytkownika. Szczegółowe informacje o localStorage, sessionStorage, cookies i danych kontaktowych opisują dokumenty
+                <a class="legal-doc__link" href="#/privacy">Polityka prywatności</a>
+                oraz
+                <a class="legal-doc__link" href="#/cookies">Polityka cookies</a>.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="terms-intellectual-property" tabindex="-1">
+              <h3>5. Własność intelektualna</h3>
+              <p>
+                Układ graficzny, struktura Serwisu, treści, koncepcja produktu, elementy wizualne oraz kod źródłowy FleetOps stanowią utwór i podlegają ochronie prawnej. Prawa do projektu przysługują Kamilowi Królowi działającemu w kontekście KP_Code Digital Studio, o ile wyraźnie nie wskazano inaczej.
+              </p>
+              <ul>
+                <li>dopuszczalne jest przeglądanie Serwisu w celach informacyjnych, prezentacyjnych i oceny możliwości współpracy,</li>
+                <li>zabronione jest kopiowanie, rozpowszechnianie, modyfikowanie lub komercyjne wykorzystywanie projektu bez uprzedniej zgody właściciela praw,</li>
+                <li>niedozwolone jest przedstawianie FleetOps jako własnego produktu, wdrożenia produkcyjnego albo realnej platformy transportowej.</li>
+              </ul>
+            </section>
+
+            <section class="legal-doc__section" id="terms-contact" tabindex="-1">
+              <h3>6. Formularz kontaktowy i komunikacja</h3>
+              <p>
+                Formularz kontaktowy oraz linki kontaktowe służą do komunikacji w sprawie FleetOps, podobnych realizacji, usług KP_Code Digital Studio lub pytań dotyczących projektu. W aktualnej implementacji formularz kontaktowy działa po stronie przeglądarki i nie wysyła danych do produkcyjnego backendu FleetOps.
+              </p>
+              <p>
+                Wysłanie wiadomości e-mail na adres
+                <a class="legal-doc__link" href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
+                nie powoduje automatycznego zawarcia umowy, złożenia zamówienia ani powstania zobowiązania po stronie Operatora. Odpowiedź jest udzielana w rozsądnym terminie, z uwzględnieniem charakteru zapytania i dostępności Operatora.
+              </p>
+              <p>
+                Użytkownik nie powinien przekazywać w formularzach ani wiadomościach haseł, danych wrażliwych, danych produkcyjnych, tajemnic przedsiębiorstwa ani innych informacji, które nie są potrzebne do obsługi zapytania.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="terms-liability" tabindex="-1">
+              <h3>7. Odpowiedzialność</h3>
+              <p>
+                Operator dokłada należytej staranności, aby Serwis działał prawidłowo i przedstawiał projekt w sposób rzetelny, jednak FleetOps jest udostępniany w aktualnym stanie technicznym, bez gwarancji ciągłości działania, kompletności funkcji ani przydatności do konkretnego zastosowania produkcyjnego.
+              </p>
+              <ul>
+                <li>Operator nie ponosi odpowiedzialności za decyzje podjęte na podstawie przykładowych treści, danych lub widoków panelu,</li>
+                <li>Operator nie odpowiada za wykorzystanie Serwisu niezgodnie z jego przeznaczeniem,</li>
+                <li>Operator nie gwarantuje dostępności Serwisu w każdym czasie ani braku przerw technicznych, błędów interfejsu lub utraty danych zapisanych lokalnie w przeglądarce.</li>
+              </ul>
+            </section>
+
+            <section class="legal-doc__section" id="terms-external-links" tabindex="-1">
+              <h3>8. Linki zewnętrzne</h3>
+              <p>
+                Serwis może zawierać odnośniki do zewnętrznych stron internetowych, w tym profili społecznościowych, map, narzędzi technicznych lub innych usług podmiotów trzecich.
+              </p>
+              <p>
+                Operator nie ponosi odpowiedzialności za treść, dostępność, bezpieczeństwo ani zasady przetwarzania danych obowiązujące w zewnętrznych serwisach. Korzystanie z takich stron odbywa się na zasadach określonych przez ich administratorów.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="terms-security" tabindex="-1">
+              <h3>9. Bezpieczeństwo i zasady korzystania</h3>
+              <p>
+                Użytkownik powinien korzystać z aktualnej przeglądarki internetowej oraz dbać o bezpieczeństwo swojego urządzenia, połączenia sieciowego i danych wpisywanych w Serwisie.
+              </p>
+              <ul>
+                <li>zakazane są próby obejścia zabezpieczeń, ingerencji w działanie Serwisu lub uzyskania nieuprawnionego dostępu,</li>
+                <li>zakazane jest generowanie sztucznego ruchu, automatycznych zgłoszeń, spamu lub nadużywanie formularzy,</li>
+                <li>zakazane jest wykorzystywanie FleetOps jako systemu do obsługi rzeczywistych danych operacyjnych, danych osobowych lub procesów firmy bez odrębnego, właściwie przygotowanego wdrożenia.</li>
+              </ul>
+            </section>
+
+            <section class="legal-doc__section" id="terms-changes" tabindex="-1">
+              <h3>10. Zmiany regulaminu</h3>
+              <p>
+                Operator może wprowadzać zmiany w niniejszym regulaminie w szczególności w przypadku aktualizacji projektu, zmian technicznych, zmian treści, nowych funkcjonalności, korekt bezpieczeństwa lub zmian przepisów prawa.
+              </p>
+              <p>
+                Zmiany wchodzą w życie z dniem publikacji aktualnej wersji regulaminu w Serwisie, o ile w treści dokumentu nie wskazano innego terminu.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="terms-final" tabindex="-1">
+              <h3>11. Postanowienia końcowe</h3>
+              <p>
+                W sprawach nieuregulowanych niniejszym regulaminem zastosowanie mają odpowiednie przepisy prawa. Regulamin dotyczy wyłącznie projektu FleetOps oraz zasad korzystania z publicznie prezentowanego Serwisu.
+              </p>
+              <p>
+                Pytania dotyczące projektu, regulaminu lub współpracy można kierować na adres
+                <a class="legal-doc__link" href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>.
+              </p>
+              <p class="legal-doc__meta">
+                Data ostatniej aktualizacji:
+                <time datetime="2026-06-05">05.06.2026</time>
+              </p>
+            </section>
           </div>
-          <div class="marketing-card">
-            <h3>Użycie komercyjne</h3>
-            <p>Zakazane jest wykorzystywanie wersji demo jako gotowego systemu produkcyjnego, w tym do obsługi realnych procesów firmy lub danych osobowych.</p>
+        </article>
+      </section>
+
+      <section class="section-tight">
+        <div class="cta-panel">
+          <div class="cta-panel__header">
+            <h2 class="cta-panel__title">Masz pytania o regulamin?</h2>
+            <p class="cta-panel__lead">Skontaktuj się, jeśli chcesz doprecyzować zasady korzystania z FleetOps lub omówić podobny projekt dla swojej firmy.</p>
           </div>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Odpowiedzialność</p>
-          <h2 class="section-header__title">Ograniczenie odpowiedzialności</h2>
-        </div>
-        <div class="marketing-card">
-          <p>Wersja demo jest udostępniana "tak jak jest" (as is). W najszerszym zakresie dopuszczalnym przez prawo właściciel projektu nie ponosi odpowiedzialności za szkody wynikające z korzystania z demo, w tym za utratę danych lokalnych, przerwy w dostępie, błędy interfejsu lub decyzje podjęte na podstawie prezentowanych informacji.</p>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Prawa autorskie</p>
-          <h2 class="section-header__title">Własność intelektualna</h2>
-        </div>
-        <div class="marketing-card">
-          <p>Interfejs, treści, layout, grafiki oraz kod źródłowy FleetOps są chronione prawem autorskim i należą do właściciela projektu: Kamil Król (KP_Code_). Zabronione jest kopiowanie, rozpowszechnianie lub udostępnianie bez uprzedniej pisemnej zgody.</p>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Kontakt</p>
-          <h2 class="section-header__title">Dane właściciela</h2>
-        </div>
-
-        <div>
-          <address class="contact-address">
-            <div><strong>Imię i nazwisko:</strong> Kamil Król (KP_Code_)</div>
-
-            <div>
-              <strong>Adres:</strong>
-                <a
-                  href="https://www.google.com/maps?q=Marynarki+Wojennej+12/3+33-100+Tarnów"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  Marynarki Wojennej 12/3, 33-100 Tarnów, Polska
-                </a>
-            </div>
-
-            <div>
-              <strong>Telefon:</strong>
-              <a href="tel:+48533537091">+48 533 537 091</a>
-            </div>
-
-            <div>
-              <strong>E-mail:</strong>
-              <a href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
-            </div>
-          </address>
-
-          <p class="muted small">
-            Dane kontaktowe dotyczą twórcy projektu demonstracyjnego FleetOps.
-          </p>
-        </div>
-      </section>
-
-      <section class="section-tight cta-panel">
-        <div>
-          <h2 class="section-header__title">Chcesz poznać FleetOps bliżej?</h2>
-          <p>Przetestuj demo lub napisz do nas z pytaniami o wdrożenie.</p>
-        </div>
-        <div class="hero-cta">
-          <a class="button button--primary" href="#/app">Otwórz demo</a>
-          <a class="button button--secondary" href="#/contact">Skontaktuj się</a>
+          <div class="cta-panel__actions">
+            <a class="button button--primary" href="#/contact">Kontakt</a>
+            <a class="button button--secondary" href="#/app">Przejdź do panelu</a>
+          </div>
         </div>
       </section>
     `,
   });
+
+  const links = Array.from(document.querySelectorAll(".legal-nav__link"));
+  const cleanups = links.map((link) => {
+    const handleClick = (event) => {
+      const href = link.getAttribute("href") || "";
+      if (!href.startsWith("#terms-")) return;
+
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+
+      event.preventDefault();
+      const behavior = window.FleetUI?.getMotionSafeScrollBehavior
+        ? FleetUI.getMotionSafeScrollBehavior()
+        : "smooth";
+
+      target.scrollIntoView({ behavior, block: "start" });
+      target.focus({ preventScroll: true });
+    };
+
+    link.addEventListener("click", handleClick);
+    return () => link.removeEventListener("click", handleClick);
+  });
+
+  if (window.CleanupRegistry && typeof CleanupRegistry.add === "function") {
+    CleanupRegistry.add(() => cleanups.forEach((cleanup) => cleanup()));
+  }
 }
 
 function renderCookiesPage() {

@@ -276,6 +276,10 @@
 
 /* Pricing Page */
 
+.marketing .grid--pricing {
+  margin-top: var(--space-5);
+}
+
 .pricing-table {
   margin-top: var(--space-6);
   border-radius: var(--radius);
@@ -290,6 +294,12 @@
 .pricing-note {
   margin-top: var(--space-2);
   font-size: var(--fs-01);
+}
+
+@media (min-width: 480px) {
+  .marketing .grid--pricing {
+    margin: 0;
+  }
 }
 
 /* About Page */
@@ -614,6 +624,8 @@
 }
 
 .legal-doc__section p {
+  font-size: var(--fs-02);
+  line-height: var(--lh-relaxed);
   color: color-mix(in srgb, var(--text-muted) 72%, var(--text) 28%);
 }
 

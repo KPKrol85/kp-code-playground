@@ -558,9 +558,9 @@ textarea[aria-invalid="true"]:focus-visible {
 
 .dropdown-menu {
   position: absolute;
-  top: 120%;
+  top: 140%;
   right: 0;
-  min-width: 180px;
+  min-width: 200px;
   padding: var(--space-2);
   margin: 0;
   border-radius: var(--radius);
