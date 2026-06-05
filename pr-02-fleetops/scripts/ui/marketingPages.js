@@ -703,154 +703,196 @@ function renderPrivacyPage() {
   renderMarketingShell({
     title: "Polityka prywatności",
     eyebrow: "Polityka prywatności",
-    lead: "Szanujemy prywatność użytkowników wersji demonstracyjnej FleetOps. Poniżej opisujemy zakres danych i sposób ich przetwarzania w modelu demo.",
-    description: "Polityka prywatności FleetOps (wersja demo). Dane lokalne, brak backendu i jasne zasady przetwarzania informacji.",
+    lead: "Informacje o zasadach przetwarzania danych, korzystania z formularza kontaktowego oraz danych zapisywanych lokalnie w projekcie FleetOps.",
+    description: "Polityka prywatności FleetOps. Zasady dotyczące danych kontaktowych, danych lokalnych, cookies i sposobu działania projektu.",
     body: `
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Informacja o wersji demo</p>
-          <h2 class="section-header__title">Serwis demonstracyjny bez backendu</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Brak kont produkcyjnych</h3>
-            <p>FleetOps to projekt portfolio / demo. Nie tworzymy kont w chmurze ani nie udostępniamy panelu klientom komercyjnym.</p>
+        <nav class="legal-nav" aria-label="Spis treści polityki prywatności">
+          <div class="legal-nav__box">
+            <p class="tag">Spis treści</p>
+            <ol class="legal-nav__list">
+              <li><a class="legal-nav__link" href="#privacy-character">Charakter projektu FleetOps</a></li>
+              <li><a class="legal-nav__link" href="#privacy-administrator">Administrator, twórca i kontakt</a></li>
+              <li><a class="legal-nav__link" href="#privacy-scope">Zakres danych, cele i podstawy przetwarzania</a></li>
+              <li><a class="legal-nav__link" href="#privacy-contact">Formularz kontaktowy i komunikacja e-mail</a></li>
+              <li><a class="legal-nav__link" href="#privacy-local-storage">Dane lokalne, localStorage i preferencje</a></li>
+              <li><a class="legal-nav__link" href="#privacy-cookies">Cookies i technologie podobne</a></li>
+              <li><a class="legal-nav__link" href="#privacy-rights">Odbiorcy, okres przechowywania i prawa użytkownika</a></li>
+              <li><a class="legal-nav__link" href="#privacy-security">Bezpieczeństwo, zmiany dokumentu i kontakt</a></li>
+            </ol>
           </div>
-          <div class="marketing-card">
-            <h3>Dane w przeglądarce</h3>
-            <p>Wszelkie dane są zapisywane lokalnie w przeglądarce użytkownika (localStorage) i nie są wysyłane na serwer.</p>
-          </div>
-          <div class="marketing-card">
-            <h3>Brak integracji z osobami trzecimi</h3>
-            <p>Demo nie przekazuje danych do zewnętrznych systemów ani narzędzi analitycznych poza standardowymi funkcjami przeglądarki.</p>
-          </div>
-        </div>
+        </nav>
       </section>
 
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Administrator</p>
-          <h2 class="section-header__title">Kto jest administratorem danych</h2>
-        </div>
-        <div class="card-soft">
-          <p>
-            Administratorem danych w ramach wersji demonstracyjnej FleetOps jest:
-          </p>
-          <div class="grid">
-            <div>
-              <strong>Imię i nazwisko:</strong> Kamil Król (KP_Code_)
-            </div>
-            <div>
-              <strong>Adres:</strong>
-              <a
-                href="https://www.google.com/maps?q=Marynarki+Wojennej+12/3,+33-100+Tarn%C3%B3w,+Polska"
-                target="_blank"
-                rel="noopener noreferrer">
-                Marynarki Wojennej 12/3, 33-100 Tarnów, Polska
-              </a>
-            </div>
-            <div>
-              <strong>Telefon:</strong>
-              <a href="tel:+48533537091">+48 533 537 091</a>
-            </div>
-            <div>
-              <strong>E-mail:</strong>
-              <a href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
-            </div>
+        <article class="legal-doc" aria-labelledby="privacy-document-title">
+          <div class="section-header">
+            <p class="tag">Dokument</p>
+            <h2 class="section-header__title" id="privacy-document-title">Zasady prywatności FleetOps</h2>
+            <p class="section-header__lead">
+              Dokument określa zasady przetwarzania danych w ramach projektu FleetOps oraz kontaktu z KP_Code Digital Studio.
+            </p>
           </div>
-          <p class="muted small">
-            Dane kontaktowe dotyczą twórcy projektu demonstracyjnego FleetOps.
-          </p>
-        </div>
+
+          <div class="legal-doc__content">
+            <section class="legal-doc__section" id="privacy-character" tabindex="-1">
+              <h3>1. Charakter projektu FleetOps</h3>
+              <p>
+                FleetOps jest statycznym projektem typu SaaS, przygotowanym jako realizacja portfolio i referencyjny projekt front-end dla KP_Code Digital Studio. Projekt prezentuje przykładowy panel do pracy z flotą, zleceniami, kierowcami, raportami i ustawieniami.
+              </p>
+              <p>
+                FleetOps ma charakter demonstracyjny i nie stanowi produkcyjnej usługi transportowej, operatora floty ani komercyjnej platformy do obsługi realnych procesów operacyjnych. Projekt nie umożliwia zawierania umów, dokonywania płatności, realizacji usług przewozowych ani korzystania z rzeczywistych integracji GPS, TMS, ERP lub podobnych systemów.
+              </p>
+              <p>
+                Dane widoczne w panelu mają charakter przykładowy albo lokalny. Użytkownik nie powinien wprowadzać do formularzy ani widoków projektu danych wrażliwych, poufnych, produkcyjnych danych firmowych ani informacji dotyczących rzeczywistych operacji transportowych.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-administrator" tabindex="-1">
+              <h3>2. Administrator, twórca i kontakt</h3>
+              <p>
+                Administratorem danych przetwarzanych w związku z kontaktem dotyczącym FleetOps jest KP_Code Digital Studio. Projekt został zaprojektowany i wykonany przez Kamila Króla oraz stanowi jego własność jako twórcy i właściciela projektu.
+              </p>
+              <p>
+                W sprawach związanych z prywatnością, projektem FleetOps lub podobnymi realizacjami można skontaktować się za pośrednictwem adresu
+                <a class="legal-doc__link" href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>.
+              </p>
+              <p>
+                Dane kontaktowe publikowane w serwisie służą komunikacji dotyczącej projektu, współpracy z KP_Code Digital Studio oraz zapytań związanych z podobnymi wdrożeniami.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-scope" tabindex="-1">
+              <h3>3. Zakres danych, cele i podstawy przetwarzania</h3>
+              <p>
+                W ramach projektu mogą występować dane wpisane dobrowolnie przez użytkownika w formularzu kontaktowym, dane przekazane w korespondencji e-mail oraz dane techniczne związane z korzystaniem ze strony i działania przeglądarki.
+              </p>
+              <p>
+                Dane mogą obejmować w szczególności imię i nazwisko, adres e-mail, treść wiadomości, informacje o zakresie zapytania oraz dane techniczne przetwarzane w zakresie niezbędnym do prawidłowego działania strony, bezpieczeństwa lub obsługi komunikacji.
+              </p>
+              <ul>
+                <li>dane kontaktowe mogą być przetwarzane w celu obsługi zapytania i prowadzenia korespondencji,</li>
+                <li>podstawą przetwarzania może być zgoda użytkownika albo prawnie uzasadniony interes administratora polegający na udzieleniu odpowiedzi,</li>
+                <li>dane techniczne mogą być przetwarzane w zakresie wynikającym z działania przeglądarki, hostingu lub zabezpieczenia strony.</li>
+              </ul>
+              <p>
+                FleetOps nie wykorzystuje danych do zautomatyzowanego podejmowania decyzji, profilowania marketingowego ani sprzedaży danych podmiotom trzecim.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-contact" tabindex="-1">
+              <h3>4. Formularz kontaktowy i komunikacja e-mail</h3>
+              <p>
+                Formularz kontaktowy służy do przekazania zapytania dotyczącego FleetOps, podobnego panelu, strony firmowej lub współpracy z KP_Code Digital Studio. W aktualnej implementacji formularz działa po stronie przeglądarki i nie wysyła danych do produkcyjnego backendu FleetOps.
+              </p>
+              <p>
+                Jeżeli użytkownik skorzysta z linku e-mail lub wyśle wiadomość bezpośrednio na adres kontaktowy, dane zawarte w wiadomości są przetwarzane w celu udzielenia odpowiedzi, prowadzenia korespondencji oraz ustalenia kontekstu zapytania.
+              </p>
+              <p>
+                W wiadomościach nie należy przekazywać haseł, danych wrażliwych, poufnych materiałów, danych produkcyjnych firm ani informacji o realnych klientach, jeżeli nie są one konieczne do obsługi zapytania.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-local-storage" tabindex="-1">
+              <h3>5. Dane lokalne, localStorage i preferencje</h3>
+              <p>
+                FleetOps działa głównie po stronie przeglądarki. Mechanizm localStorage może zapisywać lokalnie dane przykładowe oraz preferencje interfejsu, takie jak motyw, tryb kompaktowy, zakres dashboardu, status logowania testowego, filtry, preferencje list, aktualny użytkownik demonstracyjny, dane domenowe, aktywność oraz kolejka działań offline.
+              </p>
+              <p>
+                Dane zapisane w localStorage pozostają w przeglądarce użytkownika i mogą zostać usunięte z poziomu ustawień przeglądarki albo przez funkcję resetu danych w panelu FleetOps. Usunięcie tych danych przywraca projekt do stanu początkowego lub usuwa lokalne zmiany testowe.
+              </p>
+              <p>
+                Router może używać sessionStorage do tymczasowego zapamiętania ścieżki powrotu po logowaniu testowym. Taki zapis ma charakter techniczny, krótkotrwały i jest związany z działaniem nawigacji w przeglądarce.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-cookies" tabindex="-1">
+              <h3>6. Cookies i technologie podobne</h3>
+              <p>
+                W kodzie projektu nie przewidziano narzędzi analitycznych, reklamowych ani marketingowych plików cookies. Projekt może natomiast korzystać z mechanizmów przeglądarki, takich jak localStorage, sessionStorage, cache oraz standardowe zasoby niezbędne do wyświetlenia strony.
+              </p>
+              <p>
+                W zależności od sposobu hostingu przeglądarka lub infrastruktura hostingowa może przetwarzać podstawowe dane techniczne, takie jak adres IP, informacje o żądaniu, typ przeglądarki lub logi bezpieczeństwa. Zakres takich danych zależy od środowiska, w którym projekt jest uruchomiony.
+              </p>
+              <p>
+                Użytkownik może zarządzać cookies, cache i danymi lokalnymi w ustawieniach swojej przeglądarki. Ograniczenie lub usunięcie danych lokalnych może spowodować utratę zapisanych preferencji i zmian testowych.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-rights" tabindex="-1">
+              <h3>7. Odbiorcy, okres przechowywania i prawa użytkownika</h3>
+              <p>
+                Dane kontaktowe mogą być obsługiwane przez narzędzia poczty elektronicznej, dostawców hostingu lub inne narzędzia techniczne wykorzystywane przez administratora wyłącznie w zakresie potrzebnym do komunikacji, utrzymania strony i zapewnienia bezpieczeństwa.
+              </p>
+              <p>
+                Dane nie są sprzedawane ani udostępniane podmiotom trzecim w celach marketingowych. Wiadomości e-mail mogą być przechowywane przez okres potrzebny do udzielenia odpowiedzi, prowadzenia dalszej korespondencji lub ochrony przed roszczeniami.
+              </p>
+              <p>
+                Użytkownik może żądać dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przeniesienia danych, wniesienia sprzeciwu oraz cofnięcia zgody, jeżeli przetwarzanie odbywa się na podstawie zgody. Przysługuje także prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="privacy-security" tabindex="-1">
+              <h3>8. Bezpieczeństwo, zmiany dokumentu i kontakt</h3>
+              <p>
+                Projekt ogranicza zakres przetwarzania danych przez brak produkcyjnego systemu kont użytkowników, brak płatności oraz lokalny charakter danych przykładowych. Podstawowe środki bezpieczeństwa obejmują ostrożne projektowanie formularzy, ograniczenie zakresu danych oraz możliwość usunięcia danych lokalnych.
+              </p>
+              <p>
+                Polityka prywatności może być aktualizowana wraz ze zmianami projektu, sposobu hostingu, funkcji strony lub przepisów prawa. Aktualna wersja dokumentu jest publikowana w serwisie.
+              </p>
+              <p>
+                W sprawach związanych z prywatnością można skontaktować się przez adres
+                <a class="legal-doc__link" href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>.
+              </p>
+              <p class="legal-doc__meta">
+                Data ostatniej aktualizacji:
+                <time datetime="2026-06-05">05.06.2026</time>
+              </p>
+            </section>
+          </div>
+        </article>
       </section>
 
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Zakres danych</p>
-          <h2 class="section-header__title">Jakie dane mogą wystąpić w demo</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Formularz kontaktowy</h3>
-            <ul class="list-check">
-              <li>Imię i nazwisko</li>
-              <li>E-mail służbowy</li>
-              <li>Wiadomość i wielkość floty</li>
-            </ul>
-            <p class="muted small">Formularz działa lokalnie i nie wysyła danych na serwer. Dane wpisane w formularzu pozostają wyłącznie w przeglądarce użytkownika.</p>
+        <div class="cta-panel">
+          <div class="cta-panel__header">
+            <h2 class="cta-panel__title">Masz pytania o prywatność?</h2>
+            <p class="cta-panel__lead">Skontaktuj się w sprawie projektu FleetOps lub zasad opisanych w polityce prywatności.</p>
           </div>
-          <div class="marketing-card">
-            <h3>Dane demo w aplikacji</h3>
-            <ul class="list-check">
-              <li>Mockowe zlecenia, pojazdy i kierowcy</li>
-              <li>Ustawienia SLA i statusy operacyjne</li>
-              <li>Preferencje użytkownika (np. motyw)</li>
-            </ul>
+          <div class="cta-panel__actions">
+            <a class="button button--primary" href="#/contact">Kontakt</a>
+            <a class="button button--secondary" href="#/app">Przejdź do panelu</a>
           </div>
-          <div class="marketing-card">
-            <h3>LocalStorage</h3>
-            <ul class="list-check">
-              <li>Preferencje interfejsu</li>
-              <li>Dane demo wygenerowane lokalnie</li>
-              <li>Ostatnio otwarte widoki</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Cookies i technologie podobne</p>
-          <h2 class="section-header__title">Pliki cookies oraz localStorage</h2>
-        </div>
-        <div class="marketing-card">
-          <p>W wersji demo nie korzystamy z cookies marketingowych ani narzędzi analitycznych. Serwis może wykorzystywać localStorage w celu zapisania preferencji (np. motyw) oraz danych demo generowanych lokalnie w przeglądarce.</p>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Prawa użytkownika</p>
-          <h2 class="section-header__title">Kontrola nad danymi w wersji demo</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Dostęp i poprawa</h3>
-            <p>Masz prawo uzyskać informacje o danych zapisanych lokalnie. W wersji demo wystarczy przejrzeć dane w przeglądarce.</p>
-          </div>
-          <div class="marketing-card">
-            <h3>Usunięcie danych</h3>
-            <p>Możesz wyczyścić localStorage w ustawieniach przeglądarki, aby usunąć dane demo i preferencje.</p>
-          </div>
-          <div class="marketing-card">
-            <h3>Kontakt z administratorem</h3>
-            <p>Jeśli potrzebujesz wsparcia, napisz na kontakt@kp-code.pl. Uwaga: wiadomość wysłana e-mailem (mailto) trafia do administratora i jest przetwarzana w celu odpowiedzi na zapytanie.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Bezpieczeństwo</p>
-          <h2 class="section-header__title">Jak dbamy o bezpieczeństwo</h2>
-        </div>
-        <div class="marketing-card">
-          <p>Wersja demo działa wyłącznie po stronie klienta. Nie przechowujemy danych na serwerze, nie profilujemy i nie sprzedajemy informacji. Stosujemy podstawowe praktyki bezpieczeństwa: aktualne zależności, brak publicznego API / endpointów do przesyłania danych oraz minimalny zakres danych.</p>
-        </div>
-      </section>
-
-      <section class="section-tight cta-panel">
-        <div>
-          <h2 class="section-header__title">Masz pytania o prywatność?</h2>
-          <p>Skontaktuj się z nami, odpowiemy w sprawie wersji demo FleetOps.</p>
-        </div>
-        <div class="hero-cta">
-          <a class="button button--primary" href="#/contact">Kontakt</a>
-          <a class="button button--secondary" href="#/app">Przejdź do demo</a>
         </div>
       </section>
     `,
   });
+
+  const links = Array.from(document.querySelectorAll(".legal-nav__link"));
+  const cleanups = links.map((link) => {
+    const handleClick = (event) => {
+      const href = link.getAttribute("href") || "";
+      if (!href.startsWith("#privacy-")) return;
+
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+
+      event.preventDefault();
+      const behavior = window.FleetUI?.getMotionSafeScrollBehavior
+        ? FleetUI.getMotionSafeScrollBehavior()
+        : "smooth";
+
+      target.scrollIntoView({ behavior, block: "start" });
+      target.focus({ preventScroll: true });
+    };
+
+    link.addEventListener("click", handleClick);
+    return () => link.removeEventListener("click", handleClick);
+  });
+
+  if (window.CleanupRegistry && typeof CleanupRegistry.add === "function") {
+    CleanupRegistry.add(() => cleanups.forEach((cleanup) => cleanup()));
+  }
 }
 
 function renderTermsPage() {
@@ -942,7 +984,7 @@ function renderTermsPage() {
           <h2 class="section-header__title">Dane właściciela</h2>
         </div>
 
-        <div class="card-soft">
+        <div>
           <address class="contact-address">
             <div><strong>Imię i nazwisko:</strong> Kamil Król (KP_Code_)</div>
 
@@ -1056,7 +1098,7 @@ function renderCookiesPage() {
           <p class="tag">Kontakt</p>
           <h2 class="section-header__title">Masz pytania o politykę cookies?</h2>
         </div>
-        <div class="card-soft">
+        <div">
           <address class="contact-address">
             <div>
               <strong>Imię i nazwisko:</strong> Kamil Król (KP_Code_)
