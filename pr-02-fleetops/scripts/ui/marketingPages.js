@@ -1126,100 +1126,231 @@ function renderCookiesPage() {
   renderMarketingShell({
     title: "Polityka cookies",
     eyebrow: "Polityka cookies",
-    lead: "Wersja demo FleetOps nie stosuje śledzących plików cookies. Wyjaśniamy, jakie dane techniczne mogą być zapisane lokalnie.",
-    description: "Polityka cookies FleetOps (wersja demo). Informacje o danych technicznych, localStorage i sposobach zarządzania ustawieniami.",
+    lead: "Informacje o cookies, danych lokalnych przeglądarki, cache, ustawieniach interfejsu oraz kontroli tych mechanizmów w projekcie FleetOps.",
+    description: "Polityka cookies FleetOps. Zasady dotyczące cookies, localStorage, sessionStorage, cache, preferencji przeglądarki i technicznych mechanizmów projektu KP_Code Digital Studio.",
     body: `
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Podstawy</p>
-          <h2 class="section-header__title">Jakich mechanizmów używamy</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Brak tracking cookies</h3>
-            <p>FleetOps nie wykorzystuje marketingowych ani analitycznych ciasteczek śledzących.</p>
+        <nav class="legal-nav" aria-label="Spis treści polityki cookies">
+          <div class="legal-nav__box">
+            <p class="tag">Spis treści</p>
+            <ol class="legal-nav__list">
+              <li><a class="legal-nav__link" href="#cookies-general">Postanowienia ogólne</a></li>
+              <li><a class="legal-nav__link" href="#cookies-definition">Czym są cookies i podobne technologie</a></li>
+              <li><a class="legal-nav__link" href="#cookies-types">Rodzaje cookies i danych lokalnych</a></li>
+              <li><a class="legal-nav__link" href="#cookies-purposes">Cele wykorzystywania mechanizmów przeglądarki</a></li>
+              <li><a class="legal-nav__link" href="#cookies-legal-basis">Podstawy prawne</a></li>
+              <li><a class="legal-nav__link" href="#cookies-management">Zarządzanie ustawieniami</a></li>
+              <li><a class="legal-nav__link" href="#cookies-third-parties">Technologie podmiotów trzecich</a></li>
+              <li><a class="legal-nav__link" href="#cookies-local-storage">localStorage, sessionStorage i cache</a></li>
+              <li><a class="legal-nav__link" href="#cookies-changes">Zmiany polityki cookies</a></li>
+              <li><a class="legal-nav__link" href="#cookies-contact">Kontakt</a></li>
+            </ol>
           </div>
-          <div class="marketing-card">
-            <h3>LocalStorage</h3>
-            <p>Preferencje interfejsu i dane demo są przechowywane lokalnie w przeglądarce użytkownika.</p>
-          </div>
-          <div class="marketing-card">
-            <h3>Dane techniczne przeglądarki</h3>
-            <p>Przeglądarka może zapisywać dane niezbędne do poprawnego działania strony (np. cache), zgodnie z jej własnymi zasadami.</p>
-          </div>
-        </div>
+        </nav>
       </section>
 
       <section class="section-tight">
-        <div class="landing-section__header">
-          <p class="tag">Kategorie</p>
-          <h2 class="section-header__title">Jakie dane techniczne mogą wystąpić</h2>
-        </div>
-        <div class="marketing-card">
-          <ul class="list-check">
-            <li>Ustawienia motywu i preferencje interfejsu</li>
-            <li>Historia ostatnich widoków w demo</li>
-            <li>Mockowe dane operacyjne zapisane lokalnie</li>
-          </ul>
-          <p class="muted small">Wersja demo nie wykorzystuje zewnętrznych skryptów analitycznych ani reklamowych.</p>
-        </div>
+        <article class="legal-doc" aria-labelledby="cookies-document-title">
+          <div class="section-header">
+            <p class="tag">Dokument</p>
+            <h2 class="section-header__title" id="cookies-document-title">Zasady cookies i danych lokalnych FleetOps</h2>
+            <p class="section-header__lead">
+              Dokument wyjaśnia, jakie mechanizmy przeglądarki mogą być wykorzystywane podczas korzystania z publicznej strony i panelu FleetOps.
+            </p>
+          </div>
+
+          <div class="legal-doc__content">
+            <section class="legal-doc__section" id="cookies-general" tabindex="-1">
+              <h3>1. Postanowienia ogólne</h3>
+              <p>
+                Niniejsza Polityka cookies określa zasady wykorzystywania plików cookies oraz technologii o podobnym charakterze w ramach projektu FleetOps przygotowanego przez KP_Code Digital Studio.
+              </p>
+              <p>
+                FleetOps jest profesjonalnym projektem referencyjnym typu SaaS dla obszaru floty, transportu i operacji logistycznych. Projekt został zaprojektowany i wykonany przez Kamila Króla, który jest jego twórcą, właścicielem i dysponentem praw.
+              </p>
+              <p>
+                Dokument ma charakter informacyjny i projektowy. FleetOps nie stanowi realnego operatora transportowego, produkcyjnej usługi flotowej ani systemu do obsługi rzeczywistych procesów przedsiębiorstwa.
+              </p>
+              <p>
+                W zakresie nieuregulowanym niniejszą Polityką cookies zastosowanie mają dokumenty
+                <a class="legal-doc__link" href="#/privacy">Polityka prywatności</a>
+                oraz
+                <a class="legal-doc__link" href="#/terms">Regulamin</a>.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-definition" tabindex="-1">
+              <h3>2. Czym są cookies i podobne technologie</h3>
+              <p>
+                Pliki cookies to niewielkie informacje tekstowe zapisywane na urządzeniu użytkownika przez przeglądarkę internetową. Mogą wspierać prawidłowe działanie strony, utrzymanie ustawień, bezpieczeństwo oraz stabilność techniczną.
+              </p>
+              <p>
+                Technologie podobne do cookies obejmują między innymi localStorage, sessionStorage, cache przeglądarki oraz inne mechanizmy pozwalające zapisywać albo odczytywać informacje lokalnie po stronie urządzenia użytkownika.
+              </p>
+              <p>
+                W FleetOps mechanizmy tego typu są związane przede wszystkim z działaniem interfejsu, zachowaniem preferencji, lokalnymi danymi referencyjnymi oraz nawigacją w przeglądarce.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-types" tabindex="-1">
+              <h3>3. Rodzaje cookies i danych lokalnych</h3>
+              <p>
+                W zależności od środowiska uruchomienia Serwisu mogą występować cookies techniczne, mechanizmy pamięci lokalnej przeglądarki oraz dane cache potrzebne do wyświetlenia zasobów strony.
+              </p>
+              <ul>
+                <li>cookies techniczne mogą wspierać prawidłowe działanie strony lub infrastruktury hostingu,</li>
+                <li>dane funkcjonalne mogą obejmować preferencje interfejsu, takie jak motyw, tryb kompaktowy i zakres dashboardu,</li>
+                <li>dane lokalne mogą obejmować filtry, preferencje list, status logowania testowego, użytkownika referencyjnego, dane domenowe, aktywność oraz kolejkę działań offline,</li>
+                <li>cache przeglądarki może przechowywać zasoby strony, takie jak pliki HTML, CSS, JavaScript, obrazy, fonty lub inne elementy potrzebne do jej szybszego wyświetlenia.</li>
+              </ul>
+              <p>
+                W aktualnym kodzie projektu nie przewidziano analitycznych cookies, reklamowych cookies, tracking scripts ani zewnętrznych pikseli marketingowych.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-purposes" tabindex="-1">
+              <h3>4. Cele wykorzystywania mechanizmów przeglądarki</h3>
+              <p>
+                Mechanizmy przeglądarki mogą być wykorzystywane w FleetOps w celach technicznych, funkcjonalnych i organizacyjnych związanych z prezentacją projektu oraz działaniem panelu front-end.
+              </p>
+              <ul>
+                <li>zapewnienie prawidłowego działania strony, panelu i nawigacji,</li>
+                <li>zapamiętanie ustawień interfejsu, takich jak motyw, tryb kompaktowy i zakres danych w dashboardzie,</li>
+                <li>utrzymanie lokalnych danych referencyjnych, filtrów, preferencji widoków i stanu wybranych elementów panelu,</li>
+                <li>obsługa technicznego zapamiętania ścieżki powrotu po logowaniu testowym,</li>
+                <li>poprawa stabilności i szybkości wyświetlania zasobów przez cache przeglądarki.</li>
+              </ul>
+              <p>
+                Zakres danych może zależeć od używanej przeglądarki, ustawień użytkownika, sposobu hostingu oraz aktualnej wersji projektu FleetOps.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-legal-basis" tabindex="-1">
+              <h3>5. Podstawy prawne</h3>
+              <p>
+                Stosowanie cookies i podobnych technologii odbywa się zgodnie z właściwymi przepisami dotyczącymi prywatności, ochrony danych osobowych oraz łączności elektronicznej, w tym RODO, jeżeli dane techniczne mogą zostać uznane za dane osobowe.
+              </p>
+              <p>
+                Dla mechanizmów niezbędnych do prawidłowego działania Serwisu podstawą może być prawnie uzasadniony interes Operatora polegający na zapewnieniu bezpieczeństwa, stabilności i poprawnego działania strony.
+              </p>
+              <p>
+                Jeżeli w przyszłości w FleetOps zostałyby wdrożone cookies lub narzędzia inne niż niezbędne, w szczególności analityczne albo marketingowe, ich stosowanie powinno być poprzedzone odpowiednią informacją oraz mechanizmem zgody użytkownika, jeżeli wymagają tego przepisy prawa.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-management" tabindex="-1">
+              <h3>6. Zarządzanie ustawieniami</h3>
+              <p>
+                Użytkownik może zarządzać cookies, cache oraz danymi lokalnymi z poziomu ustawień swojej przeglądarki internetowej. Dostępne opcje zależą od przeglądarki, urządzenia i konfiguracji prywatności.
+              </p>
+              <ul>
+                <li>można ograniczyć albo zablokować zapisywanie cookies,</li>
+                <li>można usunąć zapisane wcześniej cookies, dane witryny, cache, localStorage albo sessionStorage,</li>
+                <li>w panelu FleetOps można skorzystać z funkcji resetu danych lokalnych, jeżeli jest dostępna w danym widoku ustawień.</li>
+              </ul>
+              <p>
+                Ograniczenie lub usunięcie danych lokalnych może spowodować utratę zapisanych preferencji, lokalnych zmian testowych, filtrów, ustawień widoków oraz powrót projektu do stanu początkowego.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-third-parties" tabindex="-1">
+              <h3>7. Technologie podmiotów trzecich</h3>
+              <p>
+                W aktualnym kodzie FleetOps nie stwierdzono zewnętrznych narzędzi analitycznych, reklamowych, tracking scripts ani pikseli marketingowych, które służyłyby profilowaniu użytkowników.
+              </p>
+              <p>
+                W zależności od sposobu publikacji Serwis może być obsługiwany przez dostawców hostingu, infrastruktury IT, domeny, poczty elektronicznej lub narzędzi technicznych. Takie podmioty mogą przetwarzać podstawowe dane techniczne, na przykład logi serwera, adres IP, informacje o żądaniu, typ przeglądarki lub dane bezpieczeństwa.
+              </p>
+              <p>
+                Zasady działania usług zewnętrznych określają ich własne polityki prywatności i regulaminy. Operator nie odpowiada za treść ani praktyki prywatności stron zewnętrznych, do których użytkownik przechodzi poza FleetOps.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-local-storage" tabindex="-1">
+              <h3>8. localStorage, sessionStorage i cache</h3>
+              <p>
+                FleetOps działa głównie po stronie przeglądarki. Mechanizm localStorage może przechowywać ustawienia i dane referencyjne, takie jak motyw, tryb kompaktowy, zakres dashboardu, status logowania testowego, aktualny użytkownik, filtry, preferencje list, aktywność, dane domenowe oraz kolejkę działań offline.
+              </p>
+              <p>
+                Mechanizm sessionStorage może być wykorzystywany technicznie przez router do tymczasowego zapamiętania ścieżki powrotu po logowaniu testowym. Taki zapis jest związany z bieżącą sesją przeglądarki.
+              </p>
+              <p>
+                Cache przeglądarki może przechowywać zasoby potrzebne do wyświetlenia strony. Usunięcie cache albo danych witryny może wymagać ponownego pobrania zasobów i odtworzenia preferencji interfejsu.
+              </p>
+              <p>
+                Szczegółowe informacje o danych lokalnych i prywatności opisuje
+                <a class="legal-doc__link" href="#/privacy">Polityka prywatności</a>.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-changes" tabindex="-1">
+              <h3>9. Zmiany polityki cookies</h3>
+              <p>
+                Operator może aktualizować niniejszą Politykę cookies w przypadku zmian przepisów prawa, zmian sposobu hostingu, rozwoju funkcji FleetOps, korekt technicznych lub zmiany technologii używanych w projekcie.
+              </p>
+              <p>
+                Aktualna wersja dokumentu jest publikowana w Serwisie. Zmiany wchodzą w życie z dniem publikacji, o ile w treści dokumentu nie wskazano innego terminu.
+              </p>
+            </section>
+
+            <section class="legal-doc__section" id="cookies-contact" tabindex="-1">
+              <h3>10. Kontakt</h3>
+              <p>
+                W sprawach związanych z cookies, danymi lokalnymi, zasadami prywatności lub projektem FleetOps można skontaktować się z KP_Code Digital Studio pod adresem
+                <a class="legal-doc__link" href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>.
+              </p>
+              <p>
+                Wiadomości są obsługiwane w zakresie potrzebnym do odpowiedzi na zapytanie i wyjaśnienia zasad działania projektu.
+              </p>
+              <p class="legal-doc__meta">
+                Data ostatniej aktualizacji:
+                <time datetime="2026-06-05">05.06.2026</time>
+              </p>
+            </section>
+          </div>
+        </article>
       </section>
 
       <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Zarządzanie</p>
-          <h2 class="section-header__title">Jak kontrolować dane w przeglądarce</h2>
-        </div>
-        <div class="grid">
-          <div class="marketing-card">
-            <h3>Ustawienia przeglądarki</h3>
-            <p>W ustawieniach przeglądarki możesz wyczyścić dane strony oraz ograniczyć zapisywanie danych lokalnych.</p>
+        <div class="cta-panel">
+          <div class="cta-panel__header">
+            <h2 class="cta-panel__title">Masz pytania o cookies?</h2>
+            <p class="cta-panel__lead">Skontaktuj się, jeśli chcesz doprecyzować zasady cookies, danych lokalnych lub działania FleetOps w przeglądarce.</p>
           </div>
-          <div class="marketing-card">
-            <h3>Czyszczenie localStorage</h3>
-            <p>Usunięcie danych lokalnych przywróci demo do stanu początkowego (np. motyw, ustawienia, dane demo).</p>
+          <div class="cta-panel__actions">
+            <a class="button button--primary" href="#/contact">Kontakt</a>
+            <a class="button button--secondary" href="#/app">Przejdź do panelu</a>
           </div>
-          <div class="marketing-card">
-            <h3>Brak narzędzi stron trzecich</h3>
-            <p>Nie korzystamy z zewnętrznych narzędzi analitycznych ani reklamowych, które mogłyby ustawić cookies śledzące.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-tight">
-        <div class="section-header">
-          <p class="tag">Kontakt</p>
-          <h2 class="section-header__title">Masz pytania o politykę cookies?</h2>
-        </div>
-        <div">
-          <address class="contact-address">
-            <div>
-              <strong>Imię i nazwisko:</strong> Kamil Król (KP_Code_)
-            </div>
-            <div>
-              <strong>Adres:</strong>
-              <a href="https://www.google.com/maps?q=Marynarki+Wojennej+12/3,+33-100+Tarn%C3%B3w,+Polska"
-                target="_blank"
-                rel="noopener noreferrer">
-                Marynarki Wojennej 12/3, 33-100 Tarnów, Polska
-              </a>
-            </div>
-            <div>
-              <strong>Telefon:</strong>
-              <a href="tel:+48533537091">+48 533 537 091</a>
-            </div>
-            <div>
-              <strong>E-mail:</strong>
-              <a href="mailto:kontakt@kp-code.pl">kontakt@kp-code.pl</a>
-            </div>
-          </address>
-          <p class="muted small">
-            Dane kontaktowe dotyczą twórcy projektu demonstracyjnego FleetOps.
-          </p>
         </div>
       </section>
     `,
   });
+
+  const links = Array.from(document.querySelectorAll(".legal-nav__link"));
+  const cleanups = links.map((link) => {
+    const handleClick = (event) => {
+      const href = link.getAttribute("href") || "";
+      if (!href.startsWith("#cookies-")) return;
+
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+
+      event.preventDefault();
+      const behavior = window.FleetUI?.getMotionSafeScrollBehavior
+        ? FleetUI.getMotionSafeScrollBehavior()
+        : "smooth";
+
+      target.scrollIntoView({ behavior, block: "start" });
+      target.focus({ preventScroll: true });
+    };
+
+    link.addEventListener("click", handleClick);
+    return () => link.removeEventListener("click", handleClick);
+  });
+
+  if (window.CleanupRegistry && typeof CleanupRegistry.add === "function") {
+    CleanupRegistry.add(() => cleanups.forEach((cleanup) => cleanup()));
+  }
 }
 
 window.renderProductPage = renderProductPage;
