@@ -236,11 +236,8 @@ body.drawer-open {
 }
 
 .sidebar .logo {
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-compact);
 }
 
 .sidebar .logo__icon {
@@ -249,13 +246,20 @@ body.drawer-open {
 }
 
 .sidebar nav {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  align-self: start;
 }
 
 .sidebar a {
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-02);
   color: var(--text-muted);
   border: 1px solid transparent;
 }
@@ -265,6 +269,33 @@ body.drawer-open {
   color: var(--accent);
   background: var(--accent-ghost);
   border-color: transparent;
+}
+
+@media (min-width: 1025px) {
+  .sidebar,
+  .sidebar.is-open {
+    position: sticky;
+    top: 0;
+    left: auto;
+    width: auto;
+    height: 100vh;
+    max-height: 100vh;
+    padding: var(--space-3);
+    z-index: auto;
+    transform: none;
+    visibility: visible;
+    box-shadow: none;
+    overflow-y: auto;
+  }
+
+  .sidebar nav {
+    align-self: start;
+  }
+
+  .sidebar a {
+    min-height: 38px;
+    padding: var(--space-2) var(--space-3);
+  }
 }
 
 /* App Main & Content */
@@ -438,8 +469,8 @@ body.drawer-open {
 
 .app-shell .sidebar a[aria-current="page"],
 .app-shell .sidebar a.active {
-  color: var(--accent);
-  background: var(--accent-ghost);
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent-ghost) 72%, var(--surface));
   border-color: transparent;
 }
 
@@ -642,20 +673,6 @@ body[data-compact="true"] .topbar {
 
   .app-topbar {
     display: none;
-  }
-
-  .sidebar,
-  .sidebar.is-open {
-    position: sticky;
-    left: auto;
-    width: auto;
-    height: 100vh;
-    padding: var(--space-4) var(--space-3);
-    top: 0;
-    z-index: auto;
-    transform: none;
-    visibility: visible;
-    box-shadow: none;
   }
 
   body[data-compact="true"] .sidebar {
