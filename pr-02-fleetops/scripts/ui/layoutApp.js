@@ -113,7 +113,7 @@ function renderAppShell(viewTitle, contentNode) {
         <div class="dropdown-menu topbar__user-menu-panel" id="userMenu">
           <div class="dropdown-item topbar__user-menu-item">Konto: <span class="topbar__user-menu-name">${safeUserName}</span></div>
           <div class="dropdown-item topbar__user-menu-item">Rola: ${safeRoleLabel}</div>
-          <button class="dropdown-item topbar__user-menu-item" id="logoutBtn" type="button">Wyloguj się</button>
+          <button class="dropdown-item topbar__user-menu-item topbar__user-menu-logout" id="logoutBtn" type="button">Wyloguj się</button>
         </div>
       </div>
     </div>
