@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="KP_Code Layout Lens is a rule-based frontend UI audit tool for layout, accessibility, polish, and maintainability reviews."
+    />
+    <title>KP_Code Layout Lens | Digital Vault UI Audit Tool</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#audit-workspace">Skip to audit workspace</a>
+
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="KP_Code Layout Lens home">
+          <span class="brand__mark" aria-hidden="true">LL</span>
+          <span>
+            <span class="brand__eyebrow">KP_Code Digital Vault</span>
+            <span class="brand__name">Layout Lens</span>
+          </span>
+        </a>
+        <div class="site-nav__links" aria-label="Page sections">
+          <a href="#audit-workspace">Audit</a>
+          <a href="#recommendations">Recommendations</a>
+          <a href="#roadmap">Roadmap</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell" aria-labelledby="hero-title">
+        <div class="hero__content">
+          <p class="eyebrow">Frontend quality intelligence · v1 manual audit</p>
+          <h1 id="hero-title">A scalable UI audit foundation for serious frontend teams.</h1>
+          <p class="hero__lede">
+            KP_Code Layout Lens helps product builders evaluate layouts, spacing, typography,
+            responsiveness, accessibility, polish, and maintainability using structured rules that
+            can evolve into static analysis, visual overlays, reports, and AI-assisted review.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#audit-workspace">Start manual audit</a>
+            <a class="button button--secondary" href="#roadmap">View product roadmap</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Current product scope">
+          <span class="status-pill">Static v1</span>
+          <h2>Rule-based audit generator</h2>
+          <p>
+            No backend, no AI, no upload pipeline. This first release focuses on clean data,
+            scoring logic, durable UX, and future extension points.
+          </p>
+          <ul class="hero-card__list">
+            <li>Manual check status tracking</li>
+            <li>Weighted quality scoring</li>
+            <li>Category-level insight</li>
+            <li>Local demo presets</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="dashboard section-shell" aria-labelledby="dashboard-title">
+        <div class="section-heading">
+          <p class="eyebrow">Overview dashboard</p>
+          <h2 id="dashboard-title">Quality snapshot</h2>
+          <p>
+            Use this dashboard to understand the current audit health before moving into a full
+            component-by-component review.
+          </p>
+        </div>
+        <div class="metric-grid" aria-live="polite">
+          <article class="metric-card">
+            <span class="metric-card__label">Overall score</span>
+            <strong id="overall-score">0</strong>
+            <span id="quality-label" class="metric-card__meta">Not started</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-card__label">Passed checks</span>
+            <strong id="passed-count">0</strong>
+            <span class="metric-card__meta">Rules marked pass</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-card__label">Warnings</span>
+            <strong id="warning-count">0</strong>
+            <span class="metric-card__meta">Needs review</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-card__label">Failed checks</span>
+            <strong id="failed-count">0</strong>
+            <span class="metric-card__meta">Blocks premium quality</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="audit-workspace" class="audit-workspace section-shell" aria-labelledby="audit-title">
+        <div class="section-heading section-heading--split">
+          <div>
+            <p class="eyebrow">New audit panel</p>
+            <h2 id="audit-title">Manual UI audit workflow</h2>
+            <p>
+              Select a component type, review each rule, and update statuses as you inspect the UI.
+              Scores update instantly using the separated audit engine.
+            </p>
+          </div>
+          <button id="reset-audit" class="button button--secondary" type="button">Reset audit</button>
+        </div>
+
+        <div class="audit-layout">
+          <aside class="audit-config card" aria-labelledby="config-title">
+            <h3 id="config-title">Audit setup</h3>
+            <label class="field" for="component-type">
+              <span>Component type</span>
+              <select id="component-type" name="component-type"></select>
+            </label>
+            <div class="demo-summary" id="demo-summary"></div>
+          </aside>
+
+          <div class="checklist card" aria-labelledby="checklist-title">
+            <div class="checklist__header">
+              <h3 id="checklist-title">Audit checklist</h3>
+              <p>Mark every rule as pass, warning, fail, or not applicable.</p>
+            </div>
+            <div id="rules-container" class="rules-container"></div>
+          </div>
+
+          <aside class="results-panel card" aria-labelledby="results-title">
+            <h3 id="results-title">Result summary</h3>
+            <div class="score-ring" aria-live="polite">
+              <span id="score-ring-value">0</span>
+              <small>/100</small>
+            </div>
+            <p id="score-ring-label" class="results-panel__label">Not started</p>
+            <div id="category-scores" class="category-scores"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="recommendations" class="recommendations section-shell" aria-labelledby="recommendations-title">
+        <div class="section-heading">
+          <p class="eyebrow">Generated recommendations</p>
+          <h2 id="recommendations-title">Actionable next steps</h2>
+          <p>
+            Recommendations are derived from warning and failed rule statuses. Future versions can
+            enrich this with DOM evidence, screenshots, and report exports.
+          </p>
+        </div>
+        <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
+      </section>
+
+      <section id="roadmap" class="roadmap section-shell" aria-labelledby="roadmap-title">
+        <div class="section-heading">
+          <p class="eyebrow">Product roadmap</p>
+          <h2 id="roadmap-title">Designed for the Digital Vault roadmap</h2>
+          <p>
+            The v1 foundation keeps data, scoring, and rendering separate so KP_Code Layout Lens can
+            grow without a rewrite.
+          </p>
+        </div>
+        <div class="roadmap-grid">
+          <article>
+            <span>v2</span>
+            <h3>Richer rule templates</h3>
+            <p>Reusable presets, stricter severities, and project-specific quality profiles.</p>
+          </article>
+          <article>
+            <span>v3</span>
+            <h3>HTML/CSS analyzer</h3>
+            <p>Static inspection for semantics, overflow risk, responsive patterns, and tokens.</p>
+          </article>
+          <article>
+            <span>v4</span>
+            <h3>Live preview overlays</h3>
+            <p>Visual rulers, spacing hints, focus-state inspection, and viewport simulations.</p>
+          </article>
+          <article>
+            <span>v5+</span>
+            <h3>Reports and AI review</h3>
+            <p>Saved audits, exportable reports, and AI-assisted senior frontend review workflows.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-shell">
+      <p>KP_Code Layout Lens · A KP_Code Digital Vault developer tool foundation.</p>
+      <p>Built with semantic HTML, CSS, and vanilla JavaScript only.</p>
+    </footer>
+
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>
