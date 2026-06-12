@@ -16,15 +16,15 @@ function ordersView() {
       <p class="module-header__meta">Monitoruj status dostaw</p>
     </div>
 
-    <div class="toolbar orders-toolbar">
-      <select class="input orders-toolbar__select" id="ordersSortBy" aria-label="Sortuj">
+    <div class="toolbar">
+      <select class="input toolbar__select" id="ordersSortBy" aria-label="Sortuj">
         <option value="updated">Aktualizacja</option>
         <option value="client">Klient</option>
         <option value="status">Status</option>
         <option value="priority">Priorytet</option>
       </select>
 
-      <select class="input orders-toolbar__select" id="ordersSortDir" aria-label="Kierunek">
+      <select class="input toolbar__select" id="ordersSortDir" aria-label="Kierunek">
         <option value="asc">Rosnąco</option>
         <option value="desc">Malejąco</option>
       </select>
@@ -33,16 +33,17 @@ function ordersView() {
 
   root.appendChild(header);
 
-  const ordersActions = dom.h("div", "orders-actions");
+  const ordersActions = dom.h("div", "app-actions");
   ordersActions.innerHTML = `
-    <button class="button button--primary orders-actions__button" id="addOrder" type="button">
+    <button class="button button--primary app-actions__button" id="addOrder" type="button">
       Dodaj zlecenie
     </button>
 
-    <button class="button button--secondary orders-actions__button" id="exportOrders" type="button">
+    <button class="button button--secondary app-actions__button" id="exportOrders" type="button">
       Eksportuj CSV
     </button>
   `;
+
   root.appendChild(ordersActions);
 
   const filterBar = dom.h("div", "table-filter");
