@@ -381,6 +381,11 @@ html[data-theme="dark"] .setting-card:has(input, select, textarea, button, a):fo
   gap: var(--space-2);
 }
 
+.vehicle-card__toolbar .button--ghost {
+  font-size: var(--fs-01);
+  border: none;
+}
+
 .vehicle-card__title {
   font-variant-numeric: tabular-nums;
   line-height: var(--lh-tight);
@@ -469,10 +474,16 @@ html[data-theme="dark"] .setting-card:has(input, select, textarea, button, a):fo
   white-space: nowrap;
 }
 
+.alerts-rules-menu {
+  background: var(--surface-2);
+}
+
 .alerts-rules-menu__reset {
-  padding: var(--space-1) var(--space-2);
   font-size: var(--fs-01);
   white-space: nowrap;
+}
+.alerts-rules-menu__reset:hover {
+  color: var(--danger);
 }
 
 .alerts-rules-menu__header {
@@ -480,25 +491,33 @@ html[data-theme="dark"] .setting-card:has(input, select, textarea, button, a):fo
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-2);
+}
+
+.alerts-rules-menu__eyebrow {
+  font-size: var(--fs-01);
 }
 
 .alerts-rules-menu__section {
   padding: var(--space-2) var(--space-3);
 }
 
-.alerts-rules-menu__title {
-  padding-block: var(--space-1);
-}
-
+.alerts-rules-menu__title,
 .alerts-rules-menu__group-title {
-  padding: var(--space-2) var(--space-3);
+  padding-bottom: var(--space-3);
+  font-size: var(--fs-01);
 }
 
 .alerts-rules-menu__option {
+  font-size: var(--fs-01);
+}
+
+.alerts-rules-menu__title,
+.alerts-rules-menu__group-title,
+.alerts-rules-menu__option {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .alerts-rules-menu__option + .alerts-rules-menu__option {
@@ -689,3 +708,4 @@ textarea:focus-visible {
     transition: none;
   }
 }
+

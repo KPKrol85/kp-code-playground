@@ -361,7 +361,7 @@ function ordersView() {
     const body = dom.h("div");
     body.innerHTML = `
       <p>Czy na pewno usunąć zlecenie <strong>${escapeHtml(order.id)}</strong>?</p>
-      <p class="muted small">${escapeHtml(order.client)} - ${escapeHtml(order.route)}</p>
+      <p>${escapeHtml(order.client)} - ${escapeHtml(order.route)}</p>
       <div class="modal-actions modal-actions--confirm">
         <button class="button button--ghost" type="button" data-modal-cancel>Anuluj</button>
         <button class="button button--primary" type="button" data-modal-confirm>Usuń</button>
