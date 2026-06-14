@@ -77,8 +77,9 @@
 
 .badge.status {
   border: 0;
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-semibold);
   color: #0b0d10;
+  box-shadow: none;
 }
 
 .badge.in-progress {
@@ -96,8 +97,6 @@
 .badge.pending {
   background: #fde68a;
 }
-
-
 
 /* Chips */
 
@@ -125,6 +124,7 @@
 
 .dashboard-columns {
   gap: var(--space-3);
+  grid-template-columns: 1fr;
 }
 
 .report-mix-grid {
@@ -132,29 +132,28 @@
   margin-top: var(--space-2);
 }
 
-
-
-
-
-/* Cards Layout */
-
-.card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
+.report-mix-grid {
+  grid-template-columns: 1fr;
 }
+
+@media (min-width: 1024px) {
+  .app-main .dashboard-columns {
+    grid-template-columns: 2fr 1fr;
+  }
+  .app-main .report-mix-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* need to be relocat */
 
 .load-more {
   display: flex;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: var(--space-3);
 }
 
-.vehicle-card__actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+
 
 /* Skeleton */
 

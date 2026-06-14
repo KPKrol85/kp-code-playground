@@ -489,6 +489,7 @@ textarea[aria-invalid="true"]:focus-visible {
   align-items: center;
   justify-content: space-between;
   margin-bottom: var(--space-3);
+  font-size: var(--fs-03);
 }
 
 .modal-close {

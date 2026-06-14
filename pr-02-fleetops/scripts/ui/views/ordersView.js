@@ -543,7 +543,7 @@ tableWrap.innerHTML = Table.render(
       <p><strong>Status:</strong> ${escapeHtml(format.statusLabel(order.status))}</p>
       <p><strong>ETA:</strong> ${escapeHtml(order.eta)}</p>
       <p><strong>Priorytet:</strong> ${escapeHtml(priorityLabel(order.priority))}</p>
-      <p class="muted small">Ostatnia aktualizacja: ${format.dateShort(order.updated)}</p>
+      <p>Ostatnia aktualizacja: ${format.dateShort(order.updated)}</p>
     `;
     Modal.open({ title: `Zlecenie ${escapeHtml(order.id)}`, body });
   };
