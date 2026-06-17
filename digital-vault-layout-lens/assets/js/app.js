@@ -77,10 +77,10 @@ function renderComponentOptions() {
 function renderDemoSummary() {
   const preset = getPresetById(state.componentTypeId);
   elements.demoSummary.innerHTML = `
-    <p>${preset.summary}</p>
+    <p>${escapeHtml(preset.summary)}</p>
     <div>
       <strong>Review focus</strong>
-      <ul>${preset.idealReviewFocus.map((item) => `<li>${item}</li>`).join('')}</ul>
+      <ul class="demo-summary__list">${preset.idealReviewFocus.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
     </div>
   `;
 }
@@ -92,8 +92,8 @@ function renderRules() {
       return `
         <section class="rule-category" aria-labelledby="category-${slugify(category)}">
           <div class="rule-category__header">
-            <h4 id="category-${slugify(category)}">${category}</h4>
-            <span>${rules.length} checks</span>
+            <h4 id="category-${slugify(category)}" class="rule-category__title">${escapeHtml(category)}</h4>
+            <span class="rule-category__count">${rules.length} checks</span>
           </div>
           <div class="rule-list">
             ${rules.map(renderRule).join('')}
@@ -106,16 +106,17 @@ function renderRules() {
 
 function renderRule(rule) {
   const selectedStatus = state.statuses[rule.id] || 'warning';
+  const safeLabel = escapeHtml(rule.label);
   return `
     <article class="rule-card rule-card--${selectedStatus}">
       <div class="rule-card__body">
         <div>
-          <p class="rule-card__meta">${rule.severity} severity · weight ${rule.weight}</p>
-          <h5>${rule.label}</h5>
-          <p>${rule.description}</p>
+          <p class="rule-card__meta">${escapeHtml(rule.severity)} severity · weight ${rule.weight}</p>
+          <h5 class="rule-card__title">${safeLabel}</h5>
+          <p>${escapeHtml(rule.description)}</p>
         </div>
         <label class="status-select">
-          <span class="sr-only">Status for ${rule.label}</span>
+          <span class="sr-only">Status for ${safeLabel}</span>
           <select data-rule-status="${rule.id}">
             ${statusOptions
               .map((option) => `<option value="${option.value}" ${option.value === selectedStatus ? 'selected' : ''}>${option.label}</option>`)
@@ -125,8 +126,8 @@ function renderRule(rule) {
       </div>
       <details class="rule-card__details">
         <summary>Recommendation and future automation</summary>
-        <p><strong>Recommendation:</strong> ${rule.recommendation}</p>
-        <p><strong>Automation hint:</strong> ${rule.futureAutomationHint}</p>
+        <p><strong>Recommendation:</strong> ${escapeHtml(rule.recommendation)}</p>
+        <p><strong>Automation hint:</strong> ${escapeHtml(rule.futureAutomationHint)}</p>
       </details>
     </article>
   `;
@@ -148,7 +149,7 @@ function renderResults() {
       (category) => `
         <div class="category-score">
           <div>
-            <strong>${category.name}</strong>
+            <strong>${escapeHtml(category.name)}</strong>
             <span>${category.counts.pass} pass · ${category.counts.warning} warn · ${category.counts.fail} fail</span>
           </div>
           <meter min="0" max="100" value="${category.score}">${category.score}</meter>
@@ -166,10 +167,10 @@ function renderResults() {
 function renderRecommendation(item) {
   return `
     <article class="recommendation-card recommendation-card--${item.status}">
-      <p class="recommendation-card__meta">${item.category} · ${item.severity} · ${item.status}</p>
-      <h3>${item.label}</h3>
-      <p>${item.recommendation}</p>
-      <small>Future automation: ${item.futureAutomationHint}</small>
+      <p class="recommendation-card__meta">${escapeHtml(item.category)} · ${escapeHtml(item.severity)} · ${escapeHtml(item.status)}</p>
+      <h3>${escapeHtml(item.label)}</h3>
+      <p>${escapeHtml(item.recommendation)}</p>
+      <small>Future automation: ${escapeHtml(item.futureAutomationHint)}</small>
     </article>
   `;
 }
@@ -203,4 +204,14 @@ function getPresetById(id) {
 
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
 }
