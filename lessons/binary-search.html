@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kompletna lekcja KP_Code Algorithms Academy: Binary Search / Wyszukiwanie binarne.">
+  <title>Binary Search / Wyszukiwanie binarne | KP_Code Algorithms Academy</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <header class="site-header">
+    <nav class="site-nav container" aria-label="Główna nawigacja">
+      <a class="brand" href="../index.html"><span class="brand__mark" aria-hidden="true">KP</span><span class="brand__text">Algorithms Academy</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="nav-toggle__bar" aria-hidden="true"></span><span class="sr-only">Otwórz menu</span></button>
+      <div class="site-nav__links" id="primary-menu"><a href="../index.html">Dashboard</a><a href="#quiz">Quiz</a><button class="theme-toggle" type="button" aria-pressed="false">Tryb</button></div>
+    </nav>
+  </header>
+
+  <main id="main-content" class="lesson-layout">
+    <section class="lesson-hero section">
+      <div class="container">
+        <p class="eyebrow">Searching • Beginner • JavaScript</p>
+        <h1>Binary Search / Wyszukiwanie binarne</h1>
+        <p class="hero__lead">Naucz się algorytmu, który zamiast sprawdzać każdy element po kolei, w każdej iteracji odrzuca połowę możliwych odpowiedzi.</p>
+        <div class="lesson-meta" aria-label="Metadane lekcji"><span>Czas: 25–35 min</span><span>Wymagania: tablice, pętle, warunki</span><span>Złożoność: O(log n)</span></div>
+      </div>
+    </section>
+
+    <div class="container lesson-shell">
+      <aside class="toc" aria-label="Spis treści">
+        <h2>Spis treści</h2>
+        <nav><a href="#definition">Definicja</a><a href="#problem">Problem</a><a href="#analogy">Analogia</a><a href="#background">Kontekst</a><a href="#steps">Kroki</a><a href="#walkthrough">Walkthrough</a><a href="#pseudocode">Pseudokod</a><a href="#javascript">JavaScript</a><a href="#complexity">O(log n)</a><a href="#mistakes">Błędy</a><a href="#usage">Kiedy używać</a><a href="#quiz">Quiz</a><a href="#summary">Podsumowanie</a></nav>
+      </aside>
+
+      <article class="article">
+        <section id="definition"><h2>Definicja</h2><p><strong>Binary Search</strong>, czyli <strong>wyszukiwanie binarne</strong>, to algorytm znajdowania elementu w <strong>posortowanej</strong> kolekcji. Porównuje szukaną wartość ze środkiem aktualnego zakresu, a następnie kontynuuje pracę tylko w lewej albo prawej połowie.</p></section>
+        <section id="problem"><h2>Jaki problem rozwiązuje?</h2><p>Gdy dane są posortowane, nie musimy sprawdzać każdego elementu. Binary Search odpowiada na pytanie: „czy element istnieje i gdzie się znajduje?” znacznie szybciej niż Linear Search dla dużych zbiorów.</p></section>
+        <section id="analogy"><h2>Prosta analogia z życia</h2><p>Wyobraź sobie zgadywanie liczby od 1 do 100. Jeśli pytasz „czy to 50?”, a odpowiedź brzmi „za dużo”, od razu odrzucasz liczby 50–100. Następnie pytasz o środek pozostałego zakresu. To dokładnie intuicja wyszukiwania binarnego.</p></section>
+        <section id="background"><h2>Krótki kontekst historyczny</h2><p>Idea połowienia zakresu jest starsza niż współczesne języki programowania i pojawia się w klasycznej informatyce jako przykład metody <em>divide and conquer</em>. Binary Search jest jednym z podstawowych algorytmów uczonych przy analizie złożoności, bo bardzo wyraźnie pokazuje różnicę między wzrostem liniowym a logarytmicznym.</p></section>
+        <section id="steps"><h2>Wyjaśnienie krok po kroku</h2><div class="concept-grid"><div class="concept-card"><h3>1. Ustal granice</h3><p>Na początku lewa granica to pierwszy indeks, prawa granica to ostatni indeks.</p></div><div class="concept-card"><h3>2. Sprawdź środek</h3><p>Oblicz indeks środka i porównaj wartość z celem.</p></div><div class="concept-card"><h3>3. Odrzuć połowę</h3><p>Jeśli środek jest za mały, szukaj po prawej. Jeśli za duży, szukaj po lewej.</p></div><div class="concept-card"><h3>4. Zakończ</h3><p>Zwróć indeks po znalezieniu albo informację, że elementu nie ma.</p></div></div></section>
+        <section id="walkthrough"><h2>Wizualny walkthrough tekstowy</h2><p>Szukamy liczby <strong>23</strong> w tablicy:</p><pre><code>[2, 5, 8, 12, 16, 23, 38, 56, 72]</code></pre><ol><li>Zakres: indeksy 0–8. Środek: indeks 4, wartość 16. Cel 23 jest większy, więc odrzucamy lewą połowę.</li><li>Zakres: indeksy 5–8. Środek: indeks 6, wartość 38. Cel 23 jest mniejszy, więc odrzucamy prawą część.</li><li>Zakres: indeks 5–5. Środek: indeks 5, wartość 23. Element znaleziony.</li></ol></section>
+        <section id="pseudocode"><h2>Pseudokod</h2><pre><code>left = 0
+right = length(array) - 1
+while left <= right:
+  middle = floor((left + right) / 2)
+  if array[middle] == target:
+    return middle
+  if array[middle] < target:
+    left = middle + 1
+  else:
+    right = middle - 1
+return -1</code></pre></section>
+        <section id="javascript"><h2>Przykład w JavaScript</h2><pre><code>function binarySearch(numbers, target) {
+  let left = 0;
+  let right = numbers.length - 1;
+
+  while (left <= right) {
+    const middle = Math.floor((left + right) / 2);
+    const value = numbers[middle];
+
+    if (value === target) {
+      return middle;
+    }
+
+    if (value < target) {
+      left = middle + 1;
+    } else {
+      right = middle - 1;
+    }
+  }
+
+  return -1;
+}
+
+console.log(binarySearch([2, 5, 8, 12, 16, 23, 38], 23)); // 5</code></pre></section>
+        <section id="complexity"><h2>Złożoność O(log n)</h2><p>Po każdym porównaniu liczba kandydatów spada mniej więcej o połowę. Dla 1 000 000 elementów potrzeba około 20 kroków, a nie miliona. Dlatego czas działania zapisujemy jako <strong>O(log n)</strong>. Pamięć w wersji iteracyjnej wynosi <strong>O(1)</strong>, bo używamy tylko kilku zmiennych pomocniczych.</p></section>
+        <section id="mistakes"><h2>Najczęstsze błędy</h2><ul><li>Uruchamianie algorytmu na nieposortowanej tablicy.</li><li>Złe warunki pętli, np. <code>left &lt; right</code> zamiast <code>left &lt;= right</code> w klasycznej wersji.</li><li>Brak przesunięcia granic o jeden, co może prowadzić do nieskończonej pętli.</li><li>Mylenie zwracanej wartości: indeks elementu kontra sama wartość.</li></ul></section>
+        <section id="usage"><h2>Kiedy używać, a kiedy nie?</h2><p>Używaj Binary Search, gdy dane są posortowane i wykonujesz wiele zapytań albo zależy Ci na szybkim wyszukiwaniu. Nie używaj go jako pierwszego wyboru, gdy dane często się zmieniają i sortowanie kosztuje więcej niż samo wyszukiwanie, albo gdy kolekcja jest bardzo mała i prostszy kod liniowy jest wystarczający.</p></section>
+        <section id="quiz"><h2>Quiz i praktyka</h2><ol><li>Dlaczego Binary Search wymaga posortowanych danych?</li><li>Ile maksymalnie kroków potrzeba mniej więcej dla 1024 elementów?</li><li>Zaimplementuj wersję, która zwraca <code>true</code>/<code>false</code> zamiast indeksu.</li><li>Przetestuj algorytm dla wartości mniejszej niż pierwszy element i większej niż ostatni.</li></ol></section>
+        <section id="summary"><h2>Podsumowanie</h2><p>Binary Search jest fundamentalnym algorytmem, ponieważ uczy myślenia zakresami, redukcji problemu i analizy logarytmicznej. Najważniejszy warunek to posortowane dane. Jeśli jest spełniony, algorytm pozwala bardzo szybko znaleźć element nawet w ogromnej tablicy.</p></section>
+        <nav class="lesson-navigation" aria-label="Nawigacja lekcji"><a class="button button--secondary" href="../index.html">Wróć do dashboardu</a><span>Następne lekcje: Linear Search, Big O Notation, Recursion Basics — wkrótce.</span></nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container site-footer__inner"><p>© KP_Code Digital Academy</p><a href="../plan.md">Roadmapa produktu</a></div></footer>
+</body>
+</html>
