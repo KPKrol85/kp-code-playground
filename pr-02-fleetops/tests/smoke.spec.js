@@ -382,6 +382,24 @@ test("core app routes render route-level headings", async ({ page }) => {
   }
 });
 
+test("orders CSV export stays demo-disabled while reports JSON export works", async ({ page }) => {
+  await loginAsDemo(page);
+  await page.locator('.sidebar nav a[data-route="/app/orders"]').click();
+  await expect(page.getByRole("heading", { name: "Zlecenia", level: 1 })).toBeVisible();
+
+  const csvExport = page.getByRole("button", { name: "Eksportuj CSV" });
+  await expect(csvExport).toBeDisabled();
+  await expect(csvExport).toHaveAttribute("title", "Eksport CSV jest niedostępny w wersji demo");
+
+  await page.locator('.sidebar nav a[data-route="/app/reports"]').click();
+  await expect(page.getByRole("heading", { name: "Raporty", level: 1 })).toBeVisible();
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Eksportuj JSON" }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe("fleetops-reports.json");
+});
+
 test("settings table preferences update persisted list and dense state", async ({ page, context }) => {
   await loginAsDemo(page);
   await page.locator('.sidebar nav a[data-route="/app/settings"]').click();
