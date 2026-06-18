@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KP_Code Algorithms Academy — uporządkowana platforma do nauki algorytmów, struktur danych i myślenia programistycznego.">
+  <title>KP_Code Algorithms Academy</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <header class="site-header">
+    <nav class="site-nav container" aria-label="Główna nawigacja">
+      <a class="brand" href="index.html" aria-label="KP_Code Algorithms Academy — strona główna">
+        <span class="brand__mark" aria-hidden="true">KP</span>
+        <span class="brand__text">KP_Code Algorithms Academy</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="sr-only">Otwórz menu</span>
+      </button>
+      <div class="site-nav__links" id="primary-menu">
+        <a href="#path">Ścieżka nauki</a>
+        <a href="#categories">Kategorie</a>
+        <a href="lessons/binary-search.html">Pierwsza lekcja</a>
+        <button class="theme-toggle" type="button" aria-pressed="false">Tryb</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero section">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">Digital Academy / Digital Vault</p>
+          <h1>Profesjonalna nauka algorytmów w ekosystemie KP_Code.</h1>
+          <p class="hero__lead">KP_Code Algorithms Academy to uporządkowana, statyczna baza lekcji dla osób, które chcą rozumieć algorytmy praktycznie: przez intuicję, kod JavaScript, analizę złożoności i ćwiczenia.</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="lessons/binary-search.html">Rozpocznij Binary Search</a>
+            <a class="button button--secondary" href="plan.md">Zobacz roadmapę</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Status produktu">
+          <p class="hero-panel__label">Pierwszy moduł</p>
+          <h2>Searching Fundamentals</h2>
+          <ul class="check-list">
+            <li>lekcje po polsku</li>
+            <li>angielskie nazwy techniczne</li>
+            <li>kod w vanilla JavaScript</li>
+            <li>fundament pod kolejne moduły</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="path">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Learning path</p>
+          <h2>Ścieżka nauki algorytmów</h2>
+          <p>Startujemy od intuicyjnych algorytmów wyszukiwania, a następnie przechodzimy do sortowania, rekurencji, struktur danych, grafów i programowania dynamicznego.</p>
+        </div>
+        <div class="lesson-grid">
+          <article class="lesson-card lesson-card--featured">
+            <p class="lesson-card__meta">Gotowe • Beginner • Searching</p>
+            <h3>Binary Search / Wyszukiwanie binarne</h3>
+            <p>Kompletna lekcja o szybkim wyszukiwaniu w posortowanych danych, z analogią, walkthrough, pseudokodem, JavaScriptem i quizem.</p>
+            <a class="card-link" href="lessons/binary-search.html">Otwórz lekcję</a>
+          </article>
+          <article class="lesson-card"><p class="lesson-card__meta">Wkrótce • Beginner</p><h3>Linear Search</h3><p>Najprostszy model przeszukiwania danych i punkt odniesienia dla złożoności O(n).</p></article>
+          <article class="lesson-card"><p class="lesson-card__meta">Wkrótce • Sorting</p><h3>Merge Sort</h3><p>Dziel i zwyciężaj w praktyce: stabilne sortowanie oraz analiza O(n log n).</p></article>
+          <article class="lesson-card"><p class="lesson-card__meta">Wkrótce • Graphs</p><h3>Breadth-First Search</h3><p>Przeszukiwanie grafu poziomami, najkrótsze ścieżki w grafach nieważonych i kolejka.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--muted" id="categories">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Curriculum map</p>
+          <h2>Kategorie przyszłych lekcji</h2>
+        </div>
+        <div class="category-grid">
+          <span>Searching</span><span>Sorting</span><span>Recursion</span><span>Graphs</span><span>Dynamic Programming</span><span>Greedy Algorithms</span><span>Data Structures</span><span>Strings</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© KP_Code Digital Academy. Solidne fundamenty algorytmiczne, lekcja po lekcji.</p>
+      <a href="lessons/binary-search.html">Przejdź do pierwszej lekcji</a>
+    </div>
+  </footer>
+</body>
+</html>
