@@ -45,11 +45,9 @@ nie wykryto.
 ## 5. P2 — Minor refinements
 
 EN:
-- Homepage canonical and Open Graph URL differ only by trailing slash. The canonical URL is `https://saas-pr02-fleetops.netlify.app/`, while `og:url` omits the slash (`index.html:12-19`). This is minor, but aligning them removes a small SEO/social metadata inconsistency.
 - Manifest shortcut icon paths are less portable than the rest of the manifest. Core icons and screenshots use root-relative `src` values (`assets/favicon/site.webmanifest:12-45`), while shortcut icons use absolute production URLs (`assets/favicon/site.webmanifest:52-87`). This works for the declared Netlify domain, but root-relative shortcut icons would be more consistent for local previews and alternate static hosts.
 
 PL:
-- Canonical homepage i Open Graph URL różnią się tylko końcowym ukośnikiem. Canonical wskazuje `https://saas-pr02-fleetops.netlify.app/`, a `og:url` pomija ukośnik (`index.html:12-19`). To drobna uwaga, ale ujednolicenie usuwa małą niespójność SEO/social metadata.
 - Ścieżki ikon skrótów w manifeście są mniej przenośne niż reszta manifestu. Główne ikony i screenshoty używają ścieżek root-relative (`assets/favicon/site.webmanifest:12-45`), a ikony skrótów używają absolutnych URL-i domeny produkcyjnej (`assets/favicon/site.webmanifest:52-87`). Działa to dla zadeklarowanej domeny Netlify, ale ścieżki root-relative byłyby spójniejsze dla lokalnego podglądu i innych statycznych hostów.
 
 ## 6. Extra quality improvements
