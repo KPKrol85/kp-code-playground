@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KP_Code Digital Vault - Design Tokens</title>
+    <script>
+      (() => {
+        try {
+          const storedTheme = localStorage.getItem("vault-theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/vault.css" />
+    <script src="assets/vault-data.js" defer></script>
+    <script src="assets/vault.js" defer></script>
+  </head>
+  <body>
+    <main class="vault-shell">
+      <nav class="vault-topbar" aria-label="Produkt">
+        <div class="vault-brand">
+          <span class="vault-brand__mark">KP</span>
+          <span>
+            <span class="vault-brand__name">KP_Code Digital Vault</span>
+            <span class="vault-brand__meta">Biblioteka produktów z tokenami CSS</span>
+          </span>
+        </div>
+        <div class="vault-actions">
+          <div class="vault-status" aria-label="Statystyki biblioteki">
+            <span class="vault-status__item">200 zestawów tokenów</span>
+            <span class="vault-status__item">Podglądy BEM</span>
+            <span class="vault-status__item">CSS do skopiowania</span>
+          </div>
+          <div class="vault-theme-toggle" aria-label="Motyw panelu">
+            <button class="vault-theme-toggle__option" type="button" data-theme-option="light" aria-pressed="true">Light</button>
+            <button class="vault-theme-toggle__option" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+          </div>
+        </div>
+      </nav>
+
+      <header class="vault-hero">
+        <div>
+          <p class="vault-hero__eyebrow">Design Tokens / Produkt dla developerów</p>
+          <h1 class="vault-hero__title">Gotowe systemy stylów CSS dla profesjonalnych produktów.</h1>
+          <p class="vault-hero__copy">
+            Wybierz zestaw dopasowany do typu projektu, sprawdź komponenty w podglądzie i skopiuj pełny plik CSS z tokenami, skalami oraz klasami BEM do własnej aplikacji.
+          </p>
+        </div>
+        <section class="vault-summary" aria-label="Podsumowanie produktu">
+          <div class="vault-summary__item"><span class="vault-summary__value">200</span><span class="vault-summary__label">zestawów</span></div>
+          <div class="vault-summary__item"><span class="vault-summary__value">20</span><span class="vault-summary__label">kategorii</span></div>
+          <div class="vault-summary__item"><span class="vault-summary__value vault-summary__value--action">Kopiuj CSS</span><span class="vault-summary__label">gotowe tokeny w schowku</span></div>
+        </section>
+      </header>
+
+      <section class="vault-toolbar" aria-label="Filtry tokenów">
+        <label class="vault-field">
+          <span class="vault-field__label">Szukaj</span>
+          <input class="vault-input" id="tokenSearch" type="search" placeholder="np. SaaS, fintech, AI" />
+        </label>
+        <label class="vault-field">
+          <span class="vault-field__label">Kategoria</span>
+          <select class="vault-select" id="categoryFilter"></select>
+        </label>
+        <label class="vault-field">
+          <span class="vault-field__label">Sortowanie</span>
+          <select class="vault-select" id="sortFilter">
+            <option value="id">Numer zestawu</option>
+            <option value="name">Nazwa</option>
+            <option value="category">Kategoria</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="vault-grid" id="tokenGrid" aria-live="polite"></section>
+      <p class="vault-empty" id="emptyState">Brak zestawów dla wybranych filtrów.</p>
+    </main>
+  </body>
+</html>
