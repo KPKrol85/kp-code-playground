@@ -51,12 +51,10 @@ PL:
 ## 6. Extra quality improvements
 
 EN:
-- If public marketing routes become SEO targets, consider generating static route-level HTML or updating canonical/Open Graph/Twitter metadata per route. The current marketing shell updates only `document.title` and the meta description at runtime (`scripts/ui/marketingPages.js:1-5`, `scripts/ui/marketingPages.js:21-23`), which is acceptable for a hash-routed static demo but limited for share previews.
 - Before making hard WCAG contrast claims, run computed-style contrast checks against the light and dark token combinations. Source tokens and focus styles are present, but contrast compliance cannot be verified from static token definitions alone (`styles/src/00-settings.css:13-28`, `styles/src/01-base.css:45-56`).
 - Verify deployment CSP behavior for the inline JSON-LD block if strict production CSP is a priority. The project declares inline JSON-LD (`index.html:33-75`) and a Netlify CSP with `script-src 'self'` (`_headers:7`); whether this affects structured-data processing should be checked in the deployed browser context before changing the policy.
 
 PL:
-- Jeśli publiczne trasy marketingowe mają stać się celami SEO, warto rozważyć generowanie statycznego HTML per trasa albo aktualizowanie canonical/Open Graph/Twitter dla każdej trasy. Obecny shell marketingowy zmienia w runtime tylko `document.title` i meta description (`scripts/ui/marketingPages.js:1-5`, `scripts/ui/marketingPages.js:21-23`), co jest akceptowalne dla statycznego demo z routingiem hash-based, ale ograniczone dla podglądów udostępniania.
 - Przed deklarowaniem pełnej zgodności kontrastu z WCAG warto uruchomić kontrolę kontrastu na stylach wyliczonych dla jasnych i ciemnych kombinacji tokenów. Tokeny i style fokusu są obecne, ale same definicje statyczne nie pozwalają potwierdzić zgodności kontrastu (`styles/src/00-settings.css:13-28`, `styles/src/01-base.css:45-56`).
 - Jeśli restrykcyjny CSP produkcyjny jest priorytetem, warto zweryfikować zachowanie wdrożeniowe dla inline JSON-LD. Projekt deklaruje inline JSON-LD (`index.html:33-75`) i Netlify CSP z `script-src 'self'` (`_headers:7`); wpływ na przetwarzanie danych strukturalnych należy sprawdzić w realnym kontekście przeglądarki przed zmianą polityki.
 
