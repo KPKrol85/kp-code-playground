@@ -1,45 +1,56 @@
 :root {
-  --vault-bg: #f4f5f7;
+  --vault-bg: #f6f7f9;
   --vault-page-start: #ffffff;
   --vault-ink: #111827;
   --vault-muted: #667085;
   --vault-surface: #ffffff;
-  --vault-panel: #ebeef2;
+  --vault-panel: #f1f3f6;
   --vault-chip-bg: #ffffff;
   --vault-input-bg: #ffffff;
-  --vault-line: #d7dce3;
-  --vault-strong: #1f4e79;
-  --vault-strong-hover: #173b5d;
+  --vault-line: #dfe3e8;
+  --vault-strong: #24577f;
+  --vault-strong-hover: #183f60;
   --vault-accent: #2d8478;
   --vault-warn: #9b6b24;
   --vault-mark-bg: #111827;
   --vault-mark-ink: #ffffff;
-  --vault-radius: 8px;
-  --vault-shadow: 0 16px 42px rgb(17 24 39 / 0.08);
-  --vault-topbar-shadow: 0 18px 44px rgb(17 24 39 / 0.08);
+  --vault-radius: 10px;
+  --vault-radius-sm: 8px;
+  --vault-radius-lg: 16px;
+  --vault-space-1: 4px;
+  --vault-space-2: 8px;
+  --vault-space-3: 12px;
+  --vault-space-4: 16px;
+  --vault-space-5: 20px;
+  --vault-space-6: 24px;
+  --vault-space-7: 32px;
+  --vault-shadow: 0 12px 30px rgb(17 24 39 / 0.06);
+  --vault-shadow-soft: 0 8px 20px rgb(17 24 39 / 0.05);
+  --vault-topbar-shadow: 0 14px 34px rgb(17 24 39 / 0.07);
   --vault-focus: rgb(31 78 121 / 0.22);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
   --vault-bg: #0f141b;
-  --vault-page-start: #151b24;
+  --vault-page-start: #141a22;
   --vault-ink: #eef3f8;
-  --vault-muted: #a8b3c2;
+  --vault-muted: #aab5c3;
   --vault-surface: #171f2a;
-  --vault-panel: #202a37;
+  --vault-panel: #202936;
   --vault-chip-bg: #151d27;
   --vault-input-bg: #111821;
-  --vault-line: #2f3b4c;
-  --vault-strong: #6aa6d8;
-  --vault-strong-hover: #8abce5;
-  --vault-accent: #4ab6a8;
+  --vault-line: #344052;
+  --vault-strong: #7db5df;
+  --vault-strong-hover: #a0cdef;
+  --vault-accent: #58c0b2;
   --vault-warn: #d0a85f;
   --vault-mark-bg: #eef3f8;
   --vault-mark-ink: #0f141b;
-  --vault-shadow: 0 20px 52px rgb(0 0 0 / 0.34);
-  --vault-topbar-shadow: 0 22px 54px rgb(0 0 0 / 0.28);
-  --vault-focus: rgb(106 166 216 / 0.32);
+  --vault-shadow: 0 14px 34px rgb(0 0 0 / 0.24);
+  --vault-shadow-soft: 0 10px 24px rgb(0 0 0 / 0.2);
+  --vault-topbar-shadow: 0 16px 38px rgb(0 0 0 / 0.24);
+  --vault-focus: rgb(125 181 223 / 0.34);
   color-scheme: dark;
 }
 
@@ -58,6 +69,25 @@ body {
     linear-gradient(180deg, var(--vault-page-start) 0, var(--vault-bg) 420px),
     var(--vault-bg);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--vault-strong) 22%, transparent);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 button,
@@ -69,7 +99,7 @@ select {
 .vault-shell {
   width: min(1440px, 100% - 32px);
   margin: 0 auto;
-  padding: 24px 0 56px;
+  padding: var(--vault-space-6) 0 56px;
 }
 
 .vault-topbar {
@@ -79,14 +109,13 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  min-height: 76px;
-  margin-bottom: 30px;
+  gap: var(--vault-space-5);
+  min-height: 72px;
+  margin-bottom: var(--vault-space-7);
   border: 1px solid color-mix(in srgb, var(--vault-line) 88%, transparent);
-  border-radius: calc(var(--vault-radius) + 6px);
-  padding: 14px 16px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--vault-surface) 94%, var(--vault-strong)), var(--vault-surface));
+  border-radius: var(--vault-radius-lg);
+  padding: 14px var(--vault-space-4);
+  background: color-mix(in srgb, var(--vault-surface) 94%, transparent);
   box-shadow: var(--vault-topbar-shadow);
   backdrop-filter: blur(14px);
   transition:
@@ -101,7 +130,7 @@ body.is-scrolled .vault-topbar {
   min-height: 58px;
   border-color: var(--vault-line);
   padding-block: 8px;
-  box-shadow: 0 12px 30px rgb(17 24 39 / 0.12);
+  box-shadow: var(--vault-shadow-soft);
 }
 
 .vault-actions {
@@ -109,7 +138,7 @@ body.is-scrolled .vault-topbar {
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: var(--vault-space-2);
 }
 
 .vault-brand {
@@ -132,10 +161,9 @@ body.is-scrolled .vault-topbar {
   flex: 0 0 auto;
   place-items: center;
   border-radius: 12px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--vault-mark-bg) 86%, var(--vault-strong)), var(--vault-mark-bg));
+  background: var(--vault-mark-bg);
   color: var(--vault-mark-ink);
-  font-weight: 850;
+  font-weight: 800;
   letter-spacing: -0.04em;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14);
   transition:
@@ -154,16 +182,16 @@ body.is-scrolled .vault-brand__mark {
   display: block;
   color: var(--vault-strong);
   font-size: 0.68rem;
-  font-weight: 850;
+  font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
 .vault-brand__name {
   display: block;
-  font-size: 1.05rem;
-  font-weight: 850;
-  line-height: 1.1;
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.15;
 }
 
 .vault-brand__meta {
@@ -186,7 +214,7 @@ body.is-scrolled .vault-brand__mark {
   background: color-mix(in srgb, var(--vault-chip-bg) 88%, transparent);
   color: var(--vault-muted);
   font-size: 0.78rem;
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .vault-status__item strong {
@@ -224,7 +252,7 @@ body.is-scrolled .vault-brand__mark {
 .vault-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-  gap: 24px;
+  gap: var(--vault-space-6);
   align-items: end;
   margin-bottom: 24px;
 }
@@ -241,42 +269,43 @@ body.is-scrolled .vault-brand__mark {
 .vault-hero__title {
   max-width: 820px;
   margin: 0;
-  font-size: clamp(2rem, 5vw, 4.5rem);
-  line-height: 0.98;
-  letter-spacing: 0;
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
 }
 
 .vault-hero__copy {
   max-width: 720px;
   margin: 18px 0 0;
   color: var(--vault-muted);
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.7;
 }
 
 .vault-summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: var(--vault-space-2);
 }
 
 .vault-summary__item {
   border: 1px solid var(--vault-line);
-  border-radius: var(--vault-radius);
-  padding: 16px;
+  border-radius: var(--vault-radius-lg);
+  padding: var(--vault-space-4);
   background: var(--vault-surface);
 }
 
 .vault-summary__value {
   display: block;
-  font-size: 1.65rem;
-  font-weight: 850;
+  font-size: 1.55rem;
+  font-weight: 800;
 }
 
 .vault-summary__value--action {
   color: var(--vault-strong);
   font-size: 1rem;
-  font-weight: 750;
+  font-weight: 700;
   line-height: 1.3;
 }
 
@@ -293,13 +322,13 @@ body.is-scrolled .vault-brand__mark {
   z-index: 10;
   display: grid;
   grid-template-columns: minmax(220px, 1fr) 220px 180px;
-  gap: 10px;
-  margin: 0 0 18px;
+  gap: var(--vault-space-2);
+  margin: 0 0 var(--vault-space-5);
   border: 1px solid var(--vault-line);
-  border-radius: var(--vault-radius);
-  padding: 10px;
+  border-radius: var(--vault-radius-lg);
+  padding: var(--vault-space-3);
   background: color-mix(in srgb, var(--vault-surface) 94%, transparent);
-  box-shadow: 0 10px 24px rgb(17 24 39 / 0.06);
+  box-shadow: var(--vault-shadow-soft);
   backdrop-filter: blur(10px);
 }
 
@@ -321,8 +350,8 @@ body.is-scrolled .vault-brand__mark {
   width: 100%;
   min-height: 42px;
   border: 1px solid var(--vault-line);
-  border-radius: 7px;
-  padding: 0 12px;
+  border-radius: var(--vault-radius-sm);
+  padding: 0 var(--vault-space-3);
   background: var(--vault-input-bg);
   color: var(--vault-ink);
 }
@@ -338,14 +367,14 @@ body.is-scrolled .vault-brand__mark {
 .vault-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: var(--vault-space-5);
 }
 
 .token-card {
   display: grid;
   min-width: 0;
   border: 1px solid var(--vault-line);
-  border-radius: var(--vault-radius);
+  border-radius: var(--vault-radius-lg);
   background: var(--vault-surface);
   box-shadow: var(--vault-shadow);
   overflow: hidden;
@@ -356,7 +385,7 @@ body.is-scrolled .vault-brand__mark {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
   align-items: start;
-  padding: 18px;
+  padding: var(--vault-space-5);
   border-bottom: 1px solid var(--vault-line);
 }
 
@@ -378,9 +407,9 @@ body.is-scrolled .vault-brand__mark {
 
 .token-card__title {
   margin: 0;
-  font-size: 1.28rem;
-  line-height: 1.2;
-  letter-spacing: 0;
+  font-size: 1.22rem;
+  line-height: 1.25;
+  letter-spacing: -0.018em;
 }
 
 .token-card__text {
@@ -403,7 +432,7 @@ body.is-scrolled .vault-brand__mark {
   background: var(--vault-panel);
   color: var(--vault-muted);
   font-size: 0.72rem;
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .vault-copy {
@@ -413,10 +442,10 @@ body.is-scrolled .vault-brand__mark {
   min-width: 118px;
   min-height: 40px;
   border: 1px solid var(--vault-strong);
-  border-radius: 7px;
-  padding: 0 12px;
+  border-radius: var(--vault-radius-sm);
+  padding: 0 var(--vault-space-3);
   background: var(--vault-strong);
-  color: #ffffff;
+  color: var(--vault-page-start);
   font-weight: 800;
   cursor: pointer;
   transition:
@@ -457,7 +486,7 @@ body.is-scrolled .vault-brand__mark {
 .vault-empty {
   display: none;
   border: 1px dashed var(--vault-line);
-  border-radius: var(--vault-radius);
+  border-radius: var(--vault-radius-lg);
   padding: 28px;
   background: var(--vault-surface);
   color: var(--vault-muted);
@@ -500,7 +529,7 @@ body.is-scrolled .vault-brand__mark {
     flex-direction: column;
     align-items: stretch;
     min-height: 0;
-    margin-bottom: 24px;
+    margin-bottom: var(--vault-space-6);
     padding: 14px;
   }
 
@@ -539,11 +568,16 @@ body.is-scrolled .vault-brand__mark {
   }
 
   .vault-hero__title {
-    font-size: 2.35rem;
+    font-size: clamp(2.2rem, 12vw, 2.85rem);
+    letter-spacing: -0.04em;
   }
 
   .token-card__preview {
     height: 500px;
+  }
+
+  .vault-copy {
+    width: 100%;
   }
 }
 
@@ -551,9 +585,8 @@ body.is-scrolled .vault-brand__mark {
   width: min(1440px, 100% - 32px);
   margin: 0 auto 24px;
   border: 1px solid var(--vault-line);
-  border-radius: var(--vault-radius);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--vault-surface) 92%, var(--vault-strong)), var(--vault-surface));
+  border-radius: var(--vault-radius-lg);
+  background: var(--vault-surface);
   box-shadow: var(--vault-shadow);
   overflow: hidden;
 }
@@ -626,7 +659,7 @@ body.is-scrolled .vault-brand__mark {
 
 .vault-footer__link {
   color: var(--vault-ink);
-  font-weight: 750;
+  font-weight: 700;
   text-decoration: none;
   text-underline-offset: 4px;
   transition: color 160ms ease;
