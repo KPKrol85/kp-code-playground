@@ -16,6 +16,7 @@
   --vault-mark-ink: #ffffff;
   --vault-radius: 8px;
   --vault-shadow: 0 16px 42px rgb(17 24 39 / 0.08);
+  --vault-topbar-shadow: 0 18px 44px rgb(17 24 39 / 0.08);
   --vault-focus: rgb(31 78 121 / 0.22);
   color-scheme: light;
 }
@@ -37,6 +38,7 @@
   --vault-mark-bg: #eef3f8;
   --vault-mark-ink: #0f141b;
   --vault-shadow: 0 20px 52px rgb(0 0 0 / 0.34);
+  --vault-topbar-shadow: 0 22px 54px rgb(0 0 0 / 0.28);
   --vault-focus: rgb(106 166 216 / 0.32);
   color-scheme: dark;
 }
@@ -71,13 +73,35 @@ select {
 }
 
 .vault-topbar {
+  position: sticky;
+  top: 12px;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  min-height: 56px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid var(--vault-line);
+  gap: 18px;
+  min-height: 76px;
+  margin-bottom: 30px;
+  border: 1px solid color-mix(in srgb, var(--vault-line) 88%, transparent);
+  border-radius: calc(var(--vault-radius) + 6px);
+  padding: 14px 16px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--vault-surface) 94%, var(--vault-strong)), var(--vault-surface));
+  box-shadow: var(--vault-topbar-shadow);
+  backdrop-filter: blur(14px);
+  transition:
+    min-height 180ms ease,
+    padding 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+body.is-scrolled .vault-topbar {
+  min-height: 58px;
+  border-color: var(--vault-line);
+  padding-block: 8px;
+  box-shadow: 0 12px 30px rgb(17 24 39 / 0.12);
 }
 
 .vault-actions {
@@ -95,21 +119,51 @@ select {
   min-width: 0;
 }
 
+.vault-brand__content {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
 .vault-brand__mark {
   display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--vault-mark-bg) 86%, var(--vault-strong)), var(--vault-mark-bg));
+  color: var(--vault-mark-ink);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14);
+  transition:
+    width 180ms ease,
+    height 180ms ease,
+    border-radius 180ms ease;
+}
+
+body.is-scrolled .vault-brand__mark {
   width: 36px;
   height: 36px;
-  place-items: center;
-  border-radius: 8px;
-  background: var(--vault-mark-bg);
-  color: var(--vault-mark-ink);
-  font-weight: 800;
+  border-radius: 10px;
+}
+
+.vault-brand__eyebrow {
+  display: block;
+  color: var(--vault-strong);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
 .vault-brand__name {
   display: block;
-  font-size: 0.95rem;
-  font-weight: 800;
+  font-size: 1.05rem;
+  font-weight: 850;
+  line-height: 1.1;
 }
 
 .vault-brand__meta {
@@ -129,10 +183,14 @@ select {
   border: 1px solid var(--vault-line);
   border-radius: 999px;
   padding: 6px 10px;
-  background: var(--vault-chip-bg);
+  background: color-mix(in srgb, var(--vault-chip-bg) 88%, transparent);
   color: var(--vault-muted);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 750;
+}
+
+.vault-status__item strong {
+  color: var(--vault-ink);
 }
 
 .vault-theme-toggle {
@@ -231,7 +289,7 @@ select {
 
 .vault-toolbar {
   position: sticky;
-  top: 0;
+  top: 86px;
   z-index: 10;
   display: grid;
   grid-template-columns: minmax(220px, 1fr) 220px 180px;
@@ -421,20 +479,50 @@ select {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .vault-topbar,
+  .vault-brand__mark,
+  .vault-copy,
+  .vault-footer__link {
+    transition: none;
+  }
+}
+
 @media (max-width: 680px) {
   .vault-shell {
     width: min(100% - 20px, 1440px);
     padding-top: 14px;
   }
 
-  .vault-topbar,
+  .vault-topbar {
+    position: relative;
+    top: auto;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    margin-bottom: 24px;
+    padding: 14px;
+  }
+
   .token-card__header {
     grid-template-columns: 1fr;
   }
 
-  .vault-topbar,
   .vault-hero {
     align-items: start;
+  }
+
+  body.is-scrolled .vault-topbar {
+    min-height: 0;
+    padding-block: 14px;
+  }
+
+  .vault-brand__meta {
+    font-size: 0.74rem;
+  }
+
+  .vault-toolbar {
+    top: 0;
   }
 
   .vault-status {
@@ -563,12 +651,6 @@ select {
 
 .vault-footer__copyright {
   font-size: 0.84rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vault-footer__link {
-    transition: none;
-  }
 }
 
 @media (max-width: 1040px) {
