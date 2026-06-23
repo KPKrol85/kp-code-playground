@@ -7,6 +7,35 @@
   const sortFilter = document.querySelector("#sortFilter");
   const emptyState = document.querySelector("#emptyState");
   const themeButtons = Array.from(document.querySelectorAll("[data-theme-option]"));
+  const topbar = document.querySelector(".vault-topbar");
+
+  function initScrollHeader() {
+    if (!topbar) {
+      return;
+    }
+
+    let ticking = false;
+    let isScrolled = false;
+
+    function updateHeaderState() {
+      const nextIsScrolled = window.scrollY > 12;
+      if (nextIsScrolled !== isScrolled) {
+        isScrolled = nextIsScrolled;
+        document.body.classList.toggle("is-scrolled", isScrolled);
+      }
+      ticking = false;
+    }
+
+    function requestHeaderUpdate() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateHeaderState);
+      }
+    }
+
+    updateHeaderState();
+    window.addEventListener("scroll", requestHeaderUpdate, { passive: true });
+  }
 
   if (!grid || !searchInput || !categoryFilter || !sortFilter || !emptyState) {
     return;
@@ -178,6 +207,7 @@
     categoryFilter.innerHTML = categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("");
   }
 
+  initScrollHeader();
   setTheme(document.documentElement.dataset.theme);
   initFilters();
 
