@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instrukcja obsługi tokenów - KP_Code Digital Vault</title>
+    <script>
+      (() => {
+        try {
+          const storedTheme = localStorage.getItem("vault-theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/vault.css" />
+    <script src="assets/vault.js" defer></script>
+  </head>
+  <body>
+    <main class="vault-shell guide-shell">
+      <nav class="vault-topbar" aria-label="Produkt">
+        <div class="vault-brand">
+          <span class="vault-brand__mark" aria-hidden="true">KP</span>
+          <span class="vault-brand__content">
+            <span class="vault-brand__eyebrow">KP_Code Digital Vault</span>
+            <span class="vault-brand__name">CSS Design Token Systems</span>
+            <span class="vault-brand__meta">Instrukcja pracy z gotowymi tokenami UI</span>
+          </span>
+        </div>
+        <div class="vault-actions">
+          <a class="vault-toplink" href="index.html">Panel tokenów</a>
+          <div class="vault-theme-toggle" aria-label="Motyw panelu">
+            <button class="vault-theme-toggle__option" type="button" data-theme-option="light" aria-pressed="true">Light</button>
+            <button class="vault-theme-toggle__option" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+          </div>
+        </div>
+      </nav>
+
+      <header class="vault-hero guide-hero">
+        <div>
+          <p class="vault-hero__eyebrow">Przewodnik użytkownika</p>
+          <h1 class="vault-hero__title">Instrukcja obsługi tokenów</h1>
+          <p class="vault-hero__copy">
+            Dowiedz się, jak wybrać system tokenów, skopiować CSS i wykorzystać go jako fundament nowoczesnego interfejsu.
+          </p>
+        </div>
+        <aside class="guide-note" aria-label="Najważniejsze informacje">
+          <strong>200 gotowych systemów</strong>
+          <span>Każdy plik jest samodzielnym zestawem zmiennych CSS, skal i klas podglądowych.</span>
+        </aside>
+      </header>
+
+      <div class="guide-layout">
+        <nav class="guide-toc" aria-label="Spis treści instrukcji">
+          <a href="#produkt">Produkt</a>
+          <a href="#tokeny">Design tokens</a>
+          <a href="#panel">Panel</a>
+          <a href="#kopiowanie">Kopiowanie i import</a>
+          <a href="#struktura">Struktura plików</a>
+          <a href="#preview">Klasy preview</a>
+          <a href="#workflow">Workflow</a>
+        </nav>
+
+        <article class="guide-content">
+          <section class="guide-section" id="produkt">
+            <p class="guide-kicker">Czym jest produkt</p>
+            <h2>Biblioteka fundamentów wizualnych dla projektów frontendowych</h2>
+            <p>
+              CSS Design Token Systems to kuratorska biblioteka KP_Code Digital Vault zawierająca 200 gotowych do skopiowania systemów tokenów CSS. Każdy system opisuje konkretny kontekst UI: od SaaS i fintechu, przez edukację, zdrowie oraz panele administracyjne, po produkty gamingowe, commerce i impact tech.
+            </p>
+            <p>
+              Produkt nie jest generatorem ani frameworkiem. To lekki panel edukacyjny, który pomaga szybko porównać kierunki wizualne, zobaczyć je w przykładowych komponentach i przenieść wybrany fundament do własnej aplikacji.
+            </p>
+          </section>
+
+          <section class="guide-section" id="tokeny">
+            <p class="guide-kicker">Podstawy</p>
+            <h2>Co to są design tokeny?</h2>
+            <p>
+              Design tokeny to nazwane wartości projektowe zapisane jako CSS custom properties. Zamiast wpisywać w komponentach przypadkowe kolory, odstępy i cienie, używasz zmiennych takich jak <code>--dt-color-primary</code>, <code>--dt-space-4</code> albo <code>--dt-radius-lg</code>.
+            </p>
+            <div class="guide-card-grid" aria-label="Typy tokenów">
+              <div class="guide-card"><strong>Kolory</strong><span>Tła, tekst, akcenty, powierzchnie i stany interfejsu.</span></div>
+              <div class="guide-card"><strong>Typografia</strong><span>Rodziny fontów, rozmiary tekstu i wysokości linii.</span></div>
+              <div class="guide-card"><strong>Layout</strong><span>Odstępy, promienie, szerokości kontenerów i rytm układu.</span></div>
+              <div class="guide-card"><strong>Efekty</strong><span>Cienie, obramowania, przejścia i podstawowe wartości motion.</span></div>
+            </div>
+          </section>
+
+          <section class="guide-section" id="panel">
+            <p class="guide-kicker">Praca w panelu</p>
+            <h2>Jak wybrać system tokenów?</h2>
+            <ol class="guide-steps">
+              <li><strong>Określ kontekst produktu.</strong> Zacznij od typu interfejsu: dashboard, landing page, panel operacyjny, edukacja, commerce lub narzędzie specjalistyczne.</li>
+              <li><strong>Użyj wyszukiwarki i kategorii.</strong> Filtry pomagają zawęzić 200 zestawów do kilku kierunków pasujących do problemu.</li>
+              <li><strong>Sprawdź podgląd komponentów.</strong> Każda karta pokazuje przykładowy układ, przyciski, metryki, kartę i paletę kolorów.</li>
+              <li><strong>Wybierz fundament, nie finalny layout.</strong> Tokeny mają nadać rytm, hierarchię i charakter wizualny. Komponenty aplikacji możesz później dopasować do własnego produktu.</li>
+            </ol>
+          </section>
+
+          <section class="guide-section" id="kopiowanie">
+            <p class="guide-kicker">Kopiowanie CSS</p>
+            <h2>Jak skopiować i zaimportować wybrany plik?</h2>
+            <p>
+              Przycisk <strong>Kopiuj CSS</strong> na karcie zestawu kopiuje pełną zawartość odpowiadającego mu pliku z folderu <code>tokens/</code>. Możesz wkleić ten CSS do własnego arkusza albo zaimportować plik bezpośrednio, jeśli zachowujesz strukturę projektu.
+            </p>
+            <pre class="guide-code"><code>&lt;link rel="stylesheet" href="./tokens/tokens-02.css" /&gt;</code></pre>
+            <p>
+              Po imporcie mapuj własne komponenty na zmienne <code>--dt-*</code>. Dzięki temu możesz zmieniać charakter UI przez podmianę jednego pliku tokenów, bez przepisywania całego systemu komponentów.
+            </p>
+          </section>
+
+          <section class="guide-section" id="struktura">
+            <p class="guide-kicker">Organizacja</p>
+            <h2>Jak są zbudowane pliki tokenów i panel?</h2>
+            <p>
+              Każdy plik <code>tokens/tokens-xx.css</code> jest samodzielnym systemem. Zawiera prymitywy kolorów, tokeny semantyczne, typografię, odstępy, promienie, cienie, wartości layoutu oraz warstwę klas demonstracyjnych w BEM.
+            </p>
+            <p>
+              Panel korzysta z wygenerowanych danych, aby wyświetlać karty, opisy, tagi, palety i kod CSS do kopiowania. Pliku <code>assets/vault-data.js</code> nie należy edytować ręcznie — dane produktu powinny pochodzić ze źródła generującego, aby panel i tokeny pozostały spójne.
+            </p>
+          </section>
+
+          <section class="guide-section" id="preview">
+            <p class="guide-kicker">Klasy podglądowe</p>
+            <h2>Co oznaczają klasy preview?</h2>
+            <p>
+              Klasy z prefiksem <code>dt-</code> pokazują, jak tokeny zachowują się w typowych elementach UI. Możesz potraktować je jako inspirację, test wizualny albo punkt startowy do własnych komponentów.
+            </p>
+            <dl class="guide-definition-list">
+              <div><dt><code>.dt-preview</code></dt><dd>Główny kontener przykładowego widoku.</dd></div>
+              <div><dt><code>.dt-preview__title</code></dt><dd>Nagłówek demonstrujący skalę typografii i kontrast.</dd></div>
+              <div><dt><code>.dt-button</code> / <code>.dt-button--primary</code></dt><dd>Przyciski pokazujące akcje podstawowe i warianty powierzchni.</dd></div>
+              <div><dt><code>.dt-card</code></dt><dd>Karta do sprawdzania tła, obramowania, promieni i cienia.</dd></div>
+              <div><dt><code>.dt-metric</code></dt><dd>Mały blok danych do oceny hierarchii liczb i etykiet.</dd></div>
+              <div><dt><code>.dt-scale__swatch</code></dt><dd>Próbka koloru z palety danego systemu.</dd></div>
+            </dl>
+          </section>
+
+          <section class="guide-section" id="workflow">
+            <p class="guide-kicker">Rekomendowany proces</p>
+            <h2>Pracuj od fundamentu do komponentów</h2>
+            <ol class="guide-steps">
+              <li>Wybierz 2–3 zestawy pasujące do domeny produktu.</li>
+              <li>Porównaj podglądy i wybierz system o najlepszej czytelności dla Twoich treści.</li>
+              <li>Skopiuj CSS lub zaimportuj wybrany plik tokenów.</li>
+              <li>Podłącz komponenty aplikacji do zmiennych <code>--dt-*</code>.</li>
+              <li>Dopracuj komponenty lokalnie, nie rozbijając spójności kolorów, odstępów i typografii.</li>
+            </ol>
+            <div class="guide-cta">
+              <div>
+                <h2>Gotowy, aby wybrać system?</h2>
+                <p>Wróć do panelu, przefiltruj bibliotekę i skopiuj CSS najlepiej dopasowany do Twojego projektu.</p>
+              </div>
+              <a class="vault-copy guide-cta__link" href="index.html">Przejdź do panelu</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer class="vault-footer" aria-labelledby="vaultFooterTitle">
+      <div class="vault-footer__inner">
+        <section class="vault-footer__brand" aria-labelledby="vaultFooterTitle">
+          <div class="vault-footer__identity">
+            <span class="vault-brand__mark" aria-hidden="true">KP</span>
+            <div>
+              <h2 class="vault-footer__title" id="vaultFooterTitle">KP_Code Digital Vault</h2>
+              <p class="vault-footer__meta">Design tokens jako fundament nowoczesnego UI.</p>
+            </div>
+          </div>
+          <p class="vault-footer__copy">
+            Ta instrukcja pomaga przejść od wyboru systemu wizualnego do praktycznego użycia tokenów CSS w projekcie frontendowym.
+          </p>
+        </section>
+
+        <nav class="vault-footer__nav" aria-label="Sekcje projektu">
+          <h3 class="vault-footer__heading">Projekt</h3>
+          <ul class="vault-footer__list">
+            <li><a class="vault-footer__link" href="index.html">Panel tokenów</a></li>
+            <li><a class="vault-footer__link" href="index.html#tokenGrid">Biblioteka zestawów</a></li>
+            <li><a class="vault-footer__link" href="#workflow">Rekomendowany workflow</a></li>
+          </ul>
+        </nav>
+
+        <section class="vault-footer__nav" aria-labelledby="vaultFooterLearning">
+          <h3 class="vault-footer__heading" id="vaultFooterLearning">Nauka</h3>
+          <ul class="vault-footer__list">
+            <li>Tokeny jako zmienne CSS</li>
+            <li>Import plików z folderu tokens</li>
+            <li>Podglądowe klasy BEM</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="vault-footer__bottom">
+        <p class="vault-footer__copyright">© 2026 KP_Code. Projekt edukacyjny poświęcony design tokenom, systemom UI i nowoczesnym fundamentom frontendowym.</p>
+      </div>
+    </footer>
+  </body>
+</html>
