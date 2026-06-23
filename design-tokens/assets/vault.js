@@ -37,6 +37,25 @@
     window.addEventListener("scroll", requestHeaderUpdate, { passive: true });
   }
 
+  function setTheme(theme) {
+    const nextTheme = theme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = nextTheme;
+    themeButtons.forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.themeOption === nextTheme));
+    });
+    try {
+      localStorage.setItem("vault-theme", nextTheme);
+    } catch (error) {
+      // localStorage can be unavailable in some embedded previews.
+    }
+  }
+
+  initScrollHeader();
+  setTheme(document.documentElement.dataset.theme);
+  themeButtons.forEach((button) => {
+    button.addEventListener("click", () => setTheme(button.dataset.themeOption));
+  });
+
   if (!grid || !searchInput || !categoryFilter || !sortFilter || !emptyState) {
     return;
   }
@@ -91,19 +110,6 @@
     </main>
   </body>
 </html>`;
-  }
-
-  function setTheme(theme) {
-    const nextTheme = theme === "dark" ? "dark" : "light";
-    document.documentElement.dataset.theme = nextTheme;
-    themeButtons.forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.themeOption === nextTheme));
-    });
-    try {
-      localStorage.setItem("vault-theme", nextTheme);
-    } catch (error) {
-      // localStorage can be unavailable in some embedded previews.
-    }
   }
 
   function matchesFilters(system) {
@@ -207,16 +213,11 @@
     categoryFilter.innerHTML = categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("");
   }
 
-  initScrollHeader();
-  setTheme(document.documentElement.dataset.theme);
   initFilters();
 
   searchInput.addEventListener("input", render);
   categoryFilter.addEventListener("change", render);
   sortFilter.addEventListener("change", render);
-  themeButtons.forEach((button) => {
-    button.addEventListener("click", () => setTheme(button.dataset.themeOption));
-  });
 
   render();
 })();
