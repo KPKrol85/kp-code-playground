@@ -75,8 +75,19 @@ code { font-family: "SFMono-Regular", Consolas, monospace; font-size: .94em; }
 .card-link { font-weight: 850; }
 .category-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 .category-grid span, .lesson-meta span { padding: .85rem 1rem; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface); font-weight: 750; text-align: center; }
-.site-footer { padding: var(--space-5) 0; border-top: 1px solid var(--color-border); }
-.site-footer__inner { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: space-between; }
+.site-footer { padding: var(--space-6) 0 var(--space-4); border-top: 1px solid var(--color-border); background: color-mix(in srgb, var(--color-surface) 72%, transparent); }
+.site-footer__grid { display: grid; gap: var(--space-5); }
+.site-footer__brand { max-width: 48rem; }
+.site-footer__logo { margin-bottom: var(--space-3); }
+.site-footer__brand p, .site-footer__section p, .site-footer__bottom p { color: var(--color-muted); }
+.site-footer__note { font-size: .95rem; }
+.site-footer__section h2 { font-size: 1rem; letter-spacing: .02em; text-transform: uppercase; }
+.site-footer__links, .site-footer__roadmap { display: grid; gap: .65rem; margin: 0; padding: 0; list-style: none; }
+.site-footer__links a { color: var(--color-text); font-weight: 750; text-decoration: none; }
+.site-footer__links a:hover { color: var(--color-brand-strong); text-decoration: underline; }
+.site-footer__roadmap li { width: fit-content; max-width: 100%; padding: .5rem .75rem; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface); color: var(--color-muted); font-size: .9rem; font-weight: 750; }
+.site-footer__bottom { margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+.site-footer__bottom p { margin: 0; font-size: .92rem; }
 
 .lesson-meta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
 .lesson-shell { display: grid; gap: var(--space-5); padding-bottom: var(--space-7); }
@@ -91,6 +102,6 @@ code { font-family: "SFMono-Regular", Consolas, monospace; font-size: .94em; }
 .lesson-navigation { display: grid; gap: var(--space-3); align-items: center; }
 
 @media (min-width: 480px) { .category-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
-@media (min-width: 760px) { .nav-toggle { display: none; } .site-nav__links { display: flex; } .lesson-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .concept-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .lesson-navigation { grid-template-columns: auto 1fr; } }
-@media (min-width: 1024px) { .hero__grid { grid-template-columns: 1.25fr .75fr; } .lesson-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } .lesson-card--featured { grid-column: span 2; } .category-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } .lesson-shell { grid-template-columns: 280px minmax(0,1fr); } .toc { position: sticky; top: 6rem; } }
+@media (min-width: 760px) { .site-footer__grid { grid-template-columns: 1.35fr .8fr; } .site-footer__section:last-child { grid-column: 1 / -1; } .site-footer__roadmap { grid-template-columns: repeat(2, minmax(0, max-content)); } .nav-toggle { display: none; } .site-nav__links { display: flex; } .lesson-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .concept-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .lesson-navigation { grid-template-columns: auto 1fr; } }
+@media (min-width: 1024px) { .site-footer__grid { grid-template-columns: minmax(0, 1.45fr) minmax(12rem, .55fr) minmax(18rem, .8fr); align-items: start; } .site-footer__section:last-child { grid-column: auto; } .site-footer__roadmap { grid-template-columns: 1fr; } .hero__grid { grid-template-columns: 1.25fr .75fr; } .lesson-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } .lesson-card--featured { grid-column: span 2; } .category-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } .lesson-shell { grid-template-columns: 280px minmax(0,1fr); } .toc { position: sticky; top: 6rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
