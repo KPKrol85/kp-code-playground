@@ -14,16 +14,38 @@
     <nav class="site-nav container" aria-label="Główna nawigacja">
       <a class="brand" href="index.html" aria-label="KP_Code Algorithms Academy — strona główna">
         <span class="brand__mark" aria-hidden="true">KP</span>
-        <span class="brand__text">KP_Code Algorithms Academy</span>
+        <span class="brand__copy">
+          <span class="brand__label">Digital Academy</span>
+          <span class="brand__text">Algorithms Academy</span>
+        </span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
         <span class="nav-toggle__bar" aria-hidden="true"></span>
         <span class="sr-only">Otwórz menu</span>
       </button>
       <div class="site-nav__links" id="primary-menu">
-        <a href="#path">Ścieżka nauki</a>
-        <a href="#categories">Kategorie</a>
-        <a href="lessons/binary-search.html">Pierwsza lekcja</a>
+        <a class="nav-link" href="index.html" aria-current="page">Dashboard</a>
+        <div class="nav-disclosure">
+          <button class="nav-disclosure__trigger" type="button" aria-expanded="false" aria-controls="lessons-menu">
+            Lekcje
+            <span aria-hidden="true">⌄</span>
+          </button>
+          <div class="nav-disclosure__panel" id="lessons-menu">
+            <p class="nav-disclosure__eyebrow">Gotowe lekcje</p>
+            <a class="nav-disclosure__item" href="lessons/binary-search.html">
+              <span>Wyszukiwanie binarne</span>
+              <small>Beginner • Searching • JavaScript</small>
+            </a>
+            <p class="nav-disclosure__eyebrow">W roadmapie</p>
+            <ul class="nav-disclosure__roadmap" aria-label="Planowane lekcje bez aktywnych linków">
+              <li>Algorithmic Thinking Basics</li>
+              <li>Big O Notation</li>
+              <li>Linear Search</li>
+            </ul>
+          </div>
+        </div>
+        <a class="nav-link" href="#path">Ścieżka nauki</a>
+        <a class="nav-link" href="#categories">Kategorie</a>
         <button class="theme-toggle" type="button" aria-pressed="false">Tryb</button>
       </div>
     </nav>
