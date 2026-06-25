@@ -1,3 +1,14 @@
+export const auditCategories = [
+  'Layout',
+  'Spacing',
+  'Typography',
+  'Responsiveness',
+  'Accessibility',
+  'Visual polish',
+  'Performance basics',
+  'Code maintainability'
+];
+
 export const auditRules = [
   {
     id: 'layout-grid-structure',
@@ -160,5 +171,3 @@ export const auditRules = [
     futureAutomationHint: 'Analyze file organization, selector complexity, and coupling between scripts and markup.'
   }
 ];
-
-export const auditCategories = [...new Set(auditRules.map((rule) => rule.category))];

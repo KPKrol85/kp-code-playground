@@ -1,6 +1,7 @@
-const STATUS_SCORES = {
+const DEFAULT_WARNING_SCORE = 0.55;
+
+const BASE_STATUS_SCORES = {
   pass: 1,
-  warning: 0.55,
   fail: 0,
   na: null
 };
@@ -12,7 +13,11 @@ export function createInitialStatuses(rules, presetStatuses = {}) {
   }, {});
 }
 
-export function calculateAudit(rules, statuses) {
+export function calculateAudit(rules, statuses, profile = {}) {
+  const statusScores = {
+    ...BASE_STATUS_SCORES,
+    warning: profile.warningScore ?? DEFAULT_WARNING_SCORE
+  };
   const totals = {
     pass: 0,
     warning: 0,
@@ -35,12 +40,13 @@ export function calculateAudit(rules, statuses) {
     const category = categoryMap.get(rule.category);
     category.counts[status] += 1;
 
-    const statusScore = STATUS_SCORES[status];
+    const statusScore = statusScores[status] ?? statusScores.warning;
+    const adjustedWeight = getProfileWeight(rule, profile);
     if (statusScore !== null) {
-      earnedWeight += rule.weight * statusScore;
-      applicableWeight += rule.weight;
-      category.earnedWeight += rule.weight * statusScore;
-      category.applicableWeight += rule.weight;
+      earnedWeight += adjustedWeight * statusScore;
+      applicableWeight += adjustedWeight;
+      category.earnedWeight += adjustedWeight * statusScore;
+      category.applicableWeight += adjustedWeight;
     }
   });
 
@@ -53,25 +59,28 @@ export function calculateAudit(rules, statuses) {
 
   return {
     score,
-    qualityLabel: getQualityLabel(score),
+    qualityLabel: getQualityLabel(score, profile),
     totals,
     categoryScores,
-    recommendations: getRecommendations(rules, statuses)
+    recommendations: getRecommendations(rules, statuses, profile)
   };
 }
 
-export function getQualityLabel(score) {
-  if (score >= 92) return 'Premium-ready';
-  if (score >= 82) return 'Production-ready with minor polish';
-  if (score >= 70) return 'Solid';
-  if (score >= 50) return 'Improving';
-  return 'Needs work';
+export function getQualityLabel(score, profile = {}) {
+  const thresholds = profile.qualityThresholds || [
+    { score: 92, label: 'Premium-ready' },
+    { score: 82, label: 'Production-ready with minor polish' },
+    { score: 70, label: 'Solid' },
+    { score: 50, label: 'Improving' }
+  ];
+
+  return thresholds.find((threshold) => score >= threshold.score)?.label || 'Needs work';
 }
 
-function getRecommendations(rules, statuses) {
+function getRecommendations(rules, statuses, profile = {}) {
   return rules
     .filter((rule) => ['warning', 'fail'].includes(statuses[rule.id]))
-    .sort((a, b) => severityRank(b.severity) - severityRank(a.severity) || b.weight - a.weight)
+    .sort((a, b) => recommendationRank(b, profile) - recommendationRank(a, profile) || b.weight - a.weight)
     .map((rule) => ({
       id: rule.id,
       category: rule.category,
@@ -90,4 +99,14 @@ function severityRank(severity) {
     medium: 2,
     low: 1
   }[severity] || 0;
+}
+
+function getProfileWeight(rule, profile) {
+  return rule.weight * (profile.categoryMultipliers?.[rule.category] || 1);
+}
+
+function recommendationRank(rule, profile) {
+  const priorityCategories = profile.recommendationCategoryPriority || [];
+  const categoryBoost = priorityCategories.includes(rule.category) ? 10 : 0;
+  return categoryBoost + severityRank(rule.severity);
 }
