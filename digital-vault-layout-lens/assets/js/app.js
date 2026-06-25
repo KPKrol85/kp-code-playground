@@ -3,6 +3,7 @@ import { calculateAudit, createInitialStatuses } from './auditEngine.js';
 import { componentPresets } from './demoData.js';
 
 const STORAGE_KEY = 'kp-layout-lens-audit-v1';
+const THEME_STORAGE_KEY = 'kp-layout-lens-theme';
 const statusOptions = [
   { value: 'pass', label: 'Pass' },
   { value: 'warning', label: 'Warning' },
@@ -23,7 +24,8 @@ const elements = {
   scoreRingLabel: document.querySelector('#score-ring-label'),
   categoryScores: document.querySelector('#category-scores'),
   recommendationList: document.querySelector('#recommendation-list'),
-  resetAudit: document.querySelector('#reset-audit')
+  resetAudit: document.querySelector('#reset-audit'),
+  themeToggle: document.querySelector('#theme-toggle')
 };
 
 const savedState = loadState();
@@ -37,6 +39,7 @@ function init() {
   renderRules();
   renderResults();
   bindEvents();
+  syncThemeToggle();
 }
 
 function createState(preset) {
@@ -64,6 +67,14 @@ function bindEvents() {
   elements.resetAudit.addEventListener('click', () => {
     state = createState(getPresetById(state.componentTypeId));
     persistAndRender();
+  });
+
+  elements.themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    syncThemeToggle();
   });
 }
 
@@ -214,4 +225,15 @@ function escapeHtml(value) {
     '"': '&quot;',
     "'": '&#39;'
   })[character]);
+}
+
+
+function syncThemeToggle() {
+  if (!elements.themeToggle) return;
+
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  elements.themeToggle.setAttribute('aria-pressed', String(isDark));
+  elements.themeToggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
+  elements.themeToggle.querySelector('.theme-toggle__icon').textContent = isDark ? '☀' : '☾';
+  elements.themeToggle.querySelector('.theme-toggle__text').textContent = isDark ? 'Light' : 'Dark';
 }

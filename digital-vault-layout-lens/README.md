@@ -16,6 +16,17 @@ Version 1 is deliberately small and product-focused:
 
 This release does **not** include backend services, login, file upload, real DOM parsing, AI calls, report generation, browser extension logic, or database storage.
 
+
+## Interface refinement update
+
+This version includes a focused production-quality UI refinement pass:
+
+- Modernized dashboard and audit panel surfaces with cleaner spacing, stronger hierarchy, and more scalable card treatments.
+- Refined typography, focus states, control styling, and responsive layout details for better readability across viewport sizes.
+- Added a persisted light/dark theme toggle that respects the user's system preference on first visit and reduces theme flash during page load.
+- Rebuilt the footer with Digital Vault copyright text and useful internal links to product sections, README, and the development plan.
+- Preserved the existing vanilla JavaScript audit workflow, rule engine separation, local audit persistence, and reduced-motion support.
+
 ## How the audit system works
 
 1. `assets/js/auditRules.js` defines rule data with category, severity, weight, recommendation, and future automation hints.

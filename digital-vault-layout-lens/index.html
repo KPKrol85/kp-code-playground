@@ -8,6 +8,21 @@
       content="KP_Code Layout Lens is a rule-based frontend UI audit tool for layout, accessibility, polish, and maintainability reviews."
     />
     <title>KP_Code Layout Lens | Digital Vault UI Audit Tool</title>
+    <script>
+      (() => {
+        const storageKey = 'kp-layout-lens-theme';
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        let storedTheme;
+
+        try {
+          storedTheme = localStorage.getItem(storageKey);
+        } catch {
+          storedTheme = null;
+        }
+
+        document.documentElement.dataset.theme = storedTheme || systemTheme;
+      })();
+    </script>
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
@@ -22,10 +37,16 @@
             <span class="brand__name">Layout Lens</span>
           </span>
         </a>
-        <div class="site-nav__links" aria-label="Page sections">
-          <a href="#audit-workspace">Audit</a>
-          <a href="#recommendations">Recommendations</a>
-          <a href="#roadmap">Roadmap</a>
+        <div class="site-nav__actions">
+          <div class="site-nav__links" aria-label="Page sections">
+            <a href="#audit-workspace">Audit</a>
+            <a href="#recommendations">Recommendations</a>
+            <a href="#roadmap">Roadmap</a>
+          </div>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+            <span class="theme-toggle__icon" aria-hidden="true">◐</span>
+            <span class="theme-toggle__text">Theme</span>
+          </button>
         </div>
       </nav>
     </header>
@@ -104,7 +125,9 @@
               Scores update instantly using the separated audit engine.
             </p>
           </div>
-          <button id="reset-audit" class="button button--secondary" type="button">Reset audit</button>
+          <div class="panel-actions" aria-label="Audit actions">
+            <button id="reset-audit" class="button button--secondary" type="button">Reset audit</button>
+          </div>
         </div>
 
         <div class="audit-layout">
@@ -183,9 +206,35 @@
       </section>
     </main>
 
-    <footer class="site-footer section-shell">
-      <p>KP_Code Layout Lens · A KP_Code Digital Vault developer tool foundation.</p>
-      <p>Built with semantic HTML, CSS, and vanilla JavaScript only.</p>
+    <footer class="site-footer" aria-labelledby="footer-title">
+      <div class="site-footer__inner section-shell">
+        <div class="site-footer__brand">
+          <p class="eyebrow">KP_Code Digital Vault</p>
+          <h2 id="footer-title">Layout Lens</h2>
+          <p>
+            A focused frontend quality workspace for structured UI audits, scoring, and future
+            Digital Vault product review workflows.
+          </p>
+        </div>
+        <nav class="site-footer__links" aria-label="Footer navigation">
+          <div>
+            <h3>Product</h3>
+            <a href="#top">Overview</a>
+            <a href="#audit-workspace">Audit workspace</a>
+            <a href="#recommendations">Recommendations</a>
+          </div>
+          <div>
+            <h3>Resources</h3>
+            <a href="#roadmap">Roadmap</a>
+            <a href="README.md">README</a>
+            <a href="plan.md">Development plan</a>
+          </div>
+        </nav>
+        <div class="site-footer__bottom">
+          <p>© 2026 KP_Code Digital Vault. All rights reserved.</p>
+          <p>Built with semantic HTML, accessible CSS, and vanilla JavaScript.</p>
+        </div>
+      </div>
     </footer>
 
     <script type="module" src="assets/js/app.js"></script>
