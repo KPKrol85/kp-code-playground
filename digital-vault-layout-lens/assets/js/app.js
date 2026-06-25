@@ -1,5 +1,7 @@
 import { auditCategories, auditRules } from './auditRules.js';
 import { calculateAudit, createInitialStatuses } from './auditEngine.js';
+import { DEFAULT_PROFILE_ID, auditProfiles, getAuditProfile } from './auditProfiles.js';
+import { validateRules } from './ruleValidation.js';
 import { componentPresets } from './demoData.js';
 
 const STORAGE_KEY = 'kp-layout-lens-audit-v1';
@@ -13,6 +15,9 @@ const statusOptions = [
 
 const elements = {
   componentType: document.querySelector('#component-type'),
+  qualityProfile: document.querySelector('#quality-profile'),
+  profileSummary: document.querySelector('#profile-summary'),
+  ruleHealth: document.querySelector('#rule-health'),
   demoSummary: document.querySelector('#demo-summary'),
   rulesContainer: document.querySelector('#rules-container'),
   overallScore: document.querySelector('#overall-score'),
@@ -30,12 +35,15 @@ const elements = {
 
 const savedState = loadState();
 let state = savedState || createState(componentPresets[0]);
+const ruleValidation = validateRules(auditRules, auditCategories, state.statuses);
 
 init();
 
 function init() {
   renderComponentOptions();
+  renderProfileOptions();
   renderDemoSummary();
+  renderRuleHealth();
   renderRules();
   renderResults();
   bindEvents();
@@ -45,14 +53,20 @@ function init() {
 function createState(preset) {
   return {
     componentTypeId: preset.id,
+    profileId: DEFAULT_PROFILE_ID,
     statuses: createInitialStatuses(auditRules, preset.statuses)
   };
 }
 
 function bindEvents() {
+  elements.qualityProfile.addEventListener('change', (event) => {
+    state.profileId = getAuditProfile(event.target.value).id;
+    persistAndRender();
+  });
+
   elements.componentType.addEventListener('change', (event) => {
     const preset = getPresetById(event.target.value);
-    state = createState(preset);
+    state = { ...createState(preset), profileId: state.profileId };
     persistAndRender();
   });
 
@@ -65,7 +79,7 @@ function bindEvents() {
   });
 
   elements.resetAudit.addEventListener('click', () => {
-    state = createState(getPresetById(state.componentTypeId));
+    state = { ...createState(getPresetById(state.componentTypeId)), profileId: state.profileId };
     persistAndRender();
   });
 
@@ -83,6 +97,22 @@ function renderComponentOptions() {
     .map((preset) => `<option value="${preset.id}">${preset.name}</option>`)
     .join('');
   elements.componentType.value = state.componentTypeId;
+}
+
+function renderProfileOptions() {
+  elements.qualityProfile.innerHTML = auditProfiles
+    .map((profile) => `<option value="${profile.id}">${profile.name}</option>`)
+    .join('');
+  const selectedProfile = getAuditProfile(state.profileId);
+  elements.qualityProfile.value = selectedProfile.id;
+  elements.profileSummary.textContent = selectedProfile.description;
+}
+
+function renderRuleHealth() {
+  elements.ruleHealth.className = `rule-health ${ruleValidation.valid ? 'rule-health--valid' : 'rule-health--warning'}`;
+  elements.ruleHealth.innerHTML = ruleValidation.valid
+    ? '<strong>Rules valid</strong><span>Schema, IDs, weights, categories, severities, and saved statuses passed validation.</span>'
+    : `<strong>Rule data warnings</strong><ul>${ruleValidation.issues.map((issue) => `<li>${escapeHtml(issue)}</li>`).join('')}</ul>`;
 }
 
 function renderDemoSummary() {
@@ -145,7 +175,7 @@ function renderRule(rule) {
 }
 
 function renderResults() {
-  const result = calculateAudit(auditRules, state.statuses);
+  const result = calculateAudit(auditRules, state.statuses, getAuditProfile(state.profileId));
 
   elements.overallScore.textContent = result.score;
   elements.qualityLabel.textContent = result.qualityLabel;
@@ -189,7 +219,9 @@ function renderRecommendation(item) {
 function persistAndRender() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   renderComponentOptions();
+  renderProfileOptions();
   renderDemoSummary();
+  renderRuleHealth();
   renderRules();
   renderResults();
 }
@@ -202,6 +234,7 @@ function loadState() {
     if (!getPresetById(parsed.componentTypeId)) return null;
     return {
       componentTypeId: parsed.componentTypeId,
+      profileId: getAuditProfile(parsed.profileId).id,
       statuses: createInitialStatuses(auditRules, parsed.statuses || {})
     };
   } catch {

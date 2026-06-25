@@ -12,7 +12,9 @@ Version 1 is deliberately small and product-focused:
 - Weighted scoring engine separated from DOM rendering.
 - Live score, category score, and recommendation updates.
 - Local demo presets for common UI review scenarios.
-- `localStorage` persistence for the active audit state.
+- `localStorage` persistence for the active audit state and selected quality profile.
+- Quality profiles for baseline, production, premium, and accessibility-first review modes.
+- Startup rule data validation for schema, duplicate IDs, weights, categories, severities, and saved statuses.
 
 This release does **not** include backend services, login, file upload, real DOM parsing, AI calls, report generation, browser extension logic, or database storage.
 
@@ -31,8 +33,10 @@ This version includes a focused production-quality UI refinement pass:
 
 1. `assets/js/auditRules.js` defines rule data with category, severity, weight, recommendation, and future automation hints.
 2. `assets/js/demoData.js` defines component presets such as SaaS dashboard, pricing section, card grid, hero section, and form section.
-3. `assets/js/auditEngine.js` converts rule statuses into a weighted score from 0 to 100.
-4. `assets/js/app.js` renders the UI, listens for user changes, updates state, persists to `localStorage`, and displays recommendations.
+3. `assets/js/auditProfiles.js` defines deterministic quality profiles that adjust warning strictness, category weighting, score labels, and recommendation priority.
+4. `assets/js/auditEngine.js` converts rule statuses into a weighted score from 0 to 100.
+5. `assets/js/ruleValidation.js` validates rule integrity at startup and returns developer-facing warnings for the UI.
+6. `assets/js/app.js` renders the UI, listens for user changes, updates state, persists to `localStorage`, and displays recommendations.
 
 Each rule can be marked as:
 
@@ -41,7 +45,11 @@ Each rule can be marked as:
 - `fail` — no rule weight is earned.
 - `not applicable` — the rule is excluded from the score denominator.
 
-The engine also calculates category scores, pass/warning/fail counts, and a quality label:
+The engine also calculates category scores, pass/warning/fail counts, and a profile-aware quality label. Production keeps the original scoring tone, baseline is more forgiving, premium is stricter about warnings and polish categories, and accessibility-first boosts accessibility-related weighting and recommendations. Default profile is production.
+
+The validation layer checks that rule records include required fields, unique IDs, valid positive weights, known categories, supported severities, and valid persisted statuses when status data is provided. A compact rule-health panel in the audit setup shows either a positive valid state or actionable warnings for contributors.
+
+Production quality labels include:
 
 - Needs work
 - Improving
@@ -63,8 +71,10 @@ digital-vault-layout-lens/
     └── js/
         ├── app.js
         ├── auditEngine.js
+        ├── auditProfiles.js
         ├── auditRules.js
-        └── demoData.js
+        ├── demoData.js
+        └── ruleValidation.js
 ```
 
 ## How to run
