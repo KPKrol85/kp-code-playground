@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pl" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KP_Code Microinteractions Lab — interaktywna biblioteka mikrointerakcji frontendowych z gotowymi snippetami HTML, CSS i JavaScript.">
+  <title>KP_Code Microinteractions Lab | Digital Vault</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do głównej treści</a>
+  <div class="lab-shell" id="top">
+    <header class="lab-header" aria-label="Główny nagłówek produktu">
+      <div class="lab-header__inner">
+        <a class="lab-header__brand" href="#top" aria-label="KP_Code Microinteractions Lab - strona główna">
+          <span class="lab-header__mark" aria-hidden="true">KP</span>
+          <span class="lab-header__brand-text">
+            <strong>Microinteractions Lab</strong>
+            <small>KP_Code Digital Vault</small>
+          </span>
+        </a>
+        <nav class="lab-nav" aria-label="Nawigacja po sekcjach">
+          <a class="lab-nav__link" href="#explore">Explore</a>
+          <a class="lab-nav__link" href="#featured">Featured</a>
+          <a class="lab-nav__link" href="#principles">Principles</a>
+          <a class="lab-nav__link" href="#code">Code</a>
+          <a class="lab-nav__link" href="#roadmap">Roadmap</a>
+        </nav>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Przełącz motyw jasny lub ciemny" aria-pressed="false">
+          <span class="theme-toggle__track" aria-hidden="true">
+            <span class="theme-toggle__thumb"></span>
+          </span>
+          <span class="theme-toggle__label" data-theme-label>Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="lab-main" id="main-content">
+      <section class="hero section-pad" aria-labelledby="hero-title">
+        <div class="hero__grid container">
+          <div class="hero__content">
+            <p class="eyebrow">Digital Vault Product Demo</p>
+            <h1 class="hero__title" id="hero-title">KP_Code Microinteractions Lab</h1>
+            <p class="hero__lead">Polski-first katalog dopracowanych mikrointerakcji frontendowych: szybki podgląd, praktyczne zasady użycia i gotowe snippetty HTML/CSS/JS bez frameworków.</p>
+            <div class="hero__actions" aria-label="Główne akcje">
+              <a class="button button--primary" href="#explore">Explore interactions</a>
+              <a class="button button--secondary" href="#principles">View principles</a>
+            </div>
+            <dl class="hero-stats" aria-label="Statystyki produktu">
+              <div class="hero-stats__item"><dt>30+</dt><dd>wzorców interakcji</dd></div>
+              <div class="hero-stats__item"><dt>8</dt><dd>kategorii UI</dd></div>
+              <div class="hero-stats__item"><dt>Copy</dt><dd>gotowe snippetty</dd></div>
+              <div class="hero-stats__item"><dt>A11y</dt><dd>reduced motion ready</dd></div>
+            </dl>
+          </div>
+          <aside class="hero__showcase" aria-label="Przykładowe mikrointerakcje">
+            <div class="vault-card vault-card--hero">
+              <div class="vault-card__topline"><span class="status-dot"></span><span>Interaction quality board</span></div>
+              <div class="hero-demo-stack">
+                <button class="demo-button demo-button--glow" type="button">Premium CTA</button>
+                <div class="demo-skeleton" aria-hidden="true"><span></span><span></span><span></span></div>
+                <div class="demo-progress"><span>State clarity</span><strong>86%</strong><div><i></i></div></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="explore section-pad" id="explore" aria-labelledby="explore-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Explore library</p>
+            <h2 id="explore-title">Filtruj, podglądaj i kopiuj wzorce</h2>
+            <p>Każda karta zawiera kontekst użycia, poziom ruchu oraz prawdziwe snippetty. Wybierz wzorzec, aby zobaczyć większy podgląd i panel kodu.</p>
+          </div>
+
+          <form class="filter-panel" data-filter-form aria-label="Filtrowanie mikrointerakcji">
+            <div class="filter-panel__group filter-panel__group--search">
+              <label class="filter-panel__label" for="interaction-search">Szukaj interakcji</label>
+              <input class="filter-panel__input" id="interaction-search" name="search" type="search" placeholder="np. button, toast, skeleton" autocomplete="off" data-search-input>
+            </div>
+            <div class="filter-panel__group">
+              <label class="filter-panel__label" for="category-filter">Kategoria</label>
+              <select class="filter-panel__select" id="category-filter" name="category" data-category-filter>
+                <option value="all">Wszystkie</option>
+              </select>
+            </div>
+            <div class="filter-panel__group">
+              <label class="filter-panel__label" for="complexity-filter">Złożoność</label>
+              <select class="filter-panel__select" id="complexity-filter" name="complexity" data-complexity-filter>
+                <option value="all">Wszystkie</option>
+              </select>
+            </div>
+            <div class="filter-panel__group">
+              <label class="filter-panel__label" for="motion-filter">Poziom ruchu</label>
+              <select class="filter-panel__select" id="motion-filter" name="motion" data-motion-filter>
+                <option value="all">Wszystkie</option>
+              </select>
+            </div>
+            <div class="filter-panel__actions">
+              <button class="button button--ghost" type="reset" data-reset-filters>Reset filtrów</button>
+            </div>
+          </form>
+
+          <div class="results-toolbar" aria-live="polite">
+            <p class="results-toolbar__count" data-results-count>Ładowanie biblioteki…</p>
+            <p class="results-toolbar__hint">Tip: użyj klawiatury Tab, aby przejść przez filtry, karty i akcje kopiowania.</p>
+          </div>
+
+          <div class="pattern-grid" data-pattern-grid aria-label="Lista mikrointerakcji"></div>
+          <div class="empty-state is-hidden" data-empty-state role="status">
+            <div class="empty-state__icon" aria-hidden="true">⌁</div>
+            <h3>Brak pasujących wzorców</h3>
+            <p>Zmień frazę lub wyczyść filtry, aby wrócić do pełnej biblioteki.</p>
+            <button class="button button--primary" type="button" data-empty-reset>Wyczyść filtry</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview-section section-pad" id="code" aria-labelledby="preview-title">
+        <div class="container preview-layout">
+          <div class="preview-stage" aria-live="polite">
+            <div class="section-heading section-heading--compact">
+              <p class="eyebrow">Live preview</p>
+              <h2 id="preview-title" data-preview-name>Wybierz mikrointerakcję</h2>
+              <p data-preview-description>Podgląd i opis zaktualizują się po wybraniu karty z biblioteki.</p>
+            </div>
+            <div class="preview-stage__meta" data-preview-meta></div>
+            <div class="preview-stage__surface" data-preview-surface aria-label="Duży podgląd wybranej mikrointerakcji"></div>
+            <div class="preview-stage__notes">
+              <article><h3>Najlepsze użycie</h3><p data-preview-best-for>Wybierz wzorzec, aby zobaczyć rekomendacje użycia.</p></article>
+              <article><h3>Dostępność</h3><p data-preview-accessibility>Każdy wzorzec opisuje kluczową uwagę dotyczącą dostępności.</p></article>
+            </div>
+          </div>
+
+          <aside class="code-panel" aria-labelledby="code-panel-title">
+            <div class="code-panel__header">
+              <div><p class="eyebrow">Snippet panel</p><h2 id="code-panel-title">Kod do skopiowania</h2></div>
+              <button class="code-panel__copy button button--secondary" type="button" data-copy-current>Kopiuj aktywny</button>
+            </div>
+            <div class="code-tabs" role="tablist" aria-label="Typ snippetu">
+              <button class="code-tabs__tab is-active" type="button" role="tab" aria-selected="true" data-code-tab="html">HTML</button>
+              <button class="code-tabs__tab" type="button" role="tab" aria-selected="false" data-code-tab="css">CSS</button>
+              <button class="code-tabs__tab" type="button" role="tab" aria-selected="false" data-code-tab="js">JS</button>
+            </div>
+            <pre class="code-panel__pre"><code data-code-output>Wybierz wzorzec z biblioteki.</code></pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="featured section-pad" id="featured" aria-labelledby="featured-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Featured interactions</p>
+            <h2 id="featured-title">Cztery wzorce do sekcji premium</h2>
+            <p>Wybrane mikrointerakcje pokazują, jak łączyć emocję z przewidywalnością i czytelnym feedbackiem.</p>
+          </div>
+          <div class="featured-grid">
+            <article class="featured-card"><span class="badge badge--motion">CTA</span><h3>Premium Glow Button</h3><p>Akcentuje najważniejszą akcję bez blokowania użytkownika animacją.</p><button class="demo-button demo-button--glow" type="button">Otwórz vault</button></article>
+            <article class="featured-card"><span class="badge badge--success">Status</span><h3>Animated Status Badge</h3><p>Łączy tekst, ikonę i subtelny puls, więc status nie zależy wyłącznie od koloru.</p><div class="demo-status"><span></span>Synchronizacja aktywna</div></article>
+            <article class="featured-card"><span class="badge badge--neutral">Loading</span><h3>Skeleton Loader Card</h3><p>Zmniejsza odczuwalny czas oczekiwania i stabilizuje layout przed pojawieniem się danych.</p><div class="demo-skeleton demo-skeleton--card" aria-hidden="true"><span></span><span></span><span></span><span></span></div></article>
+            <article class="featured-card featured-card--pricing"><span class="badge badge--premium">Card</span><h3>Pricing Highlight Hover</h3><p>Delikatny lift kieruje uwagę na rekomendowany pakiet, ale nie ukrywa ceny.</p><strong>Digital Vault Pro</strong><button class="button button--primary" type="button">Zobacz pakiet</button></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="principles section-pad" id="principles" aria-labelledby="principles-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Principles</p>
+            <h2 id="principles-title">Zasady mikrointerakcji KP_Code</h2>
+            <p>Mikrointerakcja jest dobra wtedy, gdy skraca dystans między intencją użytkownika a odpowiedzią interfejsu.</p>
+          </div>
+          <div class="principles-grid">
+            <article class="principle-card"><span>01</span><h3>Feedback natychmiastowy</h3><p>Przycisk, formularz albo toast powinny potwierdzać akcję w momencie, gdy użytkownik jej oczekuje.</p></article>
+            <article class="principle-card"><span>02</span><h3>Nie nadanimuj</h3><p>Ruch ma pomagać w orientacji, a nie konkurować z treścią. Krótkie przejścia są zwykle lepsze niż spektakl.</p></article>
+            <article class="principle-card"><span>03</span><h3>Szanuj reduced motion</h3><p>Każdy wzorzec musi zachować sens po wyłączeniu animacji lub ograniczeniu transformacji.</p></article>
+            <article class="principle-card"><span>04</span><h3>Stany przewidywalne</h3><p>Hover, focus, active, loading, success i error powinny budować spójny język produktu.</p></article>
+            <article class="principle-card"><span>05</span><h3>Ruch wyjaśnia zmianę</h3><p>Animacja powinna pokazywać relację: skąd pojawił się panel, co zostało zapisane, który element jest aktywny.</p></article>
+            <article class="principle-card"><span>06</span><h3>Klawiatura i screen reader</h3><p>Efekt wizualny nie może zastąpić etykiety, focus state, aria-live ani logicznego porządku tabulacji.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="roadmap section-pad" id="roadmap" aria-labelledby="roadmap-title">
+        <div class="container roadmap-layout">
+          <div class="section-heading section-heading--compact">
+            <p class="eyebrow">Roadmap</p>
+            <h2 id="roadmap-title">Kierunki rozwoju Digital Vault</h2>
+            <p>Lab może stać się bazą do paczek produktowych, audytów dostępności i design tokenów dla zespołów KP_Code.</p>
+          </div>
+          <ol class="roadmap-list">
+            <li><span>Q1</span><strong>Więcej patterns</strong><p>Rozszerzenie o mikrointerakcje dashboardów, checkoutów i onboardingów.</p></li>
+            <li><span>Q2</span><strong>Downloadable packs</strong><p>Eksport paczek snippetów pogrupowanych według typu produktu.</p></li>
+            <li><span>Q3</span><strong>Framework versions</strong><p>Porty do React/Vue jako dodatki, bez utraty wersji vanilla.</p></li>
+            <li><span>Q4</span><strong>Figma tokens i audyty</strong><p>Mapowanie tokenów, checklisty WCAG i raporty jakości mikrointerakcji.</p></li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="lab-footer">
+      <div class="container lab-footer__inner">
+        <div><strong>KP_Code Digital Vault</strong><p>Microinteractions Lab to statyczny produkt demonstracyjny do nauki i projektowania drobnych, ale ważnych detali UI.</p></div>
+        <nav class="lab-footer__nav" aria-label="Linki stopki"><a href="#explore">Explore</a><a href="#principles">Principles</a><a href="#roadmap">Roadmap</a><a href="#top">Top</a></nav>
+        <p class="lab-footer__note">© 2026 KP_Code demo. Bez zależności, backendu i frameworków.</p>
+      </div>
+    </footer>
+  </div>
+  <div class="toast-region" aria-live="polite" aria-atomic="true" data-toast-region></div>
+  <noscript><div class="noscript-banner">Ta demonstracja wymaga JavaScriptu do filtrowania, podglądu i kopiowania snippetów.</div></noscript>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
