@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 30 CSS Academy: kaskada, specyficzność, kolejność reguł, !important, style inline i @layer w większym projekcie.">
+  <title>Lekcja 30 — Kaskada, specyficzność i @layer | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-30">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#czym-jest-kaskada">Czym jest kaskada</a></li>
+          <li><a href="#specyficznosc">Specyficzność</a></li>
+          <li><a href="#kolejnosc-zrodla">Kolejność źródła</a></li>
+          <li><a href="#important-inline">Important i inline</a></li>
+          <li><a href="#podstawy-layer">Podstawy @layer</a></li>
+          <li><a href="#kolejnosc-layer">Kolejność warstw</a></li>
+          <li><a href="#demo">Demo kaskady</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 30</p>
+          <h1>Kaskada, specyficzność i @layer</h1>
+          <p>CSS jest kaskadowy: wiele reguł może dotyczyć tego samego elementu, a przeglądarka musi zdecydować, która deklaracja wygra. W tej lekcji uporządkujesz mentalny model kaskady i poznasz <code>@layer</code> jako narzędzie do kontroli kolejności stylów w większym projekcie.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>wyjaśnić, czym jest kaskada CSS,</li>
+            <li>ocenić podstawową specyficzność selektorów,</li>
+            <li>zrozumieć rolę kolejności reguł w arkuszu,</li>
+            <li>unikać eskalacji przez <code>!important</code>,</li>
+            <li>rozpoznać wpływ stylów inline,</li>
+            <li>używać <code>@layer</code> do porządkowania resetu, baz, komponentów i utilities.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Problemy z kaskadą zaczynają się wtedy, gdy komponent trzeba nadpisać coraz mocniejszym selektorem. Najpierw pojawia się <code>.card .title</code>, potem <code>.page .card .title</code>, a na końcu <code>!important</code>. To zwykle sygnał, że projekt potrzebuje lepszego porządku warstw i niższej specyficzności.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> senior developer nie wygrywa z kaskadą siłą. Projektuje kolejność stylów tak, aby nadpisywanie było przewidywalne.</div>
+        </section>
+
+        <section id="czym-jest-kaskada" class="lesson-section">
+          <h2>Czym jest kaskada</h2>
+          <p>Kaskada to zestaw zasad, które decydują, która deklaracja CSS zostanie zastosowana. Znaczenie mają między innymi: źródło stylu, warstwa, specyficzność selektora, kolejność w arkuszu oraz <code>!important</code>.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-cascade-order-example">Kopiuj</button><code id="lesson30-cascade-order-example">.button {
+  background: #2563eb;
+}
+
+.button {
+  background: #16a34a;
+}</code></pre>
+          <p>Jeżeli dwie reguły mają tę samą siłę, wygrywa deklaracja zapisana później. W przykładzie przycisk dostanie zielone tło.</p>
+        </section>
+
+        <section id="specyficznosc" class="lesson-section">
+          <h2>Specyficzność</h2>
+          <p>Specyficzność określa, jak mocny jest selektor. ID jest mocniejsze niż klasa, a klasa jest mocniejsza niż selektor elementu. Im bardziej rozbudowany selektor, tym trudniej go później nadpisać.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-specificity-example">Kopiuj</button><code id="lesson30-specificity-example">button {
+  color: #475569;
+}
+
+.button {
+  color: #2563eb;
+}
+
+#primary-action {
+  color: #dc2626;
+}</code></pre>
+          <p>W tym zestawie selektor ID wygra, nawet jeśli znajduje się wcześniej niż klasa. Dlatego ID rzadko jest dobrym wyborem do codziennego stylowania komponentów.</p>
+        </section>
+
+        <section id="kolejnosc-zrodla" class="lesson-section">
+          <h2>Kolejność źródła</h2>
+          <p>Kiedy specyficzność jest taka sama, wygrywa reguła późniejsza. To prosty mechanizm, ale w dużym projekcie łatwo go zepsuć przez przypadkowe importy albo chaotyczną kolejność plików.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-source-order-example">Kopiuj</button><code id="lesson30-source-order-example">/* components.css */
+.alert {
+  border-color: #bfdbfe;
+}
+
+/* utilities.css loaded later */
+.alert {
+  border-color: #fca5a5;
+}</code></pre>
+          <p>Jeśli utilities mają być łatwe do nadpisywania komponentów, powinny być ładowane później albo umieszczone w późniejszej warstwie.</p>
+        </section>
+
+        <section id="important-inline" class="lesson-section">
+          <h2>Important i inline</h2>
+          <p><code>!important</code> zmienia normalną kolejność rozstrzygania deklaracji. Style inline są bardzo mocne i zwykle powinny być używane ostrożnie, szczególnie gdy później chcesz kontrolować wygląd z arkusza CSS.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-important-inline-example">Kopiuj</button><code id="lesson30-important-inline-example">.badge {
+  color: #2563eb !important;
+}
+
+&lt;span class="badge" style="color: #dc2626;"&gt;
+  Status
+&lt;/span&gt;</code></pre>
+          <p><code>!important</code> bywa potrzebne w klasach utility albo wyjątkach dostępnościowych, ale używane bez kontroli prowadzi do wojny deklaracji.</p>
+        </section>
+
+        <section id="podstawy-layer" class="lesson-section">
+          <h2>Podstawy @layer</h2>
+          <p><code>@layer</code> pozwala jawnie określić kolejność grup stylów. Dzięki temu reset, style bazowe, komponenty i utility mogą mieć przewidywalną hierarchię bez podbijania specyficzności.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-layer-basic-example">Kopiuj</button><code id="lesson30-layer-basic-example">@layer reset, base, components, utilities;
+
+@layer components {
+  .button {
+    padding: .75rem 1rem;
+  }
+}</code></pre>
+          <p>Kolejność podana w pierwszej deklaracji jest ważna. Warstwa zapisana później w tej liście ma większy priorytet niż wcześniejsza.</p>
+        </section>
+
+        <section id="kolejnosc-layer" class="lesson-section">
+          <h2>Kolejność warstw</h2>
+          <p>Warstwy pomagają uniknąć selektorów typu <code>.page .section .card .button</code>. Utility może wygrać z komponentem, bo jest w późniejszej warstwie, nawet jeśli ma prostszy selektor.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-layer-order-example">Kopiuj</button><code id="lesson30-layer-order-example">@layer components {
+  .button {
+    background: #2563eb;
+  }
+}
+
+@layer utilities {
+  .u-bg-success {
+    background: #16a34a;
+  }
+}</code></pre>
+          <p>Jeśli <code>utilities</code> jest późniejszą warstwą niż <code>components</code>, klasa <code>.u-bg-success</code> może wygrać bez selektora o większej specyficzności.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo kaskady</h2>
+          <p>Demo pokazuje różnicę między chaotycznym nadpisywaniem i uporządkowanymi warstwami. W obu przypadkach efekt może wyglądać podobnie, ale koszt utrzymania jest zupełnie inny.</p>
+
+          <div class="cascade-demo" aria-label="Porównanie walki ze specyficznością i porządku przez @layer">
+            <section class="cascade-demo__panel" aria-labelledby="cascade-fight-title">
+              <span class="cascade-demo__label cascade-demo__label--risk">Bez warstw</span>
+              <h3 id="cascade-fight-title">Rosnąca specyficzność</h3>
+              <article class="cascade-demo__card cascade-demo__card--fight">
+                <strong>.page .card .button</strong>
+                <p>Każde nadpisanie wymaga mocniejszego selektora albo kolejnego wyjątku.</p>
+              </article>
+              <ol class="cascade-demo__stack">
+                <li><span>element</span><code>button</code></li>
+                <li><span>klasa</span><code>.button</code></li>
+                <li><span>łańcuch</span><code>.page .card .button</code></li>
+              </ol>
+            </section>
+
+            <section class="cascade-demo__panel" aria-labelledby="cascade-layer-title">
+              <span class="cascade-demo__label">@layer</span>
+              <h3 id="cascade-layer-title">Jawna kolejność</h3>
+              <article class="cascade-demo__card cascade-demo__card--layered">
+                <strong>@layer components, utilities</strong>
+                <p>Proste selektory działają, bo kolejność warstw jest częścią architektury.</p>
+              </article>
+              <ol class="cascade-demo__stack cascade-demo__stack--layers">
+                <li><span>reset</span><code>@layer reset</code></li>
+                <li><span>komponent</span><code>@layer components</code></li>
+                <li><span>utility</span><code>@layer utilities</code></li>
+              </ol>
+            </section>
+          </div>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Dodawanie coraz dłuższych selektorów zamiast zmniejszenia specyficzności.</li>
+            <li>Nadużywanie ID do stylowania komponentów.</li>
+            <li>Używanie <code>!important</code> jako pierwszego sposobu naprawy.</li>
+            <li>Ładowanie plików CSS w przypadkowej kolejności.</li>
+            <li>Mieszanie resetu, komponentów i utilities w jednej nieuporządkowanej warstwie.</li>
+            <li>Zakładanie, że <code>@layer</code> zastępuje dobre nazwy klas i czytelną strukturę plików.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Uporządkuj style dla przycisku w małym systemie UI.</p>
+          <ul>
+            <li>Zdefiniuj kolejność warstw: <code>reset</code>, <code>base</code>, <code>components</code>, <code>utilities</code>.</li>
+            <li>Umieść bazowy styl <code>.button</code> w warstwie <code>components</code>.</li>
+            <li>Dodaj utility <code>.u-bg-success</code> w warstwie <code>utilities</code>.</li>
+            <li>Sprawdź, czy utility wygrywa bez <code>!important</code>.</li>
+            <li>Usuń zbyt długi selektor, jeśli możesz zastąpić go warstwą albo prostszą klasą.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Rozumiem, że kaskada decyduje, która deklaracja CSS wygrywa.</li>
+            <li>Potrafię porównać specyficzność elementu, klasy i ID.</li>
+            <li>Wiem, kiedy kolejność źródła ma znaczenie.</li>
+            <li>Używam <code>!important</code> świadomie i rzadko.</li>
+            <li>Potrafię zaplanować podstawową kolejność warstw przez <code>@layer</code>.</li>
+            <li>Nie podbijam specyficzności, gdy problemem jest organizacja arkusza.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Kaskada nie jest błędem CSS, tylko jego podstawowym mechanizmem. Specyficzność, kolejność źródła, <code>!important</code> i <code>@layer</code> trzeba rozumieć jako narzędzia kontroli. Dobrze zaprojektowane warstwy pozwalają pisać prostsze selektory i ograniczają chaos w większym projekcie.</p>
+          <p>Kolejny krok roadmapy to reset, normalize i style bazowe.</p>
+          <a class="button button--primary" href="reset-normalize-base-styles.html">Przejdź do Lekcji 31</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 32 CSS Academy: struktura plików CSS, skalowanie arkusza, kolejność importów, foldery base, layout, components, utilities i utrzymywalna architektura stylów.">
+  <title>Lekcja 32 — Struktura plików CSS i skalowanie arkusza | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-32">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#problem-jednego-pliku">Problem jednego pliku</a></li>
+          <li><a href="#warstwy-i-foldery">Warstwy i foldery</a></li>
+          <li><a href="#kolejnosc-importow">Kolejność importów</a></li>
+          <li><a href="#granice-komponentow">Granice komponentów</a></li>
+          <li><a href="#utilities">Utilities</a></li>
+          <li><a href="#skalowanie">Skalowanie arkusza</a></li>
+          <li><a href="#demo">Demo struktury CSS</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 32</p>
+          <h1>Struktura plików CSS i skalowanie arkusza</h1>
+          <p>Gdy projekt rośnie, CSS przestaje być tylko listą reguł. Staje się systemem, który musi mieć kolejność, granice odpowiedzialności i przewidywalne miejsce dla nowych stylów.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>rozpoznać moment, w którym jeden plik CSS zaczyna szkodzić utrzymaniu,</li>
+            <li>podzielić style na warstwy: settings, reset, base, layout, components i utilities,</li>
+            <li>zaplanować kolejność importów zgodną z kaskadą,</li>
+            <li>wyznaczyć granice odpowiedzialności komponentów,</li>
+            <li>używać utilities bez chaosu i duplikacji,</li>
+            <li>skalować arkusz bez podbijania specyficzności i przypadkowych wyjątków.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Na początku jeden plik <code>style.css</code> jest wygodny. Po kilkudziesięciu komponentach zaczyna być trudno znaleźć, gdzie zmienić przycisk, gdzie kończy się layout, a gdzie zaczyna jednorazowa poprawka. Struktura plików ma skrócić czas decyzji: nowy styl powinien mieć oczywiste miejsce.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> dobra architektura CSS nie oznacza wielu folderów dla samego porządku. Oznacza jasny kontrakt: co jest globalne, co jest komponentem, co jest layoutem, a co jest świadomym utility.</div>
+        </section>
+
+        <section id="problem-jednego-pliku" class="lesson-section">
+          <h2>Problem jednego pliku</h2>
+          <p>Jeden plik może działać długo, ale bez sekcji i konwencji szybko zamienia się w historię przypadkowych dopisków. Najgroźniejsze są reguły, które wyglądają lokalnie, ale wpływają na cały projekt.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-single-file-example">Kopiuj</button><code id="lesson32-single-file-example">/* style.css */
+.card h3 {
+  margin-bottom: .5rem;
+}
+
+.dashboard .card h3 {
+  margin-bottom: 0;
+}
+
+.settings-page .dashboard .card h3 {
+  margin-bottom: 1rem;
+}</code></pre>
+          <p>To nie jest problem samego pliku, tylko braku granic. Reguły zaczynają poprawiać poprzednie reguły zamiast opisywać jasne odpowiedzialności.</p>
+        </section>
+
+        <section id="warstwy-i-foldery" class="lesson-section">
+          <h2>Warstwy i foldery</h2>
+          <p>Praktyczny podział powinien odpowiadać temu, jak działa CSS. Najpierw decyzje systemowe, potem reset i baza, później layouty, komponenty i utilities.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-folder-structure-example">Kopiuj</button><code id="lesson32-folder-structure-example">styles/
+  settings/
+    tokens.css
+  reset/
+    reset.css
+  base/
+    document.css
+    typography.css
+  layout/
+    containers.css
+    grids.css
+  components/
+    button.css
+    card.css
+  utilities/
+    spacing.css</code></pre>
+          <p>Nie każdy projekt potrzebuje dokładnie takiego drzewa. Ważne, aby podział pomagał decydować, gdzie dodać nowy styl i gdzie szukać istniejącego.</p>
+        </section>
+
+        <section id="kolejnosc-importow" class="lesson-section">
+          <h2>Kolejność importów</h2>
+          <p>Kolejność plików jest częścią architektury. Importy powinny odzwierciedlać warstwy i kolejność nadpisywania, a nie przypadkową kolejność powstawania plików.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-import-order-example">Kopiuj</button><code id="lesson32-import-order-example">@layer settings, reset, base, layout, components, utilities;
+
+@import url("./settings/tokens.css") layer(settings);
+@import url("./reset/reset.css") layer(reset);
+@import url("./base/document.css") layer(base);
+@import url("./layout/containers.css") layer(layout);
+@import url("./components/button.css") layer(components);
+@import url("./utilities/spacing.css") layer(utilities);</code></pre>
+          <p>Jeżeli projekt nie używa build toola, można nadal utrzymywać jeden plik końcowy, ale z czytelnymi sekcjami i komentarzami granicznymi.</p>
+        </section>
+
+        <section id="granice-komponentow" class="lesson-section">
+          <h2>Granice komponentów</h2>
+          <p>Komponent powinien opisywać własną strukturę i warianty, ale nie powinien naprawiać layoutu strony. Layout decyduje, gdzie komponent stoi. Komponent decyduje, jak wygląda sam w sobie.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-component-boundary-example">Kopiuj</button><code id="lesson32-component-boundary-example">/* components/card.css */
+.card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.card--featured {
+  border-color: var(--color-action);
+}</code></pre>
+          <p>Jeżeli klasa komponentu zaczyna zawierać szerokość całej strony, offset sticky albo reguły siatki rodzica, to prawdopodobnie miesza się z layoutem.</p>
+        </section>
+
+        <section id="utilities" class="lesson-section">
+          <h2>Utilities</h2>
+          <p>Utility to mała, przewidywalna klasa do konkretnego zadania. Może być bardzo przydatna, jeśli ma ograniczony zakres i jest w późniejszej warstwie niż komponenty.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-utilities-example">Kopiuj</button><code id="lesson32-utilities-example">@layer utilities {
+  .u-stack-sm {
+    display: grid;
+    gap: .5rem;
+  }
+
+  .u-text-muted {
+    color: var(--color-text-muted);
+  }
+}</code></pre>
+          <p>Utilities nie powinny zastępować komponentów. Jeżeli budujesz cały przycisk z dziesięciu utility, początkującemu użytkownikowi trudniej zrozumieć intencję UI.</p>
+        </section>
+
+        <section id="skalowanie" class="lesson-section">
+          <h2>Skalowanie arkusza</h2>
+          <p>Skalowanie CSS polega na kontrolowaniu kosztu kolejnej zmiany. Nowy komponent powinien wymagać dodania lokalnego pliku albo sekcji, a nie przeszukiwania całego arkusza i dopisywania wyjątków na końcu.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-scalable-rules-example">Kopiuj</button><code id="lesson32-scalable-rules-example">/* Dobra zasada decyzyjna */
+settings  -> tokeny i decyzje systemowe
+reset     -> wyrównanie startu przeglądarek
+base      -> domyślne elementy HTML
+layout    -> kontenery, gridy, regiony strony
+components -> przyciski, karty, formularze
+utilities -> małe świadome wyjątki</code></pre>
+          <p>Jeżeli nie potrafisz przypisać reguły do żadnej kategorii, to często znaczy, że reguła robi za dużo albo opisuje jednorazowy hack.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo struktury CSS</h2>
+          <p>Demo pokazuje różnicę między arkuszem, który rośnie przez dopisywanie poprawek, a arkuszem z jawnymi warstwami i odpowiedzialnościami.</p>
+
+          <div class="structure-demo" aria-label="Porównanie chaotycznego arkusza i skalowalnej struktury CSS">
+            <section class="structure-demo__panel" aria-labelledby="structure-chaos-title">
+              <span class="structure-demo__label structure-demo__label--risk">Bez struktury</span>
+              <h3 id="structure-chaos-title">Dopisywanie na końcu</h3>
+              <ol class="structure-demo__list structure-demo__list--chaos">
+                <li><code>.button</code><span>pierwsza wersja</span></li>
+                <li><code>.home .button</code><span>wyjątek strony</span></li>
+                <li><code>.modal .home .button</code><span>naprawa wyjątku</span></li>
+                <li><code>.button.special</code><span>kolejny wariant</span></li>
+              </ol>
+            </section>
+
+            <section class="structure-demo__panel" aria-labelledby="structure-system-title">
+              <span class="structure-demo__label">Skalowalna baza</span>
+              <h3 id="structure-system-title">Warstwy i odpowiedzialności</h3>
+              <ol class="structure-demo__list structure-demo__list--system">
+                <li><code>settings/tokens.css</code><span>decyzje systemowe</span></li>
+                <li><code>base/document.css</code><span>domyślne elementy</span></li>
+                <li><code>layout/grid.css</code><span>układ strony</span></li>
+                <li><code>components/button.css</code><span>komponent i warianty</span></li>
+              </ol>
+            </section>
+          </div>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Tworzenie wielu folderów bez realnej konwencji odpowiedzialności.</li>
+            <li>Mieszanie resetu, layoutu i komponentów w jednej sekcji arkusza.</li>
+            <li>Dodawanie wyjątków na końcu pliku zamiast poprawienia źródłowej reguły.</li>
+            <li>Budowanie komponentów przez selektory zależne od konkretnej strony.</li>
+            <li>Używanie utilities jako zamiennika dla czytelnych komponentów.</li>
+            <li>Brak jednego miejsca dla tokenów, zmiennych i decyzji systemowych.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zaprojektuj strukturę CSS dla małej strony z hero, kartami, formularzem i stopką.</p>
+          <ul>
+            <li>Rozpisz foldery lub sekcje: <code>settings</code>, <code>reset</code>, <code>base</code>, <code>layout</code>, <code>components</code>, <code>utilities</code>.</li>
+            <li>Przypisz tokeny kolorów i odstępów do <code>settings</code>.</li>
+            <li>Umieść reguły <code>body</code>, linków i obrazów w <code>base</code>.</li>
+            <li>Przenieś kontenery i siatki do <code>layout</code>.</li>
+            <li>Wydziel <code>.button</code>, <code>.card</code> i pole formularza do <code>components</code>.</li>
+            <li>Dodaj maksymalnie trzy utilities i opisz, kiedy wolno ich używać.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Potrafię zaproponować strukturę plików CSS dla małego projektu.</li>
+            <li>Rozumiem różnicę między warstwą base, layout i components.</li>
+            <li>Wiem, dlaczego kolejność importów wpływa na kaskadę.</li>
+            <li>Potrafię rozpoznać komponent, który robi za dużo.</li>
+            <li>Używam utilities świadomie i w ograniczonym zakresie.</li>
+            <li>Nie dopisuję wyjątków na końcu arkusza bez sprawdzenia źródła problemu.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Struktura plików CSS jest narzędziem do zarządzania decyzjami. Dobre foldery, warstwy i sekcje pomagają utrzymać niską specyficzność, ograniczyć duplikację i szybko znaleźć właściwe miejsce dla kolejnej reguły.</p>
+          <p>Kolejny krok roadmapy to pseudoklasy i pseudoelementy w praktyce.</p>
+          <a class="button button--primary" href="pseudo-classes-and-elements-practice.html">Przejdź do Lekcji 33</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

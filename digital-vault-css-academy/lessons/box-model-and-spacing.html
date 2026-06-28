@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 03 CSS Academy: box model, odstępy i rozmiary elementów dla początkujących.">
+  <title>Lekcja 03 — Box model, odstępy i rozmiary elementów | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-3">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#czym-jest-box-model">Czym jest box model?</a></li>
+          <li><a href="#content-padding-border-margin">Content, padding, border i margin</a></li>
+          <li><a href="#box-sizing-border-box"><code>box-sizing: border-box</code></a></li>
+          <li><a href="#rozmiary-elementow"><code>width</code>, <code>max-width</code>, <code>height</code> i <code>min-height</code></a></li>
+          <li><a href="#margin-kontra-padding">Margin kontra padding</a></li>
+          <li><a href="#odstepy-miedzy-elementami">Odstępy między elementami</a></li>
+          <li><a href="#dobre-praktyki">Dobre praktyki</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 03</p>
+          <h1>Box model, odstępy i rozmiary elementów</h1>
+          <p>W tej lekcji poznasz sposób, w jaki przeglądarka liczy rozmiar każdego elementu. To fundament pracy z kartami, sekcjami, przyciskami i układami, które mają wyglądać równo na różnych ekranach.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>wyjaśnić, czym jest box model i z jakich części składa się element,</li>
+            <li>odróżnić <code>content</code>, <code>padding</code>, <code>border</code> i <code>margin</code>,</li>
+            <li>ustawić <code>box-sizing: border-box</code> i zrozumieć, dlaczego ułatwia budowanie layoutu,</li>
+            <li>korzystać z <code>width</code>, <code>max-width</code>, <code>height</code> i <code>min-height</code> bez blokowania responsywności,</li>
+            <li>planować odstępy tak, aby interfejs był czytelny i spójny.</li>
+          </ul>
+        </section>
+
+        <section id="czym-jest-box-model" class="lesson-section">
+          <h2>Czym jest box model?</h2>
+          <p>Każdy element HTML jest traktowany przez przeglądarkę jak prostokątne pudełko. Nawet tekst, link, karta produktu czy cała sekcja strony mają swoje miejsce, rozmiar i odstępy. Box model opisuje, z czego składa się to pudełko.</p>
+          <p>Myśl o elemencie jak o karcie: w środku jest treść, wokół treści możesz dodać oddech, następnie obramowanie, a na zewnątrz odstęp od innych elementów.</p>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> gdy układ strony wygląda „nierówno”, bardzo często problem wynika z paddingu, marginesu, szerokości albo sposobu liczenia box modelu.</div>
+        </section>
+
+        <section id="content-padding-border-margin" class="lesson-section">
+          <h2>Content, padding, border i margin</h2>
+          <p>Box model składa się z czterech warstw. Każda odpowiada za inny rodzaj przestrzeni.</p>
+          <ul>
+            <li><code>content</code> to właściwa treść elementu: tekst, obraz, ikona albo formularz.</li>
+            <li><code>padding</code> to odstęp wewnętrzny między treścią a krawędzią elementu.</li>
+            <li><code>border</code> to obramowanie elementu.</li>
+            <li><code>margin</code> to odstęp zewnętrzny między elementem a jego otoczeniem.</li>
+          </ul>
+          <pre class="code-block"><code>.lesson-card {
+  padding: 1.5rem;
+  border: 1px solid #dbe2f1;
+  margin-bottom: 1rem;
+}</code></pre>
+          <p>W tym przykładzie treść karty nie dotyka obramowania dzięki <code>padding</code>, a kolejne elementy nie przyklejają się do karty dzięki <code>margin-bottom</code>.</p>
+        </section>
+
+        <section id="box-sizing-border-box" class="lesson-section">
+          <h2><code>box-sizing: border-box</code></h2>
+          <p>Domyślnie CSS liczy szerokość elementu w sposób, który bywa zaskakujący dla początkujących: <code>width</code> obejmuje tylko treść, a <code>padding</code> i <code>border</code> zwiększają całkowity rozmiar pudełka.</p>
+          <p>Dlatego w nowoczesnych projektach bardzo często stosuje się globalną regułę:</p>
+          <pre class="code-block"><code>* {
+  box-sizing: border-box;
+}</code></pre>
+          <p>Dzięki temu deklaracja <code>width: 300px</code> oznacza całkowitą szerokość elementu razem z paddingiem i obramowaniem. Layout jest łatwiejszy do przewidzenia.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> <code>border-box</code> zmniejsza liczbę sytuacji, w których element z ustaloną szerokością nagle wypycha układ poza ekran.</div>
+        </section>
+
+        <section id="rozmiary-elementow" class="lesson-section">
+          <h2><code>width</code>, <code>max-width</code>, <code>height</code> i <code>min-height</code></h2>
+          <p>Rozmiary w CSS warto ustawiać elastycznie. Stała szerokość może wyglądać dobrze na dużym ekranie, ale na telefonie łatwo zepsuje układ. Dlatego często lepiej łączyć <code>width</code> z <code>max-width</code>.</p>
+          <pre class="code-block"><code>.container {
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}</code></pre>
+          <p>Taki kontener może zwężać się na małych ekranach, ale nie rośnie bez końca na dużych monitorach.</p>
+          <p>Z wysokością zachowaj ostrożność. <code>height</code> wymusza konkretną wysokość i może obcinać treść, gdy tekstu będzie więcej. <code>min-height</code> ustala minimalną wysokość, ale pozwala elementowi urosnąć, jeśli treść tego wymaga.</p>
+        </section>
+
+        <section id="margin-kontra-padding" class="lesson-section">
+          <h2>Margin kontra padding</h2>
+          <p>Najprostsze rozróżnienie brzmi: <code>padding</code> buduje przestrzeń wewnątrz elementu, a <code>margin</code> odsuwa element od innych elementów.</p>
+          <ul>
+            <li>Użyj <code>padding</code>, gdy treść potrzebuje oddechu wewnątrz karty, przycisku lub sekcji.</li>
+            <li>Użyj <code>margin</code>, gdy chcesz zwiększyć odległość między sąsiednimi blokami.</li>
+            <li>Nie używaj dużego paddingu tylko po to, aby odsunąć cały element od innych elementów.</li>
+          </ul>
+          <pre class="code-block"><code>.button {
+  padding: 0.75rem 1rem;
+}
+
+.section {
+  margin-top: 3rem;
+}</code></pre>
+        </section>
+
+        <section id="odstepy-miedzy-elementami" class="lesson-section">
+          <h2>Odstępy między elementami</h2>
+          <p>Spójne odstępy sprawiają, że strona wygląda spokojniej i czyta się ją szybciej. Zamiast wpisywać przypadkowe wartości, korzystaj z prostego rytmu, np. <code>0.5rem</code>, <code>1rem</code>, <code>1.5rem</code>, <code>2rem</code>.</p>
+          <p>W komponentach opartych o flexbox lub grid bardzo wygodne jest <code>gap</code>, bo opisuje odstęp między elementami bez dokładania marginesów do każdego dziecka.</p>
+          <pre class="code-block"><code>.card-list {
+  display: grid;
+  gap: 1rem;
+}</code></pre>
+          <p>To czytelniejsze niż ręczne dodawanie <code>margin-bottom</code> do wszystkich kart i usuwanie marginesu z ostatniej.</p>
+
+          <h3>Przykład karty</h3>
+          <p>Poniżej mały przykład HTML i CSS, który łączy box model, odstępy i elastyczną szerokość.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson3-card-example">Kopiuj</button><code id="lesson3-card-example">&lt;article class="profile-card"&gt;
+  &lt;p class="profile-card__label"&gt;Mini komponent&lt;/p&gt;
+  &lt;h2&gt;Karta kursu CSS&lt;/h2&gt;
+  &lt;p&gt;Krótki opis lekcji, który ma wygodny odstęp od krawędzi karty.&lt;/p&gt;
+&lt;/article&gt;
+
+.profile-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 28rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #dbe2f1;
+  border-radius: 12px;
+  background-color: #ffffff;
+}</code></pre>
+        </section>
+
+        <section id="dobre-praktyki" class="lesson-section">
+          <h2>Dobre praktyki</h2>
+          <ul>
+            <li>Ustaw <code>box-sizing: border-box</code> globalnie na początku arkusza stylów.</li>
+            <li>Preferuj <code>max-width</code> zamiast sztywnej szerokości, gdy element ma działać na wielu ekranach.</li>
+            <li>Nie ustawiaj <code>height</code> na tekstowych kartach, jeśli nie masz konkretnego powodu. Częściej wybieraj <code>min-height</code>.</li>
+            <li>Stosuj jeden rytm odstępów w całym projekcie, aby interfejs nie wyglądał przypadkowo.</li>
+            <li>Do odstępów w listach kart, paskach narzędzi i gridach używaj <code>gap</code>, gdy układ na to pozwala.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Utwórz kartę informacyjną z nagłówkiem, krótkim tekstem i linkiem. Następnie w CSS:</p>
+          <ul>
+            <li>dodaj <code>padding</code>, aby treść nie dotykała krawędzi,</li>
+            <li>ustaw <code>border</code>, aby zobaczyć granice elementu,</li>
+            <li>dodaj <code>margin</code>, aby odsunąć kartę od innych elementów,</li>
+            <li>ustaw <code>width: 100%</code> i <code>max-width</code>, aby karta była responsywna,</li>
+            <li>zmień wartości paddingu, bordera, marginesu i <code>max-width</code>, a potem sprawdź, jak wpływają na układ.</li>
+          </ul>
+          <p>Na koniec odpowiedz sobie na pytanie: które odstępy należą do wnętrza komponentu, a które opisują jego relację z otoczeniem?</p>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Wiesz już, że każdy element jest pudełkiem z treścią, paddingiem, obramowaniem i marginesem. Rozumiesz, dlaczego <code>box-sizing: border-box</code> ułatwia przewidywanie szerokości oraz kiedy wybierać <code>padding</code>, <code>margin</code>, <code>max-width</code> i <code>min-height</code>.</p>
+          <p>Kolejny krok: sprawdź, jak właściwość <code>display</code> decyduje o tym, czy element zachowuje się jak blok, tekst w linii czy mały komponent w tekście.</p>
+          <a class="button button--primary" href="display-and-document-flow.html">Przejdź do Lekcji 04</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

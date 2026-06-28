@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 17 CSS Academy: fluid typography, funkcje min(), max(), clamp() oraz płynne rozmiary tekstu i odstępów w responsywnym UI.">
+  <title>Lekcja 17 — Fluid typography i funkcje min(), max(), clamp() | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-17">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#problem-skokowej-skali">Problem skokowej skali</a></li>
+          <li><a href="#min"><code>min()</code></a></li>
+          <li><a href="#max"><code>max()</code></a></li>
+          <li><a href="#clamp"><code>clamp()</code></a></li>
+          <li><a href="#fluid-typography">Fluid typography</a></li>
+          <li><a href="#fluid-spacing">Płynne odstępy</a></li>
+          <li><a href="#guardrails">Granice i dostępność</a></li>
+          <li><a href="#demo">Demo płynnej skali</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 17</p>
+          <h1>Fluid typography i funkcje min(), max(), clamp()</h1>
+          <p>Po obrazach i mediach responsywnych czas na płynne skalowanie tekstu oraz odstępów. Zamiast skakać między rozmiarami tylko na breakpointach, możesz pozwolić wartościom rosnąć stopniowo w bezpiecznych granicach.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>wyjaśnić, czym różni się skokowa responsywność od płynnej skali,</li>
+            <li>użyć <code>min()</code> do wyboru mniejszej z kilku wartości,</li>
+            <li>użyć <code>max()</code> do ustawienia minimalnej granicy,</li>
+            <li>zbudować bezpieczny rozmiar tekstu przez <code>clamp()</code>,</li>
+            <li>tworzyć płynne odstępy bez nadmiaru breakpointów,</li>
+            <li>utrzymać czytelność tekstu na mobile i desktopie.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Płynna typografia przydaje się w hero, leadach artykułów, kartach marketingowych, dashboardach i stronach edukacyjnych. Duże nagłówki mogą rosnąć razem z viewportem, ale nie powinny stać się ani zbyt małe na telefonie, ani absurdalnie wielkie na szerokim monitorze.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> najlepszy efekt daje połączenie wartości względnych. Dolna i górna granica zwykle są w <code>rem</code>, a środek skali miesza <code>rem</code> z <code>vw</code>.</div>
+        </section>
+
+        <section id="problem-skokowej-skali" class="lesson-section">
+          <h2>Problem skokowej skali</h2>
+          <p>Klasyczne breakpointy często zmieniają tekst skokowo: na małym ekranie nagłówek ma <code>2rem</code>, a od <code>1024px</code> nagle dostaje <code>3.5rem</code>. To działa, ale między breakpointami layout może wyglądać przypadkowo.</p>
+          <pre class="code-block"><code>.hero-title {
+  font-size: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+}</code></pre>
+          <p>Fluid typography pozwala zastąpić wiele takich progów jedną wartością, która płynnie reaguje na szerokość viewportu.</p>
+        </section>
+
+        <section id="min" class="lesson-section">
+          <h2><code>min()</code></h2>
+          <p><code>min()</code> wybiera mniejszą z podanych wartości. To użyteczne, gdy element ma rosnąć, ale nie przekroczyć rozsądnego limitu.</p>
+          <pre class="code-block"><code>.content {
+  width: min(100%, 42rem);
+}</code></pre>
+          <p>Ten zapis oznacza: kontener może mieć pełną szerokość rodzica, ale maksymalnie <code>42rem</code>. To czytelniejsza alternatywa dla pary <code>width: 100%</code> i <code>max-width</code>.</p>
+        </section>
+
+        <section id="max" class="lesson-section">
+          <h2><code>max()</code></h2>
+          <p><code>max()</code> wybiera większą z wartości. Przydaje się, gdy chcesz zagwarantować minimalny rozmiar albo odstęp, nawet jeśli druga wartość jest zależna od viewportu.</p>
+          <pre class="code-block"><code>.section {
+  padding-block: max(2rem, 6vw);
+}</code></pre>
+          <p>Na małym ekranie odstęp nie spadnie poniżej <code>2rem</code>, a na większym może rosnąć zależnie od szerokości viewportu.</p>
+        </section>
+
+        <section id="clamp" class="lesson-section">
+          <h2><code>clamp()</code></h2>
+          <p><code>clamp()</code> ma trzy wartości: minimum, wartość preferowaną i maksimum. Przeglądarka wybiera wartość preferowaną, ale pilnuje dolnej i górnej granicy.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson17-clamp-type-example">Kopiuj</button><code id="lesson17-clamp-type-example">.hero-title {
+  font-size: clamp(2rem, 1.2rem + 4vw, 4.5rem);
+  line-height: 1.05;
+}</code></pre>
+          <p>Odczyt praktyczny: nagłówek nigdy nie będzie mniejszy niż <code>2rem</code>, będzie rósł według wartości <code>1.2rem + 4vw</code>, ale zatrzyma się na <code>4.5rem</code>.</p>
+        </section>
+
+        <section id="fluid-typography" class="lesson-section">
+          <h2>Fluid typography</h2>
+          <p>W większym projekcie warto zbudować kilka tokenów typograficznych. Dzięki temu komponenty nie używają przypadkowych wartości, tylko wspólnej skali.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson17-fluid-system-example">Kopiuj</button><code id="lesson17-fluid-system-example">:root {
+  --text-sm: clamp(0.875rem, 0.82rem + 0.2vw, 1rem);
+  --text-md: clamp(1rem, 0.95rem + 0.35vw, 1.125rem);
+  --text-lg: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  --text-xl: clamp(2rem, 1.3rem + 3vw, 4rem);
+}
+
+.article-title {
+  font-size: var(--text-xl);
+  line-height: 1.08;
+}</code></pre>
+          <p>Nie każda wartość musi być płynna. Tekst akapitu często może zostać stabilny, a największy zysk daje płynna skala nagłówków i dużych elementów kompozycyjnych.</p>
+        </section>
+
+        <section id="fluid-spacing" class="lesson-section">
+          <h2>Płynne odstępy</h2>
+          <p>Te same funkcje możesz stosować do paddingu, gapów i marginesów. Płynny spacing pomaga utrzymać rytm bez dopisywania breakpointu do każdej sekcji.</p>
+          <pre class="code-block"><code>.section {
+  padding-block: clamp(2.5rem, 6vw, 6rem);
+}
+
+.card-grid {
+  gap: clamp(1rem, 2vw, 2rem);
+}</code></pre>
+          <p>Granice są tu tak samo ważne jak przy tekście. Bez maksimum odstępy na dużych monitorach mogą zacząć marnować przestrzeń.</p>
+        </section>
+
+        <section id="guardrails" class="lesson-section">
+          <h2>Granice i dostępność</h2>
+          <p>Płynna typografia ma poprawiać czytelność, nie robić efektu wizualnego za wszelką cenę. W praktyce pilnuj trzech rzeczy:</p>
+          <ul>
+            <li>minimum nie może być zbyt małe dla użytkowników na mobile,</li>
+            <li>maksimum nie może rozpychać layoutu na desktopie,</li>
+            <li>akapit nadal potrzebuje sensownej długości linii, np. <code>max-width: 65ch</code>.</li>
+          </ul>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> płynny rozmiar tekstu nie zastępuje hierarchii. Nadal potrzebujesz dobrego kontrastu, line-height, szerokości tekstu i logicznej skali nagłówków.</div>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo płynnej skali</h2>
+          <p>Poniższe demo pokazuje, jak jedna skala może kontrolować nagłówek, lead, odstępy i kartę bez dokładania kolejnych breakpointów.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson17-card-example">Kopiuj</button><code id="lesson17-card-example">.fluid-card {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.fluid-card h3 {
+  font-size: clamp(1.5rem, 1rem + 2vw, 3rem);
+}
+
+.fluid-card p {
+  max-width: 58ch;
+}</code></pre>
+
+          <div class="fluid-demo" aria-label="Wizualny przykład płynnej typografii i funkcji clamp">
+            <article class="fluid-demo__sample">
+              <span class="fluid-demo__badge">clamp()</span>
+              <h3>Ten nagłówek skaluje się płynnie</h3>
+              <p>Jego rozmiar ma dolną granicę, wartość reagującą na viewport i górny limit, dzięki czemu pozostaje czytelny na telefonie i desktopie.</p>
+            </article>
+            <div class="fluid-demo__scale">
+              <div class="fluid-demo__row">
+                <span>min</span>
+                <strong>2rem</strong>
+              </div>
+              <div class="fluid-demo__track">
+                <span style="width: 42%;">mobile</span>
+              </div>
+              <div class="fluid-demo__track fluid-demo__track--wide">
+                <span style="width: 76%;">desktop</span>
+              </div>
+              <div class="fluid-demo__row">
+                <span>max</span>
+                <strong>4.5rem</strong>
+              </div>
+            </div>
+          </div>
+          <p>Interpretacja: <code>clamp()</code> daje kontrolę nad całym zakresem. Tekst może reagować na ekran, ale nie wymyka się poza zaplanowane minimum i maksimum.</p>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Używanie samego <code>vw</code> dla fontu, przez co tekst robi się zbyt mały lub zbyt duży.</li>
+            <li>Brak dolnej i górnej granicy dla dużych nagłówków.</li>
+            <li>Tworzenie wielu przypadkowych wartości <code>clamp()</code> zamiast małej skali tokenów.</li>
+            <li>Skalowanie akapitów tak mocno, że zmienia się rytm czytania.</li>
+            <li>Ignorowanie <code>line-height</code> po zwiększeniu rozmiaru fontu.</li>
+            <li>Brak testu na wąskim viewportcie i bardzo szerokim desktopie.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zbuduj sekcję hero z płynną typografią i odstępami.</p>
+          <ul>
+            <li>Ustaw nagłówek przez <code>font-size: clamp(2rem, 1.2rem + 4vw, 4.5rem)</code>.</li>
+            <li>Dodaj lead z <code>max-width: 60ch</code> i spokojnym <code>line-height</code>.</li>
+            <li>Ustaw padding sekcji przez <code>clamp(3rem, 8vw, 7rem)</code>.</li>
+            <li>Przetestuj szerokości 390px, 768px, 1440px i sprawdź, czy tekst nie rozpycha layoutu.</li>
+            <li>Wydziel przynajmniej dwa tokeny CSS, np. <code>--text-lg</code> i <code>--space-section</code>.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Rozumiem, że <code>min()</code> wybiera mniejszą wartość.</li>
+            <li>Rozumiem, że <code>max()</code> wybiera większą wartość.</li>
+            <li>Potrafię czytać zapis <code>clamp(min, preferowane, max)</code>.</li>
+            <li>Umiem zbudować płynny nagłówek z granicami w <code>rem</code>.</li>
+            <li>Wiem, że <code>vw</code> powinno być ograniczone przez <code>clamp()</code>.</li>
+            <li>Testuję płynną skalę na małym ekranie, tablecie i szerokim desktopie.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p><code>min()</code>, <code>max()</code> i <code>clamp()</code> pozwalają budować wartości, które reagują na kontekst, ale nie tracą kontroli. Najważniejszym narzędziem dla fluid typography jest <code>clamp()</code>, bo łączy minimum, skalowanie i maksimum w jednym zapisie.</p>
+          <p>Kolejny krok roadmapy to komponenty UI: linki, przyciski i stany <code>hover</code>, <code>focus</code>, <code>active</code> oraz <code>disabled</code>.</p>
+          <a class="button button--primary" href="links-buttons-hover-focus-active-disabled.html">Przejdź do Lekcji 18</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

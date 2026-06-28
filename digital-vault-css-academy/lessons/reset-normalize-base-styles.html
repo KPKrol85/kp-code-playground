@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 31 CSS Academy: reset CSS, normalize, box-sizing, style bazowe, domyślne elementy HTML, media i formularze w przewidywalnym fundamencie projektu.">
+  <title>Lekcja 31 — Reset, normalize i style bazowe | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-31">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#reset-vs-normalize">Reset vs normalize</a></li>
+          <li><a href="#box-sizing">Box sizing</a></li>
+          <li><a href="#html-body">HTML i body</a></li>
+          <li><a href="#media">Media i obrazy</a></li>
+          <li><a href="#typografia-linki">Typografia i linki</a></li>
+          <li><a href="#formularze">Formularze</a></li>
+          <li><a href="#demo">Demo stylów bazowych</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 31</p>
+          <h1>Reset, normalize i style bazowe</h1>
+          <p>Każdy projekt CSS potrzebuje przewidywalnego startu. Reset, normalize i style bazowe nie są dekoracją, tylko fundamentem, który ogranicza różnice między przeglądarkami i ustawia domyślne zachowanie elementów HTML.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>odróżnić reset CSS od normalize,</li>
+            <li>ustawić globalny model pudełkowy przez <code>box-sizing</code>,</li>
+            <li>zdefiniować bazowe style dla <code>html</code> i <code>body</code>,</li>
+            <li>zabezpieczyć obrazy i media przed overflow,</li>
+            <li>ustawić rozsądne domyślne style typografii, linków i formularzy,</li>
+            <li>umieścić reset i base w odpowiednich warstwach CSS.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Bez wspólnego fundamentu każdy komponent zaczyna walczyć z domyślnymi stylami przeglądarki. Jeden nagłówek ma własne marginesy, obraz wychodzi poza kontener, formularz nie dziedziczy fontu, a rozmiar elementu zmienia się po dodaniu paddingu.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> reset nie powinien wymazywać dostępności ani znaczenia elementów. Ma usuwać nieprzewidywalność, a style bazowe mają ustawić sensowne domyślne zachowanie projektu.</div>
+        </section>
+
+        <section id="reset-vs-normalize" class="lesson-section">
+          <h2>Reset vs normalize</h2>
+          <p>Reset agresywnie usuwa część domyślnych stylów przeglądarki. Normalize zachowuje przydatne domyślne zachowania, ale wyrównuje różnice między przeglądarkami. W nowoczesnych projektach często używa się małego, świadomego resetu zamiast ogromnego pliku.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-reset-normalize-example">Kopiuj</button><code id="lesson31-reset-normalize-example">@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+}</code></pre>
+          <p>Nie musisz resetować wszystkiego. Najlepszy reset jest mały, zrozumiały i dopasowany do projektu.</p>
+        </section>
+
+        <section id="box-sizing" class="lesson-section">
+          <h2>Box sizing</h2>
+          <p>Domyślnie szerokość elementu dotyczy tylko contentu. Po dodaniu paddingu i borderu element może stać się większy niż oczekujesz. <code>border-box</code> sprawia, że padding i border mieszczą się w zadanej szerokości.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-box-sizing-example">Kopiuj</button><code id="lesson31-box-sizing-example">*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}</code></pre>
+          <p>To jedna z najczęściej stosowanych bazowych reguł CSS, bo upraszcza pracę z layoutem, kartami, formularzami i siatkami.</p>
+        </section>
+
+        <section id="html-body" class="lesson-section">
+          <h2>HTML i body</h2>
+          <p><code>html</code> i <code>body</code> są podstawą całego dokumentu. W stylach bazowych zwykle ustawiasz wysokość, kolor tekstu, tło, font, wygładzanie tekstu i wysokość linii.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-html-body-example">Kopiuj</button><code id="lesson31-html-body-example">@layer base {
+  html {
+    min-height: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    color: #0f172a;
+    background: #f8fafc;
+    -webkit-font-smoothing: antialiased;
+  }
+}</code></pre>
+          <p>Te decyzje powinny być spójne z tokenami projektu. W większym systemie zamiast surowych wartości użyjesz zmiennych, np. <code>var(--color-text)</code>.</p>
+        </section>
+
+        <section id="media" class="lesson-section">
+          <h2>Media i obrazy</h2>
+          <p>Obrazy, wideo, canvas i SVG łatwo powodują poziomy overflow, jeśli są większe niż kontener. Bazowa reguła <code>max-width: 100%</code> ogranicza ten problem już na starcie.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-media-example">Kopiuj</button><code id="lesson31-media-example">img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}</code></pre>
+          <p><code>display: block</code> usuwa typową przerwę pod obrazem wynikającą z zachowania elementów inline.</p>
+        </section>
+
+        <section id="typografia-linki" class="lesson-section">
+          <h2>Typografia i linki</h2>
+          <p>Style bazowe powinny chronić czytelność. Ustawienia takie jak <code>overflow-wrap</code>, dziedziczenie koloru linków albo widoczny fokus pomagają uniknąć problemów w komponentach.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-typography-links-example">Kopiuj</button><code id="lesson31-typography-links-example">h1,
+h2,
+h3,
+p {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: .18em;
+}
+
+:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}</code></pre>
+          <p>Nie usuwaj obrysu fokusu bez zapewnienia równie czytelnej alternatywy. To podstawowy mechanizm dostępności dla użytkowników klawiatury.</p>
+        </section>
+
+        <section id="formularze" class="lesson-section">
+          <h2>Formularze</h2>
+          <p>Elementy formularzy mają wiele domyślnych stylów zależnych od przeglądarki i systemu. Bazowe reguły powinny wyrównać font, zachować dostępność i nie blokować późniejszego stylowania komponentów.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-forms-example">Kopiuj</button><code id="lesson31-forms-example">button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}</code></pre>
+          <p>Nie resetuj formularzy tak mocno, aby utracić ich czytelne stany. Bazowy CSS ma ułatwiać komponentom pracę, nie ukrywać ich zachowania.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo stylów bazowych</h2>
+          <p>Demo porównuje przypadkowe domyślne zachowanie z uporządkowanym fundamentem. Różnica nie polega na ozdobach, tylko na kontroli odstępów, rozmiaru, mediów i formularzy.</p>
+
+          <div class="base-demo" aria-label="Porównanie braku resetu i uporządkowanych stylów bazowych">
+            <section class="base-demo__panel base-demo__panel--raw" aria-labelledby="base-raw-title">
+              <span class="base-demo__label base-demo__label--warning">Bez bazy</span>
+              <h3 id="base-raw-title">Domyślne style walczą z komponentem</h3>
+              <article class="base-demo__mock base-demo__mock--raw">
+                <h4>Raport tygodnia</h4>
+                <p>Treść ma przypadkowe marginesy, obraz nie ma ograniczeń, a kontrolka formularza nie dziedziczy rytmu typografii.</p>
+                <div class="base-demo__overflow" aria-hidden="true">obraz 1280px</div>
+                <button type="button">Zapisz raport</button>
+              </article>
+            </section>
+
+            <section class="base-demo__panel base-demo__panel--stable" aria-labelledby="base-stable-title">
+              <span class="base-demo__label">Reset + base</span>
+              <h3 id="base-stable-title">Elementy startują z przewidywalnego poziomu</h3>
+              <article class="base-demo__mock base-demo__mock--stable">
+                <h4>Raport tygodnia</h4>
+                <p>Spacing, media, przyciski i box model mają wspólny fundament, więc komponent wymaga mniej wyjątków.</p>
+                <div class="base-demo__media" aria-hidden="true">max-width: 100%</div>
+                <button type="button">Zapisz raport</button>
+              </article>
+            </section>
+          </div>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Kopiowanie dużego resetu bez zrozumienia, co zmienia.</li>
+            <li>Globalne usuwanie stylów list, przycisków i linków bez zachowania dostępności.</li>
+            <li>Usuwanie <code>outline</code> dla fokusu bez czytelnej alternatywy.</li>
+            <li>Brak globalnego <code>box-sizing: border-box</code>.</li>
+            <li>Zapominanie o bazowych regułach dla obrazów i mediów.</li>
+            <li>Mieszanie resetu z komponentami w jednej przypadkowej części arkusza.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Przygotuj mały fundament CSS dla nowej strony statycznej.</p>
+          <ul>
+            <li>Utwórz warstwy <code>reset</code>, <code>base</code>, <code>components</code> i <code>utilities</code>.</li>
+            <li>Dodaj globalne <code>box-sizing: border-box</code>.</li>
+            <li>Ustaw bazowe style dla <code>body</code>: font, kolor, tło i <code>line-height</code>.</li>
+            <li>Zabezpiecz media przez <code>display: block</code> i <code>max-width: 100%</code>.</li>
+            <li>Sprawdź, czy linki i fokus klawiatury pozostają czytelne.</li>
+            <li>Dodaj bazowe reguły formularzy bez niszczenia stanów dostępności.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Rozumiem różnicę między resetem i normalize.</li>
+            <li>Wiem, dlaczego globalne <code>box-sizing</code> upraszcza layout.</li>
+            <li>Potrafię ustawić przewidywalne style dla <code>html</code> i <code>body</code>.</li>
+            <li>Potrafię zabezpieczyć obrazy i media przed overflow.</li>
+            <li>Nie usuwam dostępnych stanów fokusu bez zamiennika.</li>
+            <li>Trzymam reset i style bazowe przed komponentami w architekturze CSS.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Reset, normalize i style bazowe tworzą pierwszy poziom architektury CSS. Dobrze ustawiony fundament zmniejsza liczbę wyjątków w komponentach, poprawia przewidywalność layoutu i pomaga zachować dostępność od początku projektu.</p>
+          <p>Kolejny krok roadmapy to struktura plików CSS i skalowanie arkusza.</p>
+          <a class="button button--primary" href="css-file-structure-scalable-stylesheets.html">Przejdź do Lekcji 32</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

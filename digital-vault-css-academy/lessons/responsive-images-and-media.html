@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 16 CSS Academy: obrazy i media responsywne, max-width, aspect-ratio, object-fit, picture, srcset, sizes oraz bezpieczne kadrowanie.">
+  <title>Lekcja 16 — Obrazy i media responsywne | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-16">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#bazowy-styl">Bazowy styl mediów</a></li>
+          <li><a href="#proporcje">Proporcje i <code>aspect-ratio</code></a></li>
+          <li><a href="#object-fit"><code>object-fit</code> i kadrowanie</a></li>
+          <li><a href="#picture-srcset-sizes"><code>picture</code>, <code>srcset</code> i <code>sizes</code></a></li>
+          <li><a href="#lazy-loading">Ładowanie i stabilność layoutu</a></li>
+          <li><a href="#demo">Demo responsywnych mediów</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 16</p>
+          <h1>Obrazy i media responsywne</h1>
+          <p>Obrazy potrafią zniszczyć dobry layout szybciej niż źle dobrany breakpoint. W tej lekcji nauczysz się zabezpieczać media przed overflow, utrzymywać proporcje i kontrolować kadrowanie bez utraty czytelności UI.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>ustawić bezpieczny bazowy styl dla obrazów, wideo i osadzonych mediów,</li>
+            <li>używać <code>max-width: 100%</code> i <code>height: auto</code> bez deformowania grafiki,</li>
+            <li>kontrolować proporcje komponentów przez <code>aspect-ratio</code>,</li>
+            <li>stosować <code>object-fit</code> i <code>object-position</code> do świadomego kadrowania,</li>
+            <li>rozumieć rolę <code>picture</code>, <code>srcset</code> i <code>sizes</code> w responsywnych obrazach,</li>
+            <li>ograniczać skoki layoutu przez atrybuty <code>width</code> i <code>height</code>.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Responsywne media pojawiają się w kartach produktów, zdjęciach artykułów, galeriach, sekcjach hero, avatarach, dashboardach i materiałach edukacyjnych. Ten sam obraz może wyglądać dobrze na desktopie, ale na telefonie wypchnąć layout poza viewport albo uciąć najważniejszy fragment.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> obraz nie powinien dyktować całego layoutu. To komponent powinien określać dostępną szerokość, proporcje i sposób kadrowania, a obraz ma się do tego bezpiecznie dopasować.</div>
+        </section>
+
+        <section id="bazowy-styl" class="lesson-section">
+          <h2>Bazowy styl mediów</h2>
+          <p>Najważniejszy reset dla obrazów jest krótki. Zabezpiecza przed poziomym overflow i usuwa problem pustej przestrzeni pod obrazem wynikający z domyślnego zachowania elementów inline.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson16-safe-media-example">Kopiuj</button><code id="lesson16-safe-media-example">img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}</code></pre>
+          <p><code>max-width: 100%</code> pozwala obrazowi zmniejszyć się do szerokości rodzica, a <code>height: auto</code> zachowuje jego naturalne proporcje.</p>
+        </section>
+
+        <section id="proporcje" class="lesson-section">
+          <h2>Proporcje i <code>aspect-ratio</code></h2>
+          <p>W kartach, galeriach i hero często potrzebujesz stabilnego miejsca na obraz, zanim grafika się wczyta. <code>aspect-ratio</code> pozwala zarezerwować przewidywalny format bez ręcznego liczenia wysokości.</p>
+          <pre class="code-block"><code>.media-card__image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.media-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}</code></pre>
+          <p>Najczęściej spotkasz proporcje <code>16 / 9</code> dla szerokich kadrów, <code>4 / 3</code> dla klasycznych zdjęć i <code>1 / 1</code> dla avatarów lub miniatur.</p>
+        </section>
+
+        <section id="object-fit" class="lesson-section">
+          <h2><code>object-fit</code> i kadrowanie</h2>
+          <p><code>object-fit</code> mówi przeglądarce, jak obraz ma wypełnić ramkę, kiedy ramka i obraz mają inne proporcje.</p>
+          <ul>
+            <li><code>cover</code> — obraz wypełnia całą ramkę, ale może zostać przycięty.</li>
+            <li><code>contain</code> — cały obraz jest widoczny, ale w ramce mogą pojawić się puste pasy.</li>
+            <li><code>fill</code> — obraz wypełnia ramkę i może zostać zniekształcony, więc zwykle go unikamy.</li>
+            <li><code>object-position</code> — ustawia punkt kadrowania, np. <code>center</code>, <code>top</code> albo <code>60% 40%</code>.</li>
+          </ul>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> <code>cover</code> jest świetne dla kart i hero, ale wymaga kontroli kadru. Jeśli obraz zawiera tekst, wykres albo interfejs, często lepsze jest <code>contain</code>.</div>
+        </section>
+
+        <section id="picture-srcset-sizes" class="lesson-section">
+          <h2><code>picture</code>, <code>srcset</code> i <code>sizes</code></h2>
+          <p>Responsywność obrazu to nie tylko CSS. HTML może pomóc przeglądarce wybrać właściwy wariant grafiki dla danego viewportu i gęstości ekranu.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson16-art-direction-example">Kopiuj</button><code id="lesson16-art-direction-example">&lt;picture&gt;
+  &lt;source
+    media='(min-width: 760px)'
+    srcset='assets/img/hero-wide.webp'&gt;
+  &lt;img
+    src='assets/img/hero-mobile.webp'
+    alt='Panel aplikacji pokazany na responsywnym ekranie'
+    width='720'
+    height='960'
+    loading='lazy'
+    decoding='async'&gt;
+&lt;/picture&gt;</code></pre>
+          <p><code>picture</code> jest przydatny przy art direction, czyli gdy na mobile pokazujesz inny kadr niż na desktopie. <code>srcset</code> i <code>sizes</code> pomagają natomiast dobrać rozdzielczość obrazu do realnej szerokości renderowania.</p>
+        </section>
+
+        <section id="lazy-loading" class="lesson-section">
+          <h2>Ładowanie i stabilność layoutu</h2>
+          <p>Responsywne obrazy powinny być nie tylko elastyczne, ale też przewidywalne. Dwa atrybuty mają tu duże znaczenie:</p>
+          <ul>
+            <li><code>width</code> i <code>height</code> — pozwalają przeglądarce obliczyć proporcje przed pobraniem pliku,</li>
+            <li><code>loading="lazy"</code> — opóźnia ładowanie obrazów poza pierwszym viewportem,</li>
+            <li><code>decoding="async"</code> — pozwala przeglądarce dekodować obraz bez blokowania renderowania.</li>
+          </ul>
+          <p>Nie stosuj <code>loading="lazy"</code> automatycznie do głównego obrazu hero w pierwszym widoku. Tam obraz jest częścią pierwszego renderu i powinien być dostępny szybko.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo responsywnych mediów</h2>
+          <p>Poniższe demo pokazuje trzy decyzje: stabilną proporcję, kadr zależny od viewportu oraz różnicę między <code>cover</code> i <code>contain</code>.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson16-card-example">Kopiuj</button><code id="lesson16-card-example">.media-card__frame {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.media-card__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}</code></pre>
+
+          <div class="media-demo" aria-label="Wizualny przykład responsywnych obrazów i kadrowania">
+            <article class="media-demo__frame">
+              <div class="media-demo__label">
+                <strong>Stabilna proporcja</strong>
+                <span>aspect-ratio: 16 / 9</span>
+              </div>
+              <div class="media-demo__image media-demo__image--wide">
+                <img src="../assets/img/lesson-16-wide.svg" alt="Szeroki abstrakcyjny kadr użyty jako przykład obrazu responsywnego" width="1200" height="720" loading="lazy" decoding="async">
+              </div>
+            </article>
+
+            <article class="media-demo__frame">
+              <div class="media-demo__label">
+                <strong>Inny kadr dla desktopu</strong>
+                <span>picture + source</span>
+              </div>
+              <picture class="media-demo__picture">
+                <source media="(min-width: 760px)" srcset="../assets/img/lesson-16-wide.svg">
+                <img src="../assets/img/lesson-16-portrait.svg" alt="Responsywny obraz zmieniający kadr między mobile i desktopem" width="720" height="960" loading="lazy" decoding="async">
+              </picture>
+            </article>
+
+            <article class="media-demo__frame media-demo__frame--compare">
+              <div class="media-demo__label">
+                <strong>Kadrowanie</strong>
+                <span>cover kontra contain</span>
+              </div>
+              <div class="media-demo__comparison">
+                <div>
+                  <span>cover</span>
+                  <img class="media-demo__fit media-demo__fit--cover" src="../assets/img/lesson-16-portrait.svg" alt="Przykład object-fit cover" width="720" height="960" loading="lazy" decoding="async">
+                </div>
+                <div>
+                  <span>contain</span>
+                  <img class="media-demo__fit media-demo__fit--contain" src="../assets/img/lesson-16-portrait.svg" alt="Przykład object-fit contain" width="720" height="960" loading="lazy" decoding="async">
+                </div>
+              </div>
+            </article>
+          </div>
+          <p>Interpretacja: pierwszy przykład rezerwuje miejsce przez proporcje, drugi pokazuje zmianę źródła obrazu przez <code>picture</code>, a trzeci pokazuje, dlaczego <code>cover</code> przycina kadr, a <code>contain</code> zostawia cały obraz widoczny.</p>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Ustawianie samego <code>width: 100%</code> bez <code>height: auto</code> dla zwykłego obrazu.</li>
+            <li>Sztywna szerokość obrazu w <code>px</code>, która powoduje poziome przewijanie na mobile.</li>
+            <li>Używanie <code>height: 100%</code> bez wysokości rodzica i bez kontroli proporcji.</li>
+            <li>Stosowanie <code>object-fit: cover</code> do obrazów z tekstem, wykresami albo ważnymi detalami na krawędziach.</li>
+            <li>Brak atrybutu <code>alt</code> albo opis alternatywny, który nie mówi, co obraz wnosi do treści.</li>
+            <li>Brak <code>width</code> i <code>height</code>, przez co layout skacze podczas ładowania obrazów.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zbuduj responsywną kartę artykułu z obrazem.</p>
+          <ul>
+            <li>Dodaj ramkę obrazu z <code>aspect-ratio: 16 / 9</code>.</li>
+            <li>Ustaw obraz na <code>width: 100%</code>, <code>height: 100%</code> i <code>object-fit: cover</code>.</li>
+            <li>Dodaj <code>alt</code>, <code>width</code>, <code>height</code>, <code>loading="lazy"</code> i <code>decoding="async"</code>.</li>
+            <li>Na większym breakpointcie zmień układ karty z jednej kolumny na obraz + treść obok siebie.</li>
+            <li>Sprawdź w devtools, czy na szerokości 390px nie pojawia się poziome przewijanie.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Potrafię zabezpieczyć obraz przed wyjściem poza kontener.</li>
+            <li>Rozumiem różnicę między <code>max-width: 100%</code> i sztywną szerokością.</li>
+            <li>Umiem użyć <code>aspect-ratio</code> do stabilnej ramki obrazu.</li>
+            <li>Wiem, kiedy użyć <code>cover</code>, a kiedy <code>contain</code>.</li>
+            <li>Rozumiem podstawową rolę <code>picture</code>, <code>srcset</code> i <code>sizes</code>.</li>
+            <li>Pamiętam o <code>alt</code>, <code>width</code>, <code>height</code> i świadomym ładowaniu obrazów.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Responsywne media wymagają kontroli szerokości, proporcji, kadrowania i ładowania. Bazowy styl chroni przed overflow, <code>aspect-ratio</code> stabilizuje układ, <code>object-fit</code> kontroluje kadr, a <code>picture</code>, <code>srcset</code> i <code>sizes</code> pomagają dostarczyć właściwy obraz do właściwego ekranu.</p>
+          <p>Kolejny krok roadmapy to fluid typography i funkcje <code>min()</code>, <code>max()</code> oraz <code>clamp()</code>.</p>
+          <a class="button button--primary" href="fluid-typography-min-max-clamp.html">Przejdź do Lekcji 17</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

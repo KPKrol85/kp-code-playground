@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 09 CSS Academy: CSS Grid, kolumny, wiersze, odstępy, fr, repeat i minmax dla początkujących.">
+  <title>Lekcja 09 — CSS Grid: kolumny, wiersze i odstępy | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-9">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#grid-kontra-flexbox">Grid kontra Flexbox</a></li>
+          <li><a href="#display-grid"><code>display: grid</code></a></li>
+          <li><a href="#kolumny">Kolumny: <code>grid-template-columns</code></a></li>
+          <li><a href="#wiersze">Wiersze: <code>grid-template-rows</code></a></li>
+          <li><a href="#gap">Odstępy: <code>gap</code></a></li>
+          <li><a href="#fr">Jednostka <code>fr</code></a></li>
+          <li><a href="#repeat">Funkcja <code>repeat()</code></a></li>
+          <li><a href="#minmax">Funkcja <code>minmax()</code></a></li>
+          <li><a href="#przyklad-siatki">Przykład siatki sześciu kart</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 09</p>
+          <h1>CSS Grid: kolumny, wiersze i odstępy</h1>
+          <p>Flexbox pomaga układać elementy w jednym kierunku. CSS Grid idzie krok dalej: pozwala myśleć o układzie jako o siatce kolumn i wierszy. To fundament galerii, dashboardów, list kart i większych sekcji strony.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>wyjaśnić, czym CSS Grid różni się od Flexboxa,</li>
+            <li>włączyć siatkę za pomocą <code>display: grid</code>,</li>
+            <li>zdefiniować proste kolumny i wiersze,</li>
+            <li>ustawić odstępy między komórkami siatki przez <code>gap</code>,</li>
+            <li>użyć <code>fr</code>, <code>repeat()</code> i <code>minmax()</code> w prostym układzie kart.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Grid pojawia się tam, gdzie layout ma wyraźne kolumny i wiersze: galerie, sekcje kart, cenniki, układy dashboardu, listy produktów i większe bloki strony głównej. Zamiast ręcznie pilnować szerokości każdej karty, opisujesz strukturę siatki na rodzicu.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> gdy układ ma działać jednocześnie w poziomie i w pionie, CSS Grid zwykle będzie czytelniejszy niż rozbudowany Flexbox.</div>
+        </section>
+
+        <section id="grid-kontra-flexbox" class="lesson-section">
+          <h2>Grid kontra Flexbox</h2>
+          <p>Flexbox i Grid nie konkurują ze sobą w każdej sytuacji. To narzędzia do różnych problemów layoutu.</p>
+          <ul>
+            <li>Flexbox jest najlepszy, gdy najważniejszy jest jeden kierunek: rząd albo kolumna.</li>
+            <li>Grid jest najlepszy, gdy chcesz kontrolować kolumny i wiersze jednocześnie.</li>
+            <li>Flexbox często działa wewnątrz komponentu, a Grid często układa większą sekcję z wieloma kartami.</li>
+          </ul>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> prosta reguła startowa brzmi: Flexbox do linii i małych komponentów, Grid do siatek i większych układów dwuwymiarowych.</div>
+        </section>
+
+        <section id="display-grid" class="lesson-section">
+          <h2><code>display: grid</code></h2>
+          <p>Tak jak Flexbox zaczyna się od <code>display: flex</code>, Grid zaczyna się od <code>display: grid</code>. Element staje się kontenerem grid, a jego bezpośrednie dzieci trafiają do komórek siatki.</p>
+          <pre class="code-block"><code>.lesson-grid {
+  display: grid;
+}</code></pre>
+          <p>Samo <code>display: grid</code> nie wystarczy do ciekawego layoutu. Najczęściej od razu dopisujesz definicję kolumn oraz odstęp.</p>
+        </section>
+
+        <section id="kolumny" class="lesson-section">
+          <h2>Kolumny: <code>grid-template-columns</code></h2>
+          <p><code>grid-template-columns</code> opisuje, ile kolumn ma mieć siatka i jak szeroka jest każda z nich.</p>
+          <pre class="code-block"><code>.lesson-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}</code></pre>
+          <p>Ten przykład tworzy trzy równe kolumny. Każde bezpośrednie dziecko kontenera trafi do kolejnej komórki, a po zapełnieniu wiersza przeglądarka utworzy następny wiersz.</p>
+        </section>
+
+        <section id="wiersze" class="lesson-section">
+          <h2>Wiersze: <code>grid-template-rows</code></h2>
+          <p><code>grid-template-rows</code> działa podobnie, ale opisuje wysokości wierszy. W prostych listach kart często nie musisz go ustawiać, bo wysokość wiersza wynika z treści. Warto jednak wiedzieć, że taka kontrola istnieje.</p>
+          <pre class="code-block"><code>.dashboard {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+}</code></pre>
+          <p><code>auto</code> oznacza, że wiersz dopasuje się do zawartości. Sztywne wysokości stosuj ostrożnie, bo mogą utrudnić responsywność i obciąć tekst.</p>
+        </section>
+
+        <section id="gap" class="lesson-section">
+          <h2>Odstępy: <code>gap</code></h2>
+          <p><code>gap</code> ustawia odstęp między kolumnami i wierszami siatki. To ten sam wygodny mechanizm, który znasz już z Flexboxa.</p>
+          <pre class="code-block"><code>.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}</code></pre>
+          <p>Użycie <code>gap</code> jest czytelniejsze niż dodawanie marginesów do każdej karty i usuwanie marginesu z ostatniego elementu w wierszu.</p>
+        </section>
+
+        <section id="fr" class="lesson-section">
+          <h2>Jednostka <code>fr</code></h2>
+          <p><code>fr</code> oznacza część dostępnej przestrzeni w siatce. Jeśli zapiszesz trzy kolumny jako <code>1fr 1fr 1fr</code>, każda dostanie równą część wolnego miejsca.</p>
+          <pre class="code-block"><code>.content-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}</code></pre>
+          <p>W tym przykładzie pierwsza kolumna dostaje dwie części przestrzeni, a druga jedną. To praktyczny wzorzec dla układu treść główna + panel boczny.</p>
+        </section>
+
+        <section id="repeat" class="lesson-section">
+          <h2>Funkcja <code>repeat()</code></h2>
+          <p><code>repeat()</code> skraca powtarzalne definicje kolumn albo wierszy. Zamiast pisać <code>1fr 1fr 1fr</code>, możesz zapisać to czytelniej.</p>
+          <pre class="code-block"><code>.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}</code></pre>
+          <p>Ten kod nadal tworzy trzy równe kolumny, ale jest łatwiejszy do edycji. Jeśli potrzebujesz czterech kolumn, zmieniasz tylko liczbę w <code>repeat()</code>.</p>
+        </section>
+
+        <section id="minmax" class="lesson-section">
+          <h2>Funkcja <code>minmax()</code></h2>
+          <p><code>minmax()</code> pozwala podać minimalny i maksymalny rozmiar kolumny lub wiersza. To ważny krok w stronę responsywnych siatek.</p>
+          <pre class="code-block"><code>.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}</code></pre>
+          <p><code>minmax(0, 1fr)</code> mówi: kolumna może się zmniejszyć do zera, ale docelowo bierze jedną część dostępnej przestrzeni. W prostych kartach pomaga uniknąć sytuacji, w której zawartość niepotrzebnie rozpycha siatkę.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> w kolejnej lekcji rozwiniesz <code>minmax()</code> o bardziej responsywne układy z <code>auto-fit</code> i <code>auto-fill</code>.</div>
+        </section>
+
+        <section id="przyklad-siatki" class="lesson-section">
+          <h2>Przykład siatki sześciu kart</h2>
+          <p>Poniższy przykład tworzy prostą siatkę sześciu kart w trzech równych kolumnach. To dobry pierwszy wzorzec dla galerii lekcji albo listy modułów.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson9-grid-example">Kopiuj</button><code id="lesson9-grid-example">&lt;section class="module-grid"&gt;
+  &lt;article class="module-card"&gt;Lekcja 01&lt;/article&gt;
+  &lt;article class="module-card"&gt;Lekcja 02&lt;/article&gt;
+  &lt;article class="module-card"&gt;Lekcja 03&lt;/article&gt;
+  &lt;article class="module-card"&gt;Lekcja 04&lt;/article&gt;
+  &lt;article class="module-card"&gt;Lekcja 05&lt;/article&gt;
+  &lt;article class="module-card"&gt;Lekcja 06&lt;/article&gt;
+&lt;/section&gt;
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.module-card {
+  padding: 1rem;
+  border: 1px solid #dbe2f1;
+  border-radius: 12px;
+  background-color: #ffffff;
+}</code></pre>
+
+          <div class="grid-demo" aria-label="Wizualny przykład siatki CSS Grid z sześcioma kartami">
+            <div class="grid-demo__cards">
+              <article class="grid-demo__card">Lekcja 01</article>
+              <article class="grid-demo__card">Lekcja 02</article>
+              <article class="grid-demo__card">Lekcja 03</article>
+              <article class="grid-demo__card">Lekcja 04</article>
+              <article class="grid-demo__card">Lekcja 05</article>
+              <article class="grid-demo__card">Lekcja 06</article>
+            </div>
+          </div>
+
+          <p>Interpretacja: kontener tworzy trzy kolumny, a sześć kart automatycznie układa się w dwa wiersze. <code>gap</code> tworzy równy odstęp pionowy i poziomy między kartami.</p>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Ustawianie <code>display: grid</code> na każdej karcie zamiast na wspólnym rodzicu listy.</li>
+            <li>Mylenie <code>gap</code> z marginesem pojedynczej karty.</li>
+            <li>Tworzenie zbyt wielu sztywnych kolumn w pikselach, które nie mieszczą się na małym ekranie.</li>
+            <li>Używanie Grida do bardzo prostego wyrównania ikony i tekstu, gdzie Flexbox byłby prostszy.</li>
+            <li>Zakładanie, że <code>grid-template-rows</code> jest konieczne w każdej siatce. Przy kartach często wystarczą kolumny i naturalna wysokość treści.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zbuduj prostą siatkę sześciu kart z równymi kolumnami.</p>
+          <ul>
+            <li>Utwórz sekcję z sześcioma elementami <code>article</code>.</li>
+            <li>Na rodzicu ustaw <code>display: grid</code>.</li>
+            <li>Dodaj trzy równe kolumny przez <code>grid-template-columns: repeat(3, minmax(0, 1fr))</code>.</li>
+            <li>Ustaw <code>gap</code>, aby karty miały równy odstęp w pionie i poziomie.</li>
+            <li>Ostyluj karty przez <code>padding</code>, <code>border</code> i jasne tło.</li>
+          </ul>
+          <p>Na koniec zmień liczbę kolumn z trzech na dwie i sprawdź, jak przeglądarka automatycznie układa karty w kolejnych wierszach.</p>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Wiem, kiedy Grid jest lepszym wyborem niż Flexbox.</li>
+            <li>Potrafię wskazać kontener grid i jego bezpośrednie dzieci.</li>
+            <li>Umiem zdefiniować trzy równe kolumny przez <code>repeat(3, 1fr)</code>.</li>
+            <li>Rozumiem, że <code>gap</code> działa między komórkami siatki.</li>
+            <li>Wiem, do czego służy jednostka <code>fr</code>.</li>
+            <li>Potrafię użyć <code>minmax(0, 1fr)</code> w podstawowej siatce kart.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Wiesz już, że CSS Grid pozwala układać elementy w kolumnach i wierszach. Potrafisz włączyć siatkę przez <code>display: grid</code>, zdefiniować kolumny, użyć <code>gap</code>, jednostki <code>fr</code>, funkcji <code>repeat()</code> i podstawowego <code>minmax()</code>.</p>
+          <p>Kolejny krok to praktyczne użycie Grida w galeriach, dashboardach i responsywnych układach kart.</p>
+          <a class="button button--primary" href="css-grid-gallery-dashboard-cards.html">Przejdź do Lekcji 10</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

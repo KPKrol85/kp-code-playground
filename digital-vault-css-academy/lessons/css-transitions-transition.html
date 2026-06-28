@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 25 CSS Academy: przejścia CSS transition, duration, timing-function, delay, stany UI i prefers-reduced-motion.">
+  <title>Lekcja 25 — Przejścia CSS: transition | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-25">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#czym-jest-transition">Czym jest transition</a></li>
+          <li><a href="#transition-property">Transition property</a></li>
+          <li><a href="#duration-delay-timing">Duration, delay i timing</a></li>
+          <li><a href="#shorthand">Skrót transition</a></li>
+          <li><a href="#stany-interakcji">Stany interakcji</a></li>
+          <li><a href="#wydajnosc-i-dostepnosc">Wydajność i dostępność</a></li>
+          <li><a href="#demo">Demo transition</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 25</p>
+          <h1>Przejścia CSS: transition</h1>
+          <p><code>transition</code> pozwala płynnie zmieniać wartości CSS między stanami elementu. Dzięki temu hover, focus, active i otwieranie prostych komponentów mogą być czytelniejsze, spokojniejsze i bardziej profesjonalne.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>wyjaśnić, kiedy użyć <code>transition</code>, a kiedy nie jest potrzebny,</li>
+            <li>kontrolować <code>transition-property</code>, <code>transition-duration</code>, <code>transition-timing-function</code> i <code>transition-delay</code>,</li>
+            <li>zapisywać przejścia skrótem <code>transition</code>,</li>
+            <li>dobierać właściwości bezpieczne dla wydajności,</li>
+            <li>budować płynne stany <code>:hover</code>, <code>:focus-visible</code> i <code>:active</code>,</li>
+            <li>uwzględniać <code>prefers-reduced-motion</code> w projektach UI.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Przejścia są używane w przyciskach, linkach, kartach, formularzach, dropdownach, menu, tooltipach i stanach walidacji. Dobra animacja stanu nie ma odciągać uwagi. Ma pomóc użytkownikowi zauważyć zmianę i zrozumieć reakcję interfejsu.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> transition działa tylko wtedy, gdy przeglądarka ma stan początkowy i końcowy tej samej właściwości. Nie animuje magicznie wszystkiego i nie zastępuje dobrze zaprojektowanych stanów UI.</div>
+        </section>
+
+        <section id="czym-jest-transition" class="lesson-section">
+          <h2>Czym jest transition</h2>
+          <p><code>transition</code> mówi przeglądarce, że zmiana wartości CSS ma nastąpić płynnie w czasie. Najczęściej deklarujesz przejście na stanie bazowym elementu, a właściwość zmieniasz dopiero w stanie interakcji.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-transition-base-example">Kopiuj</button><code id="lesson25-transition-base-example">.button {
+  background: #3b82f6;
+  transition: background-color .18s ease;
+}
+
+.button:hover {
+  background: #1d4ed8;
+}</code></pre>
+          <p>Jeżeli dodasz <code>transition</code> tylko w <code>:hover</code>, wejście w hover może być płynne, ale wyjście często będzie nagłe. Dlatego bazowy selektor jest najbezpieczniejszym miejscem dla deklaracji przejścia.</p>
+        </section>
+
+        <section id="transition-property" class="lesson-section">
+          <h2>Transition property</h2>
+          <p><code>transition-property</code> określa, które właściwości mają się zmieniać płynnie. W profesjonalnym kodzie zwykle lepiej wskazać konkretne właściwości niż używać <code>all</code>.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-property-example">Kopiuj</button><code id="lesson25-property-example">.card {
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: .2s;
+  transition-timing-function: ease;
+}</code></pre>
+          <p><code>all</code> bywa wygodne, ale może animować przypadkowe właściwości dodane później. To utrudnia debugowanie i może pogorszyć wydajność.</p>
+        </section>
+
+        <section id="duration-delay-timing" class="lesson-section">
+          <h2>Duration, delay i timing</h2>
+          <p><code>transition-duration</code> określa czas trwania, <code>transition-delay</code> opóźnienie startu, a <code>transition-timing-function</code> charakter zmiany. Dla interfejsów najczęściej sprawdzają się krótkie czasy: od <code>120ms</code> do <code>250ms</code>.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-timing-example">Kopiuj</button><code id="lesson25-timing-example">.menu-item {
+  transition-property: color, background-color;
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+  transition-delay: 0ms;
+}</code></pre>
+          <p>Opóźnienie jest przydatne rzadziej niż duration i timing. W nawigacji albo formularzu zbyt duży delay zwykle sprawia wrażenie ospałego interfejsu.</p>
+        </section>
+
+        <section id="shorthand" class="lesson-section">
+          <h2>Skrót transition</h2>
+          <p>Skrót <code>transition</code> pozwala zapisać property, duration, timing i delay w jednej linii. Możesz też podać kilka przejść rozdzielonych przecinkami, gdy różne właściwości potrzebują innego czasu.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-shorthand-example">Kopiuj</button><code id="lesson25-shorthand-example">.card {
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease;
+}</code></pre>
+          <p>Najpierw pisz przejście jawnie, gdy uczysz się mechanizmu. Skrót jest wygodny, ale łatwo zgubić, co dokładnie animujesz.</p>
+        </section>
+
+        <section id="stany-interakcji" class="lesson-section">
+          <h2>Stany interakcji</h2>
+          <p>Przejścia najlepiej wspierają istniejące stany. Najpierw zaprojektuj czytelny <code>:hover</code>, <code>:focus-visible</code> i <code>:active</code>, a dopiero potem dodaj płynność. Animacja nie może być jedynym sygnałem zmiany.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-states-example">Kopiuj</button><code id="lesson25-states-example">.link-card {
+  transition: transform .18s ease, border-color .18s ease;
+}
+
+.link-card:hover,
+.link-card:focus-visible {
+  border-color: #3b82f6;
+  transform: translateY(-.2rem);
+}</code></pre>
+          <p>Stan fokusu powinien pozostać wyraźny także bez ruchu. Użytkownik klawiatury musi natychmiast widzieć, gdzie aktualnie jest.</p>
+        </section>
+
+        <section id="wydajnosc-i-dostepnosc" class="lesson-section">
+          <h2>Wydajność i dostępność</h2>
+          <p>Najbezpieczniejsze do animowania są zwykle <code>transform</code> i <code>opacity</code>. Ostrożnie podchodź do właściwości wpływających na layout, takich jak <code>width</code>, <code>height</code>, <code>top</code> czy <code>left</code>. Pamiętaj też o użytkownikach, którzy wolą ograniczony ruch.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-reduced-motion-example">Kopiuj</button><code id="lesson25-reduced-motion-example">@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}</code></pre>
+          <p>Ograniczenie ruchu nie oznacza usunięcia stanów. Kolor, obramowanie, tło i outline nadal powinny jasno informować o interakcji.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo transition</h2>
+          <p>Poniższe demo pokazuje trzy typowe przejścia: przycisk, kartę oraz wskaźnik statusu. Najedź kursorem albo przejdź klawiaturą do elementów interaktywnych, aby zobaczyć zmianę stanu.</p>
+
+          <div class="transition-demo" aria-label="Wizualny przykład przejść CSS transition">
+            <section class="transition-demo__panel transition-demo__panel--wide" aria-labelledby="transition-demo-title">
+              <span class="transition-demo__label">Transition</span>
+              <h3 id="transition-demo-title">Płynne stany komponentów</h3>
+              <div class="transition-demo__actions">
+                <button class="transition-demo__button" type="button">Primary action</button>
+                <a class="transition-demo__link-card" href="#demo">
+                  <span>Karta linku</span>
+                  <strong>Hover i focus podnoszą element bez zmiany layoutu.</strong>
+                </a>
+              </div>
+              <div class="transition-demo__status-row" aria-label="Przykładowe statusy przejść">
+                <span class="transition-demo__status transition-demo__status--quick">120ms</span>
+                <span class="transition-demo__status transition-demo__status--smooth">180ms</span>
+                <span class="transition-demo__status transition-demo__status--slow">260ms</span>
+              </div>
+            </section>
+
+            <section class="transition-demo__panel" aria-labelledby="transition-tokens-title">
+              <span class="transition-demo__label">Timing</span>
+              <h3 id="transition-tokens-title">Krzywe i czas</h3>
+              <div class="transition-demo__timing-list">
+                <div class="transition-demo__timing transition-demo__timing--ease">
+                  <span></span>
+                  <p><strong>ease</strong>Uniwersalne, spokojne przejście</p>
+                </div>
+                <div class="transition-demo__timing transition-demo__timing--out">
+                  <span></span>
+                  <p><strong>ease-out</strong>Szybki start, łagodny koniec</p>
+                </div>
+                <div class="transition-demo__timing transition-demo__timing--linear">
+                  <span></span>
+                  <p><strong>linear</strong>Stałe tempo, dobre do wskaźników</p>
+                </div>
+              </div>
+              <p>Dobór timing function wpływa na odczucie interfejsu tak samo jak sam czas trwania.</p>
+            </section>
+          </div>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Dodawanie <code>transition: all</code> do każdego komponentu bez kontroli właściwości.</li>
+            <li>Umieszczanie deklaracji transition tylko w stanie <code>:hover</code>.</li>
+            <li>Animowanie właściwości layoutowych, które powodują kosztowne przeliczenia układu.</li>
+            <li>Zbyt długie czasy przejść w podstawowych akcjach UI.</li>
+            <li>Brak wyraźnego stanu fokusu, gdy ruch jest wyłączony.</li>
+            <li>Ignorowanie <code>prefers-reduced-motion</code>.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zbuduj kartę linku z płynnymi stanami interakcji.</p>
+          <ul>
+            <li>Dodaj bazowy styl karty z ramką i cieniem.</li>
+            <li>Dodaj <code>transition</code> dla <code>transform</code>, <code>box-shadow</code> i <code>border-color</code>.</li>
+            <li>W stanie <code>:hover</code> przesuń kartę przez <code>translateY(-.25rem)</code>.</li>
+            <li>W stanie <code>:focus-visible</code> dodaj wyraźny outline niezależny od ruchu.</li>
+            <li>Dodaj regułę <code>prefers-reduced-motion</code>, która wyłącza przejścia, ale zostawia stany wizualne.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Rozumiem, że transition wymaga stanu początkowego i końcowego.</li>
+            <li>Potrafię wskazać konkretne właściwości przez <code>transition-property</code>.</li>
+            <li>Dobieram rozsądny czas trwania i timing function.</li>
+            <li>Unikam <code>transition: all</code> w komponentach produkcyjnych.</li>
+            <li>Projektuję hover, focus i active przed dodaniem płynności.</li>
+            <li>Uwzględniam <code>prefers-reduced-motion</code>.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p><code>transition</code> zamienia nagłą zmianę stanu w płynne przejście. Profesjonalne użycie polega na animowaniu konkretnych właściwości, krótkim czasie trwania, czytelnych stanach fokusu i respektowaniu preferencji ograniczonego ruchu.</p>
+          <p>Kolejny krok roadmapy to animacje CSS przez <code>@keyframes</code>.</p>
+          <a class="button button--primary" href="css-keyframes-animations.html">Przejdź do Lekcji 26</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

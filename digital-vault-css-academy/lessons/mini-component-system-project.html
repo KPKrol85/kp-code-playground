@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 42 CSS Academy: projekt mini systemu komponentów CSS z tokenami, przyciskami, kartami, alertami, polami formularza i dokumentacją użycia.">
+  <title>Lekcja 42 — Projekt 5: mini system komponentów CSS | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-42">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cel-projektu">Cel projektu</a></li>
+          <li><a href="#brief">Brief projektu</a></li>
+          <li><a href="#kryteria-sukcesu">Kryteria sukcesu</a></li>
+          <li><a href="#zakres-systemu">Zakres systemu</a></li>
+          <li><a href="#struktura-html">Struktura HTML</a></li>
+          <li><a href="#tokeny">Tokeny systemu</a></li>
+          <li><a href="#przyciski">Przyciski</a></li>
+          <li><a href="#karty">Karty</a></li>
+          <li><a href="#alerty">Alerty</a></li>
+          <li><a href="#pola-formularza">Pola formularza</a></li>
+          <li><a href="#stany-i-warianty">Stany i warianty</a></li>
+          <li><a href="#responsywnosc">Responsywność</a></li>
+          <li><a href="#demo">Demo systemu</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#zadanie-projektowe">Zadanie projektowe</a></li>
+          <li><a href="#checklista">Checklista jakości</a></li>
+          <li><a href="#podsumowanie">Podsumowanie roadmapy</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 42</p>
+          <h1>Projekt 5: mini system komponentów CSS</h1>
+          <p>W ostatnim projekcie łączysz całą roadmapę w mały, spójny system UI: tokeny, przyciski, karty, alerty, pola formularza, stany i dokumentację użycia. To finałowy test myślenia o CSS jako o systemie, a nie zbiorze pojedynczych deklaracji.</p>
+        </header>
+
+        <section id="cel-projektu" class="lesson-section">
+          <h2>Cel projektu</h2>
+          <p>Celem jest stworzenie mini biblioteki komponentów, którą można wykorzystać w małej aplikacji edukacyjnej albo portfolio. System ma być prosty, ale spójny i przewidywalny.</p>
+          <ul>
+            <li>Tokeny definiują kolory, odstępy, promienie, cienie i fokus.</li>
+            <li>Komponenty mają bazę oraz warianty zamiast osobnych klas jednorazowych.</li>
+            <li>Stany hover, focus-visible, active, disabled, error i success są spójne.</li>
+            <li>Komponenty działają w układzie mobile-first.</li>
+            <li>Demo pokazuje realne użycie systemu, nie tylko pojedyncze elementy bez kontekstu.</li>
+          </ul>
+        </section>
+
+        <section id="brief" class="lesson-section">
+          <h2>Brief projektu</h2>
+          <p>Zaprojektuj mini system komponentów dla „CSS Academy UI Kit”. System ma wystarczyć do zbudowania małej sekcji aplikacji: przyciski, karta kursu, alert statusu i pole formularza.</p>
+          <div class="note note--practice"><strong>Założenie produktowe:</strong> to nie jest pełny design system. To celowo mały zestaw komponentów, który uczy granic: co warto ustandaryzować, a czego nie należy komplikować za wcześnie.</div>
+        </section>
+
+        <section id="kryteria-sukcesu" class="lesson-section">
+          <h2>Kryteria sukcesu</h2>
+          <p>Mini system komponentów jest dobry wtedy, gdy kilka różnych elementów wygląda jak część jednego produktu i da się je rozwijać bez walki ze specyficznością.</p>
+          <ul>
+            <li>Tokeny semantyczne są nazwane rolą, nie kolorem technicznym.</li>
+            <li>Każdy komponent ma bazową klasę i ograniczony zestaw wariantów.</li>
+            <li>Selektory nie są głębsze niż wymaga tego komponent.</li>
+            <li>Warianty nie nadpisują przypadkowo stylów innych komponentów.</li>
+            <li>Stany interakcji są dostępne klawiaturą.</li>
+            <li>Kod można skopiować do innej strony bez przepisywania fundamentów.</li>
+          </ul>
+        </section>
+
+        <section id="zakres-systemu" class="lesson-section">
+          <h2>Zakres systemu</h2>
+          <p>Dobry mini system nie próbuje rozwiązać wszystkich problemów naraz. W tym projekcie zakres jest świadomie mały.</p>
+          <ul>
+            <li><strong>Tokens:</strong> kolory, powierzchnie, border, fokus, odstępy, promienie i cień.</li>
+            <li><strong>Button:</strong> wariant primary, secondary, ghost i disabled.</li>
+            <li><strong>Card:</strong> karta bazowa oraz karta wyróżniona.</li>
+            <li><strong>Alert:</strong> success, warning i error.</li>
+            <li><strong>Field:</strong> label, input, help text, error i success.</li>
+          </ul>
+        </section>
+
+        <section id="struktura-html" class="lesson-section">
+          <h2>Struktura HTML</h2>
+          <p>Komponenty powinny mieć czytelną strukturę i semantykę. System klas nie zastępuje poprawnego HTML.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-html-example">Kopiuj</button><code id="lesson42-html-example">&lt;article class="ui-card ui-card--featured"&gt;
+  &lt;p class="ui-card__meta"&gt;Moduł CSS&lt;/p&gt;
+  &lt;h3&gt;Responsive Layout&lt;/h3&gt;
+  &lt;p&gt;Ćwiczenia z Grid, Flexbox i breakpointów.&lt;/p&gt;
+  &lt;a class="ui-button ui-button--primary" href="#"&gt;Otwórz moduł&lt;/a&gt;
+&lt;/article&gt;</code></pre>
+          <p>Klasy opisują rolę komponentu, a HTML nadal odpowiada za strukturę treści.</p>
+        </section>
+
+        <section id="tokeny" class="lesson-section">
+          <h2>Tokeny systemu</h2>
+          <p>Tokeny to kontrakt między komponentami. Jeśli każdy komponent używa tych samych ról, cały interfejs zachowuje spójność.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-tokens-example">Kopiuj</button><code id="lesson42-tokens-example">.ui-system {
+  --ui-bg: #f8fafc;
+  --ui-surface: #ffffff;
+  --ui-text: #0f172a;
+  --ui-muted: #64748b;
+  --ui-border: #dbe3ef;
+  --ui-accent: #2563eb;
+  --ui-success: #16a34a;
+  --ui-warning: #d97706;
+  --ui-error: #dc2626;
+  --ui-radius: 12px;
+}</code></pre>
+          <p>Nie twórz tokenu dla każdej pojedynczej wartości. Token ma mieć sens jako decyzja systemowa.</p>
+        </section>
+
+        <section id="przyciski" class="lesson-section">
+          <h2>Przyciski</h2>
+          <p>Przycisk jest komponentem z największą liczbą stanów. Zacznij od bazy, potem dodaj warianty i stany.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-button-example">Kopiuj</button><code id="lesson42-button-example">.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ui-button--primary {
+  background: var(--ui-accent);
+  color: #ffffff;
+}</code></pre>
+          <p>Wariant nie powinien powtarzać całej definicji przycisku. Wariant zmienia tylko to, co naprawdę różni dany przypadek.</p>
+        </section>
+
+        <section id="karty" class="lesson-section">
+          <h2>Karty</h2>
+          <p>Karta jest powierzchnią dla treści. System powinien określać jej padding, border, radius i rytm wewnętrzny.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-card-example">Kopiuj</button><code id="lesson42-card-example">.ui-card {
+  display: grid;
+  gap: .75rem;
+  padding: 1rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-surface);
+}
+
+.ui-card--featured {
+  border-color: #93c5fd;
+}</code></pre>
+          <p>Karta nie powinna wiedzieć, w jakim layoucie się znajdzie. Layout należy do rodzica, komponent do własnej zawartości.</p>
+        </section>
+
+        <section id="alerty" class="lesson-section">
+          <h2>Alerty</h2>
+          <p>Alerty komunikują status. Nie opieraj ich wyłącznie na kolorze; dodaj tytuł, tekst i jasną rolę wizualną.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-alert-example">Kopiuj</button><code id="lesson42-alert-example">.ui-alert {
+  padding: .85rem 1rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-surface);
+}
+
+.ui-alert--success {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}</code></pre>
+          <p>Jeśli alert oznacza błąd krytyczny, powinien być blisko miejsca działania albo widoczny w podsumowaniu formularza.</p>
+        </section>
+
+        <section id="pola-formularza" class="lesson-section">
+          <h2>Pola formularza</h2>
+          <p>Pole formularza składa się z labelki, kontrolki, tekstu pomocniczego i opcjonalnego błędu. To naturalny kandydat na komponent.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-field-example">Kopiuj</button><code id="lesson42-field-example">.ui-field {
+  display: grid;
+  gap: .4rem;
+}
+
+.ui-field input {
+  min-height: 2.75rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  font: inherit;
+}</code></pre>
+          <p>Komponent pola powinien wspierać stany error i success bez zmiany struktury HTML.</p>
+        </section>
+
+        <section id="stany-i-warianty" class="lesson-section">
+          <h2>Stany i warianty</h2>
+          <p>Stany pokazują chwilowe zachowanie komponentu, a warianty opisują trwałą odmianę. Nie mieszaj tych dwóch pojęć.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-states-example">Kopiuj</button><code id="lesson42-states-example">.ui-button:hover {
+  transform: translateY(-1px);
+}
+
+.ui-button:focus-visible {
+  outline: 3px solid #bfdbfe;
+  outline-offset: 3px;
+}
+
+.ui-button:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}</code></pre>
+          <p>Stan disabled nie jest wariantem wizualnym. To stan funkcjonalny, który musi komunikować brak dostępności.</p>
+        </section>
+
+        <section id="responsywnosc" class="lesson-section">
+          <h2>Responsywność</h2>
+          <p>System komponentów powinien działać w różnych kontenerach. Karta, alert i pole formularza nie mogą zakładać stałej szerokości strony.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-responsive-example">Kopiuj</button><code id="lesson42-responsive-example">.ui-system__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+}</code></pre>
+          <p>Responsywność mini systemu polega na tym, że komponenty nie rozpychają rodzica i dobrze znoszą krótszy oraz dłuższy tekst.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo systemu</h2>
+          <p>Poniżej znajduje się gotowy mini system komponentów: tokeny, przyciski, karty, alerty i pole formularza użyte w jednym małym widoku aplikacji.</p>
+
+          <section class="component-system-demo" aria-labelledby="component-system-demo-title">
+            <header class="component-system-demo__header">
+              <div>
+                <p class="component-system-demo__eyebrow">CSS Academy UI Kit</p>
+                <h3 id="component-system-demo-title">Mini system komponentów</h3>
+                <p>Mały zestaw elementów gotowy do panelu kursu, formularza i sekcji treści.</p>
+              </div>
+              <div class="component-system-demo__actions">
+                <a class="component-system-demo__button component-system-demo__button--primary" href="#zadanie-projektowe">Użyj systemu</a>
+                <a class="component-system-demo__button component-system-demo__button--secondary" href="#checklista">Sprawdź jakość</a>
+              </div>
+            </header>
+
+            <div class="component-system-demo__tokens" aria-label="Tokeny systemu">
+              <span style="--swatch: #2563eb">Accent</span>
+              <span style="--swatch: #16a34a">Success</span>
+              <span style="--swatch: #d97706">Warning</span>
+              <span style="--swatch: #dc2626">Error</span>
+            </div>
+
+            <div class="component-system-demo__grid">
+              <article class="component-system-demo__card component-system-demo__card--featured">
+                <p class="component-system-demo__meta">Moduł aktywny</p>
+                <h4>Responsive Layout</h4>
+                <p>Ćwiczenia z Grid, Flexbox, breakpointów i braku poziomego overflow.</p>
+                <div class="component-system-demo__button-row">
+                  <a class="component-system-demo__button component-system-demo__button--primary" href="#demo">Otwórz</a>
+                  <a class="component-system-demo__button component-system-demo__button--ghost" href="#demo">Szczegóły</a>
+                </div>
+              </article>
+
+              <article class="component-system-demo__card">
+                <p class="component-system-demo__meta">Komponent</p>
+                <h4>Karta bazowa</h4>
+                <p>Ten sam rytm odstępów, obramowanie i promień działają w zwykłym oraz wyróżnionym wariancie.</p>
+                <button class="component-system-demo__button component-system-demo__button--secondary" type="button" disabled>Zablokowane</button>
+              </article>
+
+              <div class="component-system-demo__stack">
+                <div class="component-system-demo__alert component-system-demo__alert--success" role="status">
+                  <strong>Projekt zapisany</strong>
+                  <span>Tokeny i komponenty są spójne.</span>
+                </div>
+                <div class="component-system-demo__alert component-system-demo__alert--warning" role="status">
+                  <strong>Sprawdź kontrast</strong>
+                  <span>Wariant ostrzeżenia wymaga testu czytelności.</span>
+                </div>
+                <div class="component-system-demo__alert component-system-demo__alert--error" role="alert">
+                  <strong>Błąd pola</strong>
+                  <span>Komunikat musi być blisko kontrolki.</span>
+                </div>
+              </div>
+
+              <form class="component-system-demo__form" aria-label="Demo pola formularza">
+                <label for="system-demo-email">Email do zaproszenia</label>
+                <input id="system-demo-email" type="email" value="mentor@academy.dev" aria-describedby="system-demo-email-help">
+                <p id="system-demo-email-help">Pole używa tych samych tokenów fokusu i obramowania.</p>
+              </form>
+            </div>
+          </section>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Budowanie „systemu” z jednorazowych klas, które działają tylko w jednym widoku.</li>
+            <li>Nazywanie tokenów technicznie, na przykład <code>--blue</code>, zamiast semantycznie, na przykład <code>--color-accent</code>.</li>
+            <li>Tworzenie zbyt wielu wariantów zanim powstanie realna potrzeba.</li>
+            <li>Powtarzanie pełnej definicji komponentu w każdym wariancie.</li>
+            <li>Brak spójnych stanów focus-visible i disabled.</li>
+            <li>Projektowanie komponentów, które zakładają stałą szerokość rodzica.</li>
+          </ul>
+        </section>
+
+        <section id="zadanie-projektowe" class="lesson-section">
+          <h2>Zadanie projektowe</h2>
+          <p>Zbuduj własny mini system komponentów CSS dla małej aplikacji, portfolio albo strony kursu.</p>
+          <ul>
+            <li>Zdefiniuj tokeny dla tła, powierzchni, tekstu, obramowania, akcentu, sukcesu, ostrzeżenia, błędu, fokusu i promienia.</li>
+            <li>Utwórz komponent przycisku z wariantami primary, secondary, ghost i disabled.</li>
+            <li>Utwórz komponent karty z wariantem wyróżnionym.</li>
+            <li>Utwórz komponent alertu z wariantami success, warning i error.</li>
+            <li>Utwórz komponent pola formularza z labelką, help text i stanem błędu.</li>
+            <li>Dodaj widoczne stany hover, active i focus-visible.</li>
+            <li>Sprawdź system w układzie jednej kolumny i responsywnej siatki.</li>
+            <li>Udokumentuj krótko, kiedy używać każdego wariantu.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista jakości</h2>
+          <ul>
+            <li>Tokeny są semantyczne i używane przez komponenty.</li>
+            <li>Komponenty mają bazę i ograniczoną liczbę wariantów.</li>
+            <li>Stany focus-visible są widoczne na przyciskach i polach.</li>
+            <li>Disabled wygląda i zachowuje się jak stan nieaktywny.</li>
+            <li>Alerty mają tekst, nie tylko kolor.</li>
+            <li>Karty nie zależą od konkretnego layoutu strony.</li>
+            <li>Na 390px nie ma poziomego overflow.</li>
+            <li>System da się wykorzystać w drugim widoku bez zmiany nazw klas.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie roadmapy</h2>
+          <p>Mini system komponentów domyka całą ścieżkę CSS Academy. Po przejściu roadmapy masz fundamenty CSS, layout, responsywność, komponenty UI, formularze, dane, efekty, organizację arkusza, nowoczesne funkcje CSS i pięć praktycznych projektów portfolio.</p>
+          <p>Najlepszy następny krok to utrzymanie jakości: przegląd wspólnej nawigacji, wydzielenie listy lekcji jako źródła prawdy i ewentualne uporządkowanie CSS w sekcje lub pliki.</p>
+          <a class="button button--primary" href="../index.html#sciezka">Wróć do pełnej ścieżki nauki</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

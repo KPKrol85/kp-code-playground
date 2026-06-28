@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 11 CSS Academy: pozycjonowanie relative, absolute, fixed i sticky oraz offsety top, right, bottom i left.">
+  <title>Lekcja 11 — Pozycjonowanie: relative, absolute, fixed i sticky | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-11">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#normalny-flow">Normalny flow a pozycjonowanie</a></li>
+          <li><a href="#position-relative"><code>position: relative</code></a></li>
+          <li><a href="#position-absolute"><code>position: absolute</code></a></li>
+          <li><a href="#position-fixed"><code>position: fixed</code></a></li>
+          <li><a href="#position-sticky"><code>position: sticky</code></a></li>
+          <li><a href="#offsety"><code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code></a></li>
+          <li><a href="#badge-nowe">Badge „Nowe” na karcie</a></li>
+          <li><a href="#sticky-panel">Sticky panel w praktyce</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 11</p>
+          <h1>Pozycjonowanie: relative, absolute, fixed i sticky</h1>
+          <p>Po Flexboxie i Gridzie potrafisz układać główne sekcje oraz karty. Pozycjonowanie daje dodatkową kontrolę nad elementami, które mają zostać przesunięte, przyklejone, przypięte do viewportu albo osadzone w konkretnym rogu komponentu.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>odróżnić normalny przepływ dokumentu od pozycjonowania,</li>
+            <li>użyć <code>position: relative</code> jako punktu odniesienia dla elementu absolutnego,</li>
+            <li>umieścić badge lub etykietę przez <code>position: absolute</code>,</li>
+            <li>wyjaśnić, kiedy stosować <code>fixed</code>, a kiedy <code>sticky</code>,</li>
+            <li>bezpiecznie korzystać z offsetów <code>top</code>, <code>right</code>, <code>bottom</code> i <code>left</code>.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Pozycjonowanie przydaje się w konkretnych sytuacjach: badge „Nowe” na karcie, przyklejony header, pasek postępu, floating action button, tooltip, dropdown, panel sticky albo etykieta w rogu miniatury.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> Flexbox i Grid budują główny layout. Pozycjonowanie traktuj jako precyzyjną kontrolę wybranych elementów, a nie podstawowy sposób układania całej strony.</div>
+        </section>
+
+        <section id="normalny-flow" class="lesson-section">
+          <h2>Normalny flow a pozycjonowanie</h2>
+          <p>Normalny flow to domyślny sposób układania elementów: blok po bloku, od góry do dołu, zgodnie ze strukturą HTML. Pozycjonowanie pozwala elementowi częściowo albo całkowicie wyjść poza ten zwykły przepływ.</p>
+          <p>To duża moc, ale też częste źródło błędów. Jeśli użyjesz pozycjonowania do problemu, który powinien rozwiązać Grid albo Flexbox, layout szybko stanie się trudny do utrzymania.</p>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> najpierw ułóż stronę normalnym flow, Flexboxem albo Gridem. Pozycjonowanie dodawaj dopiero tam, gdzie naprawdę potrzebujesz warstwy lub precyzyjnego rogu.</div>
+        </section>
+
+        <section id="position-relative" class="lesson-section">
+          <h2><code>position: relative</code></h2>
+          <p><code>relative</code> zostawia element w normalnym przepływie, ale pozwala go przesunąć względem jego pierwotnego miejsca. Bardzo często używa się go także jako punktu odniesienia dla dziecka z <code>position: absolute</code>.</p>
+          <pre class="code-block"><code>.card {
+  position: relative;
+}</code></pre>
+          <p>Samo <code>position: relative</code> nie zmieni wyglądu elementu. Zmiana pojawi się dopiero po dodaniu offsetów albo po osadzeniu wewnątrz elementu absolutnego.</p>
+        </section>
+
+        <section id="position-absolute" class="lesson-section">
+          <h2><code>position: absolute</code></h2>
+          <p><code>absolute</code> wyjmuje element z normalnego przepływu i ustawia go względem najbliższego pozycjonowanego przodka. W praktyce oznacza to zwykle: rodzic ma <code>position: relative</code>, a dziecko ma <code>position: absolute</code>.</p>
+          <pre class="code-block"><code>.card {
+  position: relative;
+}
+
+.card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}</code></pre>
+          <p>To klasyczny wzorzec dla badge’y, etykiet w rogu zdjęcia, ikon zamknięcia modala albo małych dekoracyjnych elementów w komponencie.</p>
+        </section>
+
+        <section id="position-fixed" class="lesson-section">
+          <h2><code>position: fixed</code></h2>
+          <p><code>fixed</code> przypina element względem viewportu, czyli widocznego obszaru przeglądarki. Element pozostaje w tym samym miejscu podczas przewijania strony.</p>
+          <pre class="code-block"><code>.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}</code></pre>
+          <p>W tym projekcie pasek postępu lekcji używa właśnie takiego podejścia. <code>fixed</code> dobrze pasuje do elementów globalnych, ale może zasłaniać treść, jeśli nie zaplanujesz miejsca i warstw.</p>
+        </section>
+
+        <section id="position-sticky" class="lesson-section">
+          <h2><code>position: sticky</code></h2>
+          <p><code>sticky</code> łączy zachowanie normalnego elementu i elementu przyklejonego. Element przewija się razem z treścią, dopóki nie osiągnie podanego offsetu, np. <code>top: 1rem</code>. Potem zostaje przyklejony w tej pozycji.</p>
+          <pre class="code-block"><code>.lesson-sidebar {
+  position: sticky;
+  top: 1rem;
+}</code></pre>
+          <p>To dobry wzorzec dla spisu treści, paneli filtrów i bocznych podsumowań, które mają pozostać pod ręką podczas przewijania dłuższej strony.</p>
+        </section>
+
+        <section id="offsety" class="lesson-section">
+          <h2><code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code></h2>
+          <p>Offsety określają odległość pozycjonowanego elementu od wybranej krawędzi jego punktu odniesienia. Same nie wystarczą: działają dopiero wtedy, gdy element ma pozycję inną niż domyślne <code>static</code>.</p>
+          <ul>
+            <li><code>top</code> odsuwa element od górnej krawędzi punktu odniesienia.</li>
+            <li><code>right</code> odsuwa element od prawej krawędzi.</li>
+            <li><code>bottom</code> odsuwa element od dolnej krawędzi.</li>
+            <li><code>left</code> odsuwa element od lewej krawędzi.</li>
+          </ul>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> jeśli <code>top</code> albo <code>right</code> nic nie robią, najpierw sprawdź, czy element ma ustawione <code>position</code>.</div>
+        </section>
+
+        <section id="badge-nowe" class="lesson-section">
+          <h2>Badge „Nowe” na karcie</h2>
+          <p>Poniższy przykład pokazuje najczęstszy praktyczny duet: rodzic z <code>position: relative</code> i etykieta z <code>position: absolute</code>.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson11-badge-example">Kopiuj</button><code id="lesson11-badge-example">&lt;article class="course-card"&gt;
+  &lt;span class="course-card__badge"&gt;Nowe&lt;/span&gt;
+  &lt;h2&gt;Pozycjonowanie w CSS&lt;/h2&gt;
+  &lt;p&gt;Naucz się osadzać elementy w konkretnym rogu komponentu.&lt;/p&gt;
+&lt;/article&gt;
+
+.course-card {
+  position: relative;
+  padding: 1.5rem;
+  border: 1px solid #dbe2f1;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.course-card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}</code></pre>
+
+          <div class="position-demo" aria-label="Wizualny przykład badge'a Nowe osadzonego w prawym górnym rogu karty">
+            <article class="position-demo__card">
+              <span class="position-demo__badge">Nowe</span>
+              <p class="card__meta">Lekcja 11</p>
+              <h3>Pozycjonowanie w CSS</h3>
+              <p>Badge jest ustawiony absolutnie względem karty, ponieważ karta tworzy kontekst przez <code>position: relative</code>.</p>
+            </article>
+          </div>
+          <p>Interpretacja: badge nie zajmuje miejsca w normalnym układzie treści karty. Jest warstwą osadzoną w prawym górnym rogu.</p>
+        </section>
+
+        <section id="sticky-panel" class="lesson-section">
+          <h2>Sticky panel w praktyce</h2>
+          <p>W długich widokach przydaje się mały panel, który pozostaje widoczny podczas przewijania swojej sekcji. Poniższy przykład pokazuje uproszczony układ z panelem sticky i treścią obok.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson11-sticky-example">Kopiuj</button><code id="lesson11-sticky-example">&lt;aside class="summary-panel"&gt;
+  &lt;h2&gt;W tej sekcji&lt;/h2&gt;
+  &lt;p&gt;Najważniejsze punkty zostają pod ręką.&lt;/p&gt;
+&lt;/aside&gt;
+
+.summary-panel {
+  position: sticky;
+  top: 1rem;
+}</code></pre>
+
+          <div class="position-demo position-demo--sticky" aria-label="Wizualny przykład panelu sticky w układzie lekcji">
+            <aside class="position-demo__sticky">
+              <strong>Sticky panel</strong>
+              <span>top: 1rem</span>
+            </aside>
+            <div class="position-demo__stack">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <p>Sticky działa w granicach swojego kontenera. Jeśli rodzic jest zbyt niski albo ma nieoczekiwany <code>overflow</code>, efekt może wyglądać inaczej niż zakładasz.</p>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Ustawianie <code>top</code> albo <code>right</code> bez ustawienia <code>position</code>.</li>
+            <li>Zapominanie o <code>position: relative</code> na rodzicu elementu absolutnego.</li>
+            <li>Budowanie całych layoutów przez <code>absolute</code> zamiast użycia normalnego flow, Flexboxa albo Grida.</li>
+            <li>Używanie <code>fixed</code> bez sprawdzenia, czy element nie zasłania treści na małym ekranie.</li>
+            <li>Oczekiwanie, że <code>sticky</code> zadziała zawsze, bez sprawdzenia wysokości rodzica i kontekstu przewijania.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Dodaj badge „Nowe” w prawym górnym rogu karty oraz sticky panel z krótkim podsumowaniem sekcji.</p>
+          <ul>
+            <li>Utwórz kartę z nagłówkiem, opisem i etykietą <code>Nowe</code>.</li>
+            <li>Na karcie ustaw <code>position: relative</code>.</li>
+            <li>Na etykiecie ustaw <code>position: absolute</code>, <code>top</code> i <code>right</code>.</li>
+            <li>Dodaj panel boczny albo małe podsumowanie z <code>position: sticky</code> i <code>top: 1rem</code>.</li>
+            <li>Przewiń stronę i sprawdź, czy sticky zachowuje się zgodnie z oczekiwaniem.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Wiem, czym normalny flow różni się od pozycjonowania.</li>
+            <li>Potrafię użyć <code>position: relative</code> jako kontekstu dla elementu absolutnego.</li>
+            <li>Umiem osadzić badge w rogu karty przez <code>absolute</code>, <code>top</code> i <code>right</code>.</li>
+            <li>Rozumiem, że <code>fixed</code> odnosi się do viewportu.</li>
+            <li>Wiem, że <code>sticky</code> wymaga offsetu i działa w granicach swojego kontenera.</li>
+            <li>Nie używam pozycjonowania jako zamiennika dla Flexboxa i Grida.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Pozycjonowanie daje precyzyjną kontrolę nad wybranymi elementami interfejsu. <code>relative</code> często tworzy punkt odniesienia, <code>absolute</code> osadza element w komponencie, <code>fixed</code> przypina element do viewportu, a <code>sticky</code> pozwala panelowi przykleić się podczas przewijania.</p>
+          <p>Kolejny krok to warstwy i nakładanie: <code>z-index</code>, overlay, modal i kontekst stosu.</p>
+          <a class="button button--primary" href="layers-z-index-overlay-stacking-context.html">Przejdź do Lekcji 12</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

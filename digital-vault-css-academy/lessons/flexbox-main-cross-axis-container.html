@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 07 CSS Academy: Flexbox, oś główna, oś poprzeczna i kontener flex dla początkujących.">
+  <title>Lekcja 07 — Flexbox: oś główna, oś poprzeczna i kontener | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-7">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#czym-jest-flexbox">Czym jest Flexbox?</a></li>
+          <li><a href="#display-flex"><code>display: flex</code></a></li>
+          <li><a href="#os-glowna-i-poprzeczna">Oś główna i poprzeczna</a></li>
+          <li><a href="#flex-direction"><code>flex-direction</code></a></li>
+          <li><a href="#justify-content"><code>justify-content</code></a></li>
+          <li><a href="#align-items"><code>align-items</code></a></li>
+          <li><a href="#gap"><code>gap</code></a></li>
+          <li><a href="#przyklad-paska">Przykład paska UI</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 07</p>
+          <h1>Flexbox: oś główna, oś poprzeczna i kontener</h1>
+          <p>Flexbox jest pierwszym dużym narzędziem layoutu w tej ścieżce. Nauczysz się układać elementy w rzędzie lub kolumnie, kontrolować odstępy i wyrównywać komponenty bez ręcznego przesuwania ich marginesami.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>wyjaśnić, czym jest kontener flex i elementy flex,</li>
+            <li>włączyć Flexbox przez <code>display: flex</code>,</li>
+            <li>odróżnić oś główną od osi poprzecznej,</li>
+            <li>zmienić kierunek układu za pomocą <code>flex-direction</code>,</li>
+            <li>użyć <code>justify-content</code>, <code>align-items</code> i <code>gap</code> w prostym komponencie UI.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Flexbox pojawia się w bardzo wielu małych i średnich częściach interfejsu: nawigacjach, paskach narzędzi, kartach z ikoną i tekstem, grupach przycisków, etykietach, formularzach oraz stopkach komponentów.</p>
+          <p>Najczęściej używasz go wtedy, gdy kilka elementów ma ułożyć się w jednej linii albo w jednej kolumnie i potrzebujesz wygodnie kontrolować odstęp oraz wyrównanie.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> jeśli budujesz pasek z logo, menu i przyciskiem, Flexbox zwykle będzie prostszym wyborem niż ręczne marginesy albo pozycjonowanie.</div>
+        </section>
+
+        <section id="czym-jest-flexbox" class="lesson-section">
+          <h2>Czym jest Flexbox?</h2>
+          <p>Flexbox to model układu CSS zaprojektowany do rozmieszczania elementów w jednym wymiarze: w poziomie albo w pionie. Jeden wymiar nie oznacza, że layout jest prosty. Oznacza, że w danym momencie najważniejsza jest jedna linia układu.</p>
+          <p>Element z włączonym Flexboxem staje się <strong>kontenerem flex</strong>. Jego bezpośrednie dzieci stają się <strong>elementami flex</strong> i zaczynają układać się według zasad tego kontenera.</p>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> właściwości takie jak <code>justify-content</code>, <code>align-items</code> i <code>gap</code> ustawiasz zwykle na rodzicu, czyli kontenerze flex.</div>
+        </section>
+
+        <section id="display-flex" class="lesson-section">
+          <h2><code>display: flex</code></h2>
+          <p>Najmniejszy możliwy start z Flexboxem to jedna deklaracja na rodzicu. Od tego momentu jego bezpośrednie dzieci układają się domyślnie w rzędzie.</p>
+          <pre class="code-block"><code>.toolbar {
+  display: flex;
+}</code></pre>
+          <p>To nie zmienia znaczenia HTML. Zmienia tylko sposób, w jaki przeglądarka układa dzieci elementu <code>.toolbar</code>.</p>
+        </section>
+
+        <section id="os-glowna-i-poprzeczna" class="lesson-section">
+          <h2>Oś główna i oś poprzeczna</h2>
+          <p>Flexbox działa wokół dwóch osi. Oś główna to kierunek, w którym układają się elementy. Oś poprzeczna jest do niej prostopadła.</p>
+          <ul>
+            <li>Przy domyślnym <code>flex-direction: row</code> oś główna biegnie poziomo.</li>
+            <li>Oś poprzeczna biegnie wtedy pionowo.</li>
+            <li>Gdy ustawisz <code>flex-direction: column</code>, osie zamieniają praktyczne role: główna biegnie pionowo, a poprzeczna poziomo.</li>
+          </ul>
+
+          <div class="flex-demo" aria-label="Wizualny przykład osi Flexboxa">
+            <div class="flex-demo__row">
+              <span class="flex-demo__item">Logo</span>
+              <span class="flex-demo__item">Menu</span>
+              <span class="flex-demo__item">CTA</span>
+            </div>
+            <p class="flex-demo__hint">W układzie <code>row</code> elementy idą po osi głównej od lewej do prawej, a ich pionowe wyrównanie kontroluje oś poprzeczna.</p>
+          </div>
+        </section>
+
+        <section id="flex-direction" class="lesson-section">
+          <h2><code>flex-direction</code></h2>
+          <p><code>flex-direction</code> określa kierunek osi głównej. Najczęściej spotkasz dwie wartości: <code>row</code> i <code>column</code>.</p>
+          <pre class="code-block"><code>.navigation {
+  display: flex;
+  flex-direction: row;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}</code></pre>
+          <p><code>row</code> dobrze pasuje do menu, pasków akcji i poziomych list. <code>column</code> sprawdza się w pionowych grupach formularza, kartach i panelach bocznych.</p>
+        </section>
+
+        <section id="justify-content" class="lesson-section">
+          <h2><code>justify-content</code></h2>
+          <p><code>justify-content</code> wyrównuje elementy wzdłuż osi głównej. Jeśli oś główna jest pozioma, ta właściwość kontroluje poziome rozmieszczenie elementów.</p>
+          <pre class="code-block"><code>.navigation {
+  display: flex;
+  justify-content: space-between;
+}</code></pre>
+          <p>Popularne wartości to <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-between</code> i <code>space-around</code>. W pasku z logo po lewej i przyciskiem po prawej często użyjesz <code>space-between</code>.</p>
+        </section>
+
+        <section id="align-items" class="lesson-section">
+          <h2><code>align-items</code></h2>
+          <p><code>align-items</code> wyrównuje elementy wzdłuż osi poprzecznej. Przy domyślnym układzie <code>row</code> oznacza to zwykle wyrównanie pionowe.</p>
+          <pre class="code-block"><code>.navigation {
+  display: flex;
+  align-items: center;
+}</code></pre>
+          <p>W praktyce <code>align-items: center</code> jest bardzo częste, bo logo, linki i przycisk w pasku nawigacji powinny zwykle siedzieć na wspólnej osi wizualnej.</p>
+        </section>
+
+        <section id="gap" class="lesson-section">
+          <h2><code>gap</code></h2>
+          <p><code>gap</code> ustawia odstęp między elementami flex. Jest czytelniejszy niż dodawanie marginesów do każdego dziecka i pilnowanie, aby ostatni element nie miał niepotrzebnego odstępu.</p>
+          <pre class="code-block"><code>.menu {
+  display: flex;
+  gap: 1rem;
+}</code></pre>
+          <p>To dobry nawyk: jeśli odstęp opisuje relację między elementami w tym samym układzie, najpierw sprawdź <code>gap</code>.</p>
+        </section>
+
+        <section id="przyklad-paska" class="lesson-section">
+          <h2>Przykład paska UI</h2>
+          <p>Poniższy przykład buduje prosty pasek z logo, menu i przyciskiem CTA. To dokładnie ten typ komponentu, w którym Flexbox daje szybki, przewidywalny efekt.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson7-flexbar-example">Kopiuj</button><code id="lesson7-flexbar-example">&lt;nav class="topbar" aria-label="Przykładowa nawigacja"&gt;
+  &lt;a class="topbar__logo" href="#"&gt;Vault&lt;/a&gt;
+  &lt;div class="topbar__menu"&gt;
+    &lt;a href="#"&gt;Lekcje&lt;/a&gt;
+    &lt;a href="#"&gt;Ćwiczenia&lt;/a&gt;
+    &lt;a href="#"&gt;Plan&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;a class="topbar__cta" href="#"&gt;Start&lt;/a&gt;
+&lt;/nav&gt;
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.topbar__menu {
+  display: flex;
+  gap: 0.75rem;
+}</code></pre>
+
+          <div class="flex-demo flex-demo--topbar">
+            <div class="flex-demo__topbar">
+              <strong>Vault</strong>
+              <span>Lekcje</span>
+              <span>Ćwiczenia</span>
+              <a href="#mini-zadanie">Start</a>
+            </div>
+          </div>
+
+          <p>Interpretacja: cały pasek jest kontenerem flex. <code>align-items: center</code> wyrównuje elementy pionowo, <code>justify-content: space-between</code> rozpycha główne grupy na boki, a <code>gap</code> pilnuje bezpiecznych odstępów między elementami.</p>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Ustawianie <code>justify-content</code> na dziecku zamiast na kontenerze flex.</li>
+            <li>Mylenie osi: <code>justify-content</code> działa po osi głównej, a <code>align-items</code> po osi poprzecznej.</li>
+            <li>Oczekiwanie, że <code>align-items</code> zawsze oznacza poziome wyrównanie. To zależy od <code>flex-direction</code>.</li>
+            <li>Dodawanie marginesów do każdego elementu zamiast użycia <code>gap</code>.</li>
+            <li>Włączanie Flexboxa na zbyt głębokim elemencie. Pamiętaj, że Flexbox układa bezpośrednie dzieci kontenera.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zbuduj prosty pasek z trzema częściami: logo, menu i przyciskiem CTA. Użyj semantycznego elementu <code>nav</code> oraz kilku linków.</p>
+          <ul>
+            <li>Na kontenerze ustaw <code>display: flex</code>.</li>
+            <li>Wyrównaj elementy pionowo przez <code>align-items: center</code>.</li>
+            <li>Rozmieść główne części paska przez <code>justify-content: space-between</code>.</li>
+            <li>Dodaj <code>gap</code>, aby elementy nie przyklejały się do siebie na mniejszym ekranie.</li>
+            <li>W osobnym kontenerze menu również użyj Flexboxa, aby linki miały równy odstęp.</li>
+          </ul>
+          <p>Na koniec zmień <code>flex-direction</code> z <code>row</code> na <code>column</code> i sprawdź, jak zmienia się znaczenie osi głównej oraz poprzecznej.</p>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Potrafię wskazać kontener flex i jego bezpośrednie dzieci.</li>
+            <li>Wiem, że <code>display: flex</code> ustawiam na rodzicu.</li>
+            <li>Rozumiem, że oś główna zależy od <code>flex-direction</code>.</li>
+            <li>Umiem dobrać <code>justify-content</code> do rozmieszczenia elementów po osi głównej.</li>
+            <li>Umiem użyć <code>align-items</code> do wyrównania po osi poprzecznej.</li>
+            <li>Wiem, kiedy <code>gap</code> jest lepszy niż marginesy między dziećmi kontenera.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Wiesz już, że Flexbox zaczyna się od kontenera i jego bezpośrednich dzieci. Rozumiesz oś główną, oś poprzeczną oraz wpływ <code>flex-direction</code> na działanie <code>justify-content</code> i <code>align-items</code>.</p>
+          <p>To fundament pod kolejną lekcję, w której Flexbox przejdzie z pojedynczego paska do praktycznych układów: nawigacji, kart i sekcji.</p>
+          <a class="button button--primary" href="flexbox-navigation-cards-sections.html">Przejdź do Lekcji 08</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

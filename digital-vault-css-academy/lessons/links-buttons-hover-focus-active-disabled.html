@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lekcja 18 CSS Academy: linki, przyciski oraz stany hover, focus, active i disabled w dostępnych komponentach UI.">
+  <title>Lekcja 18 — Linki, przyciski i stany: hover, focus, active, disabled | KP_Code CSS Academy</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="lesson-18">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <div class="progress" aria-hidden="true"><div class="progress__bar" id="lesson-progress"></div></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Strona główna CSS Academy">
+        <span class="brand__mark">DV</span>
+        <span class="brand__text">KP_Code CSS Academy</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
+        <ul class="site-nav__list">
+          <li><a href="../index.html" data-nav="home">Start</a></li>
+          <li><a href="introduction-to-css.html" data-nav="lesson-1">Lekcja 01</a></li>
+          <li><a href="selectors-and-inheritance.html" data-nav="lesson-2">Lekcja 02</a></li>
+          <li><a href="box-model-and-spacing.html" data-nav="lesson-3">Lekcja 03</a></li>
+          <li><a href="display-and-document-flow.html" data-nav="lesson-4">Lekcja 04</a></li>
+          <li><a href="colors-and-backgrounds.html" data-nav="lesson-5">Lekcja 05</a></li>
+          <li><a href="typography-and-readability.html" data-nav="lesson-6">Lekcja 06</a></li>
+          <li><a href="flexbox-main-cross-axis-container.html" data-nav="lesson-7">Lekcja 07</a></li>
+          <li><a href="flexbox-navigation-cards-sections.html" data-nav="lesson-8">Lekcja 08</a></li>
+          <li><a href="css-grid-columns-rows-gaps.html" data-nav="lesson-9">Lekcja 09</a></li>
+          <li><a href="css-grid-gallery-dashboard-cards.html" data-nav="lesson-10">Lekcja 10</a></li>
+          <li><a href="positioning-relative-absolute-fixed-sticky.html" data-nav="lesson-11">Lekcja 11</a></li>
+          <li><a href="layers-z-index-overlay-stacking-context.html" data-nav="lesson-12">Lekcja 12</a></li>
+          <li><a href="responsive-mobile-first.html" data-nav="lesson-13">Lekcja 13</a></li>
+          <li><a href="media-queries-and-breakpoints.html" data-nav="lesson-14">Lekcja 14</a></li>
+          <li><a href="css-units-px-percent-em-rem-vw-vh-svh-ch.html" data-nav="lesson-15">Lekcja 15</a></li>
+          <li><a href="responsive-images-and-media.html" data-nav="lesson-16">Lekcja 16</a></li>
+          <li><a href="fluid-typography-min-max-clamp.html" data-nav="lesson-17">Lekcja 17</a></li>
+          <li><a href="links-buttons-hover-focus-active-disabled.html" data-nav="lesson-18">Lekcja 18</a></li>
+          <li><a href="forms-inputs-labels-errors-validation-states.html" data-nav="lesson-19">Lekcja 19</a></li>
+          <li><a href="cards-lists-content-sections.html" data-nav="lesson-20">Lekcja 20</a></li>
+          <li><a href="navigation-breadcrumbs-pagination.html" data-nav="lesson-21">Lekcja 21</a></li>
+          <li><a href="tables-and-data-in-css.html" data-nav="lesson-22">Lekcja 22</a></li>
+          <li><a href="shadows-borders-radius-visual-separation.html" data-nav="lesson-23">Lekcja 23</a></li>
+          <li><a href="css-2d-transforms.html" data-nav="lesson-24">Lekcja 24</a></li>
+          <li><a href="css-transitions-transition.html" data-nav="lesson-25">Lekcja 25</a></li>
+          <li><a href="css-keyframes-animations.html" data-nav="lesson-26">Lekcja 26</a></li>
+          <li><a href="accessible-animations-prefers-reduced-motion.html" data-nav="lesson-27">Lekcja 27</a></li>
+          <li><a href="class-naming-bem-like-naming.html" data-nav="lesson-28">Lekcja 28</a></li>
+          <li><a href="css-variables-design-tokens.html" data-nav="lesson-29">Lekcja 29</a></li>
+          <li><a href="cascade-specificity-and-layer.html" data-nav="lesson-30">Lekcja 30</a></li>
+          <li><a href="reset-normalize-base-styles.html" data-nav="lesson-31">Lekcja 31</a></li>
+          <li><a href="css-file-structure-scalable-stylesheets.html" data-nav="lesson-32">Lekcja 32</a></li>
+          <li><a href="pseudo-classes-and-elements-practice.html" data-nav="lesson-33">Lekcja 33</a></li>
+          <li><a href="container-queries.html" data-nav="lesson-34">Lekcja 34</a></li>
+          <li><a href="logical-properties.html" data-nav="lesson-35">Lekcja 35</a></li>
+          <li><a href="css-nesting-modern-syntax.html" data-nav="lesson-36">Lekcja 36</a></li>
+          <li><a href="color-schemes-theme-variables-dark-mode.html" data-nav="lesson-37">Lekcja 37</a></li>
+          <li><a href="responsive-profile-card-project.html" data-nav="lesson-38">Lekcja 38</a></li>
+          <li><a href="landing-page-hero-cards-project.html" data-nav="lesson-39">Lekcja 39</a></li>
+          <li><a href="dashboard-panel-project.html" data-nav="lesson-40">Lekcja 40</a></li>
+          <li><a href="registration-form-project.html" data-nav="lesson-41">Lekcja 41</a></li>
+          <li><a href="mini-component-system-project.html" data-nav="lesson-42">Lekcja 42</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="lesson-main">
+    <div class="container lesson-layout">
+      <aside class="lesson-toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">W tej lekcji</h2>
+        <ol>
+          <li><a href="#cele-lekcji">Cele lekcji</a></li>
+          <li><a href="#kontekst-praktyczny">Kontekst praktyczny</a></li>
+          <li><a href="#link-czy-button">Link czy button</a></li>
+          <li><a href="#bazowy-styl">Bazowy styl komponentu</a></li>
+          <li><a href="#hover"><code>:hover</code></a></li>
+          <li><a href="#focus"><code>:focus-visible</code></a></li>
+          <li><a href="#active"><code>:active</code></a></li>
+          <li><a href="#disabled"><code>:disabled</code> i <code>aria-disabled</code></a></li>
+          <li><a href="#demo">Demo stanów</a></li>
+          <li><a href="#najczestsze-bledy">Najczęstsze błędy</a></li>
+          <li><a href="#mini-zadanie">Mini zadanie</a></li>
+          <li><a href="#checklista">Checklista</a></li>
+          <li><a href="#podsumowanie">Podsumowanie lekcji</a></li>
+        </ol>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-content__header">
+          <p class="eyebrow">Lekcja 18</p>
+          <h1>Linki, przyciski i stany: hover, focus, active, disabled</h1>
+          <p>Po module responsywności zaczynamy budować realne komponenty UI. Linki i przyciski są małe, ale krytyczne: prowadzą użytkownika przez interfejs i muszą jasno komunikować, co można kliknąć, co jest aktywne, co ma fokus i co jest niedostępne.</p>
+        </header>
+
+        <section id="cele-lekcji" class="lesson-section">
+          <h2>Cele lekcji</h2>
+          <p>Po ukończeniu tej lekcji będziesz umieć:</p>
+          <ul>
+            <li>odróżnić semantycznie link od przycisku,</li>
+            <li>zbudować bazowy styl przycisku odporny na różne treści,</li>
+            <li>zaprojektować czytelny stan <code>:hover</code>,</li>
+            <li>zostawić wyraźny i dostępny stan <code>:focus-visible</code>,</li>
+            <li>dodać subtelny stan <code>:active</code>,</li>
+            <li>poprawnie obsłużyć <code>:disabled</code> i <code>aria-disabled</code>.</li>
+          </ul>
+        </section>
+
+        <section id="kontekst-praktyczny" class="lesson-section">
+          <h2>Kontekst praktyczny</h2>
+          <p>Linki i przyciski pojawiają się w nawigacji, formularzach, modalach, dashboardach, kartach produktów, paskach narzędzi i CTA. Użytkownik powinien bez zastanowienia rozpoznać, który element prowadzi do innej strony, który uruchamia akcję oraz dlaczego niektóre akcje są chwilowo niedostępne.</p>
+          <div class="note note--practice"><strong>W praktyce:</strong> dobry komponent interaktywny ma styl bazowy, warianty, stany myszy, stany klawiatury i wersję niedostępną. Nie wystarczy zmienić kolor na hover.</div>
+        </section>
+
+        <section id="link-czy-button" class="lesson-section">
+          <h2>Link czy button</h2>
+          <p>Najpierw wybierz poprawny element HTML. CSS może sprawić, że link wygląda jak przycisk, ale nie powinien zmieniać semantyki akcji.</p>
+          <ul>
+            <li>Użyj <code>&lt;a&gt;</code>, gdy użytkownik przechodzi do innego adresu, sekcji albo pliku.</li>
+            <li>Użyj <code>&lt;button&gt;</code>, gdy użytkownik wykonuje akcję na bieżącej stronie.</li>
+            <li>Nie używaj <code>&lt;div&gt;</code> jako przycisku. Tracisz semantykę, fokus i zachowanie klawiatury.</li>
+          </ul>
+          <pre class="code-block"><code>&lt;a class='button' href='#pricing'&gt;Zobacz cennik&lt;/a&gt;
+
+&lt;button class='button' type='button'&gt;
+  Zapisz zmiany
+&lt;/button&gt;</code></pre>
+        </section>
+
+        <section id="bazowy-styl" class="lesson-section">
+          <h2>Bazowy styl komponentu</h2>
+          <p>Bazowy przycisk powinien mieć przewidywalny rozmiar, czytelny tekst, stabilne odstępy i styl, który działa dla linku oraz elementu <code>button</code>.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson18-button-base-example">Kopiuj</button><code id="lesson18-button-base-example">.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: .7rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}</code></pre>
+          <p><code>font: inherit</code> pomaga przy elementach <code>button</code>, które w wielu przeglądarkach mają własne domyślne style formularzy.</p>
+        </section>
+
+        <section id="hover" class="lesson-section">
+          <h2><code>:hover</code></h2>
+          <p><code>:hover</code> pokazuje reakcję na wskaźnik myszy lub gładzik. Powinien być subtelny, ale zauważalny: zmiana koloru, tła, obramowania albo cienia.</p>
+          <pre class="code-block"><code>.button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}</code></pre>
+          <p>Nie opieraj ważnej informacji wyłącznie na hover. Użytkownicy klawiatury i ekrany dotykowe nie korzystają z niego w taki sam sposób.</p>
+        </section>
+
+        <section id="focus" class="lesson-section">
+          <h2><code>:focus-visible</code></h2>
+          <p><code>:focus-visible</code> pokazuje, który element jest aktualnie aktywny dla klawiatury. To jeden z najważniejszych stanów dostępności.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson18-focus-example">Kopiuj</button><code id="lesson18-focus-example">.button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}</code></pre>
+          <div class="note note--remember"><strong>Zapamiętaj:</strong> nie usuwaj outline bez zastąpienia go równie widocznym stanem fokusu. <code>outline: none</code> bez alternatywy to częsty błąd dostępności.</div>
+        </section>
+
+        <section id="active" class="lesson-section">
+          <h2><code>:active</code></h2>
+          <p><code>:active</code> działa w momencie naciskania elementu. Może dać wrażenie fizycznego kliknięcia, ale powinien być szybki i delikatny.</p>
+          <pre class="code-block"><code>.button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}</code></pre>
+          <p>Jeśli używasz animacji, pamiętaj o <code>prefers-reduced-motion</code>. Stan aktywny nie powinien rozpraszać ani opóźniać wykonania akcji.</p>
+        </section>
+
+        <section id="disabled" class="lesson-section">
+          <h2><code>:disabled</code> i <code>aria-disabled</code></h2>
+          <p>Dla elementu <code>button</code> używaj prawdziwego atrybutu <code>disabled</code>. Przeglądarka usunie go z interakcji i klawiatury. Dla linków nie ma natywnego <code>disabled</code>, więc jeśli musisz pokazać niedostępny link, użyj jasnego stylu oraz <code>aria-disabled="true"</code>.</p>
+          <pre class="code-block"><code>.button:disabled,
+.button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: .55;
+  transform: none;
+}</code></pre>
+          <p>Nie ukrywaj przyczyny niedostępności. Jeżeli akcja jest zablokowana, użytkownik powinien wiedzieć, co musi zrobić, aby ją odblokować.</p>
+        </section>
+
+        <section id="demo" class="lesson-section">
+          <h2>Demo stanów</h2>
+          <p>Poniższe demo pokazuje bazowy komponent, wariant linku, stan fokusu, stan aktywny oraz wersję niedostępną.</p>
+          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson18-state-system-example">Kopiuj</button><code id="lesson18-state-system-example">.ui-button {
+  transition: background-color .18s ease, transform .18s ease;
+}
+
+.ui-button:hover {
+  background: #1d4ed8;
+}
+
+.ui-button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+.ui-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}</code></pre>
+
+          <div class="state-demo" aria-label="Wizualny przykład stanów linków i przycisków">
+            <article class="state-demo__panel">
+              <span class="state-demo__label">Interaktywne</span>
+              <div class="state-demo__actions">
+                <a class="state-demo__control state-demo__control--primary" href="#demo">Link jako CTA</a>
+                <button class="state-demo__control state-demo__control--secondary" type="button">Button akcji</button>
+              </div>
+              <p>Najedź myszą lub przejdź klawiaturą przez elementy, żeby zobaczyć realne stany <code>hover</code> i <code>focus-visible</code>.</p>
+            </article>
+
+            <article class="state-demo__panel">
+              <span class="state-demo__label">Symulacja stanów</span>
+              <div class="state-demo__states">
+                <span class="state-demo__pill state-demo__pill--hover">hover</span>
+                <span class="state-demo__pill state-demo__pill--focus">focus-visible</span>
+                <span class="state-demo__pill state-demo__pill--active">active</span>
+                <span class="state-demo__pill state-demo__pill--disabled">disabled</span>
+              </div>
+              <button class="state-demo__control state-demo__control--primary" type="button" disabled>Button disabled</button>
+            </article>
+          </div>
+          <p>Interpretacja: stany powinny różnić się wystarczająco mocno, ale nadal należeć do tego samego systemu wizualnego. Fokus klawiatury musi być najbardziej jednoznaczny.</p>
+        </section>
+
+        <section id="najczestsze-bledy" class="lesson-section">
+          <h2>Najczęstsze błędy początkujących</h2>
+          <ul>
+            <li>Usuwanie <code>outline</code> bez dodania widocznego zamiennika.</li>
+            <li>Używanie <code>&lt;a&gt;</code> do akcji, która powinna być przyciskiem.</li>
+            <li>Budowanie przycisku z <code>&lt;div&gt;</code> albo <code>&lt;span&gt;</code>.</li>
+            <li>Projektowanie tylko stanu <code>:hover</code> i ignorowanie klawiatury.</li>
+            <li>Disabled wyglądający jak zwykły aktywny przycisk.</li>
+            <li>Zbyt duże animacje na kliknięcie, które sprawiają wrażenie opóźnienia akcji.</li>
+          </ul>
+        </section>
+
+        <section id="mini-zadanie" class="lesson-section">
+          <h2>Mini zadanie</h2>
+          <p>Zbuduj mały system dwóch przycisków i jednego linku tekstowego.</p>
+          <ul>
+            <li>Dodaj wariant <code>.button--primary</code> i <code>.button--secondary</code>.</li>
+            <li>Ustaw <code>:hover</code>, <code>:focus-visible</code>, <code>:active</code> i <code>:disabled</code>.</li>
+            <li>Sprawdź obsługę klawiaturą przez klawisz Tab.</li>
+            <li>Nie usuwaj fokusu bez widocznej alternatywy.</li>
+            <li>Dodaj jeden link wyglądający jak link tekstowy, nie jak przycisk.</li>
+          </ul>
+        </section>
+
+        <section id="checklista" class="lesson-section">
+          <h2>Checklista</h2>
+          <ul>
+            <li>Wiem, kiedy użyć linku, a kiedy przycisku.</li>
+            <li>Potrafię zbudować bazowy styl przycisku na <code>inline-flex</code>.</li>
+            <li>Projektuję stan <code>:hover</code> jako ulepszenie, nie jedyny sygnał.</li>
+            <li>Zostawiam widoczny <code>:focus-visible</code> dla klawiatury.</li>
+            <li>Rozumiem różnicę między <code>:disabled</code> i <code>aria-disabled</code>.</li>
+            <li>Testuję komponent myszą, klawiaturą i na małym ekranie.</li>
+          </ul>
+        </section>
+
+        <section id="podsumowanie" class="lesson-section">
+          <h2>Podsumowanie lekcji</h2>
+          <p>Linki i przyciski są podstawą interfejsu. Dobre komponenty interaktywne mają poprawną semantykę, czytelne style bazowe, przewidywalny hover, wyraźny focus, delikatny active i jednoznaczny disabled.</p>
+          <p>Kolejny krok roadmapy to formularze: inputy, labelki, błędy i stany walidacji.</p>
+          <a class="button button--primary" href="forms-inputs-labels-errors-validation-states.html">Przejdź do Lekcji 19</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 KP_Code Digital Vault EDU.</p>
+      <a href="../index.html">Powrót do CSS Academy</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>
