@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator podatkowy PL</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <div class="hero__top">
+          <div>
+        <p class="hero__badge">KP_Code Digital Vault</p>
+        <h1 class="hero__title">Kalkulator podatkowy PL</h1>
+        <p class="hero__description">Profesjonalne narzędzie do szacowania wynagrodzeń netto/brutto, kosztu pracodawcy i porównania typów umów w Polsce.</p>
+        <p class="hero__disclaimer">Uwaga: wyniki mają charakter orientacyjny i nie stanowią porady prawnej, podatkowej ani księgowej.</p>
+          </div>
+          <div class="theme-switcher" role="group" aria-label="Wybór motywu">
+            <button type="button" class="theme-switcher__btn" data-theme-value="light">Light</button>
+            <button type="button" class="theme-switcher__btn" data-theme-value="dark">Dark</button>
+            <button type="button" class="theme-switcher__btn" data-theme-value="system">System</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container app">
+      <section class="card" aria-labelledby="calc-heading">
+        <h2 id="calc-heading">Parametry kalkulacji</h2>
+        <form id="calculator-form" class="form" novalidate>
+          <div class="form__row">
+            <label for="amount">Kwota (PLN)</label>
+            <input id="amount" name="amount" type="number" min="0" step="0.01" placeholder="np. 12000" required />
+          </div>
+
+          <fieldset class="form__fieldset">
+            <legend>Kierunek obliczeń</legend>
+            <label><input type="radio" name="direction" value="grossToNet" checked /> brutto → netto</label>
+            <label><input type="radio" name="direction" value="netToGross" /> netto → brutto</label>
+          </fieldset>
+
+          <div class="form__row">
+            <label for="period">Okres</label>
+            <select id="period" name="period">
+              <option value="monthly">miesięcznie</option>
+              <option value="yearly">rocznie</option>
+            </select>
+          </div>
+
+          <div class="form__row">
+            <label for="contractType">Typ umowy</label>
+            <select id="contractType" name="contractType">
+              <option value="employment">umowa o pracę</option>
+              <option value="mandate">umowa zlecenie</option>
+              <option value="specificWork">umowa o dzieło</option>
+              <option value="b2bScale">B2B skala podatkowa</option>
+              <option value="b2bLinear">B2B podatek liniowy</option>
+              <option value="b2bLumpSum">B2B ryczałt</option>
+            </select>
+          </div>
+
+          <fieldset class="form__fieldset">
+            <legend>Ustawienia dodatkowe</legend>
+            <label><input type="checkbox" id="under26" name="under26" /> wiek poniżej 26 lat</label>
+            <label><input type="checkbox" id="ppk" name="ppk" /> PPK (pracownik)</label>
+            <label><input type="checkbox" id="pit2" name="pit2" checked /> uwzględnij PIT-2</label>
+            <label><input type="checkbox" id="vatPayer" name="vatPayer" /> podatnik VAT (B2B)</label>
+          </fieldset>
+
+          <div class="form__row">
+            <label for="deductibleCosts">Koszty uzyskania przychodu</label>
+            <select id="deductibleCosts" name="deductibleCosts">
+              <option value="standard">standardowe</option>
+              <option value="increased">podwyższone</option>
+              <option value="fiftyPercent">50%</option>
+            </select>
+          </div>
+
+          <div class="form__row">
+            <label for="zusType">Typ ZUS (B2B)</label>
+            <select id="zusType" name="zusType">
+              <option value="full">pełny ZUS</option>
+              <option value="preferential">preferencyjny ZUS</option>
+              <option value="starter">ulga na start</option>
+              <option value="custom">własne wartości</option>
+            </select>
+          </div>
+
+          <div id="custom-zus" class="form__group form__group--hidden">
+            <div class="form__row">
+              <label for="customSocial">Własna składka społeczna</label>
+              <input id="customSocial" name="customSocial" type="number" min="0" step="0.01" value="0" />
+            </div>
+            <div class="form__row">
+              <label for="customHealth">Własna składka zdrowotna</label>
+              <input id="customHealth" name="customHealth" type="number" min="0" step="0.01" value="0" />
+            </div>
+          </div>
+
+          <div class="form__row">
+            <label for="quick-scenario">Szybki scenariusz</label>
+            <select id="quick-scenario" name="quickScenario">
+              <option value="">wybierz scenariusz</option>
+              <option value="juniorEmployment">Junior UoP < 26</option>
+              <option value="seniorB2BLinear">Senior B2B liniowy</option>
+              <option value="creatorSpecificWork">Twórca UoD 50% KUP</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary">Oblicz</button>
+          <p id="validation-message" class="form__error" role="alert" aria-live="assertive"></p>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="results-heading">
+        <h2 id="results-heading">Wyniki</h2>
+        <div id="result-warning" class="notice" aria-live="polite"></div>
+        <div id="results-grid" class="results-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="card" aria-labelledby="comparison-heading">
+        <h2 id="comparison-heading">Porównanie typów umów</h2>
+        <div class="table-wrap">
+          <table class="table" id="comparison-table">
+            <thead>
+              <tr><th>Typ umowy</th><th>Brutto</th><th>Netto</th><th>Efektywne obciążenie</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="history-heading">
+        <h2 id="history-heading">Historia kalkulacji</h2>
+        <ul id="calculation-history" class="history-list"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

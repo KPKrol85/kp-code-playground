@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator podatkowy PL 2026</title>
+  <meta name="description" content="Profesjonalny kalkulator podatkowy i wynagrodzeń dla Polski.">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      var storageKey = 'digital-vault-theme';
+      var root = document.documentElement;
+      var preference = 'system';
+
+      try {
+        var storedPreference = window.localStorage.getItem(storageKey);
+        if (storedPreference === 'light' || storedPreference === 'dark' || storedPreference === 'system') {
+          preference = storedPreference;
+        }
+      } catch (error) {}
+
+      var systemTheme = 'light';
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        systemTheme = 'dark';
+      }
+
+      var resolvedTheme = preference === 'system' ? systemTheme : preference;
+      root.dataset.theme = resolvedTheme;
+      root.dataset.themePreference = preference;
+      root.style.colorScheme = resolvedTheme;
+    }());
+  </script>
+  <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero__toolbar">
+      <div class="theme-control" data-theme-control role="group" aria-label="Tryb kolorystyczny">
+        <button class="theme-control__button" type="button" data-theme-option="light" aria-label="Włącz jasny motyw" aria-pressed="false" title="Jasny motyw">
+          <svg xmlns="http://www.w3.org/2000/svg" class="theme-control__icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          </svg>
+          <span>Jasny</span>
+        </button>
+        <button class="theme-control__button" type="button" data-theme-option="system" aria-label="Użyj motywu systemowego" aria-pressed="false" title="Motyw systemowy">
+          <svg xmlns="http://www.w3.org/2000/svg" class="theme-control__icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25h6m-7.5 3h9m-11.25-3h13.5A2.25 2.25 0 0 0 21 15V5.25A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25V15a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+          <span>System</span>
+        </button>
+        <button class="theme-control__button" type="button" data-theme-option="dark" aria-label="Włącz ciemny motyw" aria-pressed="false" title="Ciemny motyw">
+          <svg xmlns="http://www.w3.org/2000/svg" class="theme-control__icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
+          <span>Ciemny</span>
+        </button>
+      </div>
+    </div>
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <p class="hero__badge">Digital Vault • Polska • 2026</p>
+        <h1 class="hero__title">Kalkulator podatkowy i wynagrodzeń</h1>
+        <p class="hero__subtitle">Oblicz netto, brutto, koszt pracodawcy i porównaj najpopularniejsze formy współpracy w jednym szybkim widoku.</p>
+        <div class="hero__meta" aria-label="Zakres kalkulatora">
+          <span>UoP</span>
+          <span>Zlecenie</span>
+          <span>Dzieło</span>
+          <span>B2B</span>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-label="Parametry kalkulatora">
+        <strong>Model orientacyjny</strong>
+        <span>Skala PIT 12% / 32%, kwota wolna 30 000 zł, limit ulgi dla młodych 85 528 zł oraz składki ZUS 2026 dla działalności.</span>
+        <small>Wyniki nie zastępują indywidualnej konsultacji księgowej.</small>
+      </aside>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="panel panel--calculator" aria-labelledby="calculator-title">
+      <div class="section-heading">
+        <p>Krok 1</p>
+        <h2 id="calculator-title">Dane kalkulacji</h2>
+      </div>
+      <form id="calculator-form" class="form" novalidate>
+        <div class="amount-card">
+          <label for="amount">Kwota wejściowa</label>
+          <div class="amount-card__control">
+            <input id="amount" name="amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Np. 10 000" required>
+            <span>PLN</span>
+          </div>
+          <p id="amount-error" class="form__error" aria-live="polite"></p>
+          <div class="quick-values" aria-label="Szybkie kwoty">
+            <button type="button" data-amount="6000">6 000</button>
+            <button type="button" data-amount="10000">10 000</button>
+            <button type="button" data-amount="15000">15 000</button>
+            <button type="button" data-amount="25000">25 000</button>
+          </div>
+        </div>
+
+        <fieldset class="form__fieldset">
+          <legend>Kierunek kalkulacji</legend>
+          <div class="segmented">
+            <label><input type="radio" name="direction" value="grossToNet" checked><span>Brutto → netto</span></label>
+            <label><input type="radio" name="direction" value="netToGross"><span>Netto → brutto</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="form__fieldset">
+          <legend>Okres</legend>
+          <div class="segmented">
+            <label><input type="radio" name="period" value="monthly" checked><span>Miesięcznie</span></label>
+            <label><input type="radio" name="period" value="yearly"><span>Rocznie</span></label>
+          </div>
+        </fieldset>
+
+        <div class="form__field">
+          <label for="contractType">Typ umowy</label>
+          <select id="contractType" name="contractType">
+            <option value="employment">umowa o pracę</option>
+            <option value="mandate">umowa zlecenie</option>
+            <option value="specificWork">umowa o dzieło</option>
+            <option value="b2bScale">B2B skala podatkowa</option>
+            <option value="b2bLinear">B2B podatek liniowy</option>
+            <option value="b2bLumpSum">B2B ryczałt</option>
+          </select>
+        </div>
+
+        <fieldset class="form__fieldset" id="common-options">
+          <legend>Opcje dodatkowe</legend>
+          <div class="option-grid">
+            <label class="check-card"><input type="checkbox" id="under26"><span>Wiek poniżej 26 lat</span></label>
+            <label class="check-card"><input type="checkbox" id="ppk"><span>Uczestnictwo w PPK</span></label>
+            <label class="check-card"><input type="checkbox" id="pit2" checked><span>Miesięczne pomniejszenie PIT-2</span></label>
+          </div>
+          <div class="form__field">
+            <label for="deductibleCosts">Koszty uzyskania przychodu</label>
+            <select id="deductibleCosts">
+              <option value="standard">standardowe</option>
+              <option value="elevated">podwyższone</option>
+              <option value="fifty">50%</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="form__fieldset" id="b2b-options" hidden>
+          <legend>Opcje B2B</legend>
+          <label class="check-card check-card--inline"><input type="checkbox" id="vatPayer" checked><span>Płatnik VAT</span></label>
+          <div class="form__field">
+            <label for="zusType">Typ ZUS</label>
+            <select id="zusType">
+              <option value="full">pełny ZUS</option>
+              <option value="preferential">preferencyjny ZUS</option>
+              <option value="starter">ulga na start</option>
+              <option value="custom">własne wartości</option>
+            </select>
+          </div>
+          <div class="form__grid" id="custom-zus" hidden>
+            <div class="form__field"><label for="customSocial">Składki społeczne (własne)</label><input type="number" id="customSocial" min="0" step="0.01" value="0"></div>
+            <div class="form__field"><label for="customHealth">Składka zdrowotna (własna)</label><input type="number" id="customHealth" min="0" step="0.01" value="0"></div>
+          </div>
+        </fieldset>
+        <div class="form__actions">
+          <button class="button button--primary" type="submit">Oblicz wyniki</button>
+          <button class="button button--ghost" type="reset">Wyczyść</button>
+        </div>
+      </form>
+      <p class="warning" id="context-warning" aria-live="polite"></p>
+    </section>
+
+    <section class="panel panel--results" aria-labelledby="results-title">
+      <div class="section-heading">
+        <p>Krok 2</p>
+        <h2 id="results-title">Wyniki</h2>
+      </div>
+      <div id="results" class="results" aria-live="polite"></div>
+    </section>
+
+    <section class="panel panel--wide" aria-labelledby="comparison-title">
+      <div class="section-heading section-heading--row">
+        <div>
+          <p>Krok 3</p>
+          <h2 id="comparison-title">Porównanie typów umów</h2>
+        </div>
+        <span id="comparison-context">Po wpisaniu kwoty zobaczysz ranking netto.</span>
+      </div>
+      <div class="table-wrapper">
+        <table class="comparison-table" id="comparison-table">
+          <thead><tr><th>Typ umowy</th><th>Brutto</th><th>Netto</th><th>Obciążenie</th><th>Relacja</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Parametry podatkowe oparto o publiczne limity PIT i ZUS dla 2026 r. Kalkulator stosuje uproszczenia, szczególnie przy B2B, PPK i indywidualnych kosztach.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
