@@ -19,6 +19,17 @@ npx serve .
 
 albo dowolnym lokalnym serwerem HTTP i wejść na `index.html`.
 
+
+## Testy
+
+Projekt ma lekki, bez-zależnościowy harness regresyjny dla funkcji kalkulacyjnych:
+
+```bash
+npm run test:calculations
+```
+
+Testy obejmują smoke testy dla wszystkich typów umów, wybrane wartości regresyjne brutto → netto oraz podstawowe przypadki netto → brutto z tolerancją zaokrągleń.
+
 ## Funkcje
 
 - kalkulacja brutto -> netto oraz netto -> brutto,

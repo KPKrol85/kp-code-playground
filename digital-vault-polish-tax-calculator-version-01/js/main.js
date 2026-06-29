@@ -20,6 +20,8 @@ const customZus = document.getElementById('custom-zus');
 const amountError = document.getElementById('amount-error');
 const contractTypeSelect = document.getElementById('contractType');
 const commonOptions = document.getElementById('common-options');
+const assumptionsPanel = document.getElementById('assumptions-panel');
+const printSummaryButton = document.getElementById('print-summary');
 
 const contractLabels = {
   employment: 'umowa o pracę',
@@ -144,28 +146,60 @@ function readFormState() {
   };
 }
 
+function setAmountValidity(isInvalid) {
+  amountInput.setAttribute('aria-invalid', String(isInvalid));
+}
+
 function validateAmount(value) {
   if (amountInput.value.trim() === '') {
     amountError.textContent = 'Wprowadź kwotę, aby uruchomić kalkulator.';
+    setAmountValidity(true);
     return false;
   }
   if (!Number.isFinite(value) || value <= 0) {
     amountError.textContent = 'Kwota musi być dodatnią liczbą.';
+    setAmountValidity(true);
     return false;
   }
   if (value > 100000000) {
     amountError.textContent = 'Kwota jest zbyt duża dla wiarygodnych szacunków. Użyj mniejszej wartości.';
+    setAmountValidity(true);
     return false;
   }
   amountError.textContent = '';
+  setAmountValidity(false);
   return true;
+}
+
+function renderAssumptionsPanel(state = readFormState()) {
+  const isB2B = state.contractType.startsWith('b2b');
+  const active = [
+    `Wybrany typ: ${contractLabels[state.contractType]}.`,
+    `PIT-2: ${state.options.pit2 && state.contractType === 'employment' ? 'uwzględniony dla UoP' : 'nie wpływa na wybrany typ w tym modelu'}.`,
+    `PPK: ${state.options.ppk && state.contractType === 'employment' ? '2% po stronie pracownika dla UoP' : 'nieaktywne lub nie dotyczy wybranego typu'}.`,
+    `KUP: ${isB2B ? 'nie stosujemy kosztów działalności B2B' : state.options.deductibleCosts}.`,
+  ];
+  if (isB2B) active.push(`ZUS B2B: ${state.options.zusType}; VAT: informacyjnie, bez wpływu na wynik.`);
+
+  assumptionsPanel.innerHTML = `
+    <h3 id="assumptions-title">Założenia kalkulacji</h3>
+    <dl class="assumptions-panel__meta">
+      <div><dt>Wersja reguł</dt><dd>${TAX_CONFIG.rulesVersion || `PL-${TAX_CONFIG.year}`}</dd></div>
+      <div><dt>Rok modelu</dt><dd>${TAX_CONFIG.year}</dd></div>
+      <div><dt>Ostatni przegląd</dt><dd>${TAX_CONFIG.lastReviewed || 'do uzupełnienia'}</dd></div>
+    </dl>
+    <ul>${[...active, ...TAX_CONFIG.assumptions].map((item) => `<li>${item}</li>`).join('')}</ul>
+    <p>${TAX_CONFIG.notes.legalDisclaimer}</p>`;
 }
 
 function setEmptyState() {
   resultsEl.innerHTML = `<div class="empty-state"><strong>Wpisz kwotę i kliknij „Oblicz wyniki”.</strong><span>Zobaczysz kwotę netto, brutto, składki, PIT, koszt pracodawcy i porównanie umów.</span></div>`;
-  comparisonBody.innerHTML = '';
-  comparisonContext.textContent = 'Po wpisaniu kwoty zobaczysz ranking netto.';
+  comparisonBody.innerHTML = '<tr><td colspan="5" class="comparison-empty">Wpisz poprawną kwotę, aby zobaczyć ranking form współpracy.</td></tr>';
+  comparisonContext.textContent = 'Po wpisaniu poprawnej kwoty zobaczysz ranking: najwyższe netto albo najniższe wymagane brutto.';
   warningEl.textContent = TAX_CONFIG.notes.legalDisclaimer;
+  printSummaryButton.hidden = true;
+  setAmountValidity(false);
+  renderAssumptionsPanel(readFormState());
 }
 
 const periodLabel = (period) => (period === 'yearly' ? 'rocznie' : 'miesięcznie');
@@ -205,7 +239,9 @@ function renderResults(data, state) {
       ${renderResultRow('PPK pracownika', formatMoney(ppk))}
       ${renderResultRow('Łączne potrącenia', formatMoney(deductions))}
     </div>
-    <p class="result-note">Wartości są zaokrąglone do groszy i przeliczone dla okresu: ${periodLabel(state.period)}.</p>`;
+    <p class="result-note">Wartości są zaokrąglone do groszy i przeliczone dla okresu: ${periodLabel(state.period)}. Model ma charakter orientacyjny.</p>`;
+  printSummaryButton.hidden = false;
+  renderAssumptionsPanel(state);
 }
 
 function renderComparison(items, state) {
@@ -228,14 +264,15 @@ function renderComparison(items, state) {
   }).join('');
 
   comparisonContext.textContent = state.direction === 'grossToNet'
-    ? `Ranking dla tej samej kwoty brutto, ${periodLabel(state.period)} (najwyższe netto = najwyżej).`
-    : `Ranking dla tej samej kwoty netto, ${periodLabel(state.period)} (najniższe brutto = najwyżej).`;
+    ? `Ranking dla tej samej kwoty brutto, ${periodLabel(state.period)} — najwyższy szacunkowy wynik netto jest najwyżej.`
+    : `Ranking dla tej samej kwoty netto, ${periodLabel(state.period)} — najniższa wymagana kwota brutto/przychodu jest najwyżej.`;
 }
 
 function updateConditionalFields(state = readFormState()) {
   const isB2B = state.contractType.startsWith('b2b');
   b2bOptions.hidden = !isB2B;
-  commonOptions.querySelector('#ppk').disabled = isB2B;
+  ['ppk', 'pit2'].forEach((id) => { commonOptions.querySelector(`#${id}`).disabled = isB2B || state.contractType === 'specificWork' || (id === 'ppk' && state.contractType !== 'employment'); });
+  commonOptions.querySelector('#deductibleCosts').disabled = isB2B;
   customZus.hidden = state.options.zusType !== 'custom';
 }
 
@@ -268,7 +305,7 @@ function calculateAndRender({ shouldValidate = true } = {}) {
   updateWarning(state);
 
   if (!shouldValidate && amountInput.value.trim() === '') return setEmptyState();
-  if (!validateAmount(state.amount)) return;
+  if (!validateAmount(state.amount)) { printSummaryButton.hidden = true; return; }
 
   const monthlyAmount = annualize(state.amount, state.period);
   const result = state.direction === 'grossToNet' ? grossToNet(state.contractType, monthlyAmount, state.options) : netToGross(state.contractType, monthlyAmount, state.options);
@@ -311,7 +348,8 @@ form.addEventListener('submit', (event) => {
 });
 form.addEventListener('input', () => calculateAndRender({ shouldValidate: false }));
 form.addEventListener('change', () => calculateAndRender({ shouldValidate: false }));
-form.addEventListener('reset', () => window.setTimeout(() => { history.replaceState(null, '', window.location.pathname); updateConditionalFields(); setEmptyState(); }, 0));
+form.addEventListener('reset', () => window.setTimeout(() => { history.replaceState(null, '', window.location.pathname); amountError.textContent = ''; updateConditionalFields(); setEmptyState(); }, 0));
+printSummaryButton.addEventListener('click', () => window.print());
 document.querySelectorAll('[data-amount]').forEach((button) => button.addEventListener('click', () => { amountInput.value = button.dataset.amount; calculateAndRender(); }));
 
 if (applyStateFromQuery()) calculateAndRender(); else { updateConditionalFields(); setEmptyState(); }
