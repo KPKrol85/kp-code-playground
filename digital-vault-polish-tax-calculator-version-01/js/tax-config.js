@@ -1,5 +1,7 @@
 export const TAX_CONFIG = {
   year: 2026,
+  rulesVersion: 'PL-2026-simplified-v1',
+  lastReviewed: '2026-06-29',
   thresholds: {
     annualTaxFreeAmount: 30000,
     firstBracketLimit: 120000,
@@ -47,8 +49,15 @@ export const TAX_CONFIG = {
     preferential: { social: 456.18, healthBase: 1441.8 },
     starter: { social: 0, healthBase: 0 },
   },
+  assumptions: [
+    'Model używa miesięcznych wyliczeń i przelicza je na rok przy trybie rocznym.',
+    'B2B nie uwzględnia kosztów działalności, VAT, księgowości, urlopu, chorobowego ani prywatnych ubezpieczeń.',
+    'Ryczałt B2B używa domyślnej stawki IT 12%.',
+    'Umowa zlecenie zakłada brak dobrowolnej składki chorobowej w obecnym formularzu.',
+    'Płatnik VAT jest opcją informacyjną i nie zmienia wyniku w tej wersji.',
+  ],
   notes: {
-    legalDisclaimer: 'Wyniki są szacunkowe i bazują na uproszczonym modelu miesięcznym. Przepisy oraz indywidualne ulgi mogą zmienić wynik.',
-    accountingCheck: 'Wybrane ustawienia, szczególnie B2B, ulga dla młodych i 50% KUP, wymagają indywidualnej weryfikacji księgowej.',
+    legalDisclaimer: 'Wyniki są szacunkowe i bazują na uproszczonym modelu miesięcznym. Nie zastępują porady podatkowej, prawnej, księgowej ani finansowej.',
+    accountingCheck: 'Wybrane ustawienia, szczególnie B2B, ulga dla młodych i 50% KUP, wymagają indywidualnej weryfikacji z księgowym lub doradcą.',
   },
 };

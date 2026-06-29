@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "scripts": {
+    "test:calculations": "node scripts/test-calculations.js"
+  }
+}
