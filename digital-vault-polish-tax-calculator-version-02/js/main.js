@@ -11,6 +11,10 @@ const zusType = document.getElementById("zusType");
 const customZus = document.getElementById("custom-zus");
 const historyEl = document.getElementById("calculation-history");
 const scenarioSelect = document.getElementById("quick-scenario");
+const assumptionsMeta = document.getElementById("assumptions-meta");
+const assumptionsList = document.getElementById("assumptions-list");
+const limitationsList = document.getElementById("limitations-list");
+const assumptionsDisclaimer = document.getElementById("assumptions-disclaimer");
 
 const HISTORY_KEY = "tax-calculator-history-v2";
 const MAX_HISTORY = 8;
@@ -85,6 +89,28 @@ function collectOptions() {
     customSocial: parseAmount(fd.get("customSocial")),
     customHealth: parseAmount(fd.get("customHealth")),
   };
+}
+
+function renderList(target, items) {
+  if (!target) return;
+  target.innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+}
+
+function renderAssumptionsPanel() {
+  const metadata = TAX_CONFIG.metadata;
+  if (!metadata || !assumptionsMeta) return;
+
+  assumptionsMeta.innerHTML = `
+    <div><dt>Rok zasad podatkowych</dt><dd>${metadata.taxYear}</dd></div>
+    <div><dt>Nazwa modelu</dt><dd>${metadata.modelName}</dd></div>
+    <div><dt>Ostatni przegląd</dt><dd>${metadata.lastReviewed}</dd></div>
+    <div><dt>Status weryfikacji</dt><dd>${metadata.verificationStatus}</dd></div>
+  `;
+  renderList(assumptionsList, metadata.assumptions || []);
+  renderList(limitationsList, metadata.limitations || []);
+  if (assumptionsDisclaimer) {
+    assumptionsDisclaimer.textContent = `Wynik orientacyjny: ${metadata.disclaimer} ${metadata.sourceStatus}`;
+  }
 }
 
 function renderResults(resultByPeriod) {
@@ -217,5 +243,6 @@ mediaQuery.addEventListener("change", () => {
 });
 
 initTheme();
+renderAssumptionsPanel();
 renderHistory();
 calculateAndRender();

@@ -147,6 +147,14 @@ Risks / notes:
 - Do not overstate official correctness unless constants have been verified separately.
 - Use neutral language such as “estimated,” “simplified,” and “requires verification.”
 
+Implementation status: Implemented
+
+Completed on: 2026-06-29
+
+Files changed: `js/tax-config.js`, `index.html`, `js/main.js`, `css/style.css`, `README.md`, `improvements-plsn.md`
+
+Notes: Added central tax-rule metadata and a visible assumptions panel rendered from `TAX_CONFIG`. README now documents the model year, simplified assumptions, verification status, disclaimer, and update location. Tax constants were not officially verified in this task and still require official-source verification. Future related tasks, especially official-source verification and calculation regression tests, remain in the roadmap.
+
 ### Improvement 2 — Create calculation regression tests
 
 Priority: P0
