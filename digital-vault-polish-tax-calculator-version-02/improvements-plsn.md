@@ -231,6 +231,14 @@ Risks / notes:
 - Avoid relying on unofficial summaries as primary sources for release verification.
 - This should not introduce paid APIs or runtime dependencies.
 
+Implementation status: Implemented
+
+Completed on: 2026-06-29
+
+Files changed: `docs/tax-verification-checklist.md`, `README.md`, `improvements-plsn.md`
+
+Notes: Added an official-source verification checklist that maps all major `TAX_CONFIG` constant groups, separates official-source values from simplified model assumptions, and documents release-blocking verification requirements. Tax constants remain marked as requiring official-source verification unless they are model assumptions; no formulas or constants were changed.
+
 ### Improvement 4 — Complete accessibility validation pass
 
 Priority: P1
