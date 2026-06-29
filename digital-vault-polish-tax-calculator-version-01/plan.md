@@ -1,423 +1,400 @@
-# Digital Vault Polish Tax Calculator — Audit and Development Plan
+# Digital Vault Polish Tax Calculator — Development Plan
 
-## 1. Current Status
+_Last roadmap refresh: 2026-06-29_
 
-`digital-vault-polish-tax-calculator-version-01` is a static, vanilla frontend calculator for estimating Polish earnings, taxes, social contributions, health contributions, employer cost, and cooperation model comparisons. The current implementation is already more than a prototype: it has a clear landing section, a calculator form, result cards, a comparison table, dark/light/system theme support, URL state restoration, contextual warnings, and separated JavaScript modules for configuration, calculations, utilities, and UI orchestration.
+## 1. Product Overview
 
-The product direction is appropriate for the KP_Code Digital Vault ecosystem: fast, focused, informative, and useful as a practical decision-support tool. The next development stage should not be a rewrite. It should be a staged product hardening process focused on calculation transparency, correctness validation, trust signals, accessibility, mobile polish, and maintainable expansion.
+`digital-vault-polish-tax-calculator-version-01` is a static vanilla frontend tool in the KP_Code Digital Vault ecosystem. It estimates Polish gross-to-net and net-to-gross values, contributions, PIT, employer cost, and a comparison of common cooperation models: employment contract, mandate contract, specific work contract, and selected B2B variants.
 
-Important tax/legal note: the calculator currently presents a 2026-oriented simplified model. Before production positioning, the project needs visible tax-rule version metadata, explicit assumptions, source/update notes, QA examples, and a clear disclaimer that results are estimates and not tax, legal, accounting, or financial advice.
+The product should remain a fast, transparent decision-support calculator rather than tax/legal/accounting advice. Its biggest value is helping users understand tradeoffs and ask better questions before negotiating a contract or consulting an accountant.
 
-## 2. Existing Features
+## 2. Current Implementation Status
 
 ### Core calculator flows
 
-- Gross-to-net calculation.
-- Net-to-gross calculation using an iterative binary-search approach.
-- Monthly and yearly input modes.
-- Contract type selection:
-  - employment contract / `umowa o pracę`,
-  - mandate contract / `umowa zlecenie`,
-  - specific work contract / `umowa o dzieło`,
-  - B2B progressive scale,
-  - B2B linear tax,
-  - B2B lump sum.
-- Quick amount buttons for common values.
-- Reset flow that clears query parameters and restores the empty state.
-
-### Options currently exposed
-
-- Under-26 relief toggle.
-- PPK participation toggle.
-- PIT-2 monthly reduction toggle.
-- Deductible cost option: standard, elevated, or 50%.
-- B2B-specific option section displayed only for B2B contract types.
-- VAT payer toggle in the B2B section.
-- ZUS type selection: full, preferential, starter, or custom values.
-- Custom B2B social and health contribution inputs.
-
-### Result and comparison output
-
-- Primary summary cards for gross, net, and employer cost when available.
-- Detailed deduction list for social contributions, health contribution, PIT, PPK, and total deductions.
-- Contextual note explaining period conversion.
-- Contract comparison table ranking cooperation types by highest net result for gross-to-net mode or lowest gross amount for net-to-gross mode.
-- Visual relationship bars in the comparison table.
-- URL synchronization for shareable/restorable state, including amount, direction, period, contract type, common options, and custom ZUS values.
-
-### UI and brand direction
-
-- Professional hero section with Digital Vault framing.
-- Step-based layout: input, results, comparison.
-- Modern panel/card visual system.
-- Design-token CSS variables for colors, shadows, typography scale, radius, and theme behavior.
-- Light, dark, and system theme support with persisted preference.
-- Responsive CSS with mobile table transformation.
-
-## 3. Technical Audit
-
-### Architecture
-
-The project uses a clean static structure:
-
-- `index.html` contains the semantic shell, form controls, result containers, and theme bootstrap script.
-- `css/style.css` contains all styling, design tokens, responsive rules, and theme variants.
-- `js/tax-config.js` centralizes tax parameters, contribution rates, ZUS presets, and disclaimer copy.
-- `js/calculations.js` contains calculation functions for each contract type plus comparison generation.
-- `js/utils.js` contains formatting, parsing, rounding, and period conversion helpers.
-- `js/main.js` handles DOM references, theme controls, form state, validation, rendering, query synchronization, and event listeners.
-
-This separation is worth preserving. It is simple, framework-free, understandable, and aligned with a lightweight Digital Vault tool.
-
-### Strengths worth preserving
-
-- Vanilla ES modules keep the app dependency-light and easy to host.
-- Tax constants are not hardcoded throughout the UI; most important numbers live in `tax-config.js`.
-- Calculation functions are exported, which makes future unit testing realistic.
-- `netToGross` is implemented generically on top of `grossToNet`, reducing duplicated reverse-calculation logic.
-- The theme bootstrap script runs before CSS loads, reducing flash-of-wrong-theme risk.
-- Query-string state makes calculations restorable and shareable without backend infrastructure.
-- B2B conditional UI avoids overwhelming non-B2B users.
-- The UI already uses many semantic elements such as `form`, `fieldset`, `legend`, `section`, `table`, and labeled inputs.
-
-### Technical gaps and risks
-
-- There is no automated test suite for calculations, URL state restoration, validation, or rendering.
-- Calculation assumptions are not yet displayed in a structured, source-like way for each contract type.
-- `vatPayer` is collected and restored but does not appear to affect calculations. This is acceptable only if clearly labeled as informational, otherwise it creates a trust risk.
-- The same option object is passed into all comparison calculations, which may produce misleading comparisons because some options are contract-specific. For example, B2B ZUS options apply to B2B, but employment-specific PIT/PPK/deductible-cost options may need different applicability rules.
-- The `sickness` option is referenced in mandate-contract calculations, but there is no visible UI control for it. This makes mandate sickness contribution behavior unclear.
-- B2B calculations do not include business costs/expenses, VAT treatment, mixed expense deductibility, health contribution deductibility/caps, or other real-world tax-planning details.
-- Annual calculations are currently derived by converting user input to a monthly amount and applying a simplified monthly model. This is useful for quick estimates, but it should be disclosed as a model choice because true annual payroll/tax calculations can differ.
-- There is no build, lint, test, or formatting workflow documented in the project.
-- `main.js` mixes theme management, state parsing, validation, DOM rendering, and URL syncing. It is acceptable at the current size, but future features should be extracted into smaller modules before the file becomes difficult to maintain.
-
-## 4. UX/UI Audit
-
-### Current UX direction
-
-The current user journey is strong:
-
-1. User reads a concise product promise and simplified-model notice.
-2. User enters an amount.
-3. User selects direction, period, contract type, and options.
-4. Results update live after input/change.
-5. User sees a selected-contract result and a broader contract comparison.
-
-The layout communicates a professional calculator product rather than a throwaway demo. The visual language is clean, modern, and suitable for a financial tool.
-
-### UX strengths
-
-- Step labels make the flow easy to follow.
-- Quick amount buttons reduce friction.
-- Result cards prioritize the most important numbers.
-- Contract comparison is a high-value differentiator because users often want to understand employment vs B2B tradeoffs.
-- Contextual warnings appear near the calculator form.
-- Dark/light/system theme control is a polished touch.
-- Query-state support enables sharing/reopening a calculation.
-
-### UX improvement opportunities
-
-- Add a simple/advanced mode split. The current form exposes several advanced concepts immediately; a simple mode could ask only for amount, direction, period, and contract type.
-- Add explanatory tooltips or helper text for PIT-2, under-26 relief, PPK, deductible costs, ZUS type, health contribution, and employer cost.
-- Add a structured assumptions panel near results so users know exactly which tax year, rates, thresholds, and simplifications were used.
-- Improve result hierarchy with clearer labels such as `Take-home pay`, `Your gross`, `Employer total cost`, and `Total public-law deductions`.
-- Add a tax-threshold progress indicator for annual taxable base, especially for progressive scale calculations.
-- Add side-by-side scenario comparison for two or three saved variants.
-- Add a print/download summary action after calculation.
-- Consider a sticky mobile result summary after the user enters a valid amount.
-- Clarify whether yearly mode means annualized input under a simplified monthly model or a true annual tax calculation.
-- Add empty-state guidance in the comparison table, not only in the results panel.
-
-## 5. Calculation Logic Audit
-
-### Current calculation model
-
-The calculator currently uses simplified formulas for:
-
-- progressive PIT thresholds,
-- tax-free amount relief,
-- PIT-2 monthly relief,
-- employee social contributions,
-- employee health contribution,
-- PPK employee and employer rates,
-- employer-side employment costs,
-- mandate and specific-work deductible cost options,
-- under-26 relief for selected contracts,
-- B2B scale, linear, and lump-sum variants,
-- B2B ZUS presets and custom contribution overrides.
-
-### Calculation strengths
-
-- The logic is concentrated in a dedicated calculation module.
-- Contract-specific functions make the model readable and extendable.
-- Rounding is centralized through utility helpers.
-- Net-to-gross is calculated consistently by reusing gross-to-net functions.
-- Configurable rates make future tax-year updates easier than if all values were embedded in UI code.
-
-### Calculation concerns to address before production
-
-#### P0 / correctness-sensitive
-
-- Validate every configured 2026 rate and threshold against authoritative sources before product release. If any values are provisional, estimated, or simplified, mark them explicitly.
-- Add golden test cases for each contract type and direction. Without tests, future changes can silently break financial results.
-- Resolve the PIT model discrepancy: `calculateAnnualScaleTax` subtracts tax-free relief, while `calculateMonthlyPit` applies progressive tax divided by 12 and optionally PIT-2 relief. The intended behavior should be verified and documented for each contract type.
-- Review under-26 relief handling. Current implementation subtracts exempt revenue from annual tax base, but professional-grade handling should account for eligibility, contract applicability, annual limit, and interaction with costs/contributions.
-
-#### P1 / production-readiness
-
-- Document exact assumptions for each contract type directly in the UI.
-- Add a tax-year selector or at minimum a visible `Tax rules version: 2026` metadata block.
-- Add a calculation QA checklist with expected examples and tolerances.
-- Make option applicability explicit. Options that do not apply to a selected contract should be hidden, disabled, or explained.
-- Decide whether `vatPayer` should be removed, labeled as future/informational, or wired into a future VAT/cost module.
-- Add business expense inputs for B2B before positioning B2B results as practical profitability estimates.
-- Add support for choosing lump-sum rate instead of always using a hardcoded IT rate.
-
-#### P2 / advanced usefulness
-
-- Add annual income planner with threshold progress and expected PIT movement during the year.
-- Add employer total cost breakdown card for employment contracts.
-- Add health contribution visibility by calculation basis.
-- Add B2B costs/expenses, revenue, VAT, and post-cost taxable base sections.
-- Add effective tax rate and effective total burden with clear definitions.
-- Add monthly vs yearly result toggle inside results, even when input mode differs.
-
-## 6. Accessibility Audit
-
-### Current accessibility positives
-
-- The page uses a semantic heading hierarchy and landmark-like structure.
-- The calculator uses a real `form` element.
-- Radio groups are wrapped in `fieldset` and `legend`.
-- Inputs and selects have visible labels.
-- Theme buttons expose `aria-pressed` and descriptive labels.
-- Results and warning areas use `aria-live` so updates can be announced.
-- The amount input has an associated error message element.
-- Responsive design preserves mobile access to table values via `data-label` cells.
-
-### Accessibility issues and improvements
-
-#### P0 / serious accessibility
-
-- Link the amount input to its error message with `aria-describedby="amount-error"` and set `aria-invalid` when validation fails.
-- Ensure keyboard focus is visible and consistent across all interactive elements, including quick amount buttons and checkbox cards.
-- Ensure hidden conditional sections do not leave disabled/irrelevant controls in the focus or announcement flow.
-
-#### P1 / production-readiness
-
-- Add helper text for advanced options and connect it with `aria-describedby` where appropriate.
-- Announce major result changes in a concise way; avoid overly verbose repeated screen-reader announcements on every keystroke.
-- Review color contrast in both light and dark themes, especially muted text, warning panels, selected segmented controls, and table bars.
-- Add accessible names or captions for the comparison table. A `<caption>` could summarize what the table compares.
-- Consider a non-table card comparison view for small screens if the current responsive table becomes too dense.
-- Add `autocomplete` and input hints where helpful.
-
-#### P2 / polish
-
-- Add skip link to the calculator/results area if this tool becomes embedded in a larger Digital Vault page.
-- Respect reduced-motion preferences for all animated theme and hover behavior.
-- Add manual accessibility QA checklist using keyboard-only navigation and screen-reader smoke testing.
-
-## 7. Performance and Maintainability Notes
-
-### Performance
-
-The current app should be fast because it is static, has no framework runtime, uses a single local variable font, and performs lightweight calculations. Performance risks are currently low.
-
-Recommended future checks:
-
-- Keep JavaScript small and avoid introducing a framework unless a later product requirement truly needs it.
-- Avoid heavy charting libraries for simple visualizations; use CSS bars or lightweight inline SVG.
-- Add lazy/non-blocking behavior only if future assets grow.
-- Consider debouncing live calculation if future logic becomes significantly heavier.
-- Keep font loading optimized and verify no layout shift from font swap.
-
-### Maintainability
-
-- Keep `tax-config.js` as the source of truth for configurable rates.
-- Split future rendering helpers out of `main.js` before adding export/print/scenario features.
-- Add tests before refactoring formulas.
-- Introduce clear naming for model concepts: `revenue`, `gross`, `taxBase`, `contributionBase`, `net`, `employerCost`, and `takeHome`.
-- Use small pure helpers for tax-year calculations to avoid business logic hidden in DOM code.
-- Preserve BEM-like class naming and token-based CSS.
-- Add comments only where tax formula assumptions are not obvious; avoid over-commenting simple UI code.
-
-## 8. Product Opportunities
-
-### Professional calculator patterns to adopt
-
-Without copying another product's branding or design, the project can borrow common professional calculator patterns:
-
-- prominent take-home summary,
-- monthly and yearly result tabs,
-- contribution breakdown cards,
-- employer cost section,
-- assumptions and tax-year metadata,
-- visible legal/tax disclaimer,
-- comparison mode for employment vs B2B,
-- scenario saving and side-by-side comparison,
-- downloadable PDF/print summary,
-- permalink/shareable URL,
-- clear validation and inline helper text,
-- dedicated simple and advanced modes,
-- educational explanations beside complex tax terms.
-
-### High-value feature ideas
-
-- **Simple salary calculator mode:** amount, direction, period, contract type, calculate.
-- **Advanced tax breakdown mode:** exposes PIT, ZUS, health, KUP, PPK, reliefs, and assumptions.
-- **Contract type comparison:** already exists; improve with applicability notes and clearer ranking criteria.
-- **Employment vs B2B profitability calculator:** include business expenses, VAT assumptions, accounting costs, paid leave, sick leave, and invoice net/gross concepts.
-- **Annual income planner:** show annual threshold progress, monthly tax base, and warning when crossing 120,000 PLN taxable threshold.
-- **Tax-year selector:** start with `2026` only, then support historical configurations once reliable data is added.
-- **Result export:** print-friendly summary and future PDF/share option.
-- **Saved presets:** localStorage scenarios such as `Full-time employment`, `B2B linear with full ZUS`, or user-created presets.
-- **Localization-ready copy:** centralize UI strings if Polish/English versions or other Digital Vault embedding contexts become likely.
-- **QA accuracy panel:** internal or visible page with sample calculations and last-reviewed date.
-
-## 9. Recommended Feature Roadmap
-
-### Stage 1 — Trust and correctness foundation
-
-Goal: make the current calculator safe to improve and more transparent.
-
-- Add calculation unit tests for all exported calculation functions.
-- Create a small test fixture file with representative inputs and expected outputs.
-- Add visible tax-rule version metadata and last-reviewed date.
-- Add an assumptions/disclaimer panel near results.
-- Audit 2026 rates and mark any simplified or unverified values.
-- Fix accessibility linkage for validation errors.
-- Clarify unused or currently informational options such as VAT payer.
-
-### Stage 2 — UX clarity and option applicability
-
-Goal: reduce confusion and make results easier to trust.
-
-- Add simple/advanced mode.
-- Hide or disable options that do not apply to the selected contract type.
-- Add helper text/tooltips for PIT-2, PPK, KUP, under-26 relief, and ZUS types.
-- Add a comparison-table caption and improved empty state.
-- Add clearer result labels and definitions.
-- Improve mobile result cards and comparison readability.
-- Add a threshold progress indicator for progressive tax scenarios.
-
-### Stage 3 — Product-grade comparison tools
-
-Goal: turn the calculator into a decision-support product.
-
-- Add side-by-side scenario comparison.
-- Add B2B expense inputs and accounting-cost input.
-- Add lump-sum tax rate selection.
-- Add employer cost breakdown.
-- Add monthly/yearly result toggle independent of input period.
-- Add print-friendly summary and browser print button.
-- Add shareable URL improvements with compact parameter names or encoded state.
-
-### Stage 4 — Digital Vault product expansion
-
-Goal: create premium utility and ecosystem value.
-
-- Add saved presets in localStorage.
-- Add historical tax-year selector with separate config objects.
-- Add guided wizard for `employment vs B2B` decisions.
-- Add downloadable branded report.
-- Add checklist for assumptions users should confirm with an accountant.
-- Add optional lead-generation or newsletter CTA after useful non-intrusive results.
-- Add content modules explaining Polish tax concepts in plain language.
-
-## 10. Priority Plan
-
-### P0: Critical correctness, broken flows, serious accessibility
-
-- Verify and document all tax parameters before production use.
-- Add automated calculation regression tests.
-- Add visible tax-year/version metadata and stronger assumptions/disclaimer language.
-- Fix amount validation accessibility with `aria-describedby` and `aria-invalid`.
-- Review PIT/tax-free/PIT-2 logic for consistency and document the intended model.
-- Resolve option ambiguity for `vatPayer` and mandate sickness contribution.
-
-### P1: Important before production-quality positioning
-
-- Add assumptions panel for selected contract and active options.
-- Add helper text for tax concepts.
-- Improve option applicability by contract type.
-- Add comparison table caption and better mobile comparison guidance.
-- Add calculation QA checklist in documentation.
-- Add print styles and a print summary button.
-- Add employer cost breakdown.
-
-### P2: Useful polish and professional feature additions
-
-- Add simple/advanced mode.
-- Add threshold progress indicator.
-- Add monthly/yearly result toggle.
-- Add lump-sum rate selector.
-- Add B2B expense and accounting-cost inputs.
-- Add scenario comparison.
-- Add saved presets.
-- Add localized copy structure if needed.
-
-### P3: Future premium/product ideas
-
-- Historical tax-year selector with verified datasets.
-- Branded downloadable report.
-- Guided employment-vs-B2B decision wizard.
-- Educational tax glossary and explainers.
-- Digital Vault integration with other calculators and saved user workspace.
-- Premium scenario library for freelancers, employees, contractors, and founders.
-
-## 11. Future Monetization / Digital Vault Product Potential
-
-This project has strong Digital Vault potential because users repeatedly need salary, contract, and B2B comparison tools when negotiating compensation, changing jobs, freelancing, or planning yearly income.
-
-Possible product positioning:
+- **Implemented:** gross-to-net calculations for all supported contract types.
+- **Implemented:** net-to-gross reverse calculation via binary search over the gross-to-net functions.
+- **Implemented:** monthly and yearly input modes. Yearly mode currently divides the entered value by 12, runs the monthly model, and annualizes displayed results.
+- **Implemented:** quick amount buttons for common monthly values.
+- **Implemented:** reset flow clears the query string and restores the empty state.
+- **Needs verification:** official tax correctness for all rates, formulas, thresholds, and relief interactions.
+
+### Contract types
+
+- **Implemented:** `employment` / umowa o pracę.
+- **Implemented:** `mandate` / umowa zlecenie.
+- **Implemented:** `specificWork` / umowa o dzieło.
+- **Implemented:** `b2bScale` / B2B skala podatkowa.
+- **Implemented:** `b2bLinear` / B2B podatek liniowy.
+- **Implemented:** `b2bLumpSum` / B2B ryczałt.
+- **Partially implemented:** mandate sickness contribution exists in calculation code, but there is no UI control; the visible assumption says mandate uses no voluntary sickness contribution.
+
+### B2B options
+
+- **Implemented:** B2B options section appears only for B2B contract types.
+- **Implemented:** VAT payer checkbox is present and explicitly labeled as informational; it does not affect calculations.
+- **Implemented:** ZUS type selector supports full, preferential, starter, and custom values.
+- **Implemented:** custom B2B social and health contribution inputs.
+- **Partially implemented:** B2B ryczałt has a config object with IT and general rates, but the calculator always uses the IT 12% rate and has no rate selector.
+- **Not implemented:** B2B expenses, accounting costs, VAT settlement logic, health contribution deductibility/caps, paid leave/sick leave modeling, invoice net/gross distinction.
+
+### Result and comparison UI
+
+- **Implemented:** primary cards for net, gross, effective burden, and employer cost when applicable.
+- **Implemented:** detailed rows for social contributions, health contribution, PIT, PPK, and total deductions.
+- **Implemented:** comparison table for all supported contract types.
+- **Implemented:** comparison ranking changes by direction: highest net for gross-to-net and lowest required gross/revenue for net-to-gross.
+- **Implemented:** visual relationship bars in the comparison table.
+- **Implemented:** empty comparison state before a valid amount is entered.
+- **Partially implemented:** employer cost is shown as one value for employment, but there is no employer-cost component breakdown.
+- **Not implemented:** side-by-side saved scenario comparison, visual threshold indicator, result definition glossary, effective tax/burden explanation cards.
+
+### Trust and assumptions
+
+- **Implemented:** hero and footer disclose simplified model limitations.
+- **Implemented:** `TAX_CONFIG` includes `year`, `rulesVersion`, `lastReviewed`, assumptions, and disclaimer notes.
+- **Implemented:** assumptions panel renders near results and includes active option notes plus configured assumptions.
+- **Implemented:** contextual warning switches to an accounting-check message for B2B, under-26, 50% KUP, or custom ZUS.
+- **Needs verification:** `lastReviewed` reflects an internal implementation pass, not an audited official-source tax review.
+
+### Accessibility
+
+- **Implemented:** semantic form structure with `fieldset`/`legend`, labels, headings, table caption, and `aria-live` result/warning areas.
+- **Implemented:** amount input is associated with helper/error text and toggles `aria-invalid`.
+- **Implemented:** helper text is connected to advanced options via `aria-describedby`.
+- **Implemented:** theme controls use `aria-pressed`.
+- **Implemented:** visible focus styling exists for theme buttons, segmented controls, form controls, quick values, buttons, and selected table rows.
+- **Implemented:** reduced-motion media query exists.
+- **Needs QA:** keyboard-only walkthrough, screen-reader smoke testing, color contrast review, mobile table/card readability.
+
+### Print/export
+
+- **Implemented:** print summary button appears after valid results and calls `window.print()`.
+- **Implemented:** print CSS hides the form and non-essential controls while keeping results, comparison, and assumptions printable.
+- **Not implemented:** PDF generation, branded downloadable report, export/share file.
+
+### Saved scenarios
+
+- **Not implemented:** no scenario save/load/delete UI and no localStorage scenario persistence.
+- **Implemented only for theme:** localStorage stores the theme preference.
+
+### Tests
+
+- **Implemented:** dependency-free Node calculation test harness via `npm run test:calculations`.
+- **Implemented:** smoke tests for all contract types, representative regression checks, net-to-gross tolerance checks, and comparison shape checks.
+- **Partially implemented:** tests assert current behavior, but expected values are not yet validated against official-source examples.
+- **Not implemented:** DOM/UI tests, URL restore tests, print tests, accessibility automated tests, mobile visual regression tests.
+
+### Documentation
+
+- **Implemented:** README explains purpose, local run command, test command, major features, and disclaimer.
+- **Implemented:** this plan is the living roadmap and audit record.
+- **Needs ongoing updates:** README should stay user-facing and concise; this file should preserve detailed audit/roadmap knowledge.
+
+## 3. Architecture Map
+
+- `index.html` — semantic shell, hero, calculator form, results section, assumptions panel mount, comparison table, footer, and theme bootstrap script. Keep markup accessible and avoid adding framework-specific structure.
+- `css/style.css` — all design tokens, layout, components, responsive behavior, focus states, assumptions panel styles, comparison table styles, reduced motion, and print styles. Future extraction is optional; do not split unless CSS becomes materially hard to maintain.
+- `js/tax-config.js` — central tax-rate/configuration source, B2B ZUS presets, assumptions, version metadata, and disclaimer copy. This should remain the first place future Codex sessions inspect before touching formulas.
+- `js/calculations.js` — pure calculation functions for contract types, employer cost, reverse net-to-gross search, and comparison generation. Formula changes require tests and official-source verification.
+- `js/utils.js` — money formatting, parsing, rounding, positive clamping, and monthly/yearly conversion helpers.
+- `js/main.js` — DOM references, theme management, form state, validation, conditional fields, rendering, URL synchronization, and print action. It is acceptable now, but future large UI features should be extracted to smaller modules before this file becomes too dense.
+- `scripts/test-calculations.js` — lightweight calculation regression harness using Node ES modules and no external dependencies.
+- `package.json` — declares ESM mode and `test:calculations` script.
+- `README.md` — concise user/developer entry point.
+- `assets/fonts/InterVariable.woff2` — local font asset.
+
+Stable boundaries to preserve: configuration in `tax-config.js`, formulas in `calculations.js`, generic helpers in `utils.js`, and DOM/UI orchestration in `main.js`. Any refactor must preserve current URL state behavior and tests.
+
+## 4. Completed Work Log
+
+### 2026-06-29 — Project mapping and roadmap refresh
+
+- Completed repository mapping across README, plan, HTML, CSS, JS modules, package script, and tests.
+- Reclassified outdated roadmap items that are now implemented.
+- Preserved calculation-risk notes and added clearer next-task priorities.
+
+### 2026-06-29 — Trust, assumptions, accessibility, print, and test foundation visible in code
+
+- Added visible tax-rule metadata fields in `TAX_CONFIG`: `year`, `rulesVersion`, and `lastReviewed`.
+- Added assumptions/disclaimer data in `TAX_CONFIG` and rendered an assumptions panel in the results area.
+- Added helper text for key options and connected controls through `aria-describedby`.
+- Added `aria-invalid` behavior for the amount input.
+- Added comparison table caption and clearer empty comparison state.
+- Added print summary button and print CSS foundation.
+- Added dependency-free calculation regression tests and `npm run test:calculations`.
+
+### Earlier completed baseline
+
+- Static vanilla ES module architecture.
+- Light/dark/system theme support with persisted preference.
+- Gross-to-net and net-to-gross flows.
+- Monthly/yearly input modes.
+- URL query restoration and synchronization.
+- Contract comparison table for six cooperation models.
+- B2B ZUS presets and custom ZUS inputs.
+
+## 5. Current Risk Register
+
+| Risk | Severity | Current status | Recommended next action |
+| --- | --- | --- | --- |
+| Simplified tax model can differ from payroll/accounting systems. | P0 | Clearly disclosed, but not official-source verified. | Verify formulas and keep limitations visible in UI/README. |
+| Tax-law/rate freshness risk for 2026 constants. | P0 | Config has metadata, but no cited official-source audit. | Audit `tax-config.js` against authoritative sources and record source/date notes. |
+| Monthly vs annual simplification risk. | P1 | Yearly mode is annualized monthly model. | Add stronger UI explanation and golden yearly edge-case tests. |
+| B2B assumptions risk. | P0 | B2B ignores expenses, VAT effects, accounting costs, leave, insurance, and many real-world choices. | Keep B2B caveats prominent; add expense module only with explicit simplified assumptions. |
+| VAT treatment limitations. | P1 | Checkbox is informational and documented as no-op. | Decide whether to keep as informational, remove, or implement a proper VAT module later. |
+| Health contribution and deductibility limitations. | P0 | Simplified health calculations; no detailed deductibility/cap handling. | Verify against official rules and add tests for B2B health scenarios. |
+| Under-26 relief limitations. | P1 | Implemented simplistically for selected contracts. | Verify eligibility, annual limit, and interaction with costs/contributions. |
+| Net-to-gross approximation limitations. | P1 | Binary search with tolerance; covered by smoke tests. | Add edge-case regression cases and document tolerance. |
+| Option applicability confusion. | P1 | Some controls are disabled by contract type; assumptions panel explains selected effects. | Continue tightening disabled/hidden states and explanatory copy. |
+| Accessibility/table complexity. | P1 | Many foundations implemented; no formal QA yet. | Run keyboard, screen-reader, mobile table, and contrast checks. |
+| No backend/persistence. | P2 | Static-only; URL sharing exists; saved scenarios do not. | Keep static by default; add localStorage scenarios only if needed. |
+
+## 6. Calculation Accuracy Plan
+
+Before any public production-quality positioning, complete a focused correctness program:
+
+1. **Official-source verification**
+   - Verify every value in `tax-config.js`: PIT thresholds, tax-free amount, PIT rates, under-26 limit, employee social rates, health rates/minimums, employer rates, PPK defaults, deductible costs, and B2B ZUS presets.
+   - Add comments or documentation metadata for source names and review dates.
+   - Clearly mark anything provisional, simplified, or intentionally omitted.
+
+2. **Tax-rule metadata**
+   - Extend config metadata with `sourceReviewedBy`, `sourceUrls` or source labels, and `modelLimitations` if future docs need stronger traceability.
+   - Keep `rulesVersion` stable and increment when formula assumptions change.
+
+3. **Golden test cases**
+   - Add official-source or accountant-verified expected examples for each contract type.
+   - Keep tolerance-based assertions because payroll rounding can vary by system.
+   - Separate “current behavior regression” tests from “verified accuracy” tests.
+
+4. **Required edge cases**
+   - Zero/empty amount validation.
+   - Very low amount.
+   - High amount crossing the 120,000 PLN threshold.
+   - Under-26 relief enabled and disabled.
+   - PPK enabled and disabled.
+   - PIT-2 enabled and disabled.
+   - B2B full/preferential/starter/custom ZUS.
+   - B2B ryczałt different rates after a rate selector exists.
+   - B2B expenses after an expenses module exists.
+   - Yearly input conversion.
+   - Net-to-gross reverse search for all contract types.
+
+5. **Do not overclaim**
+   - Until this plan is complete, language must remain “estimate”, “simplified model”, and “not tax/legal/accounting/financial advice”.
+
+## 7. UX/UI Roadmap
+
+### Already implemented
+
+- Professional Digital Vault hero and calculator flow.
+- Step-based layout: data, results, comparison.
+- Quick amount buttons.
+- Light/dark/system theme.
+- Result summary cards and deduction details.
+- Comparison ranking table with relationship bars.
+- Assumptions panel.
+- Print summary button.
+- Contextual warning/disclaimer.
+
+### Next practical improvements
+
+- Clarify yearly mode near the period selector.
+- Add stronger definitions for gross, net, employer cost, effective burden, PIT, and health contribution.
+- Add employer cost component breakdown for employment.
+- Improve mobile comparison readability, potentially with a card view below a breakpoint.
+- Add side-by-side comparison for two or three scenarios, preferably after calculation tests are expanded.
+- Add a visible threshold indicator for progressive-tax scenarios.
+- Add an explicit B2B ryczałt rate selector.
+
+### Later premium/product improvements
+
+- Guided employment vs B2B wizard.
+- Glossary/explainer modules for Polish tax terms.
+- Visual burden/effective-tax-rate cards.
+- Downloadable branded summary/report.
+- Digital Vault cross-links to related tools.
+- Saved preset templates for common user profiles.
+
+## 8. Accessibility Roadmap
+
+### Implemented foundation
+
+- Amount validation helper/error association and `aria-invalid` state.
+- Helper text associations for advanced controls.
+- Keyboard focus styles for key interactive elements.
+- `fieldset`/`legend` groupings.
+- Comparison table caption.
+- Reduced-motion CSS.
+- Print mode.
+- `aria-live` for warnings/results.
+
+### Needs QA / follow-up
+
+- Full keyboard-only navigation pass from theme controls through print button.
+- Screen-reader smoke test for form labels, dynamic results, assumptions panel, and comparison table.
+- Verify disabled options are understandable and not confusing to assistive technology users.
+- Contrast audit in light and dark themes.
+- Mobile table/card readability review.
+- Confirm print output preserves meaningful order and does not hide required disclaimers.
+
+### Future checklist for screen-reader smoke test
+
+- Initial page title and H1 are announced correctly.
+- Amount input announces label, helper, validation error, and invalid state.
+- Contract type and advanced options have understandable labels/descriptions.
+- Results update is not overly verbose on every keystroke.
+- Comparison table caption and row/column context are understandable.
+- Print button is discoverable after calculation.
+
+## 9. Testing and QA Plan
+
+### Existing automated tests
+
+Run:
+
+```bash
+npm run test:calculations
+```
+
+Current coverage includes:
+
+- smoke tests for all six contract types,
+- representative regression values for selected gross-to-net cases,
+- net-to-gross tolerance checks,
+- comparison array shape checks.
+
+### Next automated test tasks
+
+- Add official-source/accountant-verified golden tests.
+- Add tests for under-26, PPK, PIT-2, yearly conversion, and high-threshold scenarios.
+- Add B2B ZUS variant tests for full, preferential, starter, and custom.
+- Add future ryczałt-rate and B2B-expense tests when those features exist.
+- Consider lightweight browser tests for URL restore and visible DOM states if a test runner is introduced.
+
+### Manual QA checklist
+
+- Gross-to-net and net-to-gross for every contract type.
+- Monthly and yearly modes.
+- URL restore for amount, direction, period, contract type, common options, ZUS type, and custom ZUS.
+- Reset clears URL and UI.
+- Print summary after valid result.
+- Keyboard-only navigation.
+- Mobile viewport checks for calculator, results, assumptions, and comparison.
+- Light/dark/system theme behavior and persistence.
+- No console errors during normal use.
+
+## 10. Documentation Plan
+
+### README status
+
+README is intentionally concise and user-facing. It should cover:
+
+- project purpose,
+- local run instructions,
+- available calculator features,
+- simplified model assumptions,
+- tax/legal/accounting disclaimer,
+- URL sharing,
+- print summary,
+- test command,
+- key limitations.
+
+Current README has the essentials and should be kept lightweight. When formulas or features change, update README only enough that users are not misled.
+
+### Planning documentation status
+
+This `plan.md` is the detailed living roadmap. It should be updated after each meaningful implementation pass, especially when a planned item becomes implemented or a risk is resolved.
+
+## 11. Next Codex Tasks
+
+### P0 tasks
+
+1. **Verify tax constants and assumptions**
+   - Goal: validate `tax-config.js` and formula assumptions against authoritative sources.
+   - Expected files: `js/tax-config.js`, `README.md`, `plan.md`, possibly a new `docs/tax-sources.md`.
+   - Constraints: do not change formulas unless a verified discrepancy is found and tests are updated.
+
+2. **Expand calculation regression tests**
+   - Goal: cover edge cases and options beyond current smoke tests.
+   - Expected files: `scripts/test-calculations.js`, optionally `scripts/fixtures/*.js`.
+   - Constraints: no external dependencies unless explicitly justified.
+
+3. **Accessibility QA and fixes**
+   - Goal: perform keyboard/screen-reader-oriented review and fix discovered issues.
+   - Expected files: `index.html`, `css/style.css`, `js/main.js`, possibly `plan.md`.
+   - Constraints: preserve current design and calculations.
+
+4. **Clarify misleading option behavior**
+   - Goal: ensure VAT, PIT-2, PPK, KUP, and mandate sickness behavior cannot be misunderstood.
+   - Expected files: `index.html`, `js/main.js`, `js/tax-config.js`, `README.md`.
+   - Constraints: avoid formula changes unless scoped and tested.
+
+### P1 tasks
+
+1. **Improve scenario comparison**
+   - Goal: compare two or three named states side by side.
+   - Expected files: `index.html`, `css/style.css`, `js/main.js`, tests if logic is extracted.
+   - Constraints: preserve URL sharing; do not introduce backend persistence.
+
+2. **Improve B2B assumptions/expenses**
+   - Goal: add explicit simplified monthly expenses/accounting costs for B2B.
+   - Expected files: `index.html`, `js/calculations.js`, `js/main.js`, `js/tax-config.js`, `scripts/test-calculations.js`, `README.md`.
+   - Constraints: keep caveats prominent; do not imply full VAT/accounting accuracy.
+
+3. **Improve mobile comparison**
+   - Goal: make comparison easier to scan on narrow screens.
+   - Expected files: `css/style.css`, maybe `index.html`/`js/main.js`.
+   - Constraints: preserve accessible table semantics or provide an equally accessible alternative.
+
+4. **Improve README completeness**
+   - Goal: keep README aligned with latest implemented features and limitations.
+   - Expected files: `README.md`.
+   - Constraints: concise, user-facing, no legal/tax certainty claims.
+
+### P2 tasks
+
+1. **Guided wizard** — help users choose employment vs B2B inputs step by step. Expected files: HTML/CSS/JS UI files. Constraint: keep advanced form accessible.
+2. **Glossary/educational explanations** — explain PIT, ZUS, KUP, PPK, health contribution, employer cost. Expected files: `index.html`, `css/style.css`, maybe copy config. Constraint: concise and non-advisory.
+3. **Digital Vault integration** — add links/embedding affordances for related tools. Expected files: `index.html`, `README.md`. Constraint: no heavy dependencies.
+4. **Saved preset templates** — localStorage presets for common profiles. Expected files: `js/main.js`, `index.html`, `css/style.css`. Constraint: handle storage failures gracefully.
+
+### P3 tasks
+
+1. **Historical tax-year selector** — support verified configurations by year. Constraint: only after source-backed datasets exist.
+2. **Branded downloadable report** — print/PDF-style negotiation report. Constraint: do not add large PDF dependencies without product need.
+3. **Premium scenario library** — curated freelancer/employee/founder scenarios. Constraint: preserve trust and disclaimers.
+
+## 12. Release Readiness Checklist
+
+- [ ] Tax data verified against authoritative sources.
+- [ ] Formula assumptions documented and visible.
+- [ ] Disclaimers visible in UI and README.
+- [ ] Calculation regression tests expanded and passing.
+- [ ] Edge cases tested: low/high amounts, threshold crossing, reliefs, PPK, PIT-2, B2B ZUS variants.
+- [ ] Keyboard-only QA completed.
+- [ ] Screen-reader smoke test completed.
+- [ ] Mobile QA completed.
+- [ ] Print QA completed.
+- [ ] Dark/light/system theme QA completed.
+- [ ] URL restore works for supported state.
+- [ ] Reset behavior works and clears URL.
+- [ ] No console errors in normal use.
+- [ ] README updated.
+- [ ] Limitations documented without overpromising accuracy.
+
+## 13. Monetization / Digital Vault Potential
+
+This tool has strong Digital Vault potential because salary, contract, and B2B comparisons are recurring user needs during job changes, contract negotiations, freelancing decisions, and yearly planning.
+
+Possible model:
 
 - Free core calculator with transparent assumptions.
-- Premium scenario comparison and saved presets.
-- B2B profitability report with expenses, VAT assumptions, and accounting-cost modeling.
-- Downloadable branded PDF for negotiation planning.
-- Educational bundle explaining Polish tax and employment models.
-- Integration with other Digital Vault tools such as invoice calculators, freelance pricing tools, mortgage affordability calculators, and cost-of-living planners.
+- Premium saved comparisons and scenario history.
+- B2B profitability report with expenses, VAT assumptions, accounting-cost modeling, and accountant-check prompts.
+- Downloadable branded summary for negotiation planning.
+- Educational bundle explaining Polish employment/tax concepts in plain language.
+- Integration with other Digital Vault tools such as invoice calculators, freelance pricing calculators, mortgage affordability tools, and cost-of-living planners.
 
-Monetization should not compromise trust. Any premium features should keep disclaimers visible and avoid implying guaranteed tax outcomes.
-
-## 12. Risks and Important Notes
-
-- Tax law, ZUS rates, health contribution rules, reliefs, and limits can change. The calculator must show when rules were last reviewed.
-- A simplified monthly model may differ from payroll systems and year-end tax settlement.
-- B2B results can be materially wrong if business expenses, VAT, accounting costs, insurance, paid leave, and health contribution deductibility are ignored.
-- Contract-specific options can mislead if they are shown globally without applicability notes.
-- Financial calculators need strong accessibility because forms and tables are frequent sources of screen-reader and keyboard-navigation issues.
-- The project should avoid legal/tax certainty claims and should continue to present results as estimates.
-- New features should be added incrementally; do not introduce a framework unless the static vanilla approach becomes a proven blocker.
-
-## 13. Suggested Next Codex Tasks
-
-1. Add a visible tax-rule metadata and assumptions panel using the existing `TAX_CONFIG` values.
-2. Add `aria-describedby` and `aria-invalid` behavior for amount validation.
-3. Create a small vanilla JavaScript calculation test harness for exported calculation functions.
-4. Add contract-option applicability rules so irrelevant controls are hidden, disabled, or explained.
-5. Add helper text/tooltips for PIT-2, PPK, KUP, under-26 relief, ZUS type, and B2B health contribution.
-6. Add a comparison table caption and improve the comparison empty state.
-7. Add print-friendly CSS and a `Print summary` button after valid results.
-8. Add a lump-sum rate selector for B2B ryczałt instead of using only the hardcoded IT rate.
-9. Add a B2B expenses section with a clearly simplified model and explicit assumptions.
-10. Add a progressive-tax threshold progress indicator for scale-tax scenarios.
-11. Add simple/advanced mode while preserving the current advanced controls.
-12. Add localStorage saved scenarios for up to three named calculation presets.
-
-## Recommended Next Codex Prompts
-
-1. **Accessibility validation pass:** "In `digital-vault-polish-tax-calculator-version-01`, update only the amount input validation so it uses `aria-describedby`, toggles `aria-invalid`, and keeps the current visual design unchanged."
-2. **Assumptions panel:** "Add a compact assumptions panel near the results that reads from `js/tax-config.js`, shows tax year, key rates, simplification notes, and the existing disclaimer without changing calculation formulas."
-3. **Calculation tests:** "Create a lightweight test script for `js/calculations.js` using Node ES modules with representative gross-to-net and net-to-gross cases for each contract type. Do not add external dependencies."
-4. **Option applicability:** "Refine the form so options that do not apply to the selected contract type are disabled or annotated, especially VAT payer, PPK, PIT-2, deductible costs, and B2B ZUS options. Preserve existing calculations."
-5. **Helper text:** "Add concise helper text for PIT-2, PPK, KUP, under-26 relief, ZUS type, and custom ZUS fields, using accessible descriptions connected to the relevant controls."
-6. **Comparison accessibility:** "Improve the comparison table accessibility by adding a caption, better empty state copy, and clearer mobile labels while preserving the existing table layout."
-7. **Print summary:** "Add print-friendly CSS and a print summary button that appears after valid results, without generating PDFs or adding dependencies."
-8. **Lump-sum selector:** "Add a B2B ryczałt rate selector powered by `TAX_CONFIG.b2bLumpSumRates`, wire it into calculations, and keep existing IT rate as the default."
-9. **Threshold indicator:** "Add a small progressive-tax threshold progress indicator for employment and B2B scale results, based on the current calculated annual base assumptions."
-10. **Simple/advanced mode:** "Add a simple/advanced mode toggle that hides advanced options by default while preserving current state, URL sync, and all existing controls."
-11. **B2B expenses MVP:** "Add a clearly labeled simplified B2B expense input that reduces B2B taxable base, includes an assumptions warning, and updates tests."
-12. **Saved presets:** "Add localStorage saved calculation presets with save/load/delete for up to three scenarios, keeping URL sharing behavior intact."
+Trust is the main product asset. Monetization must not hide limitations, imply guaranteed outcomes, or replace professional tax/accounting/legal advice.
