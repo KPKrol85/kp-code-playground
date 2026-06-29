@@ -25,6 +25,11 @@ Statyczna aplikacja webowa do orientacyjnego wyliczania wynagrodzeń brutto/nett
 
 Aktualny model w konfiguracji wskazuje rok zasad podatkowych `2026`, ale stałe podatkowe i składkowe wymagają weryfikacji w oficjalnych źródłach przed traktowaniem kalkulatora jako materiału publikacyjnego lub produkcyjnego.
 
+## Tax constants verification
+`js/tax-config.js` remains the source of truth for tax constants, contribution rates, metadata, and simplified model assumptions. The official-source audit workflow is documented in `docs/tax-verification-checklist.md` and must be updated whenever any tax constant, tax year, or model assumption changes.
+
+The checklist maps app values to the official sources that should verify them and records whether each item is verified, requires verification, needs an update, or is a simplified model assumption. Automated tests protect current calculation behavior, but they do not prove official tax correctness or suitability for individual legal, tax, accounting, or financial decisions.
+
 ## Założenia uproszczonego modelu
 - Kalkulacje opierają się na miesięcznej kwocie wejściowej i prostym przeliczeniu rocznym x12.
 - Formularz obejmuje wybrane warianty: umowa o pracę, zlecenie, dzieło, B2B skala, B2B liniowy i B2B ryczałt.
