@@ -1043,3 +1043,147 @@ button {
     box-shadow: none;
   }
 }
+
+.form__helper {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--fs-04);
+  font-weight: 520;
+}
+
+.option-grid__helper {
+  margin: -4px 0 2px 25px;
+}
+
+.check-card:has(input:disabled),
+.form__field:has(input:disabled),
+.form__field:has(select:disabled) {
+  opacity: 0.62;
+}
+
+.amount-card__control:has(input[aria-invalid="true"]) {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--error), transparent 82%);
+}
+
+.print-button {
+  justify-self: start;
+  margin-top: 12px;
+}
+
+.comparison-table caption {
+  padding: 10px 13px;
+  color: var(--muted);
+  font-size: var(--fs-04);
+  text-align: left;
+}
+
+.comparison-table__empty td {
+  padding: 28px 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.assumptions {
+  display: grid;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.assumptions__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.assumptions__meta span {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--field-bg);
+  color: var(--label);
+  font-size: var(--fs-04);
+}
+
+.assumptions p,
+.assumptions ul {
+  margin: 0;
+}
+
+.assumptions ul {
+  padding-left: 1.2rem;
+}
+
+.assumptions__disclaimer {
+  color: var(--warning);
+  font-weight: 760;
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    color: #111827;
+  }
+
+  .hero__toolbar,
+  .form,
+  .warning,
+  .footer,
+  .print-button,
+  .quick-values {
+    display: none !important;
+  }
+
+  .hero {
+    padding: 0 0 14px;
+    background: #fff;
+    color: #111827;
+  }
+
+  .hero__panel,
+  .hero__meta {
+    display: none;
+  }
+
+  .layout,
+  .hero__grid {
+    display: block;
+  }
+
+  .panel,
+  .panel--calculator,
+  .panel--results,
+  .panel--wide {
+    break-inside: avoid;
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: #fff;
+  }
+
+  .panel--calculator {
+    display: none;
+  }
+
+  .panel::before {
+    display: none;
+  }
+
+  .comparison-table {
+    min-width: 0;
+    font-size: 11px;
+  }
+
+  .comparison-table th,
+  .comparison-table td,
+  .result-row,
+  .metric,
+  .table-wrapper {
+    border-color: #d1d5db;
+  }
+}

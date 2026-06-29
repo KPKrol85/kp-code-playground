@@ -87,9 +87,10 @@
         <div class="amount-card">
           <label for="amount">Kwota wejściowa</label>
           <div class="amount-card__control">
-            <input id="amount" name="amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Np. 10 000" required>
+            <input id="amount" name="amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Np. 10 000" aria-describedby="amount-error amount-helper" aria-invalid="false" required>
             <span>PLN</span>
           </div>
+          <p id="amount-helper" class="form__helper">Wpisz kwotę brutto albo docelowe netto zgodnie z wybranym kierunkiem.</p>
           <p id="amount-error" class="form__error" aria-live="polite"></p>
           <div class="quick-values" aria-label="Szybkie kwoty">
             <button type="button" data-amount="6000">6 000</button>
@@ -130,35 +131,42 @@
         <fieldset class="form__fieldset" id="common-options">
           <legend>Opcje dodatkowe</legend>
           <div class="option-grid">
-            <label class="check-card"><input type="checkbox" id="under26"><span>Wiek poniżej 26 lat</span></label>
-            <label class="check-card"><input type="checkbox" id="ppk"><span>Uczestnictwo w PPK</span></label>
-            <label class="check-card"><input type="checkbox" id="pit2" checked><span>Miesięczne pomniejszenie PIT-2</span></label>
+            <label class="check-card"><input type="checkbox" id="under26" aria-describedby="under26-helper"><span>Wiek poniżej 26 lat</span></label>
+            <p id="under26-helper" class="form__helper option-grid__helper">Ulga dla młodych jest modelowana uproszczone dla UoP i zlecenia; nie dotyczy dzieła ani B2B.</p>
+            <label class="check-card"><input type="checkbox" id="ppk" aria-describedby="ppk-helper"><span>Uczestnictwo w PPK</span></label>
+            <p id="ppk-helper" class="form__helper option-grid__helper">PPK wpływa na UoP w tym modelu; dla pozostałych typów opcja jest wyłączana.</p>
+            <label class="check-card"><input type="checkbox" id="pit2" checked aria-describedby="pit2-helper"><span>Miesięczne pomniejszenie PIT-2</span></label>
+            <p id="pit2-helper" class="form__helper option-grid__helper">PIT-2 stosujemy tylko tam, gdzie uproszczony model liczy miesięczną zaliczkę PIT.</p>
           </div>
           <div class="form__field">
             <label for="deductibleCosts">Koszty uzyskania przychodu</label>
-            <select id="deductibleCosts">
+            <select id="deductibleCosts" aria-describedby="deductible-helper">
               <option value="standard">standardowe</option>
               <option value="elevated">podwyższone</option>
               <option value="fifty">50%</option>
             </select>
+            <p id="deductible-helper" class="form__helper">KUP wpływają na UoP, zlecenie i dzieło; dla B2B są pomijane w obecnym modelu.</p>
           </div>
         </fieldset>
 
         <fieldset class="form__fieldset" id="b2b-options" hidden>
           <legend>Opcje B2B</legend>
-          <label class="check-card check-card--inline"><input type="checkbox" id="vatPayer" checked><span>Płatnik VAT</span></label>
+          <label class="check-card check-card--inline"><input type="checkbox" id="vatPayer" checked aria-describedby="vat-helper"><span>Płatnik VAT</span></label>
+          <p id="vat-helper" class="form__helper">Informacyjnie: VAT jest zapisywany w stanie, ale nie zmienia obecnych wyników.</p>
           <div class="form__field">
             <label for="zusType">Typ ZUS</label>
-            <select id="zusType">
+            <select id="zusType" aria-describedby="zus-helper">
               <option value="full">pełny ZUS</option>
               <option value="preferential">preferencyjny ZUS</option>
               <option value="starter">ulga na start</option>
               <option value="custom">własne wartości</option>
             </select>
+            <p id="zus-helper" class="form__helper">ZUS dotyczy wyłącznie wariantów B2B; wybierz preset albo własne wartości.</p>
           </div>
           <div class="form__grid" id="custom-zus" hidden>
-            <div class="form__field"><label for="customSocial">Składki społeczne (własne)</label><input type="number" id="customSocial" min="0" step="0.01" value="0"></div>
-            <div class="form__field"><label for="customHealth">Składka zdrowotna (własna)</label><input type="number" id="customHealth" min="0" step="0.01" value="0"></div>
+            <div class="form__field"><label for="customSocial">Składki społeczne (własne)</label><input type="number" id="customSocial" min="0" step="0.01" value="0" aria-describedby="custom-zus-helper"></div>
+            <div class="form__field"><label for="customHealth">Składka zdrowotna (własna)</label><input type="number" id="customHealth" min="0" step="0.01" value="0" aria-describedby="custom-zus-helper"></div>
+            <p id="custom-zus-helper" class="form__helper">Własne składki zastępują preset społeczny i opcjonalnie zdrowotny; wpisz miesięczne kwoty.</p>
           </div>
         </fieldset>
         <div class="form__actions">
@@ -175,6 +183,7 @@
         <h2 id="results-title">Wyniki</h2>
       </div>
       <div id="results" class="results" aria-live="polite"></div>
+      <button class="button button--ghost print-button" type="button" id="print-summary" hidden>Drukuj podsumowanie</button>
     </section>
 
     <section class="panel panel--wide" aria-labelledby="comparison-title">
@@ -187,10 +196,19 @@
       </div>
       <div class="table-wrapper">
         <table class="comparison-table" id="comparison-table">
+          <caption>Porównanie typów umów według wybranego kierunku kalkulacji.</caption>
           <thead><tr><th>Typ umowy</th><th>Brutto</th><th>Netto</th><th>Obciążenie</th><th>Relacja</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+    </section>
+
+    <section class="panel panel--wide assumptions-panel" aria-labelledby="assumptions-title">
+      <div class="section-heading">
+        <p>Założenia</p>
+        <h2 id="assumptions-title">Założenia kalkulacji i wersja reguł</h2>
+      </div>
+      <div id="assumptions" class="assumptions"></div>
     </section>
   </main>
 

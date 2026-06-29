@@ -20,6 +20,8 @@ const customZus = document.getElementById('custom-zus');
 const amountError = document.getElementById('amount-error');
 const contractTypeSelect = document.getElementById('contractType');
 const commonOptions = document.getElementById('common-options');
+const assumptionsEl = document.getElementById('assumptions');
+const printButton = document.getElementById('print-summary');
 
 const contractLabels = {
   employment: 'umowa o pracę',
@@ -144,34 +146,59 @@ function readFormState() {
   };
 }
 
-function validateAmount(value) {
+function setAmountValidity(isValid, message = '') {
+  amountInput.setAttribute('aria-invalid', String(!isValid));
+  amountError.textContent = message;
+}
+
+function validateAmount(value, { markEmpty = true } = {}) {
   if (amountInput.value.trim() === '') {
-    amountError.textContent = 'Wprowadź kwotę, aby uruchomić kalkulator.';
+    setAmountValidity(!markEmpty, markEmpty ? 'Wprowadź kwotę, aby uruchomić kalkulator.' : '');
     return false;
   }
   if (!Number.isFinite(value) || value <= 0) {
-    amountError.textContent = 'Kwota musi być dodatnią liczbą.';
+    setAmountValidity(false, 'Kwota musi być dodatnią liczbą.');
     return false;
   }
   if (value > 100000000) {
-    amountError.textContent = 'Kwota jest zbyt duża dla wiarygodnych szacunków. Użyj mniejszej wartości.';
+    setAmountValidity(false, 'Kwota jest zbyt duża dla wiarygodnych szacunków. Użyj mniejszej wartości.');
     return false;
   }
-  amountError.textContent = '';
+  setAmountValidity(true);
   return true;
 }
 
 function setEmptyState() {
   resultsEl.innerHTML = `<div class="empty-state"><strong>Wpisz kwotę i kliknij „Oblicz wyniki”.</strong><span>Zobaczysz kwotę netto, brutto, składki, PIT, koszt pracodawcy i porównanie umów.</span></div>`;
-  comparisonBody.innerHTML = '';
-  comparisonContext.textContent = 'Po wpisaniu kwoty zobaczysz ranking netto.';
+  comparisonBody.innerHTML = '<tr class="comparison-table__empty"><td colspan="5">Wpisz poprawną kwotę, aby zobaczyć porównanie umów i ranking.</td></tr>';
+  comparisonContext.textContent = 'Po wpisaniu poprawnej kwoty ranking pokaże najwyższe netto albo najniższe wymagane brutto.';
   warningEl.textContent = TAX_CONFIG.notes.legalDisclaimer;
+  printButton.hidden = true;
 }
 
 const periodLabel = (period) => (period === 'yearly' ? 'rocznie' : 'miesięcznie');
 
 function renderResultRow(label, value) {
   return `<div class="result-row"><span>${label}</span><strong>${value}</strong></div>`;
+}
+
+function renderAssumptions(state = readFormState()) {
+  const active = [
+    `Wybrany typ: ${contractLabels[state.contractType]}.`,
+    `Kierunek: ${state.direction === 'grossToNet' ? 'brutto → netto' : 'netto → brutto'}, okres: ${periodLabel(state.period)}.`,
+    state.contractType.startsWith('b2b') ? `B2B: ZUS ${state.options.zusType}, VAT informacyjny (${state.options.vatPayer ? 'zaznaczony' : 'niezaznaczony'}) — bez wpływu na wynik.` : 'Opcje B2B są ukryte i nie wpływają na ten typ umowy.',
+    state.contractType === 'mandate' ? 'Umowa zlecenie: dobrowolna składka chorobowa jest w tej wersji wyłączona.' : '',
+  ].filter(Boolean);
+
+  assumptionsEl.innerHTML = `
+    <div class="assumptions__meta">
+      <span><strong>Rok/model:</strong> ${TAX_CONFIG.year}</span>
+      <span><strong>Wersja reguł:</strong> ${TAX_CONFIG.modelVersion}</span>
+      <span><strong>Ostatni przegląd:</strong> ${TAX_CONFIG.lastReviewed}</span>
+    </div>
+    <p>${TAX_CONFIG.notes.simplifiedModel}</p>
+    <ul>${[...active, ...TAX_CONFIG.assumptions].map((item) => `<li>${item}</li>`).join('')}</ul>
+    <p class="assumptions__disclaimer">${TAX_CONFIG.notes.adviceDisclaimer}</p>`;
 }
 
 function renderResults(data, state) {
@@ -206,6 +233,7 @@ function renderResults(data, state) {
       ${renderResultRow('Łączne potrącenia', formatMoney(deductions))}
     </div>
     <p class="result-note">Wartości są zaokrąglone do groszy i przeliczone dla okresu: ${periodLabel(state.period)}.</p>`;
+  printButton.hidden = false;
 }
 
 function renderComparison(items, state) {
@@ -235,8 +263,11 @@ function renderComparison(items, state) {
 function updateConditionalFields(state = readFormState()) {
   const isB2B = state.contractType.startsWith('b2b');
   b2bOptions.hidden = !isB2B;
-  commonOptions.querySelector('#ppk').disabled = isB2B;
-  customZus.hidden = state.options.zusType !== 'custom';
+  b2bOptions.querySelectorAll('input, select').forEach((control) => { control.disabled = !isB2B; });
+  commonOptions.querySelector('#ppk').disabled = state.contractType !== 'employment';
+  commonOptions.querySelector('#pit2').disabled = state.contractType.startsWith('b2b') || state.contractType === 'mandate' || state.contractType === 'specificWork';
+  commonOptions.querySelector('#deductibleCosts').disabled = isB2B;
+  customZus.hidden = !isB2B || state.options.zusType !== 'custom';
 }
 
 function updateWarning(state) {
@@ -267,13 +298,21 @@ function calculateAndRender({ shouldValidate = true } = {}) {
   updateConditionalFields(state);
   updateWarning(state);
 
-  if (!shouldValidate && amountInput.value.trim() === '') return setEmptyState();
-  if (!validateAmount(state.amount)) return;
+  if (!shouldValidate && amountInput.value.trim() === '') {
+    setAmountValidity(true);
+    renderAssumptions(state);
+    return setEmptyState();
+  }
+  if (!validateAmount(state.amount, { markEmpty: shouldValidate })) {
+    printButton.hidden = true;
+    return;
+  }
 
   const monthlyAmount = annualize(state.amount, state.period);
   const result = state.direction === 'grossToNet' ? grossToNet(state.contractType, monthlyAmount, state.options) : netToGross(state.contractType, monthlyAmount, state.options);
 
   renderResults(result, state);
+  renderAssumptions(state);
   renderComparison(generateComparison(monthlyAmount, state.options, state.direction), state);
   syncQuery(state);
 }
@@ -304,6 +343,7 @@ function applyStateFromQuery() {
 }
 
 initThemeControls();
+renderAssumptions(readFormState());
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -311,7 +351,8 @@ form.addEventListener('submit', (event) => {
 });
 form.addEventListener('input', () => calculateAndRender({ shouldValidate: false }));
 form.addEventListener('change', () => calculateAndRender({ shouldValidate: false }));
-form.addEventListener('reset', () => window.setTimeout(() => { history.replaceState(null, '', window.location.pathname); updateConditionalFields(); setEmptyState(); }, 0));
+form.addEventListener('reset', () => window.setTimeout(() => { history.replaceState(null, '', window.location.pathname); updateConditionalFields(); setAmountValidity(true); renderAssumptions(readFormState()); setEmptyState(); }, 0));
 document.querySelectorAll('[data-amount]').forEach((button) => button.addEventListener('click', () => { amountInput.value = button.dataset.amount; calculateAndRender(); }));
+printButton.addEventListener('click', () => window.print());
 
 if (applyStateFromQuery()) calculateAndRender(); else { updateConditionalFields(); setEmptyState(); }

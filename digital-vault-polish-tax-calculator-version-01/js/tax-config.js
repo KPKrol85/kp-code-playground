@@ -1,5 +1,7 @@
 export const TAX_CONFIG = {
   year: 2026,
+  modelVersion: 'PL-2026-uproszczony-v1',
+  lastReviewed: '2026-06-29',
   thresholds: {
     annualTaxFreeAmount: 30000,
     firstBracketLimit: 120000,
@@ -49,6 +51,15 @@ export const TAX_CONFIG = {
   },
   notes: {
     legalDisclaimer: 'Wyniki są szacunkowe i bazują na uproszczonym modelu miesięcznym. Przepisy oraz indywidualne ulgi mogą zmienić wynik.',
+    adviceDisclaimer: 'To narzędzie edukacyjne. Wyniki orientacyjne nie zastępują porady podatkowej, prawnej, księgowej ani finansowej.',
     accountingCheck: 'Wybrane ustawienia, szczególnie B2B, ulga dla młodych i 50% KUP, wymagają indywidualnej weryfikacji księgowej.',
+    simplifiedModel: 'Model przelicza kwotę do wartości miesięcznej i annualizuje wybrane podstawy. Nie uwzględnia wszystkich ulg, limitów, kosztów firmowych ani szczególnych przypadków.',
   },
+  assumptions: [
+    'Skala PIT 12% / 32%, kwota wolna 30 000 zł i próg 120 000 zł rocznie.',
+    'PPK przyjęto jako podstawową wpłatę pracownika 2%; dopłaty i warianty dodatkowe nie są modelowane.',
+    'Umowa zlecenie zakłada brak dobrowolnej składki chorobowej w UI; w kalkulacji jest wyłączona.',
+    'B2B nie uwzględnia kosztów działalności, VAT w wyniku netto ani indywidualnych odliczeń.',
+    'Ryczałt B2B używa stawki IT 12% z konfiguracji.',
+  ],
 };

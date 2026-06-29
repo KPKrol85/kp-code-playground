@@ -28,6 +28,16 @@ albo dowolnym lokalnym serwerem HTTP i wejść na `index.html`.
 - opcje B2B, własne wartości składek i ostrzeżenia kontekstowe,
 - szybkie kwoty i możliwość odtworzenia stanu z parametrów URL, np. `?amount=10000&direction=netToGross&period=monthly&contractType=b2bLinear`.
 
+## Testy
+
+Kalkulacje mają lekki, bez-zależnościowy harness w Node.js:
+
+```bash
+node scripts/test-calculations.js
+```
+
+Testy obejmują smoke/regression cases dla wszystkich typów umów, kierunek brutto → netto, netto → brutto i porównanie umów z tolerancją dla zaokrągleń.
+
 ## Uwagi
 
 Kalkulator jest modelem orientacyjnym. Parametry podatkowe i składkowe są uproszczone, a wynik nie zastępuje indywidualnej konsultacji księgowej, finansowej ani prawnej.
