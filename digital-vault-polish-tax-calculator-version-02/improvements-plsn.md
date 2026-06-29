@@ -190,6 +190,14 @@ Risks / notes:
 - Do not change formulas while adding tests unless a separate correction task explicitly asks for it.
 - Expected values should be labeled as regression values for the current simplified implementation.
 
+Implementation status: Implemented
+
+Completed on: 2026-06-29
+
+Files changed: `package.json`, `test/calculations.test.js`, `README.md`, `improvements-plsn.md`
+
+Notes: Added lightweight Node.js calculation regression tests for the current simplified formulas. Tests cover all six contract/cooperation types, net-to-gross round-trip tolerance, employment employer cost, period shaping, comparison generation, and selected option smoke cases. Tax constants still require official-source verification. Calculation formulas, constants, UI behavior, and comparison logic were not changed.
+
 ### Improvement 3 — Add official-source verification checklist for tax constants
 
 Priority: P0
