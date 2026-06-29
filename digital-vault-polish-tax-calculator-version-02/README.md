@@ -31,6 +31,19 @@ Aktualny model w konfiguracji wskazuje rok zasad podatkowych `2026`, ale stałe 
 - PIT-2, ulga dla osób poniżej 26 lat, PPK, koszty uzyskania przychodu i typ ZUS są obsługiwane jako uproszczone opcje formularza.
 - Porównanie typów umów używa wspólnych ustawień wejściowych, aby pokazać orientacyjną różnicę netto.
 
+
+## Testy regresyjne obliczeń
+
+Projekt używa lekkiego zestawu testów opartych o wbudowany runner Node.js, bez zewnętrznych zależności. Testy uruchamia się z katalogu projektu:
+
+```bash
+npm test
+```
+
+Zakres testów obejmuje obecne publiczne funkcje obliczeniowe: reprezentatywne brutto → netto dla UoP, zlecenia, dzieła, B2B na skali, B2B liniowo i B2B ryczałtem; iteracyjne netto → brutto z tolerancją; koszt pracodawcy dla UoP; miesięczne/roczne kształtowanie wyników; porównanie typów umów oraz wybrane opcje brzegowe, takie jak ulga dla osób poniżej 26 lat, PIT-2, PPK, 50% KUP i własne wartości ZUS dla B2B.
+
+Oczekiwane wartości w testach są wartościami regresyjnymi dla aktualnego uproszczonego modelu. Przejście testów oznacza, że bieżące formuły nie zmieniły się przypadkowo, ale nie oznacza oficjalnej weryfikacji stawek podatkowych, składkowych ani poprawności dla indywidualnych przypadków.
+
 ## Status weryfikacji
 Stałe podatkowe i składkowe nie zostały oficjalnie zweryfikowane w ramach ostatniej zmiany. Przed zmianą statusu na zweryfikowany należy sprawdzić wartości w oficjalnych źródłach oraz zaktualizować pola `metadata.lastReviewed`, `metadata.verificationStatus` i `metadata.sourceStatus` w `js/tax-config.js`.
 
