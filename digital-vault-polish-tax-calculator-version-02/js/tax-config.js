@@ -1,4 +1,24 @@
 export const TAX_CONFIG = {
+  metadata: {
+    taxYear: 2026,
+    modelName: "Uproszczony model kalkulacji wynagrodzeń PL",
+    lastReviewed: "wymaga weryfikacji źródłowej",
+    verificationStatus: "wymaga weryfikacji w oficjalnych źródłach",
+    sourceStatus: "Stałe podatkowe i składkowe są wartościami roboczymi w konfiguracji aplikacji; nie zostały zweryfikowane w ramach tego wdrożenia.",
+    assumptions: [
+      "Kalkulacje opierają się na miesięcznej kwocie wejściowej i prostym przeliczeniu rocznym x12.",
+      "Model obejmuje wybrane warianty: UoP, zlecenie, dzieło oraz B2B na skali, liniowo i ryczałtem.",
+      "PIT-2, ulga dla osób poniżej 26 lat, PPK, koszty uzyskania przychodu i typ ZUS są stosowane zgodnie z uproszczonymi opcjami formularza.",
+      "Porównanie typów umów używa tych samych ustawień wejściowych, aby pokazać orientacyjną różnicę netto.",
+    ],
+    limitations: [
+      "Brak indywidualnych ulg, odliczeń, limitów rocznych i szczególnych przypadków podatkowych poza opcjami formularza.",
+      "B2B nie uwzględnia kosztów działalności, VAT, szczegółowych zasad składki zdrowotnej, limitów ZUS ani pełnej klasyfikacji ryczałtu.",
+      "Obliczenia roczne są uproszczone i nie zastępują rozliczenia według rzeczywistych przychodów w kolejnych miesiącach.",
+      "Kalkulator nie prowadzi kwalifikacji prawnej formy współpracy ani prawa do ulg.",
+    ],
+    disclaimer: "Wynik jest orientacyjną symulacją i nie stanowi porady prawnej, podatkowej, księgowej ani finansowej. Przed podjęciem decyzji zweryfikuj dane w oficjalnych źródłach lub z doradcą.",
+  },
   constants: {
     annualTaxFreeAmount: 30000,
     taxReductionMonthly: 300,

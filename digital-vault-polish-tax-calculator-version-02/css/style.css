@@ -148,3 +148,19 @@ input:focus-visible, select:focus-visible, .theme-switcher__btn:focus-visible, .
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 @media (min-width: 900px) { .app { grid-template-columns: 1.2fr 1fr; } .card:last-child { grid-column: 1 / -1; } }
+
+.assumptions-panel { display: grid; gap: var(--space-150); }
+.assumptions-panel__header { display: grid; gap: var(--space-100); }
+.assumptions-panel__eyebrow { color: var(--color-accent); font-size: var(--font-size-100); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; }
+.assumptions-panel__title { margin-top: var(--space-025); }
+.assumptions-panel__meta { display: grid; gap: var(--space-075); margin: 0; }
+.assumptions-panel__meta div { background: var(--color-surface-solid); border: 1px solid var(--color-card-border); border-radius: var(--radius-sm); padding: var(--space-075); }
+.assumptions-panel__meta dt { color: var(--color-text-secondary); font-size: var(--font-size-100); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.04em; }
+.assumptions-panel__meta dd { margin: var(--space-025) 0 0; font-weight: var(--font-weight-semibold); }
+.assumptions-panel__content { display: grid; gap: var(--space-100); }
+.assumptions-panel__content h3 { margin: 0 0 var(--space-050); font-size: var(--font-size-300); }
+.assumptions-panel__list { margin: 0; padding-left: 1.15rem; color: var(--color-text-secondary); }
+.assumptions-panel__list li + li { margin-top: var(--space-050); }
+.assumptions-panel__note { background: color-mix(in oklab, var(--color-warning) 13%, transparent); border: 1px solid color-mix(in oklab, var(--color-warning) 45%, var(--color-card-border)); border-radius: var(--radius-md); color: var(--color-text-primary); padding: var(--space-100); font-size: var(--font-size-200); line-height: 1.55; }
+
+@media (min-width: 720px) { .assumptions-panel__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); } .assumptions-panel__content { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
