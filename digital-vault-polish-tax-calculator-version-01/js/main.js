@@ -192,14 +192,32 @@ function renderAssumptionsPanel(state = readFormState()) {
     <p>${TAX_CONFIG.notes.legalDisclaimer}</p>`;
 }
 
-function setEmptyState() {
-  resultsEl.innerHTML = `<div class="empty-state"><strong>Wpisz kwotę i kliknij „Oblicz wyniki”.</strong><span>Zobaczysz kwotę netto, brutto, składki, PIT, koszt pracodawcy i porównanie umów.</span></div>`;
-  comparisonBody.innerHTML = '<tr><td colspan="5" class="comparison-empty">Wpisz poprawną kwotę, aby zobaczyć ranking form współpracy.</td></tr>';
-  comparisonContext.textContent = 'Po wpisaniu poprawnej kwoty zobaczysz ranking: najwyższe netto albo najniższe wymagane brutto.';
+function renderInactiveState({ invalid = false } = {}) {
+  const title = invalid ? 'Popraw kwotę, aby odświeżyć wyniki.' : 'Wpisz kwotę i kliknij „Oblicz wyniki”.';
+  const description = invalid
+    ? 'Wyniki i ranking są ukryte, żeby nie sugerować aktualności poprzedniej kalkulacji.'
+    : 'Zobaczysz kwotę netto, brutto, składki, PIT, koszt pracodawcy i porównanie umów.';
+  const comparisonMessage = invalid
+    ? 'Popraw kwotę wejściową, aby zobaczyć aktualny ranking form współpracy.'
+    : 'Wpisz poprawną kwotę, aby zobaczyć ranking form współpracy.';
+
+  resultsEl.innerHTML = `<div class="empty-state"><strong>${title}</strong><span>${description}</span></div>`;
+  comparisonBody.innerHTML = `<tr><td colspan="5" class="comparison-empty">${comparisonMessage}</td></tr>`;
+  comparisonContext.textContent = invalid
+    ? 'Ranking zostanie przeliczony po podaniu poprawnej kwoty.'
+    : 'Po wpisaniu poprawnej kwoty zobaczysz ranking: najwyższe netto albo najniższe wymagane brutto.';
   warningEl.textContent = TAX_CONFIG.notes.legalDisclaimer;
   printSummaryButton.hidden = true;
-  setAmountValidity(false);
+  if (!invalid) setAmountValidity(false);
   renderAssumptionsPanel(readFormState());
+}
+
+function setEmptyState() {
+  renderInactiveState();
+}
+
+function setInvalidState() {
+  renderInactiveState({ invalid: true });
 }
 
 const periodLabel = (period) => (period === 'yearly' ? 'rocznie' : 'miesięcznie');
@@ -270,9 +288,24 @@ function renderComparison(items, state) {
 
 function updateConditionalFields(state = readFormState()) {
   const isB2B = state.contractType.startsWith('b2b');
+  const isSpecificWork = state.contractType === 'specificWork';
+  const isEmployment = state.contractType === 'employment';
+
   b2bOptions.hidden = !isB2B;
-  ['ppk', 'pit2'].forEach((id) => { commonOptions.querySelector(`#${id}`).disabled = isB2B || state.contractType === 'specificWork' || (id === 'ppk' && state.contractType !== 'employment'); });
-  commonOptions.querySelector('#deductibleCosts').disabled = isB2B;
+
+  const under26Input = commonOptions.querySelector('#under26');
+  const ppkInput = commonOptions.querySelector('#ppk');
+  const pit2Input = commonOptions.querySelector('#pit2');
+  const deductibleCostsSelect = commonOptions.querySelector('#deductibleCosts');
+
+  under26Input.disabled = isB2B || isSpecificWork;
+  ppkInput.disabled = !isEmployment;
+  pit2Input.disabled = !isEmployment;
+  deductibleCostsSelect.disabled = isB2B;
+
+  if (under26Input.disabled) under26Input.checked = false;
+  if (ppkInput.disabled) ppkInput.checked = false;
+
   customZus.hidden = state.options.zusType !== 'custom';
 }
 
@@ -300,12 +333,13 @@ function syncQuery(state) {
 }
 
 function calculateAndRender({ shouldValidate = true } = {}) {
-  const state = readFormState();
+  let state = readFormState();
   updateConditionalFields(state);
+  state = readFormState();
   updateWarning(state);
 
   if (!shouldValidate && amountInput.value.trim() === '') return setEmptyState();
-  if (!validateAmount(state.amount)) { printSummaryButton.hidden = true; return; }
+  if (!validateAmount(state.amount)) { setInvalidState(); return; }
 
   const monthlyAmount = annualize(state.amount, state.period);
   const result = state.direction === 'grossToNet' ? grossToNet(state.contractType, monthlyAmount, state.options) : netToGross(state.contractType, monthlyAmount, state.options);
