@@ -3,12 +3,14 @@ import { formatCurrency, parseAmount, round2 } from "./utils.js";
 import { TAX_CONFIG } from "./tax-config.js";
 
 const form = document.getElementById("calculator-form");
+const amountInput = document.getElementById("amount");
 const resultsGrid = document.getElementById("results-grid");
 const comparisonBody = document.querySelector("#comparison-table tbody");
 const validationMessage = document.getElementById("validation-message");
 const warningEl = document.getElementById("result-warning");
 const zusType = document.getElementById("zusType");
 const customZus = document.getElementById("custom-zus");
+const customZusInputs = Array.from(customZus.querySelectorAll("input"));
 const historyEl = document.getElementById("calculation-history");
 const scenarioSelect = document.getElementById("quick-scenario");
 const assumptionsMeta = document.getElementById("assumptions-meta");
@@ -38,6 +40,7 @@ function applyTheme(preference, persist = true) {
     const isActive = button.dataset.themeValue === normalized;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
+    button.setAttribute("aria-label", `${button.textContent}: ${isActive ? "wybrany motyw" : "wybierz motyw"}`);
   });
 
   if (persist) localStorage.setItem(THEME_KEY, normalized);
@@ -124,8 +127,17 @@ function renderResults(resultByPeriod) {
 
 function renderComparison(items) {
   comparisonBody.innerHTML = items
-    .map((item) => `<tr><td>${contractNames[item.contractType]}</td><td>${formatCurrency(item.gross)}</td><td>${formatCurrency(item.net)}</td><td>${round2(item.burden)}%</td></tr>`)
+    .map((item) => `<tr><th scope="row">${contractNames[item.contractType]}</th><td>${formatCurrency(item.gross)}</td><td>${formatCurrency(item.net)}</td><td>${round2(item.burden)}%</td></tr>`)
     .join("");
+}
+
+function setCustomZusState(isActive) {
+  customZus.classList.toggle("form__group--hidden", !isActive);
+  customZus.hidden = !isActive;
+  customZus.setAttribute("aria-hidden", String(!isActive));
+  customZusInputs.forEach((input) => {
+    input.disabled = !isActive;
+  });
 }
 
 function updateWarnings(contractType, options) {
@@ -167,7 +179,7 @@ function setFormFromScenario(name) {
     }
     field.value = value;
   });
-  customZus.classList.toggle("form__group--hidden", zusType.value !== "custom");
+  setCustomZusState(zusType.value === "custom");
 }
 
 function calculateAndRender() {
@@ -179,10 +191,12 @@ function calculateAndRender() {
   const options = collectOptions();
 
   validationMessage.textContent = "";
+  amountInput.removeAttribute("aria-invalid");
   if (!Number.isFinite(amount) || amount <= 0) {
     resultsGrid.innerHTML = "";
     comparisonBody.innerHTML = "";
     validationMessage.textContent = "Podaj poprawną dodatnią kwotę, aby zobaczyć wyniki.";
+    amountInput.setAttribute("aria-invalid", "true");
     warningEl.textContent = "";
     return null;
   }
@@ -216,7 +230,7 @@ form.addEventListener("submit", (event) => {
 });
 
 form.addEventListener("change", (event) => {
-  if (event.target.id === "zusType") customZus.classList.toggle("form__group--hidden", zusType.value !== "custom");
+  if (event.target.id === "zusType") setCustomZusState(zusType.value === "custom");
 });
 
 scenarioSelect.addEventListener("change", (event) => {
@@ -243,6 +257,7 @@ mediaQuery.addEventListener("change", () => {
 });
 
 initTheme();
+setCustomZusState(zusType.value === "custom");
 renderAssumptionsPanel();
 renderHistory();
 calculateAndRender();

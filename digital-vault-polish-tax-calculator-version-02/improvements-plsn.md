@@ -276,6 +276,14 @@ Risks / notes:
 - Do not remove existing visible labels or fieldsets.
 - Accessibility changes should not alter calculation behavior.
 
+Implementation status: Implemented
+
+Completed on: 2026-06-30
+
+Files changed: `index.html`, `js/main.js`, `css/style.css`, `improvements-plsn.md`
+
+Notes: Completed the accessibility validation pass by adding a skip link, comparison table caption and scoped headers, amount validation/help associations, concise helper text for high-risk options, semantic inactive states for hidden custom ZUS fields, clearer theme button pressed/selected labels, and calmer polite live-region behavior for validation, warnings, and results. Calculation formulas, tax constants, comparison calculations, and calculation outputs were not changed.
+
 ### Improvement 5 — Add option applicability rules by contract type
 
 Priority: P1
