@@ -63,26 +63,39 @@
             <p id="contract-help" class="form__help">Wybór typu umowy wpływa na składki, PIT i ostrzeżenia przy wynikach.</p>
           </div>
 
-          <fieldset class="form__fieldset">
+          <fieldset class="form__fieldset" id="additional-options-group">
             <legend>Ustawienia dodatkowe</legend>
-            <label><input type="checkbox" id="under26" name="under26" aria-describedby="under26-help" /> wiek poniżej 26 lat</label>
-            <p id="under26-help" class="form__help">Opcja uproszczona: ulga zależy od rodzaju umowy i limitu rocznego.</p>
-            <label><input type="checkbox" id="ppk" name="ppk" /> PPK (pracownik)</label>
-            <label><input type="checkbox" id="pit2" name="pit2" checked /> uwzględnij PIT-2</label>
-            <label><input type="checkbox" id="vatPayer" name="vatPayer" aria-describedby="vat-help" /> podatnik VAT (B2B)</label>
-            <p id="vat-help" class="form__help">W obecnym uproszczonym modelu VAT nie zmienia wyniku netto.</p>
+            <div class="form__option" data-option-key="under26">
+              <label><input type="checkbox" id="under26" name="under26" aria-describedby="under26-help under26-applicability" /> wiek poniżej 26 lat</label>
+              <p id="under26-help" class="form__help">Opcja uproszczona: ulga zależy od rodzaju umowy i limitu rocznego.</p>
+              <p id="under26-applicability" class="form__help form__help--applicability" aria-live="polite"></p>
+            </div>
+            <div class="form__option" data-option-key="ppk">
+              <label><input type="checkbox" id="ppk" name="ppk" aria-describedby="ppk-applicability" /> PPK (pracownik)</label>
+              <p id="ppk-applicability" class="form__help form__help--applicability" aria-live="polite"></p>
+            </div>
+            <div class="form__option" data-option-key="pit2">
+              <label><input type="checkbox" id="pit2" name="pit2" checked aria-describedby="pit2-applicability" /> uwzględnij PIT-2</label>
+              <p id="pit2-applicability" class="form__help form__help--applicability" aria-live="polite"></p>
+            </div>
+            <div class="form__option" data-option-key="vatPayer">
+              <label><input type="checkbox" id="vatPayer" name="vatPayer" aria-describedby="vat-help vat-applicability" /> podatnik VAT (B2B)</label>
+              <p id="vat-help" class="form__help">W obecnym uproszczonym modelu VAT nie zmienia wyniku netto.</p>
+              <p id="vat-applicability" class="form__help form__help--applicability" aria-live="polite"></p>
+            </div>
           </fieldset>
 
-          <div class="form__row">
+          <div class="form__row" data-option-key="deductibleCosts">
             <label for="deductibleCosts">Koszty uzyskania przychodu</label>
-            <select id="deductibleCosts" name="deductibleCosts">
+            <select id="deductibleCosts" name="deductibleCosts" aria-describedby="deductible-costs-applicability">
               <option value="standard">standardowe</option>
               <option value="increased">podwyższone</option>
               <option value="fiftyPercent">50%</option>
             </select>
+            <p id="deductible-costs-applicability" class="form__help form__help--applicability" aria-live="polite"></p>
           </div>
 
-          <div class="form__row">
+          <div class="form__row" data-option-key="zusType">
             <label for="zusType">Typ ZUS (B2B)</label>
             <select id="zusType" name="zusType" aria-describedby="zus-help">
               <option value="full">pełny ZUS</option>
@@ -93,7 +106,7 @@
             <p id="zus-help" class="form__help">Dotyczy kalkulacji B2B; własne wartości aktywują pola składek poniżej.</p>
           </div>
 
-          <div id="custom-zus" class="form__group form__group--hidden" hidden aria-hidden="true">
+          <div id="custom-zus" class="form__group form__group--hidden" data-option-key="customZus" hidden aria-hidden="true">
             <div class="form__row">
               <label for="customSocial">Własna składka społeczna</label>
               <input id="customSocial" name="customSocial" type="number" min="0" step="0.01" value="0" disabled />
@@ -160,6 +173,7 @@
             <tbody></tbody>
           </table>
         </div>
+        <p id="comparison-assumptions" class="comparison-note">Porównanie używa tej samej kwoty i kierunku obliczeń dla wszystkich typów umów. Nie każda opcja formularza dotyczy każdego modelu; opcje nieaktywne są pomijane zgodnie z uproszczonym modelem. Wyniki są szacunkowe i wymagają indywidualnej weryfikacji.</p>
       </section>
 
       <section class="card" aria-labelledby="history-heading">

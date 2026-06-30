@@ -1,6 +1,6 @@
 import { generateComparison, grossToNet, netToGross, calculateEmployerCost, byPeriod } from "./calculations.js";
 import { formatCurrency, parseAmount, round2 } from "./utils.js";
-import { TAX_CONFIG } from "./tax-config.js";
+import { OPTION_APPLICABILITY, TAX_CONFIG } from "./tax-config.js";
 
 const form = document.getElementById("calculator-form");
 const amountInput = document.getElementById("amount");
@@ -8,6 +8,7 @@ const resultsGrid = document.getElementById("results-grid");
 const comparisonBody = document.querySelector("#comparison-table tbody");
 const validationMessage = document.getElementById("validation-message");
 const warningEl = document.getElementById("result-warning");
+const contractTypeSelect = document.getElementById("contractType");
 const zusType = document.getElementById("zusType");
 const customZus = document.getElementById("custom-zus");
 const customZusInputs = Array.from(customZus.querySelectorAll("input"));
@@ -17,6 +18,8 @@ const assumptionsMeta = document.getElementById("assumptions-meta");
 const assumptionsList = document.getElementById("assumptions-list");
 const limitationsList = document.getElementById("limitations-list");
 const assumptionsDisclaimer = document.getElementById("assumptions-disclaimer");
+const applicabilityGroups = Array.from(document.querySelectorAll("[data-option-key]"));
+const deductibleCostsSelect = document.getElementById("deductibleCosts");
 
 const HISTORY_KEY = "tax-calculator-history-v2";
 const MAX_HISTORY = 8;
@@ -24,6 +27,82 @@ const MAX_HISTORY = 8;
 const THEME_KEY = "tax-calculator-theme-v1";
 const themeButtons = Array.from(document.querySelectorAll(".theme-switcher__btn"));
 const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+const optionControls = {
+  under26: document.getElementById("under26"),
+  ppk: document.getElementById("ppk"),
+  pit2: document.getElementById("pit2"),
+  vatPayer: document.getElementById("vatPayer"),
+  deductibleCosts: deductibleCostsSelect,
+  zusType,
+};
+
+const helperIds = {
+  under26: "under26-applicability",
+  ppk: "ppk-applicability",
+  pit2: "pit2-applicability",
+  vatPayer: "vat-applicability",
+  deductibleCosts: "deductible-costs-applicability",
+  zusType: "zus-help",
+};
+
+function getApplicability(contractType) {
+  return OPTION_APPLICABILITY[contractType] || OPTION_APPLICABILITY.employment;
+}
+
+function isB2B(contractType) {
+  return contractType.startsWith("b2b");
+}
+
+function setGroupInactive(optionKey, isInactive) {
+  applicabilityGroups
+    .filter((group) => group.dataset.optionKey === optionKey)
+    .forEach((group) => {
+      group.classList.toggle("form__option--inactive", isInactive);
+      group.setAttribute("data-applicability-inactive", String(isInactive));
+    });
+}
+
+function setHelperText(optionKey, text) {
+  const helper = document.getElementById(helperIds[optionKey]);
+  if (helper) helper.textContent = text || "";
+}
+
+function syncDeductibleCostOptions(rule) {
+  if (!deductibleCostsSelect || !rule) return;
+  const allowedValues = rule.allowedValues || Array.from(deductibleCostsSelect.options).map((option) => option.value);
+  Array.from(deductibleCostsSelect.options).forEach((option) => {
+    option.disabled = !allowedValues.includes(option.value);
+  });
+  if (!allowedValues.includes(deductibleCostsSelect.value)) {
+    deductibleCostsSelect.value = rule.fallbackValue || allowedValues[0] || "standard";
+  }
+}
+
+function updateOptionApplicability() {
+  const contractType = contractTypeSelect.value;
+  const rules = getApplicability(contractType);
+
+  Object.entries(optionControls).forEach(([optionKey, control]) => {
+    const rule = rules[optionKey];
+    if (!control || !rule) return;
+    const inactive = ["notApplicable", "ignored"].includes(rule.status);
+    control.disabled = inactive;
+    if (inactive && control.type === "checkbox") control.checked = false;
+    setGroupInactive(optionKey, inactive);
+    setHelperText(optionKey, rule.note);
+  });
+
+  syncDeductibleCostOptions(rules.deductibleCosts);
+
+  if (!isB2B(contractType)) {
+    zusType.value = "full";
+  }
+
+  const customZusActive = isB2B(contractType) && zusType.value === "custom";
+  setCustomZusState(customZusActive);
+  setGroupInactive("customZus", !customZusActive);
+}
 
 function resolveTheme(preference) {
   if (preference === "system") return mediaQuery.matches ? "dark" : "light";
@@ -179,7 +258,7 @@ function setFormFromScenario(name) {
     }
     field.value = value;
   });
-  setCustomZusState(zusType.value === "custom");
+  updateOptionApplicability();
 }
 
 function calculateAndRender() {
@@ -230,7 +309,7 @@ form.addEventListener("submit", (event) => {
 });
 
 form.addEventListener("change", (event) => {
-  if (event.target.id === "zusType") setCustomZusState(zusType.value === "custom");
+  if (["contractType", "zusType"].includes(event.target.id)) updateOptionApplicability();
 });
 
 scenarioSelect.addEventListener("change", (event) => {
@@ -245,6 +324,7 @@ historyEl.addEventListener("click", (event) => {
   if (!selected) return;
   form.elements.namedItem("amount").value = selected.inputAmount;
   form.elements.namedItem("contractType").value = selected.contractType;
+  updateOptionApplicability();
   calculateAndRender();
 });
 
@@ -257,7 +337,7 @@ mediaQuery.addEventListener("change", () => {
 });
 
 initTheme();
-setCustomZusState(zusType.value === "custom");
+updateOptionApplicability();
 renderAssumptionsPanel();
 renderHistory();
 calculateAndRender();

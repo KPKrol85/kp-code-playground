@@ -53,3 +53,53 @@ export const TAX_CONFIG = {
     disclaimer: "Wyniki mają charakter orientacyjny. Przy indywidualnych przypadkach skonsultuj się z księgowym.",
   },
 };
+
+export const OPTION_APPLICABILITY = {
+  employment: {
+    pit2: { status: "applicable", note: "PIT-2 jest używany w uproszczonym modelu UoP." },
+    under26: { status: "applicable", note: "Ulga poniżej 26 lat jest uwzględniana dla UoP w uproszczonym modelu." },
+    ppk: { status: "applicable", note: "PPK jest używane tylko dla umowy o pracę." },
+    deductibleCosts: { status: "partial", allowedValues: ["standard", "increased"], fallbackValue: "standard", note: "Dla UoP dostępne są standardowe lub podwyższone koszty; 50% KUP nie jest tu obsługiwane." },
+    zusType: { status: "notApplicable", note: "Opcje ZUS B2B dotyczą tylko wariantów B2B." },
+    customZus: { status: "notApplicable", note: "Własne składki ZUS są aktywne tylko dla B2B z trybem własnych wartości." },
+    vatPayer: { status: "notApplicable", note: "VAT dotyczy tylko wariantów B2B i nie zmienia obecnie wyniku netto." },
+  },
+  mandate: {
+    pit2: { status: "applicable", note: "PIT-2 jest używany dla zlecenia w uproszczonym modelu." },
+    under26: { status: "applicable", note: "Ulga poniżej 26 lat jest uwzględniana dla zlecenia w uproszczonym modelu." },
+    ppk: { status: "notApplicable", note: "PPK jest używane tylko dla umowy o pracę." },
+    deductibleCosts: { status: "ignored", allowedValues: ["standard"], fallbackValue: "standard", note: "Zlecenie używa stałych 20% kosztów z modelu; wybór z listy jest pomijany." },
+    zusType: { status: "notApplicable", note: "Opcje ZUS B2B dotyczą tylko wariantów B2B." },
+    customZus: { status: "notApplicable", note: "Własne składki ZUS są aktywne tylko dla B2B z trybem własnych wartości." },
+    vatPayer: { status: "notApplicable", note: "VAT dotyczy tylko wariantów B2B i nie zmienia obecnie wyniku netto." },
+  },
+  specificWork: {
+    pit2: { status: "applicable", note: "PIT-2 jest używany dla dzieła w uproszczonym modelu." },
+    under26: { status: "applicable", note: "Ulga poniżej 26 lat jest uwzględniana dla dzieła w obecnym uproszczeniu." },
+    ppk: { status: "notApplicable", note: "PPK jest używane tylko dla umowy o pracę." },
+    deductibleCosts: { status: "partial", allowedValues: ["standard", "fiftyPercent"], fallbackValue: "standard", note: "50% KUP jest dostępne dla dzieła w uproszczonym modelu; podwyższone koszty nie są obsługiwane." },
+    zusType: { status: "notApplicable", note: "Opcje ZUS B2B dotyczą tylko wariantów B2B." },
+    customZus: { status: "notApplicable", note: "Własne składki ZUS są aktywne tylko dla B2B z trybem własnych wartości." },
+    vatPayer: { status: "notApplicable", note: "VAT dotyczy tylko wariantów B2B i nie zmienia obecnie wyniku netto." },
+  },
+  b2bScale: {
+    pit2: { status: "applicable", note: "PIT-2 wpływa tylko na B2B na skali w obecnym uproszczeniu." },
+    under26: { status: "ignored", note: "Ulga poniżej 26 lat nie jest stosowana w wariantach B2B." },
+    ppk: { status: "notApplicable", note: "PPK jest używane tylko dla umowy o pracę." },
+    deductibleCosts: { status: "ignored", allowedValues: ["standard"], fallbackValue: "standard", note: "B2B nie uwzględnia kosztów działalności w tym modelu; wybór KUP jest pomijany." },
+    zusType: { status: "applicable", note: "Opcje ZUS B2B dotyczą wariantów B2B." },
+    customZus: { status: "partial", note: "Własne składki są aktywne tylko po wyborze trybu własnych wartości." },
+    vatPayer: { status: "informational", note: "Status VAT jest założeniem informacyjnym i nie zmienia wyniku netto." },
+  },
+  b2bLinear: {},
+  b2bLumpSum: {},
+};
+
+OPTION_APPLICABILITY.b2bLinear = {
+  ...OPTION_APPLICABILITY.b2bScale,
+  pit2: { status: "ignored", note: "PIT-2 nie wpływa na B2B liniowy w obecnym modelu." },
+};
+OPTION_APPLICABILITY.b2bLumpSum = {
+  ...OPTION_APPLICABILITY.b2bScale,
+  pit2: { status: "ignored", note: "PIT-2 nie wpływa na B2B ryczałt w obecnym modelu." },
+};

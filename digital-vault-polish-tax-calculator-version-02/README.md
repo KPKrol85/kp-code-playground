@@ -11,6 +11,7 @@ Statyczna aplikacja webowa do orientacyjnego wyliczania wynagrodzeń brutto/nett
 - porównanie netto dla wszystkich typów umów
 - walidacja i ostrzeżenia
 - widoczny panel założeń kalkulacji i statusu weryfikacji modelu
+- kontraktowe stany opcji formularza: nieaktywne ustawienia są wyłączane lub opisane jako pomijane w uproszczonym modelu
 
 ## Struktura
 - `index.html` – układ aplikacji i semantyczne sekcje
@@ -34,7 +35,10 @@ The checklist maps app values to the official sources that should verify them an
 - Kalkulacje opierają się na miesięcznej kwocie wejściowej i prostym przeliczeniu rocznym x12.
 - Formularz obejmuje wybrane warianty: umowa o pracę, zlecenie, dzieło, B2B skala, B2B liniowy i B2B ryczałt.
 - PIT-2, ulga dla osób poniżej 26 lat, PPK, koszty uzyskania przychodu i typ ZUS są obsługiwane jako uproszczone opcje formularza.
-- Porównanie typów umów używa wspólnych ustawień wejściowych, aby pokazać orientacyjną różnicę netto.
+- Część opcji jest zależna od typu umowy: PPK działa tylko dla UoP, ustawienia ZUS i VAT są B2B-only, a 50% KUP jest dostępne tylko tam, gdzie wspiera je aktualny model.
+- Status podatnika VAT jest obecnie założeniem informacyjnym i nie zmienia wyniku netto.
+- Porównanie typów umów używa wspólnych ustawień wejściowych, ale opcje nieaktywne dla danego modelu mogą być pomijane zgodnie z uproszczoną logiką.
+- W tej zmianie nie modyfikowano formuł, stałych podatkowych ani oczekiwanych wyników regresyjnych.
 
 
 ## Testy regresyjne obliczeń

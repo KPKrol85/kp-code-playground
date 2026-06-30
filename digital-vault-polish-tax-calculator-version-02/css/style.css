@@ -210,3 +210,26 @@ input:disabled {
   color: var(--color-text-primary);
   font-weight: var(--font-weight-semibold);
 }
+
+.form__option { display: grid; gap: var(--space-025); }
+.form__option--inactive,
+.form__row[data-applicability-inactive="true"],
+.form__group[data-applicability-inactive="true"] {
+  opacity: 0.78;
+}
+.form__option--inactive label,
+.form__row[data-applicability-inactive="true"] label {
+  color: var(--color-text-secondary);
+}
+.form__help--applicability { font-style: italic; }
+.comparison-note {
+  margin-top: var(--space-075);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.45;
+}
+select:disabled,
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}

@@ -319,6 +319,14 @@ Risks / notes:
 - Do not silently change calculation inputs in a way that surprises users.
 - Keep the first pass simple; dynamic help text is enough before adding advanced option logic.
 
+Implementation status: Implemented
+
+Completed on: 2026-06-30
+
+Files changed: `js/tax-config.js`, `index.html`, `js/main.js`, `css/style.css`, `README.md`, `improvements-plsn.md`
+
+Notes: Added a central option applicability map and connected the form to contract-specific active, ignored, informational, and not-applicable states. B2B-only ZUS/VAT controls, custom ZUS fields, PPK, PIT-2, under-26 relief, and KUP modes now expose clearer disabled or helper states according to the current simplified model. Added a comparison assumptions note near the table. Calculation formulas, `TAX_CONFIG` constants, and regression outputs were not changed.
+
 ### Improvement 6 — Clarify and extend B2B model assumptions
 
 Priority: P1
