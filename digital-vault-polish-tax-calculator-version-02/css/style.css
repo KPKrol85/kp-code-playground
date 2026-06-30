@@ -164,3 +164,49 @@ input:focus-visible, select:focus-visible, .theme-switcher__btn:focus-visible, .
 .assumptions-panel__note { background: color-mix(in oklab, var(--color-warning) 13%, transparent); border: 1px solid color-mix(in oklab, var(--color-warning) 45%, var(--color-card-border)); border-radius: var(--radius-md); color: var(--color-text-primary); padding: var(--space-100); font-size: var(--font-size-200); line-height: 1.55; }
 
 @media (min-width: 720px) { .assumptions-panel__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); } .assumptions-panel__content { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.skip-link {
+  position: absolute;
+  left: var(--space-100);
+  top: var(--space-100);
+  z-index: 10;
+  transform: translateY(calc(-100% - var(--space-100)));
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem var(--space-100);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.skip-link:focus-visible { transform: translateY(0); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+
+.form__help {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.45;
+}
+
+input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-danger) 55%, transparent);
+}
+
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.table caption {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.45;
+  padding: 0 0 var(--space-075);
+  text-align: left;
+}
+
+.table th[scope="row"] {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
