@@ -52,7 +52,7 @@
 
           <div class="form__row">
             <label for="contractType">Typ umowy</label>
-            <select id="contractType" name="contractType" aria-describedby="contract-help assumptions-disclaimer">
+            <select id="contractType" name="contractType" aria-describedby="contract-help b2b-selected-note assumptions-disclaimer">
               <option value="employment">umowa o pracę</option>
               <option value="mandate">umowa zlecenie</option>
               <option value="specificWork">umowa o dzieło</option>
@@ -61,6 +61,7 @@
               <option value="b2bLumpSum">B2B ryczałt</option>
             </select>
             <p id="contract-help" class="form__help">Wybór typu umowy wpływa na składki, PIT i ostrzeżenia przy wynikach.</p>
+            <p id="b2b-selected-note" class="form__help b2b-note b2b-note--inline" hidden></p>
           </div>
 
           <fieldset class="form__fieldset" id="additional-options-group">
@@ -80,7 +81,7 @@
             </div>
             <div class="form__option" data-option-key="vatPayer">
               <label><input type="checkbox" id="vatPayer" name="vatPayer" aria-describedby="vat-help vat-applicability" /> podatnik VAT (B2B)</label>
-              <p id="vat-help" class="form__help">W obecnym uproszczonym modelu VAT nie zmienia wyniku netto.</p>
+              <p id="vat-help" class="form__help">W obecnej wersji status VAT jest informacyjny i nie zmienia wyniku netto. Model nie uwzględnia przepływów VAT.</p>
               <p id="vat-applicability" class="form__help form__help--applicability" aria-live="polite"></p>
             </div>
           </fieldset>
@@ -152,6 +153,12 @@
             <ul class="assumptions-panel__list" id="limitations-list"></ul>
           </div>
         </div>
+
+        <aside class="b2b-note" id="b2b-assumptions" aria-labelledby="b2b-assumptions-heading">
+          <h3 id="b2b-assumptions-heading">Założenia B2B</h3>
+          <p id="b2b-assumptions-summary"></p>
+          <ul class="assumptions-panel__list" id="b2b-assumptions-list"></ul>
+        </aside>
 
         <p class="assumptions-panel__note" id="assumptions-disclaimer"></p>
       </section>

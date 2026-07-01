@@ -18,6 +18,10 @@ const assumptionsMeta = document.getElementById("assumptions-meta");
 const assumptionsList = document.getElementById("assumptions-list");
 const limitationsList = document.getElementById("limitations-list");
 const assumptionsDisclaimer = document.getElementById("assumptions-disclaimer");
+const b2bAssumptionsSummary = document.getElementById("b2b-assumptions-summary");
+const b2bAssumptionsList = document.getElementById("b2b-assumptions-list");
+const b2bSelectedNote = document.getElementById("b2b-selected-note");
+const comparisonAssumptions = document.getElementById("comparison-assumptions");
 const applicabilityGroups = Array.from(document.querySelectorAll("[data-option-key]"));
 const deductibleCostsSelect = document.getElementById("deductibleCosts");
 
@@ -102,6 +106,11 @@ function updateOptionApplicability() {
   const customZusActive = isB2B(contractType) && zusType.value === "custom";
   setCustomZusState(customZusActive);
   setGroupInactive("customZus", !customZusActive);
+
+  if (b2bSelectedNote) {
+    b2bSelectedNote.hidden = !isB2B(contractType);
+    b2bSelectedNote.textContent = isB2B(contractType) ? TAX_CONFIG.b2b.modelAssumptions.selectedContractNote : "";
+  }
 }
 
 function resolveTheme(preference) {
@@ -190,6 +199,11 @@ function renderAssumptionsPanel() {
   `;
   renderList(assumptionsList, metadata.assumptions || []);
   renderList(limitationsList, metadata.limitations || []);
+  if (b2bAssumptionsSummary) b2bAssumptionsSummary.textContent = TAX_CONFIG.b2b.modelAssumptions.summary;
+  renderList(b2bAssumptionsList, TAX_CONFIG.b2b.modelAssumptions.items || []);
+  if (comparisonAssumptions) {
+    comparisonAssumptions.textContent = `Porównanie używa tej samej kwoty i kierunku obliczeń dla wszystkich typów umów. Nie każda opcja formularza dotyczy każdego modelu; opcje nieaktywne są pomijane zgodnie z uproszczonym modelem. ${TAX_CONFIG.b2b.modelAssumptions.comparisonNote} Wyniki są szacunkowe i wymagają indywidualnej weryfikacji.`;
+  }
   if (assumptionsDisclaimer) {
     assumptionsDisclaimer.textContent = `Wynik orientacyjny: ${metadata.disclaimer} ${metadata.sourceStatus}`;
   }
@@ -221,7 +235,7 @@ function setCustomZusState(isActive) {
 
 function updateWarnings(contractType, options) {
   const warnings = [];
-  if (contractType.startsWith("b2b")) warnings.push("Dla B2B składka zdrowotna, koszty oraz podatek zależą od szczegółów działalności i PKD.");
+  if (contractType.startsWith("b2b")) warnings.push(TAX_CONFIG.b2b.modelAssumptions.selectedContractNote);
   if (options.under26) warnings.push("Ulga dla osób poniżej 26 lat działa do rocznego limitu przychodu i zależy od rodzaju umowy.");
   warningEl.textContent = `${warnings.join(" ")} ${TAX_CONFIG.notes.disclaimer}`.trim();
 }

@@ -41,6 +41,17 @@ The checklist maps app values to the official sources that should verify them an
 - W tej zmianie nie modyfikowano formuł, stałych podatkowych ani oczekiwanych wyników regresyjnych.
 
 
+## Założenia modelu B2B
+- Wyniki dla B2B skala, B2B liniowy i B2B ryczałt są uproszczonymi szacunkami, a nie kompletną analizą podatkową lub księgową.
+- Koszty działalności nie są jeszcze odejmowane od podstawy opodatkowania; kalkulator nie ma aktywnego modelu kosztów firmowych ani kosztu księgowości.
+- Status podatnika VAT jest obecnie informacyjny i nie zmienia wyniku netto, ponieważ model nie uwzględnia przepływów VAT.
+- Założenia ZUS i składki zdrowotnej dla B2B są uproszczone i wymagają weryfikacji warunków, limitów oraz aktualnych kwot w oficjalnych źródłach.
+- Ryczałt używa aktualnej stawki domyślnej z konfiguracji, dlatego nie powinien być traktowany jako uniwersalny dla każdej działalności, PKD lub rodzaju usługi.
+- Kalkulator nie uwzględnia płatnego urlopu, chorobowego, ubezpieczeń, księgowości, indywidualnych ulg ani szczególnych zasad rozliczeń.
+- Indywidualne przypadki B2B wymagają weryfikacji u księgowego lub doradcy oraz w oficjalnych źródłach.
+- Planowane przyszłe usprawnienia mogą objąć jawne koszty działalności, koszt księgowości i selektor stawki ryczałtu, ale te funkcje nie są obecnie zaimplementowane.
+- Testy regresyjne chronią obecne uproszczone zachowanie obliczeń, ale nie potwierdzają oficjalnej poprawności podatkowej modelu B2B.
+
 ## Testy regresyjne obliczeń
 
 Projekt używa lekkiego zestawu testów opartych o wbudowany runner Node.js, bez zewnętrznych zależności. Testy uruchamia się z katalogu projektu:

@@ -233,3 +233,31 @@ input:disabled {
   cursor: not-allowed;
   opacity: 0.65;
 }
+
+
+.b2b-note {
+  background: color-mix(in oklab, var(--color-accent) 9%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-accent) 32%, var(--color-card-border));
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  padding: var(--space-100);
+}
+
+.b2b-note h3 {
+  margin: 0 0 var(--space-050);
+  font-size: var(--font-size-300);
+}
+
+.b2b-note p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.45;
+  margin-bottom: var(--space-075);
+}
+
+.b2b-note--inline {
+  padding: var(--space-075);
+  margin-top: var(--space-025);
+}
+
+.b2b-note--inline[hidden] { display: none; }

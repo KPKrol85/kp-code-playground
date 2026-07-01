@@ -363,6 +363,14 @@ Risks / notes:
 - Do not add complex B2B formulas without official verification and tests.
 - Avoid presenting lump-sum default rate as universal.
 
+Implementation status: Implemented
+
+Completed on: 2026-07-01
+
+Files changed: `js/tax-config.js`, `index.html`, `js/main.js`, `css/style.css`, `README.md`, `docs/tax-verification-checklist.md`, `improvements-plsn.md`
+
+Notes: Added explicit B2B model assumptions, clarified VAT as informational in the current model, documented missing B2B expenses/VAT/accounting-cost logic, and added future-safe boundaries for later B2B expense and lump-sum improvements. Calculation formulas and tax constants were not changed.
+
 ### Improvement 7 — Polish result and comparison UX with clearer context
 
 Priority: P2
