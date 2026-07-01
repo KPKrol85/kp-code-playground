@@ -9,6 +9,9 @@ const comparisonBody = document.querySelector("#comparison-table tbody");
 const validationMessage = document.getElementById("validation-message");
 const warningEl = document.getElementById("result-warning");
 const calculationSummary = document.getElementById("calculation-summary");
+const printSummaryButton = document.getElementById("print-summary");
+const copySummaryButton = document.getElementById("copy-summary");
+const summaryActionStatus = document.getElementById("summary-action-status");
 const comparisonRankingNote = document.getElementById("comparison-ranking-note");
 const contractTypeSelect = document.getElementById("contractType");
 const zusType = document.getElementById("zusType");
@@ -29,6 +32,7 @@ const deductibleCostsSelect = document.getElementById("deductibleCosts");
 
 const HISTORY_KEY = "tax-calculator-history-v2";
 const MAX_HISTORY = 8;
+let lastCalculation = null;
 
 const THEME_KEY = "tax-calculator-theme-v1";
 const themeButtons = Array.from(document.querySelectorAll(".theme-switcher__btn"));
@@ -51,6 +55,108 @@ const helperIds = {
   deductibleCosts: "deductible-costs-applicability",
   zusType: "zus-help",
 };
+
+function setSummaryActionsEnabled(isEnabled, message = "") {
+  [printSummaryButton, copySummaryButton].forEach((button) => {
+    if (button) button.disabled = !isEnabled;
+  });
+  if (summaryActionStatus) {
+    summaryActionStatus.textContent = message || (isEnabled
+      ? "Podsumowanie można wydrukować lub skopiować jako tekst."
+      : "Drukowanie i kopiowanie będą dostępne po poprawnym obliczeniu.");
+  }
+}
+
+function getMetadataLines() {
+  const metadata = TAX_CONFIG.metadata || {};
+  return [
+    `Rok zasad podatkowych: ${metadata.taxYear || "nie podano"}`,
+    `Nazwa modelu: ${metadata.modelName || "nie podano"}`,
+    `Ostatni przegląd: ${metadata.lastReviewed || "nie podano"}`,
+    `Status weryfikacji: ${metadata.verificationStatus || "nie podano"}`,
+  ];
+}
+
+function getResultValue(key, values) {
+  if (key === "socialContributions") return ["pension", "disability", "sickness"].reduce((sum, itemKey) => sum + (values[itemKey] || 0), 0);
+  if (key === "totalDeductions") return Math.max(0, (values.gross || 0) - (values.net || 0));
+  return values[key] || 0;
+}
+
+function formatResultLine(key, monthly, yearly) {
+  const monthlyRaw = getResultValue(key, monthly);
+  const yearlyRaw = getResultValue(key, yearly);
+  const monthlyValue = key === "effectiveBurden" ? `${round2(monthlyRaw)}%` : formatCurrency(monthlyRaw);
+  const yearlyText = key === "effectiveBurden" ? `${round2(yearlyRaw)}%` : formatCurrency(yearlyRaw);
+  return `- ${labels[key] || key}: ${monthlyValue} miesięcznie / ${yearlyText} rocznie`;
+}
+
+function buildPlainTextSummary(calculation) {
+  if (!calculation) return "";
+  const { amount, direction, period, contractType, options, periodResult, comparisonItems } = calculation;
+  const metadata = TAX_CONFIG.metadata || {};
+  const activeAssumptions = getActiveAssumptions(contractType, options);
+  const monthly = periodResult.monthly;
+  const yearly = periodResult.yearly;
+  const comparisonLines = comparisonItems.map((item) => {
+    const marker = item.contractType === contractType ? " (wybrana)" : "";
+    return `- ${contractNames[item.contractType]}${marker}: brutto/przychód ${formatCurrency(item.gross)}, netto ${formatCurrency(item.net)}, obciążenie ${round2(item.burden)}%`;
+  });
+
+  return [
+    "Kalkulator podatkowy PL — podsumowanie kalkulacji",
+    "",
+    "Metadane modelu:",
+    ...getMetadataLines().map((line) => `- ${line}`),
+    "",
+    "Wybrane dane wejściowe:",
+    `- Kwota wejściowa: ${formatCurrency(amount)}`,
+    `- Kierunek: ${directionLabels[direction]}`,
+    `- Okres: ${periodLabels[period]}`,
+    `- Wybrana forma: ${contractNames[contractType]}`,
+    `- Opcje/założenia aktywne: ${activeAssumptions.join("; ")}`,
+    "",
+    "Wyniki:",
+    ...getResultRows(monthly).map(([key]) => formatResultLine(key, monthly, yearly)),
+    "",
+    "Porównanie typów umów:",
+    ...comparisonLines,
+    "",
+    "Założenia i ograniczenia:",
+    ...(metadata.assumptions || []).map((item) => `- ${item}`),
+    ...(metadata.limitations || []).map((item) => `- ${item}`),
+    "",
+    "Disclaimer:",
+    metadata.disclaimer || TAX_CONFIG.notes.disclaimer,
+    metadata.sourceStatus || "",
+    "Wartości są przybliżone i nie stanowią porady podatkowej, prawnej, księgowej ani finansowej.",
+  ].filter((line) => line !== "").join("\n");
+}
+
+async function copySummary() {
+  if (!lastCalculation) {
+    setSummaryActionsEnabled(false);
+    return;
+  }
+  const summary = buildPlainTextSummary(lastCalculation);
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+    await navigator.clipboard.writeText(summary);
+    setSummaryActionsEnabled(true, "Skopiowano tekstowe podsumowanie kalkulacji.");
+  } catch (error) {
+    const textarea = document.createElement("textarea");
+    textarea.value = summary;
+    textarea.setAttribute("readonly", "");
+    textarea.className = "visually-hidden";
+    document.body.append(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    setSummaryActionsEnabled(true, copied
+      ? "Skopiowano tekstowe podsumowanie kalkulacji."
+      : "Nie udało się skopiować automatycznie. Zaznacz wyniki i skopiuj ręcznie.");
+  }
+}
 
 function getApplicability(contractType) {
   return OPTION_APPLICABILITY[contractType] || OPTION_APPLICABILITY.employment;
@@ -125,6 +231,7 @@ function applyTheme(preference, persist = true) {
   const activeTheme = resolveTheme(normalized);
   document.documentElement.dataset.theme = activeTheme;
   document.documentElement.style.colorScheme = activeTheme;
+
 
   themeButtons.forEach((button) => {
     const isActive = button.dataset.themeValue === normalized;
@@ -222,6 +329,8 @@ function renderCalculationSummary({ amount, direction, period, contractType, opt
 }
 
 function renderEmptyStates(message = "Wpisz kwotę, aby zobaczyć szacunkowe wyniki.") {
+  lastCalculation = null;
+  setSummaryActionsEnabled(false);
   if (calculationSummary) {
     calculationSummary.hidden = true;
     calculationSummary.innerHTML = "";
@@ -406,10 +515,13 @@ function calculateAndRender() {
 
   renderCalculationSummary({ amount, direction, period, contractType, options });
   renderResults(periodResult);
-  renderComparison(generateComparison(monthlyInput, direction, options), contractType);
+  const comparisonItems = generateComparison(monthlyInput, direction, options);
+  renderComparison(comparisonItems, contractType);
   updateComparisonRankingNote(direction);
   updateWarnings(contractType, options);
-  return { periodResult, contractType, amount, base };
+  lastCalculation = { periodResult, contractType, amount, base, direction, period, options, comparisonItems };
+  setSummaryActionsEnabled(true);
+  return lastCalculation;
 }
 
 form.addEventListener("submit", (event) => {
@@ -445,6 +557,20 @@ historyEl.addEventListener("click", (event) => {
   updateOptionApplicability();
   calculateAndRender();
 });
+
+if (printSummaryButton) {
+  printSummaryButton.addEventListener("click", () => {
+    if (!lastCalculation) {
+      setSummaryActionsEnabled(false);
+      return;
+    }
+    window.print();
+  });
+}
+
+if (copySummaryButton) {
+  copySummaryButton.addEventListener("click", copySummary);
+}
 
 themeButtons.forEach((button) => {
   button.addEventListener("click", () => applyTheme(button.dataset.themeValue));
