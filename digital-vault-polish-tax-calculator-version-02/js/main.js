@@ -8,6 +8,8 @@ const resultsGrid = document.getElementById("results-grid");
 const comparisonBody = document.querySelector("#comparison-table tbody");
 const validationMessage = document.getElementById("validation-message");
 const warningEl = document.getElementById("result-warning");
+const calculationSummary = document.getElementById("calculation-summary");
+const comparisonRankingNote = document.getElementById("comparison-ranking-note");
 const contractTypeSelect = document.getElementById("contractType");
 const zusType = document.getElementById("zusType");
 const customZus = document.getElementById("custom-zus");
@@ -141,16 +143,19 @@ function initTheme() {
 
 
 const labels = {
-  gross: "kwota brutto",
-  net: "kwota netto",
-  effectiveBurden: "efektywne obciążenie",
-  pit: "podatek PIT",
-  pension: "składka emerytalna",
-  disability: "składka rentowa",
-  sickness: "składka chorobowa",
-  health: "składka zdrowotna",
-  taxAdvance: "zaliczka podatkowa",
-  employerCost: "koszt pracodawcy",
+  net: "Szacunkowo na rękę",
+  gross: "Kwota brutto / przychód",
+  employerCost: "Łączny koszt pracodawcy",
+  pit: "Zaliczka PIT",
+  taxAdvance: "Zaliczka PIT",
+  pension: "Składka emerytalna",
+  disability: "Składka rentowa",
+  sickness: "Składka chorobowa",
+  socialContributions: "Składki społeczne",
+  health: "Składka zdrowotna",
+  ppk: "PPK pracownika",
+  totalDeductions: "Łączne potrącenia",
+  effectiveBurden: "Efektywne obciążenie",
 };
 
 const contractNames = {
@@ -161,6 +166,77 @@ const contractNames = {
   b2bLinear: "B2B liniowy",
   b2bLumpSum: "B2B ryczałt",
 };
+
+
+const directionLabels = {
+  grossToNet: "brutto → netto",
+  netToGross: "netto → brutto",
+};
+
+const periodLabels = {
+  monthly: "miesięcznie",
+  yearly: "rocznie",
+};
+
+const deductibleCostLabels = {
+  standard: "KUP standardowe",
+  increased: "KUP podwyższone",
+  fiftyPercent: "KUP 50%",
+};
+
+const zusTypeLabels = {
+  full: "pełny ZUS",
+  preferential: "preferencyjny ZUS",
+  starter: "ulga na start",
+  custom: "własne wartości ZUS",
+};
+
+function getActiveAssumptions(contractType, options) {
+  const assumptions = [];
+  assumptions.push(options.pit2 ? "PIT-2: tak" : "PIT-2: nie");
+  assumptions.push(options.ppk ? "PPK: tak" : "PPK: nie");
+  assumptions.push(options.under26 ? "ulga dla młodych: tak" : "ulga dla młodych: nie");
+  if (options.deductibleCosts) assumptions.push(deductibleCostLabels[options.deductibleCosts] || `KUP: ${options.deductibleCosts}`);
+  if (isB2B(contractType)) {
+    assumptions.push(`ZUS B2B: ${zusTypeLabels[options.zusType] || options.zusType}`);
+    assumptions.push(options.vatPayer ? "VAT: informacyjnie tak" : "VAT: informacyjnie nie");
+    if (options.zusType === "custom") assumptions.push(`własny ZUS: społ. ${formatCurrency(options.customSocial)}, zdr. ${formatCurrency(options.customHealth)}`);
+  }
+  return assumptions;
+}
+
+function renderCalculationSummary({ amount, direction, period, contractType, options }) {
+  if (!calculationSummary) return;
+  const assumptions = getActiveAssumptions(contractType, options);
+  calculationSummary.hidden = false;
+  calculationSummary.innerHTML = `
+    <h3>Podsumowanie kalkulacji</h3>
+    <dl class="calculation-summary__grid">
+      <div><dt>Kwota wejściowa</dt><dd>${formatCurrency(amount)}</dd></div>
+      <div><dt>Kierunek</dt><dd>${directionLabels[direction]}</dd></div>
+      <div><dt>Okres</dt><dd>${periodLabels[period]}</dd></div>
+      <div><dt>Wybrana forma</dt><dd>${contractNames[contractType]}</dd></div>
+    </dl>
+    <p><strong>Aktywne założenia:</strong> ${assumptions.join(" · ")}</p>
+  `;
+}
+
+function renderEmptyStates(message = "Wpisz kwotę, aby zobaczyć szacunkowe wyniki.") {
+  if (calculationSummary) {
+    calculationSummary.hidden = true;
+    calculationSummary.innerHTML = "";
+  }
+  resultsGrid.innerHTML = `<div class="empty-state">${message}</div>`;
+  comparisonBody.innerHTML = `<tr><td colspan="4" class="empty-state empty-state--table">Porównanie pojawi się po poprawnym wyliczeniu.</td></tr>`;
+  if (comparisonRankingNote) comparisonRankingNote.textContent = "Porównanie pojawi się po poprawnym wyliczeniu.";
+}
+
+function updateComparisonRankingNote(direction) {
+  if (!comparisonRankingNote) return;
+  comparisonRankingNote.textContent = direction === "grossToNet"
+    ? "W trybie brutto → netto wyżej oceniana jest forma z wyższym szacunkowym wynikiem netto."
+    : "W trybie netto → brutto wyżej oceniana jest forma z niższą wymaganą kwotą brutto/przychodu.";
+}
 
 const scenarios = {
   juniorEmployment: { amount: 6800, direction: "grossToNet", period: "monthly", contractType: "employment", under26: true, pit2: true, ppk: false, deductibleCosts: "standard", zusType: "full" },
@@ -209,18 +285,45 @@ function renderAssumptionsPanel() {
   }
 }
 
+function getResultRows(monthly) {
+  const socialContributions = ["pension", "disability", "sickness"].reduce((sum, key) => sum + (monthly[key] || 0), 0);
+  const totalDeductions = Math.max(0, (monthly.gross || 0) - (monthly.net || 0));
+  const rows = [
+    ["net", monthly.net],
+    ["gross", monthly.gross],
+  ];
+  if (monthly.employerCost) rows.push(["employerCost", monthly.employerCost]);
+  rows.push(
+    ["pit", monthly.pit ?? monthly.taxAdvance ?? 0],
+    ["socialContributions", socialContributions],
+    ["health", monthly.health || 0]
+  );
+  if (monthly.ppk) rows.push(["ppk", monthly.ppk]);
+  rows.push(["totalDeductions", totalDeductions], ["effectiveBurden", monthly.effectiveBurden || 0]);
+  return rows;
+}
+
 function renderResults(resultByPeriod) {
   const monthly = resultByPeriod.monthly;
   const yearly = resultByPeriod.yearly;
-  const rows = { ...monthly, employerCost: monthly.employerCost || 0 };
-  resultsGrid.innerHTML = Object.entries(rows)
-    .map(([key, val]) => `<article class="result-card"><p class="result-card__label">${labels[key] || key}</p><p class="result-card__value">${key === "effectiveBurden" ? `${round2(val)}%` : formatCurrency(val)}</p><p class="result-card__label">Rocznie: ${key === "effectiveBurden" ? `${round2(yearly[key] || 0)}%` : formatCurrency(yearly[key] || 0)}</p></article>`)
+  resultsGrid.innerHTML = getResultRows(monthly)
+    .map(([key, val]) => {
+      const yearlyValue = key === "socialContributions"
+        ? ["pension", "disability", "sickness"].reduce((sum, itemKey) => sum + (yearly[itemKey] || 0), 0)
+        : key === "totalDeductions"
+          ? Math.max(0, (yearly.gross || 0) - (yearly.net || 0))
+          : yearly[key] || 0;
+      return `<article class="result-card result-card--${key}"><p class="result-card__label">${labels[key] || key}</p><p class="result-card__value">${key === "effectiveBurden" ? `${round2(val)}%` : formatCurrency(val)}</p><p class="result-card__label">Rocznie: ${key === "effectiveBurden" ? `${round2(yearlyValue)}%` : formatCurrency(yearlyValue)}</p></article>`;
+    })
     .join("");
 }
 
-function renderComparison(items) {
+function renderComparison(items, activeContractType) {
   comparisonBody.innerHTML = items
-    .map((item) => `<tr><th scope="row">${contractNames[item.contractType]}</th><td>${formatCurrency(item.gross)}</td><td>${formatCurrency(item.net)}</td><td>${round2(item.burden)}%</td></tr>`)
+    .map((item) => {
+      const isActive = item.contractType === activeContractType;
+      return `<tr class="${isActive ? "comparison-table__row--active" : ""}" ${isActive ? 'aria-current="true"' : ""}><th scope="row">${contractNames[item.contractType]} ${isActive ? '<span class="comparison-table__badge">wybrana</span>' : ""}</th><td>${formatCurrency(item.gross)}</td><td>${formatCurrency(item.net)}</td><td>${round2(item.burden)}%</td></tr>`;
+    })
     .join("");
 }
 
@@ -286,10 +389,9 @@ function calculateAndRender() {
   validationMessage.textContent = "";
   amountInput.removeAttribute("aria-invalid");
   if (!Number.isFinite(amount) || amount <= 0) {
-    resultsGrid.innerHTML = "";
-    comparisonBody.innerHTML = "";
-    validationMessage.textContent = "Podaj poprawną dodatnią kwotę, aby zobaczyć wyniki.";
-    amountInput.setAttribute("aria-invalid", "true");
+    renderEmptyStates(amountInput.value ? "Podaj kwotę większą od zera." : "Wpisz kwotę, aby zobaczyć szacunkowe wyniki.");
+    validationMessage.textContent = amountInput.value ? "Podaj kwotę większą od zera." : "";
+    if (amountInput.value) amountInput.setAttribute("aria-invalid", "true");
     warningEl.textContent = "";
     return null;
   }
@@ -302,8 +404,10 @@ function calculateAndRender() {
   if (contractType === "employment") base.employerCost = calculateEmployerCost(grossMonthly);
   const periodResult = byPeriod(base, "monthly");
 
+  renderCalculationSummary({ amount, direction, period, contractType, options });
   renderResults(periodResult);
-  renderComparison(generateComparison(monthlyInput, direction, options));
+  renderComparison(generateComparison(monthlyInput, direction, options), contractType);
+  updateComparisonRankingNote(direction);
   updateWarnings(contractType, options);
   return { periodResult, contractType, amount, base };
 }
@@ -354,4 +458,4 @@ initTheme();
 updateOptionApplicability();
 renderAssumptionsPanel();
 renderHistory();
-calculateAndRender();
+renderEmptyStates();

@@ -261,3 +261,71 @@ input:disabled {
 }
 
 .b2b-note--inline[hidden] { display: none; }
+
+.calculation-summary {
+  display: grid;
+  gap: var(--space-075);
+  margin-bottom: var(--space-100);
+  padding: var(--space-100);
+  background: color-mix(in oklab, var(--color-accent) 8%, var(--color-surface-solid));
+  border: 1px solid color-mix(in oklab, var(--color-accent) 35%, var(--color-card-border));
+  border-radius: var(--radius-md);
+}
+
+.calculation-summary[hidden] { display: none; }
+.calculation-summary h3 { margin: 0; font-size: var(--font-size-300); }
+.calculation-summary p { color: var(--color-text-secondary); font-size: var(--font-size-200); line-height: 1.45; }
+.calculation-summary__grid { display: grid; gap: var(--space-050); margin: 0; }
+.calculation-summary__grid div { background: var(--color-surface-solid); border: 1px solid var(--color-card-border); border-radius: var(--radius-sm); padding: var(--space-075); }
+.calculation-summary__grid dt { color: var(--color-text-secondary); font-size: var(--font-size-100); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.04em; }
+.calculation-summary__grid dd { margin: var(--space-025) 0 0; font-weight: var(--font-weight-semibold); }
+
+.empty-state {
+  grid-column: 1 / -1;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-solid);
+  border: 1px dashed var(--color-card-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-100);
+  line-height: 1.45;
+}
+.empty-state--table { display: table-cell; }
+
+.result-note {
+  margin-top: var(--space-100);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.45;
+}
+.result-card--net { border-color: color-mix(in oklab, var(--color-success) 45%, var(--color-card-border)); }
+.result-card--net .result-card__value { color: var(--color-success); }
+.result-card--gross,
+.result-card--employerCost { border-color: color-mix(in oklab, var(--color-accent) 35%, var(--color-card-border)); }
+
+.comparison-note--strong {
+  color: var(--color-text-primary);
+  background: color-mix(in oklab, var(--color-accent) 7%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-accent) 25%, var(--color-card-border));
+  border-radius: var(--radius-sm);
+  padding: var(--space-075);
+}
+.comparison-table__row--active {
+  background: color-mix(in oklab, var(--color-accent) 11%, transparent);
+  box-shadow: inset 4px 0 0 var(--color-accent);
+}
+.comparison-table__row--active th,
+.comparison-table__row--active td { font-weight: var(--font-weight-semibold); }
+.comparison-table__badge {
+  display: inline-block;
+  margin-left: var(--space-050);
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 720px) { .calculation-summary__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
