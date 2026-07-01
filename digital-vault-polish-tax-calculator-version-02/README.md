@@ -19,9 +19,12 @@ Statyczna aplikacja webowa do orientacyjnego wyliczania wynagrodzeń brutto/nett
 - `index.html` – układ aplikacji i semantyczne sekcje
 - `css/style.css` – styl premium, mobile-first, BEM
 - `js/tax-config.js` – centralne stawki, progi podatkowe, metadane modelu i założenia kalkulacji
-- `js/calculations.js` – logika obliczeń
+- `js/calculations.js` – logika obliczeń brutto/netto, netto/brutto, kosztu pracodawcy, porównań i przeliczania okresów; moduł pozostaje bez zależności od DOM
 - `js/utils.js` – formatowanie i funkcje pomocnicze
-- `js/main.js` – zachowanie UI i render wyników oraz panelu założeń
+- `js/ui-config.js` – etykiety UI, nazwy typów umów, etykiety okresów/kierunków oraz definicje szybkich scenariuszy; nie zawiera formuł podatkowych
+- `js/theme.js` – inicjalizacja motywu, zapis preferencji i stan przycisków przełącznika motywu
+- `js/history.js` – lokalny zapis, odczyt i render historii kalkulacji w `localStorage`
+- `js/main.js` – warstwa orkiestracji: referencje DOM, zbieranie stanu formularza, wiązanie zdarzeń, koordynacja obliczeń, render wyników/porównań/założeń, ostrzeżeń oraz akcji drukowania/kopiowania
 
 ## Konfiguracja zasad podatkowych
 `js/tax-config.js` jest źródłem prawdy dla kalkulatora. Wszystkie stawki, progi, składki, uproszczenia modelu, metadane roku podatkowego i teksty założeń należy aktualizować w tym pliku.
@@ -84,6 +87,12 @@ Udostępnianie stanu przez URL nie zostało wdrożone w tym etapie. Może być p
 - Widok mobilny/wąski pozostaje czytelny, a przyciski akcji układają się bez przepełnienia.
 - Zachowanie motywu jasny/ciemny/system na ekranie pozostaje bez zmian.
 - Konsola przeglądarki nie pokazuje nowych błędów po kalkulacji, druku i kopiowaniu.
+
+## Manual QA po refaktorze modułów
+- Sprawdź poprawną kalkulację brutto → netto i netto → brutto dla wybranego typu umowy.
+- Sprawdź, czy wszystkie sześć typów umów/współpracy nadal renderuje wyniki oraz czy tabela porównania pokazuje aktywny wybór.
+- Sprawdź widoczność założeń, disclaimerów, reguł dostępności opcji, historii, przełączania motywu oraz akcji drukowania/kopiowania po poprawnym obliczeniu.
+- Sprawdź bezpieczny stan pustej albo niepoprawnej kwoty i brak nowych błędów w konsoli przeglądarki.
 
 ## Testy regresyjne obliczeń
 
