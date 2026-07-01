@@ -1,6 +1,9 @@
 import { generateComparison, grossToNet, netToGross, calculateEmployerCost, byPeriod } from "./calculations.js";
 import { formatCurrency, parseAmount, round2 } from "./utils.js";
 import { OPTION_APPLICABILITY, TAX_CONFIG } from "./tax-config.js";
+import { contractNames, deductibleCostLabels, directionLabels, periodLabels, quickScenarios, resultLabels, zusTypeLabels } from "./ui-config.js";
+import { findHistoryEntry, renderHistory, writeHistoryEntry } from "./history.js";
+import { initThemeSwitcher } from "./theme.js";
 
 const form = document.getElementById("calculator-form");
 const amountInput = document.getElementById("amount");
@@ -30,13 +33,9 @@ const comparisonAssumptions = document.getElementById("comparison-assumptions");
 const applicabilityGroups = Array.from(document.querySelectorAll("[data-option-key]"));
 const deductibleCostsSelect = document.getElementById("deductibleCosts");
 
-const HISTORY_KEY = "tax-calculator-history-v2";
-const MAX_HISTORY = 8;
 let lastCalculation = null;
 
-const THEME_KEY = "tax-calculator-theme-v1";
 const themeButtons = Array.from(document.querySelectorAll(".theme-switcher__btn"));
-const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
 const optionControls = {
   under26: document.getElementById("under26"),
@@ -88,7 +87,7 @@ function formatResultLine(key, monthly, yearly) {
   const yearlyRaw = getResultValue(key, yearly);
   const monthlyValue = key === "effectiveBurden" ? `${round2(monthlyRaw)}%` : formatCurrency(monthlyRaw);
   const yearlyText = key === "effectiveBurden" ? `${round2(yearlyRaw)}%` : formatCurrency(yearlyRaw);
-  return `- ${labels[key] || key}: ${monthlyValue} miesięcznie / ${yearlyText} rocznie`;
+  return `- ${resultLabels[key] || key}: ${monthlyValue} miesięcznie / ${yearlyText} rocznie`;
 }
 
 function buildPlainTextSummary(calculation) {
@@ -221,83 +220,6 @@ function updateOptionApplicability() {
   }
 }
 
-function resolveTheme(preference) {
-  if (preference === "system") return mediaQuery.matches ? "dark" : "light";
-  return preference === "dark" ? "dark" : "light";
-}
-
-function applyTheme(preference, persist = true) {
-  const normalized = ["light", "dark", "system"].includes(preference) ? preference : "system";
-  const activeTheme = resolveTheme(normalized);
-  document.documentElement.dataset.theme = activeTheme;
-  document.documentElement.style.colorScheme = activeTheme;
-
-
-  themeButtons.forEach((button) => {
-    const isActive = button.dataset.themeValue === normalized;
-    button.classList.toggle("is-active", isActive);
-    button.setAttribute("aria-pressed", String(isActive));
-    button.setAttribute("aria-label", `${button.textContent}: ${isActive ? "wybrany motyw" : "wybierz motyw"}`);
-  });
-
-  if (persist) localStorage.setItem(THEME_KEY, normalized);
-}
-
-function initTheme() {
-  const savedTheme = localStorage.getItem(THEME_KEY) || "system";
-  applyTheme(savedTheme, false);
-}
-
-
-const labels = {
-  net: "Szacunkowo na rękę",
-  gross: "Kwota brutto / przychód",
-  employerCost: "Łączny koszt pracodawcy",
-  pit: "Zaliczka PIT",
-  taxAdvance: "Zaliczka PIT",
-  pension: "Składka emerytalna",
-  disability: "Składka rentowa",
-  sickness: "Składka chorobowa",
-  socialContributions: "Składki społeczne",
-  health: "Składka zdrowotna",
-  ppk: "PPK pracownika",
-  totalDeductions: "Łączne potrącenia",
-  effectiveBurden: "Efektywne obciążenie",
-};
-
-const contractNames = {
-  employment: "umowa o pracę",
-  mandate: "umowa zlecenie",
-  specificWork: "umowa o dzieło",
-  b2bScale: "B2B skala",
-  b2bLinear: "B2B liniowy",
-  b2bLumpSum: "B2B ryczałt",
-};
-
-
-const directionLabels = {
-  grossToNet: "brutto → netto",
-  netToGross: "netto → brutto",
-};
-
-const periodLabels = {
-  monthly: "miesięcznie",
-  yearly: "rocznie",
-};
-
-const deductibleCostLabels = {
-  standard: "KUP standardowe",
-  increased: "KUP podwyższone",
-  fiftyPercent: "KUP 50%",
-};
-
-const zusTypeLabels = {
-  full: "pełny ZUS",
-  preferential: "preferencyjny ZUS",
-  starter: "ulga na start",
-  custom: "własne wartości ZUS",
-};
-
 function getActiveAssumptions(contractType, options) {
   const assumptions = [];
   assumptions.push(options.pit2 ? "PIT-2: tak" : "PIT-2: nie");
@@ -346,12 +268,6 @@ function updateComparisonRankingNote(direction) {
     ? "W trybie brutto → netto wyżej oceniana jest forma z wyższym szacunkowym wynikiem netto."
     : "W trybie netto → brutto wyżej oceniana jest forma z niższą wymaganą kwotą brutto/przychodu.";
 }
-
-const scenarios = {
-  juniorEmployment: { amount: 6800, direction: "grossToNet", period: "monthly", contractType: "employment", under26: true, pit2: true, ppk: false, deductibleCosts: "standard", zusType: "full" },
-  seniorB2BLinear: { amount: 22000, direction: "grossToNet", period: "monthly", contractType: "b2bLinear", under26: false, pit2: false, ppk: false, deductibleCosts: "standard", zusType: "full" },
-  creatorSpecificWork: { amount: 12000, direction: "grossToNet", period: "monthly", contractType: "specificWork", under26: false, pit2: true, ppk: false, deductibleCosts: "fiftyPercent", zusType: "full" },
-};
 
 function collectOptions() {
   const fd = new FormData(form);
@@ -422,7 +338,7 @@ function renderResults(resultByPeriod) {
         : key === "totalDeductions"
           ? Math.max(0, (yearly.gross || 0) - (yearly.net || 0))
           : yearly[key] || 0;
-      return `<article class="result-card result-card--${key}"><p class="result-card__label">${labels[key] || key}</p><p class="result-card__value">${key === "effectiveBurden" ? `${round2(val)}%` : formatCurrency(val)}</p><p class="result-card__label">Rocznie: ${key === "effectiveBurden" ? `${round2(yearlyValue)}%` : formatCurrency(yearlyValue)}</p></article>`;
+      return `<article class="result-card result-card--${key}"><p class="result-card__label">${resultLabels[key] || key}</p><p class="result-card__value">${key === "effectiveBurden" ? `${round2(val)}%` : formatCurrency(val)}</p><p class="result-card__label">Rocznie: ${key === "effectiveBurden" ? `${round2(yearlyValue)}%` : formatCurrency(yearlyValue)}</p></article>`;
     })
     .join("");
 }
@@ -452,22 +368,8 @@ function updateWarnings(contractType, options) {
   warningEl.textContent = `${warnings.join(" ")} ${TAX_CONFIG.notes.disclaimer}`.trim();
 }
 
-function writeHistoryEntry(payload) {
-  const current = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
-  const next = [payload, ...current].slice(0, MAX_HISTORY);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
-  renderHistory();
-}
-
-function renderHistory() {
-  const items = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
-  historyEl.innerHTML = items.length
-    ? items.map((item) => `<li><button type="button" class="history-btn" data-id="${item.id}">${item.timestamp} • ${contractNames[item.contractType]} • ${formatCurrency(item.inputAmount)} → ${formatCurrency(item.net)}</button></li>`).join("")
-    : '<li class="history-empty">Brak zapisanych kalkulacji.</li>';
-}
-
 function setFormFromScenario(name) {
-  const data = scenarios[name];
+  const data = quickScenarios[name];
   if (!data) return;
   Object.entries(data).forEach(([key, value]) => {
     const field = form.elements.namedItem(key);
@@ -536,6 +438,7 @@ form.addEventListener("submit", (event) => {
     inputAmount: result.amount,
     net: result.base.net,
   });
+  renderHistory(historyEl, { contractNames, formatCurrency });
 });
 
 form.addEventListener("change", (event) => {
@@ -549,8 +452,7 @@ scenarioSelect.addEventListener("change", (event) => {
 historyEl.addEventListener("click", (event) => {
   const btn = event.target.closest(".history-btn");
   if (!btn) return;
-  const items = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
-  const selected = items.find((item) => item.id === btn.dataset.id);
+  const selected = findHistoryEntry(btn.dataset.id);
   if (!selected) return;
   form.elements.namedItem("amount").value = selected.inputAmount;
   form.elements.namedItem("contractType").value = selected.contractType;
@@ -572,16 +474,8 @@ if (copySummaryButton) {
   copySummaryButton.addEventListener("click", copySummary);
 }
 
-themeButtons.forEach((button) => {
-  button.addEventListener("click", () => applyTheme(button.dataset.themeValue));
-});
-
-mediaQuery.addEventListener("change", () => {
-  if ((localStorage.getItem(THEME_KEY) || "system") === "system") applyTheme("system", false);
-});
-
-initTheme();
+initThemeSwitcher({ themeButtons });
 updateOptionApplicability();
 renderAssumptionsPanel();
-renderHistory();
+renderHistory(historyEl, { contractNames, formatCurrency });
 renderEmptyStates();
