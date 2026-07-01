@@ -164,7 +164,14 @@
       </section>
 
       <section class="card" aria-labelledby="results-heading">
-        <h2 id="results-heading">Wyniki</h2>
+        <div class="results-header">
+          <h2 id="results-heading">Wyniki</h2>
+          <div class="summary-actions" aria-label="Akcje podsumowania">
+            <button type="button" class="btn-secondary" id="print-summary" disabled>Drukuj podsumowanie</button>
+            <button type="button" class="btn-secondary" id="copy-summary" disabled>Kopiuj podsumowanie</button>
+          </div>
+        </div>
+        <p id="summary-action-status" class="summary-action-status" role="status" aria-live="polite">Drukowanie i kopiowanie będą dostępne po poprawnym obliczeniu.</p>
         <div id="calculation-summary" class="calculation-summary" hidden></div>
         <div id="result-warning" class="notice" aria-live="polite" aria-atomic="true"></div>
         <div id="results-grid" class="results-grid" aria-live="polite" aria-atomic="false"></div>

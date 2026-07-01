@@ -12,6 +12,8 @@ Statyczna aplikacja webowa do orientacyjnego wyliczania wynagrodzeń brutto/nett
 - walidacja i ostrzeżenia
 - widoczny panel założeń kalkulacji i statusu weryfikacji modelu
 - kontraktowe stany opcji formularza: nieaktywne ustawienia są wyłączane lub opisane jako pomijane w uproszczonym modelu
+- drukowanie czytelnego podsumowania po poprawnym obliczeniu
+- kopiowanie transparentnego tekstowego podsumowania bez backendu ani usług zewnętrznych
 
 ## Struktura
 - `index.html` – układ aplikacji i semantyczne sekcje
@@ -59,6 +61,29 @@ The checklist maps app values to the official sources that should verify them an
 - Indywidualne przypadki B2B wymagają weryfikacji u księgowego lub doradcy oraz w oficjalnych źródłach.
 - Planowane przyszłe usprawnienia mogą objąć jawne koszty działalności, koszt księgowości i selektor stawki ryczałtu, ale te funkcje nie są obecnie zaimplementowane.
 - Testy regresyjne chronią obecne uproszczone zachowanie obliczeń, ale nie potwierdzają oficjalnej poprawności podatkowej modelu B2B.
+
+## Drukowanie i kopiowanie podsumowania
+Po poprawnym obliczeniu aplikacja odblokowuje akcje `Drukuj podsumowanie` i `Kopiuj podsumowanie` w sekcji wyników. Dla pustej lub niepoprawnej kwoty akcje pozostają nieaktywne, aby nie tworzyć mylącego wydruku ani tekstu bez ważnego wyniku.
+
+Wydruk korzysta z reguł `@media print` w `css/style.css`. Układ ekranowy nie jest zmieniany, a podgląd wydruku upraszcza stronę do czytelnej wersji zawierającej: nazwę aplikacji, metadane modelu i status weryfikacji, wybrany kontekst kalkulacji, wyniki, tabelę porównania, założenia, ograniczenia oraz disclaimer. Kontrolki interaktywne, takie jak wybór motywu, formularz, szybkie scenariusze, przyciski akcji i historia kalkulacji, są ukrywane w druku.
+
+Kopiowanie podsumowania używa Clipboard API, a w razie braku dostępu próbuje prostego fallbacku po stronie przeglądarki. Kopiowany tekst zawiera nazwę aplikacji, kwotę, kierunek, okres, typ umowy, aktywne opcje, wartości miesięczne i roczne, porównanie typów umów, założenia, ograniczenia oraz informację, że wartości są przybliżone i nie stanowią porady prawnej, podatkowej, księgowej ani finansowej.
+
+### Prywatność i udostępnianie
+Ta funkcja nie wprowadza backendu, kont użytkowników, bazy danych, analityki ani zewnętrznych usług udostępniania. Dane są drukowane lub kopiowane wyłącznie po świadomej akcji użytkownika w przeglądarce. Historia pozostaje lokalna w `localStorage` tak jak dotychczas.
+
+Udostępnianie stanu przez URL nie zostało wdrożone w tym etapie. Może być przyszłym usprawnieniem, jeśli zostanie dodane z walidacją i tylko dla niesensytywnych pól kalkulatora, bez historii i bez identyfikatorów osobowych.
+
+## Manual QA dla podsumowań
+- Poprawna kalkulacja odblokowuje przyciski drukowania i kopiowania w sekcji wyników.
+- Pusta albo niepoprawna kwota blokuje drukowanie i kopiowanie oraz pokazuje bezpieczny status.
+- Podgląd wydruku zawiera disclaimer, założenia, ograniczenia, metadane modelu, wyniki i tabelę porównania.
+- Podgląd wydruku ukrywa formularz, wybór motywu, szybkie scenariusze, przyciski akcji i historię.
+- Skopiowany tekst zawiera kontekst wejściowy, aktywne opcje, wyniki, porównanie, ograniczenia i disclaimer.
+- Tabela porównania pozostaje czytelna w wydruku.
+- Widok mobilny/wąski pozostaje czytelny, a przyciski akcji układają się bez przepełnienia.
+- Zachowanie motywu jasny/ciemny/system na ekranie pozostaje bez zmian.
+- Konsola przeglądarki nie pokazuje nowych błędów po kalkulacji, druku i kopiowaniu.
 
 ## Testy regresyjne obliczeń
 
