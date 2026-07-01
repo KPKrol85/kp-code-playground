@@ -31,6 +31,14 @@ Aktualny model w konfiguracji wskazuje rok zasad podatkowych `2026`, ale stałe 
 
 The checklist maps app values to the official sources that should verify them and records whether each item is verified, requires verification, needs an update, or is a simplified model assumption. Automated tests protect current calculation behavior, but they do not prove official tax correctness or suitability for individual legal, tax, accounting, or financial decisions.
 
+
+## Interpretacja wyników
+- Wyniki pokazują szacunkowe wartości netto, brutto/przychodu oraz — dla umowy o pracę — łączny koszt pracodawcy.
+- Ranking w porównaniu zależy od kierunku obliczeń: dla brutto → netto wyżej oceniany jest wyższy wynik netto, a dla netto → brutto niższa wymagana kwota brutto/przychodu.
+- Łączny koszt pracodawcy jest bezpośrednio pokazywany głównie dla umowy o pracę; inne formy współpracy nie mają w uproszczonym modelu w pełni porównywalnego odpowiednika tego kosztu.
+- Porównania B2B i umów cywilnoprawnych korzystają z uproszczonych założeń, bez pełnej analizy indywidualnych ulg, kosztów działalności, VAT i szczególnych zasad ZUS/zdrowotnych.
+- Założenia, ograniczenia i disclaimer pozostają widoczne w aplikacji przy interpretacji wyników.
+
 ## Założenia uproszczonego modelu
 - Kalkulacje opierają się na miesięcznej kwocie wejściowej i prostym przeliczeniu rocznym x12.
 - Formularz obejmuje wybrane warianty: umowa o pracę, zlecenie, dzieło, B2B skala, B2B liniowy i B2B ryczałt.

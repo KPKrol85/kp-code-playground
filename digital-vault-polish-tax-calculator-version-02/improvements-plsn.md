@@ -406,6 +406,14 @@ Risks / notes:
 - Keep cards readable on mobile.
 - Do not overload the UI with long tax explanations; link to or collapse assumptions when necessary.
 
+Implementation status: Implemented
+
+Completed on: 2026-07-01
+
+Files changed: `index.html`, `js/main.js`, `css/style.css`, `README.md`, `improvements-plsn.md`
+
+Notes: Added calculation context summary, clearer empty and invalid states, improved result labels/hierarchy, selected-contract row highlight, comparison ranking notes, and employer-cost interpretation copy. Calculation formulas and tax constants were not changed.
+
 ### Improvement 8 — Add print-friendly and shareable summary
 
 Priority: P2
