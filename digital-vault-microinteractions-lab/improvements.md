@@ -67,7 +67,10 @@ The current/planned architecture is intentionally small and static:
 - **Expected files:** `assets/js/main.js`, `README.md`, `plan.md`, `improvements.md`.
 - **Acceptance criteria:** All interaction objects use the same required fields; allowed taxonomy values are documented; missing or invalid metadata can be identified during manual review; filters map directly to documented taxonomy values.
 - **Risks / notes:** Do not over-engineer with a build-time schema library; keep validation lightweight and framework-free.
-- **Implementation status:** Not started
+- **Implementation status:** Implemented
+- **Completed on:** 2026-07-02
+- **Files changed:** `assets/js/main.js`, `README.md`, `plan.md`, `improvements.md`.
+- **Implementation notes:** Strengthened the interaction data model with stable lowercase taxonomy values, added lightweight runtime metadata validation, connected filters to the taxonomy source of truth, updated maintainer documentation, and preserved the static vanilla architecture with no framework, backend or build step.
 
 ### 2. Build or refine core catalogue rendering
 
