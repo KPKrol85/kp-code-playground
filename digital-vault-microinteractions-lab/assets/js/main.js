@@ -24,11 +24,14 @@ const selectors = {
   toastRegion: '[data-toast-region]'
 };
 
-const state = {
-  query: '',
+const filterState = {
+  search: '',
   category: 'all',
   complexity: 'all',
-  motion: 'all',
+  motion: 'all'
+};
+
+const state = {
   selectedId: 'button-magnetic',
   activeCodeTab: 'html',
   theme: 'light'
@@ -660,7 +663,7 @@ function getTaxonomyLabel(key, value) {
 }
 
 function getSelectedInteraction() {
-  return interactions.find((interaction) => interaction.id === state.selectedId) || interactions[0];
+  return interactions.find((interaction) => interaction.id === state.selectedId) || null;
 }
 
 function populateSelect(selectElement, options) {
@@ -847,38 +850,62 @@ function renderMeta(interaction) {
   return fragment;
 }
 
+function readFilterStateFromControls() {
+  filterState.search = dom.searchInput.value;
+  filterState.category = dom.categoryFilter.value;
+  filterState.complexity = dom.complexityFilter.value;
+  filterState.motion = dom.motionFilter.value;
+}
+
+function syncSelectedInteraction(filteredInteractions) {
+  if (filteredInteractions.some((interaction) => interaction.id === state.selectedId)) {
+    return;
+  }
+  state.selectedId = filteredInteractions[0]?.id || null;
+}
+
 function renderCards() {
   const filtered = applyFilters();
+  syncSelectedInteraction(filtered);
   dom.patternGrid.replaceChildren();
   filtered.forEach((interaction) => {
+    const isSelected = interaction.id === state.selectedId;
     const card = createElement('article', 'pattern-card');
     card.dataset.patternId = interaction.id;
-    if (interaction.id === state.selectedId) {
-      card.classList.add('is-selected');
-    }
+    card.classList.toggle('is-selected', isSelected);
+
+    const selectButton = createElement('button', 'pattern-card__select');
+    selectButton.type = 'button';
+    selectButton.setAttribute('aria-pressed', String(isSelected));
+    selectButton.setAttribute('aria-label', `Wybierz wzorzec: ${interaction.name}`);
+    selectButton.addEventListener('click', () => selectInteraction(interaction.id));
+
     const preview = createElement('div', 'pattern-card__preview');
     preview.append(renderPreviewMarkup(interaction.previewType, interaction.name));
-    const header = createElement('div', 'pattern-card__header');
-    const titleWrap = createElement('div');
-    titleWrap.append(createElement('h3', 'pattern-card__title', interaction.name));
-    titleWrap.append(createElement('p', 'pattern-card__description', interaction.description));
-    header.append(titleWrap);
+    const status = createElement('span', 'pattern-card__selected-label', isSelected ? 'Wybrany wzorzec' : 'Wybierz wzorzec');
+    const title = createElement('h3', 'pattern-card__title', interaction.name);
+    const description = createElement('p', 'pattern-card__description', interaction.description);
     const meta = createElement('div', 'pattern-card__meta');
+    meta.setAttribute('aria-label', 'Metadane wzorca');
     meta.append(renderMeta(interaction));
-    const best = createElement('p', 'pattern-card__best', `Best for: ${interaction.bestFor}`);
+    const best = createElement('p', 'pattern-card__best', `Najlepsze użycie: ${interaction.bestFor}`);
+    const a11y = createElement('p', 'pattern-card__a11y', `Dostępność: ${interaction.accessibility}`);
+    selectButton.append(status, title, description, meta, best, a11y);
+
     const actions = createElement('div', 'pattern-card__actions');
-    actions.append(createActionButton('Preview', () => selectInteraction(interaction.id)));
-    actions.append(createActionButton('Copy HTML', () => copySnippet(interaction, 'html')));
-    actions.append(createActionButton('Copy CSS', () => copySnippet(interaction, 'css')));
+    actions.append(createActionButton('Kopiuj HTML', () => copySnippet(interaction, 'html')));
+    actions.append(createActionButton('Kopiuj CSS', () => copySnippet(interaction, 'css')));
     if (interaction.js) {
-      actions.append(createActionButton('Copy JS', () => copySnippet(interaction, 'js')));
+      actions.append(createActionButton('Kopiuj JS', () => copySnippet(interaction, 'js')));
     }
-    card.append(preview, header, meta, best, actions);
+    card.append(preview, selectButton, actions);
     dom.patternGrid.append(card);
   });
-  dom.resultsCount.textContent = `${filtered.length} z ${interactions.length} wzorców pasuje do filtrów.`;
+  renderResultStatus(filtered.length);
   dom.emptyState.classList.toggle('is-hidden', filtered.length > 0);
   dom.patternGrid.classList.toggle('is-hidden', filtered.length === 0);
+  renderFeaturedPreview();
+  renderCodePanel();
 }
 
 function createActionButton(label, onClick) {
@@ -889,19 +916,50 @@ function createActionButton(label, onClick) {
 }
 
 function applyFilters() {
-  const query = normalize(state.query);
+  const query = normalize(filterState.search);
   return interactions.filter((interaction) => {
-    const haystack = normalize(`${interaction.name} ${interaction.description} ${interaction.bestFor} ${interaction.category}`);
-    const matchesQuery = !query || haystack.includes(query);
-    const matchesCategory = state.category === 'all' || interaction.category === state.category;
-    const matchesComplexity = state.complexity === 'all' || interaction.complexity === state.complexity;
-    const matchesMotion = state.motion === 'all' || interaction.motion === state.motion;
+    const searchableText = [
+      interaction.name,
+      interaction.description,
+      getTaxonomyLabel('category', interaction.category),
+      interaction.category,
+      interaction.bestFor,
+      interaction.accessibility
+    ].join(' ');
+    const matchesQuery = !query || normalize(searchableText).includes(query);
+    const matchesCategory = filterState.category === 'all' || interaction.category === filterState.category;
+    const matchesComplexity = filterState.complexity === 'all' || interaction.complexity === filterState.complexity;
+    const matchesMotion = filterState.motion === 'all' || interaction.motion === filterState.motion;
     return matchesQuery && matchesCategory && matchesComplexity && matchesMotion;
   });
 }
 
+function renderResultStatus(resultCount) {
+  dom.resultsCount.textContent = resultCount === 0
+    ? 'Brak wyników dla wybranych filtrów.'
+    : `Znaleziono ${resultCount} ${getPolishResultWord(resultCount)} z ${interactions.length}.`;
+}
+
+function getPolishResultWord(count) {
+  if (count === 1) {
+    return 'interakcję';
+  }
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+  return lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 12 || lastTwoDigits > 14) ? 'interakcje' : 'interakcji';
+}
+
 function renderFeaturedPreview() {
   const interaction = getSelectedInteraction();
+  if (!interaction) {
+    dom.previewName.textContent = 'Brak wzorca do podglądu';
+    dom.previewDescription.textContent = 'Żaden wzorzec nie pasuje do aktualnych filtrów. Wyczyść filtry, aby wrócić do biblioteki.';
+    dom.previewMeta.replaceChildren();
+    dom.previewSurface.replaceChildren(createElement('p', 'preview-stage__empty-note', 'Brak podglądu dla pustego wyniku.'));
+    dom.previewBestFor.textContent = 'Wyczyść filtry albo zmień frazę wyszukiwania.';
+    dom.previewAccessibility.textContent = 'Pusty stan jest komunikowany tekstowo i nie blokuje panelu kodu.';
+    return;
+  }
   dom.previewName.textContent = interaction.name;
   dom.previewDescription.textContent = interaction.description;
   dom.previewMeta.replaceChildren(renderMeta(interaction));
@@ -912,7 +970,7 @@ function renderFeaturedPreview() {
 
 function renderCodePanel() {
   const interaction = getSelectedInteraction();
-  const snippet = interaction[state.activeCodeTab] || '// Ten wzorzec nie wymaga dodatkowego JavaScriptu.';
+  const snippet = interaction ? (interaction[state.activeCodeTab] || '// Ten wzorzec nie wymaga dodatkowego JavaScriptu.') : '// Brak snippetu: aktualne filtry nie zwracają żadnego wzorca.';
   dom.codeOutput.textContent = snippet;
   queryAll(selectors.codeTabs).forEach((tab) => {
     const active = tab.dataset.codeTab === state.activeCodeTab;
@@ -923,8 +981,6 @@ function renderCodePanel() {
 
 function selectInteraction(id) {
   state.selectedId = id;
-  renderFeaturedPreview();
-  renderCodePanel();
   renderCards();
   showToast('Podgląd został zaktualizowany.', 'success');
 }
@@ -945,6 +1001,10 @@ async function copyText(text) {
 }
 
 function copySnippet(interaction, type) {
+  if (!interaction) {
+    showToast('Brak wzorca do skopiowania. Wyczyść filtry lub wybierz wynik.', 'error');
+    return;
+  }
   const snippet = interaction[type] || '// Ten wzorzec nie wymaga tego typu snippetu.';
   copyText(snippet)
     .then(() => showToast(`Skopiowano ${type.toUpperCase()} dla: ${interaction.name}.`, 'success'))
@@ -959,16 +1019,17 @@ function showToast(message, variant) {
 }
 
 function resetFilters() {
-  state.query = '';
-  state.category = 'all';
-  state.complexity = 'all';
-  state.motion = 'all';
+  filterState.search = '';
+  filterState.category = 'all';
+  filterState.complexity = 'all';
+  filterState.motion = 'all';
   dom.searchInput.value = '';
   dom.categoryFilter.value = 'all';
   dom.complexityFilter.value = 'all';
   dom.motionFilter.value = 'all';
   renderCards();
 }
+
 
 function initTheme() {
   const stored = localStorage.getItem('kp-micro-theme');
@@ -993,21 +1054,11 @@ function initFilters() {
   populateSelect(dom.categoryFilter, interactionTaxonomy.category);
   populateSelect(dom.complexityFilter, interactionTaxonomy.complexity);
   populateSelect(dom.motionFilter, interactionTaxonomy.motion);
-  dom.searchInput.addEventListener('input', (event) => {
-    state.query = event.target.value;
-    renderCards();
-  });
-  dom.categoryFilter.addEventListener('change', (event) => {
-    state.category = event.target.value;
-    renderCards();
-  });
-  dom.complexityFilter.addEventListener('change', (event) => {
-    state.complexity = event.target.value;
-    renderCards();
-  });
-  dom.motionFilter.addEventListener('change', (event) => {
-    state.motion = event.target.value;
-    renderCards();
+  [dom.searchInput, dom.categoryFilter, dom.complexityFilter, dom.motionFilter].forEach((control) => {
+    control.addEventListener(control === dom.searchInput ? 'input' : 'change', () => {
+      readFilterStateFromControls();
+      renderCards();
+    });
   });
   dom.resetFilters.addEventListener('click', resetFilters);
   dom.emptyReset.addEventListener('click', resetFilters);
