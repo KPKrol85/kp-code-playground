@@ -34,13 +34,74 @@ const state = {
   theme: 'light'
 };
 
+const interactionTaxonomy = {
+  category: [
+    { value: 'feedback', label: 'Feedback' },
+    { value: 'navigation', label: 'Nawigacja' },
+    { value: 'forms', label: 'Formularze' },
+    { value: 'buttons', label: 'Przyciski' },
+    { value: 'cards', label: 'Karty' },
+    { value: 'loading', label: 'Ładowanie' },
+    { value: 'onboarding', label: 'Onboarding' },
+    { value: 'dashboard', label: 'Dashboard' },
+    { value: 'ecommerce', label: 'E-commerce' },
+    { value: 'empty-states', label: 'Empty states' }
+  ],
+  complexity: [
+    { value: 'basic', label: 'Podstawowy' },
+    { value: 'intermediate', label: 'Średni' },
+    { value: 'advanced', label: 'Zaawansowany' }
+  ],
+  motion: [
+    { value: 'none', label: 'Bez ruchu' },
+    { value: 'subtle', label: 'Subtelny' },
+    { value: 'medium', label: 'Średni' },
+    { value: 'expressive', label: 'Ekspresyjny' }
+  ],
+  previewType: [
+    { value: 'accordion', label: 'Accordion' },
+    { value: 'button-glow', label: 'Glow button' },
+    { value: 'button-loading', label: 'Loading button' },
+    { value: 'button-magnetic', label: 'Magnetic button' },
+    { value: 'button-press', label: 'Pressable button' },
+    { value: 'card', label: 'Card' },
+    { value: 'dot', label: 'Notification dot' },
+    { value: 'empty', label: 'Empty state' },
+    { value: 'field', label: 'Form field' },
+    { value: 'meter', label: 'Meter' },
+    { value: 'progress', label: 'Progress' },
+    { value: 'row', label: 'Data row' },
+    { value: 'skeleton', label: 'Skeleton' },
+    { value: 'status', label: 'Status' },
+    { value: 'tabs', label: 'Tabs' },
+    { value: 'toast', label: 'Toast' },
+    { value: 'tooltip', label: 'Tooltip' }
+  ]
+};
+
+const requiredInteractionFields = [
+  'id',
+  'name',
+  'category',
+  'complexity',
+  'motion',
+  'featured',
+  'description',
+  'bestFor',
+  'accessibility',
+  'previewType',
+  'html',
+  'css',
+  'js'
+];
+
 const interactions = [
   {
     id: "button-magnetic",
     name: "Magnetic CTA Button",
-    category: "Buttons",
-    complexity: "Medium",
-    motion: "Animated",
+    category: "buttons",
+    complexity: "intermediate",
+    motion: "medium",
     featured: true,
     description: "Magnetic CTA Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 1 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -56,9 +117,9 @@ if (element) {
   {
     id: "button-soft-glow",
     name: "Soft Glow Button",
-    category: "Buttons",
-    complexity: "Easy",
-    motion: "Subtle",
+    category: "buttons",
+    complexity: "basic",
+    motion: "subtle",
     featured: true,
     description: "Soft Glow Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 2 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -71,9 +132,9 @@ if (element) {
   {
     id: "button-pressable",
     name: "Pressable Button",
-    category: "Buttons",
-    complexity: "Easy",
-    motion: "Subtle",
+    category: "buttons",
+    complexity: "basic",
+    motion: "subtle",
     featured: false,
     description: "Pressable Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 3 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -86,9 +147,9 @@ if (element) {
   {
     id: "button-loading",
     name: "Loading Button",
-    category: "Buttons",
-    complexity: "Medium",
-    motion: "Animated",
+    category: "buttons",
+    complexity: "intermediate",
+    motion: "medium",
     featured: false,
     description: "Loading Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 4 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -104,9 +165,9 @@ if (element) {
   {
     id: "button-success",
     name: "Success Button",
-    category: "Feedback",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "feedback",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Success Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 5 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -122,9 +183,9 @@ if (element) {
   {
     id: "button-ripple",
     name: "Ripple Feedback Button",
-    category: "Buttons",
-    complexity: "Advanced",
-    motion: "Animated",
+    category: "buttons",
+    complexity: "advanced",
+    motion: "medium",
     featured: false,
     description: "Ripple Feedback Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 6 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -140,9 +201,9 @@ if (element) {
   {
     id: "card-tilt-product",
     name: "Tilt Product Card",
-    category: "Cards",
-    complexity: "Advanced",
-    motion: "Animated",
+    category: "cards",
+    complexity: "advanced",
+    motion: "medium",
     featured: true,
     description: "Tilt Product Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 7 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -158,9 +219,9 @@ if (element) {
   {
     id: "card-lift",
     name: "Lift Card",
-    category: "Cards",
-    complexity: "Easy",
-    motion: "Subtle",
+    category: "cards",
+    complexity: "basic",
+    motion: "subtle",
     featured: false,
     description: "Lift Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 8 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -173,9 +234,9 @@ if (element) {
   {
     id: "card-expandable-info",
     name: "Expandable Info Card",
-    category: "Cards",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "cards",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Expandable Info Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 9 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -191,9 +252,9 @@ if (element) {
   {
     id: "card-pricing-highlight",
     name: "Pricing Highlight Card",
-    category: "Cards",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "cards",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: true,
     description: "Pricing Highlight Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 10 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -209,9 +270,9 @@ if (element) {
   {
     id: "skeleton-profile",
     name: "Skeleton Profile Card",
-    category: "Loading",
-    complexity: "Easy",
-    motion: "Animated",
+    category: "loading",
+    complexity: "basic",
+    motion: "medium",
     featured: true,
     description: "Skeleton Profile Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Loading, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 11 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -224,9 +285,9 @@ if (element) {
   {
     id: "skeleton-dashboard-row",
     name: "Skeleton Dashboard Row",
-    category: "Loading",
-    complexity: "Easy",
-    motion: "Animated",
+    category: "loading",
+    complexity: "basic",
+    motion: "medium",
     featured: false,
     description: "Skeleton Dashboard Row pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Loading, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 12 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -239,9 +300,9 @@ if (element) {
   {
     id: "progress-stepper",
     name: "Progress Stepper",
-    category: "Navigation",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "navigation",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Progress Stepper pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 13 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -257,9 +318,9 @@ if (element) {
   {
     id: "badge-animated",
     name: "Animated Badge",
-    category: "Feedback",
-    complexity: "Easy",
-    motion: "Animated",
+    category: "feedback",
+    complexity: "basic",
+    motion: "medium",
     featured: true,
     description: "Animated Badge pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 14 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -272,9 +333,9 @@ if (element) {
   {
     id: "status-pulse",
     name: "Status Pulse",
-    category: "Feedback",
-    complexity: "Easy",
-    motion: "Animated",
+    category: "feedback",
+    complexity: "basic",
+    motion: "medium",
     featured: false,
     description: "Status Pulse pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 15 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -287,9 +348,9 @@ if (element) {
   {
     id: "toast-feedback",
     name: "Toast Feedback",
-    category: "Feedback",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "feedback",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Toast Feedback pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 16 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -305,9 +366,9 @@ if (element) {
   {
     id: "form-inline-error",
     name: "Inline Form Error",
-    category: "Forms",
-    complexity: "Easy",
-    motion: "Static",
+    category: "forms",
+    complexity: "basic",
+    motion: "none",
     featured: false,
     description: "Inline Form Error pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 17 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -320,9 +381,9 @@ if (element) {
   {
     id: "form-floating-label",
     name: "Floating Label Input",
-    category: "Forms",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "forms",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Floating Label Input pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 18 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -338,9 +399,9 @@ if (element) {
   {
     id: "password-strength",
     name: "Password Strength Meter",
-    category: "Forms",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "forms",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Password Strength Meter pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 19 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -356,9 +417,9 @@ if (element) {
   {
     id: "segmented-control",
     name: "Segmented Control",
-    category: "Navigation",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "navigation",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Segmented Control pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 20 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -374,9 +435,9 @@ if (element) {
   {
     id: "tabs-indicator",
     name: "Tabs Indicator",
-    category: "Navigation",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "navigation",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Tabs Indicator pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 21 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -392,9 +453,9 @@ if (element) {
   {
     id: "accordion-reveal",
     name: "Accordion Reveal",
-    category: "Navigation",
-    complexity: "Easy",
-    motion: "Subtle",
+    category: "navigation",
+    complexity: "basic",
+    motion: "subtle",
     featured: false,
     description: "Accordion Reveal pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 22 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -407,9 +468,9 @@ if (element) {
   {
     id: "tooltip-hint",
     name: "Tooltip Hint",
-    category: "Feedback",
-    complexity: "Easy",
-    motion: "Static",
+    category: "feedback",
+    complexity: "basic",
+    motion: "none",
     featured: false,
     description: "Tooltip Hint pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 23 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -422,9 +483,9 @@ if (element) {
   {
     id: "empty-state-cta",
     name: "Empty State CTA",
-    category: "Empty States",
-    complexity: "Easy",
-    motion: "Static",
+    category: "empty-states",
+    complexity: "basic",
+    motion: "none",
     featured: false,
     description: "Empty State CTA pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Empty States, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 24 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -437,9 +498,9 @@ if (element) {
   {
     id: "notification-dot",
     name: "Notification Dot",
-    category: "Feedback",
-    complexity: "Easy",
-    motion: "Static",
+    category: "feedback",
+    complexity: "basic",
+    motion: "none",
     featured: false,
     description: "Notification Dot pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 25 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -452,9 +513,9 @@ if (element) {
   {
     id: "copy-feedback-chip",
     name: "Copy Feedback Chip",
-    category: "Feedback",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "feedback",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Copy Feedback Chip pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 26 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -470,9 +531,9 @@ if (element) {
   {
     id: "mini-progress-bar",
     name: "Mini Progress Bar",
-    category: "Data UI",
-    complexity: "Easy",
-    motion: "Animated",
+    category: "dashboard",
+    complexity: "basic",
+    motion: "medium",
     featured: false,
     description: "Mini Progress Bar pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Data UI, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 27 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -485,9 +546,9 @@ if (element) {
   {
     id: "timeline-reveal",
     name: "Timeline Item Reveal",
-    category: "Data UI",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "dashboard",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Timeline Item Reveal pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Data UI, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 28 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -503,9 +564,9 @@ if (element) {
   {
     id: "data-row-hover",
     name: "Data Row Hover",
-    category: "Data UI",
-    complexity: "Easy",
-    motion: "Subtle",
+    category: "dashboard",
+    complexity: "basic",
+    motion: "subtle",
     featured: false,
     description: "Data Row Hover pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Data UI, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 29 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -518,9 +579,9 @@ if (element) {
   {
     id: "save-state-indicator",
     name: "Save State Indicator",
-    category: "Feedback",
-    complexity: "Medium",
-    motion: "Subtle",
+    category: "feedback",
+    complexity: "intermediate",
+    motion: "subtle",
     featured: false,
     description: "Save State Indicator pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 30 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -536,9 +597,9 @@ if (element) {
   {
     id: "empty-search-results",
     name: "Empty Search Results",
-    category: "Empty States",
-    complexity: "Easy",
-    motion: "Static",
+    category: "empty-states",
+    complexity: "basic",
+    motion: "none",
     featured: false,
     description: "Empty Search Results pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Empty States, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 31 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -551,9 +612,9 @@ if (element) {
   {
     id: "form-valid-check",
     name: "Valid Field Check",
-    category: "Forms",
-    complexity: "Easy",
-    motion: "Subtle",
+    category: "forms",
+    complexity: "basic",
+    motion: "subtle",
     featured: false,
     description: "Valid Field Check pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 32 wymaga szybkiego feedbacku i jasnego następnego kroku.",
@@ -590,20 +651,78 @@ function normalize(value) {
   return String(value || '').trim().toLowerCase();
 }
 
+function getTaxonomyValues(key) {
+  return interactionTaxonomy[key].map((item) => item.value);
+}
+
+function getTaxonomyLabel(key, value) {
+  return interactionTaxonomy[key].find((item) => item.value === value)?.label || value;
+}
+
 function getSelectedInteraction() {
   return interactions.find((interaction) => interaction.id === state.selectedId) || interactions[0];
 }
 
-function getUniqueValues(key) {
-  return [...new Set(interactions.map((interaction) => interaction[key]))].sort((a, b) => a.localeCompare(b, 'pl'));
-}
-
-function populateSelect(selectElement, values) {
-  values.forEach((value) => {
-    const option = createElement('option', '', value);
+function populateSelect(selectElement, options) {
+  options.forEach(({ value, label }) => {
+    const option = createElement('option', '', label);
     option.value = value;
     selectElement.append(option);
   });
+}
+
+function validateInteractions(interactionList) {
+  const ids = new Set();
+  const duplicateIds = new Set();
+  const allowedCategory = getTaxonomyValues('category');
+  const allowedComplexity = getTaxonomyValues('complexity');
+  const allowedMotion = getTaxonomyValues('motion');
+  const allowedPreviewType = getTaxonomyValues('previewType');
+  const warnings = [];
+
+  interactionList.forEach((interaction, index) => {
+    const label = interaction.id || `interaction at index ${index}`;
+
+    requiredInteractionFields.forEach((field) => {
+      if (!Object.prototype.hasOwnProperty.call(interaction, field)) {
+        warnings.push(`${label}: missing required field "${field}".`);
+      }
+    });
+
+    if (interaction.id) {
+      if (ids.has(interaction.id)) {
+        duplicateIds.add(interaction.id);
+      }
+      ids.add(interaction.id);
+    }
+
+    if (!allowedCategory.includes(interaction.category)) {
+      warnings.push(`${label}: invalid category "${interaction.category}".`);
+    }
+    if (!allowedComplexity.includes(interaction.complexity)) {
+      warnings.push(`${label}: invalid complexity "${interaction.complexity}".`);
+    }
+    if (!allowedMotion.includes(interaction.motion)) {
+      warnings.push(`${label}: invalid motion "${interaction.motion}".`);
+    }
+    if (!allowedPreviewType.includes(interaction.previewType)) {
+      warnings.push(`${label}: invalid previewType "${interaction.previewType}".`);
+    }
+    ['html', 'css'].forEach((field) => {
+      if (typeof interaction[field] !== 'string' || interaction[field].trim() === '') {
+        warnings.push(`${label}: "${field}" snippet is required and cannot be empty.`);
+      }
+    });
+    if (typeof interaction.js !== 'string') {
+      warnings.push(`${label}: "js" must be a string; use an empty string when JavaScript is not needed.`);
+    }
+  });
+
+  duplicateIds.forEach((id) => warnings.push(`Duplicate interaction id "${id}".`));
+
+  if (warnings.length > 0) {
+    console.warn('Interaction metadata validation warnings:', warnings);
+  }
 }
 
 function renderPreviewMarkup(previewType, label) {
@@ -719,7 +838,7 @@ function renderPreviewMarkup(previewType, label) {
 function renderMeta(interaction) {
   const fragment = document.createDocumentFragment();
   ['category', 'complexity', 'motion'].forEach((key) => {
-    const badge = createElement('span', 'badge', interaction[key]);
+    const badge = createElement('span', 'badge', getTaxonomyLabel(key, interaction[key]));
     if (key === 'motion') {
       badge.classList.add('badge--motion');
     }
@@ -871,9 +990,9 @@ function applyTheme() {
 }
 
 function initFilters() {
-  populateSelect(dom.categoryFilter, getUniqueValues('category'));
-  populateSelect(dom.complexityFilter, getUniqueValues('complexity'));
-  populateSelect(dom.motionFilter, getUniqueValues('motion'));
+  populateSelect(dom.categoryFilter, interactionTaxonomy.category);
+  populateSelect(dom.complexityFilter, interactionTaxonomy.complexity);
+  populateSelect(dom.motionFilter, interactionTaxonomy.motion);
   dom.searchInput.addEventListener('input', (event) => {
     state.query = event.target.value;
     renderCards();
@@ -929,6 +1048,7 @@ function cacheDom() {
 
 function initApp() {
   cacheDom();
+  validateInteractions(interactions);
   initTheme();
   initFilters();
   initCodeTabs();
