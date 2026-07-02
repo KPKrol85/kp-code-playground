@@ -518,6 +518,14 @@ Risks / notes:
 - Documentation must stay synchronized with actual behavior.
 - Avoid adding future features to README as if they already exist.
 
+Implementation status: Implemented
+
+Completed on: 2026-07-02
+
+Files changed: `README.md`, `docs/manual-qa.md`, `docs/release-checklist.md`, `improvements-plsn.md`
+
+Notes: Expanded README into a maintainer operating manual, added manual QA workflow, and added a release-readiness checklist. This documentation-only task did not change formulas, tax constants, tests, UI behavior, or product features.
+
 ## 6. Suggested Implementation Order
 
 ### Stage 1 — Trust and correctness foundation
