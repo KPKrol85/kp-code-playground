@@ -81,7 +81,10 @@ The current/planned architecture is intentionally small and static:
 - **Expected files:** `index.html`, `assets/js/main.js`, `assets/css/main.css`.
 - **Acceptance criteria:** Search, category, complexity and motion filters can be combined; no-result state is textual and accessible; selected card state is visually and programmatically clear; reset behavior is predictable.
 - **Risks / notes:** Avoid duplicating card markup in multiple places; avoid color-only selected indicators.
-- **Implementation status:** Not started
+- **Implementation status:** Implemented
+- **Completed on:** 2026-07-02
+- **Files changed:** `assets/js/main.js`, `assets/css/main.css`, `improvements.md`.
+- **Implementation notes:** Refined data-driven catalogue rendering, centralized combined filter state, preserved or safely reset selected-card state across filter changes, added robust empty/no-result handling, improved result status feedback, and made card selection accessible with native buttons plus non-color-only selected indicators.
 
 ### 3. Improve live preview architecture
 
