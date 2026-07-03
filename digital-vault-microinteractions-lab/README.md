@@ -102,6 +102,20 @@ Filters should be generated from the taxonomy and interaction cards should displ
 
 Live previews use a controlled `previewType` → renderer-function map in `assets/js/main.js`. Snippet strings are shown for copying in the code panel, but they are not executed as arbitrary JavaScript; the selected interaction object remains the single source for card state, preview metadata and snippet content.
 
+
+## Snippet quality rules
+
+Snippets are educational, copy-ready examples for plain HTML/CSS/JS projects, not full production component libraries. Keep them aligned with the live preview selected in the catalogue.
+
+- Every interaction must expose `html`, `css` and `js` fields in `assets/js/main.js`; `html` and `css` must be non-empty strings, and `js` must be a string (`""` when JavaScript is not needed).
+- Use BEM-like snippet classes with a stable block name derived from the pattern, e.g. `mi-button-magnetic` and elements like `mi-button-magnetic__spinner`.
+- HTML should prefer semantic elements, native controls, useful text labels and ARIA only when it adds clarity; avoid inline styles, app-only wrappers, unavailable assets and external dependencies.
+- CSS should stay scoped to snippet classes, use custom properties with fallbacks where practical, avoid broad global selectors and include `prefers-reduced-motion` handling whenever motion or animation is present.
+- JavaScript is optional and should stay small, local and defensive: query local selectors, guard empty NodeLists/elements, avoid hidden app state, avoid dependencies, never use `eval`, and never inject arbitrary script strings.
+- Snippets must not depend on the Digital Vault app shell, hidden globals, frameworks, CDNs, build tools or backend services unless a future note explicitly documents that dependency.
+- Snippets should match the core live-preview behavior: loading buttons show a loading affordance, tabs include tab-like markup and optional local JS, accordions use accordion markup, toasts use status messaging, and static patterns keep `js: ""`.
+- Accessibility expectations are practical guidance: visible focus, semantic controls, text equivalents for visual states and no claim of WCAG certification without a separate manual audit.
+
 ## Quality checklist
 
 - Semantic HTML and Polish educational content.
