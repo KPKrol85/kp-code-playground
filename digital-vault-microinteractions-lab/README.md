@@ -100,6 +100,8 @@ Allowed `previewType` values:
 
 Filters should be generated from the taxonomy and interaction cards should display Polish labels mapped from these programmatic keys. When adding a pattern, keep the card metadata, preview metadata and snippet tabs connected to the same interaction object so the product does not drift between browsing, previewing and copying.
 
+Live previews use a controlled `previewType` → renderer-function map in `assets/js/main.js`. Snippet strings are shown for copying in the code panel, but they are not executed as arbitrary JavaScript; the selected interaction object remains the single source for card state, preview metadata and snippet content.
+
 ## Quality checklist
 
 - Semantic HTML and Polish educational content.

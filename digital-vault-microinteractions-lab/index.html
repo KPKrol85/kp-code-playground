@@ -120,14 +120,14 @@
 
       <section class="preview-section section-pad" id="code" aria-labelledby="preview-title">
         <div class="container preview-layout">
-          <div class="preview-stage" aria-live="polite">
+          <div class="preview-stage" role="region" aria-labelledby="preview-title" aria-describedby="preview-context" aria-live="polite">
             <div class="section-heading section-heading--compact">
               <p class="eyebrow">Live preview</p>
               <h2 id="preview-title" data-preview-name>Wybierz mikrointerakcję</h2>
-              <p data-preview-description>Podgląd i opis zaktualizują się po wybraniu karty z biblioteki.</p>
+              <p id="preview-context" data-preview-description>Podgląd i opis zaktualizują się po wybraniu karty z biblioteki.</p>
             </div>
             <div class="preview-stage__meta" data-preview-meta></div>
-            <div class="preview-stage__surface" data-preview-surface aria-label="Duży podgląd wybranej mikrointerakcji"></div>
+            <div class="preview-stage__surface" data-preview-surface role="group" aria-label="Duży podgląd wybranej mikrointerakcji"></div>
             <div class="preview-stage__notes">
               <article><h3>Najlepsze użycie</h3><p data-preview-best-for>Wybierz wzorzec, aby zobaczyć rekomendacje użycia.</p></article>
               <article><h3>Dostępność</h3><p data-preview-accessibility>Każdy wzorzec opisuje kluczową uwagę dotyczącą dostępności.</p></article>

@@ -95,7 +95,10 @@ The current/planned architecture is intentionally small and static:
 - **Expected files:** `index.html`, `assets/js/main.js`, `assets/css/main.css`.
 - **Acceptance criteria:** Selecting a card updates preview title, description, metadata and visual demo; previews do not require external libraries; preview state does not leak between interactions; preview controls are keyboard reachable.
 - **Risks / notes:** Do not use arbitrary `eval` or unsafe script execution for snippets; keep demos intentionally small.
-- **Implementation status:** Not started
+- **Implementation status:** Implemented
+- **Completed on:** 2026-07-03
+- **Files changed:** `index.html`, `assets/js/main.js`, `assets/css/main.css`, `README.md`, `plan.md`, `improvements.md`.
+- **Implementation notes:** Improved the live preview architecture with controlled renderer functions for documented `previewType` values, isolated preview updates with DOM reset before each render, added safer fallback behavior for unknown preview types, strengthened textual labels and keyboard-friendly preview controls, and kept preview metadata, snippets and selected-card state synchronized through the selected interaction object.
 
 ### 4. Create snippet quality rules and copy consistency
 
