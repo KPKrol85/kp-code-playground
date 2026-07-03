@@ -28,7 +28,7 @@ Create a premium Digital Vault lab where makers can preview frontend microintera
 
 Each interaction object contains `id`, `name`, `category`, `complexity`, `motion`, `featured`, `description`, `bestFor`, `accessibility`, `previewType`, `html`, `css` and `js` fields. The model is intentionally descriptive so cards, previews and copy actions can be generated from one source of truth.
 
-The catalogue uses stable lowercase programmatic taxonomy keys for categories, complexity, motion and preview renderers. User-facing labels remain Polish-first, while filter options are generated from the same taxonomy used by the data objects to avoid drift as the library grows. HTML and CSS snippets are required for every pattern; JS remains optional behavior but must be represented by a string, including an empty string when no script is needed.
+The catalogue uses stable lowercase programmatic taxonomy keys for categories, complexity, motion and preview renderers. User-facing labels remain Polish-first, while filter options are generated from the same taxonomy used by the data objects to avoid drift as the library grows. HTML and CSS snippets are required for every pattern; JS remains optional behavior but must be represented by a string, including an empty string when no script is needed. Live previews are rendered through a controlled `previewType` map, and code snippets are displayed for copying rather than executed from snippet strings.
 
 ## Accessibility checklist
 

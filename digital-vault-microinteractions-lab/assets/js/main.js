@@ -728,114 +728,110 @@ function validateInteractions(interactionList) {
   }
 }
 
-function renderPreviewMarkup(previewType, label) {
-  const wrapper = createElement('div', `interaction-demo interaction-demo--${previewType}`);
-  if (previewType === 'card') {
-    const card = createElement('article', 'demo-card');
-    card.append(createElement('h4', '', label));
-    card.append(createElement('p', '', 'Subtelny hover state z czytelną hierarchią treści.'));
-    wrapper.append(card);
-    return wrapper;
-  }
-  if (previewType === 'skeleton') {
-    const skeleton = createElement('div', 'demo-skeleton');
-    skeleton.setAttribute('aria-hidden', 'true');
-    skeleton.append(createElement('span'));
-    skeleton.append(createElement('span'));
-    skeleton.append(createElement('span'));
-    wrapper.append(skeleton);
-    return wrapper;
-  }
-  if (previewType === 'status') {
-    const status = createElement('div', 'demo-status');
-    status.append(createElement('span'));
-    status.append(document.createTextNode(label));
-    wrapper.append(status);
-    return wrapper;
-  }
-  if (previewType === 'field') {
-    const field = createElement('label', 'demo-field');
-    field.append(createElement('span', '', 'Email zespołu'));
-    const input = createElement('input');
-    input.type = 'email';
-    input.value = 'team@kp.dev';
-    field.append(input);
-    field.append(createElement('small', '', 'Komunikat stanu jest tekstowy.'));
-    wrapper.append(field);
-    return wrapper;
-  }
-  if (previewType === 'tabs') {
-    const tabs = createElement('div', 'demo-tabs');
-    tabs.setAttribute('role', 'tablist');
-    ['Design', 'Code', 'Audit'].forEach((item) => tabs.append(createElement('button', '', item)));
-    wrapper.append(tabs);
-    return wrapper;
-  }
-  if (previewType === 'accordion') {
-    const details = createElement('details', 'demo-accordion');
-    details.open = true;
-    details.append(createElement('summary', '', 'Jak działa wzorzec?'));
-    details.append(createElement('p', '', 'Treść rozwija się przewidywalnie i pozostaje dostępna z klawiatury.'));
-    wrapper.append(details);
-    return wrapper;
-  }
-  if (previewType === 'tooltip') {
-    const tooltip = createElement('button', 'demo-tooltip', 'Najedź lub ustaw focus');
-    tooltip.type = 'button';
-    wrapper.append(tooltip);
-    return wrapper;
-  }
-  if (previewType === 'empty') {
-    const empty = createElement('div', 'demo-empty');
-    empty.append(createElement('div', '', '⌁'));
-    empty.append(createElement('h4', '', 'Brak danych'));
-    empty.append(createElement('p', '', 'Dodaj pierwszy element, aby rozpocząć.'));
-    wrapper.append(empty);
-    return wrapper;
-  }
-  if (previewType === 'dot') {
-    const dot = createElement('div', 'demo-dot');
-    dot.setAttribute('aria-label', '3 nowe powiadomienia');
-    wrapper.append(dot);
-    return wrapper;
-  }
-  if (previewType === 'meter') {
-    const meter = createElement('div', 'demo-meter');
-    meter.append(createElement('strong', '', 'Siła hasła: dobra'));
-    const bar = createElement('div', 'demo-meter__bar');
-    bar.append(createElement('span'));
-    meter.append(bar);
-    wrapper.append(meter);
-    return wrapper;
-  }
-  if (previewType === 'progress') {
-    const progress = createElement('div', 'demo-progress');
-    progress.append(createElement('span', '', 'Postęp konfiguracji'));
-    progress.append(createElement('strong', '', '86%'));
-    const track = createElement('div');
-    track.append(createElement('i'));
-    progress.append(track);
-    wrapper.append(progress);
-    return wrapper;
-  }
-  if (previewType === 'row') {
-    const row = createElement('div', 'demo-row');
-    row.append(createElement('span', '', 'Vault token'));
-    row.append(createElement('strong', '', 'Aktywny'));
-    wrapper.append(row);
-    return wrapper;
-  }
-  const button = createElement('button', 'demo-button demo-button--glow', label);
-  button.type = 'button';
-  if (previewType === 'button-press') {
-    button.className = 'demo-button demo-button--press';
-  }
-  if (previewType === 'button-loading') {
-    button.className = 'demo-button demo-button--loading';
-    button.textContent = 'Zapisywanie';
-  }
-  wrapper.append(button);
+function createPreviewShell(previewType, interaction) {
+  const safeType = previewRenderers[previewType] ? previewType : 'fallback';
+  const wrapper = createElement('div', `interaction-demo interaction-demo--${safeType}`);
+  wrapper.dataset.previewType = safeType;
+  wrapper.setAttribute('aria-label', `Demo: ${interaction?.name || 'podgląd mikrointerakcji'}`);
+
+  const label = createElement('p', 'interaction-demo__label', `Demo: ${getPreviewLabel(safeType)}`);
+  wrapper.append(label);
   return wrapper;
+}
+
+function getPreviewLabel(previewType) {
+  const labels = {
+    accordion: 'sekcja rozwijana dostępna z klawiatury',
+    'button-glow': 'przycisk z subtelnym stanem hover i focus',
+    'button-loading': 'przycisk pokazujący stan zapisywania',
+    'button-magnetic': 'CTA z lekką odpowiedzią na interakcję',
+    'button-press': 'przycisk z wyczuwalnym stanem naciśnięcia',
+    card: 'karta z czytelną hierarchią i hover state',
+    dot: 'znacznik nowych powiadomień z tekstową etykietą',
+    empty: 'empty state z instrukcją następnego kroku',
+    field: 'pole formularza z tekstowym komunikatem stanu',
+    meter: 'miernik jakości pokazany tekstem i paskiem',
+    progress: 'postęp procesu z wartością procentową',
+    row: 'wiersz danych ze statusem tekstowym',
+    skeleton: 'skeleton loading dla karty produktu',
+    status: 'status z ikoną oraz tekstem',
+    tabs: 'przełączane zakładki na natywnych przyciskach',
+    toast: 'toast z informacją o zapisaniu ustawień',
+    tooltip: 'podpowiedź dostępna na hover i focus',
+    fallback: 'bezpieczny podgląd zastępczy dla nieznanego typu'
+  };
+  return labels[previewType] || labels.fallback;
+}
+
+function renderButtonGlowPreview(wrapper, interaction) { const button = createElement('button', 'demo-button demo-button--glow', interaction.name); button.type = 'button'; wrapper.append(button); }
+function renderButtonMagneticPreview(wrapper, interaction) { const button = createElement('button', 'demo-button demo-button--glow demo-button--magnetic', interaction.name); button.type = 'button'; wrapper.append(button); }
+function renderButtonPressPreview(wrapper, interaction) { const button = createElement('button', 'demo-button demo-button--press', interaction.name); button.type = 'button'; wrapper.append(button); }
+function renderButtonLoadingPreview(wrapper) { const button = createElement('button', 'demo-button demo-button--loading', 'Zapisywanie'); button.type = 'button'; wrapper.append(button, createElement('span', 'interaction-demo__hint', 'Stan: trwa zapisywanie danych.')); }
+function renderCardPreview(wrapper, interaction) { const card = createElement('article', 'demo-card'); card.append(createElement('h4', '', interaction.name), createElement('p', '', 'Subtelny hover state z czytelną hierarchią treści.')); wrapper.append(card); }
+function renderSkeletonPreview(wrapper) { const skeleton = createElement('div', 'demo-skeleton'); skeleton.setAttribute('aria-hidden', 'true'); skeleton.append(createElement('span'), createElement('span'), createElement('span')); wrapper.append(skeleton, createElement('span', 'interaction-demo__hint', 'Ładowanie: układ karty jest rezerwowany przed pojawieniem się treści.')); }
+function renderStatusPreview(wrapper, interaction) { const status = createElement('div', 'demo-status'); status.setAttribute('role', 'status'); status.append(createElement('span'), document.createTextNode(interaction.name)); wrapper.append(status); }
+function renderFieldPreview(wrapper) { const field = createElement('label', 'demo-field'); field.append(createElement('span', '', 'Email zespołu')); const input = createElement('input'); input.type = 'email'; input.value = 'team@kp.dev'; field.append(input, createElement('small', '', 'Komunikat stanu: format adresu jest poprawny.')); wrapper.append(field); }
+function renderTabsPreview(wrapper) { const tabs = createElement('div', 'demo-tabs'); tabs.setAttribute('role', 'tablist'); ['Design', 'Code', 'Audit'].forEach((item, index) => { const tab = createElement('button', '', item); tab.type = 'button'; tab.setAttribute('role', 'tab'); tab.setAttribute('aria-selected', String(index === 0)); tab.addEventListener('click', () => { Array.from(tabs.querySelectorAll('button')).forEach((button) => button.setAttribute('aria-selected', String(button === tab))); }); tabs.append(tab); }); wrapper.append(tabs, createElement('span', 'interaction-demo__hint', 'Użyj Tab i Enter/Space, aby przełączać zakładki.')); }
+function renderAccordionPreview(wrapper) { const details = createElement('details', 'demo-accordion'); details.open = true; details.append(createElement('summary', '', 'Jak działa wzorzec?'), createElement('p', '', 'Treść rozwija się przewidywalnie i pozostaje dostępna z klawiatury.')); wrapper.append(details); }
+function renderTooltipPreview(wrapper) { const tooltip = createElement('button', 'demo-tooltip', 'Najedź lub ustaw focus'); tooltip.type = 'button'; tooltip.setAttribute('aria-label', 'Najedź lub ustaw focus, aby zobaczyć podpowiedź: Bezpieczna podpowiedź tekstowa.'); wrapper.append(tooltip); }
+function renderEmptyPreview(wrapper) { const empty = createElement('div', 'demo-empty'); empty.append(createElement('div', '', '⌁'), createElement('h4', '', 'Brak danych'), createElement('p', '', 'Dodaj pierwszy element, aby rozpocząć.')); wrapper.append(empty); }
+function renderDotPreview(wrapper) { const dot = createElement('div', 'demo-dot'); dot.setAttribute('role', 'img'); dot.setAttribute('aria-label', '3 nowe powiadomienia'); wrapper.append(dot, createElement('span', 'interaction-demo__hint', '3 nowe powiadomienia')); }
+function renderMeterPreview(wrapper) { const meter = createElement('div', 'demo-meter'); meter.append(createElement('strong', '', 'Siła hasła: dobra')); const bar = createElement('div', 'demo-meter__bar'); bar.setAttribute('aria-hidden', 'true'); bar.append(createElement('span')); meter.append(bar); wrapper.append(meter); }
+function renderProgressPreview(wrapper) { const progress = createElement('div', 'demo-progress'); progress.append(createElement('span', '', 'Postęp konfiguracji'), createElement('strong', '', '86%')); const track = createElement('div'); track.setAttribute('aria-hidden', 'true'); track.append(createElement('i')); progress.append(track); wrapper.append(progress); }
+function renderRowPreview(wrapper) { const row = createElement('div', 'demo-row'); row.append(createElement('span', '', 'Vault token'), createElement('strong', '', 'Status: aktywny')); wrapper.append(row); }
+function renderToastPreview(wrapper) { const toast = createElement('div', 'demo-toast-preview'); toast.setAttribute('role', 'status'); toast.append(createElement('strong', '', 'Zapisano ustawienia'), createElement('span', '', 'Toast pokazuje krótkie potwierdzenie akcji.')); wrapper.append(toast); }
+function renderFallbackPreview(wrapper, interaction) { const fallback = createElement('div', 'demo-fallback'); fallback.append(createElement('strong', '', 'Bezpieczny podgląd zastępczy'), createElement('p', '', `${interaction?.name || 'Ten wzorzec'} nie ma rozpoznanego typu podglądu, ale snippetty pozostają dostępne w panelu kodu.`)); wrapper.append(fallback); }
+
+const previewRenderers = {
+  accordion: renderAccordionPreview,
+  'button-glow': renderButtonGlowPreview,
+  'button-loading': renderButtonLoadingPreview,
+  'button-magnetic': renderButtonMagneticPreview,
+  'button-press': renderButtonPressPreview,
+  card: renderCardPreview,
+  dot: renderDotPreview,
+  empty: renderEmptyPreview,
+  field: renderFieldPreview,
+  meter: renderMeterPreview,
+  progress: renderProgressPreview,
+  row: renderRowPreview,
+  skeleton: renderSkeletonPreview,
+  status: renderStatusPreview,
+  tabs: renderTabsPreview,
+  toast: renderToastPreview,
+  tooltip: renderTooltipPreview
+};
+
+function renderPreviewMarkup(previewType, interactionOrLabel) {
+  const interaction = typeof interactionOrLabel === 'object' ? interactionOrLabel : { name: interactionOrLabel || 'Podgląd mikrointerakcji', previewType };
+  const renderer = previewRenderers[previewType];
+  const wrapper = createPreviewShell(previewType, interaction);
+  if (!renderer) {
+    console.warn(`Unknown previewType "${previewType}". Rendering safe fallback preview.`);
+    renderFallbackPreview(wrapper, interaction);
+    return wrapper;
+  }
+  renderer(wrapper, interaction);
+  return wrapper;
+}
+
+function updatePreview(interaction) {
+  dom.previewSurface.replaceChildren();
+  dom.previewMeta.replaceChildren();
+  if (!interaction) {
+    dom.previewName.textContent = 'Brak wzorca do podglądu';
+    dom.previewDescription.textContent = 'Żaden wzorzec nie pasuje do aktualnych filtrów. Wyczyść filtry, aby wrócić do biblioteki.';
+    dom.previewSurface.replaceChildren(createElement('p', 'preview-stage__empty-note', 'Brak podglądu dla pustego wyniku.'));
+    dom.previewBestFor.textContent = 'Wyczyść filtry albo zmień frazę wyszukiwania.';
+    dom.previewAccessibility.textContent = 'Pusty stan jest komunikowany tekstowo i nie blokuje panelu kodu.';
+    return;
+  }
+  dom.previewName.textContent = interaction.name;
+  dom.previewDescription.textContent = interaction.description;
+  dom.previewMeta.replaceChildren(renderMeta(interaction));
+  dom.previewSurface.replaceChildren(renderPreviewMarkup(interaction.previewType, interaction));
+  dom.previewBestFor.textContent = interaction.bestFor;
+  dom.previewAccessibility.textContent = interaction.accessibility;
 }
 
 function renderMeta(interaction) {
@@ -881,7 +877,7 @@ function renderCards() {
     selectButton.addEventListener('click', () => selectInteraction(interaction.id));
 
     const preview = createElement('div', 'pattern-card__preview');
-    preview.append(renderPreviewMarkup(interaction.previewType, interaction.name));
+    preview.append(renderPreviewMarkup(interaction.previewType, interaction));
     const status = createElement('span', 'pattern-card__selected-label', isSelected ? 'Wybrany wzorzec' : 'Wybierz wzorzec');
     const title = createElement('h3', 'pattern-card__title', interaction.name);
     const description = createElement('p', 'pattern-card__description', interaction.description);
@@ -950,22 +946,7 @@ function getPolishResultWord(count) {
 }
 
 function renderFeaturedPreview() {
-  const interaction = getSelectedInteraction();
-  if (!interaction) {
-    dom.previewName.textContent = 'Brak wzorca do podglądu';
-    dom.previewDescription.textContent = 'Żaden wzorzec nie pasuje do aktualnych filtrów. Wyczyść filtry, aby wrócić do biblioteki.';
-    dom.previewMeta.replaceChildren();
-    dom.previewSurface.replaceChildren(createElement('p', 'preview-stage__empty-note', 'Brak podglądu dla pustego wyniku.'));
-    dom.previewBestFor.textContent = 'Wyczyść filtry albo zmień frazę wyszukiwania.';
-    dom.previewAccessibility.textContent = 'Pusty stan jest komunikowany tekstowo i nie blokuje panelu kodu.';
-    return;
-  }
-  dom.previewName.textContent = interaction.name;
-  dom.previewDescription.textContent = interaction.description;
-  dom.previewMeta.replaceChildren(renderMeta(interaction));
-  dom.previewSurface.replaceChildren(renderPreviewMarkup(interaction.previewType, interaction.name));
-  dom.previewBestFor.textContent = interaction.bestFor;
-  dom.previewAccessibility.textContent = interaction.accessibility;
+  updatePreview(getSelectedInteraction());
 }
 
 function renderCodePanel() {
