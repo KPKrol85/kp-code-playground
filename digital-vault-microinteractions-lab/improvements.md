@@ -109,7 +109,10 @@ The current/planned architecture is intentionally small and static:
 - **Expected files:** `README.md`, `plan.md`, `assets/js/main.js`, `improvements.md`.
 - **Acceptance criteria:** Every interaction has HTML and CSS snippets; JS is empty or clearly provided only when needed; snippets use consistent formatting; snippets match the visible preview behavior.
 - **Risks / notes:** Avoid making snippets too abstract; they should remain copy-ready and easy to paste into a plain project.
-- **Implementation status:** Not started
+- **Implementation status:** Implemented
+- **Completed on:** 2026-07-03
+- **Files changed:** `assets/js/main.js`, `README.md`, `plan.md`, `improvements.md`.
+- **Implementation notes:** Audited and normalized snippet fields so every interaction has copy-ready HTML/CSS and a string JS field, strengthened lightweight snippet validation for missing, non-string, empty and unsafe snippet content, documented copy-ready contribution rules, improved snippet/preview consistency through controlled per-preview snippet templates, and introduced no framework, backend, dependency or build step.
 
 ### 5. Add accessibility and reduced-motion audit layer
 

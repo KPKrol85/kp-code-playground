@@ -674,6 +674,76 @@ function populateSelect(selectElement, options) {
   });
 }
 
+
+function buildSnippetCss(blockName, previewType) {
+  const movingTypes = ['button-glow', 'button-loading', 'button-magnetic', 'button-press', 'card', 'row', 'tooltip'];
+  const motion = movingTypes.includes(previewType)
+    ? `\n.${blockName} { transition: transform 180ms ease, box-shadow 180ms ease; }\n.${blockName}:where(:hover, :focus-within) { transform: translateY(-2px); }`
+    : '';
+  const base = `.${blockName} { color: var(--mi-text, #172033); font: 600 1rem/1.5 system-ui, sans-serif; }`;
+  const map = {
+    accordion: `.${blockName} { border: 1px solid var(--mi-border, #d9e2f2); border-radius: 1rem; padding: 1rem; background: var(--mi-surface, #ffffff); }\n.${blockName}__summary { cursor: pointer; font-weight: 700; }\n.${blockName}__content { margin: .75rem 0 0; color: var(--mi-muted, #5d6b82); }`,
+    'button-glow': `.${blockName} { border: 0; border-radius: 999px; padding: .85rem 1.2rem; background: var(--mi-accent, #5b7cfa); color: #fff; box-shadow: 0 10px 28px rgb(91 124 250 / .35); cursor: pointer; }${motion}\n.${blockName}:focus-visible { outline: 3px solid var(--mi-focus, #f5c542); outline-offset: 3px; }`,
+    'button-magnetic': `.${blockName} { border: 0; border-radius: 999px; padding: .85rem 1.2rem; background: var(--mi-accent, #5b7cfa); color: #fff; box-shadow: 0 14px 34px rgb(91 124 250 / .38); cursor: pointer; }${motion}\n.${blockName}:where(:hover, :focus-visible) { transform: translateY(-3px) scale(1.02); }\n.${blockName}:focus-visible { outline: 3px solid var(--mi-focus, #f5c542); outline-offset: 3px; }`,
+    'button-press': `.${blockName} { border: 0; border-radius: .9rem; padding: .85rem 1.2rem; background: var(--mi-accent, #334155); color: #fff; box-shadow: 0 6px 0 var(--mi-shadow, #0f172a); cursor: pointer; }${motion}\n.${blockName}:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--mi-shadow, #0f172a); }\n.${blockName}:focus-visible { outline: 3px solid var(--mi-focus, #f5c542); outline-offset: 3px; }`,
+    'button-loading': `.${blockName} { display: inline-flex; align-items: center; gap: .6rem; border: 0; border-radius: 999px; padding: .85rem 1.2rem; background: var(--mi-accent, #5b7cfa); color: #fff; cursor: wait; }\n.${blockName}__spinner { inline-size: 1rem; block-size: 1rem; border: 2px solid rgb(255 255 255 / .45); border-top-color: #fff; border-radius: 50%; animation: ${blockName}-spin .8s linear infinite; }\n@keyframes ${blockName}-spin { to { transform: rotate(1turn); } }`,
+    card: `.${blockName} { max-width: 18rem; border: 1px solid var(--mi-border, #d9e2f2); border-radius: 1.25rem; padding: 1.25rem; background: var(--mi-surface, #ffffff); box-shadow: 0 18px 40px rgb(15 23 42 / .10); }${motion}\n.${blockName}__title { margin: 0 0 .4rem; font-size: 1.1rem; }\n.${blockName}__text { margin: 0; color: var(--mi-muted, #5d6b82); }`,
+    skeleton: `.${blockName} { width: min(100%, 18rem); display: grid; gap: .75rem; }\n.${blockName}__line { height: .9rem; border-radius: 999px; background: linear-gradient(90deg, #e6ecf5, #f7f9fc, #e6ecf5); background-size: 220% 100%; animation: ${blockName}-shine 1.4s ease-in-out infinite; }\n.${blockName}__line:first-child { height: 3rem; border-radius: 1rem; }\n@keyframes ${blockName}-shine { to { background-position: -220% 0; } }`,
+    status: `.${blockName} { display: inline-flex; align-items: center; gap: .55rem; border-radius: 999px; padding: .45rem .75rem; background: var(--mi-success-bg, #e8f8ef); color: var(--mi-success-text, #126b3a); }\n.${blockName}__dot { inline-size: .65rem; block-size: .65rem; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 .35rem rgb(18 107 58 / .16); }`,
+    field: `.${blockName} { display: grid; gap: .4rem; max-width: 20rem; }\n.${blockName}__input { border: 1px solid var(--mi-border, #d9e2f2); border-radius: .85rem; padding: .75rem .9rem; }\n.${blockName}__input:focus { outline: 3px solid var(--mi-focus, #f5c542); outline-offset: 2px; }\n.${blockName}__hint { color: var(--mi-success-text, #126b3a); }`,
+    tabs: `.${blockName} { display: inline-flex; gap: .35rem; border-radius: 999px; padding: .35rem; background: var(--mi-muted-bg, #edf2f7); }\n.${blockName}__tab { border: 0; border-radius: 999px; padding: .6rem .9rem; background: transparent; cursor: pointer; }\n.${blockName}__tab[aria-selected="true"] { background: var(--mi-surface, #fff); box-shadow: 0 8px 20px rgb(15 23 42 / .12); }`,
+    toast: `.${blockName} { max-width: 22rem; border-radius: 1rem; padding: 1rem; background: var(--mi-surface, #ffffff); color: var(--mi-text, #172033); box-shadow: 0 18px 45px rgb(15 23 42 / .18); }\n.${blockName}__title { display: block; margin-bottom: .25rem; }`,
+    tooltip: `.${blockName} { position: relative; border: 1px solid var(--mi-border, #d9e2f2); border-radius: 999px; padding: .75rem 1rem; background: #fff; cursor: help; }${motion}\n.${blockName}::after { content: attr(data-tooltip); position: absolute; inset-inline-start: 50%; inset-block-end: calc(100% + .6rem); transform: translateX(-50%); width: max-content; max-width: 14rem; border-radius: .7rem; padding: .45rem .65rem; background: #172033; color: #fff; opacity: 0; pointer-events: none; }\n.${blockName}:where(:hover, :focus-visible)::after { opacity: 1; }`,
+    dot: `.${blockName} { inline-size: 1rem; block-size: 1rem; border-radius: 50%; background: var(--mi-danger, #ef4444); box-shadow: 0 0 0 .35rem rgb(239 68 68 / .16); }`,
+    meter: `.${blockName} { display: grid; gap: .55rem; width: min(100%, 18rem); }\n.${blockName}__track { height: .65rem; border-radius: 999px; background: var(--mi-muted-bg, #edf2f7); overflow: hidden; }\n.${blockName}__bar { display: block; width: 72%; height: 100%; background: var(--mi-success, #22c55e); }`,
+    progress: `.${blockName} { display: grid; gap: .55rem; width: min(100%, 18rem); }\n.${blockName}__meta { display: flex; justify-content: space-between; gap: 1rem; }\n.${blockName}__track { height: .65rem; border-radius: 999px; background: var(--mi-muted-bg, #edf2f7); overflow: hidden; }\n.${blockName}__bar { display: block; width: 86%; height: 100%; background: var(--mi-accent, #5b7cfa); }`,
+    row: `.${blockName} { display: flex; justify-content: space-between; gap: 1rem; align-items: center; border: 1px solid var(--mi-border, #d9e2f2); border-radius: 1rem; padding: .85rem 1rem; background: #fff; }${motion}`,
+    empty: `.${blockName} { max-width: 20rem; text-align: center; border: 1px dashed var(--mi-border, #cbd5e1); border-radius: 1.25rem; padding: 1.5rem; color: var(--mi-muted, #5d6b82); }\n.${blockName}__icon { font-size: 2rem; }\n.${blockName}__title { margin: .4rem 0; color: var(--mi-text, #172033); }`
+  };
+  return `${base}\n${map[previewType] || map.card}\n@media (prefers-reduced-motion: reduce) {\n  .${blockName}, .${blockName} *, .${blockName}::after { animation: none; transition: none; transform: none; }\n}`;
+}
+
+function buildInteractionSnippets(interaction) {
+  const blockName = `mi-${interaction.id}`;
+  const title = interaction.name;
+  const htmlByType = {
+    accordion: `<details class="${blockName}" open>\n  <summary class="${blockName}__summary">Jak działa wzorzec?</summary>\n  <p class="${blockName}__content">Treść rozwija się przewidywalnie i pozostaje dostępna z klawiatury.</p>\n</details>`,
+    skeleton: `<div class="${blockName}" role="status" aria-label="Ładowanie treści">\n  <span class="${blockName}__line"></span>\n  <span class="${blockName}__line"></span>\n  <span class="${blockName}__line"></span>\n</div>`,
+    status: `<div class="${blockName}" role="status">\n  <span class="${blockName}__dot" aria-hidden="true"></span>\n  <span>${title}</span>\n</div>`,
+    field: `<label class="${blockName}">\n  <span class="${blockName}__label">Email zespołu</span>\n  <input class="${blockName}__input" type="email" value="team@kp.dev">\n  <small class="${blockName}__hint">Format adresu jest poprawny.</small>\n</label>`,
+    tabs: `<div class="${blockName}" role="tablist" aria-label="Sekcje przykładu">\n  <button class="${blockName}__tab" type="button" role="tab" aria-selected="true">Design</button>\n  <button class="${blockName}__tab" type="button" role="tab" aria-selected="false">Code</button>\n  <button class="${blockName}__tab" type="button" role="tab" aria-selected="false">Audit</button>\n</div>`,
+    toast: `<div class="${blockName}" role="status">\n  <strong class="${blockName}__title">Zapisano ustawienia</strong>\n  <span>Toast pokazuje krótkie potwierdzenie akcji.</span>\n</div>`,
+    tooltip: `<button class="${blockName}" type="button" data-tooltip="Bezpieczna podpowiedź tekstowa.">\n  Najedź lub ustaw focus\n</button>`,
+    dot: `<span class="${blockName}" role="img" aria-label="3 nowe powiadomienia"></span>`,
+    meter: `<div class="${blockName}">\n  <strong>Siła hasła: dobra</strong>\n  <div class="${blockName}__track" aria-hidden="true"><span class="${blockName}__bar"></span></div>\n</div>`,
+    progress: `<div class="${blockName}">\n  <div class="${blockName}__meta"><span>Postęp konfiguracji</span><strong>86%</strong></div>\n  <div class="${blockName}__track" aria-hidden="true"><span class="${blockName}__bar"></span></div>\n</div>`,
+    row: `<div class="${blockName}">\n  <span>Vault token</span>\n  <strong>Status: aktywny</strong>\n</div>`,
+    empty: `<section class="${blockName}" aria-labelledby="${blockName}-title">\n  <div class="${blockName}__icon" aria-hidden="true">⌁</div>\n  <h3 class="${blockName}__title" id="${blockName}-title">Brak danych</h3>\n  <p>Dodaj pierwszy element, aby rozpocząć.</p>\n</section>`
+  };
+  const html = htmlByType[interaction.previewType] || (interaction.previewType.startsWith('button-')
+    ? `<button class="${blockName}" type="button">${title}</button>`
+    : `<article class="${blockName}">\n  <h3 class="${blockName}__title">${title}</h3>\n  <p class="${blockName}__text">Subtelny hover state z czytelną hierarchią treści.</p>\n</article>`);
+  const js = interaction.previewType === 'tabs'
+    ? `document.querySelectorAll('.${blockName}').forEach((tablist) => {\n  const tabs = Array.from(tablist.querySelectorAll('.${blockName}__tab'));\n  if (tabs.length === 0) return;\n\n  tabs.forEach((tab) => {\n    tab.addEventListener('click', () => {\n      tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));\n    });\n  });\n});`
+    : "";
+  return { html, css: buildSnippetCss(blockName, interaction.previewType), js };
+}
+
+function normalizeInteractionSnippets(interactionList) {
+  interactionList.forEach((interaction) => {
+    const snippets = buildInteractionSnippets(interaction);
+    interaction.html = snippets.html;
+    interaction.css = snippets.css;
+    interaction.js = snippets.js;
+  });
+}
+
+function getSnippetClasses(snippet) {
+  return Array.from(snippet.matchAll(/class="([^"]+)"/g))
+    .flatMap((match) => match[1].split(/\s+/))
+    .filter(Boolean);
+}
+
 function validateInteractions(interactionList) {
   const ids = new Set();
   const duplicateIds = new Set();
@@ -681,6 +751,7 @@ function validateInteractions(interactionList) {
   const allowedComplexity = getTaxonomyValues('complexity');
   const allowedMotion = getTaxonomyValues('motion');
   const allowedPreviewType = getTaxonomyValues('previewType');
+  const snippetClassOwners = new Map();
   const warnings = [];
 
   interactionList.forEach((interaction, index) => {
@@ -699,26 +770,36 @@ function validateInteractions(interactionList) {
       ids.add(interaction.id);
     }
 
-    if (!allowedCategory.includes(interaction.category)) {
-      warnings.push(`${label}: invalid category "${interaction.category}".`);
-    }
-    if (!allowedComplexity.includes(interaction.complexity)) {
-      warnings.push(`${label}: invalid complexity "${interaction.complexity}".`);
-    }
-    if (!allowedMotion.includes(interaction.motion)) {
-      warnings.push(`${label}: invalid motion "${interaction.motion}".`);
-    }
-    if (!allowedPreviewType.includes(interaction.previewType)) {
-      warnings.push(`${label}: invalid previewType "${interaction.previewType}".`);
-    }
-    ['html', 'css'].forEach((field) => {
-      if (typeof interaction[field] !== 'string' || interaction[field].trim() === '') {
+    if (!allowedCategory.includes(interaction.category)) warnings.push(`${label}: invalid category "${interaction.category}".`);
+    if (!allowedComplexity.includes(interaction.complexity)) warnings.push(`${label}: invalid complexity "${interaction.complexity}".`);
+    if (!allowedMotion.includes(interaction.motion)) warnings.push(`${label}: invalid motion "${interaction.motion}".`);
+    if (!allowedPreviewType.includes(interaction.previewType)) warnings.push(`${label}: invalid previewType "${interaction.previewType}".`);
+
+    ['html', 'css', 'js'].forEach((field) => {
+      if (!Object.prototype.hasOwnProperty.call(interaction, field)) {
+        warnings.push(`${label}: missing "${field}" snippet field.`);
+        return;
+      }
+      if (typeof interaction[field] !== 'string') {
+        warnings.push(`${label}: "${field}" snippet must be a string${field === 'js' ? '; use an empty string when JavaScript is not needed' : ''}.`);
+        return;
+      }
+      if ((field === 'html' || field === 'css') && interaction[field].trim() === '') {
         warnings.push(`${label}: "${field}" snippet is required and cannot be empty.`);
       }
+      if (/<script[\s>]/i.test(interaction[field]) || /\beval\s*\(/i.test(interaction[field]) || /https?:\/\/|cdn\./i.test(interaction[field])) {
+        warnings.push(`${label}: "${field}" snippet contains a forbidden pattern (<script>, eval or external CDN/link).`);
+      }
     });
-    if (typeof interaction.js !== 'string') {
-      warnings.push(`${label}: "js" must be a string; use an empty string when JavaScript is not needed.`);
-    }
+
+    getSnippetClasses(`${interaction.html || ''}\n${interaction.css || ''}`).forEach((className) => {
+      const owner = snippetClassOwners.get(className);
+      if (owner && owner !== label && className.startsWith('mi-')) {
+        warnings.push(`${label}: possible duplicate snippet class "${className}" also used by ${owner}.`);
+      } else {
+        snippetClassOwners.set(className, label);
+      }
+    });
   });
 
   duplicateIds.forEach((id) => warnings.push(`Duplicate interaction id "${id}".`));
@@ -727,6 +808,7 @@ function validateInteractions(interactionList) {
     console.warn('Interaction metadata validation warnings:', warnings);
   }
 }
+
 
 function createPreviewShell(previewType, interaction) {
   const safeType = previewRenderers[previewType] ? previewType : 'fallback';
@@ -951,13 +1033,22 @@ function renderFeaturedPreview() {
 
 function renderCodePanel() {
   const interaction = getSelectedInteraction();
-  const snippet = interaction ? (interaction[state.activeCodeTab] || '// Ten wzorzec nie wymaga dodatkowego JavaScriptu.') : '// Brak snippetu: aktualne filtry nie zwracają żadnego wzorca.';
+  const snippet = interaction
+    ? getDisplaySnippet(interaction, state.activeCodeTab)
+    : '// Brak snippetu: aktualne filtry nie zwracają żadnego wzorca.';
   dom.codeOutput.textContent = snippet;
   queryAll(selectors.codeTabs).forEach((tab) => {
     const active = tab.dataset.codeTab === state.activeCodeTab;
     tab.classList.toggle('is-active', active);
     tab.setAttribute('aria-selected', String(active));
   });
+}
+
+function getDisplaySnippet(interaction, type) {
+  if (type === 'js' && interaction.js === '') {
+    return '// Ten wzorzec nie wymaga dodatkowego JavaScriptu.';
+  }
+  return interaction[type] || `// Brak snippetu ${type.toUpperCase()} dla tego wzorca.`;
 }
 
 function selectInteraction(id) {
@@ -986,7 +1077,11 @@ function copySnippet(interaction, type) {
     showToast('Brak wzorca do skopiowania. Wyczyść filtry lub wybierz wynik.', 'error');
     return;
   }
-  const snippet = interaction[type] || '// Ten wzorzec nie wymaga tego typu snippetu.';
+  const snippet = interaction[type];
+  if (type === 'js' && snippet === '') {
+    showToast('Ten wzorzec nie wymaga JavaScriptu — nie ma kodu JS do skopiowania.', 'success');
+    return;
+  }
   copyText(snippet)
     .then(() => showToast(`Skopiowano ${type.toUpperCase()} dla: ${interaction.name}.`, 'success'))
     .catch(() => showToast('Nie udało się skopiować. Zaznacz kod ręcznie.', 'error'));
@@ -1080,6 +1175,7 @@ function cacheDom() {
 
 function initApp() {
   cacheDom();
+  normalizeInteractionSnippets(interactions);
   validateInteractions(interactions);
   initTheme();
   initFilters();
