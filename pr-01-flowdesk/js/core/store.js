@@ -1,32 +1,27 @@
 import { seedData } from '../data/seed.js';
-import { migrateState } from '../domain/migrations.js';
-import { validateClient, validateEvent, validateProject, validateUiPreferences } from '../domain/validators.js';
-import { storage } from '../utils/storage.js';
+import {
+  createClientAction,
+  createEventAction,
+  createProjectAction,
+  deleteClientAction,
+  deleteEventAction,
+  deleteProjectAction,
+  exportStateAction,
+  resetDemoDataAction,
+  restoreStateAction,
+  updateClientAction,
+  updateEventAction,
+  updateProjectAction,
+  updateUiPreferencesAction
+} from './actions.js';
+import { statePersistence } from './persistence.js';
 
-const STORAGE_KEY = 'flowdesk_state_v1';
-
-let state = migrateState(storage.get(STORAGE_KEY), seedData);
+let state = statePersistence.save(statePersistence.load());
 
 const listeners = new Set();
 
-const persist = () => storage.set(STORAGE_KEY, state);
-
 const notify = () => {
   listeners.forEach((listener) => listener(state));
-};
-
-const commitState = (nextState) => {
-  state = migrateState(nextState, seedData);
-  persist();
-  notify();
-};
-
-persist();
-
-const setState = (partial) => commitState({ ...state, ...partial });
-
-const updateCollection = (key, items) => {
-  commitState({ ...state, [key]: items });
 };
 
 const createId = (prefix) => {
@@ -34,7 +29,62 @@ const createId = (prefix) => {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 };
 
+const commitActionResult = (result) => {
+  if (!result.ok) return result;
+  state = statePersistence.save(result.nextState);
+  notify();
+  return { ok: true, data: result.data };
+};
+
+const actionContext = { createId };
+
+const actions = {
+  createClient(payload) {
+    return commitActionResult(createClientAction(state, payload, actionContext));
+  },
+  updateClient(id, payload) {
+    return commitActionResult(updateClientAction(state, id, payload));
+  },
+  deleteClient(id) {
+    return commitActionResult(deleteClientAction(state, id));
+  },
+  createProject(payload) {
+    return commitActionResult(createProjectAction(state, payload, actionContext));
+  },
+  updateProject(id, payload) {
+    return commitActionResult(updateProjectAction(state, id, payload));
+  },
+  deleteProject(id) {
+    return commitActionResult(deleteProjectAction(state, id));
+  },
+  createEvent(payload) {
+    return commitActionResult(createEventAction(state, payload, actionContext));
+  },
+  updateEvent(id, payload) {
+    return commitActionResult(updateEventAction(state, id, payload));
+  },
+  deleteEvent(id) {
+    return commitActionResult(deleteEventAction(state, id));
+  },
+  updateUiPreferences(payload) {
+    return commitActionResult(updateUiPreferencesAction(state, payload));
+  },
+  resetDemoData() {
+    return commitActionResult(resetDemoDataAction(seedData));
+  },
+  restoreState(rawState) {
+    return commitActionResult(restoreStateAction(rawState, seedData));
+  },
+  exportState() {
+    const result = exportStateAction(state);
+    return { ok: true, data: result.data };
+  }
+};
+
+const unwrapData = (result) => (result.ok ? result.data : null);
+
 export const store = {
+  actions,
   getState() {
     return state;
   },
@@ -43,107 +93,45 @@ export const store = {
     return () => listeners.delete(listener);
   },
   reset() {
-    state = migrateState(seedData, seedData);
-    persist();
-    notify();
+    return unwrapData(actions.resetDemoData());
   },
   export() {
-    return JSON.stringify(state, null, 2);
+    return actions.exportState().data;
+  },
+  restore(rawState) {
+    return unwrapData(actions.restoreState(rawState));
   },
   setTheme(theme) {
-    const result = validateUiPreferences({ ...state.ui, theme });
-    setState({ ui: result.value });
+    return unwrapData(actions.updateUiPreferences({ theme }));
   },
   setReducedMotion(value) {
-    const result = validateUiPreferences({ ...state.ui, reducedMotion: value });
-    setState({ ui: result.value });
+    return unwrapData(actions.updateUiPreferences({ reducedMotion: value }));
   },
   addClient(payload) {
-    const result = validateClient({ ...payload, id: createId('client') });
-    if (!result.valid) return null;
-    const newClient = result.value;
-    updateCollection('clients', [...state.clients, newClient]);
-    return newClient;
+    return unwrapData(actions.createClient(payload));
   },
   updateClient(id, payload) {
-    const existingClient = state.clients.find((client) => client.id === id);
-    if (!existingClient) return null;
-    const result = validateClient({ ...existingClient, ...payload, id });
-    if (!result.valid) return null;
-    updateCollection(
-      'clients',
-      state.clients.map((client) => (client.id === id ? result.value : client))
-    );
-    return result.value;
+    return unwrapData(actions.updateClient(id, payload));
   },
   deleteClient(id) {
-    const removedProjectIds = state.projects.filter((project) => project.clientId === id).map((project) => project.id);
-    commitState({
-      ...state,
-      clients: state.clients.filter((client) => client.id !== id),
-      projects: state.projects.filter((project) => project.clientId !== id),
-      events: state.events.map((event) => ({
-        ...event,
-        clientId: event.clientId === id ? '' : event.clientId,
-        projectId: removedProjectIds.includes(event.projectId) ? '' : event.projectId
-      }))
-    });
+    return unwrapData(actions.deleteClient(id));
   },
   addProject(payload) {
-    const result = validateProject(
-      { ...payload, id: createId('project') },
-      {
-        clientIds: state.clients.map((client) => client.id)
-      }
-    );
-    if (!result.valid) return null;
-    const newProject = result.value;
-    updateCollection('projects', [...state.projects, newProject]);
-    return newProject;
+    return unwrapData(actions.createProject(payload));
   },
   updateProject(id, payload) {
-    const existingProject = state.projects.find((project) => project.id === id);
-    if (!existingProject) return null;
-    const result = validateProject(
-      { ...existingProject, ...payload, id },
-      {
-        clientIds: state.clients.map((client) => client.id)
-      }
-    );
-    if (!result.valid) return null;
-    updateCollection(
-      'projects',
-      state.projects.map((project) => (project.id === id ? result.value : project))
-    );
-    return result.value;
+    return unwrapData(actions.updateProject(id, payload));
   },
   deleteProject(id) {
-    commitState({
-      ...state,
-      projects: state.projects.filter((project) => project.id !== id),
-      events: state.events.map((event) => ({
-        ...event,
-        projectId: event.projectId === id ? '' : event.projectId
-      }))
-    });
+    return unwrapData(actions.deleteProject(id));
   },
   addEvent(payload) {
-    const result = validateEvent(
-      { ...payload, id: createId('event') },
-      {
-        clientIds: state.clients.map((client) => client.id),
-        projectIds: state.projects.map((project) => project.id)
-      }
-    );
-    if (!result.valid) return null;
-    const newEvent = result.value;
-    updateCollection('events', [...state.events, newEvent]);
-    return newEvent;
+    return unwrapData(actions.createEvent(payload));
+  },
+  updateEvent(id, payload) {
+    return unwrapData(actions.updateEvent(id, payload));
   },
   deleteEvent(id) {
-    updateCollection(
-      'events',
-      state.events.filter((event) => event.id !== id)
-    );
+    return unwrapData(actions.deleteEvent(id));
   }
 };

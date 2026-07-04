@@ -3,6 +3,7 @@ import { renderSidebar, renderNavList } from './components/sidebar.js';
 import { renderTopbar } from './components/topbar.js';
 import { createDrawer } from './components/drawer.js';
 import { auth } from './core/auth.js';
+import { selectUiPreferences } from './core/selectors.js';
 import { store } from './core/store.js';
 import { openModal } from './components/modal.js';
 import { qs } from './core/dom.js';
@@ -11,7 +12,7 @@ import { showToast } from './components/toast.js';
 const app = document.getElementById('app');
 
 const applyTheme = () => {
-  const { ui } = store.getState();
+  const ui = selectUiPreferences(store.getState());
   document.body.classList.remove('theme-light', 'theme-dark');
   document.body.classList.add(`theme-${ui.theme}`);
   document.documentElement.style.setProperty('scroll-behavior', ui.reducedMotion ? 'auto' : 'smooth');
@@ -64,8 +65,8 @@ const renderShell = (activePath, view) => {
   });
 
   qs('#themeToggle', app)?.addEventListener('click', () => {
-    const current = store.getState().ui.theme;
-    store.setTheme(current === 'light' ? 'dark' : 'light');
+    const current = selectUiPreferences(store.getState()).theme;
+    store.actions.updateUiPreferences({ theme: current === 'light' ? 'dark' : 'light' });
   });
 
   qs('#quickAdd', app)?.addEventListener('click', () => {

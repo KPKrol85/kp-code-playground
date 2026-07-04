@@ -1,13 +1,12 @@
 import { store } from '../core/store.js';
-import { isTerminalProjectStatus } from '../domain/validators.js';
+import { selectDashboardMetrics, selectNextActions, selectRecentProjects } from '../core/selectors.js';
 import { formatDate, formatNumber } from '../utils/format.js';
 
 export const renderDashboardView = (container) => {
-  const { clients, projects, events } = store.getState();
-  const activeProjects = projects.filter((project) => !isTerminalProjectStatus(project.status));
-  const overdue = projects.filter((project) => new Date(project.dueDate) < new Date());
-
-  const nextActions = projects.slice(0, 5);
+  const state = store.getState();
+  const metrics = selectDashboardMetrics(state);
+  const nextActions = selectNextActions(state);
+  const recentProjects = selectRecentProjects(state);
 
   container.innerHTML = `
     <main id="main" class="container">
@@ -19,19 +18,19 @@ export const renderDashboardView = (container) => {
       <section class="dashboard-grid">
         <div class="dashboard-kpi">
           <div class="card kpi">
-            <span class="kpi__value">${formatNumber(activeProjects.length)}</span>
+            <span class="kpi__value">${formatNumber(metrics.activeProjectsCount)}</span>
             <span class="kpi__label">Aktywne zlecenia</span>
           </div>
           <div class="card kpi">
-            <span class="kpi__value">${formatNumber(events.length)}</span>
+            <span class="kpi__value">${formatNumber(metrics.weeklyEventsCount)}</span>
             <span class="kpi__label">Wydarzenia w tym tygodniu</span>
           </div>
           <div class="card kpi">
-            <span class="kpi__value">${formatNumber(clients.length)}</span>
+            <span class="kpi__value">${formatNumber(metrics.clientsCount)}</span>
             <span class="kpi__label">Klienci w bazie</span>
           </div>
           <div class="card kpi">
-            <span class="kpi__value">${formatNumber(overdue.length)}</span>
+            <span class="kpi__value">${formatNumber(metrics.overdueProjectsCount)}</span>
             <span class="kpi__label">Zaległe zadania</span>
           </div>
         </div>
@@ -64,9 +63,8 @@ export const renderDashboardView = (container) => {
             <h2 class="card__title">Ostatnie zlecenia</h2>
             <div class="list">
               ${
-                projects.length
-                  ? projects
-                      .slice(0, 4)
+                recentProjects.length
+                  ? recentProjects
                       .map(
                         (item) => `
                     <div class="list__item">

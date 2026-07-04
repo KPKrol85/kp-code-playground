@@ -1,7 +1,8 @@
 import { qs } from '../core/dom.js';
+import { getActionFieldError } from '../core/actions.js';
+import { selectClientById, selectFilteredClients } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { CLIENT_STATUSES } from '../domain/constants.js';
-import { getFieldError, validateClient } from '../domain/validators.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 
@@ -63,8 +64,8 @@ const clientModalContent = (client = {}) => `
 `;
 
 const showClientErrors = (result) => {
-  qs('#nameError', document).textContent = getFieldError(result, 'name');
-  qs('#emailError', document).textContent = getFieldError(result, 'email');
+  qs('#nameError', document).textContent = getActionFieldError(result, 'name');
+  qs('#emailError', document).textContent = getActionFieldError(result, 'email');
 };
 
 export const renderClientsView = (container) => {
@@ -72,14 +73,9 @@ export const renderClientsView = (container) => {
   let selectedId = state.clients[0]?.id || null;
   let filterState = { term: '', sort: 'name' };
 
-  const render = (clients) => {
-    const sorted = [...clients].sort((a, b) => {
-      if (filterState.sort === 'status') return a.status.localeCompare(b.status);
-      return a.name.localeCompare(b.name);
-    });
-    const filtered = sorted.filter(
-      (client) => client.name.toLowerCase().includes(filterState.term.toLowerCase()) || client.email.toLowerCase().includes(filterState.term.toLowerCase())
-    );
+  const render = () => {
+    const currentState = store.getState();
+    const filtered = selectFilteredClients(currentState, filterState);
     const rows = filtered
       .map(
         (client) => `
@@ -144,13 +140,18 @@ export const renderClientsView = (container) => {
               }
             </div>
           </div>
-          ${renderDetails(clients.find((client) => client.id === selectedId))}
+          ${renderDetails(selectClientById(currentState, selectedId))}
         </section>
       </main>
     `;
   };
 
-  render(state.clients);
+  render();
+
+  function refresh() {
+    render();
+    updateHandlers();
+  }
 
   const updateHandlers = () => {
     const filterInput = qs('#filterInput', container);
@@ -158,8 +159,7 @@ export const renderClientsView = (container) => {
 
     const filterAndRender = () => {
       filterState = { term: filterInput.value, sort: sortSelect.value };
-      render(store.getState().clients);
-      updateHandlers();
+      refresh();
     };
 
     filterInput?.addEventListener('input', filterAndRender);
@@ -176,25 +176,20 @@ export const renderClientsView = (container) => {
       saveBtn?.addEventListener('click', () => {
         const form = qs('#clientForm', document);
         const data = new FormData(form);
-        const result = validateClient(
-          {
-            name: data.get('name'),
-            email: data.get('email'),
-            phone: data.get('phone'),
-            status: data.get('status'),
-            notes: data.get('notes')
-          },
-          { requireId: false }
-        );
-        if (!result.valid) {
+        const result = store.actions.createClient({
+          name: data.get('name'),
+          email: data.get('email'),
+          phone: data.get('phone'),
+          status: data.get('status'),
+          notes: data.get('notes')
+        });
+        if (!result.ok) {
           showClientErrors(result);
           return;
         }
-        store.addClient(result.value);
         showToast('Dodano klienta.');
         close();
-        render(store.getState().clients);
-        updateHandlers();
+        refresh();
       });
     });
 
@@ -209,23 +204,20 @@ export const renderClientsView = (container) => {
         qs('#updateClient', document)?.addEventListener('click', () => {
           const form = qs('#clientForm', document);
           const data = new FormData(form);
-          const result = validateClient({
-            id: client.id,
+          const result = store.actions.updateClient(client.id, {
             name: data.get('name'),
             email: data.get('email'),
             phone: data.get('phone'),
             status: data.get('status'),
             notes: data.get('notes')
           });
-          if (!result.valid) {
+          if (!result.ok) {
             showClientErrors(result);
             return;
           }
-          store.updateClient(client.id, result.value);
           showToast('Zaktualizowano klienta.');
           close();
-          render(store.getState().clients);
-          updateHandlers();
+          refresh();
         });
       });
     });
@@ -239,11 +231,15 @@ export const renderClientsView = (container) => {
           footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="confirmDelete">Usuń</button>'
         });
         qs('#confirmDelete', document)?.addEventListener('click', () => {
-          store.deleteClient(client.id);
+          const result = store.actions.deleteClient(client.id);
+          if (!result.ok) {
+            showToast('Nie udało się usunąć klienta.');
+            close();
+            return;
+          }
           showToast('Usunięto klienta.');
           close();
-          render(store.getState().clients);
-          updateHandlers();
+          refresh();
         });
       });
     });
@@ -251,8 +247,7 @@ export const renderClientsView = (container) => {
     container.querySelectorAll('tbody tr').forEach((row) => {
       row.addEventListener('click', () => {
         selectedId = row.dataset.id || null;
-        render(store.getState().clients);
-        updateHandlers();
+        refresh();
       });
     });
   };

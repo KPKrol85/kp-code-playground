@@ -1,7 +1,8 @@
 import { qs } from '../core/dom.js';
+import { getActionFieldError } from '../core/actions.js';
+import { selectClients, selectFilteredProjects, selectProjectById, selectProjectsByStatus, selectProjectsWithClients } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { PROJECT_PRIORITIES, PROJECT_STATUSES } from '../domain/constants.js';
-import { getFieldError, validateProject } from '../domain/validators.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 import { formatDate } from '../utils/format.js';
@@ -57,20 +58,16 @@ const badgeClass = (value) => {
 };
 
 const showProjectErrors = (result) => {
-  qs('#nameError', document).textContent = getFieldError(result, 'name');
-  qs('#dueDateError', document).textContent = getFieldError(result, 'dueDate');
+  qs('#nameError', document).textContent = getActionFieldError(result, 'name');
+  qs('#dueDateError', document).textContent = getActionFieldError(result, 'dueDate');
 };
 
 export const renderProjectsView = (container) => {
   let filterState = { status: 'all', priority: 'all' };
 
   const render = () => {
-    const { clients, projects } = store.getState();
-    const filtered = projects.filter((project) => {
-      const statusMatch = filterState.status === 'all' || project.status === filterState.status;
-      const priorityMatch = filterState.priority === 'all' || project.priority === filterState.priority;
-      return statusMatch && priorityMatch;
-    });
+    const state = store.getState();
+    const filtered = selectProjectsWithClients(state, selectFilteredProjects(state, filterState));
 
     container.innerHTML = `
       <main id="main" class="container">
@@ -101,7 +98,7 @@ export const renderProjectsView = (container) => {
         <section class="kanban">
           ${statusColumns
             .map((status) => {
-              const columnItems = filtered.filter((project) => project.status === status);
+              const columnItems = selectProjectsByStatus(state, status, filtered);
               return `
                 <div class="kanban__column">
                   <div class="kanban__title">${status} (${columnItems.length})</div>
@@ -110,11 +107,10 @@ export const renderProjectsView = (container) => {
                       columnItems.length
                         ? columnItems
                             .map((project) => {
-                              const client = clients.find((item) => item.id === project.clientId);
                               return `
                               <article class="kanban__card">
                                 <strong>${project.name}</strong>
-                                <span class="input__helper">${client?.name || 'Bez klienta'}</span>
+                                <span class="input__helper">${project.client?.name || 'Bez klienta'}</span>
                                 <div>
                                   <span class="badge ${badgeClass(project.priority)}">${project.priority}</span>
                                   <span class="badge ${badgeClass(project.status)}">${project.status}</span>
@@ -142,108 +138,107 @@ export const renderProjectsView = (container) => {
 
   render();
 
+  const refresh = () => {
+    render();
+    bindEvents();
+  };
+
   const bindEvents = () => {
     const statusFilter = qs('#statusFilter', container);
     const priorityFilter = qs('#priorityFilter', container);
 
     statusFilter?.addEventListener('change', () => {
       filterState.status = statusFilter.value;
-      render();
-      bindEvents();
+      refresh();
     });
     priorityFilter?.addEventListener('change', () => {
       filterState.priority = priorityFilter.value;
-      render();
-      bindEvents();
+      refresh();
     });
 
     qs('#addProject', container)?.addEventListener('click', () => {
       const close = openModal({
         title: 'Nowe zlecenie',
-        content: projectModalContent({}, store.getState().clients),
+        content: projectModalContent({}, selectClients(store.getState())),
         footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="saveProject">Zapisz</button>'
       });
       qs('#saveProject', document)?.addEventListener('click', () => {
         const form = qs('#projectForm', document);
         const data = new FormData(form);
-        const result = validateProject(
-          {
+        const result = store.actions.createProject({
+          name: data.get('name'),
+          clientId: data.get('client'),
+          status: data.get('status'),
+          priority: data.get('priority'),
+          dueDate: data.get('dueDate'),
+          notes: data.get('notes')
+        });
+        if (!result.ok) {
+          showProjectErrors(result);
+          return;
+        }
+        showToast('Dodano zlecenie.');
+        close();
+        refresh();
+      });
+    });
+
+    container.querySelectorAll('[data-action="edit"]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const project = selectProjectById(store.getState(), button.dataset.id);
+        if (!project) {
+          showToast('Nie znaleziono zlecenia.');
+          return;
+        }
+        const close = openModal({
+          title: 'Edytuj zlecenie',
+          content: projectModalContent(project, selectClients(store.getState())),
+          footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="updateProject">Zapisz</button>'
+        });
+        qs('#updateProject', document)?.addEventListener('click', () => {
+          const form = qs('#projectForm', document);
+          const data = new FormData(form);
+          const result = store.actions.updateProject(project.id, {
             name: data.get('name'),
             clientId: data.get('client'),
             status: data.get('status'),
             priority: data.get('priority'),
             dueDate: data.get('dueDate'),
             notes: data.get('notes')
-          },
-          {
-            requireId: false,
-            clientIds: store.getState().clients.map((client) => client.id)
-          }
-        );
-        if (!result.valid) {
-          showProjectErrors(result);
-          return;
-        }
-        store.addProject(result.value);
-        showToast('Dodano zlecenie.');
-        close();
-        render();
-        bindEvents();
-      });
-    });
-
-    container.querySelectorAll('[data-action="edit"]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const project = store.getState().projects.find((item) => item.id === button.dataset.id);
-        const close = openModal({
-          title: 'Edytuj zlecenie',
-          content: projectModalContent(project, store.getState().clients),
-          footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="updateProject">Zapisz</button>'
-        });
-        qs('#updateProject', document)?.addEventListener('click', () => {
-          const form = qs('#projectForm', document);
-          const data = new FormData(form);
-          const result = validateProject(
-            {
-              id: project.id,
-              name: data.get('name'),
-              clientId: data.get('client'),
-              status: data.get('status'),
-              priority: data.get('priority'),
-              dueDate: data.get('dueDate'),
-              notes: data.get('notes')
-            },
-            {
-              clientIds: store.getState().clients.map((client) => client.id)
-            }
-          );
-          if (!result.valid) {
+          });
+          if (!result.ok) {
             showProjectErrors(result);
             return;
           }
-          store.updateProject(project.id, result.value);
           showToast('Zaktualizowano zlecenie.');
           close();
-          render();
-          bindEvents();
+          refresh();
         });
       });
     });
 
     container.querySelectorAll('[data-action="delete"]').forEach((button) => {
       button.addEventListener('click', () => {
-        const project = store.getState().projects.find((item) => item.id === button.dataset.id);
+        const project = selectProjectById(store.getState(), button.dataset.id);
+        if (!project) {
+          showToast('Nie znaleziono zlecenia.');
+          return;
+        }
         const close = openModal({
           title: 'Usuń zlecenie',
           content: `<p>Czy na pewno usunąć <strong>${project.name}</strong>?</p>`,
           footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="confirmProjectDelete">Usuń</button>'
         });
         qs('#confirmProjectDelete', document)?.addEventListener('click', () => {
-          store.deleteProject(project.id);
+          const result = store.actions.deleteProject(project.id);
+          if (!result.ok) {
+            showToast('Nie udało się usunąć zlecenia.');
+            close();
+            return;
+          }
           showToast('Usunięto zlecenie.');
           close();
-          render();
-          bindEvents();
+          refresh();
         });
       });
     });

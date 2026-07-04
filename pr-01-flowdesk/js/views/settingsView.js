@@ -1,9 +1,10 @@
 import { qs } from '../core/dom.js';
+import { selectUiPreferences } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { showToast } from '../components/toast.js';
 
 export const renderSettingsView = (container) => {
-  const { ui } = store.getState();
+  const ui = selectUiPreferences(store.getState());
 
   container.innerHTML = `
     <main id="main" class="container">
@@ -50,17 +51,30 @@ export const renderSettingsView = (container) => {
   `;
 
   qs('#themeSwitch', container)?.addEventListener('change', (event) => {
-    store.setTheme(event.target.checked ? 'dark' : 'light');
+    const result = store.actions.updateUiPreferences({ theme: event.target.checked ? 'dark' : 'light' });
+    if (!result.ok) {
+      showToast('Nie udało się zaktualizować motywu.');
+      return;
+    }
     showToast('Zaktualizowano motyw.');
   });
 
   qs('#motionSwitch', container)?.addEventListener('change', (event) => {
-    store.setReducedMotion(event.target.checked);
+    const result = store.actions.updateUiPreferences({ reducedMotion: event.target.checked });
+    if (!result.ok) {
+      showToast('Nie udało się zaktualizować preferencji animacji.');
+      return;
+    }
     showToast('Zaktualizowano preferencje animacji.');
   });
 
   qs('#exportData', container)?.addEventListener('click', () => {
-    const blob = new Blob([store.export()], { type: 'application/json' });
+    const result = store.actions.exportState();
+    if (!result.ok) {
+      showToast('Nie udało się wyeksportować danych.');
+      return;
+    }
+    const blob = new Blob([result.data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -73,7 +87,11 @@ export const renderSettingsView = (container) => {
   qs('#resetData', container)?.addEventListener('click', () => {
     const confirmed = window.confirm('Czy na pewno przywrócić dane demo?');
     if (!confirmed) return;
-    store.reset();
+    const result = store.actions.resetDemoData();
+    if (!result.ok) {
+      showToast('Nie udało się przywrócić danych demo.');
+      return;
+    }
     showToast('Dane demo zostały przywrócone.');
     renderSettingsView(container);
   });

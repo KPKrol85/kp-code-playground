@@ -94,7 +94,7 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Status:** Ukończono formalizację modelu domenowego. Projekt ma teraz kontrakty modeli, centralne słowniki statusów/priorytetów/typów wydarzeń, walidację i normalizację danych, `schemaVersion: 2`, migracje starszego lub uszkodzonego `localStorage`, reguły spójności relacji klient-zlecenie-wydarzenie oraz testy pokrywające walidatory, migracje i zapisy store'a.
 
-### 4. Warstwa stanu, selektorów i akcji domenowych
+### 4. Warstwa stanu, selektorów i akcji domenowych - ukończone
 
 **Cel:** Widoki nie powinny znać szczegółów mutowania danych ani ręcznie liczyć wszystkich wartości pochodnych.
 
@@ -107,6 +107,8 @@ Obecny zakres funkcjonalny obejmuje:
 - Ograniczyć powtarzane renderowanie i ręczne ponowne podpinanie event listenerów.
 
 **Definition of Done:** Widoki pobierają dane przez selektory i uruchamiają akcje, a store pozostaje jedynym miejscem odpowiedzialnym za spójność stanu.
+
+**Status:** Ukończono rozdzielenie warstwy stanu na adapter persystencji, jawne akcje domenowe i czyste selektory. Store zapisuje stan przez `js/core/persistence.js`, mutacje klientów, zleceń, wydarzeń i preferencji UI przechodzą przez `js/core/actions.js` z wynikiem `{ ok, data, error, issues }`, a widoki korzystają z `js/core/selectors.js` dla metryk dashboardu, filtrowania, lookupów relacji i danych pochodnych. Dodano testy jednostkowe dla actions, selectors, persistence oraz zachowano kompatybilną fasadę store dla istniejących przepływów.
 
 ### 5. Bezpieczne renderowanie i hardening frontendu
 

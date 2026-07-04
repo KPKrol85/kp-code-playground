@@ -1,6 +1,7 @@
 import { qs } from '../core/dom.js';
+import { getActionFieldError } from '../core/actions.js';
+import { selectClients, selectEventsWithRelations, selectProjects } from '../core/selectors.js';
 import { store } from '../core/store.js';
-import { getFieldError, validateEvent } from '../domain/validators.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 import { formatDate } from '../utils/format.js';
@@ -35,13 +36,14 @@ const eventModalContent = (event = {}, clients = [], projects = []) => `
 `;
 
 const showEventErrors = (result) => {
-  qs('#titleError', document).textContent = getFieldError(result, 'title');
-  qs('#dateError', document).textContent = getFieldError(result, 'date');
+  qs('#titleError', document).textContent = getActionFieldError(result, 'title');
+  qs('#dateError', document).textContent = getActionFieldError(result, 'date');
 };
 
 export const renderCalendarView = (container) => {
   const render = () => {
-    const { events, clients, projects } = store.getState();
+    const state = store.getState();
+    const events = selectEventsWithRelations(state);
 
     container.innerHTML = `
       <main id="main" class="container">
@@ -61,16 +63,14 @@ export const renderCalendarView = (container) => {
               events.length
                 ? events
                     .map((event) => {
-                      const client = clients.find((item) => item.id === event.clientId);
-                      const project = projects.find((item) => item.id === event.projectId);
                       return `
                       <div class="list__item">
                         <div>
                           <strong>${event.title}</strong>
-                          <div class="input__helper">${formatDate(event.date)} · ${client?.name || 'Brak klienta'}</div>
+                          <div class="input__helper">${formatDate(event.date)} · ${event.client?.name || 'Brak klienta'}</div>
                         </div>
                         <div>
-                          <span class="badge badge--info">${project?.name || 'Bez projektu'}</span>
+                          <span class="badge badge--info">${event.project?.name || 'Bez projektu'}</span>
                           <button class="btn btn--ghost" data-action="delete" data-id="${event.id}">Usuń</button>
                         </div>
                       </div>
@@ -87,49 +87,48 @@ export const renderCalendarView = (container) => {
 
   render();
 
+  const refresh = () => {
+    render();
+    bindEvents();
+  };
+
   const bindEvents = () => {
     qs('#addEvent', container)?.addEventListener('click', () => {
-      const { clients, projects } = store.getState();
+      const state = store.getState();
       const close = openModal({
         title: 'Nowe wydarzenie',
-        content: eventModalContent({}, clients, projects),
+        content: eventModalContent({}, selectClients(state), selectProjects(state)),
         footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="saveEvent">Zapisz</button>'
       });
 
       qs('#saveEvent', document)?.addEventListener('click', () => {
         const form = qs('#eventForm', document);
         const data = new FormData(form);
-        const result = validateEvent(
-          {
-            title: data.get('title'),
-            date: data.get('date'),
-            clientId: data.get('client'),
-            projectId: data.get('project')
-          },
-          {
-            requireId: false,
-            clientIds: store.getState().clients.map((client) => client.id),
-            projectIds: store.getState().projects.map((project) => project.id)
-          }
-        );
-        if (!result.valid) {
+        const result = store.actions.createEvent({
+          title: data.get('title'),
+          date: data.get('date'),
+          clientId: data.get('client'),
+          projectId: data.get('project')
+        });
+        if (!result.ok) {
           showEventErrors(result);
           return;
         }
-        store.addEvent(result.value);
         showToast('Dodano wydarzenie.');
         close();
-        render();
-        bindEvents();
+        refresh();
       });
     });
 
     container.querySelectorAll('[data-action="delete"]').forEach((button) => {
       button.addEventListener('click', () => {
-        store.deleteEvent(button.dataset.id);
+        const result = store.actions.deleteEvent(button.dataset.id);
+        if (!result.ok) {
+          showToast('Nie udało się usunąć wydarzenia.');
+          return;
+        }
         showToast('Usunięto wydarzenie.');
-        render();
-        bindEvents();
+        refresh();
       });
     });
   };
