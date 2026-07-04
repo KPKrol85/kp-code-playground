@@ -108,7 +108,7 @@ const interactions = [
     featured: true,
     description: "Magnetic CTA Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 1 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Magnetic CTA Button nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Użyj natywnego przycisku z jasną etykietą i widocznym :focus-visible. Efekt magnetyczny musi działać też na focus, a przy prefers-reduced-motion powinien zostać zastąpiony statycznym cieniem lub krótką zmianą kontrastu.",
     previewType: "button-magnetic",
     html: `<div class="interaction-demo interaction-demo--button-magnetic">\n  <button class="demo-button demo-button--glow" type="button">Magnetic CTA Button</button>\n</div>`,
     css: `.interaction-demo--button-magnetic { display: grid; place-items: center; }\n.interaction-demo--button-magnetic > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--button-magnetic > *:hover { transform: translateY(-2px); }`,
@@ -126,7 +126,7 @@ if (element) {
     featured: true,
     description: "Soft Glow Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 2 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Soft Glow Button nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Glow jest dekoracją: zachowaj tekstową etykietę przycisku, widoczny focus i wystarczający kontrast. Przy prefers-reduced-motion ogranicz przejścia do delikatnej zmiany cienia bez przesuwania elementu.",
     previewType: "button-glow",
     html: `<div class="interaction-demo interaction-demo--button-soft-glow">\n  <button class="demo-button demo-button--glow" type="button">Soft Glow Button</button>\n</div>`,
     css: `.interaction-demo--button-soft-glow { display: grid; place-items: center; }\n.interaction-demo--button-soft-glow > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--button-soft-glow > *:hover { transform: translateY(-2px); }`,
@@ -141,7 +141,7 @@ if (element) {
     featured: false,
     description: "Pressable Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 3 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Pressable Button nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Stan wciśnięcia nie może być jedyną informacją o akcji; przycisk ma mieć etykietę i focus widoczny z klawiatury. Przy prefers-reduced-motion zostaw zmianę cienia/obramowania zamiast ruchu w osi Y.",
     previewType: "button-press",
     html: `<div class="interaction-demo interaction-demo--button-pressable">\n  <button class="demo-button demo-button--glow" type="button">Pressable Button</button>\n</div>`,
     css: `.interaction-demo--button-pressable { display: grid; place-items: center; }\n.interaction-demo--button-pressable > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--button-pressable > *:hover { transform: translateY(-2px); }`,
@@ -156,7 +156,7 @@ if (element) {
     featured: false,
     description: "Loading Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 4 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Loading Button nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Podczas zapisu pokaż tekstowy status, np. „Zapisywanie”, i nie blokuj focusu bez powodu. Przy prefers-reduced-motion usuń obracanie spinnera, ale zostaw widoczny komunikat stanu.",
     previewType: "button-loading",
     html: `<div class="interaction-demo interaction-demo--button-loading">\n  <button class="demo-button demo-button--glow" type="button">Loading Button</button>\n</div>`,
     css: `.interaction-demo--button-loading { display: grid; place-items: center; }\n.interaction-demo--button-loading > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--button-loading > *:hover { transform: translateY(-2px); }`,
@@ -174,7 +174,7 @@ if (element) {
     featured: false,
     description: "Success Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 5 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Success Button nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Potwierdzenie sukcesu powinno mieć tekst i opcjonalny role=\"status\"/aria-live, nie sam kolor zielony. Przy prefers-reduced-motion skróć wejście komunikatu do zmiany opacity bez przesunięcia.",
     previewType: "toast",
     html: `<div class="interaction-demo interaction-demo--button-success">\n  <button class="demo-button demo-button--glow" type="button">Success Button</button>\n</div>`,
     css: `.interaction-demo--button-success { display: grid; place-items: center; }\n.interaction-demo--button-success > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--button-success > *:hover { transform: translateY(-2px); }`,
@@ -192,7 +192,7 @@ if (element) {
     featured: false,
     description: "Ripple Feedback Button pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Buttons, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 6 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Ripple Feedback Button nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Ripple jest tylko feedbackiem wizualnym; przycisk musi mieć etykietę, focus i aktywację klawiaturą. Przy prefers-reduced-motion wyłącz rozlewający się ruch, zostawiając statyczny stan active/focus.",
     previewType: "button-glow",
     html: `<div class="interaction-demo interaction-demo--button-ripple">\n  <button class="demo-button demo-button--glow" type="button">Ripple Feedback Button</button>\n</div>`,
     css: `.interaction-demo--button-ripple { display: grid; place-items: center; }\n.interaction-demo--button-ripple > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--button-ripple > *:hover { transform: translateY(-2px); }`,
@@ -210,7 +210,7 @@ if (element) {
     featured: true,
     description: "Tilt Product Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 7 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Tilt Product Card nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Karta z tilt nie może ukrywać treści ani wymagać hovera; jeśli jest klikalna, użyj linku lub przycisku z focus-visible. Przy prefers-reduced-motion wyłącz perspektywę i obrót, zostaw obramowanie lub cień.",
     previewType: "card",
     html: `<article class="demo-card">\n  <h4>Tilt Product Card</h4>\n  <p>Krótki opis, metryka i subtelny hover state.</p>\n</article>`,
     css: `.interaction-demo--card-tilt-product { display: grid; place-items: center; }\n.interaction-demo--card-tilt-product > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--card-tilt-product > *:hover { transform: translateY(-2px); }`,
@@ -228,7 +228,7 @@ if (element) {
     featured: false,
     description: "Lift Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 8 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Lift Card nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Hover lift powinien mieć równoważny focus dla klawiatury, a treść karty pozostaje czytelna bez animacji. Przy prefers-reduced-motion usuń translateY i zachowaj statyczny cień/obramowanie.",
     previewType: "card",
     html: `<article class="demo-card">\n  <h4>Lift Card</h4>\n  <p>Krótki opis, metryka i subtelny hover state.</p>\n</article>`,
     css: `.interaction-demo--card-lift { display: grid; place-items: center; }\n.interaction-demo--card-lift > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--card-lift > *:hover { transform: translateY(-2px); }`,
@@ -243,7 +243,7 @@ if (element) {
     featured: false,
     description: "Expandable Info Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 9 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Expandable Info Card nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Dla rozwijania preferuj details/summary albo button z aria-expanded i kontrolowanym panelem. Przy prefers-reduced-motion treść powinna pojawiać się bez animowanego przesuwania, z zachowanym stanem otwarcia.",
     previewType: "accordion",
     html: `<details class="demo-accordion" open>\n  <summary>Jak działa wzorzec?</summary>\n  <p>Treść rozwija się przewidywalnie i pozostaje dostępna z klawiatury.</p>\n</details>`,
     css: `.interaction-demo--card-expandable-info { display: grid; place-items: center; }\n.interaction-demo--card-expandable-info > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--card-expandable-info > *:hover { transform: translateY(-2px); }`,
@@ -261,7 +261,7 @@ if (element) {
     featured: true,
     description: "Pricing Highlight Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Cards, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 10 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Pricing Highlight Card nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Wyróżnienie planu cenowego musi mieć tekstową etykietę, nie tylko kolor lub cień. Przy prefers-reduced-motion ogranicz animacje wyróżnienia, ale zostaw widoczny aktywny/zalecany stan.",
     previewType: "card",
     html: `<article class="demo-card">\n  <h4>Pricing Highlight Card</h4>\n  <p>Krótki opis, metryka i subtelny hover state.</p>\n</article>`,
     css: `.interaction-demo--card-pricing-highlight { display: grid; place-items: center; }\n.interaction-demo--card-pricing-highlight > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--card-pricing-highlight > *:hover { transform: translateY(-2px); }`,
@@ -279,7 +279,7 @@ if (element) {
     featured: true,
     description: "Skeleton Profile Card pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Loading, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 11 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Skeleton Profile Card nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Skeleton oznacz jako dekoracyjny lub opisz go tekstowym statusem ładowania; nie zastępuje komunikatu dla czytnika. Przy prefers-reduced-motion wyłącz shimmer i zostaw statyczne placeholdery oraz tekst „Ładowanie”.",
     previewType: "skeleton",
     html: `<div class="demo-skeleton" aria-label="Ładowanie profilu">\n  <span></span>\n  <span></span>\n  <span></span>\n</div>`,
     css: `.interaction-demo--skeleton-profile { display: grid; place-items: center; }\n.interaction-demo--skeleton-profile > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--skeleton-profile > *:hover { transform: translateY(-2px); }`,
@@ -294,7 +294,7 @@ if (element) {
     featured: false,
     description: "Skeleton Dashboard Row pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Loading, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 12 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Skeleton Dashboard Row nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Wiersz skeleton powinien rezerwować układ i mieć obok tekstowy status ładowania. Przy prefers-reduced-motion usuń zapętlony shimmer, zachowując statyczny kształt i późniejszą treść.",
     previewType: "skeleton",
     html: `<div class="demo-skeleton" aria-label="Ładowanie profilu">\n  <span></span>\n  <span></span>\n  <span></span>\n</div>`,
     css: `.interaction-demo--skeleton-dashboard-row { display: grid; place-items: center; }\n.interaction-demo--skeleton-dashboard-row > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--skeleton-dashboard-row > *:hover { transform: translateY(-2px); }`,
@@ -309,7 +309,7 @@ if (element) {
     featured: false,
     description: "Progress Stepper pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 13 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Progress Stepper nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Postęp musi być opisany tekstowo, np. procentem i nazwą kroku, a nie tylko szerokością paska. Przy prefers-reduced-motion unikaj animowanego wzrostu, ustaw finalną wartość od razu.",
     previewType: "progress",
     html: `<div class="demo-progress">\n  <span>Postęp konfiguracji</span><strong>86%</strong>\n  <div><i></i></div>\n</div>`,
     css: `.interaction-demo--progress-stepper { display: grid; place-items: center; }\n.interaction-demo--progress-stepper > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--progress-stepper > *:hover { transform: translateY(-2px); }`,
@@ -327,7 +327,7 @@ if (element) {
     featured: true,
     description: "Animated Badge pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 14 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Animated Badge nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Animowany badge powinien mieć czytelną etykietę statusu i nie przekazywać znaczenia samym kolorem. Przy prefers-reduced-motion usuń pulsowanie, zostaw statyczną ikonę/tekst.",
     previewType: "status",
     html: `<div class="demo-status"><span></span>Animated Badge</div>`,
     css: `.interaction-demo--badge-animated { display: grid; place-items: center; }\n.interaction-demo--badge-animated > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--badge-animated > *:hover { transform: translateY(-2px); }`,
@@ -342,7 +342,7 @@ if (element) {
     featured: false,
     description: "Status Pulse pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 15 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Status Pulse nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Puls statusu wymaga tekstu typu „Status: aktywny” i kontrastu niezależnego od koloru kropki. Przy prefers-reduced-motion wyłącz zapętlone pulsowanie, zostaw stały znacznik i tekst.",
     previewType: "status",
     html: `<div class="demo-status"><span></span>Status Pulse</div>`,
     css: `.interaction-demo--status-pulse { display: grid; place-items: center; }\n.interaction-demo--status-pulse > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--status-pulse > *:hover { transform: translateY(-2px); }`,
@@ -357,7 +357,7 @@ if (element) {
     featured: false,
     description: "Toast Feedback pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 16 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Toast Feedback nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Toast powinien trafiać do aria-live=\"polite\", zawierać widoczny tekst i nie polegać wyłącznie na kolorze. Przy prefers-reduced-motion pokaż go bez przesunięcia, ewentualnie krótką zmianą opacity.",
     previewType: "toast",
     html: `<div class="interaction-demo interaction-demo--toast-feedback">\n  <button class="demo-button demo-button--glow" type="button">Toast Feedback</button>\n</div>`,
     css: `.interaction-demo--toast-feedback { display: grid; place-items: center; }\n.interaction-demo--toast-feedback > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--toast-feedback > *:hover { transform: translateY(-2px); }`,
@@ -375,7 +375,7 @@ if (element) {
     featured: false,
     description: "Inline Form Error pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 17 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Inline Form Error nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Błąd formularza połącz z polem przez aria-describedby i pokaż tekst obok obramowania/koloru. Ruch nie jest wymagany; przy prefers-reduced-motion nie dodawaj potrząsania ani migania.",
     previewType: "field",
     html: `<label class="demo-field">\n  <span>Email zespołu</span>\n  <input type="email" value="team@kp.dev">\n  <small>Komunikat stanu jest tekstowy.</small>\n</label>`,
     css: `.interaction-demo--form-inline-error { display: grid; place-items: center; }\n.interaction-demo--form-inline-error > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--form-inline-error > *:hover { transform: translateY(-2px); }`,
@@ -390,7 +390,7 @@ if (element) {
     featured: false,
     description: "Floating Label Input pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 18 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Floating Label Input nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Floating label nie może zastąpić prawdziwej etykiety pola; label musi pozostać widoczny i powiązany z inputem. Przy prefers-reduced-motion skróć przejście etykiety lub ustaw ją bez animacji.",
     previewType: "field",
     html: `<label class="demo-field">\n  <span>Email zespołu</span>\n  <input type="email" value="team@kp.dev">\n  <small>Komunikat stanu jest tekstowy.</small>\n</label>`,
     css: `.interaction-demo--form-floating-label { display: grid; place-items: center; }\n.interaction-demo--form-floating-label > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--form-floating-label > *:hover { transform: translateY(-2px); }`,
@@ -408,7 +408,7 @@ if (element) {
     featured: false,
     description: "Password Strength Meter pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 19 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Password Strength Meter nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Miernik siły hasła powinien mieć tekstową ocenę i nie opierać się wyłącznie na kolorach segmentów. Przy prefers-reduced-motion aktualizuj wartość statycznie, bez animowanego wypełniania.",
     previewType: "meter",
     html: `<div class="demo-meter">\n  <strong>Siła hasła: dobra</strong>\n  <div class="demo-meter__bar"><span></span></div>\n</div>`,
     css: `.interaction-demo--password-strength { display: grid; place-items: center; }\n.interaction-demo--password-strength > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--password-strength > *:hover { transform: translateY(-2px); }`,
@@ -426,7 +426,7 @@ if (element) {
     featured: false,
     description: "Segmented Control pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 20 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Segmented Control nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Segmenty realizuj jako radio group albo tablist z jasnym aria-selected/checked i obsługą klawiatury. Przy prefers-reduced-motion przesuwany wskaźnik zastąp statycznym tłem/obramowaniem aktywnej opcji.",
     previewType: "tabs",
     html: `<div class="demo-tabs" role="tablist">\n  <button type="button">Design</button>\n  <button type="button">Code</button>\n  <button type="button">Audit</button>\n</div>`,
     css: `.interaction-demo--segmented-control { display: grid; place-items: center; }\n.interaction-demo--segmented-control > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--segmented-control > *:hover { transform: translateY(-2px); }`,
@@ -444,7 +444,7 @@ if (element) {
     featured: false,
     description: "Tabs Indicator pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 21 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Tabs Indicator nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Zakładki wymagają semantyki tablist/tab, widocznego active state i przewidywalnego focusu. Przy prefers-reduced-motion wskaźnik aktywnej zakładki powinien zmieniać pozycję bez animowanego ślizgu.",
     previewType: "tabs",
     html: `<div class="demo-tabs" role="tablist">\n  <button type="button">Design</button>\n  <button type="button">Code</button>\n  <button type="button">Audit</button>\n</div>`,
     css: `.interaction-demo--tabs-indicator { display: grid; place-items: center; }\n.interaction-demo--tabs-indicator > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--tabs-indicator > *:hover { transform: translateY(-2px); }`,
@@ -462,7 +462,7 @@ if (element) {
     featured: false,
     description: "Accordion Reveal pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Navigation, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 22 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Accordion Reveal nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Accordion powinien używać summary albo button z aria-expanded oraz treści dostępnej w logicznej kolejności. Przy prefers-reduced-motion panel otwieraj bez animacji wysokości.",
     previewType: "accordion",
     html: `<details class="demo-accordion" open>\n  <summary>Jak działa wzorzec?</summary>\n  <p>Treść rozwija się przewidywalnie i pozostaje dostępna z klawiatury.</p>\n</details>`,
     css: `.interaction-demo--accordion-reveal { display: grid; place-items: center; }\n.interaction-demo--accordion-reveal > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--accordion-reveal > *:hover { transform: translateY(-2px); }`,
@@ -477,7 +477,7 @@ if (element) {
     featured: false,
     description: "Tooltip Hint pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 23 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Tooltip Hint nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Tooltip nie może zawierać krytycznej informacji dostępnej wyłącznie na hover; pokaż go też na focus i zapewnij zrozumiałą etykietę. Ruch nie jest potrzebny, wystarczy statyczne pojawienie się.",
     previewType: "tooltip",
     html: `<button class="demo-tooltip" type="button">Najedź lub ustaw focus</button>`,
     css: `.interaction-demo--tooltip-hint { display: grid; place-items: center; }\n.interaction-demo--tooltip-hint > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--tooltip-hint > *:hover { transform: translateY(-2px); }`,
@@ -492,7 +492,7 @@ if (element) {
     featured: false,
     description: "Empty State CTA pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Empty States, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 24 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Empty State CTA nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Empty state powinien jasno opisywać brak danych i następny krok tekstem oraz przyciskiem/linkiem. Bez ruchu nadal musi być zrozumiały; nie używaj samej ilustracji jako komunikatu.",
     previewType: "empty",
     html: `<div class="demo-empty">\n  <div>⌁</div>\n  <h4>Brak danych</h4>\n  <p>Dodaj pierwszy element, aby rozpocząć.</p>\n</div>`,
     css: `.interaction-demo--empty-state-cta { display: grid; place-items: center; }\n.interaction-demo--empty-state-cta > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--empty-state-cta > *:hover { transform: translateY(-2px); }`,
@@ -507,7 +507,7 @@ if (element) {
     featured: false,
     description: "Notification Dot pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 25 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Notification Dot nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Kropka powiadomienia wymaga tekstu lub aria-label z liczbą/statussem, bo kolor i pozycja nie wystarczą. Ruch nie jest wymagany; przy ograniczeniu animacji zostaw statyczny licznik.",
     previewType: "dot",
     html: `<div class="demo-dot" aria-label="3 nowe powiadomienia"></div>`,
     css: `.interaction-demo--notification-dot { display: grid; place-items: center; }\n.interaction-demo--notification-dot > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--notification-dot > *:hover { transform: translateY(-2px); }`,
@@ -522,7 +522,7 @@ if (element) {
     featured: false,
     description: "Copy Feedback Chip pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 26 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Copy Feedback Chip nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Feedback kopiowania powinien używać widocznego tekstu i aria-live, aby potwierdzenie nie było tylko kolorem chipu. Przy prefers-reduced-motion pokaż stan bez wysuwania lub pulsowania.",
     previewType: "toast",
     html: `<div class="interaction-demo interaction-demo--copy-feedback-chip">\n  <button class="demo-button demo-button--glow" type="button">Copy Feedback Chip</button>\n</div>`,
     css: `.interaction-demo--copy-feedback-chip { display: grid; place-items: center; }\n.interaction-demo--copy-feedback-chip > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--copy-feedback-chip > *:hover { transform: translateY(-2px); }`,
@@ -540,7 +540,7 @@ if (element) {
     featured: false,
     description: "Mini Progress Bar pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Data UI, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 27 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Mini Progress Bar nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Mini pasek postępu musi mieć tekstową wartość lub etykietę statusu oraz kontrast toru i wypełnienia. Przy prefers-reduced-motion ustaw szerokość docelową bez animowanego wzrostu.",
     previewType: "progress",
     html: `<div class="demo-progress">\n  <span>Postęp konfiguracji</span><strong>86%</strong>\n  <div><i></i></div>\n</div>`,
     css: `.interaction-demo--mini-progress-bar { display: grid; place-items: center; }\n.interaction-demo--mini-progress-bar > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--mini-progress-bar > *:hover { transform: translateY(-2px); }`,
@@ -555,7 +555,7 @@ if (element) {
     featured: false,
     description: "Timeline Item Reveal pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Data UI, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 28 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Timeline Item Reveal nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Element osi czasu powinien mieć datę/etykietę w tekście i focus, jeśli prowadzi do szczegółów. Przy prefers-reduced-motion usuń reveal/translate, zostaw statyczny marker i treść.",
     previewType: "row",
     html: `<div class="demo-row">\n  <span>Vault token</span>\n  <strong>Aktywny</strong>\n</div>`,
     css: `.interaction-demo--timeline-reveal { display: grid; place-items: center; }\n.interaction-demo--timeline-reveal > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--timeline-reveal > *:hover { transform: translateY(-2px); }`,
@@ -573,7 +573,7 @@ if (element) {
     featured: false,
     description: "Data Row Hover pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Data UI, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 29 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Data Row Hover nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Wiersz danych nie może ujawniać akcji wyłącznie na hover; zapewnij focus i widoczne tekstowe statusy. Przy prefers-reduced-motion wyłącz przesunięcie wiersza, zostaw tło lub obramowanie.",
     previewType: "row",
     html: `<div class="demo-row">\n  <span>Vault token</span>\n  <strong>Aktywny</strong>\n</div>`,
     css: `.interaction-demo--data-row-hover { display: grid; place-items: center; }\n.interaction-demo--data-row-hover > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--data-row-hover > *:hover { transform: translateY(-2px); }`,
@@ -588,7 +588,7 @@ if (element) {
     featured: false,
     description: "Save State Indicator pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Feedback, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 30 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Save State Indicator nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Stan zapisu powinien być tekstem w role=\"status\"/aria-live, np. „Zapisano”, nie samą ikoną. Przy prefers-reduced-motion pomiń puls/slide i zachowaj trwały komunikat.",
     previewType: "status",
     html: `<div class="demo-status"><span></span>Save State Indicator</div>`,
     css: `.interaction-demo--save-state-indicator { display: grid; place-items: center; }\n.interaction-demo--save-state-indicator > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--save-state-indicator > *:hover { transform: translateY(-2px); }`,
@@ -606,7 +606,7 @@ if (element) {
     featured: false,
     description: "Empty Search Results pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Empty States, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 31 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Empty Search Results nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Brak wyników powinien być ogłoszony tekstowo i oferować przycisk resetu filtrów dostępny z klawiatury. Nie wymaga ruchu; ilustracja jest tylko dodatkiem.",
     previewType: "empty",
     html: `<div class="demo-empty">\n  <div>⌁</div>\n  <h4>Brak danych</h4>\n  <p>Dodaj pierwszy element, aby rozpocząć.</p>\n</div>`,
     css: `.interaction-demo--empty-search-results { display: grid; place-items: center; }\n.interaction-demo--empty-search-results > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--empty-search-results > *:hover { transform: translateY(-2px); }`,
@@ -621,7 +621,7 @@ if (element) {
     featured: false,
     description: "Valid Field Check pomaga pokazać użytkownikowi czytelny stan elementu w kategorii Forms, bez nadmiernej dekoracji i bez utraty kontroli klawiaturą.",
     bestFor: "Najlepsze dla ekranów produktu KP_Code, gdzie akcja numer 32 wymaga szybkiego feedbacku i jasnego następnego kroku.",
-    accessibility: "Zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji dla prefers-reduced-motion; Valid Field Check nie powinien polegać wyłącznie na kolorze.",
+    accessibility: "Komunikat poprawności połącz z polem przez aria-describedby i pokaż tekst, nie tylko zielony kolor. Przy prefers-reduced-motion unikaj animowanego checkmarka, zostaw statyczny stan.",
     previewType: "field",
     html: `<label class="demo-field">\n  <span>Email zespołu</span>\n  <input type="email" value="team@kp.dev">\n  <small>Komunikat stanu jest tekstowy.</small>\n</label>`,
     css: `.interaction-demo--form-valid-check { display: grid; place-items: center; }\n.interaction-demo--form-valid-check > * { transition: transform 220ms ease, box-shadow 220ms ease; }\n.interaction-demo--form-valid-check > *:hover { transform: translateY(-2px); }`,
@@ -753,6 +753,12 @@ function validateInteractions(interactionList) {
   const allowedPreviewType = getTaxonomyValues('previewType');
   const snippetClassOwners = new Map();
   const warnings = [];
+  const weakAccessibilityPhrases = [
+    'dostępne dla czytników ekranu',
+    'zapewnij widoczny focus, tekstową etykietę oraz wariant bez animacji',
+    'nie powinien polegać wyłącznie na kolorze'
+  ];
+  const reducedMotionTerms = ['prefers-reduced-motion', 'reduced motion', 'ograniczeniu animacji', 'ograniczonego ruchu', 'bez animacji', 'usuń', 'wyłącz', 'zastąp', 'skróć', 'statycz'];
 
   interactionList.forEach((interaction, index) => {
     const label = interaction.id || `interaction at index ${index}`;
@@ -774,6 +780,21 @@ function validateInteractions(interactionList) {
     if (!allowedComplexity.includes(interaction.complexity)) warnings.push(`${label}: invalid complexity "${interaction.complexity}".`);
     if (!allowedMotion.includes(interaction.motion)) warnings.push(`${label}: invalid motion "${interaction.motion}".`);
     if (!allowedPreviewType.includes(interaction.previewType)) warnings.push(`${label}: invalid previewType "${interaction.previewType}".`);
+
+    const accessibilityNote = typeof interaction.accessibility === 'string' ? interaction.accessibility.trim() : '';
+    const normalizedAccessibilityNote = normalize(accessibilityNote);
+    if (!Object.prototype.hasOwnProperty.call(interaction, 'accessibility')) {
+      warnings.push(`${label}: missing accessibility note.`);
+    } else if (!accessibilityNote) {
+      warnings.push(`${label}: accessibility note cannot be empty.`);
+    } else {
+      if (accessibilityNote.length < 80 || weakAccessibilityPhrases.some((phrase) => normalizedAccessibilityNote === phrase)) {
+        warnings.push(`${label}: accessibility note looks too short or generic; add pattern-specific keyboard, ARIA, contrast or motion guidance.`);
+      }
+      if (['medium', 'expressive'].includes(interaction.motion) && !reducedMotionTerms.some((term) => normalizedAccessibilityNote.includes(term))) {
+        warnings.push(`${label}: motion level "${interaction.motion}" needs an explicit reduced-motion strategy in the accessibility note.`);
+      }
+    }
 
     ['html', 'css', 'js'].forEach((field) => {
       if (!Object.prototype.hasOwnProperty.call(interaction, field)) {
