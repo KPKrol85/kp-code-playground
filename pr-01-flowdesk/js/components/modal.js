@@ -1,4 +1,5 @@
 import { qs, qsa, createElement } from '../core/dom.js';
+import { escapeHTML } from '../utils/sanitize.js';
 
 const focusableSelectors = ['button', '[href]', 'input', 'select', 'textarea', '[tabindex]:not([tabindex="-1"])'];
 
@@ -28,7 +29,7 @@ export const openModal = ({ title, content, footer, onClose }) => {
     <div class="modal-backdrop" role="dialog" aria-modal="true">
       <div class="modal">
         <div class="modal__header">
-          <h2 class="modal__title">${title}</h2>
+          <h2 class="modal__title">${escapeHTML(title)}</h2>
           <button class="btn btn--ghost" data-modal-close aria-label="Zamknij modal">✕</button>
         </div>
         <div class="modal__body">${content}</div>

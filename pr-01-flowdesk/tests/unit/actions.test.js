@@ -8,6 +8,7 @@ import {
   deleteClientAction,
   resetDemoDataAction,
   restoreStateAction,
+  restoreStateFromJsonAction,
   updateProjectAction,
   updateUiPreferencesAction
 } from '../../js/core/actions.js';
@@ -107,6 +108,14 @@ describe('domain actions', () => {
     expect(result.data.projects[0]).toMatchObject({ clientId: '', dueDate: '' });
     expect(result.data.events[0]).toMatchObject({ clientId: 'c-import', projectId: '' });
     expect(result.data.ui).toEqual({ theme: 'light', reducedMotion: true });
+  });
+
+  it('returns a predictable error for malformed restored JSON', () => {
+    const result = restoreStateFromJsonAction('{broken json', seedData);
+
+    expect(result.ok).toBe(false);
+    expect(result.error).toBe(ACTION_ERRORS.INVALID_JSON);
+    expect(result.issues).toContainEqual(expect.objectContaining({ field: 'json' }));
   });
 
   it('resets demo data through the migrated seed state', () => {

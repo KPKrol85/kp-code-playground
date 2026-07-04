@@ -9,6 +9,7 @@ import {
   exportStateAction,
   resetDemoDataAction,
   restoreStateAction,
+  restoreStateFromJsonAction,
   updateClientAction,
   updateEventAction,
   updateProjectAction,
@@ -75,6 +76,9 @@ const actions = {
   restoreState(rawState) {
     return commitActionResult(restoreStateAction(rawState, seedData));
   },
+  restoreStateFromJson(jsonText) {
+    return commitActionResult(restoreStateFromJsonAction(jsonText, seedData));
+  },
   exportState() {
     const result = exportStateAction(state);
     return { ok: true, data: result.data };
@@ -100,6 +104,9 @@ export const store = {
   },
   restore(rawState) {
     return unwrapData(actions.restoreState(rawState));
+  },
+  restoreJson(jsonText) {
+    return unwrapData(actions.restoreStateFromJson(jsonText));
   },
   setTheme(theme) {
     return unwrapData(actions.updateUiPreferences({ theme }));

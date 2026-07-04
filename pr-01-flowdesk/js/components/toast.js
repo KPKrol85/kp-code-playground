@@ -11,7 +11,9 @@ const ensureStack = () => {
 
 export const showToast = (message) => {
   const stack = ensureStack();
-  const toast = createElement(`<div class="toast">${message}</div>`);
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
   stack.appendChild(toast);
   setTimeout(() => toast.remove(), 3200);
 };

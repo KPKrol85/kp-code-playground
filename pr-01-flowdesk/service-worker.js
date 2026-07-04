@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flowdesk-v2';
+const CACHE_NAME = 'flowdesk-v3';
 const OFFLINE_URL = '/offline.html';
 
 const APP_SHELL = [
@@ -18,6 +18,7 @@ const APP_SHELL = [
   '/js/core/selectors.js',
   '/js/core/store.js',
   '/js/core/auth.js',
+  '/js/core/auth.demo.js',
   '/js/core/dom.js',
   '/js/data/seed.js',
   '/js/domain/constants.js',
@@ -39,6 +40,7 @@ const APP_SHELL = [
   '/js/components/table.js',
   '/js/components/formControls.js',
   '/js/utils/format.js',
+  '/js/utils/sanitize.js',
   '/js/utils/validators.js',
   '/js/utils/storage.js',
   '/assets/icons/icon-192.svg',

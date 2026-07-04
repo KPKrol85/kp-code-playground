@@ -110,7 +110,7 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Status:** Ukończono rozdzielenie warstwy stanu na adapter persystencji, jawne akcje domenowe i czyste selektory. Store zapisuje stan przez `js/core/persistence.js`, mutacje klientów, zleceń, wydarzeń i preferencji UI przechodzą przez `js/core/actions.js` z wynikiem `{ ok, data, error, issues }`, a widoki korzystają z `js/core/selectors.js` dla metryk dashboardu, filtrowania, lookupów relacji i danych pochodnych. Dodano testy jednostkowe dla actions, selectors, persistence oraz zachowano kompatybilną fasadę store dla istniejących przepływów.
 
-### 5. Bezpieczne renderowanie i hardening frontendu
+### 5. Bezpieczne renderowanie i hardening frontendu - ukończone
 
 **Cel:** Projekt musi być przygotowany na dane użytkownika, a nie tylko zaufane dane demo.
 
@@ -124,6 +124,8 @@ Obecny zakres funkcjonalny obejmuje:
 - Jasno oddzielić `auth.demo.js` od przyszłej implementacji realnego auth.
 
 **Definition of Done:** Dane wpisane przez użytkownika nie mogą wykonywać kodu ani psuć struktury DOM, a README jasno opisuje granice bezpieczeństwa demo.
+
+**Status:** Ukończono pierwszy etap hardeningu frontendu. Projekt ma helpery `escapeHTML`, `escapeAttribute` i `safeText`, zabezpieczone renderowanie danych klientów, zleceń, wydarzeń i sesji demo, DOM API dla toastów, CSP w `index.html`, obsługę błędnego JSON restore przez wynik akcji, osobny moduł `auth.demo.js` oraz testy potwierdzające, że payloady HTML są wyświetlane jako tekst i nie tworzą wykonywalnych elementów DOM. README opisuje granice bezpieczeństwa wersji demonstracyjnej.
 
 ### 6. Profesjonalny system komponentów UI
 

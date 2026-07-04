@@ -1,4 +1,5 @@
 import { auth } from '../core/auth.js';
+import { escapeHTML } from '../utils/sanitize.js';
 
 export const renderTopbar = () => {
   const session = auth.getSession();
@@ -20,7 +21,7 @@ export const renderTopbar = () => {
               <span class="avatar" aria-hidden="true"></span>
             </button>
             <div class="user-menu__panel" id="userMenuPanel" role="menu">
-              <p role="none">${session?.name || 'Użytkownik'} · ${session?.role || 'Demo'}</p>
+              <p role="none">${escapeHTML(session?.name || 'Użytkownik')} · ${escapeHTML(session?.role || 'Demo')}</p>
               <button class="btn btn--ghost" id="logoutBtn" role="menuitem">Wyloguj</button>
             </div>
           </div>

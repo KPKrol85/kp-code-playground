@@ -27,6 +27,30 @@ test('user can add a client', async ({ page }) => {
   await expect(page.getByText('e2e-client@flowdesk.test')).toBeVisible();
 });
 
+test('user-entered client HTML is rendered as text', async ({ page }) => {
+  const dialogs = [];
+  page.on('dialog', async (dialog) => {
+    dialogs.push(dialog.message());
+    await dialog.dismiss();
+  });
+  const payload = '<img src=x onerror=alert(1)> "client"';
+
+  await loginDemoUser(page);
+
+  await page.getByRole('link', { name: /Klienci/ }).click();
+  await page.getByRole('button', { name: 'Dodaj klienta' }).click();
+  await page.getByLabel('Nazwa').fill(payload);
+  await page.getByLabel('Email').fill('safe-client@flowdesk.test');
+  await page.getByLabel('Telefon').fill('+48 500 100 300');
+  await page.getByLabel('Notatki').fill('<script>alert(1)</script>');
+  await page.getByRole('button', { name: 'Zapisz' }).click();
+
+  await expect(page.getByText(payload)).toBeVisible();
+  await expect(page.locator('tbody img')).toHaveCount(0);
+  await expect(page.locator('tbody script')).toHaveCount(0);
+  expect(dialogs).toEqual([]);
+});
+
 test('user can add a project', async ({ page }) => {
   await loginDemoUser(page);
 

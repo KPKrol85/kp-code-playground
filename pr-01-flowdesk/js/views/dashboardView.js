@@ -1,6 +1,7 @@
 import { store } from '../core/store.js';
 import { selectDashboardMetrics, selectNextActions, selectRecentProjects } from '../core/selectors.js';
 import { formatDate, formatNumber } from '../utils/format.js';
+import { escapeHTML } from '../utils/sanitize.js';
 
 export const renderDashboardView = (container) => {
   const state = store.getState();
@@ -46,10 +47,10 @@ export const renderDashboardView = (container) => {
                         (item) => `
                     <div class="list__item">
                       <div>
-                        <strong>${item.name}</strong>
-                        <div class="input__helper">Termin: ${formatDate(item.dueDate)}</div>
+                        <strong>${escapeHTML(item.name)}</strong>
+                        <div class="input__helper">Termin: ${escapeHTML(formatDate(item.dueDate))}</div>
                       </div>
-                      <span class="badge badge--info">${item.status}</span>
+                      <span class="badge badge--info">${escapeHTML(item.status)}</span>
                     </div>
                   `
                       )
@@ -69,10 +70,10 @@ export const renderDashboardView = (container) => {
                         (item) => `
                     <div class="list__item">
                       <div>
-                        <strong>${item.name}</strong>
-                        <div class="input__helper">Priorytet: ${item.priority}</div>
+                        <strong>${escapeHTML(item.name)}</strong>
+                        <div class="input__helper">Priorytet: ${escapeHTML(item.priority)}</div>
                       </div>
-                      <span class="badge badge--success">${item.status}</span>
+                      <span class="badge badge--success">${escapeHTML(item.status)}</span>
                     </div>
                   `
                       )

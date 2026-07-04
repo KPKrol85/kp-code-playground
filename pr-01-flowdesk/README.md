@@ -165,9 +165,23 @@ Projekt należy uruchamiać przez lokalny serwer HTTP. Otwieranie `index.html` b
 
 ## Uwierzytelnianie demo
 
-Logowanie nie sprawdza użytkownika po stronie serwera. Aplikacja wymaga jedynie poprawnego formatu emaila i hasła o długości minimum 6 znaków. Po zalogowaniu zapisuje przykładową sesję w `localStorage`.
+Logowanie jest jawnie demonstracyjne i znajduje się w `js/core/auth.demo.js`. Plik `js/core/auth.js` jest tylko kompatybilną fasadą dla obecnego importu `auth`.
+
+Aplikacja nie sprawdza użytkownika po stronie serwera. Wymaga jedynie poprawnego formatu emaila i hasła o długości minimum 6 znaków. Po zalogowaniu zapisuje przykładową sesję w `localStorage`.
 
 To rozwiązanie nadaje się wyłącznie do prototypu. W wersji produkcyjnej konieczne będą prawdziwa autoryzacja, sesje lub tokeny, kontrola ról, ochrona danych oraz backend.
+
+## Bezpieczeństwo i granice demo
+
+FlowDesk jest aplikacją frontend-only. `localStorage` nie jest bezpiecznym miejscem na dane poufne, tokeny ani sekrety. Obecny store traktuje dane z `localStorage` jako niezaufane: stan przechodzi przez migrację, walidację domenową i reguły spójności przed zapisem oraz odczytem.
+
+Dane renderowane z formularzy, seedów i odzyskanego `localStorage` są escapowane helperami `escapeHTML`, `escapeAttribute` i `safeText`. Toasty renderują tekst przez `textContent`, a payloady HTML są wyświetlane jako tekst, nie jako wykonywalny DOM.
+
+`index.html` zawiera konserwatywną meta Content Security Policy dla hostingu statycznego: lokalne moduły JS, lokalny CSS, fonty, manifest, service worker i obrazy z tego samego originu. Produkcyjny hosting powinien przenieść CSP do nagłówków HTTP i rozszerzyć ją o docelowe domeny API, monitoring oraz politykę raportowania.
+
+Eksport JSON jest generowany jako `Blob` z aplikacyjnego stanu, a wewnętrzny punkt restore/import przechodzi przez akcje domenowe i migracje. Nie istnieje jeszcze publiczny UI importu JSON.
+
+Wersja produkcyjna wymaga backendowego uwierzytelniania, autoryzacji, bezpiecznej persystencji, walidacji po stronie serwera, nagłówków bezpieczeństwa na hostingu, ochrony przed CSRF tam, gdzie pojawią się cookies, oraz kontroli uprawnień dla danych organizacji.
 
 ## PWA i offline
 
@@ -195,9 +209,9 @@ Do dopracowania pozostają m.in. focus management po zamykaniu modali, aria-live
 - Brak lintingu, formatowania, kontroli typów i CI.
 - Brak lockfile, więc instalacje zależności mogą nie być w pełni powtarzalne.
 - Brak bundlera; `build:js` minifikuje tylko entrypoint i nie buduje kompletnej paczki aplikacji.
-- Dane użytkownika są renderowane przez template stringi i `innerHTML`, co przed produkcją wymaga zabezpieczenia przed XSS.
-- Auth jest tylko demonstracyjny.
-- `localStorage` nie ma migracji schematu ani walidacji importowanych danych.
+- Dane użytkownika są escapowane po stronie frontendu, ale przed produkcją nadal potrzebna jest walidacja serwerowa i hosting-level security headers.
+- Auth jest tylko demonstracyjny i nie stanowi mechanizmu bezpieczeństwa.
+- `localStorage` ma walidację i migracje, ale nie jest bezpieczną persystencją dla danych produkcyjnych.
 - Lista plików service workera jest utrzymywana ręcznie.
 - Brak observability, monitoringu błędów i release processu.
 - Część logiki formularzy i renderowania powtarza się w widokach.

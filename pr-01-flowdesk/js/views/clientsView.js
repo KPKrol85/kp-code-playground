@@ -5,6 +5,7 @@ import { store } from '../core/store.js';
 import { CLIENT_STATUSES } from '../domain/constants.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
+import { escapeAttribute, escapeHTML } from '../utils/sanitize.js';
 
 const renderDetails = (client) => {
   if (!client) {
@@ -18,12 +19,12 @@ const renderDetails = (client) => {
 
   return `
     <div class="side-panel">
-      <h2>${client.name}</h2>
-      <p class="input__helper">${client.status}</p>
+      <h2>${escapeHTML(client.name)}</h2>
+      <p class="input__helper">${escapeHTML(client.status)}</p>
       <div class="list">
-        <div><strong>Email:</strong> ${client.email}</div>
-        <div><strong>Telefon:</strong> ${client.phone}</div>
-        <div><strong>Notatki:</strong> ${client.notes}</div>
+        <div><strong>Email:</strong> ${escapeHTML(client.email)}</div>
+        <div><strong>Telefon:</strong> ${escapeHTML(client.phone)}</div>
+        <div><strong>Notatki:</strong> ${escapeHTML(client.notes)}</div>
       </div>
     </div>
   `;
@@ -34,30 +35,30 @@ const clientModalContent = (client = {}) => `
     <div class="form-grid form-grid--two">
       <div class="input">
         <label class="input__label" for="name">Nazwa</label>
-        <input class="input__field" id="name" name="name" value="${client.name || ''}" required />
+        <input class="input__field" id="name" name="name" value="${escapeAttribute(client.name || '')}" required />
         <span class="input__error" id="nameError"></span>
       </div>
       <div class="input">
         <label class="input__label" for="status">Status</label>
         <select class="input__select" id="status" name="status">
-          ${CLIENT_STATUSES.map((status) => `<option value="${status}" ${client.status === status ? 'selected' : ''}>${status}</option>`).join('')}
+          ${CLIENT_STATUSES.map((status) => `<option value="${escapeAttribute(status)}" ${client.status === status ? 'selected' : ''}>${escapeHTML(status)}</option>`).join('')}
         </select>
       </div>
     </div>
     <div class="form-grid form-grid--two">
       <div class="input">
         <label class="input__label" for="email">Email</label>
-        <input class="input__field" id="email" name="email" type="email" value="${client.email || ''}" required />
+        <input class="input__field" id="email" name="email" type="email" value="${escapeAttribute(client.email || '')}" required />
         <span class="input__error" id="emailError"></span>
       </div>
       <div class="input">
         <label class="input__label" for="phone">Telefon</label>
-        <input class="input__field" id="phone" name="phone" value="${client.phone || ''}" required />
+        <input class="input__field" id="phone" name="phone" value="${escapeAttribute(client.phone || '')}" required />
       </div>
     </div>
     <div class="input">
       <label class="input__label" for="notes">Notatki</label>
-      <textarea class="input__textarea" id="notes" name="notes" rows="3">${client.notes || ''}</textarea>
+      <textarea class="input__textarea" id="notes" name="notes" rows="3">${escapeHTML(client.notes || '')}</textarea>
       <span class="input__helper">Krótki kontekst dla zespołu.</span>
     </div>
   </form>
@@ -79,14 +80,14 @@ export const renderClientsView = (container) => {
     const rows = filtered
       .map(
         (client) => `
-        <tr data-id="${client.id}">
-          <td>${client.name}</td>
-          <td>${client.email}</td>
-          <td>${client.status}</td>
+        <tr data-id="${escapeAttribute(client.id)}">
+          <td>${escapeHTML(client.name)}</td>
+          <td>${escapeHTML(client.email)}</td>
+          <td>${escapeHTML(client.status)}</td>
           <td>
             <div class="table__actions">
-              <button class="btn btn--ghost" data-action="edit" data-id="${client.id}">Edytuj</button>
-              <button class="btn btn--ghost" data-action="delete" data-id="${client.id}">Usuń</button>
+              <button class="btn btn--ghost" data-action="edit" data-id="${escapeAttribute(client.id)}">Edytuj</button>
+              <button class="btn btn--ghost" data-action="delete" data-id="${escapeAttribute(client.id)}">Usuń</button>
             </div>
           </td>
         </tr>
@@ -106,7 +107,7 @@ export const renderClientsView = (container) => {
               <div class="form-grid form-grid--two">
                 <div class="input">
                   <label class="input__label" for="filterInput">Filtruj</label>
-                  <input class="input__field" id="filterInput" placeholder="Wpisz nazwę lub email" value="${filterState.term}" />
+                  <input class="input__field" id="filterInput" placeholder="Wpisz nazwę lub email" value="${escapeAttribute(filterState.term)}" />
                 </div>
                 <div class="input">
                   <label class="input__label" for="sortSelect">Sortuj</label>
@@ -227,7 +228,7 @@ export const renderClientsView = (container) => {
         const client = store.getState().clients.find((item) => item.id === button.dataset.id);
         const close = openModal({
           title: 'Usuń klienta',
-          content: `<p>Czy na pewno usunąć <strong>${client.name}</strong>? Znikną też powiązane zlecenia.</p>`,
+          content: `<p>Czy na pewno usunąć <strong>${escapeHTML(client.name)}</strong>? Znikną też powiązane zlecenia.</p>`,
           footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="confirmDelete">Usuń</button>'
         });
         qs('#confirmDelete', document)?.addEventListener('click', () => {

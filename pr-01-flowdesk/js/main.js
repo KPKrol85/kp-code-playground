@@ -15,7 +15,7 @@ const applyTheme = () => {
   const ui = selectUiPreferences(store.getState());
   document.body.classList.remove('theme-light', 'theme-dark');
   document.body.classList.add(`theme-${ui.theme}`);
-  document.documentElement.style.setProperty('scroll-behavior', ui.reducedMotion ? 'auto' : 'smooth');
+  document.documentElement.classList.toggle('motion-reduced', ui.reducedMotion);
 };
 
 let userMenuHandler = null;
@@ -36,7 +36,7 @@ const renderShell = (activePath, view) => {
   toggleBtn?.addEventListener('click', () => {
     const isOpen = drawer.drawer.classList.contains('drawer--open');
     drawer.drawer.classList.toggle('drawer--open');
-    document.body.style.overflow = isOpen ? '' : 'hidden';
+    document.body.classList.toggle('scroll-lock', !isOpen);
     toggleBtn.setAttribute('aria-expanded', String(!isOpen));
   });
 

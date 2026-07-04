@@ -5,31 +5,32 @@ import { store } from '../core/store.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 import { formatDate } from '../utils/format.js';
+import { escapeAttribute, escapeHTML } from '../utils/sanitize.js';
 
 const eventModalContent = (event = {}, clients = [], projects = []) => `
   <form id="eventForm" class="form-grid">
     <div class="input">
       <label class="input__label" for="title">Tytuł</label>
-      <input class="input__field" id="title" name="title" value="${event.title || ''}" required />
+      <input class="input__field" id="title" name="title" value="${escapeAttribute(event.title || '')}" required />
       <span class="input__error" id="titleError"></span>
     </div>
     <div class="form-grid form-grid--two">
       <div class="input">
         <label class="input__label" for="date">Data</label>
-        <input class="input__field" id="date" name="date" type="date" value="${event.date ? event.date.split('T')[0] : ''}" required />
+        <input class="input__field" id="date" name="date" type="date" value="${escapeAttribute(event.date ? event.date.split('T')[0] : '')}" required />
         <span class="input__error" id="dateError"></span>
       </div>
       <div class="input">
         <label class="input__label" for="client">Klient</label>
         <select class="input__select" id="client" name="client">
-          ${clients.map((client) => `<option value="${client.id}">${client.name}</option>`).join('')}
+          ${clients.map((client) => `<option value="${escapeAttribute(client.id)}">${escapeHTML(client.name)}</option>`).join('')}
         </select>
       </div>
     </div>
     <div class="input">
       <label class="input__label" for="project">Powiązany projekt</label>
       <select class="input__select" id="project" name="project">
-        ${projects.map((project) => `<option value="${project.id}">${project.name}</option>`).join('')}
+        ${projects.map((project) => `<option value="${escapeAttribute(project.id)}">${escapeHTML(project.name)}</option>`).join('')}
       </select>
     </div>
   </form>
@@ -66,12 +67,12 @@ export const renderCalendarView = (container) => {
                       return `
                       <div class="list__item">
                         <div>
-                          <strong>${event.title}</strong>
-                          <div class="input__helper">${formatDate(event.date)} · ${event.client?.name || 'Brak klienta'}</div>
+                          <strong>${escapeHTML(event.title)}</strong>
+                          <div class="input__helper">${escapeHTML(formatDate(event.date))} · ${escapeHTML(event.client?.name || 'Brak klienta')}</div>
                         </div>
                         <div>
-                          <span class="badge badge--info">${event.project?.name || 'Bez projektu'}</span>
-                          <button class="btn btn--ghost" data-action="delete" data-id="${event.id}">Usuń</button>
+                          <span class="badge badge--info">${escapeHTML(event.project?.name || 'Bez projektu')}</span>
+                          <button class="btn btn--ghost" data-action="delete" data-id="${escapeAttribute(event.id)}">Usuń</button>
                         </div>
                       </div>
                     `;

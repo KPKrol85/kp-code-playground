@@ -3,7 +3,8 @@ import { validateClient, validateEvent, validateProject, validateUiPreferences }
 
 export const ACTION_ERRORS = Object.freeze({
   VALIDATION: 'validation_failed',
-  NOT_FOUND: 'not_found'
+  NOT_FOUND: 'not_found',
+  INVALID_JSON: 'invalid_json'
 });
 
 export const actionOk = (data, nextState) => ({
@@ -169,6 +170,14 @@ export const resetDemoDataAction = (seedState) => {
 export const restoreStateAction = (rawState, seedState) => {
   const nextState = migrateState(rawState, seedState);
   return actionOk(nextState, nextState);
+};
+
+export const restoreStateFromJsonAction = (jsonText, seedState) => {
+  try {
+    return restoreStateAction(JSON.parse(String(jsonText || '')), seedState);
+  } catch {
+    return actionFail(ACTION_ERRORS.INVALID_JSON, [{ field: 'json', message: 'Nieprawidłowy plik JSON.' }]);
+  }
 };
 
 export const exportStateAction = (state) => actionOk(JSON.stringify(state, null, 2), state);

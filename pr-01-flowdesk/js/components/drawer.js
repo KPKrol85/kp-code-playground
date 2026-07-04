@@ -14,12 +14,12 @@ export const createDrawer = ({ content }) => {
   const open = () => {
     drawer.classList.add('drawer--open');
     drawer.querySelector('.drawer__panel').focus();
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('scroll-lock');
   };
 
   const close = () => {
     drawer.classList.remove('drawer--open');
-    document.body.style.overflow = '';
+    document.body.classList.remove('scroll-lock');
   };
 
   drawer.addEventListener('click', (event) => {
@@ -52,11 +52,11 @@ export const bindDrawerToggle = ({ button, drawer }) => {
     const isOpen = drawer.classList.contains('drawer--open');
     if (isOpen) {
       drawer.classList.remove('drawer--open');
-      document.body.style.overflow = '';
+      document.body.classList.remove('scroll-lock');
       button.setAttribute('aria-expanded', 'false');
     } else {
       drawer.classList.add('drawer--open');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('scroll-lock');
       button.setAttribute('aria-expanded', 'true');
       qs('.drawer__panel', drawer).focus();
     }
