@@ -7,7 +7,7 @@ const renderDetails = (client) => {
   if (!client) {
     return `
       <div class="side-panel">
-        <h3>Podgląd klienta</h3>
+        <h2>Podgląd klienta</h2>
         <p class="input__helper">Wybierz klienta z listy, aby zobaczyć szczegóły.</p>
       </div>
     `;
@@ -15,7 +15,7 @@ const renderDetails = (client) => {
 
   return `
     <div class="side-panel">
-      <h3>${client.name}</h3>
+      <h2>${client.name}</h2>
       <p class="input__helper">${client.status}</p>
       <div class="list">
         <div><strong>Email:</strong> ${client.email}</div>

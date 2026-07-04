@@ -61,7 +61,7 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Status:** Ukończono pierwszy etap quality toolchainu. Projekt ma teraz `package-lock.json`, konfigurację ESLint, Prettier i Stylelint, skrypty `lint`, `format`, `test`, `build` i `check` oraz workflow GitHub Actions uruchamiający `npm ci`, lint, test i build dla katalogu `pr-01-flowdesk`.
 
-### 2. Testy jednostkowe, integracyjne i e2e
+### 2. Testy jednostkowe, integracyjne i e2e - ukończone
 
 **Cel:** Rozbudowa projektu ma być bezpieczna, a regresje mają być wykrywane automatycznie.
 
@@ -74,6 +74,8 @@ Obecny zakres funkcjonalny obejmuje:
 - Dodać testy dostępności np. przez axe w najważniejszych widokach.
 
 **Definition of Done:** Istnieje minimalna piramida testów, a krytyczne przepływy biznesowe są chronione przed regresją.
+
+**Status:** Ukończono pierwszy realny setup testowy. Projekt ma teraz Vitest dla testów jednostkowych i integracyjnych, Playwright dla ścieżek e2e, axe checks dla kluczowych widoków, oddzielne skrypty `test:unit`, `test:integration`, `test:e2e` i `test:a11y` oraz rozszerzony workflow CI uruchamiający pełną piramidę testów.
 
 ### 3. Formalny model domenowy i walidacja danych
 

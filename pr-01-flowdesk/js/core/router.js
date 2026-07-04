@@ -16,7 +16,7 @@ const routes = {
   '/settings': renderSettingsView
 };
 
-const parseRoute = () => {
+export const parseRoute = () => {
   const hash = window.location.hash.replace('#', '') || '/dashboard';
   return hash.startsWith('/') ? hash : `/${hash}`;
 };
@@ -41,5 +41,10 @@ export const router = {
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', handleRoute);
     handleRoute();
+
+    return () => {
+      window.removeEventListener('hashchange', handleRoute);
+      window.removeEventListener('load', handleRoute);
+    };
   }
 };

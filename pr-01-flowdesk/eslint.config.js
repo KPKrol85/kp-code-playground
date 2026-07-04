@@ -28,7 +28,7 @@ export default [
     }
   },
   {
-    files: ['eslint.config.js', 'postcss.config.js'],
+    files: ['eslint.config.js', 'playwright.config.js', 'postcss.config.js', 'vitest.config.js'],
     languageOptions: {
       globals: {
         ...globals.node

@@ -16,11 +16,11 @@ export const renderTopbar = () => {
           <button class="btn btn--secondary" id="quickAdd">Nowy</button>
           <button class="btn btn--icon" id="themeToggle" aria-label="Zmień motyw">🌓</button>
           <div class="user-menu">
-            <button class="btn btn--icon" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn--icon" id="userMenuBtn" aria-label="Otwórz menu użytkownika" aria-haspopup="true" aria-expanded="false">
               <span class="avatar" aria-hidden="true"></span>
             </button>
             <div class="user-menu__panel" id="userMenuPanel" role="menu">
-              <p>${session?.name || 'Użytkownik'} · ${session?.role || 'Demo'}</p>
+              <p role="none">${session?.name || 'Użytkownik'} · ${session?.role || 'Demo'}</p>
               <button class="btn btn--ghost" id="logoutBtn" role="menuitem">Wyloguj</button>
             </div>
           </div>

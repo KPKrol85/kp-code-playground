@@ -52,12 +52,12 @@
   --text: #0b0f1a;
   --text-muted: #5c6b85;
   --border: #e3e8f0;
-  --primary: #2b6eff;
-  --primary-strong: #1c54d1;
-  --success: #21b36b;
-  --warning: #f4a53b;
-  --danger: #e15c5c;
-  --info: #6b7cff;
+  --primary: #255edc;
+  --primary-strong: #194bb9;
+  --success: #0f7a46;
+  --warning: #8a5200;
+  --danger: #b42323;
+  --info: #3747c4;
 }
 
 .theme-dark {
