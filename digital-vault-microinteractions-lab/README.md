@@ -103,6 +103,31 @@ Filters should be generated from the taxonomy and interaction cards should displ
 Live previews use a controlled `previewType` → renderer-function map in `assets/js/main.js`. Snippet strings are shown for copying in the code panel, but they are not executed as arbitrary JavaScript; the selected interaction object remains the single source for card state, preview metadata and snippet content.
 
 
+
+## Accessibility and reduced-motion guidance
+
+This lab provides practical accessibility guidance for microinteractions, not WCAG certification or a formal compliance claim. A separate manual audit is required before any copied pattern is described as WCAG-compliant in a production product.
+
+- Every interaction in `assets/js/main.js` needs a Polish `accessibility` note that is specific to the pattern, including the relevant keyboard, ARIA, contrast, announcement or motion concern.
+- Motion-heavy patterns (`medium` or `expressive`) need an explicit reduced-motion strategy: remove looping motion, replace transform-heavy movement with static state, shorten transitions, or preserve the final state without animation.
+- Keyboard support is expected for filters, cards, tabs, accordions, preview controls and code-copy actions. Hover-only behavior needs an equivalent `:focus-visible` state.
+- Focus indicators must remain visible in light and dark themes and must not be removed by `prefers-reduced-motion` rules.
+- Toasts, save states and copy feedback should use visible text plus a polite `aria-live`/`role="status"` pattern when the status is dynamic.
+- Forms should keep real labels, connect validation/help text with `aria-describedby` where applicable and never communicate valid/error states by color alone.
+- Dashboard/status patterns need text labels and sufficient contrast; dots, pulses, badges and progress bars are supporting visuals only.
+- Snippets copied from the lab should preserve semantic HTML, focus states, status text and reduced-motion behavior instead of copying only the visual effect.
+
+### Category-level checklist
+
+| Category | Practical accessibility expectation | Reduced-motion expectation |
+| --- | --- | --- |
+| Buttons and CTAs | Native `<button>`/link semantics, clear label, visible focus and keyboard activation. | Replace magnetic, press or ripple movement with static shadow, outline or contrast change. |
+| Feedback/toasts/status | Visible status text, `aria-live`/`role="status"` for dynamic feedback and no color-only meaning. | Remove slide, pulse or looping effects while keeping the status visible. |
+| Loading/progress | Textual loading/progress state and reserved layout; decorative skeletons should not be the only announcement. | Disable shimmer/spinner loops and show a static placeholder or final value. |
+| Forms | Persistent labels, help/error text connected to fields and validation that is readable without color. | Avoid shaking/moving labels; update text and border/static state immediately. |
+| Navigation/tabs/accordions | Expected tab/accordion semantics, `aria-selected`/`aria-expanded` where relevant and predictable focus order. | Remove sliding indicators or height animations, preserving selected/open state. |
+| Cards/dashboard/empty states | Content remains visible without hover; interactive cards need focusable controls and text labels. | Remove reveal/tilt/lift transforms while keeping outline, shadow, border or text state. |
+
 ## Snippet quality rules
 
 Snippets are educational, copy-ready examples for plain HTML/CSS/JS projects, not full production component libraries. Keep them aligned with the live preview selected in the catalogue.

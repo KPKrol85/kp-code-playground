@@ -123,7 +123,10 @@ The current/planned architecture is intentionally small and static:
 - **Expected files:** `assets/js/main.js`, `assets/css/main.css`, `README.md`, `improvements.md`.
 - **Acceptance criteria:** Every pattern includes accessibility guidance; motion-heavy interactions have a reduced-motion strategy; global `prefers-reduced-motion` handling is respected; documentation states that WCAG certification requires a separate audit.
 - **Risks / notes:** Do not claim WCAG compliance unless a formal audit is completed; keep guidance practical and pattern-specific.
-- **Implementation status:** Not started
+- **Implementation status:** Implemented
+- **Completed on:** 2026-07-03
+- **Files changed:** `assets/js/main.js`, `assets/css/main.css`, `README.md`, `plan.md`, `improvements.md`.
+- **Implementation notes:** Strengthened accessibility guidance for all interactions with Polish, pattern-specific notes; documented reduced-motion expectations for motion-heavy patterns; extended metadata validation for missing, empty, generic or motion-heavy notes without reduced-motion strategy; reviewed and improved global `prefers-reduced-motion` CSS while preserving focus and selected states; updated maintainer documentation and did not claim WCAG certification or compliance.
 
 ### 6. Polish code panel UX
 
