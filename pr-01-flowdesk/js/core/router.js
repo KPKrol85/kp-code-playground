@@ -1,7 +1,9 @@
 import { auth } from './auth.js';
 import { renderLoginView } from '../views/loginView.js';
 import { renderDashboardView } from '../views/dashboardView.js';
+import { renderClientDetailView } from '../views/clientDetailView.js';
 import { renderClientsView } from '../views/clientsView.js';
+import { renderProjectDetailView } from '../views/projectDetailView.js';
 import { renderProjectsView } from '../views/projectsView.js';
 import { renderCalendarView } from '../views/calendarView.js';
 import { renderSettingsView } from '../views/settingsView.js';
@@ -14,6 +16,25 @@ const routes = {
   '/projects': renderProjectsView,
   '/calendar': renderCalendarView,
   '/settings': renderSettingsView
+};
+
+const dynamicRoutes = [
+  { pattern: /^\/clients\/([^/]+)$/, view: renderClientDetailView, activePath: '/clients', param: 'id' },
+  { pattern: /^\/projects\/([^/]+)$/, view: renderProjectDetailView, activePath: '/projects', param: 'id' }
+];
+
+const matchRoute = (path) => {
+  if (routes[path]) return { view: routes[path], activePath: path, params: {} };
+
+  const dynamicRoute = dynamicRoutes.find((route) => route.pattern.test(path));
+  if (!dynamicRoute) return { view: renderNotFoundView, activePath: path, params: {} };
+
+  const [, value] = path.match(dynamicRoute.pattern);
+  return {
+    view: dynamicRoute.view,
+    activePath: dynamicRoute.activePath,
+    params: { [dynamicRoute.param]: decodeURIComponent(value || '') }
+  };
 };
 
 export const parseRoute = () => {
@@ -34,8 +55,8 @@ export const router = {
         window.location.hash = '#/dashboard';
         return;
       }
-      const view = routes[path] || renderNotFoundView;
-      onRoute({ path, view });
+      const matchedRoute = matchRoute(path);
+      onRoute({ path, view: matchedRoute.view, activePath: matchedRoute.activePath, params: matchedRoute.params });
     };
 
     window.addEventListener('hashchange', handleRoute);

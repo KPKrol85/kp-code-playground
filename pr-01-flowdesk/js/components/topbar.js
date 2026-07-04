@@ -12,7 +12,8 @@ export const renderTopbar = () => {
         </div>
         <div class="search" role="search">
           <label class="visually-hidden" for="searchInput">Szukaj</label>
-          <input class="search__input" id="searchInput" type="search" placeholder="Szukaj klientów, zleceń..." />
+          <input class="search__input" id="searchInput" type="search" placeholder="Szukaj klientów, zleceń..." autocomplete="off" aria-controls="searchResults" />
+          <div class="search__results" id="searchResults" hidden></div>
         </div>
         <div class="topbar__actions">
           <button class="btn btn--secondary" id="quickAdd">${icon('plus')}<span>Nowy</span></button>

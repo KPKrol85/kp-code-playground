@@ -1,13 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { CLIENT_STATUSES, CURRENT_SCHEMA_VERSION, EVENT_TYPES, PROJECT_PRIORITIES, PROJECT_STATUSES } from '../../js/domain/constants.js';
+import { CLIENT_SEGMENTS, CLIENT_STATUSES, CURRENT_SCHEMA_VERSION, EVENT_TYPES, PROJECT_PRIORITIES, PROJECT_SERVICE_LEVELS, PROJECT_STATUSES } from '../../js/domain/constants.js';
 import { validateClient, validateEvent, validateProject, validateUserSession } from '../../js/domain/validators.js';
 
 describe('domain validators', () => {
   it('exposes centralized dictionaries for domain values', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(2);
+    expect(CURRENT_SCHEMA_VERSION).toBe(3);
     expect(CLIENT_STATUSES).toEqual(['Aktywny', 'Potencjalny', 'Zawieszony']);
+    expect(CLIENT_SEGMENTS).toEqual(['SMB', 'Healthcare', 'Agency', 'Enterprise', 'Lead']);
     expect(PROJECT_STATUSES).toEqual(['Draft', 'In progress', 'Review', 'Done']);
     expect(PROJECT_PRIORITIES).toEqual(['Low', 'Medium', 'High']);
+    expect(PROJECT_SERVICE_LEVELS).toEqual(['Standard', 'Priority', 'Critical']);
     expect(EVENT_TYPES).toEqual(['General', 'Meeting', 'Deadline']);
   });
 
@@ -24,8 +26,11 @@ describe('domain validators', () => {
       id: 'c-test',
       name: 'Nova Studio',
       email: 'hello@novastudio.pl',
-      status: 'Aktywny'
+      status: 'Aktywny',
+      segment: 'SMB',
+      archivedAt: ''
     });
+    expect(result.value.contacts[0]).toMatchObject({ email: 'hello@novastudio.pl' });
   });
 
   it('rejects invalid client email input', () => {
@@ -50,7 +55,9 @@ describe('domain validators', () => {
       name: 'Service setup',
       status: 'Draft',
       priority: 'Medium',
-      dueDate: ''
+      dueDate: '',
+      sla: { serviceLevel: 'Standard', responseDueDate: '' },
+      estimate: { hours: 0, value: 0, currency: 'PLN' }
     });
     expect(result.errors).toContainEqual({ field: 'dueDate', message: 'Nieprawidłowa data.' });
   });

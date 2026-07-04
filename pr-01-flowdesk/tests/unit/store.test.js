@@ -17,7 +17,7 @@ describe('store', () => {
     const { store } = await loadStore();
     const state = store.getState();
 
-    expect(state.schemaVersion).toBe(2);
+    expect(state.schemaVersion).toBe(3);
     expect(state.clients.length).toBeGreaterThan(0);
     expect(state.projects.length).toBeGreaterThan(0);
     expect(state.events.length).toBeGreaterThan(0);
@@ -76,7 +76,7 @@ describe('store', () => {
     const { store } = await loadStore({ clearStorage: false });
     const state = store.getState();
 
-    expect(state.schemaVersion).toBe(2);
+    expect(state.schemaVersion).toBe(3);
     expect(state.projects[0]).toMatchObject({ clientId: '', dueDate: '' });
     expect(state.events[0]).toMatchObject({ clientId: '', projectId: '', date: '' });
     expect(state.ui).toEqual({ theme: 'light', reducedMotion: true });
@@ -91,6 +91,22 @@ describe('store', () => {
     expect(store.getState().projects.some((project) => project.clientId === 'c1')).toBe(false);
     expect(store.getState().events.some((event) => event.clientId === 'c1')).toBe(false);
     expect(store.getState().events.some((event) => event.projectId === 'p1')).toBe(false);
+  });
+
+  it('archives and restores important records through facade helpers', async () => {
+    const { store } = await loadStore();
+
+    store.archiveClient('c1');
+    store.archiveProject('p1');
+
+    expect(store.getState().clients.find((client) => client.id === 'c1').archivedAt).not.toBe('');
+    expect(store.getState().projects.find((project) => project.id === 'p1').archivedAt).not.toBe('');
+
+    store.restoreArchivedClient('c1');
+    store.restoreArchivedProject('p1');
+
+    expect(store.getState().clients.find((client) => client.id === 'c1').archivedAt).toBe('');
+    expect(store.getState().projects.find((project) => project.id === 'p1').archivedAt).toBe('');
   });
 
   it('clears event project references when deleting a project', async () => {

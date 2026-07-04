@@ -1,5 +1,8 @@
 import { seedData } from '../data/seed.js';
 import {
+  addProjectCommentAction,
+  archiveClientAction,
+  archiveProjectAction,
   createClientAction,
   createEventAction,
   createProjectAction,
@@ -8,8 +11,11 @@ import {
   deleteProjectAction,
   exportStateAction,
   resetDemoDataAction,
+  restoreArchivedClientAction,
+  restoreArchivedProjectAction,
   restoreStateAction,
   restoreStateFromJsonAction,
+  toggleProjectTaskAction,
   updateClientAction,
   updateEventAction,
   updateProjectAction,
@@ -46,6 +52,12 @@ const actions = {
   updateClient(id, payload) {
     return commitActionResult(updateClientAction(state, id, payload));
   },
+  archiveClient(id) {
+    return commitActionResult(archiveClientAction(state, id, actionContext));
+  },
+  restoreArchivedClient(id) {
+    return commitActionResult(restoreArchivedClientAction(state, id, actionContext));
+  },
   deleteClient(id) {
     return commitActionResult(deleteClientAction(state, id));
   },
@@ -53,7 +65,19 @@ const actions = {
     return commitActionResult(createProjectAction(state, payload, actionContext));
   },
   updateProject(id, payload) {
-    return commitActionResult(updateProjectAction(state, id, payload));
+    return commitActionResult(updateProjectAction(state, id, payload, actionContext));
+  },
+  archiveProject(id) {
+    return commitActionResult(archiveProjectAction(state, id, actionContext));
+  },
+  restoreArchivedProject(id) {
+    return commitActionResult(restoreArchivedProjectAction(state, id, actionContext));
+  },
+  toggleProjectTask(projectId, taskId) {
+    return commitActionResult(toggleProjectTaskAction(state, projectId, taskId, actionContext));
+  },
+  addProjectComment(projectId, payload) {
+    return commitActionResult(addProjectCommentAction(state, projectId, payload, actionContext));
   },
   deleteProject(id) {
     return commitActionResult(deleteProjectAction(state, id));
@@ -120,6 +144,12 @@ export const store = {
   updateClient(id, payload) {
     return unwrapData(actions.updateClient(id, payload));
   },
+  archiveClient(id) {
+    return unwrapData(actions.archiveClient(id));
+  },
+  restoreArchivedClient(id) {
+    return unwrapData(actions.restoreArchivedClient(id));
+  },
   deleteClient(id) {
     return unwrapData(actions.deleteClient(id));
   },
@@ -128,6 +158,18 @@ export const store = {
   },
   updateProject(id, payload) {
     return unwrapData(actions.updateProject(id, payload));
+  },
+  archiveProject(id) {
+    return unwrapData(actions.archiveProject(id));
+  },
+  restoreArchivedProject(id) {
+    return unwrapData(actions.restoreArchivedProject(id));
+  },
+  toggleProjectTask(projectId, taskId) {
+    return unwrapData(actions.toggleProjectTask(projectId, taskId));
+  },
+  addProjectComment(projectId, payload) {
+    return unwrapData(actions.addProjectComment(projectId, payload));
   },
   deleteProject(id) {
     return unwrapData(actions.deleteProject(id));

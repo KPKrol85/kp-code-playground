@@ -29,7 +29,7 @@ describe('state persistence adapter', () => {
     const state = persistence.load();
 
     expect(adapter.get).toHaveBeenCalledWith(STATE_STORAGE_KEY);
-    expect(state.schemaVersion).toBe(2);
+    expect(state.schemaVersion).toBe(3);
     expect(state.projects[0]).toMatchObject({ clientId: '', dueDate: '' });
     expect(state.events[0]).toMatchObject({ clientId: '', projectId: '' });
     expect(state.ui).toEqual({ theme: 'light', reducedMotion: true });
@@ -48,7 +48,7 @@ describe('state persistence adapter', () => {
 
     expect(adapter.set).toHaveBeenCalledWith(STATE_STORAGE_KEY, saved);
     expect(values.get(STATE_STORAGE_KEY)).toEqual(saved);
-    expect(saved).toMatchObject({ schemaVersion: 2, ui: { theme: 'dark', reducedMotion: true } });
+    expect(saved).toMatchObject({ schemaVersion: 3, ui: { theme: 'dark', reducedMotion: true } });
   });
 
   it('restores imported state through the same migration path', () => {
@@ -62,7 +62,7 @@ describe('state persistence adapter', () => {
       ui: { theme: 'dark' }
     });
 
-    expect(restored.schemaVersion).toBe(2);
+    expect(restored.schemaVersion).toBe(3);
     expect(values.get(STATE_STORAGE_KEY)).toEqual(restored);
   });
 
@@ -73,7 +73,7 @@ describe('state persistence adapter', () => {
     const resetState = persistence.reset();
     persistence.remove();
 
-    expect(resetState.schemaVersion).toBe(2);
+    expect(resetState.schemaVersion).toBe(3);
     expect(adapter.remove).toHaveBeenCalledWith(STATE_STORAGE_KEY);
     expect(values.has(STATE_STORAGE_KEY)).toBe(false);
   });

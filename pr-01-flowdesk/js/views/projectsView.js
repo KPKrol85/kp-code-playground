@@ -1,8 +1,8 @@
 import { qs } from '../core/dom.js';
 import { getActionFieldError } from '../core/actions.js';
-import { selectClients, selectFilteredProjects, selectProjectById, selectProjectsByStatus, selectProjectsWithClients } from '../core/selectors.js';
+import { selectActiveClients, selectFilteredProjects, selectProjectById, selectProjectsByStatus, selectProjectsWithClients } from '../core/selectors.js';
 import { store } from '../core/store.js';
-import { PROJECT_PRIORITIES, PROJECT_STATUSES } from '../domain/constants.js';
+import { PROJECT_PRIORITIES, PROJECT_SERVICE_LEVELS, PROJECT_STATUSES } from '../domain/constants.js';
 import { button } from '../components/button.js';
 import { openConfirmDialog } from '../components/confirmDialog.js';
 import { inputField, selectField, setFieldError, textareaField } from '../components/formControls.js';
@@ -42,6 +42,19 @@ const projectModalContent = (project = {}, clients = []) => `
       })}
       ${inputField({ id: 'dueDate', label: 'Termin', type: 'date', value: project.dueDate ? project.dueDate.split('T')[0] : '' })}
     </div>
+    <div class="form-grid form-grid--two">
+      ${selectField({
+        id: 'serviceLevel',
+        label: 'SLA',
+        value: project.sla?.serviceLevel,
+        options: PROJECT_SERVICE_LEVELS.map((level) => ({ value: level, label: level }))
+      })}
+      ${inputField({ id: 'responseDueDate', label: 'Reakcja SLA', type: 'date', value: project.sla?.responseDueDate ? project.sla.responseDueDate.split('T')[0] : '' })}
+    </div>
+    <div class="form-grid form-grid--two">
+      ${inputField({ id: 'estimateHours', label: 'Estymacja godzin', type: 'number', value: project.estimate?.hours || '', placeholder: '24' })}
+      ${inputField({ id: 'estimateValue', label: 'Wartość PLN', type: 'number', value: project.estimate?.value || '', placeholder: '9600' })}
+    </div>
     ${textareaField({ id: 'notes', label: 'Notatki', value: project.notes || '', rows: 3 })}
   </form>
 `;
@@ -58,7 +71,7 @@ const showProjectErrors = (result) => {
 };
 
 export const renderProjectsView = (container) => {
-  let filterState = { status: 'all', priority: 'all' };
+  let filterState = { status: 'all', priority: 'all', archive: 'active' };
 
   const render = () => {
     const state = store.getState();
@@ -83,6 +96,14 @@ export const renderProjectsView = (container) => {
                 ${priorityOptions.map((priority) => `<option value="${escapeAttribute(priority)}" ${filterState.priority === priority ? 'selected' : ''}>${escapeHTML(priority)}</option>`).join('')}
               </select>
             </div>
+            <div class="input">
+              <label class="input__label" for="archiveFilter">Zakres</label>
+              <select class="input__select" id="archiveFilter">
+                <option value="active" ${filterState.archive === 'active' ? 'selected' : ''}>Aktywne</option>
+                <option value="archived" ${filterState.archive === 'archived' ? 'selected' : ''}>Archiwum</option>
+                <option value="all" ${filterState.archive === 'all' ? 'selected' : ''}>Wszystkie</option>
+              </select>
+            </div>
           </div>
           ${button({ label: 'Dodaj zlecenie', id: 'addProject', variant: 'primary', iconName: 'plus' })}
         </section>
@@ -101,16 +122,21 @@ export const renderProjectsView = (container) => {
                             .map((project) => {
                               return `
                               <article class="kanban__card">
-                                <strong>${escapeHTML(project.name)}</strong>
+                                <a href="#/projects/${encodeURIComponent(project.id)}"><strong>${escapeHTML(project.name)}</strong></a>
                                 <span class="input__helper">${escapeHTML(project.client?.name || 'Bez klienta')}</span>
                                 <div>
                                   <span class="badge ${badgeClass(project.priority)}">${escapeHTML(project.priority)}</span>
                                   <span class="badge ${badgeClass(project.status)}">${escapeHTML(project.status)}</span>
+                                  ${project.archivedAt ? '<span class="badge badge--danger">Archiwum</span>' : ''}
                                 </div>
                                 <span class="input__helper">Termin: ${escapeHTML(formatDate(project.dueDate))}</span>
                                 <div class="table__actions">
                                   ${button({ label: 'Edytuj', variant: 'ghost', iconName: 'edit', attributes: { 'data-action': 'edit', 'data-id': project.id } })}
-                                  ${button({ label: 'Usuń', variant: 'ghost', iconName: 'delete', attributes: { 'data-action': 'delete', 'data-id': project.id } })}
+                                  ${
+                                    project.archivedAt
+                                      ? button({ label: 'Przywróć', variant: 'ghost', iconName: 'reset', attributes: { 'data-action': 'restore', 'data-id': project.id } })
+                                      : button({ label: 'Archiwizuj', variant: 'ghost', iconName: 'delete', attributes: { 'data-action': 'archive', 'data-id': project.id } })
+                                  }
                                 </div>
                               </article>
                             `;
@@ -138,6 +164,7 @@ export const renderProjectsView = (container) => {
   const bindEvents = () => {
     const statusFilter = qs('#statusFilter', container);
     const priorityFilter = qs('#priorityFilter', container);
+    const archiveFilter = qs('#archiveFilter', container);
 
     statusFilter?.addEventListener('change', () => {
       filterState.status = statusFilter.value;
@@ -147,11 +174,15 @@ export const renderProjectsView = (container) => {
       filterState.priority = priorityFilter.value;
       refresh();
     });
+    archiveFilter?.addEventListener('change', () => {
+      filterState.archive = archiveFilter.value;
+      refresh();
+    });
 
     qs('#addProject', container)?.addEventListener('click', () => {
       const close = openModal({
         title: 'Nowe zlecenie',
-        content: projectModalContent({}, selectClients(store.getState())),
+        content: projectModalContent({}, selectActiveClients(store.getState())),
         footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="saveProject">Zapisz</button>'
       });
       qs('#saveProject', document)?.addEventListener('click', () => {
@@ -163,6 +194,15 @@ export const renderProjectsView = (container) => {
           status: data.get('status'),
           priority: data.get('priority'),
           dueDate: data.get('dueDate'),
+          sla: {
+            serviceLevel: data.get('serviceLevel'),
+            responseDueDate: data.get('responseDueDate')
+          },
+          estimate: {
+            hours: data.get('estimateHours'),
+            value: data.get('estimateValue'),
+            currency: 'PLN'
+          },
           notes: data.get('notes')
         });
         if (!result.ok) {
@@ -184,7 +224,7 @@ export const renderProjectsView = (container) => {
         }
         const close = openModal({
           title: 'Edytuj zlecenie',
-          content: projectModalContent(project, selectClients(store.getState())),
+          content: projectModalContent(project, selectActiveClients(store.getState())),
           footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="updateProject">Zapisz</button>'
         });
         qs('#updateProject', document)?.addEventListener('click', () => {
@@ -196,6 +236,15 @@ export const renderProjectsView = (container) => {
             status: data.get('status'),
             priority: data.get('priority'),
             dueDate: data.get('dueDate'),
+            sla: {
+              serviceLevel: data.get('serviceLevel'),
+              responseDueDate: data.get('responseDueDate')
+            },
+            estimate: {
+              hours: data.get('estimateHours'),
+              value: data.get('estimateValue'),
+              currency: 'PLN'
+            },
             notes: data.get('notes')
           });
           if (!result.ok) {
@@ -209,7 +258,7 @@ export const renderProjectsView = (container) => {
       });
     });
 
-    container.querySelectorAll('[data-action="delete"]').forEach((button) => {
+    container.querySelectorAll('[data-action="archive"]').forEach((button) => {
       button.addEventListener('click', () => {
         const project = selectProjectById(store.getState(), button.dataset.id);
         if (!project) {
@@ -217,20 +266,28 @@ export const renderProjectsView = (container) => {
           return;
         }
         openConfirmDialog({
-          title: 'Usuń zlecenie',
-          message: `Czy na pewno usunąć ${project.name}?`,
-          confirmLabel: 'Usuń',
+          title: 'Archiwizuj zlecenie',
+          message: `Czy zarchiwizować ${project.name}? Rekord pozostanie dostępny w filtrze archiwum.`,
+          confirmLabel: 'Archiwizuj',
           destructive: true,
           onConfirm: () => {
-            const result = store.actions.deleteProject(project.id);
+            const result = store.actions.archiveProject(project.id);
             if (!result.ok) {
-              showToast('Nie udało się usunąć zlecenia.');
+              showToast('Nie udało się zarchiwizować zlecenia.');
               return;
             }
-            showToast('Usunięto zlecenie.');
+            showToast('Zarchiwizowano zlecenie.');
             refresh();
           }
         });
+      });
+    });
+
+    container.querySelectorAll('[data-action="restore"]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const result = store.actions.restoreArchivedProject(button.dataset.id);
+        showToast(result.ok ? 'Przywrócono zlecenie.' : 'Nie udało się przywrócić zlecenia.');
+        refresh();
       });
     });
   };

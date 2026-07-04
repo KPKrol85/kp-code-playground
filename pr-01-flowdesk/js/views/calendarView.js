@@ -1,6 +1,6 @@
 import { qs } from '../core/dom.js';
 import { getActionFieldError } from '../core/actions.js';
-import { selectClients, selectEventsWithRelations, selectProjects } from '../core/selectors.js';
+import { selectActiveClients, selectActiveProjectRecords, selectEventsWithRelations } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { button } from '../components/button.js';
 import { emptyState } from '../components/emptyState.js';
@@ -91,7 +91,7 @@ export const renderCalendarView = (container) => {
       const state = store.getState();
       const close = openModal({
         title: 'Nowe wydarzenie',
-        content: eventModalContent({}, selectClients(state), selectProjects(state)),
+        content: eventModalContent({}, selectActiveClients(state), selectActiveProjectRecords(state)),
         footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="saveEvent">Zapisz</button>'
       });
 

@@ -160,6 +160,8 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Definition of Done:** Aplikacja obsługuje pełniejszy przepływ pracy zespołu usługowego: od klienta, przez zlecenie i zadania, po status, terminy i historię.
 
+**Status:** Ukończono MVP rozbudowy domeny Service Management. Schemat danych podniesiono do `schemaVersion: 3`, klienci mają kontakty, tagi, segmenty, ownerów, aktywność i archiwizację, a zlecenia mają checklisty, SLA, estymacje, komentarze, historię, `completedAt` i archiwizację. Dodano selektory operacyjne dla zaległych, ukończonych, throughput, high priority, upcoming events, archiwum, detali i global search, osobne trasy `#/clients/:id` oraz `#/projects/:id`, realne wyszukiwanie w topbarze, dashboard oparty o metryki operacyjne, import JSON z walidacją przez istniejący restore path oraz testy jednostkowe, integracyjne, e2e, a11y i visual smoke dla nowych przepływów.
+
 ### 8. Przygotowanie pod backend, auth i multi-user
 
 **Cel:** Lokalna aplikacja demo powinna mieć ścieżkę migracji do produktu z prawdziwymi użytkownikami.

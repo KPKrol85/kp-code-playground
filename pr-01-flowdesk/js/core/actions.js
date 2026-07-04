@@ -1,5 +1,5 @@
 import { migrateState } from '../domain/migrations.js';
-import { validateClient, validateEvent, validateProject, validateUiPreferences } from '../domain/validators.js';
+import { isTerminalProjectStatus, normalizeString, validateClient, validateEvent, validateProject, validateUiPreferences } from '../domain/validators.js';
 
 export const ACTION_ERRORS = Object.freeze({
   VALIDATION: 'validation_failed',
@@ -27,6 +27,19 @@ const requireCreateId = (createId) => {
   if (typeof createId !== 'function') throw new TypeError('createId action dependency is required.');
 };
 
+const createTimestamp = ({ createNow } = {}) => (typeof createNow === 'function' ? createNow() : new Date().toISOString());
+
+const createEntryId = ({ createId } = {}, prefix) => (typeof createId === 'function' ? createId(prefix) : `${prefix}-${Date.now().toString(36)}`);
+
+const appendEntry = (entries = [], text, context = {}, prefix = 'entry') => [
+  ...entries,
+  {
+    id: createEntryId(context, prefix),
+    text,
+    date: createTimestamp(context)
+  }
+];
+
 export const createClientAction = (state, payload, { createId } = {}) => {
   requireCreateId(createId);
   const result = validateClient({ ...payload, id: createId('client') });
@@ -49,6 +62,38 @@ export const updateClientAction = (state, id, payload) => {
   });
 };
 
+export const archiveClientAction = (state, id, context = {}) => {
+  const existingClient = state.clients.find((client) => client.id === id);
+  if (!existingClient) return actionFail(ACTION_ERRORS.NOT_FOUND);
+
+  const archivedClient = {
+    ...existingClient,
+    archivedAt: createTimestamp(context),
+    activity: appendEntry(existingClient.activity, 'Zarchiwizowano klienta.', context, 'activity')
+  };
+
+  return actionOk(archivedClient, {
+    ...state,
+    clients: state.clients.map((client) => (client.id === id ? archivedClient : client))
+  });
+};
+
+export const restoreArchivedClientAction = (state, id, context = {}) => {
+  const existingClient = state.clients.find((client) => client.id === id);
+  if (!existingClient) return actionFail(ACTION_ERRORS.NOT_FOUND);
+
+  const restoredClient = {
+    ...existingClient,
+    archivedAt: '',
+    activity: appendEntry(existingClient.activity, 'Przywrócono klienta z archiwum.', context, 'activity')
+  };
+
+  return actionOk(restoredClient, {
+    ...state,
+    clients: state.clients.map((client) => (client.id === id ? restoredClient : client))
+  });
+};
+
 export const deleteClientAction = (state, id) => {
   const existingClient = state.clients.find((client) => client.id === id);
   if (!existingClient) return actionFail(ACTION_ERRORS.NOT_FOUND);
@@ -67,7 +112,8 @@ export const deleteClientAction = (state, id) => {
   });
 };
 
-export const createProjectAction = (state, payload, { createId } = {}) => {
+export const createProjectAction = (state, payload, context = {}) => {
+  const { createId } = context;
   requireCreateId(createId);
   const result = validateProject(
     { ...payload, id: createId('project') },
@@ -77,11 +123,14 @@ export const createProjectAction = (state, payload, { createId } = {}) => {
   );
   if (!result.valid) return actionFail(ACTION_ERRORS.VALIDATION, result.errors);
 
-  const project = result.value;
+  const project = {
+    ...result.value,
+    history: result.value.history.length ? result.value.history : appendEntry([], 'Utworzono zlecenie.', context, 'history')
+  };
   return actionOk(project, { ...state, projects: [...state.projects, project] });
 };
 
-export const updateProjectAction = (state, id, payload) => {
+export const updateProjectAction = (state, id, payload, context = {}) => {
   const existingProject = state.projects.find((project) => project.id === id);
   if (!existingProject) return actionFail(ACTION_ERRORS.NOT_FOUND);
 
@@ -93,9 +142,90 @@ export const updateProjectAction = (state, id, payload) => {
   );
   if (!result.valid) return actionFail(ACTION_ERRORS.VALIDATION, result.errors);
 
-  return actionOk(result.value, {
+  const completedAt = isTerminalProjectStatus(result.value.status) && !result.value.completedAt ? createTimestamp(context) : result.value.completedAt;
+  const history =
+    existingProject.status !== result.value.status ? appendEntry(result.value.history, `Status zmieniony na ${result.value.status}.`, context, 'history') : result.value.history;
+  const project = { ...result.value, completedAt, history };
+
+  return actionOk(project, {
     ...state,
-    projects: state.projects.map((project) => (project.id === id ? result.value : project))
+    projects: state.projects.map((item) => (item.id === id ? project : item))
+  });
+};
+
+export const archiveProjectAction = (state, id, context = {}) => {
+  const existingProject = state.projects.find((project) => project.id === id);
+  if (!existingProject) return actionFail(ACTION_ERRORS.NOT_FOUND);
+
+  const archivedProject = {
+    ...existingProject,
+    archivedAt: createTimestamp(context),
+    history: appendEntry(existingProject.history, 'Zarchiwizowano zlecenie.', context, 'history')
+  };
+
+  return actionOk(archivedProject, {
+    ...state,
+    projects: state.projects.map((project) => (project.id === id ? archivedProject : project))
+  });
+};
+
+export const restoreArchivedProjectAction = (state, id, context = {}) => {
+  const existingProject = state.projects.find((project) => project.id === id);
+  if (!existingProject) return actionFail(ACTION_ERRORS.NOT_FOUND);
+
+  const restoredProject = {
+    ...existingProject,
+    archivedAt: '',
+    history: appendEntry(existingProject.history, 'Przywrócono zlecenie z archiwum.', context, 'history')
+  };
+
+  return actionOk(restoredProject, {
+    ...state,
+    projects: state.projects.map((project) => (project.id === id ? restoredProject : project))
+  });
+};
+
+export const toggleProjectTaskAction = (state, projectId, taskId, context = {}) => {
+  const existingProject = state.projects.find((project) => project.id === projectId);
+  if (!existingProject) return actionFail(ACTION_ERRORS.NOT_FOUND);
+  const existingTask = existingProject.tasks.find((task) => task.id === taskId);
+  if (!existingTask) return actionFail(ACTION_ERRORS.NOT_FOUND);
+
+  const nextTask = { ...existingTask, done: !existingTask.done };
+  const nextProject = {
+    ...existingProject,
+    tasks: existingProject.tasks.map((task) => (task.id === taskId ? nextTask : task)),
+    history: appendEntry(existingProject.history, `${nextTask.done ? 'Ukończono' : 'Wznowiono'} zadanie: ${nextTask.title}.`, context, 'history')
+  };
+
+  return actionOk(nextTask, {
+    ...state,
+    projects: state.projects.map((project) => (project.id === projectId ? nextProject : project))
+  });
+};
+
+export const addProjectCommentAction = (state, projectId, payload, context = {}) => {
+  const existingProject = state.projects.find((project) => project.id === projectId);
+  if (!existingProject) return actionFail(ACTION_ERRORS.NOT_FOUND);
+
+  const body = normalizeString(payload?.body);
+  if (!body) return actionFail(ACTION_ERRORS.VALIDATION, [{ field: 'comment', message: 'Wpisz treść komentarza.' }]);
+
+  const comment = {
+    id: createEntryId(context, 'comment'),
+    author: normalizeString(payload?.author) || 'Alicja Maj',
+    body,
+    date: createTimestamp(context)
+  };
+  const nextProject = {
+    ...existingProject,
+    comments: [...existingProject.comments, comment],
+    history: appendEntry(existingProject.history, 'Dodano komentarz do zlecenia.', context, 'history')
+  };
+
+  return actionOk(comment, {
+    ...state,
+    projects: state.projects.map((project) => (project.id === projectId ? nextProject : project))
   });
 };
 

@@ -30,7 +30,13 @@ describe('state migrations', () => {
     );
 
     expect(migrated.clients).toContainEqual(expect.objectContaining({ id: 'c-old', name: 'Old Client', email: 'old@client.test', status: 'Aktywny' }));
-    expect(migrated.projects).toContainEqual(expect.objectContaining({ id: 'p-old', clientId: '', status: 'Draft', priority: 'Medium', dueDate: '' }));
+    expect(migrated.clients[0]).toMatchObject({ segment: 'SMB', archivedAt: '' });
+    expect(migrated.projects).toContainEqual(expect.objectContaining({ id: 'p-old', clientId: '', status: 'Draft', priority: 'Medium', dueDate: '', archivedAt: '' }));
+    expect(migrated.projects[0]).toMatchObject({
+      sla: { serviceLevel: 'Standard', responseDueDate: '' },
+      estimate: { hours: 0, value: 0, currency: 'PLN' },
+      tasks: []
+    });
     expect(migrated.events).toContainEqual(expect.objectContaining({ id: 'e-old', clientId: '', projectId: '', date: '', type: 'General' }));
     expect(migrated.ui).toEqual({ theme: 'light', reducedMotion: false });
   });

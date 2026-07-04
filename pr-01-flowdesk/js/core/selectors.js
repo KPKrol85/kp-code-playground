@@ -17,9 +17,31 @@ const addDays = (date, days) => {
   return nextDate;
 };
 
+const isArchived = (record) => Boolean(record?.archivedAt);
+
+const byDateAsc = (a, b) => {
+  const first = toValidDate(a.date || a.dueDate || a.completedAt)?.getTime() || Number.MAX_SAFE_INTEGER;
+  const second = toValidDate(b.date || b.dueDate || b.completedAt)?.getTime() || Number.MAX_SAFE_INTEGER;
+  return first - second;
+};
+
+const matchesTerm = (term, values) => {
+  const normalizedTerm = normalizeString(term).toLowerCase();
+  if (!normalizedTerm) return true;
+  return values.some((value) => normalizeString(value).toLowerCase().includes(normalizedTerm));
+};
+
 export const selectClients = (state) => state.clients;
 
+export const selectActiveClients = (state) => state.clients.filter((client) => !isArchived(client));
+
+export const selectArchivedClients = (state) => state.clients.filter(isArchived);
+
 export const selectProjects = (state) => state.projects;
+
+export const selectActiveProjectRecords = (state) => state.projects.filter((project) => !isArchived(project));
+
+export const selectArchivedProjects = (state) => state.projects.filter(isArchived);
 
 export const selectEvents = (state) => state.events;
 
@@ -37,61 +59,97 @@ export const selectClientName = (state, id, fallback = 'Bez klienta') => selectC
 
 export const selectProjectName = (state, id, fallback = 'Bez projektu') => selectProjectById(state, id)?.name || fallback;
 
-export const selectActiveProjects = (state) => state.projects.filter((project) => !isTerminalProjectStatus(project.status));
+export const selectActiveProjects = (state) => selectActiveProjectRecords(state).filter((project) => !isTerminalProjectStatus(project.status));
+
+export const selectCompletedProjects = (state) => selectActiveProjectRecords(state).filter((project) => isTerminalProjectStatus(project.status));
+
+export const selectHighPriorityOpenProjects = (state) => selectActiveProjects(state).filter((project) => project.priority === 'High');
 
 export const selectOverdueProjects = (state, referenceDate = new Date()) => {
   const referenceTime = referenceDate.getTime();
-  return state.projects.filter((project) => {
+  return selectActiveProjects(state).filter((project) => {
     const dueDate = toValidDate(project.dueDate);
     return dueDate ? dueDate.getTime() < referenceTime : false;
   });
 };
 
-export const selectWeeklyEvents = (state, referenceDate = new Date()) => {
-  const weekStart = startOfDay(referenceDate).getTime();
-  const weekEnd = addDays(startOfDay(referenceDate), 7).getTime();
+export const selectThroughputProjects = (state, referenceDate = new Date(), days = 30) => {
+  const periodStart = addDays(startOfDay(referenceDate), -days).getTime();
+  const referenceTime = referenceDate.getTime();
 
-  return state.events.filter((event) => {
-    const eventDate = toValidDate(event.date);
-    if (!eventDate) return false;
-    const eventTime = eventDate.getTime();
-    return eventTime >= weekStart && eventTime < weekEnd;
+  return selectCompletedProjects(state).filter((project) => {
+    const completedAt = toValidDate(project.completedAt);
+    if (!completedAt) return false;
+    const completedTime = completedAt.getTime();
+    return completedTime >= periodStart && completedTime <= referenceTime;
   });
 };
 
-export const selectProjectsByClient = (state, clientId) => state.projects.filter((project) => project.clientId === clientId);
+export const selectUpcomingEvents = (state, referenceDate = new Date(), days = 7) => {
+  const rangeStart = startOfDay(referenceDate).getTime();
+  const rangeEnd = addDays(startOfDay(referenceDate), days).getTime();
+
+  return state.events
+    .filter((event) => {
+      const eventDate = toValidDate(event.date);
+      if (!eventDate) return false;
+      const eventTime = eventDate.getTime();
+      return eventTime >= rangeStart && eventTime < rangeEnd;
+    })
+    .sort(byDateAsc);
+};
+
+export const selectWeeklyEvents = selectUpcomingEvents;
+
+export const selectProjectsByClient = (state, clientId, { includeArchived = true } = {}) =>
+  state.projects.filter((project) => project.clientId === clientId && (includeArchived || !isArchived(project)));
 
 export const selectProjectsByStatus = (state, status, projects = state.projects) => projects.filter((project) => project.status === status);
 
-export const selectDashboardMetrics = (state, referenceDate = new Date()) => ({
-  activeProjectsCount: selectActiveProjects(state).length,
-  weeklyEventsCount: selectWeeklyEvents(state, referenceDate).length,
-  clientsCount: state.clients.length,
-  overdueProjectsCount: selectOverdueProjects(state, referenceDate).length
-});
+export const selectDashboardMetrics = (state, referenceDate = new Date()) => {
+  const activeProjects = selectActiveProjects(state);
+  const upcomingEvents = selectUpcomingEvents(state, referenceDate);
+  const overdueProjects = selectOverdueProjects(state, referenceDate);
+  const completedProjects = selectCompletedProjects(state);
+  const throughputProjects = selectThroughputProjects(state, referenceDate);
+  const highPriorityOpenProjects = selectHighPriorityOpenProjects(state);
 
-export const selectNextActions = (state, limit = 5) => state.projects.slice(0, limit);
+  return {
+    activeProjectsCount: activeProjects.length,
+    weeklyEventsCount: upcomingEvents.length,
+    upcomingEventsCount: upcomingEvents.length,
+    clientsCount: selectActiveClients(state).length,
+    overdueProjectsCount: overdueProjects.length,
+    completedProjectsCount: completedProjects.length,
+    throughputProjectsCount: throughputProjects.length,
+    highPriorityOpenProjectsCount: highPriorityOpenProjects.length
+  };
+};
 
-export const selectRecentProjects = (state, limit = 4) => state.projects.slice(0, limit);
+export const selectNextActions = (state, limit = 5) => selectActiveProjects(state).sort(byDateAsc).slice(0, limit);
 
-export const selectFilteredClients = (state, { term = '', sort = 'name' } = {}) => {
-  const normalizedTerm = normalizeString(term).toLowerCase();
-  const sortedClients = [...state.clients].sort((a, b) => {
+export const selectRecentProjects = (state, limit = 4) => selectActiveProjectRecords(state).slice(-limit).reverse();
+
+export const selectFilteredClients = (state, { term = '', sort = 'name', archive = 'active' } = {}) => {
+  const source = archive === 'archived' ? selectArchivedClients(state) : archive === 'all' ? [...state.clients] : selectActiveClients(state);
+  const sortedClients = [...source].sort((a, b) => {
     if (sort === 'status') return a.status.localeCompare(b.status);
+    if (sort === 'owner') return a.owner.localeCompare(b.owner);
     return a.name.localeCompare(b.name);
   });
 
-  if (!normalizedTerm) return sortedClients;
-
-  return sortedClients.filter((client) => client.name.toLowerCase().includes(normalizedTerm) || client.email.toLowerCase().includes(normalizedTerm));
+  return sortedClients.filter((client) => matchesTerm(term, [client.name, client.email, client.phone, client.status, client.segment, client.owner, ...(client.tags || [])]));
 };
 
-export const selectFilteredProjects = (state, { status = 'all', priority = 'all' } = {}) =>
-  state.projects.filter((project) => {
+export const selectFilteredProjects = (state, { status = 'all', priority = 'all', archive = 'active' } = {}) => {
+  const source = archive === 'archived' ? selectArchivedProjects(state) : archive === 'all' ? [...state.projects] : selectActiveProjectRecords(state);
+
+  return source.filter((project) => {
     const statusMatch = status === 'all' || project.status === status;
     const priorityMatch = priority === 'all' || project.priority === priority;
     return statusMatch && priorityMatch;
   });
+};
 
 export const selectProjectsWithClients = (state, projects = state.projects) => {
   const clients = selectClientLookup(state);
@@ -110,4 +168,97 @@ export const selectEventsWithRelations = (state, events = state.events) => {
     client: clients.get(event.clientId) || null,
     project: projects.get(event.projectId) || null
   }));
+};
+
+export const selectClientActivityTimeline = (state, clientId) => {
+  const client = selectClientById(state, clientId);
+  if (!client) return [];
+
+  const clientActivity = client.activity.map((entry) => ({ ...entry, source: 'client' }));
+  const projectHistory = selectProjectsByClient(state, clientId).flatMap((project) =>
+    project.history.map((entry) => ({ ...entry, source: 'project', text: `${project.name}: ${entry.text}` }))
+  );
+  const events = selectEventsWithRelations(
+    state,
+    state.events.filter((event) => event.clientId === clientId)
+  ).map((event) => ({
+    id: event.id,
+    text: `Wydarzenie: ${event.title}`,
+    date: event.date,
+    source: 'event'
+  }));
+
+  return [...clientActivity, ...projectHistory, ...events]
+    .filter((entry) => toValidDate(entry.date))
+    .sort(byDateAsc)
+    .reverse();
+};
+
+export const selectClientDetail = (state, clientId) => {
+  const client = selectClientById(state, clientId);
+  if (!client) return null;
+
+  return {
+    client,
+    projects: selectProjectsWithClients(state, selectProjectsByClient(state, clientId)),
+    events: selectEventsWithRelations(
+      state,
+      state.events.filter((event) => event.clientId === clientId)
+    ),
+    timeline: selectClientActivityTimeline(state, clientId)
+  };
+};
+
+export const selectProjectDetail = (state, projectId) => {
+  const project = selectProjectById(state, projectId);
+  if (!project) return null;
+
+  return {
+    project,
+    client: selectClientById(state, project.clientId),
+    events: selectEventsWithRelations(
+      state,
+      state.events.filter((event) => event.projectId === projectId)
+    )
+  };
+};
+
+export const selectGlobalSearchResults = (state, term, limit = 8) => {
+  const normalizedTerm = normalizeString(term);
+  if (normalizedTerm.length < 2) return [];
+
+  const clientResults = selectActiveClients(state)
+    .filter((client) => matchesTerm(normalizedTerm, [client.name, client.email, client.phone, client.segment, client.owner, ...(client.tags || [])]))
+    .map((client) => ({
+      type: 'client',
+      label: 'Klient',
+      id: client.id,
+      title: client.name,
+      description: `${client.email} · ${client.segment}`,
+      href: `#/clients/${encodeURIComponent(client.id)}`
+    }));
+
+  const projectResults = selectProjectsWithClients(state, selectActiveProjectRecords(state))
+    .filter((project) => matchesTerm(normalizedTerm, [project.name, project.status, project.priority, project.client?.name, project.notes, project.sla?.serviceLevel]))
+    .map((project) => ({
+      type: 'project',
+      label: 'Zlecenie',
+      id: project.id,
+      title: project.name,
+      description: `${project.client?.name || 'Bez klienta'} · ${project.status}`,
+      href: `#/projects/${encodeURIComponent(project.id)}`
+    }));
+
+  const eventResults = selectEventsWithRelations(state)
+    .filter((event) => matchesTerm(normalizedTerm, [event.title, event.client?.name, event.project?.name, event.type]))
+    .map((event) => ({
+      type: 'event',
+      label: 'Wydarzenie',
+      id: event.id,
+      title: event.title,
+      description: `${event.client?.name || 'Bez klienta'} · ${event.project?.name || 'Bez projektu'}`,
+      href: '#/calendar'
+    }));
+
+  return [...clientResults, ...projectResults, ...eventResults].slice(0, limit);
 };

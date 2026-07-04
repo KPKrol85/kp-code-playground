@@ -11,7 +11,9 @@ test('login view has no axe violations', async ({ page }) => {
 const protectedViews = [
   { name: 'dashboard', heading: 'Dashboard', open: async () => {} },
   { name: 'clients', heading: 'Klienci', open: async (page) => page.getByRole('link', { name: /Klienci/ }).click() },
+  { name: 'client detail', heading: 'Nova Studio', open: async (page) => page.goto('/#/clients/c1') },
   { name: 'projects', heading: 'Zlecenia', open: async (page) => page.getByRole('link', { name: /Zlecenia/ }).click() },
+  { name: 'project detail', heading: 'Wdrożenie panelu klienta', open: async (page) => page.goto('/#/projects/p1') },
   { name: 'calendar', heading: 'Kalendarz', open: async (page) => page.getByRole('link', { name: /Kalendarz/ }).click() },
   { name: 'settings', heading: 'Ustawienia', open: async (page) => page.getByRole('link', { name: /Ustawienia/ }).click() }
 ];

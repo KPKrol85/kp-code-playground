@@ -83,3 +83,59 @@ test('user can switch theme', async ({ page }) => {
 
   await expect(page.locator('body')).toHaveClass(/theme-dark/);
 });
+
+test('user can search globally and open a client detail route', async ({ page }) => {
+  await loginDemoUser(page);
+
+  await page.getByLabel('Szukaj').fill('Nova');
+  await page.getByRole('link', { name: /Klient Nova Studio/ }).click();
+
+  await expect(page).toHaveURL(/#\/clients\/c1/);
+  await expect(page.getByRole('heading', { name: 'Nova Studio' })).toBeVisible();
+  await expect(page.getByText('Powiązane zlecenia')).toBeVisible();
+});
+
+test('user can open a project detail route and update its checklist', async ({ page }) => {
+  await loginDemoUser(page);
+
+  await page.goto('/#/projects/p1');
+  await expect(page.getByRole('heading', { name: 'Wdrożenie panelu klienta' })).toBeVisible();
+  await page.getByLabel('Zebrać feedback od klienta').check();
+
+  await expect(page.getByText('Zaktualizowano checklistę.')).toBeVisible();
+});
+
+test('user archives important records instead of deleting them permanently', async ({ page }) => {
+  await loginDemoUser(page);
+
+  await page.getByRole('link', { name: /Klienci/ }).click();
+  await page.getByRole('button', { name: 'Archiwizuj' }).first().click();
+  await page.locator('.modal__footer').getByRole('button', { name: 'Archiwizuj' }).click();
+
+  await expect(page.getByText('Zarchiwizowano klienta.')).toBeVisible();
+  await page.getByLabel('Zakres').selectOption('archived');
+  await expect(page.getByText('Nova Studio')).toBeVisible();
+  await expect(page.locator('.badge--danger', { hasText: 'Archiwum' }).first()).toBeVisible();
+});
+
+test('user imports valid JSON and rejects malformed JSON', async ({ page }) => {
+  await loginDemoUser(page);
+
+  await page.getByRole('link', { name: /Ustawienia/ }).click();
+  await page.getByLabel('Dane JSON').fill('{broken json');
+  await page.getByRole('button', { name: 'Importuj JSON' }).click();
+  await expect(page.getByText('Nieprawidłowy plik JSON.')).toBeVisible();
+
+  await page.getByLabel('Dane JSON').fill(
+    JSON.stringify({
+      clients: [{ id: 'c-import', name: 'Imported Client', email: 'imported@flowdesk.test' }],
+      projects: [],
+      events: [],
+      ui: { theme: 'light' }
+    })
+  );
+  await page.getByRole('button', { name: 'Importuj JSON' }).click();
+  await page.getByRole('link', { name: /Klienci/ }).click();
+
+  await expect(page.getByRole('cell', { name: 'Imported Client' })).toBeVisible();
+});

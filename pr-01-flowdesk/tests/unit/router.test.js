@@ -42,4 +42,24 @@ describe('router', () => {
 
     cleanup();
   });
+
+  it('routes authenticated users to dynamic detail views', async () => {
+    window.localStorage.setItem('flowdesk_session_v1', JSON.stringify({ email: 'demo@flowdesk.pl' }));
+    const { router } = await import('../../js/core/router.js');
+    const onRoute = vi.fn();
+
+    window.location.hash = '#/clients/c1';
+    const cleanup = router.init({ onRoute });
+
+    expect(onRoute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        path: '/clients/c1',
+        activePath: '/clients',
+        params: { id: 'c1' },
+        view: expect.any(Function)
+      })
+    );
+
+    cleanup();
+  });
 });

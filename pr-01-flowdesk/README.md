@@ -9,10 +9,13 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - Logowanie demonstracyjne z walidacją emaila i hasła.
 - Guard routingu blokujący widoki aplikacji bez aktywnej sesji demo.
 - Dashboard z KPI, aktywnymi zleceniami, wydarzeniami i zaległymi zadaniami.
-- Widok klientów z filtrowaniem, sortowaniem, dodawaniem, edycją, usuwaniem i panelem szczegółów.
-- Widok zleceń w formie prostego kanbana z filtrami statusu i priorytetu.
+- Widok klientów z filtrowaniem, sortowaniem, segmentami, ownerami, tagami, kontaktami, archiwizacją i panelem szczegółów.
+- Osobne trasy szczegółów klientów i zleceń z historią aktywności, relacjami i metadanymi operacyjnymi.
+- Widok zleceń w formie prostego kanbana z filtrami statusu, priorytetu i archiwum.
+- Checklisty zleceń, SLA, estymacje, komentarze i historia zmian.
+- Globalne wyszukiwanie w topbarze po klientach, zleceniach i wydarzeniach.
 - Widok kalendarza z wydarzeniami powiązanymi z klientami i zleceniami.
-- Ustawienia użytkownika: motyw jasny/ciemny, ograniczenie animacji, eksport JSON i reset danych demo.
+- Ustawienia użytkownika: motyw jasny/ciemny, ograniczenie animacji, eksport JSON, walidowany import JSON i reset danych demo.
 - PWA: manifest, service worker, cache app-shell i widok offline.
 - Podstawy dostępności: skip link, focus-visible, modal z `aria-modal`, obsługa ESC, preferencja reduced motion.
 
@@ -79,7 +82,9 @@ Widoki w `js/views/` renderują HTML bezpośrednio do kontenera i samodzielnie p
 | `#/login` | `loginView.js` | Logowanie demo i walidacja formularza. |
 | `#/dashboard` | `dashboardView.js` | KPI, najbliższe działania i ostatnie zlecenia. |
 | `#/clients` | `clientsView.js` | Lista klientów, filtrowanie, sortowanie, CRUD i szczegóły. |
+| `#/clients/:id` | `clientDetailView.js` | Szczegóły klienta, kontakty, tagi, powiązane zlecenia i aktywność. |
 | `#/projects` | `projectsView.js` | Kanban zleceń, filtrowanie, CRUD. |
+| `#/projects/:id` | `projectDetailView.js` | Szczegóły zlecenia, SLA, checklisty, komentarze i historia. |
 | `#/calendar` | `calendarView.js` | Lista wydarzeń powiązanych z klientami i zleceniami. |
 | `#/settings` | `settingsView.js` | Preferencje, eksport danych, reset danych demo. |
 
@@ -94,7 +99,13 @@ Widoki w `js/views/` renderują HTML bezpośrednio do kontenera i samodzielnie p
   email: 'hello@novastudio.pl',
   phone: '+48 605 010 120',
   status: 'Aktywny',
-  notes: 'Stały klient od 2022. Preferuje kontakt mailowy.'
+  notes: 'Stały klient od 2022. Preferuje kontakt mailowy.',
+  contacts: [{ id: 'ct1', name: 'Marta Nowak', role: 'Operations Lead', email: 'marta@novastudio.pl' }],
+  tags: ['retainer', 'web'],
+  segment: 'Agency',
+  owner: 'Alicja Maj',
+  activity: [{ id: 'a1', text: 'Uzgodniono zakres wdrożenia.', date: 'ISO date' }],
+  archivedAt: ''
 }
 ```
 
@@ -108,7 +119,14 @@ Widoki w `js/views/` renderują HTML bezpośrednio do kontenera i samodzielnie p
   status: 'In progress',
   priority: 'High',
   dueDate: 'ISO date',
-  notes: 'Oczekuje na feedback do makiet.'
+  notes: 'Oczekuje na feedback do makiet.',
+  tasks: [{ id: 't1', title: 'Dostarczyć makiety dashboardu', done: true }],
+  sla: { serviceLevel: 'Priority', responseDueDate: 'ISO date' },
+  estimate: { hours: 42, value: 16800, currency: 'PLN' },
+  comments: [{ id: 'cm1', author: 'Alicja Maj', body: 'Komentarz operacyjny', date: 'ISO date' }],
+  history: [{ id: 'h1', text: 'Status zmieniony na In progress.', date: 'ISO date' }],
+  completedAt: '',
+  archivedAt: ''
 }
 ```
 
@@ -173,13 +191,13 @@ To rozwiązanie nadaje się wyłącznie do prototypu. W wersji produkcyjnej koni
 
 ## Bezpieczeństwo i granice demo
 
-FlowDesk jest aplikacją frontend-only. `localStorage` nie jest bezpiecznym miejscem na dane poufne, tokeny ani sekrety. Obecny store traktuje dane z `localStorage` jako niezaufane: stan przechodzi przez migrację, walidację domenową i reguły spójności przed zapisem oraz odczytem.
+FlowDesk jest aplikacją frontend-only. `localStorage` nie jest bezpiecznym miejscem na dane poufne, tokeny ani sekrety. Obecny store traktuje dane z `localStorage` oraz importowany JSON jako niezaufane: stan przechodzi przez migrację, walidację domenową i reguły spójności przed zapisem oraz odczytem.
 
 Dane renderowane z formularzy, seedów i odzyskanego `localStorage` są escapowane helperami `escapeHTML`, `escapeAttribute` i `safeText`. Toasty renderują tekst przez `textContent`, a payloady HTML są wyświetlane jako tekst, nie jako wykonywalny DOM.
 
 `index.html` zawiera konserwatywną meta Content Security Policy dla hostingu statycznego: lokalne moduły JS, lokalny CSS, fonty, manifest, service worker i obrazy z tego samego originu. Produkcyjny hosting powinien przenieść CSP do nagłówków HTTP i rozszerzyć ją o docelowe domeny API, monitoring oraz politykę raportowania.
 
-Eksport JSON jest generowany jako `Blob` z aplikacyjnego stanu, a wewnętrzny punkt restore/import przechodzi przez akcje domenowe i migracje. Nie istnieje jeszcze publiczny UI importu JSON.
+Eksport JSON jest generowany jako `Blob` z aplikacyjnego stanu. Import JSON jest dostępny w ustawieniach jako narzędzie demo i przechodzi przez `restoreStateFromJson`, migracje oraz normalizację domenową. Niepoprawny JSON jest odrzucany bez nadpisania obecnego stanu.
 
 Wersja produkcyjna wymaga backendowego uwierzytelniania, autoryzacji, bezpiecznej persystencji, walidacji po stronie serwera, nagłówków bezpieczeństwa na hostingu, ochrony przed CSRF tam, gdzie pojawią się cookies, oraz kontroli uprawnień dla danych organizacji.
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flowdesk-v4';
+const CACHE_NAME = 'flowdesk-v5';
 const OFFLINE_URL = '/offline.html';
 
 const APP_SHELL = [
@@ -27,7 +27,9 @@ const APP_SHELL = [
   '/js/domain/validators.js',
   '/js/views/loginView.js',
   '/js/views/dashboardView.js',
+  '/js/views/clientDetailView.js',
   '/js/views/clientsView.js',
+  '/js/views/projectDetailView.js',
   '/js/views/projectsView.js',
   '/js/views/calendarView.js',
   '/js/views/settingsView.js',

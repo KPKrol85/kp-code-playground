@@ -1,7 +1,9 @@
 import { qs } from '../core/dom.js';
+import { getActionFieldError } from '../core/actions.js';
 import { selectUiPreferences } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { button } from '../components/button.js';
+import { setFieldError, textareaField } from '../components/formControls.js';
 import { openConfirmDialog } from '../components/confirmDialog.js';
 import { pageHeader } from '../components/pageHeader.js';
 import { showToast } from '../components/toast.js';
@@ -46,6 +48,21 @@ export const renderSettingsView = (container) => {
           ${button({ label: 'Reset demo danych', id: 'resetData', variant: 'ghost', iconName: 'reset' })}
         </div>
         <p class="input__helper">Reset przywróci dane demo zapisane w localStorage.</p>
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">Import JSON</h2>
+        <form id="importForm" class="form-grid">
+          ${textareaField({
+            id: 'jsonImport',
+            label: 'Dane JSON',
+            rows: 8,
+            placeholder: '{ "clients": [], "projects": [], "events": [] }',
+            helper: 'Import zastąpi lokalne dane demo po migracji i walidacji domenowej.'
+          })}
+          ${button({ label: 'Importuj JSON', type: 'submit', variant: 'secondary', iconName: 'export' })}
+        </form>
+        <p class="input__helper">Nie importuj danych poufnych. To nadal lokalny demo store w przeglądarce.</p>
       </section>
     </main>
   `;
@@ -100,5 +117,19 @@ export const renderSettingsView = (container) => {
         renderSettingsView(container);
       }
     });
+  });
+
+  qs('#importForm', container)?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    setFieldError('jsonImport', '', container);
+    const form = new FormData(event.currentTarget);
+    const result = store.actions.restoreStateFromJson(form.get('jsonImport'));
+    if (!result.ok) {
+      setFieldError('jsonImport', getActionFieldError(result, 'json') || 'Nie udało się zaimportować danych.', container);
+      showToast('Import JSON odrzucony.');
+      return;
+    }
+    showToast('Import JSON zakończony.');
+    renderSettingsView(container);
   });
 };

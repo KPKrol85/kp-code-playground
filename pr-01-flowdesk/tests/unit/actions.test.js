@@ -3,12 +3,17 @@ import { seedData } from '../../js/data/seed.js';
 import { migrateState } from '../../js/domain/migrations.js';
 import {
   ACTION_ERRORS,
+  addProjectCommentAction,
+  archiveClientAction,
+  archiveProjectAction,
   createClientAction,
   createProjectAction,
   deleteClientAction,
   resetDemoDataAction,
+  restoreArchivedProjectAction,
   restoreStateAction,
   restoreStateFromJsonAction,
+  toggleProjectTaskAction,
   updateProjectAction,
   updateUiPreferencesAction
 } from '../../js/core/actions.js';
@@ -16,6 +21,7 @@ import {
 const createState = () => migrateState(seedData, seedData);
 
 const createId = (prefix) => `${prefix}-test`;
+const actionContext = { createId, createNow: () => '2026-07-04T12:00:00.000Z' };
 
 describe('domain actions', () => {
   it('creates a client with a predictable success result', () => {
@@ -104,7 +110,7 @@ describe('domain actions', () => {
     );
 
     expect(result.ok).toBe(true);
-    expect(result.data.schemaVersion).toBe(2);
+    expect(result.data.schemaVersion).toBe(3);
     expect(result.data.projects[0]).toMatchObject({ clientId: '', dueDate: '' });
     expect(result.data.events[0]).toMatchObject({ clientId: 'c-import', projectId: '' });
     expect(result.data.ui).toEqual({ theme: 'light', reducedMotion: true });
@@ -122,7 +128,38 @@ describe('domain actions', () => {
     const result = resetDemoDataAction(seedData);
 
     expect(result.ok).toBe(true);
-    expect(result.data.schemaVersion).toBe(2);
+    expect(result.data.schemaVersion).toBe(3);
     expect(result.data.clients.length).toBe(seedData.clients.length);
+  });
+
+  it('archives important records without permanently deleting them', () => {
+    const clientResult = archiveClientAction(createState(), 'c1', actionContext);
+    const projectResult = archiveProjectAction(createState(), 'p1', actionContext);
+
+    expect(clientResult.ok).toBe(true);
+    expect(clientResult.nextState.clients.find((client) => client.id === 'c1')).toMatchObject({ archivedAt: '2026-07-04T12:00:00.000Z' });
+    expect(projectResult.ok).toBe(true);
+    expect(projectResult.nextState.projects.find((project) => project.id === 'p1')).toMatchObject({ archivedAt: '2026-07-04T12:00:00.000Z' });
+  });
+
+  it('restores archived project records', () => {
+    const archived = archiveProjectAction(createState(), 'p1', actionContext).nextState;
+    const result = restoreArchivedProjectAction(archived, 'p1', actionContext);
+
+    expect(result.ok).toBe(true);
+    expect(result.nextState.projects.find((project) => project.id === 'p1').archivedAt).toBe('');
+  });
+
+  it('updates project tasks and comments through predictable action results', () => {
+    const toggled = toggleProjectTaskAction(createState(), 'p1', 't2', actionContext);
+
+    expect(toggled.ok).toBe(true);
+    expect(toggled.data).toMatchObject({ id: 't2', done: true });
+
+    const commented = addProjectCommentAction(toggled.nextState, 'p1', { body: 'Ready for client review' }, actionContext);
+
+    expect(commented.ok).toBe(true);
+    expect(commented.data).toMatchObject({ body: 'Ready for client review', author: 'Alicja Maj' });
+    expect(commented.nextState.projects.find((project) => project.id === 'p1').comments).toContainEqual(commented.data);
   });
 });
