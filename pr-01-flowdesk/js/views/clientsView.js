@@ -1,5 +1,7 @@
 import { qs } from '../core/dom.js';
 import { store } from '../core/store.js';
+import { CLIENT_STATUSES } from '../domain/constants.js';
+import { getFieldError, validateClient } from '../domain/validators.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 
@@ -37,7 +39,7 @@ const clientModalContent = (client = {}) => `
       <div class="input">
         <label class="input__label" for="status">Status</label>
         <select class="input__select" id="status" name="status">
-          ${['Aktywny', 'Potencjalny', 'Zawieszony'].map((status) => `<option value="${status}" ${client.status === status ? 'selected' : ''}>${status}</option>`).join('')}
+          ${CLIENT_STATUSES.map((status) => `<option value="${status}" ${client.status === status ? 'selected' : ''}>${status}</option>`).join('')}
         </select>
       </div>
     </div>
@@ -59,6 +61,11 @@ const clientModalContent = (client = {}) => `
     </div>
   </form>
 `;
+
+const showClientErrors = (result) => {
+  qs('#nameError', document).textContent = getFieldError(result, 'name');
+  qs('#emailError', document).textContent = getFieldError(result, 'email');
+};
 
 export const renderClientsView = (container) => {
   const state = store.getState();
@@ -169,20 +176,21 @@ export const renderClientsView = (container) => {
       saveBtn?.addEventListener('click', () => {
         const form = qs('#clientForm', document);
         const data = new FormData(form);
-        const name = data.get('name');
-        const email = data.get('email');
-        if (!name || !email) {
-          qs('#nameError', document).textContent = name ? '' : 'Wymagane pole.';
-          qs('#emailError', document).textContent = email ? '' : 'Wymagane pole.';
+        const result = validateClient(
+          {
+            name: data.get('name'),
+            email: data.get('email'),
+            phone: data.get('phone'),
+            status: data.get('status'),
+            notes: data.get('notes')
+          },
+          { requireId: false }
+        );
+        if (!result.valid) {
+          showClientErrors(result);
           return;
         }
-        store.addClient({
-          name,
-          email,
-          phone: data.get('phone'),
-          status: data.get('status'),
-          notes: data.get('notes')
-        });
+        store.addClient(result.value);
         showToast('Dodano klienta.');
         close();
         render(store.getState().clients);
@@ -201,13 +209,19 @@ export const renderClientsView = (container) => {
         qs('#updateClient', document)?.addEventListener('click', () => {
           const form = qs('#clientForm', document);
           const data = new FormData(form);
-          store.updateClient(client.id, {
+          const result = validateClient({
+            id: client.id,
             name: data.get('name'),
             email: data.get('email'),
             phone: data.get('phone'),
             status: data.get('status'),
             notes: data.get('notes')
           });
+          if (!result.valid) {
+            showClientErrors(result);
+            return;
+          }
+          store.updateClient(client.id, result.value);
           showToast('Zaktualizowano klienta.');
           close();
           render(store.getState().clients);

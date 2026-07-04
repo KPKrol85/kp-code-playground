@@ -1,11 +1,13 @@
 import { qs } from '../core/dom.js';
 import { store } from '../core/store.js';
+import { PROJECT_PRIORITIES, PROJECT_STATUSES } from '../domain/constants.js';
+import { getFieldError, validateProject } from '../domain/validators.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 import { formatDate } from '../utils/format.js';
 
-const statusColumns = ['Draft', 'In progress', 'Review', 'Done'];
-const priorityOptions = ['Low', 'Medium', 'High'];
+const statusColumns = PROJECT_STATUSES;
+const priorityOptions = PROJECT_PRIORITIES;
 
 const projectModalContent = (project = {}, clients = []) => `
   <form id="projectForm" class="form-grid">
@@ -38,6 +40,7 @@ const projectModalContent = (project = {}, clients = []) => `
       <div class="input">
         <label class="input__label" for="dueDate">Termin</label>
         <input class="input__field" id="dueDate" name="dueDate" type="date" value="${project.dueDate ? project.dueDate.split('T')[0] : ''}" />
+        <span class="input__error" id="dueDateError"></span>
       </div>
     </div>
     <div class="input">
@@ -51,6 +54,11 @@ const badgeClass = (value) => {
   if (value === 'High' || value === 'Review') return 'badge--warning';
   if (value === 'Done') return 'badge--success';
   return 'badge--info';
+};
+
+const showProjectErrors = (result) => {
+  qs('#nameError', document).textContent = getFieldError(result, 'name');
+  qs('#dueDateError', document).textContent = getFieldError(result, 'dueDate');
 };
 
 export const renderProjectsView = (container) => {
@@ -158,19 +166,25 @@ export const renderProjectsView = (container) => {
       qs('#saveProject', document)?.addEventListener('click', () => {
         const form = qs('#projectForm', document);
         const data = new FormData(form);
-        const name = data.get('name');
-        if (!name) {
-          qs('#nameError', document).textContent = 'Wymagane pole.';
+        const result = validateProject(
+          {
+            name: data.get('name'),
+            clientId: data.get('client'),
+            status: data.get('status'),
+            priority: data.get('priority'),
+            dueDate: data.get('dueDate'),
+            notes: data.get('notes')
+          },
+          {
+            requireId: false,
+            clientIds: store.getState().clients.map((client) => client.id)
+          }
+        );
+        if (!result.valid) {
+          showProjectErrors(result);
           return;
         }
-        store.addProject({
-          name,
-          clientId: data.get('client'),
-          status: data.get('status'),
-          priority: data.get('priority'),
-          dueDate: data.get('dueDate'),
-          notes: data.get('notes')
-        });
+        store.addProject(result.value);
         showToast('Dodano zlecenie.');
         close();
         render();
@@ -189,14 +203,25 @@ export const renderProjectsView = (container) => {
         qs('#updateProject', document)?.addEventListener('click', () => {
           const form = qs('#projectForm', document);
           const data = new FormData(form);
-          store.updateProject(project.id, {
-            name: data.get('name'),
-            clientId: data.get('client'),
-            status: data.get('status'),
-            priority: data.get('priority'),
-            dueDate: data.get('dueDate'),
-            notes: data.get('notes')
-          });
+          const result = validateProject(
+            {
+              id: project.id,
+              name: data.get('name'),
+              clientId: data.get('client'),
+              status: data.get('status'),
+              priority: data.get('priority'),
+              dueDate: data.get('dueDate'),
+              notes: data.get('notes')
+            },
+            {
+              clientIds: store.getState().clients.map((client) => client.id)
+            }
+          );
+          if (!result.valid) {
+            showProjectErrors(result);
+            return;
+          }
+          store.updateProject(project.id, result.value);
           showToast('Zaktualizowano zlecenie.');
           close();
           render();

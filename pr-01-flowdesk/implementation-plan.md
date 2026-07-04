@@ -77,7 +77,7 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Status:** Ukończono pierwszy realny setup testowy. Projekt ma teraz Vitest dla testów jednostkowych i integracyjnych, Playwright dla ścieżek e2e, axe checks dla kluczowych widoków, oddzielne skrypty `test:unit`, `test:integration`, `test:e2e` i `test:a11y` oraz rozszerzony workflow CI uruchamiający pełną piramidę testów.
 
-### 3. Formalny model domenowy i walidacja danych
+### 3. Formalny model domenowy i walidacja danych - ukończone
 
 **Cel:** Dane powinny mieć jawny kontrakt, który można walidować i migrować.
 
@@ -91,6 +91,8 @@ Obecny zakres funkcjonalny obejmuje:
 - Ustalić reguły spójności: usunięcie klienta a powiązane zlecenia i wydarzenia, puste daty, brak klienta, status końcowy.
 
 **Definition of Done:** Każdy zapis do store'a przechodzi przez walidację, a aplikacja umie bezpiecznie obsłużyć starszy lub uszkodzony stan z `localStorage`.
+
+**Status:** Ukończono formalizację modelu domenowego. Projekt ma teraz kontrakty modeli, centralne słowniki statusów/priorytetów/typów wydarzeń, walidację i normalizację danych, `schemaVersion: 2`, migracje starszego lub uszkodzonego `localStorage`, reguły spójności relacji klient-zlecenie-wydarzenie oraz testy pokrywające walidatory, migracje i zapisy store'a.
 
 ### 4. Warstwa stanu, selektorów i akcji domenowych
 

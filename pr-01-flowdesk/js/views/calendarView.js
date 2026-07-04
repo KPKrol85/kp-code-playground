@@ -1,5 +1,6 @@
 import { qs } from '../core/dom.js';
 import { store } from '../core/store.js';
+import { getFieldError, validateEvent } from '../domain/validators.js';
 import { openModal } from '../components/modal.js';
 import { showToast } from '../components/toast.js';
 import { formatDate } from '../utils/format.js';
@@ -15,6 +16,7 @@ const eventModalContent = (event = {}, clients = [], projects = []) => `
       <div class="input">
         <label class="input__label" for="date">Data</label>
         <input class="input__field" id="date" name="date" type="date" value="${event.date ? event.date.split('T')[0] : ''}" required />
+        <span class="input__error" id="dateError"></span>
       </div>
       <div class="input">
         <label class="input__label" for="client">Klient</label>
@@ -31,6 +33,11 @@ const eventModalContent = (event = {}, clients = [], projects = []) => `
     </div>
   </form>
 `;
+
+const showEventErrors = (result) => {
+  qs('#titleError', document).textContent = getFieldError(result, 'title');
+  qs('#dateError', document).textContent = getFieldError(result, 'date');
+};
 
 export const renderCalendarView = (container) => {
   const render = () => {
@@ -92,17 +99,24 @@ export const renderCalendarView = (container) => {
       qs('#saveEvent', document)?.addEventListener('click', () => {
         const form = qs('#eventForm', document);
         const data = new FormData(form);
-        const title = data.get('title');
-        if (!title) {
-          qs('#titleError', document).textContent = 'Wymagane pole.';
+        const result = validateEvent(
+          {
+            title: data.get('title'),
+            date: data.get('date'),
+            clientId: data.get('client'),
+            projectId: data.get('project')
+          },
+          {
+            requireId: false,
+            clientIds: store.getState().clients.map((client) => client.id),
+            projectIds: store.getState().projects.map((project) => project.id)
+          }
+        );
+        if (!result.valid) {
+          showEventErrors(result);
           return;
         }
-        store.addEvent({
-          title,
-          date: data.get('date'),
-          clientId: data.get('client'),
-          projectId: data.get('project')
-        });
+        store.addEvent(result.value);
         showToast('Dodano wydarzenie.');
         close();
         render();

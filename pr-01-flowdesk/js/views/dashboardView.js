@@ -1,9 +1,10 @@
 import { store } from '../core/store.js';
+import { isTerminalProjectStatus } from '../domain/validators.js';
 import { formatDate, formatNumber } from '../utils/format.js';
 
 export const renderDashboardView = (container) => {
   const { clients, projects, events } = store.getState();
-  const activeProjects = projects.filter((project) => project.status !== 'Done');
+  const activeProjects = projects.filter((project) => !isTerminalProjectStatus(project.status));
   const overdue = projects.filter((project) => new Date(project.dueDate) < new Date());
 
   const nextActions = projects.slice(0, 5);

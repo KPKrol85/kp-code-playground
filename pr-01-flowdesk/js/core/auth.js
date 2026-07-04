@@ -1,15 +1,18 @@
+import { validateUserSession } from '../domain/validators.js';
 import { storage } from '../utils/storage.js';
 
 const SESSION_KEY = 'flowdesk_session_v1';
 
 export const auth = {
   login({ email }) {
-    const session = {
+    const result = validateUserSession({
       email,
       name: 'Alicja Maj',
       role: 'Owner',
       lastLogin: new Date().toISOString()
-    };
+    });
+    if (!result.valid) return null;
+    const session = result.value;
     storage.set(SESSION_KEY, session);
     return session;
   },
@@ -17,9 +20,14 @@ export const auth = {
     storage.remove(SESSION_KEY);
   },
   getSession() {
-    return storage.get(SESSION_KEY);
+    const result = validateUserSession(storage.get(SESSION_KEY));
+    if (!result.valid) {
+      storage.remove(SESSION_KEY);
+      return null;
+    }
+    return result.value;
   },
   isAuthenticated() {
-    return Boolean(storage.get(SESSION_KEY));
+    return Boolean(this.getSession());
   }
 };
