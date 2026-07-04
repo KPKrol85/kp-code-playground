@@ -39,10 +39,11 @@ export const renderDashboardView = (container) => {
           <section class="card">
             <h2 class="card__title">Najbliższe działania</h2>
             <div class="list">
-              ${nextActions.length
-                ? nextActions
-                    .map(
-                      (item) => `
+              ${
+                nextActions.length
+                  ? nextActions
+                      .map(
+                        (item) => `
                     <div class="list__item">
                       <div>
                         <strong>${item.name}</strong>
@@ -51,20 +52,22 @@ export const renderDashboardView = (container) => {
                       <span class="badge badge--info">${item.status}</span>
                     </div>
                   `
-                    )
-                    .join('')
-                : '<p class="empty-state">Brak zaplanowanych działań.</p>'}
+                      )
+                      .join('')
+                  : '<p class="empty-state">Brak zaplanowanych działań.</p>'
+              }
             </div>
           </section>
 
           <section class="card">
             <h2 class="card__title">Ostatnie zlecenia</h2>
             <div class="list">
-              ${projects.length
-                ? projects
-                    .slice(0, 4)
-                    .map(
-                      (item) => `
+              ${
+                projects.length
+                  ? projects
+                      .slice(0, 4)
+                      .map(
+                        (item) => `
                     <div class="list__item">
                       <div>
                         <strong>${item.name}</strong>
@@ -73,9 +76,10 @@ export const renderDashboardView = (container) => {
                       <span class="badge badge--success">${item.status}</span>
                     </div>
                   `
-                    )
-                    .join('')
-                : '<p class="empty-state">Brak zleceń do wyświetlenia.</p>'}
+                      )
+                      .join('')
+                  : '<p class="empty-state">Brak zleceń do wyświetlenia.</p>'
+              }
             </div>
           </section>
         </div>

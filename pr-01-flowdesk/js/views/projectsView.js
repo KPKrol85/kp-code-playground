@@ -18,19 +18,13 @@ const projectModalContent = (project = {}, clients = []) => `
       <div class="input">
         <label class="input__label" for="client">Klient</label>
         <select class="input__select" id="client" name="client" required>
-          ${clients
-            .map(
-              (client) => `<option value="${client.id}" ${project.clientId === client.id ? 'selected' : ''}>${client.name}</option>`
-            )
-            .join('')}
+          ${clients.map((client) => `<option value="${client.id}" ${project.clientId === client.id ? 'selected' : ''}>${client.name}</option>`).join('')}
         </select>
       </div>
       <div class="input">
         <label class="input__label" for="status">Status</label>
         <select class="input__select" id="status" name="status">
-          ${statusColumns
-            .map((status) => `<option value="${status}" ${project.status === status ? 'selected' : ''}>${status}</option>`)
-            .join('')}
+          ${statusColumns.map((status) => `<option value="${status}" ${project.status === status ? 'selected' : ''}>${status}</option>`).join('')}
         </select>
       </div>
     </div>
@@ -38,9 +32,7 @@ const projectModalContent = (project = {}, clients = []) => `
       <div class="input">
         <label class="input__label" for="priority">Priorytet</label>
         <select class="input__select" id="priority" name="priority">
-          ${priorityOptions
-            .map((priority) => `<option value="${priority}" ${project.priority === priority ? 'selected' : ''}>${priority}</option>`)
-            .join('')}
+          ${priorityOptions.map((priority) => `<option value="${priority}" ${project.priority === priority ? 'selected' : ''}>${priority}</option>`).join('')}
         </select>
       </div>
       <div class="input">
@@ -84,24 +76,14 @@ export const renderProjectsView = (container) => {
               <label class="input__label" for="statusFilter">Status</label>
               <select class="input__select" id="statusFilter">
                 <option value="all">Wszystkie</option>
-                ${statusColumns
-                  .map(
-                    (status) =>
-                      `<option value="${status}" ${filterState.status === status ? 'selected' : ''}>${status}</option>`
-                  )
-                  .join('')}
+                ${statusColumns.map((status) => `<option value="${status}" ${filterState.status === status ? 'selected' : ''}>${status}</option>`).join('')}
               </select>
             </div>
             <div class="input">
               <label class="input__label" for="priorityFilter">Priorytet</label>
               <select class="input__select" id="priorityFilter">
                 <option value="all">Wszystkie</option>
-                ${priorityOptions
-                  .map(
-                    (priority) =>
-                      `<option value="${priority}" ${filterState.priority === priority ? 'selected' : ''}>${priority}</option>`
-                  )
-                  .join('')}
+                ${priorityOptions.map((priority) => `<option value="${priority}" ${filterState.priority === priority ? 'selected' : ''}>${priority}</option>`).join('')}
               </select>
             </div>
           </div>
@@ -116,11 +98,12 @@ export const renderProjectsView = (container) => {
                 <div class="kanban__column">
                   <div class="kanban__title">${status} (${columnItems.length})</div>
                   <div class="list">
-                    ${columnItems.length
-                      ? columnItems
-                          .map((project) => {
-                            const client = clients.find((item) => item.id === project.clientId);
-                            return `
+                    ${
+                      columnItems.length
+                        ? columnItems
+                            .map((project) => {
+                              const client = clients.find((item) => item.id === project.clientId);
+                              return `
                               <article class="kanban__card">
                                 <strong>${project.name}</strong>
                                 <span class="input__helper">${client?.name || 'Bez klienta'}</span>
@@ -135,9 +118,10 @@ export const renderProjectsView = (container) => {
                                 </div>
                               </article>
                             `;
-                          })
-                          .join('')
-                      : '<p class="input__helper">Brak elementów.</p>'}
+                            })
+                            .join('')
+                        : '<p class="input__helper">Brak elementów.</p>'
+                    }
                   </div>
                 </div>
               `;

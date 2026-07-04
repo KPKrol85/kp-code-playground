@@ -5,18 +5,33 @@
   "type": "module",
   "scripts": {
     "dev": "npx serve .",
+    "lint": "npm run lint:js && npm run lint:css && npm run format:check",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "test": "npm run test:syntax",
+    "test:syntax": "node --check js/main.js && node --check service-worker.js && node --check postcss.config.js",
+    "build": "npm run build:css && npm run build:js",
+    "check": "npm run lint && npm run test && npm run build",
     "build:css": "postcss css/style.css -o css/style.min.css",
     "build:js": "terser js/main.js -o js/main.min.js --module",
     "images": "imagemin assets/images/* --out-dir=assets/images/optimized --plugin=webp"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "cssnano": "^6.1.2",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
     "imagemin-cli": "^7.0.0",
     "imagemin-webp": "^8.0.0",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.1.0",
+    "prettier": "^3.9.4",
     "serve": "^14.2.1",
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
     "terser": "^5.36.0"
   }
 }

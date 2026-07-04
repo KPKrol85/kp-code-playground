@@ -14,10 +14,7 @@ const applyTheme = () => {
   const { ui } = store.getState();
   document.body.classList.remove('theme-light', 'theme-dark');
   document.body.classList.add(`theme-${ui.theme}`);
-  document.documentElement.style.setProperty(
-    'scroll-behavior',
-    ui.reducedMotion ? 'auto' : 'smooth'
-  );
+  document.documentElement.style.setProperty('scroll-behavior', ui.reducedMotion ? 'auto' : 'smooth');
 };
 
 let userMenuHandler = null;

@@ -64,8 +64,14 @@ export const store = {
     );
   },
   deleteClient(id) {
-    updateCollection('clients', state.clients.filter((client) => client.id !== id));
-    updateCollection('projects', state.projects.filter((project) => project.clientId !== id));
+    updateCollection(
+      'clients',
+      state.clients.filter((client) => client.id !== id)
+    );
+    updateCollection(
+      'projects',
+      state.projects.filter((project) => project.clientId !== id)
+    );
   },
   addProject(payload) {
     const newProject = { id: createId('project'), ...payload };
@@ -79,7 +85,10 @@ export const store = {
     );
   },
   deleteProject(id) {
-    updateCollection('projects', state.projects.filter((project) => project.id !== id));
+    updateCollection(
+      'projects',
+      state.projects.filter((project) => project.id !== id)
+    );
   },
   addEvent(payload) {
     const newEvent = { id: createId('event'), ...payload };
@@ -87,6 +96,9 @@ export const store = {
     return newEvent;
   },
   deleteEvent(id) {
-    updateCollection('events', state.events.filter((event) => event.id !== id));
+    updateCollection(
+      'events',
+      state.events.filter((event) => event.id !== id)
+    );
   }
 };

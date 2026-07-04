@@ -44,7 +44,7 @@ Obecny zakres funkcjonalny obejmuje:
 
 ## 10 priorytetów implementacyjnych
 
-### 1. Powtarzalny toolchain jakości
+### 1. Powtarzalny toolchain jakości - ukończone
 
 **Cel:** Każda zmiana powinna przechodzić przez te same automatyczne bramki jakości.
 
@@ -58,6 +58,8 @@ Obecny zakres funkcjonalny obejmuje:
 - Dodać prosty pipeline CI, np. GitHub Actions: install, lint, test, build.
 
 **Definition of Done:** Pull request nie może zostać uznany za gotowy, jeśli lint, format, testy lub build nie przechodzą lokalnie i w CI.
+
+**Status:** Ukończono pierwszy etap quality toolchainu. Projekt ma teraz `package-lock.json`, konfigurację ESLint, Prettier i Stylelint, skrypty `lint`, `format`, `test`, `build` i `check` oraz workflow GitHub Actions uruchamiający `npm ci`, lint, test i build dla katalogu `pr-01-flowdesk`.
 
 ### 2. Testy jednostkowe, integracyjne i e2e
 

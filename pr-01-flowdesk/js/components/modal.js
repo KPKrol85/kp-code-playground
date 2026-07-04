@@ -1,13 +1,6 @@
 import { qs, qsa, createElement } from '../core/dom.js';
 
-const focusableSelectors = [
-  'button',
-  '[href]',
-  'input',
-  'select',
-  'textarea',
-  '[tabindex]:not([tabindex="-1"])'
-];
+const focusableSelectors = ['button', '[href]', 'input', 'select', 'textarea', '[tabindex]:not([tabindex="-1"])'];
 
 const trapFocus = (container) => {
   const focusables = qsa(focusableSelectors.join(','), container);

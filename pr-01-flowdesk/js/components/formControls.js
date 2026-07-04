@@ -14,11 +14,7 @@ export const selectField = ({ id, label, options = [], value = '', helper = '', 
     <div class="input">
       <label class="input__label" for="${id}">${label}</label>
       <select class="input__select ${error ? 'input__select--error' : ''}" id="${id}" name="${id}">
-        ${options
-          .map(
-            (option) => `<option value="${option.value}" ${option.value === value ? 'selected' : ''}>${option.label}</option>`
-          )
-          .join('')}
+        ${options.map((option) => `<option value="${option.value}" ${option.value === value ? 'selected' : ''}>${option.label}</option>`).join('')}
       </select>
       ${helper ? `<span class="input__helper">${helper}</span>` : ''}
       ${error ? `<span class="input__error">${error}</span>` : ''}

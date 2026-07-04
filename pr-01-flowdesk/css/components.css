@@ -7,7 +7,10 @@
   border-radius: var(--radius-12);
   font-weight: 600;
   font-size: var(--fs-14);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .btn--primary {

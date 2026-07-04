@@ -50,12 +50,13 @@ export const renderCalendarView = (container) => {
         <section class="card">
           <h2 class="card__title">Nadchodzące wydarzenia</h2>
           <div class="calendar-list">
-            ${events.length
-              ? events
-                  .map((event) => {
-                    const client = clients.find((item) => item.id === event.clientId);
-                    const project = projects.find((item) => item.id === event.projectId);
-                    return `
+            ${
+              events.length
+                ? events
+                    .map((event) => {
+                      const client = clients.find((item) => item.id === event.clientId);
+                      const project = projects.find((item) => item.id === event.projectId);
+                      return `
                       <div class="list__item">
                         <div>
                           <strong>${event.title}</strong>
@@ -67,9 +68,10 @@ export const renderCalendarView = (container) => {
                         </div>
                       </div>
                     `;
-                  })
-                  .join('')
-              : '<p class="empty-state">Brak wydarzeń. Dodaj nowe spotkanie.</p>'}
+                    })
+                    .join('')
+                : '<p class="empty-state">Brak wydarzeń. Dodaj nowe spotkanie.</p>'
+            }
           </div>
         </section>
       </main>

@@ -1,4 +1,4 @@
-import { qsa } from '../core/dom.js';
+import { qs, qsa } from '../core/dom.js';
 
 export const createDrawer = ({ content }) => {
   const drawer = document.createElement('div');
@@ -9,14 +9,7 @@ export const createDrawer = ({ content }) => {
       ${content}
     </nav>
   `;
-  const focusableSelectors = [
-    'button',
-    '[href]',
-    'input',
-    'select',
-    'textarea',
-    '[tabindex]:not([tabindex="-1"])'
-  ];
+  const focusableSelectors = ['button', '[href]', 'input', 'select', 'textarea', '[tabindex]:not([tabindex="-1"])'];
 
   const open = () => {
     drawer.classList.add('drawer--open');

@@ -37,9 +37,7 @@ const clientModalContent = (client = {}) => `
       <div class="input">
         <label class="input__label" for="status">Status</label>
         <select class="input__select" id="status" name="status">
-          ${['Aktywny', 'Potencjalny', 'Zawieszony']
-            .map((status) => `<option value="${status}" ${client.status === status ? 'selected' : ''}>${status}</option>`)
-            .join('')}
+          ${['Aktywny', 'Potencjalny', 'Zawieszony'].map((status) => `<option value="${status}" ${client.status === status ? 'selected' : ''}>${status}</option>`).join('')}
         </select>
       </div>
     </div>
@@ -73,9 +71,7 @@ export const renderClientsView = (container) => {
       return a.name.localeCompare(b.name);
     });
     const filtered = sorted.filter(
-      (client) =>
-        client.name.toLowerCase().includes(filterState.term.toLowerCase()) ||
-        client.email.toLowerCase().includes(filterState.term.toLowerCase())
+      (client) => client.name.toLowerCase().includes(filterState.term.toLowerCase()) || client.email.toLowerCase().includes(filterState.term.toLowerCase())
     );
     const rows = filtered
       .map(

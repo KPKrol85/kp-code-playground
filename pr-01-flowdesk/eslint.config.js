@@ -1,0 +1,38 @@
+import js from '@eslint/js';
+import globals from 'globals';
+
+export default [
+  {
+    ignores: ['node_modules/**', 'css/style.min.css', 'js/main.min.js']
+  },
+  js.configs.recommended,
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.browser
+      }
+    },
+    rules: {
+      'no-console': 'off'
+    }
+  },
+  {
+    files: ['service-worker.js'],
+    languageOptions: {
+      globals: {
+        ...globals.serviceworker
+      }
+    }
+  },
+  {
+    files: ['eslint.config.js', 'postcss.config.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    }
+  }
+];
