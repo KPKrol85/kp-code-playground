@@ -3,7 +3,12 @@ import { getActionFieldError } from '../core/actions.js';
 import { selectClientById, selectFilteredClients } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { CLIENT_STATUSES } from '../domain/constants.js';
+import { button } from '../components/button.js';
+import { openConfirmDialog } from '../components/confirmDialog.js';
+import { emptyState } from '../components/emptyState.js';
+import { inputField, selectField, setFieldError, textareaField } from '../components/formControls.js';
 import { openModal } from '../components/modal.js';
+import { pageHeader } from '../components/pageHeader.js';
 import { showToast } from '../components/toast.js';
 import { escapeAttribute, escapeHTML } from '../utils/sanitize.js';
 
@@ -33,40 +38,25 @@ const renderDetails = (client) => {
 const clientModalContent = (client = {}) => `
   <form id="clientForm" class="form-grid">
     <div class="form-grid form-grid--two">
-      <div class="input">
-        <label class="input__label" for="name">Nazwa</label>
-        <input class="input__field" id="name" name="name" value="${escapeAttribute(client.name || '')}" required />
-        <span class="input__error" id="nameError"></span>
-      </div>
-      <div class="input">
-        <label class="input__label" for="status">Status</label>
-        <select class="input__select" id="status" name="status">
-          ${CLIENT_STATUSES.map((status) => `<option value="${escapeAttribute(status)}" ${client.status === status ? 'selected' : ''}>${escapeHTML(status)}</option>`).join('')}
-        </select>
-      </div>
+      ${inputField({ id: 'name', label: 'Nazwa', value: client.name || '', required: true })}
+      ${selectField({
+        id: 'status',
+        label: 'Status',
+        value: client.status,
+        options: CLIENT_STATUSES.map((status) => ({ value: status, label: status }))
+      })}
     </div>
     <div class="form-grid form-grid--two">
-      <div class="input">
-        <label class="input__label" for="email">Email</label>
-        <input class="input__field" id="email" name="email" type="email" value="${escapeAttribute(client.email || '')}" required />
-        <span class="input__error" id="emailError"></span>
-      </div>
-      <div class="input">
-        <label class="input__label" for="phone">Telefon</label>
-        <input class="input__field" id="phone" name="phone" value="${escapeAttribute(client.phone || '')}" required />
-      </div>
+      ${inputField({ id: 'email', label: 'Email', type: 'email', value: client.email || '', required: true, autocomplete: 'email' })}
+      ${inputField({ id: 'phone', label: 'Telefon', value: client.phone || '', required: true, autocomplete: 'tel' })}
     </div>
-    <div class="input">
-      <label class="input__label" for="notes">Notatki</label>
-      <textarea class="input__textarea" id="notes" name="notes" rows="3">${escapeHTML(client.notes || '')}</textarea>
-      <span class="input__helper">Krótki kontekst dla zespołu.</span>
-    </div>
+    ${textareaField({ id: 'notes', label: 'Notatki', value: client.notes || '', rows: 3, helper: 'Krótki kontekst dla zespołu.' })}
   </form>
 `;
 
 const showClientErrors = (result) => {
-  qs('#nameError', document).textContent = getActionFieldError(result, 'name');
-  qs('#emailError', document).textContent = getActionFieldError(result, 'email');
+  setFieldError('name', getActionFieldError(result, 'name'));
+  setFieldError('email', getActionFieldError(result, 'email'));
 };
 
 export const renderClientsView = (container) => {
@@ -86,8 +76,8 @@ export const renderClientsView = (container) => {
           <td>${escapeHTML(client.status)}</td>
           <td>
             <div class="table__actions">
-              <button class="btn btn--ghost" data-action="edit" data-id="${escapeAttribute(client.id)}">Edytuj</button>
-              <button class="btn btn--ghost" data-action="delete" data-id="${escapeAttribute(client.id)}">Usuń</button>
+              ${button({ label: 'Edytuj', variant: 'ghost', iconName: 'edit', attributes: { 'data-action': 'edit', 'data-id': client.id } })}
+              ${button({ label: 'Usuń', variant: 'ghost', iconName: 'delete', attributes: { 'data-action': 'delete', 'data-id': client.id } })}
             </div>
           </td>
         </tr>
@@ -97,10 +87,7 @@ export const renderClientsView = (container) => {
 
     container.innerHTML = `
       <main id="main" class="container">
-        <header class="view-header">
-          <h1 class="view-header__title">Klienci</h1>
-          <p class="view-header__desc">Baza klientów, statusy współpracy i szybkie akcje.</p>
-        </header>
+        ${pageHeader({ title: 'Klienci', description: 'Baza klientów, statusy współpracy i szybkie akcje.' })}
         <section class="clients-layout">
           <div class="card">
             <div class="list">
@@ -117,7 +104,7 @@ export const renderClientsView = (container) => {
                   </select>
                 </div>
               </div>
-              <button class="btn btn--primary" id="addClient">Dodaj klienta</button>
+              ${button({ label: 'Dodaj klienta', id: 'addClient', variant: 'primary', iconName: 'plus' })}
             </div>
             <div class="table-wrapper">
               ${
@@ -137,7 +124,7 @@ export const renderClientsView = (container) => {
                   </tbody>
                 </table>
               `
-                  : '<p class="empty-state">Brak klientów. Dodaj pierwszy rekord.</p>'
+                  : emptyState({ description: 'Brak klientów. Dodaj pierwszy rekord.', iconName: 'clients' })
               }
             </div>
           </div>
@@ -196,7 +183,11 @@ export const renderClientsView = (container) => {
 
     container.querySelectorAll('[data-action="edit"]').forEach((button) => {
       button.addEventListener('click', () => {
-        const client = store.getState().clients.find((item) => item.id === button.dataset.id);
+        const client = selectClientById(store.getState(), button.dataset.id);
+        if (!client) {
+          showToast('Nie znaleziono klienta.');
+          return;
+        }
         const close = openModal({
           title: 'Edytuj klienta',
           content: clientModalContent(client),
@@ -225,22 +216,25 @@ export const renderClientsView = (container) => {
 
     container.querySelectorAll('[data-action="delete"]').forEach((button) => {
       button.addEventListener('click', () => {
-        const client = store.getState().clients.find((item) => item.id === button.dataset.id);
-        const close = openModal({
+        const client = selectClientById(store.getState(), button.dataset.id);
+        if (!client) {
+          showToast('Nie znaleziono klienta.');
+          return;
+        }
+        openConfirmDialog({
           title: 'Usuń klienta',
-          content: `<p>Czy na pewno usunąć <strong>${escapeHTML(client.name)}</strong>? Znikną też powiązane zlecenia.</p>`,
-          footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="confirmDelete">Usuń</button>'
-        });
-        qs('#confirmDelete', document)?.addEventListener('click', () => {
-          const result = store.actions.deleteClient(client.id);
-          if (!result.ok) {
-            showToast('Nie udało się usunąć klienta.');
-            close();
-            return;
+          message: `Czy na pewno usunąć ${client.name}? Znikną też powiązane zlecenia.`,
+          confirmLabel: 'Usuń',
+          destructive: true,
+          onConfirm: () => {
+            const result = store.actions.deleteClient(client.id);
+            if (!result.ok) {
+              showToast('Nie udało się usunąć klienta.');
+              return;
+            }
+            showToast('Usunięto klienta.');
+            refresh();
           }
-          showToast('Usunięto klienta.');
-          close();
-          refresh();
         });
       });
     });

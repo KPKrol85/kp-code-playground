@@ -1,5 +1,7 @@
 import { store } from '../core/store.js';
 import { selectDashboardMetrics, selectNextActions, selectRecentProjects } from '../core/selectors.js';
+import { emptyState } from '../components/emptyState.js';
+import { pageHeader } from '../components/pageHeader.js';
 import { formatDate, formatNumber } from '../utils/format.js';
 import { escapeHTML } from '../utils/sanitize.js';
 
@@ -11,10 +13,7 @@ export const renderDashboardView = (container) => {
 
   container.innerHTML = `
     <main id="main" class="container">
-      <header class="view-header">
-        <h1 class="view-header__title">Dashboard</h1>
-        <p class="view-header__desc">Szybki podgląd kluczowych działań i stanu operacji.</p>
-      </header>
+      ${pageHeader({ title: 'Dashboard', description: 'Szybki podgląd kluczowych działań i stanu operacji.' })}
 
       <section class="dashboard-grid">
         <div class="dashboard-kpi">
@@ -55,7 +54,7 @@ export const renderDashboardView = (container) => {
                   `
                       )
                       .join('')
-                  : '<p class="empty-state">Brak zaplanowanych działań.</p>'
+                  : emptyState({ description: 'Brak zaplanowanych działań.', iconName: 'projects' })
               }
             </div>
           </section>
@@ -78,7 +77,7 @@ export const renderDashboardView = (container) => {
                   `
                       )
                       .join('')
-                  : '<p class="empty-state">Brak zleceń do wyświetlenia.</p>'
+                  : emptyState({ description: 'Brak zleceń do wyświetlenia.', iconName: 'projects' })
               }
             </div>
           </section>

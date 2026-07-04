@@ -33,6 +33,12 @@
   color: var(--text-muted);
 }
 
+.btn--danger {
+  background: var(--danger);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
 .btn--icon {
   padding: var(--space-8);
   border-radius: var(--radius-12);
@@ -42,6 +48,10 @@
 
 .btn:active {
   transform: translateY(1px);
+}
+
+.icon {
+  flex: 0 0 auto;
 }
 
 .input {
@@ -284,6 +294,9 @@
   height: 32px;
   border-radius: 50%;
   background: linear-gradient(135deg, #6b7cff, #21b36b);
+  color: #fff;
+  display: grid;
+  place-items: center;
 }
 
 .user-menu {
@@ -310,6 +323,11 @@
 .user-menu__panel p {
   margin: 0 0 var(--space-12) 0;
   font-size: var(--fs-12);
+  color: var(--text-muted);
+}
+
+.confirm-dialog p {
+  margin: 0;
   color: var(--text-muted);
 }
 

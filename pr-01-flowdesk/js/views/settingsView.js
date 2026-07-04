@@ -1,6 +1,9 @@
 import { qs } from '../core/dom.js';
 import { selectUiPreferences } from '../core/selectors.js';
 import { store } from '../core/store.js';
+import { button } from '../components/button.js';
+import { openConfirmDialog } from '../components/confirmDialog.js';
+import { pageHeader } from '../components/pageHeader.js';
 import { showToast } from '../components/toast.js';
 
 export const renderSettingsView = (container) => {
@@ -8,10 +11,7 @@ export const renderSettingsView = (container) => {
 
   container.innerHTML = `
     <main id="main" class="container">
-      <header class="view-header">
-        <h1 class="view-header__title">Ustawienia</h1>
-        <p class="view-header__desc">Zarządzaj profilem, preferencjami i narzędziami danych.</p>
-      </header>
+      ${pageHeader({ title: 'Ustawienia', description: 'Zarządzaj profilem, preferencjami i narzędziami danych.' })}
 
       <section class="settings-grid">
         <div class="card">
@@ -42,8 +42,8 @@ export const renderSettingsView = (container) => {
       <section class="card">
         <h2 class="card__title">Narzędzia danych</h2>
         <div class="list">
-          <button class="btn btn--secondary" id="exportData">Eksportuj JSON</button>
-          <button class="btn btn--ghost" id="resetData">Reset demo danych</button>
+          ${button({ label: 'Eksportuj JSON', id: 'exportData', variant: 'secondary', iconName: 'export' })}
+          ${button({ label: 'Reset demo danych', id: 'resetData', variant: 'ghost', iconName: 'reset' })}
         </div>
         <p class="input__helper">Reset przywróci dane demo zapisane w localStorage.</p>
       </section>
@@ -85,14 +85,20 @@ export const renderSettingsView = (container) => {
   });
 
   qs('#resetData', container)?.addEventListener('click', () => {
-    const confirmed = window.confirm('Czy na pewno przywrócić dane demo?');
-    if (!confirmed) return;
-    const result = store.actions.resetDemoData();
-    if (!result.ok) {
-      showToast('Nie udało się przywrócić danych demo.');
-      return;
-    }
-    showToast('Dane demo zostały przywrócone.');
-    renderSettingsView(container);
+    openConfirmDialog({
+      title: 'Reset demo danych',
+      message: 'Czy na pewno przywrócić dane demo?',
+      confirmLabel: 'Resetuj',
+      destructive: true,
+      onConfirm: () => {
+        const result = store.actions.resetDemoData();
+        if (!result.ok) {
+          showToast('Nie udało się przywrócić danych demo.');
+          return;
+        }
+        showToast('Dane demo zostały przywrócone.');
+        renderSettingsView(container);
+      }
+    });
   });
 };

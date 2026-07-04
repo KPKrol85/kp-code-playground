@@ -142,6 +142,8 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Definition of Done:** Nowy widok można zbudować z istniejących komponentów bez kopiowania dużych bloków HTML i CSS.
 
+**Status:** Ukończono profesjonalizację lekkiego systemu komponentów UI. Projekt ma teraz jawne API dla przycisków, pól formularzy, nagłówków stron, pustych stanów, tabel, modali, drawerów, toastów i dialogów potwierdzeń, a kluczowe widoki korzystają ze wspólnych komponentów zamiast powielać duże bloki markup. Dodano dostępne helpery formularzy z `label`, `helper`, `error`, `aria-describedby` i `aria-invalid`, destrukcyjne akcje klientów, zleceń oraz resetu danych przechodzą przez `ConfirmDialog`, emoji w nawigacji i akcjach zastąpiono kontrolowanym lokalnym systemem SVG, a `docs/design-system.md` dokumentuje tokeny, konwencje komponentów i zasady rozwoju UI. Dodano testy jednostkowe komponentów oraz Playwright visual smoke tests dla logowania i głównych widoków aplikacji.
+
 ### 7. Rozbudowa funkcji domenowych Service Management
 
 **Cel:** FlowDesk powinien stać się aplikacją operacyjną, a nie tylko listą klientów i zleceń.

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flowdesk-v3';
+const CACHE_NAME = 'flowdesk-v4';
 const OFFLINE_URL = '/offline.html';
 
 const APP_SHELL = [
@@ -32,10 +32,15 @@ const APP_SHELL = [
   '/js/views/calendarView.js',
   '/js/views/settingsView.js',
   '/js/views/notFoundView.js',
+  '/js/components/button.js',
+  '/js/components/confirmDialog.js',
   '/js/components/sidebar.js',
   '/js/components/topbar.js',
   '/js/components/modal.js',
   '/js/components/drawer.js',
+  '/js/components/emptyState.js',
+  '/js/components/icon.js',
+  '/js/components/pageHeader.js',
   '/js/components/toast.js',
   '/js/components/table.js',
   '/js/components/formControls.js',

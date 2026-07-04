@@ -3,7 +3,11 @@ import { getActionFieldError } from '../core/actions.js';
 import { selectClients, selectFilteredProjects, selectProjectById, selectProjectsByStatus, selectProjectsWithClients } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { PROJECT_PRIORITIES, PROJECT_STATUSES } from '../domain/constants.js';
+import { button } from '../components/button.js';
+import { openConfirmDialog } from '../components/confirmDialog.js';
+import { inputField, selectField, setFieldError, textareaField } from '../components/formControls.js';
 import { openModal } from '../components/modal.js';
+import { pageHeader } from '../components/pageHeader.js';
 import { showToast } from '../components/toast.js';
 import { formatDate } from '../utils/format.js';
 import { escapeAttribute, escapeHTML } from '../utils/sanitize.js';
@@ -13,42 +17,32 @@ const priorityOptions = PROJECT_PRIORITIES;
 
 const projectModalContent = (project = {}, clients = []) => `
   <form id="projectForm" class="form-grid">
-    <div class="input">
-      <label class="input__label" for="name">Nazwa</label>
-      <input class="input__field" id="name" name="name" value="${escapeAttribute(project.name || '')}" required />
-      <span class="input__error" id="nameError"></span>
+    ${inputField({ id: 'name', label: 'Nazwa', value: project.name || '', required: true })}
+    <div class="form-grid form-grid--two">
+      ${selectField({
+        id: 'client',
+        label: 'Klient',
+        value: project.clientId,
+        required: true,
+        options: clients.map((client) => ({ value: client.id, label: client.name }))
+      })}
+      ${selectField({
+        id: 'status',
+        label: 'Status',
+        value: project.status,
+        options: statusColumns.map((status) => ({ value: status, label: status }))
+      })}
     </div>
     <div class="form-grid form-grid--two">
-      <div class="input">
-        <label class="input__label" for="client">Klient</label>
-        <select class="input__select" id="client" name="client" required>
-          ${clients.map((client) => `<option value="${escapeAttribute(client.id)}" ${project.clientId === client.id ? 'selected' : ''}>${escapeHTML(client.name)}</option>`).join('')}
-        </select>
-      </div>
-      <div class="input">
-        <label class="input__label" for="status">Status</label>
-        <select class="input__select" id="status" name="status">
-          ${statusColumns.map((status) => `<option value="${escapeAttribute(status)}" ${project.status === status ? 'selected' : ''}>${escapeHTML(status)}</option>`).join('')}
-        </select>
-      </div>
+      ${selectField({
+        id: 'priority',
+        label: 'Priorytet',
+        value: project.priority,
+        options: priorityOptions.map((priority) => ({ value: priority, label: priority }))
+      })}
+      ${inputField({ id: 'dueDate', label: 'Termin', type: 'date', value: project.dueDate ? project.dueDate.split('T')[0] : '' })}
     </div>
-    <div class="form-grid form-grid--two">
-      <div class="input">
-        <label class="input__label" for="priority">Priorytet</label>
-        <select class="input__select" id="priority" name="priority">
-          ${priorityOptions.map((priority) => `<option value="${escapeAttribute(priority)}" ${project.priority === priority ? 'selected' : ''}>${escapeHTML(priority)}</option>`).join('')}
-        </select>
-      </div>
-      <div class="input">
-        <label class="input__label" for="dueDate">Termin</label>
-        <input class="input__field" id="dueDate" name="dueDate" type="date" value="${escapeAttribute(project.dueDate ? project.dueDate.split('T')[0] : '')}" />
-        <span class="input__error" id="dueDateError"></span>
-      </div>
-    </div>
-    <div class="input">
-      <label class="input__label" for="notes">Notatki</label>
-      <textarea class="input__textarea" id="notes" name="notes" rows="3">${escapeHTML(project.notes || '')}</textarea>
-    </div>
+    ${textareaField({ id: 'notes', label: 'Notatki', value: project.notes || '', rows: 3 })}
   </form>
 `;
 
@@ -59,8 +53,8 @@ const badgeClass = (value) => {
 };
 
 const showProjectErrors = (result) => {
-  qs('#nameError', document).textContent = getActionFieldError(result, 'name');
-  qs('#dueDateError', document).textContent = getActionFieldError(result, 'dueDate');
+  setFieldError('name', getActionFieldError(result, 'name'));
+  setFieldError('dueDate', getActionFieldError(result, 'dueDate'));
 };
 
 export const renderProjectsView = (container) => {
@@ -72,10 +66,7 @@ export const renderProjectsView = (container) => {
 
     container.innerHTML = `
       <main id="main" class="container">
-        <header class="view-header">
-          <h1 class="view-header__title">Zlecenia</h1>
-          <p class="view-header__desc">Śledź statusy zleceń i priorytety bez przeciążenia narzędziem.</p>
-        </header>
+        ${pageHeader({ title: 'Zlecenia', description: 'Śledź statusy zleceń i priorytety bez przeciążenia narzędziem.' })}
         <section class="card">
           <div class="form-grid form-grid--two">
             <div class="input">
@@ -93,7 +84,7 @@ export const renderProjectsView = (container) => {
               </select>
             </div>
           </div>
-          <button class="btn btn--primary" id="addProject">Dodaj zlecenie</button>
+          ${button({ label: 'Dodaj zlecenie', id: 'addProject', variant: 'primary', iconName: 'plus' })}
         </section>
 
         <section class="kanban">
@@ -118,8 +109,8 @@ export const renderProjectsView = (container) => {
                                 </div>
                                 <span class="input__helper">Termin: ${escapeHTML(formatDate(project.dueDate))}</span>
                                 <div class="table__actions">
-                                  <button class="btn btn--ghost" data-action="edit" data-id="${escapeAttribute(project.id)}">Edytuj</button>
-                                  <button class="btn btn--ghost" data-action="delete" data-id="${escapeAttribute(project.id)}">Usuń</button>
+                                  ${button({ label: 'Edytuj', variant: 'ghost', iconName: 'edit', attributes: { 'data-action': 'edit', 'data-id': project.id } })}
+                                  ${button({ label: 'Usuń', variant: 'ghost', iconName: 'delete', attributes: { 'data-action': 'delete', 'data-id': project.id } })}
                                 </div>
                               </article>
                             `;
@@ -225,21 +216,20 @@ export const renderProjectsView = (container) => {
           showToast('Nie znaleziono zlecenia.');
           return;
         }
-        const close = openModal({
+        openConfirmDialog({
           title: 'Usuń zlecenie',
-          content: `<p>Czy na pewno usunąć <strong>${escapeHTML(project.name)}</strong>?</p>`,
-          footer: '<button class="btn btn--secondary" data-modal-close>Anuluj</button><button class="btn btn--primary" id="confirmProjectDelete">Usuń</button>'
-        });
-        qs('#confirmProjectDelete', document)?.addEventListener('click', () => {
-          const result = store.actions.deleteProject(project.id);
-          if (!result.ok) {
-            showToast('Nie udało się usunąć zlecenia.');
-            close();
-            return;
+          message: `Czy na pewno usunąć ${project.name}?`,
+          confirmLabel: 'Usuń',
+          destructive: true,
+          onConfirm: () => {
+            const result = store.actions.deleteProject(project.id);
+            if (!result.ok) {
+              showToast('Nie udało się usunąć zlecenia.');
+              return;
+            }
+            showToast('Usunięto zlecenie.');
+            refresh();
           }
-          showToast('Usunięto zlecenie.');
-          close();
-          refresh();
         });
       });
     });

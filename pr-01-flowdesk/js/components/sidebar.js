@@ -1,9 +1,11 @@
+import { icon } from './icon.js';
+
 const navItems = [
-  { path: '/dashboard', label: 'Dashboard', icon: '📊' },
-  { path: '/clients', label: 'Klienci', icon: '👥' },
-  { path: '/projects', label: 'Zlecenia', icon: '🧩' },
-  { path: '/calendar', label: 'Kalendarz', icon: '🗓️' },
-  { path: '/settings', label: 'Ustawienia', icon: '⚙️' }
+  { path: '/dashboard', label: 'Dashboard', iconName: 'dashboard' },
+  { path: '/clients', label: 'Klienci', iconName: 'clients' },
+  { path: '/projects', label: 'Zlecenia', iconName: 'projects' },
+  { path: '/calendar', label: 'Kalendarz', iconName: 'calendar' },
+  { path: '/settings', label: 'Ustawienia', iconName: 'settings' }
 ];
 
 export const renderSidebar = (activePath) => {
@@ -15,7 +17,7 @@ export const renderSidebar = (activePath) => {
           .map(
             (item) => `
             <a class="sidebar__link ${activePath === item.path ? 'sidebar__link--active' : ''}" href="#${item.path}">
-              <span aria-hidden="true">${item.icon}</span>
+              ${icon(item.iconName)}
               <span>${item.label}</span>
             </a>
           `
@@ -34,7 +36,7 @@ export const renderNavList = (activePath) => {
         .map(
           (item) => `
           <a class="sidebar__link ${activePath === item.path ? 'sidebar__link--active' : ''}" href="#${item.path}">
-            <span aria-hidden="true">${item.icon}</span>
+            ${icon(item.iconName)}
             <span>${item.label}</span>
           </a>
         `

@@ -5,6 +5,7 @@ import { createDrawer } from './components/drawer.js';
 import { auth } from './core/auth.js';
 import { selectUiPreferences } from './core/selectors.js';
 import { store } from './core/store.js';
+import { button } from './components/button.js';
 import { openModal } from './components/modal.js';
 import { qs } from './core/dom.js';
 import { showToast } from './components/toast.js';
@@ -75,8 +76,8 @@ const renderShell = (activePath, view) => {
       content: `
         <div class="list">
           <p>Wybierz typ rekordu do utworzenia. Dane zostaną zapisane w demo store.</p>
-          <button class="btn btn--secondary" data-quick="client">Nowy klient</button>
-          <button class="btn btn--secondary" data-quick="project">Nowe zlecenie</button>
+          ${button({ label: 'Nowy klient', variant: 'secondary', iconName: 'clients', attributes: { 'data-quick': 'client' } })}
+          ${button({ label: 'Nowe zlecenie', variant: 'secondary', iconName: 'projects', attributes: { 'data-quick': 'project' } })}
         </div>
       `,
       footer: '<button class="btn btn--secondary" data-modal-close>Zamknij</button>'
