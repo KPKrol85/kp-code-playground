@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -148,7 +148,7 @@
         <section id="struktura-html" class="lesson-section">
           <h2>Struktura HTML</h2>
           <p>Zacznij od poprawnych powiązań semantycznych. Labelka, tekst pomocniczy i błąd powinny być częścią tego samego pola.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-html-example">Kopiuj</button><code id="lesson41-html-example">&lt;form class="registration-project" aria-labelledby="registration-title"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-html-example">Kopiuj</button><code id="lesson41-html-example">&lt;form class="registration-project" aria-labelledby="registration-title"&gt;
   &lt;div class="registration-project__field"&gt;
     &lt;label for="registration-email"&gt;Email&lt;/label&gt;
     &lt;input id="registration-email" name="email" type="email" aria-describedby="registration-email-help"&gt;
@@ -161,7 +161,7 @@
         <section id="tokeny-i-baza" class="lesson-section">
           <h2>Tokeny i baza</h2>
           <p>Formularz ma wiele stanów, więc tokeny są szczególnie ważne. Nazwij role: tło, panel, tekst, border, fokus, błąd i sukces.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-tokens-example">Kopiuj</button><code id="lesson41-tokens-example">.registration-project {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-tokens-example">Kopiuj</button><code id="lesson41-tokens-example">.registration-project {
   --form-bg: #f8fafc;
   --form-panel: #ffffff;
   --form-text: #0f172a;
@@ -177,7 +177,7 @@
         <section id="layout-mobile-first" class="lesson-section">
           <h2>Layout mobile-first</h2>
           <p>Na mobile formularz powinien być jedną kolumną. Dwie kolumny dla pól mają sens dopiero wtedy, gdy szerokość pozwala zachować czytelne labelki i komunikaty.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-mobile-example">Kopiuj</button><code id="lesson41-mobile-example">.registration-project__grid {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-mobile-example">Kopiuj</button><code id="lesson41-mobile-example">.registration-project__grid {
   display: grid;
   gap: 1rem;
 }
@@ -192,7 +192,7 @@
         <section id="pola-i-labelki" class="lesson-section">
           <h2>Pola i labelki</h2>
           <p>Pola formularza powinny mieć stabilny rozmiar, czytelne obramowanie i widoczny stan fokusu. Labelka powinna być tekstem, nie dekoracją.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-fields-example">Kopiuj</button><code id="lesson41-fields-example">.registration-project__field label {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-fields-example">Kopiuj</button><code id="lesson41-fields-example">.registration-project__field label {
   font-weight: 800;
 }
 
@@ -209,7 +209,7 @@
         <section id="bledy-i-walidacja" class="lesson-section">
           <h2>Błędy i walidacja</h2>
           <p>Komunikat błędu powinien być połączony z polem i widoczny w tym samym kontekście. Sam czerwony border nie wystarczy.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-validation-example">Kopiuj</button><code id="lesson41-validation-example">.registration-project__field input[aria-invalid="true"] {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-validation-example">Kopiuj</button><code id="lesson41-validation-example">.registration-project__field input[aria-invalid="true"] {
   border-color: var(--form-error);
   background: #fef2f2;
 }
@@ -224,7 +224,7 @@
         <section id="fieldset-i-zgody" class="lesson-section">
           <h2>Fieldset i zgody</h2>
           <p>Grupy opcji, radio i checkboxy powinny mieć semantyczny kontekst. <code>fieldset</code> i <code>legend</code> mówią użytkownikowi, czego dotyczy grupa.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-fieldset-example">Kopiuj</button><code id="lesson41-fieldset-example">&lt;fieldset class="registration-project__fieldset"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-fieldset-example">Kopiuj</button><code id="lesson41-fieldset-example">&lt;fieldset class="registration-project__fieldset"&gt;
   &lt;legend&gt;Poziom nauki&lt;/legend&gt;
   &lt;label&gt;
     &lt;input type="radio" name="level" value="junior"&gt;
@@ -237,7 +237,7 @@
         <section id="responsywnosc" class="lesson-section">
           <h2>Responsywność</h2>
           <p>Na desktopie możesz skrócić formularz przez dwie kolumny, ale tylko dla pól o podobnej wadze. Checkboxy, błędy i długie opisy zwykle lepiej zostawić na pełną szerokość.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-responsive-example">Kopiuj</button><code id="lesson41-responsive-example">@media (min-width: 48rem) {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-responsive-example">Kopiuj</button><code id="lesson41-responsive-example">@media (min-width: 48rem) {
   .registration-project__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -252,7 +252,7 @@
         <section id="stany-i-dostepnosc" class="lesson-section">
           <h2>Stany i dostępność</h2>
           <p>Formularz ma wiele stanów, ale każdy musi być zrozumiały. Focus, błąd, sukces i disabled powinny różnić się więcej niż samym odcieniem koloru.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson41-states-example">Kopiuj</button><code id="lesson41-states-example">.registration-project__field input:focus-visible {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson41-states-example">Kopiuj</button><code id="lesson41-states-example">.registration-project__field input:focus-visible {
   border-color: var(--form-focus);
   outline: 3px solid #bfdbfe;
   outline-offset: 2px;

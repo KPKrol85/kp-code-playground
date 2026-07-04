@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -154,7 +154,7 @@
         <section id="clamp" class="lesson-section">
           <h2><code>clamp()</code></h2>
           <p><code>clamp()</code> ma trzy wartości: minimum, wartość preferowaną i maksimum. Przeglądarka wybiera wartość preferowaną, ale pilnuje dolnej i górnej granicy.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson17-clamp-type-example">Kopiuj</button><code id="lesson17-clamp-type-example">.hero-title {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson17-clamp-type-example">Kopiuj</button><code id="lesson17-clamp-type-example">.hero-title {
   font-size: clamp(2rem, 1.2rem + 4vw, 4.5rem);
   line-height: 1.05;
 }</code></pre>
@@ -164,7 +164,7 @@
         <section id="fluid-typography" class="lesson-section">
           <h2>Fluid typography</h2>
           <p>W większym projekcie warto zbudować kilka tokenów typograficznych. Dzięki temu komponenty nie używają przypadkowych wartości, tylko wspólnej skali.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson17-fluid-system-example">Kopiuj</button><code id="lesson17-fluid-system-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson17-fluid-system-example">Kopiuj</button><code id="lesson17-fluid-system-example">:root {
   --text-sm: clamp(0.875rem, 0.82rem + 0.2vw, 1rem);
   --text-md: clamp(1rem, 0.95rem + 0.35vw, 1.125rem);
   --text-lg: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
@@ -205,7 +205,7 @@
         <section id="demo" class="lesson-section">
           <h2>Demo płynnej skali</h2>
           <p>Poniższe demo pokazuje, jak jedna skala może kontrolować nagłówek, lead, odstępy i kartę bez dokładania kolejnych breakpointów.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson17-card-example">Kopiuj</button><code id="lesson17-card-example">.fluid-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson17-card-example">Kopiuj</button><code id="lesson17-card-example">.fluid-card {
   padding: clamp(1rem, 3vw, 2rem);
 }
 

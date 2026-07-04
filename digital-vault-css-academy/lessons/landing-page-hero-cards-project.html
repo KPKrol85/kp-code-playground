@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -145,7 +145,7 @@
         <section id="struktura-html" class="lesson-section">
           <h2>Struktura HTML</h2>
           <p>Zacznij od struktury, która ma sens bez CSS. Hero jest sekcją z nagłówkiem, a karty są listą powtarzalnych elementów treści.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson39-html-example">Kopiuj</button><code id="lesson39-html-example">&lt;section class="landing-project" aria-labelledby="landing-title"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson39-html-example">Kopiuj</button><code id="lesson39-html-example">&lt;section class="landing-project" aria-labelledby="landing-title"&gt;
   &lt;div class="landing-project__hero"&gt;
     &lt;div class="landing-project__copy"&gt;
       &lt;p class="landing-project__eyebrow"&gt;CSS Sprint&lt;/p&gt;
@@ -163,7 +163,7 @@
         <section id="tokeny-i-baza" class="lesson-section">
           <h2>Tokeny i baza</h2>
           <p>Projekt landing page szybko rośnie. Lokalne tokeny pomagają utrzymać spójność między hero, CTA i kartami.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson39-tokens-example">Kopiuj</button><code id="lesson39-tokens-example">.landing-project {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson39-tokens-example">Kopiuj</button><code id="lesson39-tokens-example">.landing-project {
   --landing-bg: #f8fafc;
   --landing-panel: #ffffff;
   --landing-text: #0f172a;
@@ -180,7 +180,7 @@
         <section id="layout-mobile-first" class="lesson-section">
           <h2>Layout mobile-first</h2>
           <p>Na telefonie hero powinno być liniowe: komunikat, akcje, panel wizualny, karty. Taki porządek jest czytelny i nie wymaga sztucznych wyjątków.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson39-mobile-example">Kopiuj</button><code id="lesson39-mobile-example">.landing-project__hero {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson39-mobile-example">Kopiuj</button><code id="lesson39-mobile-example">.landing-project__hero {
   display: grid;
   gap: clamp(1.25rem, 4vw, 2rem);
 }
@@ -196,7 +196,7 @@
         <section id="uklad-kart" class="lesson-section">
           <h2>Układ kart</h2>
           <p>Karty wartości są powtarzalnym komponentem. Najbezpieczniej dać im siatkę, która sama dobierze liczbę kolumn do dostępnego miejsca.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson39-cards-example">Kopiuj</button><code id="lesson39-cards-example">.landing-project__cards {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson39-cards-example">Kopiuj</button><code id="lesson39-cards-example">.landing-project__cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   gap: 1rem;
@@ -212,7 +212,7 @@
         <section id="responsywnosc" class="lesson-section">
           <h2>Responsywność</h2>
           <p>Na szerszym ekranie hero może stać się dwukolumnowe. Przełącz układ dopiero wtedy, gdy panel wizualny nie ściska tekstu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson39-responsive-example">Kopiuj</button><code id="lesson39-responsive-example">@media (min-width: 52rem) {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson39-responsive-example">Kopiuj</button><code id="lesson39-responsive-example">@media (min-width: 52rem) {
   .landing-project__hero {
     grid-template-columns: minmax(0, 1.05fr) minmax(18rem, .95fr);
     align-items: center;
@@ -224,7 +224,7 @@
         <section id="stany-i-dostepnosc" class="lesson-section">
           <h2>Stany i dostępność</h2>
           <p>Landing page ma prowadzić do akcji. Każdy link i przycisk musi być widoczny dla użytkownika myszy, klawiatury i ekranu dotykowego.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson39-states-example">Kopiuj</button><code id="lesson39-states-example">.landing-project__button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson39-states-example">Kopiuj</button><code id="lesson39-states-example">.landing-project__button {
   min-height: 2.75rem;
   transition: transform .18s ease, box-shadow .18s ease;
 }

@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="czym-jest-prefers" class="lesson-section">
           <h2>Czym jest prefers-reduced-motion</h2>
           <p><code>prefers-reduced-motion</code> to media feature, który informuje stronę, że użytkownik preferuje mniej animacji. Najczęściej obsługujesz wartość <code>reduce</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson27-prefers-base-example">Kopiuj</button><code id="lesson27-prefers-base-example">@media (prefers-reduced-motion: reduce) {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson27-prefers-base-example">Kopiuj</button><code id="lesson27-prefers-base-example">@media (prefers-reduced-motion: reduce) {
   .animated-panel {
     animation: none;
     transition-duration: 0ms;
@@ -132,7 +132,7 @@
         <section id="reduce-nie-remove" class="lesson-section">
           <h2>Reduce, nie zawsze remove</h2>
           <p>Ograniczenie ruchu nie oznacza usunięcia informacji. Gdy karta przestaje wysuwać się z boku, nadal może zmienić kolor obramowania, tło albo ikonę statusu. Feedback ma zostać, tylko bez dużego ruchu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson27-reduce-not-remove-example">Kopiuj</button><code id="lesson27-reduce-not-remove-example">.notice {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson27-reduce-not-remove-example">Kopiuj</button><code id="lesson27-reduce-not-remove-example">.notice {
   opacity: 0;
   transform: translateY(.75rem);
   animation: notice-enter 240ms ease-out forwards;
@@ -151,7 +151,7 @@
         <section id="transition-animation" class="lesson-section">
           <h2>Transition i animation</h2>
           <p>Dla <code>transition</code> najczęściej skracasz czas trwania albo zostawiasz tylko zmianę koloru. Dla <code>@keyframes</code> zwykle wyłączasz sekwencję i ustawiasz stan końcowy wprost.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson27-transition-animation-example">Kopiuj</button><code id="lesson27-transition-animation-example">.card-link {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson27-transition-animation-example">Kopiuj</button><code id="lesson27-transition-animation-example">.card-link {
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
@@ -173,7 +173,7 @@
         <section id="alternatywa-bez-ruchu" class="lesson-section">
           <h2>Alternatywa bez ruchu</h2>
           <p>Wariant bez ruchu powinien nadal odpowiadać na pytanie: co się zmieniło? Używaj koloru, kontrastu, obramowania, tekstu statusu, ikony albo zmiany układu, która nie jest animowana.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson27-static-feedback-example">Kopiuj</button><code id="lesson27-static-feedback-example">.save-state {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson27-static-feedback-example">Kopiuj</button><code id="lesson27-static-feedback-example">.save-state {
   border: 1px solid #bbf7d0;
   background: #f0fdf4;
   color: #166534;
@@ -191,7 +191,7 @@
         <section id="scroll-parallax" class="lesson-section">
           <h2>Scroll i parallax</h2>
           <p>Efekty scrolla i parallax potrafią być bardziej obciążające niż małe mikrointerakcje. W trybie ograniczonego ruchu wyłącz płynne przewijanie i ruch zależny od scrolla.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson27-scroll-example">Kopiuj</button><code id="lesson27-scroll-example">html {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson27-scroll-example">Kopiuj</button><code id="lesson27-scroll-example">html {
   scroll-behavior: smooth;
 }
 
@@ -209,7 +209,7 @@
         <section id="motion-tokens" class="lesson-section">
           <h2>Tokeny ruchu</h2>
           <p>W większym projekcie warto zapisać czas i dystans ruchu jako zmienne CSS. Dzięki temu tryb ograniczonego ruchu można kontrolować globalnie, bez przepisywania każdego komponentu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson27-motion-tokens-example">Kopiuj</button><code id="lesson27-motion-tokens-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson27-motion-tokens-example">Kopiuj</button><code id="lesson27-motion-tokens-example">:root {
   --motion-duration-fast: 160ms;
   --motion-distance-sm: .35rem;
 }

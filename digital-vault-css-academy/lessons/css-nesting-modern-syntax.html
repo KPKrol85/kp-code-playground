@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="czym-jest-nesting" class="lesson-section">
           <h2>Czym jest CSS nesting</h2>
           <p>Nesting pozwala umieścić jedną regułę stylu wewnątrz drugiej. Wewnętrzny selektor jest interpretowany względem selektora zewnętrznego. Dzięki temu możesz utrzymać reguły komponentu w jednym bloku.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson36-basic-example">Kopiuj</button><code id="lesson36-basic-example">/* Bez nestingu */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson36-basic-example">Kopiuj</button><code id="lesson36-basic-example">/* Bez nestingu */
 .notice {
   padding: 1rem;
 }
@@ -143,7 +143,7 @@
         <section id="selektor-rodzica" class="lesson-section">
           <h2>Selektor rodzica &amp;</h2>
           <p><code>&amp;</code> reprezentuje selektor zewnętrzny. Jest potrzebny wtedy, gdy chcesz połączyć selektor bez spacji, na przykład przy pseudoklasie, modyfikatorze albo klasie stanu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson36-parent-example">Kopiuj</button><code id="lesson36-parent-example">.button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson36-parent-example">Kopiuj</button><code id="lesson36-parent-example">.button {
   background: #2563eb;
 
   &:hover {
@@ -160,7 +160,7 @@
         <section id="stany-komponentu" class="lesson-section">
           <h2>Stany komponentu</h2>
           <p>Najbardziej czytelny przypadek nestingu to komponent ze stanami. Baza zostaje na górze, a pod nią znajdują się stany interakcji i warianty semantyczne.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson36-states-example">Kopiuj</button><code id="lesson36-states-example">.lesson-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson36-states-example">Kopiuj</button><code id="lesson36-states-example">.lesson-card {
   border: 1px solid var(--color-border);
   border-radius: .75rem;
   padding: 1rem;
@@ -184,7 +184,7 @@
         <section id="nested-at-rules" class="lesson-section">
           <h2>Zagnieżdżone at-rules</h2>
           <p>Nesting może grupować także reguły warunkowe przy komponencie. To pomaga utrzymać breakpoint, container query albo feature query blisko komponentu, którego dotyczą.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson36-atrules-example">Kopiuj</button><code id="lesson36-atrules-example">.profile-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson36-atrules-example">Kopiuj</button><code id="lesson36-atrules-example">.profile-card {
   display: grid;
   gap: 1rem;
 
@@ -202,7 +202,7 @@
         <section id="sass-vs-css" class="lesson-section">
           <h2>Sass vs natywny CSS</h2>
           <p>Natywny CSS nesting nie jest prostym kopiowaniem możliwości Sass. CSS nie skleja selektorów jako tekstu. To ważne przy nazwach BEM-like i skrótach typu <code>&amp;__title</code> albo <code>&amp;--active</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson36-sass-css-example">Kopiuj</button><code id="lesson36-sass-css-example">/* Wzorzec z Sass - nie wklejaj bez sprawdzenia do natywnego CSS */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson36-sass-css-example">Kopiuj</button><code id="lesson36-sass-css-example">/* Wzorzec z Sass - nie wklejaj bez sprawdzenia do natywnego CSS */
 .card {
   &__title {
     margin: 0;
@@ -225,7 +225,7 @@
         <section id="specyficznosc" class="lesson-section">
           <h2>Specyficzność i głębokość</h2>
           <p>Nesting nie powinien być wymówką do budowania selektorów na cztery poziomy. Im głębszy selektor, tym trudniej przewidzieć, co wygra w kaskadzie i jak napisać rozsądny wariant komponentu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson36-depth-example">Kopiuj</button><code id="lesson36-depth-example">/* Zbyt głęboko */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson36-depth-example">Kopiuj</button><code id="lesson36-depth-example">/* Zbyt głęboko */
 .dashboard {
   .panel {
     .card {

@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -132,7 +132,7 @@
         <section id="struktura-html" class="lesson-section">
           <h2>Struktura HTML</h2>
           <p>Zacznij od sensownej struktury. Karta profilu jest samodzielną treścią, więc dobrym wyborem jest <code>article</code> z nagłówkiem, opisem, listami i akcjami.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson38-html-example">Kopiuj</button><code id="lesson38-html-example">&lt;article class="profile-project-card" aria-labelledby="profile-name"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson38-html-example">Kopiuj</button><code id="lesson38-html-example">&lt;article class="profile-project-card" aria-labelledby="profile-name"&gt;
   &lt;div class="profile-project-card__avatar" aria-hidden="true"&gt;AK&lt;/div&gt;
   &lt;div class="profile-project-card__body"&gt;
     &lt;p class="profile-project-card__eyebrow"&gt;Frontend Mentor&lt;/p&gt;
@@ -146,7 +146,7 @@
         <section id="tokeny-i-baza" class="lesson-section">
           <h2>Tokeny i baza</h2>
           <p>Projekt końcowy powinien mieć lokalne tokeny komponentu. Dzięki temu warianty kolorystyczne i drobne korekty nie wymagają przepisywania wielu selektorów.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson38-tokens-example">Kopiuj</button><code id="lesson38-tokens-example">.profile-project-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson38-tokens-example">Kopiuj</button><code id="lesson38-tokens-example">.profile-project-card {
   --profile-bg: #ffffff;
   --profile-text: #0f172a;
   --profile-muted: #64748b;
@@ -163,7 +163,7 @@
         <section id="layout-mobile-first" class="lesson-section">
           <h2>Layout mobile-first</h2>
           <p>Na małym ekranie karta powinna być pionowa. To najbezpieczniejszy fallback: avatar, treść, metryki i akcje układają się w naturalnej kolejności.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson38-mobile-example">Kopiuj</button><code id="lesson38-mobile-example">.profile-project-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson38-mobile-example">Kopiuj</button><code id="lesson38-mobile-example">.profile-project-card {
   display: grid;
   gap: 1rem;
   padding: clamp(1rem, 4vw, 1.5rem);
@@ -180,7 +180,7 @@
         <section id="responsywnosc" class="lesson-section">
           <h2>Responsywność</h2>
           <p>Przełącz układ dopiero wtedy, gdy karta ma dość miejsca. W tym projekcie wystarczy jeden breakpoint albo container query, jeśli ćwiczysz nowsze podejście.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson38-responsive-example">Kopiuj</button><code id="lesson38-responsive-example">@media (min-width: 42rem) {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson38-responsive-example">Kopiuj</button><code id="lesson38-responsive-example">@media (min-width: 42rem) {
   .profile-project-card {
     grid-template-columns: auto minmax(0, 1fr);
     align-items: start;
@@ -196,7 +196,7 @@
         <section id="stany-i-dostepnosc" class="lesson-section">
           <h2>Stany i dostępność</h2>
           <p>Karta profilu ma akcje, więc musi mieć czytelne stany interakcji. Fokus klawiatury nie może znikać, a przyciski powinny mieć wystarczająco duży obszar kliknięcia.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson38-states-example">Kopiuj</button><code id="lesson38-states-example">.profile-project-card__button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson38-states-example">Kopiuj</button><code id="lesson38-states-example">.profile-project-card__button {
   min-height: 2.75rem;
   transition: transform .18s ease, box-shadow .18s ease;
 }

@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -148,7 +148,7 @@
         <section id="struktura-html" class="lesson-section">
           <h2>Struktura HTML</h2>
           <p>Komponenty powinny mieć czytelną strukturę i semantykę. System klas nie zastępuje poprawnego HTML.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-html-example">Kopiuj</button><code id="lesson42-html-example">&lt;article class="ui-card ui-card--featured"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-html-example">Kopiuj</button><code id="lesson42-html-example">&lt;article class="ui-card ui-card--featured"&gt;
   &lt;p class="ui-card__meta"&gt;Moduł CSS&lt;/p&gt;
   &lt;h3&gt;Responsive Layout&lt;/h3&gt;
   &lt;p&gt;Ćwiczenia z Grid, Flexbox i breakpointów.&lt;/p&gt;
@@ -160,7 +160,7 @@
         <section id="tokeny" class="lesson-section">
           <h2>Tokeny systemu</h2>
           <p>Tokeny to kontrakt między komponentami. Jeśli każdy komponent używa tych samych ról, cały interfejs zachowuje spójność.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-tokens-example">Kopiuj</button><code id="lesson42-tokens-example">.ui-system {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-tokens-example">Kopiuj</button><code id="lesson42-tokens-example">.ui-system {
   --ui-bg: #f8fafc;
   --ui-surface: #ffffff;
   --ui-text: #0f172a;
@@ -178,7 +178,7 @@
         <section id="przyciski" class="lesson-section">
           <h2>Przyciski</h2>
           <p>Przycisk jest komponentem z największą liczbą stanów. Zacznij od bazy, potem dodaj warianty i stany.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-button-example">Kopiuj</button><code id="lesson42-button-example">.ui-button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-button-example">Kopiuj</button><code id="lesson42-button-example">.ui-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -198,7 +198,7 @@
         <section id="karty" class="lesson-section">
           <h2>Karty</h2>
           <p>Karta jest powierzchnią dla treści. System powinien określać jej padding, border, radius i rytm wewnętrzny.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-card-example">Kopiuj</button><code id="lesson42-card-example">.ui-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-card-example">Kopiuj</button><code id="lesson42-card-example">.ui-card {
   display: grid;
   gap: .75rem;
   padding: 1rem;
@@ -216,7 +216,7 @@
         <section id="alerty" class="lesson-section">
           <h2>Alerty</h2>
           <p>Alerty komunikują status. Nie opieraj ich wyłącznie na kolorze; dodaj tytuł, tekst i jasną rolę wizualną.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-alert-example">Kopiuj</button><code id="lesson42-alert-example">.ui-alert {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-alert-example">Kopiuj</button><code id="lesson42-alert-example">.ui-alert {
   padding: .85rem 1rem;
   border: 1px solid var(--ui-border);
   border-radius: var(--ui-radius);
@@ -233,7 +233,7 @@
         <section id="pola-formularza" class="lesson-section">
           <h2>Pola formularza</h2>
           <p>Pole formularza składa się z labelki, kontrolki, tekstu pomocniczego i opcjonalnego błędu. To naturalny kandydat na komponent.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-field-example">Kopiuj</button><code id="lesson42-field-example">.ui-field {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-field-example">Kopiuj</button><code id="lesson42-field-example">.ui-field {
   display: grid;
   gap: .4rem;
 }
@@ -250,7 +250,7 @@
         <section id="stany-i-warianty" class="lesson-section">
           <h2>Stany i warianty</h2>
           <p>Stany pokazują chwilowe zachowanie komponentu, a warianty opisują trwałą odmianę. Nie mieszaj tych dwóch pojęć.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-states-example">Kopiuj</button><code id="lesson42-states-example">.ui-button:hover {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-states-example">Kopiuj</button><code id="lesson42-states-example">.ui-button:hover {
   transform: translateY(-1px);
 }
 
@@ -269,7 +269,7 @@
         <section id="responsywnosc" class="lesson-section">
           <h2>Responsywność</h2>
           <p>System komponentów powinien działać w różnych kontenerach. Karta, alert i pole formularza nie mogą zakładać stałej szerokości strony.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson42-responsive-example">Kopiuj</button><code id="lesson42-responsive-example">.ui-system__grid {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson42-responsive-example">Kopiuj</button><code id="lesson42-responsive-example">.ui-system__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   gap: 1rem;

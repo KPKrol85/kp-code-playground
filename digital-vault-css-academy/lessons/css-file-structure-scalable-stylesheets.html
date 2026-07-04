@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="problem-jednego-pliku" class="lesson-section">
           <h2>Problem jednego pliku</h2>
           <p>Jeden plik może działać długo, ale bez sekcji i konwencji szybko zamienia się w historię przypadkowych dopisków. Najgroźniejsze są reguły, które wyglądają lokalnie, ale wpływają na cały projekt.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-single-file-example">Kopiuj</button><code id="lesson32-single-file-example">/* style.css */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson32-single-file-example">Kopiuj</button><code id="lesson32-single-file-example">/* style.css */
 .card h3 {
   margin-bottom: .5rem;
 }
@@ -138,7 +138,7 @@
         <section id="warstwy-i-foldery" class="lesson-section">
           <h2>Warstwy i foldery</h2>
           <p>Praktyczny podział powinien odpowiadać temu, jak działa CSS. Najpierw decyzje systemowe, potem reset i baza, później layouty, komponenty i utilities.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-folder-structure-example">Kopiuj</button><code id="lesson32-folder-structure-example">styles/
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson32-folder-structure-example">Kopiuj</button><code id="lesson32-folder-structure-example">styles/
   settings/
     tokens.css
   reset/
@@ -160,7 +160,7 @@
         <section id="kolejnosc-importow" class="lesson-section">
           <h2>Kolejność importów</h2>
           <p>Kolejność plików jest częścią architektury. Importy powinny odzwierciedlać warstwy i kolejność nadpisywania, a nie przypadkową kolejność powstawania plików.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-import-order-example">Kopiuj</button><code id="lesson32-import-order-example">@layer settings, reset, base, layout, components, utilities;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson32-import-order-example">Kopiuj</button><code id="lesson32-import-order-example">@layer settings, reset, base, layout, components, utilities;
 
 @import url("./settings/tokens.css") layer(settings);
 @import url("./reset/reset.css") layer(reset);
@@ -174,7 +174,7 @@
         <section id="granice-komponentow" class="lesson-section">
           <h2>Granice komponentów</h2>
           <p>Komponent powinien opisywać własną strukturę i warianty, ale nie powinien naprawiać layoutu strony. Layout decyduje, gdzie komponent stoi. Komponent decyduje, jak wygląda sam w sobie.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-component-boundary-example">Kopiuj</button><code id="lesson32-component-boundary-example">/* components/card.css */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson32-component-boundary-example">Kopiuj</button><code id="lesson32-component-boundary-example">/* components/card.css */
 .card {
   display: grid;
   gap: 1rem;
@@ -191,7 +191,7 @@
         <section id="utilities" class="lesson-section">
           <h2>Utilities</h2>
           <p>Utility to mała, przewidywalna klasa do konkretnego zadania. Może być bardzo przydatna, jeśli ma ograniczony zakres i jest w późniejszej warstwie niż komponenty.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-utilities-example">Kopiuj</button><code id="lesson32-utilities-example">@layer utilities {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson32-utilities-example">Kopiuj</button><code id="lesson32-utilities-example">@layer utilities {
   .u-stack-sm {
     display: grid;
     gap: .5rem;
@@ -207,7 +207,7 @@
         <section id="skalowanie" class="lesson-section">
           <h2>Skalowanie arkusza</h2>
           <p>Skalowanie CSS polega na kontrolowaniu kosztu kolejnej zmiany. Nowy komponent powinien wymagać dodania lokalnego pliku albo sekcji, a nie przeszukiwania całego arkusza i dopisywania wyjątków na końcu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson32-scalable-rules-example">Kopiuj</button><code id="lesson32-scalable-rules-example">/* Dobra zasada decyzyjna */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson32-scalable-rules-example">Kopiuj</button><code id="lesson32-scalable-rules-example">/* Dobra zasada decyzyjna */
 settings  -> tokeny i decyzje systemowe
 reset     -> wyrównanie startu przeglądarek
 base      -> domyślne elementy HTML

@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="color-scheme" class="lesson-section">
           <h2>color-scheme</h2>
           <p><code>color-scheme</code> informuje przeglądarkę, jakie tryby kolorów strona obsługuje. Dzięki temu elementy kontrolowane przez przeglądarkę, na przykład formularze, scrollbary i część natywnych kontrolek, mogą dopasować się do wybranego schematu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson37-color-scheme-example">Kopiuj</button><code id="lesson37-color-scheme-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson37-color-scheme-example">Kopiuj</button><code id="lesson37-color-scheme-example">:root {
   color-scheme: light dark;
 }
 
@@ -133,7 +133,7 @@
         <section id="prefers-color-scheme" class="lesson-section">
           <h2>prefers-color-scheme</h2>
           <p>Media feature <code>prefers-color-scheme</code> pozwala reagować na preferencję użytkownika ustawioną w systemie lub przeglądarce. To dobry punkt startowy dla automatycznego dark mode.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson37-prefers-example">Kopiuj</button><code id="lesson37-prefers-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson37-prefers-example">Kopiuj</button><code id="lesson37-prefers-example">:root {
   --color-bg: #f8fafc;
   --color-text: #0f172a;
 }
@@ -150,7 +150,7 @@
         <section id="tokeny-semantyczne" class="lesson-section">
           <h2>Tokeny semantyczne</h2>
           <p>Najważniejsza decyzja architektoniczna to oddzielenie tokenów bazowych od semantycznych. Komponent powinien używać tokenów mówiących o roli koloru, a nie o konkretnej wartości.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson37-semantic-tokens-example">Kopiuj</button><code id="lesson37-semantic-tokens-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson37-semantic-tokens-example">Kopiuj</button><code id="lesson37-semantic-tokens-example">:root {
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
   --color-text: #0f172a;
@@ -173,7 +173,7 @@
         <section id="reczne-przelaczanie" class="lesson-section">
           <h2>Ręczne przełączanie</h2>
           <p>Preferencja systemowa jest dobra jako domyślna, ale wielu użytkowników oczekuje ręcznego wyboru. Najprostszy model to atrybut <code>data-theme</code> na elemencie <code>html</code> albo <code>body</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson37-manual-theme-example">Kopiuj</button><code id="lesson37-manual-theme-example">&lt;html lang="pl" data-theme="dark"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson37-manual-theme-example">Kopiuj</button><code id="lesson37-manual-theme-example">&lt;html lang="pl" data-theme="dark"&gt;
 
 [data-theme="light"] {
   color-scheme: light;
@@ -188,7 +188,7 @@
         <section id="komponenty-i-lokalne-tokeny" class="lesson-section">
           <h2>Komponenty i lokalne tokeny</h2>
           <p>Komponent może mieć własne lokalne tokeny, które mapują globalny motyw na konkretną rolę komponentu. To szczególnie przydatne dla alertów, kart premium i stanów statusu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson37-component-tokens-example">Kopiuj</button><code id="lesson37-component-tokens-example">.callout {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson37-component-tokens-example">Kopiuj</button><code id="lesson37-component-tokens-example">.callout {
   --callout-bg: var(--color-surface);
   --callout-text: var(--color-text);
   --callout-border: var(--color-border);
@@ -203,7 +203,7 @@
         <section id="kontrast-i-dostepnosc" class="lesson-section">
           <h2>Kontrast i dostępność</h2>
           <p>Dark mode musi być czytelny. Zbyt jasny tekst na bardzo ciemnym tle może męczyć wzrok, a zbyt niskie kontrasty niszczą dostępność. Testuj tekst, linki, obramowania, fokus, disabled state i komunikaty błędów w obu motywach.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson37-contrast-example">Kopiuj</button><code id="lesson37-contrast-example">.button:focus-visible {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson37-contrast-example">Kopiuj</button><code id="lesson37-contrast-example">.button:focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }

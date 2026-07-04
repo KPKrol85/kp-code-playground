@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="custom-properties" class="lesson-section">
           <h2>Custom properties</h2>
           <p>Zmienne CSS definiuje się jako custom properties, czyli właściwości zaczynające się od dwóch myślników. Najczęściej zapisuje się je w <code>:root</code>, aby były dostępne globalnie.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson29-custom-properties-example">Kopiuj</button><code id="lesson29-custom-properties-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson29-custom-properties-example">Kopiuj</button><code id="lesson29-custom-properties-example">:root {
   --color-primary: #2563eb;
   --space-md: 1rem;
   --radius-md: .75rem;
@@ -137,7 +137,7 @@
         <section id="var-fallback" class="lesson-section">
           <h2>var() i fallback</h2>
           <p>Funkcja <code>var()</code> pobiera wartość zmiennej. Możesz dodać fallback, czyli wartość awaryjną, która zostanie użyta, gdy zmienna nie istnieje.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson29-var-fallback-example">Kopiuj</button><code id="lesson29-var-fallback-example">.alert {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson29-var-fallback-example">Kopiuj</button><code id="lesson29-var-fallback-example">.alert {
   color: var(--alert-text, #7f1d1d);
   background: var(--alert-bg, #fee2e2);
 }</code></pre>
@@ -147,7 +147,7 @@
         <section id="tokeny-bazowe" class="lesson-section">
           <h2>Tokeny bazowe</h2>
           <p>Token bazowy opisuje surową wartość skali: konkretny kolor, odstęp, promień albo cień. Jest blisko systemu wizualnego, ale nie zawsze mówi, gdzie powinien być użyty.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson29-base-tokens-example">Kopiuj</button><code id="lesson29-base-tokens-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson29-base-tokens-example">Kopiuj</button><code id="lesson29-base-tokens-example">:root {
   --blue-600: #2563eb;
   --green-600: #16a34a;
   --space-4: 1rem;
@@ -159,7 +159,7 @@
         <section id="tokeny-semantyczne" class="lesson-section">
           <h2>Tokeny semantyczne</h2>
           <p>Token semantyczny opisuje rolę wartości w interfejsie. Dzięki temu komponent nie musi wiedzieć, jaki dokładnie odcień reprezentuje akcję, sukces albo powierzchnię.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson29-semantic-tokens-example">Kopiuj</button><code id="lesson29-semantic-tokens-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson29-semantic-tokens-example">Kopiuj</button><code id="lesson29-semantic-tokens-example">:root {
   --color-action-bg: var(--blue-600);
   --color-success-bg: #dcfce7;
   --color-surface-default: #ffffff;
@@ -171,7 +171,7 @@
         <section id="skale" class="lesson-section">
           <h2>Skale odstępów i promieni</h2>
           <p>Design tokens najlepiej działają jako małe skale. Nie potrzebujesz dwudziestu prawie identycznych odstępów. Potrzebujesz kilku nazwanych wartości, które powtarzają się konsekwentnie.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson29-scale-tokens-example">Kopiuj</button><code id="lesson29-scale-tokens-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson29-scale-tokens-example">Kopiuj</button><code id="lesson29-scale-tokens-example">:root {
   --space-xs: .25rem;
   --space-sm: .5rem;
   --space-md: 1rem;
@@ -185,7 +185,7 @@
         <section id="lokalne-nadpisanie" class="lesson-section">
           <h2>Lokalne nadpisanie</h2>
           <p>Custom properties możesz nadpisać lokalnie w komponencie. To dobry wzorzec dla wariantów, bo komponent zachowuje tę samą strukturę, a zmienia tylko zestaw tokenów.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson29-local-override-example">Kopiuj</button><code id="lesson29-local-override-example">.status-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson29-local-override-example">Kopiuj</button><code id="lesson29-local-override-example">.status-card {
   --status-bg: #eff6ff;
   --status-border: #bfdbfe;
   background: var(--status-bg);

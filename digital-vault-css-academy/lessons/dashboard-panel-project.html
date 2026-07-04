@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -148,7 +148,7 @@
         <section id="struktura-html" class="lesson-section">
           <h2>Struktura HTML</h2>
           <p>Zacznij od sekcji z nagłówkiem i jasnymi blokami treści. Karty metryk dobrze opisuje <code>dl</code>, bo łączy nazwę metryki z wartością.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson40-html-example">Kopiuj</button><code id="lesson40-html-example">&lt;section class="dashboard-project" aria-labelledby="dashboard-title"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson40-html-example">Kopiuj</button><code id="lesson40-html-example">&lt;section class="dashboard-project" aria-labelledby="dashboard-title"&gt;
   &lt;header class="dashboard-project__header"&gt;
     &lt;div&gt;
       &lt;p class="dashboard-project__eyebrow"&gt;CSS Sprint Manager&lt;/p&gt;
@@ -170,7 +170,7 @@
         <section id="tokeny-i-baza" class="lesson-section">
           <h2>Tokeny i baza</h2>
           <p>Dashboard ma wiele powierzchni. Lokalne tokeny utrzymują spójne tła, obramowania, tekst, akcenty i fokus.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson40-tokens-example">Kopiuj</button><code id="lesson40-tokens-example">.dashboard-project {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson40-tokens-example">Kopiuj</button><code id="lesson40-tokens-example">.dashboard-project {
   --dashboard-bg: #f8fafc;
   --dashboard-panel: #ffffff;
   --dashboard-text: #0f172a;
@@ -188,7 +188,7 @@
         <section id="layout-mobile-first" class="lesson-section">
           <h2>Layout mobile-first</h2>
           <p>Na małym ekranie panel powinien być jedną kolumną. Nagłówek, metryki, panel główny, zadania i aktywności układają się w naturalnej kolejności.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson40-mobile-example">Kopiuj</button><code id="lesson40-mobile-example">.dashboard-project__grid {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson40-mobile-example">Kopiuj</button><code id="lesson40-mobile-example">.dashboard-project__grid {
   display: grid;
   gap: 1rem;
 }
@@ -204,7 +204,7 @@
         <section id="siatka-dashboardu" class="lesson-section">
           <h2>Siatka dashboardu</h2>
           <p>Na desktopie dashboard korzysta z CSS Grid. Najważniejszy panel może zajmować więcej miejsca, a boczny moduł może pełnić rolę listy zadań.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson40-grid-example">Kopiuj</button><code id="lesson40-grid-example">@media (min-width: 52rem) {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson40-grid-example">Kopiuj</button><code id="lesson40-grid-example">@media (min-width: 52rem) {
   .dashboard-project__grid {
     grid-template-columns: minmax(0, 1.4fr) minmax(16rem, .6fr);
     align-items: start;
@@ -220,7 +220,7 @@
         <section id="karty-metryk" class="lesson-section">
           <h2>Karty metryk</h2>
           <p>Karta metryki powinna być mała, ale precyzyjna: nazwa, wartość, kontekst i trend. Nie pakuj do niej całego raportu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson40-metric-example">Kopiuj</button><code id="lesson40-metric-example">.dashboard-project__metric {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson40-metric-example">Kopiuj</button><code id="lesson40-metric-example">.dashboard-project__metric {
   display: grid;
   gap: .35rem;
   padding: 1rem;
@@ -262,7 +262,7 @@
         <section id="stany-i-dostepnosc" class="lesson-section">
           <h2>Stany i dostępność</h2>
           <p>Dashboard jest narzędziem pracy, więc użytkownik musi widzieć, który filtr, link albo przycisk jest aktywny. Stany nie są dekoracją, tylko informacją.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson40-states-example">Kopiuj</button><code id="lesson40-states-example">.dashboard-project__button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson40-states-example">Kopiuj</button><code id="lesson40-states-example">.dashboard-project__button {
   min-height: 2.75rem;
   transition: background-color .18s ease, transform .18s ease;
 }

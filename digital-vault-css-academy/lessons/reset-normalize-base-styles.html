@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="reset-vs-normalize" class="lesson-section">
           <h2>Reset vs normalize</h2>
           <p>Reset agresywnie usuwa część domyślnych stylów przeglądarki. Normalize zachowuje przydatne domyślne zachowania, ale wyrównuje różnice między przeglądarkami. W nowoczesnych projektach często używa się małego, świadomego resetu zamiast ogromnego pliku.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-reset-normalize-example">Kopiuj</button><code id="lesson31-reset-normalize-example">@layer reset {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson31-reset-normalize-example">Kopiuj</button><code id="lesson31-reset-normalize-example">@layer reset {
   *,
   *::before,
   *::after {
@@ -141,7 +141,7 @@
         <section id="box-sizing" class="lesson-section">
           <h2>Box sizing</h2>
           <p>Domyślnie szerokość elementu dotyczy tylko contentu. Po dodaniu paddingu i borderu element może stać się większy niż oczekujesz. <code>border-box</code> sprawia, że padding i border mieszczą się w zadanej szerokości.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-box-sizing-example">Kopiuj</button><code id="lesson31-box-sizing-example">*,
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson31-box-sizing-example">Kopiuj</button><code id="lesson31-box-sizing-example">*,
 *::before,
 *::after {
   box-sizing: border-box;
@@ -152,7 +152,7 @@
         <section id="html-body" class="lesson-section">
           <h2>HTML i body</h2>
           <p><code>html</code> i <code>body</code> są podstawą całego dokumentu. W stylach bazowych zwykle ustawiasz wysokość, kolor tekstu, tło, font, wygładzanie tekstu i wysokość linii.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-html-body-example">Kopiuj</button><code id="lesson31-html-body-example">@layer base {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson31-html-body-example">Kopiuj</button><code id="lesson31-html-body-example">@layer base {
   html {
     min-height: 100%;
   }
@@ -173,7 +173,7 @@
         <section id="media" class="lesson-section">
           <h2>Media i obrazy</h2>
           <p>Obrazy, wideo, canvas i SVG łatwo powodują poziomy overflow, jeśli są większe niż kontener. Bazowa reguła <code>max-width: 100%</code> ogranicza ten problem już na starcie.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-media-example">Kopiuj</button><code id="lesson31-media-example">img,
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson31-media-example">Kopiuj</button><code id="lesson31-media-example">img,
 picture,
 video,
 canvas,
@@ -187,7 +187,7 @@ svg {
         <section id="typografia-linki" class="lesson-section">
           <h2>Typografia i linki</h2>
           <p>Style bazowe powinny chronić czytelność. Ustawienia takie jak <code>overflow-wrap</code>, dziedziczenie koloru linków albo widoczny fokus pomagają uniknąć problemów w komponentach.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-typography-links-example">Kopiuj</button><code id="lesson31-typography-links-example">h1,
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson31-typography-links-example">Kopiuj</button><code id="lesson31-typography-links-example">h1,
 h2,
 h3,
 p {
@@ -209,7 +209,7 @@ a {
         <section id="formularze" class="lesson-section">
           <h2>Formularze</h2>
           <p>Elementy formularzy mają wiele domyślnych stylów zależnych od przeglądarki i systemu. Bazowe reguły powinny wyrównać font, zachować dostępność i nie blokować późniejszego stylowania komponentów.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson31-forms-example">Kopiuj</button><code id="lesson31-forms-example">button,
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson31-forms-example">Kopiuj</button><code id="lesson31-forms-example">button,
 input,
 textarea,
 select {

@@ -1,45 +1,29 @@
 # improvements.md — KP_Code Digital Vault CSS Academy
 
-## Co zostało zaimplementowane
-- Utworzono nowy, samodzielny projekt `digital-vault-css-academy`.
-- Przygotowano nowoczesną stronę główną z sekcjami: hero, wartość platformy, ścieżka nauki, planowane moduły i CTA.
-- Zaimplementowano pełną stronę lekcji „Wprowadzenie do CSS” z:
-  - nawigacją lekcyjną (spis treści),
-  - logicznym podziałem na sekcje edukacyjne,
-  - blokami „Zapamiętaj” i „W praktyce”,
-  - przykładami kodu,
-  - mini zadaniem i podsumowaniem.
-- Dodano progresywne ulepszenia JS:
-  - mobilne menu,
-  - aktywny stan nawigacji,
-  - pasek postępu czytania lekcji,
-  - przycisk kopiowania kodu.
+## Aktualny status projektu
+- CSS Academy v1 ma kompletną roadmapę: 42 lekcje i 5 projektów końcowych.
+- Strona działa jako statyczny moduł edukacyjny bez zależności buildowych.
+- Główny etap rozwoju lekcji jest zamknięty; aktualny etap to polish produktu EDU: UI, nawigacja, responsywność, dostępność i przygotowanie pod przyszłe funkcje aplikacyjne.
 
-## Notatki o jakości technicznej
-- Struktura oparta o semantyczny HTML i jeden `<main>` na stronę.
-- Spójny system tokenów projektowych w `:root`.
-- Podejście mobile-first i responsywne siatki.
-- Klasy zorganizowane w stylu BEM-like.
-- Dostępność: skip link, czytelny kontrast, focus states, reduced motion.
-- Brak zależności zewnętrznych i brak narzędzi buildujących.
+## Przegląd wykonany po zamknięciu roadmapy
+- Sprawdzono strukturę projektu, dokumentację, stronę główną i komplet lekcji.
+- Potwierdzono 43 pliki HTML: `index.html` oraz 42 lekcje w katalogu `lessons/`.
+- Potwierdzono brak zerwanych lokalnych linków.
+- Potwierdzono podstawową strukturę dostępności: `lang="pl"`, tytuły stron, jeden `<main>`, skip link, nagłówki H1 i paski progresu w lekcjach.
+- Sprawdzono reprezentatywne widoki Playwrightem na desktopie i mobile.
 
-## Propozycje dalszego rozwoju platformy
-- Rozszerzenie o mapę postępów użytkownika (status lekcji, cele tygodniowe).
-- Dodanie sekcji „Ćwicz na żywo” z edytorem kodu po stronie klienta.
-- System odznak i kamieni milowych nauki.
-- Tryb notatek własnych pod każdą lekcją.
+## Poprawki wdrożone w etapie polishu
+- Odświeżono hero strony głównej, aby komunikowało pełny status programu: 42 lekcje, 5 projektów i ukończony program v1.
+- Zmieniono sekcję roadmapy na opis kompletnej ścieżki lekcji zamiast wczesnego podglądu.
+- Zaktualizowano sekcję przyszłych modułów na „Następny etap rozwoju platformy”.
+- Uporządkowano desktopową nawigację: długa lista lekcji działa teraz jako jednowierszowy, przewijalny pasek zamiast rozpychać header na wiele rzędów.
+- Ograniczono wysokość mobilnego menu i dodano przewijanie dla długiej listy linków.
+- Wzmocniono stabilność kart lekcji przez spójny układ treści i linków.
+- Dodano jawne `type="button"` do przycisków menu i kopiowania kodu w całym zestawie HTML.
 
-## Sugerowane kolejne lekcje
-1. Selektory CSS i specyficzność.
-2. Box model i spacing.
-3. Display, pozycjonowanie i flow dokumentu.
-4. Flexbox od podstaw.
-5. CSS Grid od podstaw.
-6. Responsywność i media queries.
-
-## Sugerowane przyszłe panele / moduły
-- Panel „Mój plan nauki”.
-- Panel „Historia przerobionych lekcji”.
-- Biblioteka snippetów i komponentów UI.
-- Moduł „Projekty praktyczne” z checklistami.
-- Panel mentorski / feedback (etap późniejszy).
+## Następne rekomendacje produktowe
+- Zaprojektować indeks lekcji podzielony na moduły, aby 42-elementowa roadmapa była łatwiejsza do skanowania.
+- Rozważyć uproszczenie globalnej nawigacji: Start, Roadmapa, Projekty, Ostatnia lekcja oraz osobny katalog lekcji.
+- Dopracować mobilny układ lekcji, szczególnie długie spisy treści w projektach końcowych.
+- Przygotować podstawę pod dashboard postępów użytkownika.
+- Rozważyć moduł ćwiczeń live oraz bibliotekę snippetów jako kolejny etap po polishu statycznej strony.

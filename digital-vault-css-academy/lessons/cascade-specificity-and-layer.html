@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="czym-jest-kaskada" class="lesson-section">
           <h2>Czym jest kaskada</h2>
           <p>Kaskada to zestaw zasad, które decydują, która deklaracja CSS zostanie zastosowana. Znaczenie mają między innymi: źródło stylu, warstwa, specyficzność selektora, kolejność w arkuszu oraz <code>!important</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-cascade-order-example">Kopiuj</button><code id="lesson30-cascade-order-example">.button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson30-cascade-order-example">Kopiuj</button><code id="lesson30-cascade-order-example">.button {
   background: #2563eb;
 }
 
@@ -133,7 +133,7 @@
         <section id="specyficznosc" class="lesson-section">
           <h2>Specyficzność</h2>
           <p>Specyficzność określa, jak mocny jest selektor. ID jest mocniejsze niż klasa, a klasa jest mocniejsza niż selektor elementu. Im bardziej rozbudowany selektor, tym trudniej go później nadpisać.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-specificity-example">Kopiuj</button><code id="lesson30-specificity-example">button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson30-specificity-example">Kopiuj</button><code id="lesson30-specificity-example">button {
   color: #475569;
 }
 
@@ -150,7 +150,7 @@
         <section id="kolejnosc-zrodla" class="lesson-section">
           <h2>Kolejność źródła</h2>
           <p>Kiedy specyficzność jest taka sama, wygrywa reguła późniejsza. To prosty mechanizm, ale w dużym projekcie łatwo go zepsuć przez przypadkowe importy albo chaotyczną kolejność plików.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-source-order-example">Kopiuj</button><code id="lesson30-source-order-example">/* components.css */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson30-source-order-example">Kopiuj</button><code id="lesson30-source-order-example">/* components.css */
 .alert {
   border-color: #bfdbfe;
 }
@@ -165,7 +165,7 @@
         <section id="important-inline" class="lesson-section">
           <h2>Important i inline</h2>
           <p><code>!important</code> zmienia normalną kolejność rozstrzygania deklaracji. Style inline są bardzo mocne i zwykle powinny być używane ostrożnie, szczególnie gdy później chcesz kontrolować wygląd z arkusza CSS.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-important-inline-example">Kopiuj</button><code id="lesson30-important-inline-example">.badge {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson30-important-inline-example">Kopiuj</button><code id="lesson30-important-inline-example">.badge {
   color: #2563eb !important;
 }
 
@@ -178,7 +178,7 @@
         <section id="podstawy-layer" class="lesson-section">
           <h2>Podstawy @layer</h2>
           <p><code>@layer</code> pozwala jawnie określić kolejność grup stylów. Dzięki temu reset, style bazowe, komponenty i utility mogą mieć przewidywalną hierarchię bez podbijania specyficzności.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-layer-basic-example">Kopiuj</button><code id="lesson30-layer-basic-example">@layer reset, base, components, utilities;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson30-layer-basic-example">Kopiuj</button><code id="lesson30-layer-basic-example">@layer reset, base, components, utilities;
 
 @layer components {
   .button {
@@ -191,7 +191,7 @@
         <section id="kolejnosc-layer" class="lesson-section">
           <h2>Kolejność warstw</h2>
           <p>Warstwy pomagają uniknąć selektorów typu <code>.page .section .card .button</code>. Utility może wygrać z komponentem, bo jest w późniejszej warstwie, nawet jeśli ma prostszy selektor.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson30-layer-order-example">Kopiuj</button><code id="lesson30-layer-order-example">@layer components {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson30-layer-order-example">Kopiuj</button><code id="lesson30-layer-order-example">@layer components {
   .button {
     background: #2563eb;
   }

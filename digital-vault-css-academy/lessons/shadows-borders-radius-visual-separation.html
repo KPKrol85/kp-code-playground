@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -131,7 +131,7 @@
         <section id="obramowania" class="lesson-section">
           <h2>Obramowania</h2>
           <p><code>border</code> jest najprostszym sposobem pokazania granicy komponentu. W nowoczesnym UI często wystarczy linia o grubości <code>1px</code> i kolor zbliżony do tła, zamiast mocnej czerni.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson23-border-example">Kopiuj</button><code id="lesson23-border-example">.panel {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson23-border-example">Kopiuj</button><code id="lesson23-border-example">.panel {
   border: 1px solid #dbe2f1;
   background: #ffffff;
 }
@@ -145,7 +145,7 @@
         <section id="zaokraglenia" class="lesson-section">
           <h2>Zaokrąglenia</h2>
           <p><code>border-radius</code> powinien wynikać ze skali projektu. Inny promień pasuje do małego inputa, inny do karty, a inny do pigułki statusu. Warto trzymać promienie jako powtarzalne tokeny.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson23-radius-example">Kopiuj</button><code id="lesson23-radius-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson23-radius-example">Kopiuj</button><code id="lesson23-radius-example">:root {
   --radius-sm: .5rem;
   --radius-md: .75rem;
   --radius-pill: 999px;
@@ -160,7 +160,7 @@
         <section id="cienie" class="lesson-section">
           <h2>Cienie</h2>
           <p><code>box-shadow</code> opisuje przesunięcie, rozmycie, rozlanie i kolor cienia. Najczęściej profesjonalny cień jest miękki, ma niską przezroczystość i nie konkuruje z treścią.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson23-shadow-example">Kopiuj</button><code id="lesson23-shadow-example">.surface-raised {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson23-shadow-example">Kopiuj</button><code id="lesson23-shadow-example">.surface-raised {
   box-shadow: 0 12px 28px rgba(15, 23, 42, .12);
 }
 
@@ -173,7 +173,7 @@
         <section id="hierarchia" class="lesson-section">
           <h2>Hierarchia i głębia</h2>
           <p>Cień powinien odpowiadać roli elementu. Karta w siatce może mieć delikatną ramkę bez cienia. Dropdown, popover albo modal może mieć większy cień, bo faktycznie znajduje się nad inną warstwą.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson23-separation-system-example">Kopiuj</button><code id="lesson23-separation-system-example">:root {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson23-separation-system-example">Kopiuj</button><code id="lesson23-separation-system-example">:root {
   --shadow-sm: 0 6px 16px rgba(15, 23, 42, .08);
   --shadow-md: 0 14px 32px rgba(15, 23, 42, .12);
   --shadow-lg: 0 24px 55px rgba(15, 23, 42, .2);

@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="czym-jest-transition" class="lesson-section">
           <h2>Czym jest transition</h2>
           <p><code>transition</code> mówi przeglądarce, że zmiana wartości CSS ma nastąpić płynnie w czasie. Najczęściej deklarujesz przejście na stanie bazowym elementu, a właściwość zmieniasz dopiero w stanie interakcji.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-transition-base-example">Kopiuj</button><code id="lesson25-transition-base-example">.button {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson25-transition-base-example">Kopiuj</button><code id="lesson25-transition-base-example">.button {
   background: #3b82f6;
   transition: background-color .18s ease;
 }
@@ -134,7 +134,7 @@
         <section id="transition-property" class="lesson-section">
           <h2>Transition property</h2>
           <p><code>transition-property</code> określa, które właściwości mają się zmieniać płynnie. W profesjonalnym kodzie zwykle lepiej wskazać konkretne właściwości niż używać <code>all</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-property-example">Kopiuj</button><code id="lesson25-property-example">.card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson25-property-example">Kopiuj</button><code id="lesson25-property-example">.card {
   transition-property: transform, box-shadow, border-color;
   transition-duration: .2s;
   transition-timing-function: ease;
@@ -145,7 +145,7 @@
         <section id="duration-delay-timing" class="lesson-section">
           <h2>Duration, delay i timing</h2>
           <p><code>transition-duration</code> określa czas trwania, <code>transition-delay</code> opóźnienie startu, a <code>transition-timing-function</code> charakter zmiany. Dla interfejsów najczęściej sprawdzają się krótkie czasy: od <code>120ms</code> do <code>250ms</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-timing-example">Kopiuj</button><code id="lesson25-timing-example">.menu-item {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson25-timing-example">Kopiuj</button><code id="lesson25-timing-example">.menu-item {
   transition-property: color, background-color;
   transition-duration: 180ms;
   transition-timing-function: ease-out;
@@ -157,7 +157,7 @@
         <section id="shorthand" class="lesson-section">
           <h2>Skrót transition</h2>
           <p>Skrót <code>transition</code> pozwala zapisać property, duration, timing i delay w jednej linii. Możesz też podać kilka przejść rozdzielonych przecinkami, gdy różne właściwości potrzebują innego czasu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-shorthand-example">Kopiuj</button><code id="lesson25-shorthand-example">.card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson25-shorthand-example">Kopiuj</button><code id="lesson25-shorthand-example">.card {
   transition:
     transform .18s ease,
     box-shadow .18s ease,
@@ -169,7 +169,7 @@
         <section id="stany-interakcji" class="lesson-section">
           <h2>Stany interakcji</h2>
           <p>Przejścia najlepiej wspierają istniejące stany. Najpierw zaprojektuj czytelny <code>:hover</code>, <code>:focus-visible</code> i <code>:active</code>, a dopiero potem dodaj płynność. Animacja nie może być jedynym sygnałem zmiany.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-states-example">Kopiuj</button><code id="lesson25-states-example">.link-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson25-states-example">Kopiuj</button><code id="lesson25-states-example">.link-card {
   transition: transform .18s ease, border-color .18s ease;
 }
 
@@ -184,7 +184,7 @@
         <section id="wydajnosc-i-dostepnosc" class="lesson-section">
           <h2>Wydajność i dostępność</h2>
           <p>Najbezpieczniejsze do animowania są zwykle <code>transform</code> i <code>opacity</code>. Ostrożnie podchodź do właściwości wpływających na layout, takich jak <code>width</code>, <code>height</code>, <code>top</code> czy <code>left</code>. Pamiętaj też o użytkownikach, którzy wolą ograniczony ruch.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson25-reduced-motion-example">Kopiuj</button><code id="lesson25-reduced-motion-example">@media (prefers-reduced-motion: reduce) {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson25-reduced-motion-example">Kopiuj</button><code id="lesson25-reduced-motion-example">@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {

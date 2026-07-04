@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="czym-jest-transform" class="lesson-section">
           <h2>Czym jest transform</h2>
           <p>Właściwość <code>transform</code> nakłada na element przekształcenie wizualne. Element nadal zajmuje swoje pierwotne miejsce w układzie, ale przeglądarka rysuje go inaczej: przesuniętego, powiększonego, obróconego albo połączonego z kilkoma efektami.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson24-transform-base-example">Kopiuj</button><code id="lesson24-transform-base-example">.card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson24-transform-base-example">Kopiuj</button><code id="lesson24-transform-base-example">.card {
   transform: translateY(-.25rem);
 }</code></pre>
           <p>Transformacja nie zastępuje Grid, Flexboxa ani pozycjonowania. Jeżeli chcesz zmienić prawdziwy układ strony, użyj narzędzi layoutu. Jeżeli chcesz tylko przesunąć narysowanie elementu, użyj <code>transform</code>.</p>
@@ -129,7 +129,7 @@
         <section id="translate" class="lesson-section">
           <h2>Translate</h2>
           <p><code>translate()</code> przesuwa element w osi X i Y. W praktyce często używa się skrótów <code>translateX()</code> i <code>translateY()</code>, na przykład do delikatnego podniesienia karty albo przesunięcia ikony.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson24-translate-example">Kopiuj</button><code id="lesson24-translate-example">.card--lifted {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson24-translate-example">Kopiuj</button><code id="lesson24-translate-example">.card--lifted {
   transform: translateY(-.35rem);
 }
 
@@ -142,7 +142,7 @@
         <section id="scale" class="lesson-section">
           <h2>Scale</h2>
           <p><code>scale()</code> zmienia rozmiar rysowania elementu. Warto używać go oszczędnie, szczególnie na elementach z tekstem, bo zbyt duża skala może rozmywać litery albo powodować nachodzenie na inne komponenty.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson24-scale-example">Kopiuj</button><code id="lesson24-scale-example">.button:active {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson24-scale-example">Kopiuj</button><code id="lesson24-scale-example">.button:active {
   transform: scale(.98);
 }
 
@@ -155,7 +155,7 @@
         <section id="rotate" class="lesson-section">
           <h2>Rotate</h2>
           <p><code>rotate()</code> obraca element wokół punktu transformacji. Kąty podajesz najczęściej w stopniach przez <code>deg</code>. Małe obroty dobrze sprawdzają się w ikonach i detalach, ale tekst obrócony pod dużym kątem szybko traci czytelność.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson24-rotate-example">Kopiuj</button><code id="lesson24-rotate-example">.chevron {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson24-rotate-example">Kopiuj</button><code id="lesson24-rotate-example">.chevron {
   transform: rotate(90deg);
 }
 
@@ -168,7 +168,7 @@
         <section id="transform-origin" class="lesson-section">
           <h2>Transform origin</h2>
           <p><code>transform-origin</code> określa punkt, względem którego wykonuje się transformacja. Domyślnie jest to środek elementu, ale możesz ustawić go na przykład na lewy górny róg albo środek dolnej krawędzi.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson24-origin-example">Kopiuj</button><code id="lesson24-origin-example">.menu-panel {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson24-origin-example">Kopiuj</button><code id="lesson24-origin-example">.menu-panel {
   transform-origin: top right;
   transform: scale(.96);
 }
@@ -183,7 +183,7 @@
         <section id="kolejnosc-funkcji" class="lesson-section">
           <h2>Kolejność funkcji</h2>
           <p>W jednej właściwości możesz połączyć kilka funkcji. Kolejność ma znaczenie, bo przeglądarka stosuje transformacje jako sekwencję operacji. <code>translate() rotate()</code> nie musi wyglądać tak samo jak <code>rotate() translate()</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson24-order-example">Kopiuj</button><code id="lesson24-order-example">.card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson24-order-example">Kopiuj</button><code id="lesson24-order-example">.card {
   transform: translateY(-.4rem) rotate(2deg) scale(1.02);
 }</code></pre>
           <p>Dla początkujących najbezpieczniejsza kolejność w komponentach UI to zwykle: małe przesunięcie, mały obrót, mała skala. Ważniejsze jest przewidywalne zachowanie niż efektowność.</p>

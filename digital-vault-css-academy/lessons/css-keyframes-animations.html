@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="czym-sa-keyframes" class="lesson-section">
           <h2>Czym są @keyframes</h2>
           <p><code>@keyframes</code> definiuje, jak wartości CSS zmieniają się w czasie. Możesz użyć prostych punktów <code>from</code> i <code>to</code> albo procentów, gdy animacja ma więcej etapów.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson26-keyframes-base-example">Kopiuj</button><code id="lesson26-keyframes-base-example">@keyframes fade-in {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson26-keyframes-base-example">Kopiuj</button><code id="lesson26-keyframes-base-example">@keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(.5rem);
@@ -137,7 +137,7 @@
         <section id="animation-name-duration" class="lesson-section">
           <h2>Name i duration</h2>
           <p><code>animation-name</code> wskazuje nazwę animacji, a <code>animation-duration</code> ustala czas trwania jednego przebiegu. Bez czasu trwania animacja domyślnie ma <code>0s</code>, więc użytkownik jej nie zobaczy.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson26-name-duration-example">Kopiuj</button><code id="lesson26-name-duration-example">.toast {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson26-name-duration-example">Kopiuj</button><code id="lesson26-name-duration-example">.toast {
   animation-name: fade-in;
   animation-duration: 240ms;
 }</code></pre>
@@ -147,7 +147,7 @@
         <section id="timing-delay" class="lesson-section">
           <h2>Timing i delay</h2>
           <p><code>animation-timing-function</code> określa rytm zmiany, a <code>animation-delay</code> opóźnia start. Tak jak w <code>transition</code>, krzywa ruchu wpływa na to, czy animacja wydaje się lekka, techniczna czy ospała.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson26-timing-delay-example">Kopiuj</button><code id="lesson26-timing-delay-example">.panel {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson26-timing-delay-example">Kopiuj</button><code id="lesson26-timing-delay-example">.panel {
   animation-name: fade-in;
   animation-duration: 260ms;
   animation-timing-function: ease-out;
@@ -159,7 +159,7 @@
         <section id="iteration-direction" class="lesson-section">
           <h2>Iteration i direction</h2>
           <p><code>animation-iteration-count</code> mówi, ile razy animacja ma się powtórzyć. <code>animation-direction</code> kontroluje kierunek przebiegu: normalny, odwrócony albo naprzemienny.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson26-iteration-direction-example">Kopiuj</button><code id="lesson26-iteration-direction-example">.status-dot {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson26-iteration-direction-example">Kopiuj</button><code id="lesson26-iteration-direction-example">.status-dot {
   animation-name: pulse;
   animation-duration: 1.2s;
   animation-iteration-count: infinite;
@@ -171,7 +171,7 @@
         <section id="fill-mode" class="lesson-section">
           <h2>Fill mode</h2>
           <p><code>animation-fill-mode</code> określa, czy element ma zachować style z początku albo końca animacji. Najczęściej spotkasz <code>forwards</code>, gdy po animacji element powinien zostać w stanie końcowym.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson26-fill-mode-example">Kopiuj</button><code id="lesson26-fill-mode-example">.success-message {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson26-fill-mode-example">Kopiuj</button><code id="lesson26-fill-mode-example">.success-message {
   animation-name: fade-in;
   animation-duration: 240ms;
   animation-fill-mode: both;
@@ -182,7 +182,7 @@
         <section id="shorthand" class="lesson-section">
           <h2>Skrót animation</h2>
           <p>Skrót <code>animation</code> pozwala zapisać nazwę, czas, timing, delay, liczbę powtórzeń, kierunek i fill-mode w jednej deklaracji. To wygodne, ale przy nauce warto rozumieć każdy składnik osobno.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson26-shorthand-example">Kopiuj</button><code id="lesson26-shorthand-example">.loader {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson26-shorthand-example">Kopiuj</button><code id="lesson26-shorthand-example">.loader {
   animation: pulse 1.2s ease-in-out 0s infinite alternate both;
 }</code></pre>
           <p>Jeżeli skrót robi się trudny do czytania, wróć do osobnych właściwości. Kod edukacyjny i produkcyjny powinien być łatwy do utrzymania.</p>

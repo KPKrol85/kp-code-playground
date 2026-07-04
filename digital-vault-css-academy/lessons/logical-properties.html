@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="osie-logiczne" class="lesson-section">
           <h2>Osie inline i block</h2>
           <p>Oś <code>inline</code> biegnie zgodnie z kierunkiem pisania tekstu w linii. Oś <code>block</code> biegnie w kierunku układania kolejnych bloków treści. W typowym polskim dokumencie inline to lewo-prawo, a block to góra-dół.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson35-axes-example">Kopiuj</button><code id="lesson35-axes-example">/* Zamiast myśleć: lewa i prawa strona */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson35-axes-example">Kopiuj</button><code id="lesson35-axes-example">/* Zamiast myśleć: lewa i prawa strona */
 .card {
   margin-inline: auto;
   padding-block: 1rem;
@@ -135,7 +135,7 @@
         <section id="physical-vs-logical" class="lesson-section">
           <h2>Physical vs logical</h2>
           <p>Physical properties odnoszą się do fizycznych stron: <code>margin-left</code>, <code>padding-top</code>, <code>border-right</code>. Logical properties odnoszą się do osi i kierunku pisania: <code>margin-inline-start</code>, <code>padding-block-start</code>, <code>border-inline-end</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson35-physical-logical-example">Kopiuj</button><code id="lesson35-physical-logical-example">/* Physical */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson35-physical-logical-example">Kopiuj</button><code id="lesson35-physical-logical-example">/* Physical */
 .alert {
   padding-top: 1rem;
   padding-right: 1.25rem;
@@ -156,7 +156,7 @@
         <section id="odstepy-logiczne" class="lesson-section">
           <h2>Margin i padding</h2>
           <p>Najłatwiej zacząć od odstępów. <code>margin-inline</code> obejmuje początek i koniec osi inline, a <code>padding-block</code> obejmuje początek i koniec osi block.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson35-spacing-example">Kopiuj</button><code id="lesson35-spacing-example">.section {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson35-spacing-example">Kopiuj</button><code id="lesson35-spacing-example">.section {
   padding-block: clamp(2rem, 6vw, 5rem);
   padding-inline: 1rem;
 }
@@ -175,7 +175,7 @@
         <section id="granice-i-rozmiary" class="lesson-section">
           <h2>Border i sizing</h2>
           <p>Logical properties obejmują także obramowania i rozmiary. <code>inline-size</code> odpowiada rozmiarowi w osi inline, a <code>block-size</code> w osi block. W wielu komponentach to czytelniejsze niż <code>width</code> i <code>height</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson35-border-sizing-example">Kopiuj</button><code id="lesson35-border-sizing-example">.timeline-item {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson35-border-sizing-example">Kopiuj</button><code id="lesson35-border-sizing-example">.timeline-item {
   max-inline-size: 42rem;
   min-block-size: 8rem;
   padding-block: 1rem;
@@ -188,7 +188,7 @@
         <section id="pozycjonowanie-logiczne" class="lesson-section">
           <h2>Pozycjonowanie</h2>
           <p>Logical properties mają też odpowiedniki dla pozycjonowania. Zamiast <code>top</code> i <code>left</code> możesz użyć <code>inset-block-start</code> i <code>inset-inline-start</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson35-position-example">Kopiuj</button><code id="lesson35-position-example">.card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson35-position-example">Kopiuj</button><code id="lesson35-position-example">.card {
   position: relative;
 }
 
@@ -203,7 +203,7 @@
         <section id="kierunki-tekstu" class="lesson-section">
           <h2>Kierunki tekstu</h2>
           <p>Nie każdy projekt od razu obsługuje wiele języków, ale dobre komponenty nie powinny niepotrzebnie blokować takiej możliwości. Właściwość <code>dir</code> w HTML może zmienić kierunek tekstu, a logical properties dopasują spacing i akcenty bez osobnych wyjątków.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson35-dir-example">Kopiuj</button><code id="lesson35-dir-example">&lt;article class="notice" dir="rtl"&gt;
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson35-dir-example">Kopiuj</button><code id="lesson35-dir-example">&lt;article class="notice" dir="rtl"&gt;
   &lt;h3&gt;Komunikat&lt;/h3&gt;
   &lt;p&gt;Ten komponent używa border-inline-start.&lt;/p&gt;
 &lt;/article&gt;</code></pre>

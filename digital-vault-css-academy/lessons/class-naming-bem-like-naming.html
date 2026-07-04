@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="problem-nazw" class="lesson-section">
           <h2>Problem nazw ogólnych</h2>
           <p>Nazwy typu <code>.box</code>, <code>.title</code>, <code>.green</code> albo <code>.left</code> nie mówią, do czego należą. Im większy projekt, tym większa szansa, że taka klasa zostanie użyta w kilku miejscach i zacznie wymuszać nadpisywanie stylów.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson28-bad-names-example">Kopiuj</button><code id="lesson28-bad-names-example">.box {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson28-bad-names-example">Kopiuj</button><code id="lesson28-bad-names-example">.box {
   padding: 1rem;
 }
 
@@ -137,7 +137,7 @@
         <section id="model-bem" class="lesson-section">
           <h2>Model BEM-like</h2>
           <p>BEM dzieli nazwę klasy na trzy pojęcia: blok, element i modyfikator. W praktyce frontendowej często używa się wersji BEM-like, czyli tej samej logiki bez nadmiernego formalizmu.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson28-bem-structure-example">Kopiuj</button><code id="lesson28-bem-structure-example">.course-card {}
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson28-bem-structure-example">Kopiuj</button><code id="lesson28-bem-structure-example">.course-card {}
 .course-card__title {}
 .course-card__meta {}
 .course-card--featured {}</code></pre>
@@ -147,7 +147,7 @@
         <section id="blok" class="lesson-section">
           <h2>Blok</h2>
           <p>Blok to samodzielny komponent, który można przenieść w inne miejsce strony bez zmiany jego sensu. Dobry blok ma nazwę rzeczownika albo krótkiego wyrażenia opisującego rolę.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson28-block-example">Kopiuj</button><code id="lesson28-block-example">.pricing-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson28-block-example">Kopiuj</button><code id="lesson28-block-example">.pricing-card {
   display: grid;
   gap: .75rem;
   padding: 1rem;
@@ -159,7 +159,7 @@
         <section id="element" class="lesson-section">
           <h2>Element</h2>
           <p>Element to część bloku, która nie ma sensu jako samodzielny komponent. Zapisujemy go po podwójnym podkreśleniu: <code>block__element</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson28-element-example">Kopiuj</button><code id="lesson28-element-example">.pricing-card__title {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson28-element-example">Kopiuj</button><code id="lesson28-element-example">.pricing-card__title {
   margin: 0;
   font-size: 1.25rem;
 }
@@ -174,7 +174,7 @@
         <section id="modyfikator" class="lesson-section">
           <h2>Modyfikator</h2>
           <p>Modyfikator opisuje wariant bloku albo elementu. Zapisujemy go po podwójnym myślniku: <code>block--modifier</code> albo <code>block__element--modifier</code>.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson28-modifier-example">Kopiuj</button><code id="lesson28-modifier-example">.pricing-card--featured {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson28-modifier-example">Kopiuj</button><code id="lesson28-modifier-example">.pricing-card--featured {
   border-color: #60a5fa;
   background: #eff6ff;
 }
@@ -189,7 +189,7 @@
         <section id="stan-i-utility" class="lesson-section">
           <h2>Stan i utility</h2>
           <p>Stan opisuje aktualną sytuację komponentu, na przykład aktywny, otwarty albo ładowany. Utility to mała klasa pomocnicza, która robi jedną rzecz. Nie mieszaj ich z nazwami komponentów bez potrzeby.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson28-state-utility-example">Kopiuj</button><code id="lesson28-state-utility-example">.accordion {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson28-state-utility-example">Kopiuj</button><code id="lesson28-state-utility-example">.accordion {
   border: 1px solid var(--color-border);
 }
 

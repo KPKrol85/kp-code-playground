@@ -17,7 +17,7 @@
         <span class="brand__mark">DV</span>
         <span class="brand__text">KP_Code CSS Academy</span>
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="nav-toggle__label">Menu</span>
       </button>
       <nav id="primary-nav" class="site-nav" aria-label="Nawigacja główna">
@@ -120,7 +120,7 @@
         <section id="media-vs-container" class="lesson-section">
           <h2>Media vs container</h2>
           <p><code>@media</code> nadal jest potrzebne do decyzji na poziomie całej strony: głównej siatki, globalnej nawigacji czy dużych zmian layoutu. <code>@container</code> lepiej pasuje do komponentów wielokrotnego użycia.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson34-media-vs-container-example">Kopiuj</button><code id="lesson34-media-vs-container-example">/* Decyzja strony */
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson34-media-vs-container-example">Kopiuj</button><code id="lesson34-media-vs-container-example">/* Decyzja strony */
 @media (min-width: 64rem) {
   .page-layout {
     grid-template-columns: 18rem 1fr;
@@ -139,7 +139,7 @@
         <section id="container-type" class="lesson-section">
           <h2>container-type</h2>
           <p>Element musi zostać oznaczony jako kontener, zanim jego dzieci będą mogły reagować przez <code>@container</code>. Najczęściej użyjesz <code>inline-size</code>, czyli obserwacji szerokości w osi inline.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson34-container-type-example">Kopiuj</button><code id="lesson34-container-type-example">.card-shell {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson34-container-type-example">Kopiuj</button><code id="lesson34-container-type-example">.card-shell {
   container-type: inline-size;
 }
 
@@ -153,7 +153,7 @@
         <section id="container-name" class="lesson-section">
           <h2>container-name</h2>
           <p>Gdy w komponencie lub stronie masz kilka kontenerów, możesz nadać im nazwy. Dzięki temu zapytanie odnosi się do konkretnego kontekstu, a nie do najbliższego kontenera.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson34-container-name-example">Kopiuj</button><code id="lesson34-container-name-example">.dashboard-panel {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson34-container-name-example">Kopiuj</button><code id="lesson34-container-name-example">.dashboard-panel {
   container-type: inline-size;
   container-name: dashboard-panel;
 }
@@ -169,7 +169,7 @@
         <section id="container-rule" class="lesson-section">
           <h2>@container</h2>
           <p>Reguła <code>@container</code> działa podobnie do <code>@media</code>, ale warunek dotyczy kontenera. Najczęstszy wzorzec to komponent, który domyślnie jest pionowy, a po przekroczeniu szerokości kontenera przechodzi w układ poziomy.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson34-container-rule-example">Kopiuj</button><code id="lesson34-container-rule-example">.profile-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson34-container-rule-example">Kopiuj</button><code id="lesson34-container-rule-example">.profile-card {
   display: grid;
   gap: 1rem;
 }
@@ -186,7 +186,7 @@
         <section id="jednostki-container" class="lesson-section">
           <h2>Jednostki container query</h2>
           <p>Container queries mają własne jednostki. <code>cqi</code> oznacza 1% rozmiaru kontenera w osi inline, <code>cqb</code> w osi block, a <code>cqmin</code> i <code>cqmax</code> biorą mniejszy albo większy wymiar kontenera.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson34-container-units-example">Kopiuj</button><code id="lesson34-container-units-example">.card-title {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson34-container-units-example">Kopiuj</button><code id="lesson34-container-units-example">.card-title {
   font-size: clamp(1rem, 6cqi, 1.6rem);
 }
 
@@ -199,7 +199,7 @@
         <section id="fallback" class="lesson-section">
           <h2>Fallback i wsparcie</h2>
           <p>Projektuj komponent tak, aby domyślny styl był poprawny bez zapytania kontenerowego. Potem użyj <code>@container</code> jako progresywnego ulepszenia. Dzięki temu komponent nie rozpada się, jeśli zapytanie nie zadziała.</p>
-          <pre class="code-block"><button class="copy-btn" data-copy-target="lesson34-fallback-example">Kopiuj</button><code id="lesson34-fallback-example">.media-card {
+          <pre class="code-block"><button type="button" class="copy-btn" data-copy-target="lesson34-fallback-example">Kopiuj</button><code id="lesson34-fallback-example">.media-card {
   display: grid;
   gap: 1rem;
 }
