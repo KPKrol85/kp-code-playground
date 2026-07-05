@@ -212,6 +212,8 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Definition of Done:** Nowy developer potrafi uruchomić projekt, zrozumieć architekturę i bezpiecznie dowieźć zmianę bez rozmowy z autorem projektu.
 
+**Status:** Ukończono finalny etap dokumentacji i utrzymania projektu. README pełni teraz rolę głównego wejścia developerskiego i linkuje mapę dokumentów. Dodano `docs/architecture.md`, komplet ADR-ów w `docs/adr/`, `CHANGELOG.md`, `docs/versioning.md`, `docs/definition-of-done.md`, `docs/release-checklist.md` oraz `docs/observability.md`. Projekt ma lekki moduł `js/core/observability.js` z lokalnym buforem, sanitizacją kontekstu i handlerami `window.error` oraz `unhandledrejection`, bez zewnętrznych providerów, tokenów i requestów sieciowych. Dodano testy jednostkowe observability, a app-shell manifest jest aktualizowany przez istniejący proces PWA.
+
 ## Rekomendowana kolejność prac
 
 1. Toolchain jakości, lockfile i CI.

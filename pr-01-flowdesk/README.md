@@ -19,6 +19,7 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - Warstwa repozytoriów dla klientów, zleceń i wydarzeń z aktywnym adapterem `localStorage`.
 - Demo context użytkownika, organizacji, członkostwa, roli i uprawnień jako przygotowanie pod multi-user.
 - PWA: manifest, generowany app-shell cache, widok offline i kontrolowany update prompt.
+- Observability readiness: lokalne przechwytywanie błędów i kontrakt pod przyszły monitoring.
 - Podstawy dostępności: skip link, focus-visible, modal z `aria-modal`, obsługa ESC, preferencja reduced motion.
 
 ## Stack technologiczny
@@ -30,6 +31,7 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - `localStorage` jako aktywny adapter repozytoriów dla danych demo.
 - Service Worker i Web App Manifest dla trybu PWA.
 - Generowany manifest assetów service workera i statyczny performance budget.
+- Lekki moduł observability bez zewnętrznego providera.
 - PostCSS + cssnano do budowy CSS.
 - Terser do minifikacji JS.
 - `serve` do lokalnego uruchamiania projektu.
@@ -52,10 +54,16 @@ flowdesk/
     views.css              # style widoków biznesowych
   docs/
     api-contracts.md       # projekt przyszłych kontraktów API
+    architecture.md        # architektura aplikacji i przepływ danych
+    adr/                   # Architecture Decision Records
     backend-readiness.md   # backend, RBAC, multi-user i strategia offline
+    definition-of-done.md  # kryteria gotowości zmian
     design-system.md       # dokumentacja komponentów i tokenów UI
+    observability.md       # kontrakt monitoringu frontendowego
     performance-budget.md  # budżety JS/CSS/app-shell i progi Lighthouse
     pwa-strategy.md        # cache strategies, offline i update lifecycle
+    release-checklist.md   # release, deployment i rollback
+    versioning.md          # konwencja wersjonowania
   js/
     components/            # sidebar, topbar, modal, drawer, table, toast, form controls
     core/                  # auth, router, store, helpery DOM
@@ -75,6 +83,7 @@ flowdesk/
     generate-service-worker-manifest.js  # generator service-worker-assets.js
   404.html
   _redirects               # konfiguracja redirectów pod hosting statyczny, np. Netlify
+  CHANGELOG.md
   index.html
   manifest.webmanifest
   offline.html
@@ -244,6 +253,23 @@ Projekt należy uruchamiać przez lokalny serwer HTTP. Otwieranie `index.html` b
 | `npm run check` | Uruchamia pełny lokalny zestaw jakości: PWA check, lint, testy, e2e, a11y, build i performance budget. |
 | `npm run images` | Kompresuje obrazy z `assets/images/*` do WebP, jeśli taki katalog istnieje. |
 
+## Mapa dokumentacji
+
+| Dokument | Zakres |
+| --- | --- |
+| `docs/architecture.md` | moduły, routing, store, repozytoria, PWA, observability i granice deploymentu |
+| `docs/adr/` | decyzje architektoniczne i ich konsekwencje |
+| `docs/design-system.md` | komponenty UI, tokeny i konwencje interfejsu |
+| `docs/backend-readiness.md` | przyszły backend, RBAC, multi-user i offline sync |
+| `docs/api-contracts.md` | projekt przyszłych endpointów i mapowanie błędów API |
+| `docs/pwa-strategy.md` | service worker, app-shell cache, offline i update lifecycle |
+| `docs/performance-budget.md` | budżety rozmiaru, Lighthouse i startup responsiveness |
+| `docs/observability.md` | lokalny kontrakt monitoringu i zasady danych |
+| `docs/definition-of-done.md` | kryteria gotowości zmiany |
+| `docs/release-checklist.md` | release, deployment, post-release validation i rollback |
+| `docs/versioning.md` | konwencja wersjonowania demo milestone |
+| `CHANGELOG.md` | historia zmian i milestone |
+
 ## Backend readiness i multi-user
 
 FlowDesk ma teraz przygotowaną granicę migracji pod backend:
@@ -293,6 +319,12 @@ Jeżeli `localStorage` jest niedostępny, aplikacja nie crashuje i pokazuje komu
 
 Szczegóły strategii są w `docs/pwa-strategy.md`, a budżety w `docs/performance-budget.md`.
 
+## Observability readiness
+
+`js/core/observability.js` inicjalizuje lokalny kontrakt pod przyszły monitoring błędów. Obecnie przechwytuje `window.error` i `window.unhandledrejection`, sanitizuje kontekst, przechowuje krótki bufor w pamięci i nie wysyła żadnych requestów sieciowych.
+
+Moduł nie zbiera danych osobowych i nie zastępuje produkcyjnego monitoringu backendu. Szczegóły są w `docs/observability.md`.
+
 ## Dostępność
 
 Projekt ma dobre podstawy dostępności, ale wymaga pełnego audytu przed uznaniem go za gotowy produkt. Obecnie istnieją:
@@ -318,7 +350,7 @@ Do dopracowania pozostają m.in. pełny focus management po złożonych przepły
 - RBAC jest obecnie testowanym kontraktem frontendowym i nie zastępuje backendowej autoryzacji.
 - Sync metadata jest hookiem gotowościowym; aplikacja nie ma jeszcze realnej kolejki offline ani rozwiązywania konfliktów.
 - Pełny Lighthouse CI jest skonfigurowany w `lighthouserc.cjs`, ale nie jest dodany jako stała zależność npm.
-- Brak observability, monitoringu błędów i release processu.
+- Observability jest lokalnym kontraktem readiness; nie ma jeszcze produkcyjnego providera monitoringu.
 - Część logiki formularzy i renderowania powtarza się w widokach.
 
 ## Kierunek rozwoju
@@ -329,7 +361,7 @@ Najważniejsze pierwsze kroki:
 
 1. Utrzymać istniejące quality gates: lint, format, unit, integration, e2e, a11y i build.
 2. Utrzymać PWA manifest, update flow, offline smoke tests i performance budgets przy każdej zmianie runtime.
-3. Dodać dokumentację architektury, ADR-y, changelog, release checklistę i observability.
+3. Utrzymywać dokumentację architektury, ADR-y, changelog, release checklistę i observability przy zmianach.
 4. Dopiero po stabilizacji procesów zdecydować o bundlerze, TypeScript albo frameworku.
 5. Przy przyszłym backendzie zaimplementować prawdziwe auth, serwerowy RBAC, walidację, storage, audyt i sync API zgodnie z `docs/api-contracts.md`.
 
@@ -338,6 +370,8 @@ Najważniejsze pierwsze kroki:
 Projekt jest przygotowany jako statyczna aplikacja, więc może być hostowany np. na Netlify, Cloudflare Pages, GitHub Pages lub dowolnym serwerze statycznym. Plik `_redirects` sugeruje kompatybilność z Netlify.
 
 Przed publikacją trzeba zmienić wartości produkcyjne w `index.html`, `sitemap.xml`, `robots.txt` i metadanych Open Graph, szczególnie `canonical`, `og:url` oraz `og:image`.
+
+Release i rollback należy prowadzić według `docs/release-checklist.md`. Przy nazwanych milestone trzeba zaktualizować `CHANGELOG.md` i wersję zgodnie z `docs/versioning.md`.
 
 ## Status projektu
 

@@ -8,12 +8,15 @@ import { store } from './core/store.js';
 import { button } from './components/button.js';
 import { openModal } from './components/modal.js';
 import { qs } from './core/dom.js';
+import { initObservability } from './core/observability.js';
 import { registerServiceWorker } from './core/serviceWorkerRegistration.js';
 import { showToast } from './components/toast.js';
 import { escapeAttribute, escapeHTML } from './utils/sanitize.js';
 import { storage } from './utils/storage.js';
 
 const app = document.getElementById('app');
+
+initObservability();
 
 const applyTheme = () => {
   const ui = selectUiPreferences(store.getState());
