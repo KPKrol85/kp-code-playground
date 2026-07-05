@@ -16,6 +16,8 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - Globalne wyszukiwanie w topbarze po klientach, zleceniach i wydarzeniach.
 - Widok kalendarza z wydarzeniami powiązanymi z klientami i zleceniami.
 - Ustawienia użytkownika: motyw jasny/ciemny, ograniczenie animacji, eksport JSON, walidowany import JSON i reset danych demo.
+- Warstwa repozytoriów dla klientów, zleceń i wydarzeń z aktywnym adapterem `localStorage`.
+- Demo context użytkownika, organizacji, członkostwa, roli i uprawnień jako przygotowanie pod multi-user.
 - PWA: manifest, service worker, cache app-shell i widok offline.
 - Podstawy dostępności: skip link, focus-visible, modal z `aria-modal`, obsługa ESC, preferencja reduced motion.
 
@@ -25,11 +27,12 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - CSS z podziałem na tokeny, bazę, layout, komponenty i widoki.
 - JavaScript ES Modules bez frameworka frontendowego.
 - Hash routing oparty o `window.location.hash`.
-- `localStorage` jako lokalna warstwa persystencji danych demo.
+- `localStorage` jako aktywny adapter repozytoriów dla danych demo.
 - Service Worker i Web App Manifest dla trybu PWA.
 - PostCSS + cssnano do budowy CSS.
 - Terser do minifikacji JS.
 - `serve` do lokalnego uruchamiania projektu.
+- Vitest i Playwright dla testów jednostkowych, integracyjnych, e2e i dostępności.
 
 ## Struktura projektu
 
@@ -46,13 +49,24 @@ flowdesk/
     style.min.css          # zbudowany/minifikowany CSS
     tokens.css             # design tokens, kolory, spacing, font sizes, z-index
     views.css              # style widoków biznesowych
+  docs/
+    api-contracts.md       # projekt przyszłych kontraktów API
+    backend-readiness.md   # backend, RBAC, multi-user i strategia offline
+    design-system.md       # dokumentacja komponentów i tokenów UI
   js/
     components/            # sidebar, topbar, modal, drawer, table, toast, form controls
     core/                  # auth, router, store, helpery DOM
     data/                  # dane startowe demo
+    domain/                # modele, słowniki, walidacja, migracje, identity, RBAC, sync metadata
+    repositories/          # repozytoria i aktywny adapter localStorage
     utils/                 # formatowanie, storage, walidatory
     views/                 # widoki aplikacji
     main.js                # bootstrap aplikacji, shell, rejestracja service workera
+  tests/
+    a11y/                  # Playwright + axe checks
+    e2e/                   # krytyczne ścieżki użytkownika
+    integration/           # testy DOM i przepływów modułowych
+    unit/                  # testy domeny, store'a, akcji, repozytoriów i komponentów
   404.html
   _redirects               # konfiguracja redirectów pod hosting statyczny, np. Netlify
   index.html
@@ -71,7 +85,11 @@ Aplikacja jest zorganizowana jako statyczna SPA z modułami ES. `index.html` ła
 
 Routing znajduje się w `js/core/router.js`. Aktualna ścieżka jest odczytywana z hash fragmentu URL, np. `#/dashboard`. Router sprawdza sesję demo z `js/core/auth.js`; jeśli użytkownik nie jest zalogowany, przekierowuje na `#/login`.
 
-Stan aplikacji znajduje się w `js/core/store.js`. Store przechowuje kolekcje `clients`, `projects`, `events` oraz `ui`, a następnie zapisuje je w `localStorage` pod kluczem `flowdesk_state_v1`. Sesja demo jest zapisywana oddzielnie pod kluczem `flowdesk_session_v1`.
+Stan aplikacji znajduje się w `js/core/store.js`. Store przechowuje kolekcje `clients`, `projects`, `events` oraz `ui`, uruchamia jawne akcje domenowe i zapisuje wynik przez `js/core/persistence.js`. Persistence korzysta z aktywnego adaptera `localStorage` z `js/repositories/localStorageRepositoryAdapter.js`, dlatego obecny zapis nadal trafia pod klucz `flowdesk_state_v1`, ale szczegóły storage są zamknięte za granicą repozytoriów.
+
+Repozytoria w `js/repositories/` udostępniają operacje kolekcji dla klientów, zleceń i wydarzeń. To jest granica migracji pod przyszłe API: widoki nie powinny znać szczegółów `localStorage`, a przyszły adapter backendowy powinien zachować ten sam kształt wyników operacji.
+
+Sesja demo jest zapisywana oddzielnie pod kluczem `flowdesk_session_v1`. `js/domain/identity.js` definiuje frontendowe modele `User`, `Organization` i `Membership`, a `js/domain/rbac.js` definiuje role `Owner`, `Manager`, `Member`, `Viewer` oraz helpery uprawnień. To przygotowanie pod multi-user, nie realny mechanizm bezpieczeństwa.
 
 Widoki w `js/views/` renderują HTML bezpośrednio do kontenera i samodzielnie podpinają event listenery. Ten model jest wystarczający dla obecnego rozmiaru projektu, ale przy rozbudowie warto wydzielić wspólne komponenty formularzy, bezpieczne renderowanie danych użytkownika, selektory store'a oraz warstwę domenową.
 
@@ -138,7 +156,8 @@ Widoki w `js/views/` renderują HTML bezpośrednio do kontenera i samodzielnie p
   title: 'Weekly status call',
   date: 'ISO date',
   clientId: 'c1',
-  projectId: 'p1'
+  projectId: 'p1',
+  type: 'Meeting'
 }
 ```
 
@@ -150,6 +169,31 @@ Widoki w `js/views/` renderują HTML bezpośrednio do kontenera i samodzielnie p
   reducedMotion: false
 }
 ```
+
+### User, Organization, Membership
+
+```js
+{
+  user: { id: 'u-demo-owner', name: 'Alicja Maj', email: 'alicja@flowdesk.pl', status: 'active' },
+  organization: { id: 'org-flowdesk-demo', name: 'FlowDesk Demo Workspace', plan: 'demo' },
+  membership: { id: 'mem-demo-owner', userId: 'u-demo-owner', organizationId: 'org-flowdesk-demo', role: 'Owner' }
+}
+```
+
+### Sync metadata hook
+
+```js
+{
+  sync: {
+    createdAt: 'ISO date',
+    updatedAt: 'ISO date',
+    revision: 1,
+    syncStatus: 'pending'
+  }
+}
+```
+
+Metadane synchronizacji są obecnie lekkim hookiem dla przyszłych adapterów API. Nie zostały globalnie dodane do wszystkich rekordów demo.
 
 ## Uruchomienie lokalne
 
@@ -177,17 +221,42 @@ Projekt należy uruchamiać przez lokalny serwer HTTP. Otwieranie `index.html` b
 | Komenda | Opis |
 | --- | --- |
 | `npm run dev` | Uruchamia statyczny serwer przez `serve`. |
+| `npm run lint` | Uruchamia ESLint, Stylelint i Prettier check. |
+| `npm run format` | Formatuje pliki przez Prettier. |
+| `npm run test:unit` | Uruchamia testy jednostkowe Vitest. |
+| `npm run test:integration` | Uruchamia testy integracyjne Vitest. |
+| `npm run test:e2e` | Uruchamia testy end-to-end Playwright. |
+| `npm run test:a11y` | Uruchamia testy dostępności Playwright + axe. |
 | `npm run build:css` | Buduje `css/style.min.css` przez PostCSS i cssnano. |
 | `npm run build:js` | Minifikuje `js/main.js` przez Terser. Obecnie nie bundluje całego drzewa modułów. |
+| `npm run build` | Buduje CSS i entrypoint JS. |
+| `npm run check` | Uruchamia pełny lokalny zestaw jakości: lint, testy, e2e, a11y i build. |
 | `npm run images` | Kompresuje obrazy z `assets/images/*` do WebP, jeśli taki katalog istnieje. |
+
+## Backend readiness i multi-user
+
+FlowDesk ma teraz przygotowaną granicę migracji pod backend:
+
+- `localStorage` jest aktywnym adapterem demo, ale nie stałym fundamentem domeny,
+- `clientsRepository`, `projectsRepository` i `eventsRepository` zamykają operacje kolekcji za spójnym kontraktem,
+- `createFlowDeskRepositories` pozwala w przyszłości podmienić adapter lokalny na adapter API,
+- store nadal pozostaje kompatybilną fasadą dla widoków i zapisuje dane przez persistence,
+- identity context zawiera demo użytkownika, organizację, membership i rolę,
+- RBAC definiuje role `Owner`, `Manager`, `Member`, `Viewer` oraz stabilne nazwy uprawnień,
+- `syncMetadata` definiuje statusy `synced`, `pending`, `conflict`, rewizję i znaczniki czasu dla przyszłej synchronizacji.
+
+Szczegóły:
+
+- `docs/backend-readiness.md` - architektura repozytoriów, RBAC, ograniczenia bezpieczeństwa i strategia offline,
+- `docs/api-contracts.md` - projekt przyszłych endpointów, payloadów, błędów i mapowania na repozytoria.
 
 ## Uwierzytelnianie demo
 
 Logowanie jest jawnie demonstracyjne i znajduje się w `js/core/auth.demo.js`. Plik `js/core/auth.js` jest tylko kompatybilną fasadą dla obecnego importu `auth`.
 
-Aplikacja nie sprawdza użytkownika po stronie serwera. Wymaga jedynie poprawnego formatu emaila i hasła o długości minimum 6 znaków. Po zalogowaniu zapisuje przykładową sesję w `localStorage`.
+Aplikacja nie sprawdza użytkownika po stronie serwera. Wymaga jedynie poprawnego formatu emaila i hasła o długości minimum 6 znaków. Po zalogowaniu zapisuje przykładową sesję w `localStorage`, rozszerzoną o demo `user`, `organization`, `membership` i `role`.
 
-To rozwiązanie nadaje się wyłącznie do prototypu. W wersji produkcyjnej konieczne będą prawdziwa autoryzacja, sesje lub tokeny, kontrola ról, ochrona danych oraz backend.
+To rozwiązanie nadaje się wyłącznie do prototypu. W wersji produkcyjnej konieczne będą prawdziwe uwierzytelnianie, sesje lub tokeny, autoryzacja RBAC po stronie backendu, ochrona danych oraz trwała baza danych.
 
 ## Bezpieczeństwo i granice demo
 
@@ -205,7 +274,7 @@ Wersja produkcyjna wymaga backendowego uwierzytelniania, autoryzacji, bezpieczne
 
 `service-worker.js` cache'uje app-shell, pliki CSS, JS, fonty, ikony i `offline.html`. Dla żądań nawigacyjnych próbuje pobrać stronę z sieci, a przy braku połączenia zwraca fallback offline. Dla pozostałych requestów używa strategii cache-first.
 
-Przy dalszym rozwoju trzeba pamiętać o aktualizacji listy `APP_SHELL` po dodaniu nowych plików. Docelowo warto rozważyć generowanie manifestu cache automatycznie w buildzie.
+Lista `APP_SHELL` obejmuje moduły runtime, w tym domenę identity/RBAC i repozytoria potrzebne do działania aplikacji offline. Przy dalszym rozwoju trzeba pamiętać o aktualizacji listy po dodaniu nowych plików runtime. Docelowo warto rozważyć generowanie manifestu cache automatycznie w buildzie.
 
 ## Dostępność
 
@@ -219,17 +288,17 @@ Projekt ma dobre podstawy dostępności, ale wymaga pełnego audytu przed uznani
 - etykiety pól formularzy,
 - podstawowe komunikaty błędów walidacji.
 
-Do dopracowania pozostają m.in. focus management po zamykaniu modali, aria-live dla toastów, spójna semantyka tabel/akcji, obsługa klawiatury w menu użytkownika i testy automatyczne dostępności.
+Do dopracowania pozostają m.in. pełny focus management po złożonych przepływach modal/drawer, szersza obsługa klawiatury w menu użytkownika i cykliczny audyt manualny na realnych urządzeniach.
 
 ## Obecne ograniczenia
 
-- Brak testów jednostkowych, integracyjnych i e2e.
-- Brak lintingu, formatowania, kontroli typów i CI.
-- Brak lockfile, więc instalacje zależności mogą nie być w pełni powtarzalne.
+- Brak statycznego typowania, więc kontrakty domenowe są utrzymywane przez modele, walidatory, JSDoc i testy.
 - Brak bundlera; `build:js` minifikuje tylko entrypoint i nie buduje kompletnej paczki aplikacji.
 - Dane użytkownika są escapowane po stronie frontendu, ale przed produkcją nadal potrzebna jest walidacja serwerowa i hosting-level security headers.
 - Auth jest tylko demonstracyjny i nie stanowi mechanizmu bezpieczeństwa.
-- `localStorage` ma walidację i migracje, ale nie jest bezpieczną persystencją dla danych produkcyjnych.
+- `localStorage` działa przez adapter repozytoriów, ale nie jest bezpieczną persystencją dla danych produkcyjnych.
+- RBAC jest obecnie testowanym kontraktem frontendowym i nie zastępuje backendowej autoryzacji.
+- Sync metadata jest hookiem gotowościowym; aplikacja nie ma jeszcze realnej kolejki offline ani rozwiązywania konfliktów.
 - Lista plików service workera jest utrzymywana ręcznie.
 - Brak observability, monitoringu błędów i release processu.
 - Część logiki formularzy i renderowania powtarza się w widokach.
@@ -240,11 +309,11 @@ Rekomendowany kierunek to najpierw ustabilizować fundamenty jakości i architek
 
 Najważniejsze pierwsze kroki:
 
-1. Dodać powtarzalny toolchain: lockfile, lint, format, testy i CI.
-2. Zabezpieczyć renderowanie danych i oddzielić logikę domenową od widoków.
-3. Uporządkować store, modele danych, walidację i migracje `localStorage`.
-4. Zbudować podstawowy system komponentów UI.
-5. Przygotować aplikację pod backend, prawdziwe auth i deployment.
+1. Utrzymać istniejące quality gates: lint, format, unit, integration, e2e, a11y i build.
+2. Rozbudować PWA/performance: automatyzacja app-shell, strategia aktualizacji service workera, Lighthouse i budżety.
+3. Dodać dokumentację architektury, ADR-y, changelog, release checklistę i observability.
+4. Dopiero po stabilizacji procesów zdecydować o bundlerze, TypeScript albo frameworku.
+5. Przy przyszłym backendzie zaimplementować prawdziwe auth, serwerowy RBAC, walidację, storage, audyt i sync API zgodnie z `docs/api-contracts.md`.
 
 ## Deployment
 

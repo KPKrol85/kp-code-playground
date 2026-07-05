@@ -1,34 +1,28 @@
 import { seedData } from '../data/seed.js';
-import { migrateState } from '../domain/migrations.js';
 import { storage } from '../utils/storage.js';
+import { createLocalStorageRepositoryAdapter, STATE_STORAGE_KEY } from '../repositories/localStorageRepositoryAdapter.js';
 
-export const STATE_STORAGE_KEY = 'flowdesk_state_v1';
+export { STATE_STORAGE_KEY };
 
-export const createStatePersistence = ({ key = STATE_STORAGE_KEY, seedState = seedData, storageAdapter = storage } = {}) => {
-  const normalize = (rawState) => migrateState(rawState, seedState);
-
+export const createStatePersistence = ({ key = STATE_STORAGE_KEY, seedState = seedData, storageAdapter = storage, repositoryAdapter = null } = {}) => {
+  const adapter = repositoryAdapter || createLocalStorageRepositoryAdapter({ key, seedState, storageAdapter });
   return {
     load() {
-      return normalize(storageAdapter.get(key));
+      return adapter.loadState();
     },
     save(nextState) {
-      const normalizedState = normalize(nextState);
-      storageAdapter.set(key, normalizedState);
-      return normalizedState;
+      return adapter.saveState(nextState);
     },
     restore(rawState) {
-      const normalizedState = normalize(rawState);
-      storageAdapter.set(key, normalizedState);
-      return normalizedState;
+      return adapter.restoreState(rawState);
     },
     reset() {
-      const normalizedState = normalize(seedState);
-      storageAdapter.set(key, normalizedState);
-      return normalizedState;
+      return adapter.resetState();
     },
     remove() {
-      storageAdapter.remove(key);
-    }
+      adapter.removeState();
+    },
+    repositoryAdapter: adapter
   };
 };
 

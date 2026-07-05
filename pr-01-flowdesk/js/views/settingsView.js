@@ -1,5 +1,6 @@
 import { qs } from '../core/dom.js';
 import { getActionFieldError } from '../core/actions.js';
+import { auth } from '../core/auth.js';
 import { selectUiPreferences } from '../core/selectors.js';
 import { store } from '../core/store.js';
 import { button } from '../components/button.js';
@@ -7,9 +8,11 @@ import { setFieldError, textareaField } from '../components/formControls.js';
 import { openConfirmDialog } from '../components/confirmDialog.js';
 import { pageHeader } from '../components/pageHeader.js';
 import { showToast } from '../components/toast.js';
+import { escapeHTML } from '../utils/sanitize.js';
 
 export const renderSettingsView = (container) => {
   const ui = selectUiPreferences(store.getState());
+  const session = auth.getSession();
 
   container.innerHTML = `
     <main id="main" class="container">
@@ -19,9 +22,10 @@ export const renderSettingsView = (container) => {
         <div class="card">
           <h2 class="card__title">Profil</h2>
           <div class="list">
-            <div><strong>Imię i nazwisko:</strong> Alicja Maj</div>
-            <div><strong>Rola:</strong> Owner</div>
-            <div><strong>Email:</strong> alicja@flowdesk.pl</div>
+            <div><strong>Imię i nazwisko:</strong> ${escapeHTML(session?.user?.name || 'Alicja Maj')}</div>
+            <div><strong>Organizacja:</strong> ${escapeHTML(session?.organization?.name || 'FlowDesk Demo Workspace')}</div>
+            <div><strong>Rola:</strong> ${escapeHTML(session?.membership?.role || session?.role || 'Owner')}</div>
+            <div><strong>Email:</strong> ${escapeHTML(session?.user?.email || session?.email || 'alicja@flowdesk.pl')}</div>
           </div>
           <p class="input__helper">To jest mock danych profilu (bez backendu).</p>
         </div>

@@ -16,6 +16,8 @@ import {
   UI_THEMES
 } from './constants.js';
 import { createClientModel, createEventModel, createProjectModel, createUiPreferencesModel, createUserSessionModel } from './models.js';
+import { createDemoUserContext, normalizeMembership, normalizeOrganization, normalizeUser } from './identity.js';
+import { normalizeRole } from './rbac.js';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -277,11 +279,25 @@ export const validateUiPreferences = (input) => createValidationResult(normalize
 
 export const normalizeUserSession = (input = {}) => {
   const source = isPlainObject(input) ? input : {};
+  const email = normalizeString(source.email) || normalizeString(source.user?.email);
+  const name = normalizeString(source.name) || normalizeString(source.user?.name);
+  const role = normalizeRole(normalizeString(source.role || source.membership?.role) || 'Owner');
+  const context = createDemoUserContext({
+    email: email || undefined,
+    name: name || undefined,
+    role
+  });
+  const sourceUser = isPlainObject(source.user) ? source.user : {};
+  const sourceOrganization = isPlainObject(source.organization) ? source.organization : {};
+  const sourceMembership = isPlainObject(source.membership) ? source.membership : {};
 
   return createUserSessionModel({
-    email: normalizeString(source.email).toLowerCase(),
-    name: normalizeString(source.name) || 'Alicja Maj',
-    role: normalizeString(source.role) || 'Owner',
+    email: email.toLowerCase(),
+    name: name || context.user.name,
+    role,
+    user: normalizeUser({ ...context.user, ...sourceUser, email: sourceUser.email || context.user.email, name: sourceUser.name || context.user.name }),
+    organization: normalizeOrganization({ ...context.organization, ...sourceOrganization }),
+    membership: normalizeMembership({ ...context.membership, ...sourceMembership, role: sourceMembership.role || role }),
     lastLogin: normalizeDateValue(source.lastLogin) || new Date().toISOString()
   });
 };

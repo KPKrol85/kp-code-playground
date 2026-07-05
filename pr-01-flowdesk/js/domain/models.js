@@ -8,6 +8,7 @@ import {
   DEFAULT_PROJECT_STATUS,
   DEFAULT_UI_THEME
 } from './constants.js';
+import { createDemoUserContext } from './identity.js';
 
 /**
  * @typedef {Object} Client
@@ -122,6 +123,7 @@ export const createUserSessionModel = (overrides = {}) => ({
   email: '',
   name: 'Alicja Maj',
   role: 'Owner',
+  ...createDemoUserContext(),
   lastLogin: new Date().toISOString(),
   ...overrides
 });

@@ -177,6 +177,8 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Definition of Done:** Przejście z `localStorage` na API nie wymaga przepisywania widoków, tylko podmiany adapterów i rozszerzenia auth.
 
+**Status:** Ukończono etap backend readiness. Projekt ma teraz warstwę repozytoriów `clientsRepository`, `projectsRepository` i `eventsRepository`, aktywny adapter `localStorage` zamknięty za granicą repozytoriów, spójne wyniki operacji repozytoriów, fabrykę `createFlowDeskRepositories` oraz store oparty o repozytoryjny adapter persistence. Dodano frontendowe modele `User`, `Organization` i `Membership`, role `Owner`, `Manager`, `Member`, `Viewer`, macierz uprawnień RBAC, helpery `can` i `hasPermission`, demo user context w sesji oraz lekkie hooki `syncMetadata` dla przyszłej synchronizacji. Dokumenty `docs/backend-readiness.md` i `docs/api-contracts.md` opisują docelowe kontrakty API, strategię RBAC, ograniczenia demo oraz model offline sync i konfliktów. README i service worker zostały zaktualizowane, a testy pokrywają repozytoria, adapter `localStorage`, kształty wyników, identity, RBAC, sync metadata i pracę store'a przez granicę repozytoriów.
+
 ### 9. PWA, performance i strategia cache
 
 **Cel:** Aplikacja ma być szybka, przewidywalna offline i łatwa do aktualizacji po deployu.
@@ -217,8 +219,8 @@ Obecny zakres funkcjonalny obejmuje:
 5. Refactor store'a na akcje, selektory i adapter persystencji.
 6. System komponentów UI.
 7. Rozszerzenie domeny: szczegóły klientów, szczegóły zleceń, zadania, global search.
-8. PWA/performance i automatyzacja service workera.
-9. Backend readiness, auth i RBAC.
+8. Backend readiness, auth i RBAC.
+9. PWA/performance i automatyzacja service workera.
 10. Release process, observability i dokumentacja architektury.
 
 ## Senior-level rekomendacja
