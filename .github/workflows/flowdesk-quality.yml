@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: PWA manifest check
+        run: npm run pwa:check
+
       - name: Lint
         run: npm run lint
 
@@ -52,3 +55,6 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Performance budget
+        run: npm run perf:budget

@@ -194,6 +194,8 @@ Obecny zakres funkcjonalny obejmuje:
 
 **Definition of Done:** Po deployu użytkownik dostaje aktualną wersję aplikacji bez ręcznego czyszczenia cache, a podstawowe metryki Lighthouse są monitorowane.
 
+**Status:** Ukończono etap PWA, performance i strategii cache. Projekt ma teraz generowany manifest app-shell `service-worker-assets.js` tworzony przez `scripts/generate-service-worker-manifest.js`, skrypty `pwa:manifest` i `pwa:check`, service worker z rozdzielonymi strategiami navigation network-first, app-shell/static cache-first oraz guarded `/api/*` network-only fallback. Dodano kontrolowany update flow z toastem „Nowa wersja FlowDesk jest dostępna” i ręcznym `SKIP_WAITING`, odporność na niedostępny `localStorage`, szybki performance budget w `scripts/check-performance-budget.js`, konfigurację `lighthouserc.cjs`, dokumenty `docs/pwa-strategy.md` i `docs/performance-budget.md`, kroki CI dla PWA manifestu i budżetu oraz testy Playwright dla update promptu, mobile viewport, wolnych assetów, braku `localStorage` i offline cached app-shell.
+
 ### 10. Dokumentacja, ADR-y, release process i observability
 
 **Cel:** Projekt ma być łatwy do przejęcia, rozwijania i utrzymania przez kolejne osoby.

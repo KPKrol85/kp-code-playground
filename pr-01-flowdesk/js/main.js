@@ -8,8 +8,10 @@ import { store } from './core/store.js';
 import { button } from './components/button.js';
 import { openModal } from './components/modal.js';
 import { qs } from './core/dom.js';
+import { registerServiceWorker } from './core/serviceWorkerRegistration.js';
 import { showToast } from './components/toast.js';
 import { escapeAttribute, escapeHTML } from './utils/sanitize.js';
+import { storage } from './utils/storage.js';
 
 const app = document.getElementById('app');
 
@@ -184,8 +186,8 @@ router.init({
   }
 });
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js');
-  });
+registerServiceWorker();
+
+if (!storage.isAvailable()) {
+  showToast('Tryb bez trwałego zapisu. Dane demo mogą zniknąć po odświeżeniu.');
 }

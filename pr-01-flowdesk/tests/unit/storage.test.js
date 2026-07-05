@@ -11,11 +11,12 @@ describe('storage helper', () => {
   });
 
   it('stores, reads, and removes JSON values', () => {
-    storage.set('flowdesk:test', { name: 'Nova Studio' });
+    expect(storage.isAvailable()).toBe(true);
+    expect(storage.set('flowdesk:test', { name: 'Nova Studio' })).toBe(true);
 
     expect(storage.get('flowdesk:test')).toEqual({ name: 'Nova Studio' });
 
-    storage.remove('flowdesk:test');
+    expect(storage.remove('flowdesk:test')).toBe(true);
     expect(storage.get('flowdesk:test')).toBeNull();
   });
 
@@ -25,5 +26,35 @@ describe('storage helper', () => {
 
     expect(storage.get('broken', 'fallback')).toBe('fallback');
     expect(warn).toHaveBeenCalledWith('Storage read failed', expect.any(SyntaxError));
+  });
+
+  it('returns safe fallbacks when localStorage is unavailable', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const originalDescriptor = Object.getOwnPropertyDescriptor(window, 'localStorage');
+    const storageError = new Error('storage blocked');
+
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      value: {
+        getItem: vi.fn(() => {
+          throw storageError;
+        }),
+        setItem: vi.fn(() => {
+          throw storageError;
+        }),
+        removeItem: vi.fn(() => {
+          throw storageError;
+        }),
+        clear: vi.fn()
+      }
+    });
+
+    expect(storage.isAvailable()).toBe(false);
+    expect(storage.get('flowdesk:test', 'fallback')).toBe('fallback');
+    expect(storage.set('flowdesk:test', { ok: true })).toBe(false);
+    expect(storage.remove('flowdesk:test')).toBe(false);
+
+    Object.defineProperty(window, 'localStorage', originalDescriptor);
+    warn.mockRestore();
   });
 });

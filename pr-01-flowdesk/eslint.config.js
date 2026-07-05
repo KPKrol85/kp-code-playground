@@ -3,7 +3,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['node_modules/**', 'css/style.min.css', 'js/main.min.js']
+    ignores: ['node_modules/**', 'css/style.min.css', 'js/main.min.js', '.lighthouseci/**', 'test-results/**']
   },
   js.configs.recommended,
   {
@@ -20,7 +20,7 @@ export default [
     }
   },
   {
-    files: ['service-worker.js'],
+    files: ['service-worker.js', 'service-worker-assets.js'],
     languageOptions: {
       globals: {
         ...globals.serviceworker
@@ -28,8 +28,17 @@ export default [
     }
   },
   {
-    files: ['eslint.config.js', 'playwright.config.js', 'postcss.config.js', 'vitest.config.js'],
+    files: ['eslint.config.js', 'playwright.config.js', 'postcss.config.js', 'vitest.config.js', 'scripts/**/*.js'],
     languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    }
+  },
+  {
+    files: ['*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
       globals: {
         ...globals.node
       }

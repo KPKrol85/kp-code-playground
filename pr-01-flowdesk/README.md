@@ -18,7 +18,7 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - Ustawienia użytkownika: motyw jasny/ciemny, ograniczenie animacji, eksport JSON, walidowany import JSON i reset danych demo.
 - Warstwa repozytoriów dla klientów, zleceń i wydarzeń z aktywnym adapterem `localStorage`.
 - Demo context użytkownika, organizacji, członkostwa, roli i uprawnień jako przygotowanie pod multi-user.
-- PWA: manifest, service worker, cache app-shell i widok offline.
+- PWA: manifest, generowany app-shell cache, widok offline i kontrolowany update prompt.
 - Podstawy dostępności: skip link, focus-visible, modal z `aria-modal`, obsługa ESC, preferencja reduced motion.
 
 ## Stack technologiczny
@@ -29,6 +29,7 @@ Aktualna wersja działa w całości po stronie przeglądarki. Nie ma backendu, p
 - Hash routing oparty o `window.location.hash`.
 - `localStorage` jako aktywny adapter repozytoriów dla danych demo.
 - Service Worker i Web App Manifest dla trybu PWA.
+- Generowany manifest assetów service workera i statyczny performance budget.
 - PostCSS + cssnano do budowy CSS.
 - Terser do minifikacji JS.
 - `serve` do lokalnego uruchamiania projektu.
@@ -53,6 +54,8 @@ flowdesk/
     api-contracts.md       # projekt przyszłych kontraktów API
     backend-readiness.md   # backend, RBAC, multi-user i strategia offline
     design-system.md       # dokumentacja komponentów i tokenów UI
+    performance-budget.md  # budżety JS/CSS/app-shell i progi Lighthouse
+    pwa-strategy.md        # cache strategies, offline i update lifecycle
   js/
     components/            # sidebar, topbar, modal, drawer, table, toast, form controls
     core/                  # auth, router, store, helpery DOM
@@ -67,6 +70,9 @@ flowdesk/
     e2e/                   # krytyczne ścieżki użytkownika
     integration/           # testy DOM i przepływów modułowych
     unit/                  # testy domeny, store'a, akcji, repozytoriów i komponentów
+  scripts/
+    check-performance-budget.js          # szybki lokalny gate rozmiarów app-shell
+    generate-service-worker-manifest.js  # generator service-worker-assets.js
   404.html
   _redirects               # konfiguracja redirectów pod hosting statyczny, np. Netlify
   index.html
@@ -75,6 +81,7 @@ flowdesk/
   package.json
   postcss.config.js
   robots.txt
+  service-worker-assets.js # wygenerowany manifest app-shell dla service workera
   service-worker.js
   sitemap.xml
 ```
@@ -221,6 +228,10 @@ Projekt należy uruchamiać przez lokalny serwer HTTP. Otwieranie `index.html` b
 | Komenda | Opis |
 | --- | --- |
 | `npm run dev` | Uruchamia statyczny serwer przez `serve`. |
+| `npm run pwa:manifest` | Generuje `service-worker-assets.js` na podstawie runtime app-shell. |
+| `npm run pwa:check` | Sprawdza, czy wygenerowany manifest service workera jest aktualny. |
+| `npm run perf:budget` | Sprawdza gzipowane budżety JS, CSS, app-shell i pojedynczych assetów. |
+| `npm run lighthouse` | Uruchamia lokalny szybki gate budżetu wydajności; pełna konfiguracja Lighthouse CI jest w `lighthouserc.cjs`. |
 | `npm run lint` | Uruchamia ESLint, Stylelint i Prettier check. |
 | `npm run format` | Formatuje pliki przez Prettier. |
 | `npm run test:unit` | Uruchamia testy jednostkowe Vitest. |
@@ -229,8 +240,8 @@ Projekt należy uruchamiać przez lokalny serwer HTTP. Otwieranie `index.html` b
 | `npm run test:a11y` | Uruchamia testy dostępności Playwright + axe. |
 | `npm run build:css` | Buduje `css/style.min.css` przez PostCSS i cssnano. |
 | `npm run build:js` | Minifikuje `js/main.js` przez Terser. Obecnie nie bundluje całego drzewa modułów. |
-| `npm run build` | Buduje CSS i entrypoint JS. |
-| `npm run check` | Uruchamia pełny lokalny zestaw jakości: lint, testy, e2e, a11y i build. |
+| `npm run build` | Generuje manifest PWA, buduje CSS i entrypoint JS. |
+| `npm run check` | Uruchamia pełny lokalny zestaw jakości: PWA check, lint, testy, e2e, a11y, build i performance budget. |
 | `npm run images` | Kompresuje obrazy z `assets/images/*` do WebP, jeśli taki katalog istnieje. |
 
 ## Backend readiness i multi-user
@@ -272,9 +283,15 @@ Wersja produkcyjna wymaga backendowego uwierzytelniania, autoryzacji, bezpieczne
 
 ## PWA i offline
 
-`service-worker.js` cache'uje app-shell, pliki CSS, JS, fonty, ikony i `offline.html`. Dla żądań nawigacyjnych próbuje pobrać stronę z sieci, a przy braku połączenia zwraca fallback offline. Dla pozostałych requestów używa strategii cache-first.
+`service-worker.js` korzysta z wygenerowanego `service-worker-assets.js`, który zawiera runtime app-shell: HTML, manifest, źródłowe CSS, moduły JS, fonty i ikony PWA. Lista jest generowana przez `npm run pwa:manifest` i sprawdzana przez `npm run pwa:check`.
 
-Lista `APP_SHELL` obejmuje moduły runtime, w tym domenę identity/RBAC i repozytoria potrzebne do działania aplikacji offline. Przy dalszym rozwoju trzeba pamiętać o aktualizacji listy po dodaniu nowych plików runtime. Docelowo warto rozważyć generowanie manifestu cache automatycznie w buildzie.
+Dla żądań nawigacyjnych service worker używa strategii network-first z fallbackiem do cached `index.html`, a potem `offline.html`. App-shell, moduły JS, CSS, fonty i ikony używają cache-first. Przyszłe requesty `/api/*` mają guarded network-only fallback `503`, żeby nie cache'ować danych biznesowych przypadkowo.
+
+Aktualizacja service workera jest kontrolowana przez użytkownika. Nowy worker czeka w stanie waiting, aplikacja pokazuje toast „Nowa wersja FlowDesk jest dostępna”, a dopiero kliknięcie „Odśwież” wysyła `SKIP_WAITING` i przeładowuje aplikację po `controllerchange`.
+
+Jeżeli `localStorage` jest niedostępny, aplikacja nie crashuje i pokazuje komunikat, że dane demo nie będą trwale zapisane. To nie jest produkcyjny fallback persystencji.
+
+Szczegóły strategii są w `docs/pwa-strategy.md`, a budżety w `docs/performance-budget.md`.
 
 ## Dostępność
 
@@ -297,9 +314,10 @@ Do dopracowania pozostają m.in. pełny focus management po złożonych przepły
 - Dane użytkownika są escapowane po stronie frontendu, ale przed produkcją nadal potrzebna jest walidacja serwerowa i hosting-level security headers.
 - Auth jest tylko demonstracyjny i nie stanowi mechanizmu bezpieczeństwa.
 - `localStorage` działa przez adapter repozytoriów, ale nie jest bezpieczną persystencją dla danych produkcyjnych.
+- Przy niedostępnym `localStorage` aplikacja startuje, ale dane demo nie są trwale zapisywane.
 - RBAC jest obecnie testowanym kontraktem frontendowym i nie zastępuje backendowej autoryzacji.
 - Sync metadata jest hookiem gotowościowym; aplikacja nie ma jeszcze realnej kolejki offline ani rozwiązywania konfliktów.
-- Lista plików service workera jest utrzymywana ręcznie.
+- Pełny Lighthouse CI jest skonfigurowany w `lighthouserc.cjs`, ale nie jest dodany jako stała zależność npm.
 - Brak observability, monitoringu błędów i release processu.
 - Część logiki formularzy i renderowania powtarza się w widokach.
 
@@ -310,7 +328,7 @@ Rekomendowany kierunek to najpierw ustabilizować fundamenty jakości i architek
 Najważniejsze pierwsze kroki:
 
 1. Utrzymać istniejące quality gates: lint, format, unit, integration, e2e, a11y i build.
-2. Rozbudować PWA/performance: automatyzacja app-shell, strategia aktualizacji service workera, Lighthouse i budżety.
+2. Utrzymać PWA manifest, update flow, offline smoke tests i performance budgets przy każdej zmianie runtime.
 3. Dodać dokumentację architektury, ADR-y, changelog, release checklistę i observability.
 4. Dopiero po stabilizacji procesów zdecydować o bundlerze, TypeScript albo frameworku.
 5. Przy przyszłym backendzie zaimplementować prawdziwe auth, serwerowy RBAC, walidację, storage, audyt i sync API zgodnie z `docs/api-contracts.md`.
