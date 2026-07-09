@@ -1,8 +1,9 @@
 import { auditCategories, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
+import { SCORE_STATUSES, calculateAuditScore } from './scoringEngine.js';
 
 const THEME_STORAGE_KEY = 'kp-layout-lens-theme';
-const STATUS_NOT_CHECKED = 'not-checked';
+const STATUS_NOT_CHECKED = SCORE_STATUSES.NOT_CHECKED;
 const statusOptions = [
   { value: STATUS_NOT_CHECKED, label: 'Not checked' },
   { value: 'pass', label: 'Pass' },
@@ -16,6 +17,14 @@ const elements = {
   checkedRules: document.querySelector('#checked-rules'),
   needsWorkRules: document.querySelector('#needs-work-rules'),
   notApplicableRules: document.querySelector('#not-applicable-rules'),
+  auditScoreValue: document.querySelector('#audit-score-value'),
+  auditScoreUnit: document.querySelector('#audit-score-unit'),
+  auditScoreSummary: document.querySelector('#audit-score-summary'),
+  auditEarnedPoints: document.querySelector('#audit-earned-points'),
+  auditPossiblePoints: document.querySelector('#audit-possible-points'),
+  auditCheckedRules: document.querySelector('#audit-checked-rules'),
+  auditNeedsWorkRules: document.querySelector('#audit-needs-work-rules'),
+  auditNotApplicableRules: document.querySelector('#audit-not-applicable-rules'),
   resetAudit: document.querySelector('#reset-audit'),
   themeToggle: document.querySelector('#theme-toggle'),
   presetOptions: document.querySelector('#preset-options'),
@@ -35,7 +44,7 @@ function init() {
   renderPresets();
   renderSelectedPreset();
   renderRules();
-  renderCounts();
+  renderScore();
   bindEvents();
   syncThemeToggle();
 }
@@ -51,7 +60,7 @@ function bindEvents() {
 
     statuses[control.dataset.ruleStatus] = control.value;
     renderRuleStatus(control.dataset.ruleStatus);
-    renderCounts();
+    renderScore();
   });
 
   elements.presetOptions?.addEventListener('change', (event) => {
@@ -65,7 +74,7 @@ function bindEvents() {
   elements.resetAudit.addEventListener('click', () => {
     statuses = createInitialStatuses();
     renderRules();
-    renderCounts();
+    renderScore();
   });
 
   elements.themeToggle?.addEventListener('click', () => {
@@ -173,18 +182,25 @@ function renderRuleStatus(ruleId) {
   card.classList.add(`rule-card--${statuses[ruleId] || STATUS_NOT_CHECKED}`);
 }
 
-function renderCounts() {
-  const totals = auditRules.reduce((counts, rule) => {
-    const status = statuses[rule.id] || STATUS_NOT_CHECKED;
-    counts[status] = (counts[status] || 0) + 1;
-    return counts;
-  }, {});
+function renderScore() {
+  const score = calculateAuditScore(auditRules, statuses);
+  const hasScoredRules = score.scorePercent !== null;
 
-  const checked = auditRules.length - (totals[STATUS_NOT_CHECKED] || 0);
-  elements.totalRules.textContent = auditRules.length;
-  elements.checkedRules.textContent = checked;
-  elements.needsWorkRules.textContent = totals['needs-work'] || 0;
-  elements.notApplicableRules.textContent = totals['not-applicable'] || 0;
+  elements.totalRules.textContent = score.totalRules;
+  elements.checkedRules.textContent = score.checkedRules;
+  elements.needsWorkRules.textContent = score.needsWorkRules;
+  elements.notApplicableRules.textContent = score.notApplicableRules;
+
+  elements.auditScoreValue.textContent = hasScoredRules ? score.scorePercent : '—';
+  elements.auditScoreUnit.textContent = hasScoredRules ? '%' : '';
+  elements.auditScoreSummary.textContent = hasScoredRules
+    ? 'Based on checked applicable rules.'
+    : 'Not enough checked rules yet.';
+  elements.auditEarnedPoints.textContent = score.earnedPoints;
+  elements.auditPossiblePoints.textContent = score.possiblePoints;
+  elements.auditCheckedRules.textContent = score.checkedRules;
+  elements.auditNeedsWorkRules.textContent = score.needsWorkRules;
+  elements.auditNotApplicableRules.textContent = score.notApplicableRules;
 }
 
 function slugify(value) {

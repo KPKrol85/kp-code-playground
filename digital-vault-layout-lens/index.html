@@ -76,7 +76,7 @@
           <ul class="hero-card__list">
             <li>Manual audit checklist active</li>
             <li>Grouped rule categories visible</li>
-            <li>Simple in-memory status counts</li>
+            <li>Deterministic weighted scoring</li>
             <li>Future modules clearly labeled</li>
           </ul>
         </aside>
@@ -109,8 +109,8 @@
           </article>
           <article class="workflow-step">
             <span class="workflow-step__number">03</span>
-            <h3>Review simple counts</h3>
-            <p>Use checked, needs-work, and not-applicable counts as a lightweight manual progress signal.</p>
+            <h3>Review score and counts</h3>
+            <p>Use the weighted score and status counts as lightweight manual progress signals.</p>
           </article>
         </div>
 
@@ -125,10 +125,10 @@
             <h3>Component presets</h3>
             <p>Starter review contexts for common frontend surfaces without pretending to scan files.</p>
           </article>
-          <article class="module-card module-card--planned">
-            <span class="module-card__status">Planned</span>
+          <article class="module-card module-card--ready">
+            <span class="module-card__status">Available now</span>
             <h3>Weighted score</h3>
-            <p>A future deterministic score module for discussing quality consistently after manual checks exist.</p>
+            <p>A deterministic score module for discussing quality consistently after manual checks are updated.</p>
           </article>
           <article class="module-card module-card--planned">
             <span class="module-card__status">Coming next</span>
@@ -183,7 +183,7 @@
             <h2 id="audit-title">Manual UI audit workflow</h2>
             <p>
               Choose the UI type you are auditing, review each category manually, and update rule statuses as you go.
-              Simple counts update instantly in memory; scoring and persistence are planned for later phases.
+              Weighted scoring updates instantly in memory; persistence remains planned for a later phase.
             </p>
           </div>
           <div class="panel-actions" aria-label="Audit actions">
@@ -227,10 +227,41 @@
             <div class="planned-list" aria-label="Planned future modules">
               <span class="module-card__status">Coming next</span>
               <ul>
-                <li>Weighted scoring and category scores</li>
-                <li>Recommendations, saved audits, exports, and reports</li>
+                <li>Category scores and recommendations</li>
+                <li>Saved audits, exports, and reports</li>
               </ul>
             </div>
+          </aside>
+
+          <aside class="score-panel card" aria-labelledby="score-title" aria-live="polite">
+            <p class="eyebrow">Weighted scoring</p>
+            <h3 id="score-title">Manual audit score</h3>
+            <p id="audit-score-summary" class="score-panel__summary">Not enough checked rules yet.</p>
+            <div class="score-ring" aria-label="Overall manual audit score">
+              <span><span id="audit-score-value">—</span><small id="audit-score-unit"></small></span>
+            </div>
+            <dl class="score-stats">
+              <div>
+                <dt>Earned points</dt>
+                <dd id="audit-earned-points">0</dd>
+              </div>
+              <div>
+                <dt>Possible points</dt>
+                <dd id="audit-possible-points">0</dd>
+              </div>
+              <div>
+                <dt>Checked rules</dt>
+                <dd id="audit-checked-rules">0</dd>
+              </div>
+              <div>
+                <dt>Rules needing work</dt>
+                <dd id="audit-needs-work-rules">0</dd>
+              </div>
+              <div>
+                <dt>Not applicable</dt>
+                <dd id="audit-not-applicable-rules">0</dd>
+              </div>
+            </dl>
           </aside>
 
           <div class="checklist card" aria-labelledby="checklist-title">
@@ -248,8 +279,7 @@
           <p class="eyebrow">Planned module</p>
           <h2 id="recommendations-title">Recommendations are not active in v1 yet</h2>
           <p>
-            This release focuses only on the grouped manual checklist. Automated recommendations,
-            scoring, persistence, exports, analyzers, and reports remain future roadmap items.
+            This release focuses only on the grouped manual checklist. Automated recommendations, category scoring, persistence, exports, analyzers, and reports remain future roadmap items.
           </p>
         </div>
       </section>

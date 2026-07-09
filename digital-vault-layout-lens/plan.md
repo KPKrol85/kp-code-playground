@@ -11,7 +11,7 @@ Create a polished, trustworthy UI audit workspace that proves the product workfl
 - [x] Landing/dashboard-style interface.
 - [x] Manual audit checklist grouped by category.
 - [x] Component type presets.
-- Weighted scoring engine.
+- [x] Weighted scoring engine.
 - Category scores and recommendations.
 - Local audit persistence.
 - Roadmap and improvement documentation.
