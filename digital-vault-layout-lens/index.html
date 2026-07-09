@@ -135,10 +135,10 @@
             <h3>Category recommendations</h3>
             <p>Manual category scores and deterministic recommendations based on checklist items marked needs work.</p>
           </article>
-          <article class="module-card module-card--planned">
-            <span class="module-card__status">Planned</span>
+          <article class="module-card module-card--ready">
+            <span class="module-card__status">Available now</span>
             <h3>Local audit state</h3>
-            <p>Transparent local-first state handling before any account, backend, or database exists.</p>
+            <p>Transparent browser-only state handling before any account, backend, or database exists.</p>
           </article>
         </div>
       </section>
@@ -183,11 +183,12 @@
             <h2 id="audit-title">Manual UI audit workflow</h2>
             <p>
               Choose the UI type you are auditing, review each category manually, and update rule statuses as you go.
-              Weighted scoring updates instantly in memory; persistence remains planned for a later phase.
+              Weighted scoring updates instantly, and the current audit draft is saved only in this browser.
             </p>
           </div>
           <div class="panel-actions" aria-label="Audit actions">
-            <button id="reset-audit" class="button button--secondary" type="button">Reset audit</button>
+            <p id="audit-storage-status" class="local-save-status" aria-live="polite">Browser-only audit state.</p>
+            <button id="reset-audit" class="button button--secondary" type="button">Reset local audit</button>
           </div>
         </div>
 
@@ -222,13 +223,13 @@
             <h3 id="config-title">How to use this v1 checklist</h3>
             <p>
               Review the UI manually, category by category. Set each rule to Not checked, Pass,
-              Needs work, or Not applicable. The selected preset is context only; statuses stay in memory for this phase.
+              Needs work, or Not applicable. The selected preset and rule statuses are saved locally in this browser only.
             </p>
             <div class="planned-list" aria-label="Planned future modules">
               <span class="module-card__status">Coming next</span>
               <ul>
-                <li>Local audit persistence</li>
-                <li>Saved audits, exports, and reports</li>
+                <li>No account or cloud sync</li>
+                <li>Saved audits, exports, and reports remain planned</li>
               </ul>
             </div>
           </aside>
