@@ -130,10 +130,10 @@
             <h3>Weighted score</h3>
             <p>A deterministic score module for discussing quality consistently after manual checks are updated.</p>
           </article>
-          <article class="module-card module-card--planned">
-            <span class="module-card__status">Coming next</span>
+          <article class="module-card module-card--ready">
+            <span class="module-card__status">Available now</span>
             <h3>Category recommendations</h3>
-            <p>Clearer grouping and prioritization for remediation guidance in later phases.</p>
+            <p>Manual category scores and deterministic recommendations based on checklist items marked needs work.</p>
           </article>
           <article class="module-card module-card--planned">
             <span class="module-card__status">Planned</span>
@@ -227,7 +227,7 @@
             <div class="planned-list" aria-label="Planned future modules">
               <span class="module-card__status">Coming next</span>
               <ul>
-                <li>Category scores and recommendations</li>
+                <li>Local audit persistence</li>
                 <li>Saved audits, exports, and reports</li>
               </ul>
             </div>
@@ -264,6 +264,13 @@
             </dl>
           </aside>
 
+          <section class="category-panel card" aria-labelledby="category-scores-title" aria-live="polite">
+            <p class="eyebrow">Category score</p>
+            <h3 id="category-scores-title">Manual category breakdown</h3>
+            <p class="score-panel__summary">Based on checked manual rules. Not checked and not applicable rules are not scored.</p>
+            <div id="category-scores" class="category-scores"></div>
+          </section>
+
           <div class="checklist card" aria-labelledby="checklist-title">
             <div class="checklist__header">
               <h3 id="checklist-title">Audit checklist</h3>
@@ -276,12 +283,14 @@
 
       <section id="recommendations" class="recommendations section-shell" aria-labelledby="recommendations-title">
         <div class="section-heading">
-          <p class="eyebrow">Planned module</p>
-          <h2 id="recommendations-title">Recommendations are not active in v1 yet</h2>
+          <p class="eyebrow">Manual recommendations</p>
+          <h2 id="recommendations-title">Recommendations from checklist items needing work</h2>
           <p>
-            This release focuses only on the grouped manual checklist. Automated recommendations, category scoring, persistence, exports, analyzers, and reports remain future roadmap items.
+            Recommendations are deterministic and only appear when a manual checklist rule is marked “Needs work”.
+            This section does not analyze HTML or CSS automatically.
           </p>
         </div>
+        <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
       </section>
 
       <section id="roadmap" class="roadmap section-shell" aria-labelledby="roadmap-title">

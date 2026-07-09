@@ -1,6 +1,7 @@
 import { auditCategories, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
-import { SCORE_STATUSES, calculateAuditScore } from './scoringEngine.js';
+import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
+import { generateRecommendations } from './recommendations.js';
 
 const THEME_STORAGE_KEY = 'kp-layout-lens-theme';
 const STATUS_NOT_CHECKED = SCORE_STATUSES.NOT_CHECKED;
@@ -25,6 +26,8 @@ const elements = {
   auditCheckedRules: document.querySelector('#audit-checked-rules'),
   auditNeedsWorkRules: document.querySelector('#audit-needs-work-rules'),
   auditNotApplicableRules: document.querySelector('#audit-not-applicable-rules'),
+  categoryScores: document.querySelector('#category-scores'),
+  recommendationList: document.querySelector('#recommendation-list'),
   resetAudit: document.querySelector('#reset-audit'),
   themeToggle: document.querySelector('#theme-toggle'),
   presetOptions: document.querySelector('#preset-options'),
@@ -184,6 +187,8 @@ function renderRuleStatus(ruleId) {
 
 function renderScore() {
   const score = calculateAuditScore(auditRules, statuses);
+  const categoryScores = calculateCategoryScores(auditCategories, auditRules, statuses);
+  const recommendations = generateRecommendations(auditRules, statuses);
   const hasScoredRules = score.scorePercent !== null;
 
   elements.totalRules.textContent = score.totalRules;
@@ -201,7 +206,66 @@ function renderScore() {
   elements.auditCheckedRules.textContent = score.checkedRules;
   elements.auditNeedsWorkRules.textContent = score.needsWorkRules;
   elements.auditNotApplicableRules.textContent = score.notApplicableRules;
+  renderCategoryScores(categoryScores);
+  renderRecommendations(recommendations);
 }
+
+function renderCategoryScores(categoryScores) {
+  if (!elements.categoryScores) return;
+
+  elements.categoryScores.innerHTML = categoryScores.map(renderCategoryScore).join('');
+}
+
+function renderCategoryScore(categoryScore) {
+  const hasScore = categoryScore.scorePercent !== null;
+  const applicableCheckedRules = categoryScore.passedRules + categoryScore.needsWorkRules;
+  const statusText = hasScore
+    ? `${categoryScore.needsWorkRules} ${pluralize('rule', categoryScore.needsWorkRules)} needing work`
+    : 'Not enough checked rules yet';
+
+  return `
+    <article class="category-score" aria-labelledby="category-score-${categoryScore.categoryId}">
+      <div>
+        <h4 id="category-score-${categoryScore.categoryId}">${escapeHtml(categoryScore.categoryName)}</h4>
+        <p>${escapeHtml(statusText)}</p>
+      </div>
+      <strong>${hasScore ? `${categoryScore.scorePercent}%` : '—'}</strong>
+      <meter class="category-score__meter" min="0" max="100" value="${hasScore ? categoryScore.scorePercent : 0}">${hasScore ? `${categoryScore.scorePercent}%` : 'No category score yet'}</meter>
+      <span class="category-score__meta">${applicableCheckedRules} of ${categoryScore.totalRules - categoryScore.notApplicableRules} applicable ${pluralize('rule', categoryScore.totalRules - categoryScore.notApplicableRules)} checked · ${categoryScore.notCheckedRules} not checked</span>
+    </article>
+  `;
+}
+
+function renderRecommendations(recommendations) {
+  if (!elements.recommendationList) return;
+
+  if (recommendations.length === 0) {
+    elements.recommendationList.innerHTML = `
+      <article class="recommendation-empty">
+        <h3>No recommendations yet.</h3>
+        <p>Mark checklist items as “Needs work” to generate manual recommendations.</p>
+      </article>
+    `;
+    return;
+  }
+
+  elements.recommendationList.innerHTML = recommendations.map(renderRecommendation).join('');
+}
+
+function renderRecommendation(recommendation) {
+  return `
+    <article class="recommendation-card recommendation-card--${escapeHtml(recommendation.priority)}">
+      <p class="recommendation-card__meta">${escapeHtml(recommendation.categoryName)} · ${escapeHtml(recommendation.priority)} priority</p>
+      <h3>${escapeHtml(recommendation.title)}</h3>
+      <p>${escapeHtml(recommendation.description)}</p>
+    </article>
+  `;
+}
+
+function pluralize(word, count) {
+  return count === 1 ? word : `${word}s`;
+}
+
 
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
