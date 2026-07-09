@@ -58,8 +58,8 @@
           <h1 id="hero-title">Layout review command center for frontend quality.</h1>
           <p class="hero__lede">
             KP_Code Layout Lens gives developers a structured place to review UI layout quality,
-            document manual findings, and understand how future checklist, scoring, preset,
-            recommendation, and local-state modules fit together.
+            document manual findings, and understand how future scoring, preset,
+            recommendation, and local-state modules will fit together.
           </p>
           <div class="hero__actions">
             <a class="button button--primary" href="#audit-workspace">Start manual audit</a>
@@ -74,10 +74,10 @@
             surface with clear placeholders for the workflow modules that follow.
           </p>
           <ul class="hero-card__list">
-            <li>Manual audit module surfaced</li>
-            <li>Component presets introduced</li>
-            <li>Weighted score preview visible</li>
-            <li>Local audit state clearly labeled</li>
+            <li>Manual audit checklist active</li>
+            <li>Grouped rule categories visible</li>
+            <li>Simple in-memory status counts</li>
+            <li>Future modules clearly labeled</li>
           </ul>
         </aside>
       </section>
@@ -89,7 +89,7 @@
             <h2 id="workspace-overview-title">Static v1 dashboard for frontend audits</h2>
             <p>
               The landing experience frames Layout Lens as a serious Digital Vault developer tool:
-              start with a component, review the quality categories, then move into a manual audit
+              review the quality categories, then move through the manual audit checklist
               without suggesting backend, upload, AI, or analyzer features are available yet.
             </p>
           </div>
@@ -99,8 +99,8 @@
         <div class="workflow-preview" aria-label="Static audit workflow preview">
           <article class="workflow-step">
             <span class="workflow-step__number">01</span>
-            <h3>Select review target</h3>
-            <p>Choose a component preset such as dashboard, pricing, card grid, hero, or form.</p>
+            <h3>Choose a UI to inspect</h3>
+            <p>Open the product, page, or component you want to review alongside this checklist.</p>
           </article>
           <article class="workflow-step">
             <span class="workflow-step__number">02</span>
@@ -109,8 +109,8 @@
           </article>
           <article class="workflow-step">
             <span class="workflow-step__number">03</span>
-            <h3>Read dashboard signal</h3>
-            <p>Use score, category health, and recommendations as a static v1 quality snapshot.</p>
+            <h3>Review simple counts</h3>
+            <p>Use checked, needs-work, and not-applicable counts as a lightweight manual progress signal.</p>
           </article>
         </div>
 
@@ -120,15 +120,15 @@
             <h3>Manual checklist</h3>
             <p>Human-reviewed checks grouped by UI quality category for a practical first-pass audit.</p>
           </article>
-          <article class="module-card module-card--ready">
-            <span class="module-card__status">Available now</span>
+          <article class="module-card module-card--planned">
+            <span class="module-card__status">Coming next</span>
             <h3>Component presets</h3>
             <p>Starter review contexts for common frontend surfaces without pretending to scan files.</p>
           </article>
-          <article class="module-card module-card--ready">
-            <span class="module-card__status">Available now</span>
+          <article class="module-card module-card--planned">
+            <span class="module-card__status">Planned</span>
             <h3>Weighted score</h3>
-            <p>A deterministic score preview that helps teams discuss quality consistently.</p>
+            <p>A future deterministic score module for discussing quality consistently after manual checks exist.</p>
           </article>
           <article class="module-card module-card--planned">
             <span class="module-card__status">Coming next</span>
@@ -154,24 +154,24 @@
         </div>
         <div class="metric-grid" aria-live="polite">
           <article class="metric-card">
-            <span class="metric-card__label">Overall score</span>
-            <strong id="overall-score">0</strong>
-            <span id="quality-label" class="metric-card__meta">Not started</span>
+            <span class="metric-card__label">Total rules</span>
+            <strong id="total-rules">0</strong>
+            <span class="metric-card__meta">Grouped manual checks</span>
           </article>
           <article class="metric-card">
-            <span class="metric-card__label">Passed checks</span>
-            <strong id="passed-count">0</strong>
-            <span class="metric-card__meta">Rules marked pass</span>
+            <span class="metric-card__label">Checked rules</span>
+            <strong id="checked-rules">0</strong>
+            <span class="metric-card__meta">Pass, needs work, or N/A</span>
           </article>
           <article class="metric-card">
-            <span class="metric-card__label">Warnings</span>
-            <strong id="warning-count">0</strong>
-            <span class="metric-card__meta">Needs review</span>
+            <span class="metric-card__label">Needs work</span>
+            <strong id="needs-work-rules">0</strong>
+            <span class="metric-card__meta">Manual findings to revisit</span>
           </article>
           <article class="metric-card">
-            <span class="metric-card__label">Failed checks</span>
-            <strong id="failed-count">0</strong>
-            <span class="metric-card__meta">Blocks premium quality</span>
+            <span class="metric-card__label">Not applicable</span>
+            <strong id="not-applicable-rules">0</strong>
+            <span class="metric-card__meta">Skipped for this UI</span>
           </article>
         </div>
       </section>
@@ -182,8 +182,8 @@
             <p class="eyebrow">New audit panel</p>
             <h2 id="audit-title">Manual UI audit workflow</h2>
             <p>
-              Select a component type, review each rule, and update statuses as you inspect the UI.
-              Scores update instantly using the separated audit engine.
+              Review each category, inspect the UI manually, and update rule statuses as you go.
+              Simple counts update instantly in memory; scoring and persistence are planned for later phases.
             </p>
           </div>
           <div class="panel-actions" aria-label="Audit actions">
@@ -193,50 +193,40 @@
 
         <div class="audit-layout">
           <aside class="audit-config card" aria-labelledby="config-title">
-            <h3 id="config-title">Audit setup</h3>
-            <label class="field" for="component-type">
-              <span>Component type</span>
-              <select id="component-type" name="component-type"></select>
-            </label>
-            <label class="field" for="quality-profile">
-              <span>Quality profile</span>
-              <select id="quality-profile" name="quality-profile"></select>
-            </label>
-            <p id="profile-summary" class="profile-summary"></p>
-            <div id="rule-health" class="rule-health" aria-live="polite"></div>
-            <div class="demo-summary" id="demo-summary"></div>
+            <h3 id="config-title">How to use this v1 checklist</h3>
+            <p>
+              Review the UI manually, category by category. Set each rule to Not checked, Pass,
+              Needs work, or Not applicable. Statuses stay in memory only for this phase.
+            </p>
+            <div class="planned-list" aria-label="Planned future modules">
+              <span class="module-card__status">Coming next</span>
+              <ul>
+                <li>Component presets</li>
+                <li>Weighted scoring and category scores</li>
+                <li>Recommendations, saved audits, exports, and reports</li>
+              </ul>
+            </div>
           </aside>
 
           <div class="checklist card" aria-labelledby="checklist-title">
             <div class="checklist__header">
               <h3 id="checklist-title">Audit checklist</h3>
-              <p>Mark every rule as pass, warning, fail, or not applicable.</p>
+              <p>Mark every rule as Not checked, Pass, Needs work, or Not applicable.</p>
             </div>
             <div id="rules-container" class="checklist__rules"></div>
           </div>
-
-          <aside class="results-panel card" aria-labelledby="results-title">
-            <h3 id="results-title">Result summary</h3>
-            <div class="score-ring" aria-live="polite">
-              <span id="score-ring-value">0</span>
-              <small>/100</small>
-            </div>
-            <p id="score-ring-label" class="results-panel__label">Not started</p>
-            <div id="category-scores" class="category-scores"></div>
-          </aside>
         </div>
       </section>
 
       <section id="recommendations" class="recommendations section-shell" aria-labelledby="recommendations-title">
         <div class="section-heading">
-          <p class="eyebrow">Generated recommendations</p>
-          <h2 id="recommendations-title">Actionable next steps</h2>
+          <p class="eyebrow">Planned module</p>
+          <h2 id="recommendations-title">Recommendations are not active in v1 yet</h2>
           <p>
-            Recommendations are derived from warning and failed rule statuses. Future versions can
-            enrich this with DOM evidence, screenshots, and report exports.
+            This release focuses only on the grouped manual checklist. Automated recommendations,
+            scoring, persistence, exports, analyzers, and reports remain future roadmap items.
           </p>
         </div>
-        <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
       </section>
 
       <section id="roadmap" class="roadmap section-shell" aria-labelledby="roadmap-title">
@@ -244,7 +234,7 @@
           <p class="eyebrow">Product roadmap</p>
           <h2 id="roadmap-title">Designed for the Digital Vault roadmap</h2>
           <p>
-            The v1 foundation keeps data, scoring, and rendering separate so KP_Code Layout Lens can
+            The v1 foundation keeps checklist data and rendering separate so KP_Code Layout Lens can
             grow without a rewrite.
           </p>
         </div>
