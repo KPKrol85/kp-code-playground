@@ -1,4 +1,5 @@
 import { auditCategories, auditRules } from './auditRules.js';
+import { componentPresets } from './componentPresets.js';
 
 const THEME_STORAGE_KEY = 'kp-layout-lens-theme';
 const STATUS_NOT_CHECKED = 'not-checked';
@@ -16,14 +17,23 @@ const elements = {
   needsWorkRules: document.querySelector('#needs-work-rules'),
   notApplicableRules: document.querySelector('#not-applicable-rules'),
   resetAudit: document.querySelector('#reset-audit'),
-  themeToggle: document.querySelector('#theme-toggle')
+  themeToggle: document.querySelector('#theme-toggle'),
+  presetOptions: document.querySelector('#preset-options'),
+  selectedPresetName: document.querySelector('#selected-preset-name'),
+  selectedPresetHint: document.querySelector('#selected-preset-hint'),
+  selectedPresetDescription: document.querySelector('#selected-preset-description'),
+  selectedPresetCategories: document.querySelector('#selected-preset-categories'),
+  checklistTitle: document.querySelector('#checklist-title')
 };
 
 let statuses = createInitialStatuses();
+let selectedPresetId = componentPresets[0]?.id;
 
 init();
 
 function init() {
+  renderPresets();
+  renderSelectedPreset();
   renderRules();
   renderCounts();
   bindEvents();
@@ -44,6 +54,14 @@ function bindEvents() {
     renderCounts();
   });
 
+  elements.presetOptions?.addEventListener('change', (event) => {
+    const control = event.target.closest('[data-preset-id]');
+    if (!control) return;
+
+    selectedPresetId = control.value;
+    renderSelectedPreset();
+  });
+
   elements.resetAudit.addEventListener('click', () => {
     statuses = createInitialStatuses();
     renderRules();
@@ -57,6 +75,51 @@ function bindEvents() {
     localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
     syncThemeToggle();
   });
+}
+
+
+function renderPresets() {
+  if (!elements.presetOptions) return;
+
+  elements.presetOptions.innerHTML = componentPresets.map(renderPresetOption).join('');
+}
+
+function renderPresetOption(preset) {
+  const isSelected = preset.id === selectedPresetId;
+
+  return `
+    <label class="preset-option" for="preset-${escapeHtml(preset.id)}">
+      <input
+        id="preset-${escapeHtml(preset.id)}"
+        name="component-preset"
+        type="radio"
+        value="${escapeHtml(preset.id)}"
+        data-preset-id="${escapeHtml(preset.id)}"
+        ${isSelected ? 'checked' : ''}
+      />
+      <span class="preset-option__content">
+        <span class="preset-option__name">${escapeHtml(preset.name)}</span>
+        <span class="preset-option__description">${escapeHtml(preset.description)}</span>
+      </span>
+    </label>
+  `;
+}
+
+function renderSelectedPreset() {
+  const preset = getSelectedPreset();
+  if (!preset) return;
+
+  elements.selectedPresetName.textContent = preset.name;
+  elements.selectedPresetHint.textContent = preset.bestUse || 'Preset helps focus the checklist.';
+  elements.selectedPresetDescription.textContent = preset.description;
+  elements.selectedPresetCategories.innerHTML = preset.relatedCategories
+    .map((category) => `<li>${escapeHtml(category)}</li>`)
+    .join('');
+  elements.checklistTitle.textContent = `${preset.name} audit checklist`;
+}
+
+function getSelectedPreset() {
+  return componentPresets.find((preset) => preset.id === selectedPresetId) || componentPresets[0];
 }
 
 function renderRules() {
