@@ -89,7 +89,7 @@
             <h2 id="workspace-overview-title">Static v1 dashboard for frontend audits</h2>
             <p>
               The landing experience frames Layout Lens as a serious Digital Vault developer tool:
-              review the quality categories, then move through the manual audit checklist
+              review the quality categories, choose a manual preset, then move through the audit checklist
               without suggesting backend, upload, AI, or analyzer features are available yet.
             </p>
           </div>
@@ -120,8 +120,8 @@
             <h3>Manual checklist</h3>
             <p>Human-reviewed checks grouped by UI quality category for a practical first-pass audit.</p>
           </article>
-          <article class="module-card module-card--planned">
-            <span class="module-card__status">Coming next</span>
+          <article class="module-card module-card--ready">
+            <span class="module-card__status">Available now</span>
             <h3>Component presets</h3>
             <p>Starter review contexts for common frontend surfaces without pretending to scan files.</p>
           </article>
@@ -182,7 +182,7 @@
             <p class="eyebrow">New audit panel</p>
             <h2 id="audit-title">Manual UI audit workflow</h2>
             <p>
-              Review each category, inspect the UI manually, and update rule statuses as you go.
+              Choose the UI type you are auditing, review each category manually, and update rule statuses as you go.
               Simple counts update instantly in memory; scoring and persistence are planned for later phases.
             </p>
           </div>
@@ -191,17 +191,42 @@
           </div>
         </div>
 
+        <section class="preset-panel card" aria-labelledby="preset-title">
+          <div class="preset-panel__header">
+            <div>
+              <p class="eyebrow">Audit context</p>
+              <h3 id="preset-title">Manual preset</h3>
+              <p id="preset-intro">Choose the UI/component type you are auditing. The preset adds context for this manual checklist and prepares future rule filtering without running automation yet.</p>
+            </div>
+            <div class="selected-preset" aria-live="polite">
+              <span class="selected-preset__label">Currently auditing</span>
+              <strong id="selected-preset-name">Landing page</strong>
+              <span id="selected-preset-hint">Preset helps focus the checklist.</span>
+            </div>
+          </div>
+          <fieldset class="preset-options" aria-describedby="preset-intro selected-preset-categories">
+            <legend class="sr-only">Choose audit preset</legend>
+            <div id="preset-options" class="preset-options__grid"></div>
+          </fieldset>
+          <div class="preset-details" aria-live="polite">
+            <p id="selected-preset-description"></p>
+            <div>
+              <h4>Most relevant categories</h4>
+              <ul id="selected-preset-categories" class="preset-category-list"></ul>
+            </div>
+          </div>
+        </section>
+
         <div class="audit-layout">
           <aside class="audit-config card" aria-labelledby="config-title">
             <h3 id="config-title">How to use this v1 checklist</h3>
             <p>
               Review the UI manually, category by category. Set each rule to Not checked, Pass,
-              Needs work, or Not applicable. Statuses stay in memory only for this phase.
+              Needs work, or Not applicable. The selected preset is context only; statuses stay in memory for this phase.
             </p>
             <div class="planned-list" aria-label="Planned future modules">
               <span class="module-card__status">Coming next</span>
               <ul>
-                <li>Component presets</li>
                 <li>Weighted scoring and category scores</li>
                 <li>Recommendations, saved audits, exports, and reports</li>
               </ul>
