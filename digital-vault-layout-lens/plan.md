@@ -13,7 +13,7 @@ Create a polished, trustworthy UI audit workspace that proves the product workfl
 - [x] Component type presets.
 - [x] Weighted scoring engine.
 - [x] Category scores and recommendations.
-- Local audit persistence.
+- [x] Local audit persistence.
 - Roadmap and improvement documentation.
 
 ### Technical notes

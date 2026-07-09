@@ -2,6 +2,7 @@ import { auditCategories, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
 import { generateRecommendations } from './recommendations.js';
+import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
 
 const THEME_STORAGE_KEY = 'kp-layout-lens-theme';
 const STATUS_NOT_CHECKED = SCORE_STATUSES.NOT_CHECKED;
@@ -35,15 +36,20 @@ const elements = {
   selectedPresetHint: document.querySelector('#selected-preset-hint'),
   selectedPresetDescription: document.querySelector('#selected-preset-description'),
   selectedPresetCategories: document.querySelector('#selected-preset-categories'),
-  checklistTitle: document.querySelector('#checklist-title')
+  checklistTitle: document.querySelector('#checklist-title'),
+  auditStorageStatus: document.querySelector('#audit-storage-status')
 };
 
 let statuses = createInitialStatuses();
 let selectedPresetId = componentPresets[0]?.id;
+const validRuleIds = new Set(auditRules.map((rule) => rule.id));
+const validPresetIds = new Set(componentPresets.map((preset) => preset.id));
+const validStatuses = new Set(statusOptions.map((option) => option.value));
 
 init();
 
 function init() {
+  restoreSavedAuditState();
   renderPresets();
   renderSelectedPreset();
   renderRules();
@@ -64,6 +70,7 @@ function bindEvents() {
     statuses[control.dataset.ruleStatus] = control.value;
     renderRuleStatus(control.dataset.ruleStatus);
     renderScore();
+    persistAuditState('Saved in this browser.');
   });
 
   elements.presetOptions?.addEventListener('change', (event) => {
@@ -72,23 +79,75 @@ function bindEvents() {
 
     selectedPresetId = control.value;
     renderSelectedPreset();
+    persistAuditState('Saved in this browser.');
   });
 
   elements.resetAudit.addEventListener('click', () => {
+    selectedPresetId = componentPresets[0]?.id;
     statuses = createInitialStatuses();
+    clearSavedAuditState();
+    renderPresets();
+    renderSelectedPreset();
     renderRules();
     renderScore();
+    setAuditStorageStatus('Local audit cleared. Browser-only draft removed.');
   });
 
   elements.themeToggle?.addEventListener('click', () => {
     const currentTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = nextTheme;
-    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    } catch {
+      // Theme preference remains session-only when browser storage is unavailable.
+    }
     syncThemeToggle();
   });
 }
 
+
+
+function restoreSavedAuditState() {
+  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses });
+
+  if (result.state) {
+    if (result.state.selectedPresetId) {
+      selectedPresetId = result.state.selectedPresetId;
+    }
+
+    statuses = {
+      ...createInitialStatuses(),
+      ...result.state.ruleStatuses
+    };
+  }
+
+  if (result.status === 'loaded') {
+    setAuditStorageStatus('Local draft restored. Changes are saved in this browser only.');
+    return;
+  }
+
+  if (result.status === 'invalid') {
+    setAuditStorageStatus('Saved audit data could not be used. Starting a fresh browser-only audit.');
+    return;
+  }
+
+  setAuditStorageStatus(`Browser-only audit state. Saved locally under ${AUDIT_STORAGE_KEY}.`);
+}
+
+function persistAuditState(message) {
+  const saved = saveAuditState({
+    selectedPresetId,
+    ruleStatuses: statuses
+  });
+
+  setAuditStorageStatus(saved ? message : 'Browser storage is unavailable. Changes are kept for this session only.');
+}
+
+function setAuditStorageStatus(message) {
+  if (!elements.auditStorageStatus) return;
+  elements.auditStorageStatus.textContent = message;
+}
 
 function renderPresets() {
   if (!elements.presetOptions) return;
