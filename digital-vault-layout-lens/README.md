@@ -1,25 +1,32 @@
 # KP_Code Layout Lens
 
-KP_Code Layout Lens is a static frontend/UI audit product in the KP_Code Digital Vault ecosystem. It currently provides a landing/dashboard interface and a manual checklist for reviewing UI quality by category.
+KP_Code Layout Lens is a static frontend/UI audit product in the KP_Code Digital Vault ecosystem. It provides a landing/dashboard interface and a manual checklist for reviewing UI quality by category.
 
 ## Current version scope
 
-Version 1 is deliberately small and product-focused:
+The current version is deliberately local-first and product-focused:
 
 - Polished static landing/dashboard interface.
 - Manual audit checklist grouped by frontend quality category.
 - 32 beginner-friendly audit rules stored as reusable JavaScript data.
-- In-memory status updates for each rule.
-- Simple dashboard counts for total rules, checked rules, needs-work items, and not-applicable items.
-- Light/dark theme toggle persisted separately as a UI preference.
+- Component presets for common UI and page types.
+- Weighted scoring based on rule severity and manual status.
+- Category score breakdowns and deterministic recommendations.
+- Browser-only local audit persistence for selected preset and rule statuses.
+- Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
-This release does **not** include weighted scoring, category scores, recommendations, audit persistence, exports, analyzer logic, backend services, login, file upload, AI calls, report generation, browser extension logic, or database storage.
+This release does **not** include exports, analyzer logic, backend services, login, file upload, AI calls, report generation, browser extension logic, SaaS features, or database storage.
+
+For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
 ## How the manual checklist works
 
 1. `assets/js/auditRules.js` defines rule data with `id`, `category`, `title`, `description`, and `severity`.
-2. `assets/js/app.js` renders category sections and rule cards, listens for status changes, and updates simple counts.
-3. Statuses are stored in memory only. Refreshing the page resets the checklist.
+2. `assets/js/componentPresets.js` defines manual audit presets for common page and component types.
+3. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
+4. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
+5. `assets/js/auditStorage.js` handles browser-only local audit state.
+6. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, theme state, and status changes.
 
 Each rule can be marked as:
 
@@ -35,13 +42,16 @@ digital-vault-layout-lens/
 ├── index.html
 ├── README.md
 ├── plan.md
-├── improvements.md
 └── assets/
     ├── css/
     │   └── styles.css
     └── js/
         ├── app.js
-        └── auditRules.js
+        ├── auditRules.js
+        ├── auditStorage.js
+        ├── componentPresets.js
+        ├── recommendations.js
+        └── scoringEngine.js
 ```
 
 ## Run locally
