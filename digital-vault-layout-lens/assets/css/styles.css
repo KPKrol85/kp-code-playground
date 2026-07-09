@@ -552,10 +552,10 @@ select {
   background: color-mix(in srgb, var(--color-surface-strong) 52%, transparent);
 }
 
+.rule-card--not-checked { border-left-color: var(--color-muted); }
 .rule-card--pass { border-left-color: var(--color-success); }
-.rule-card--warning { border-left-color: var(--color-warning); }
-.rule-card--fail { border-left-color: var(--color-danger); }
-.rule-card--na { border-left-color: var(--color-muted); }
+.rule-card--needs-work { border-left-color: var(--color-warning); }
+.rule-card--not-applicable { border-left-color: var(--color-primary); }
 
 .rule-card__body { align-items: start; }
 
@@ -569,7 +569,28 @@ select {
   font-weight: 800;
 }
 
-.status-select { min-width: 140px; }
+.status-select {
+  display: grid;
+  min-width: 170px;
+  gap: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.planned-list {
+  display: grid;
+  gap: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+}
+
+.planned-list ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--color-muted);
+}
 
 .score-ring {
   display: grid;
@@ -745,12 +766,11 @@ meter {
   .workflow-preview { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .module-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 
-  .audit-layout { grid-template-columns: 290px minmax(0, 1fr) 310px; }
+  .audit-layout { grid-template-columns: 300px minmax(0, 1fr); }
   .site-footer__inner { grid-template-columns: minmax(0, 1fr) 420px; }
   .site-footer__bottom { grid-column: 1 / -1; }
 
-  .audit-config,
-  .results-panel {
+  .audit-config {
     position: sticky;
     top: 96px;
   }

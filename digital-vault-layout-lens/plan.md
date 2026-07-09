@@ -9,7 +9,7 @@ Create a polished, trustworthy UI audit workspace that proves the product workfl
 
 ### Features
 - [x] Landing/dashboard-style interface.
-- Manual audit checklist grouped by category.
+- [x] Manual audit checklist grouped by category.
 - Component type presets.
 - Weighted scoring engine.
 - Category scores and recommendations.
