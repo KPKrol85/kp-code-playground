@@ -20,7 +20,24 @@ export function getRuleWeight(rule) {
 }
 
 export function calculateAuditScore(rules, statuses) {
-  return rules.reduce((score, rule) => {
+  return finalizeScore(rules.reduce(addRuleToScore(statuses), createEmptyScore()));
+}
+
+export function calculateCategoryScores(categories, rules, statuses) {
+  return categories.map((categoryName) => {
+    const categoryRules = rules.filter((rule) => rule.category === categoryName);
+    const score = calculateAuditScore(categoryRules, statuses);
+
+    return {
+      categoryId: slugify(categoryName),
+      categoryName,
+      ...score
+    };
+  });
+}
+
+function addRuleToScore(statuses) {
+  return (score, rule) => {
     const status = statuses[rule.id] || SCORE_STATUSES.NOT_CHECKED;
     const weight = getRuleWeight(rule);
 
@@ -43,17 +60,15 @@ export function calculateAuditScore(rules, statuses) {
     if (status === SCORE_STATUSES.PASS) {
       score.passedRules += 1;
       score.earnedPoints += weight;
-      score.scorePercent = calculatePercent(score.earnedPoints, score.possiblePoints);
       return score;
     }
 
     if (status === SCORE_STATUSES.NEEDS_WORK) {
       score.needsWorkRules += 1;
-      score.scorePercent = calculatePercent(score.earnedPoints, score.possiblePoints);
     }
 
     return score;
-  }, createEmptyScore());
+  };
 }
 
 function createEmptyScore() {
@@ -70,7 +85,18 @@ function createEmptyScore() {
   };
 }
 
+function finalizeScore(score) {
+  return {
+    ...score,
+    scorePercent: calculatePercent(score.earnedPoints, score.possiblePoints)
+  };
+}
+
 function calculatePercent(earnedPoints, possiblePoints) {
   if (possiblePoints <= 0) return null;
   return Math.round((earnedPoints / possiblePoints) * 100);
+}
+
+function slugify(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }

@@ -482,6 +482,7 @@ summary:focus-visible {
 
 .audit-config,
 .score-panel,
+.category-panel,
 .results-panel { align-self: start; }
 
 .field {
@@ -685,6 +686,69 @@ meter {
   height: 0.7rem;
   grid-column: 1 / -1;
 }
+
+.category-panel { align-self: start; }
+
+.category-score {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  background: color-mix(in srgb, var(--color-surface-strong) 48%, transparent);
+}
+
+.category-score h4,
+.category-score p { margin: 0; }
+
+.category-score strong {
+  color: var(--color-primary);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.category-score__meta {
+  grid-column: 1 / -1;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.category-score__meter {
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.category-score__meter::-webkit-meter-bar {
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-muted) 18%, transparent);
+}
+
+.category-score__meter::-webkit-meter-optimum-value {
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+.category-score__meter::-moz-meter-bar {
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+.recommendation-empty {
+  grid-column: 1 / -1;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--color-surface-strong) 44%, transparent);
+}
+
+.recommendation-empty h3,
+.recommendation-empty p { margin: 0; }
+
+.recommendation-empty p { color: var(--color-muted); }
+
+.recommendation-card--high { border-left-color: var(--color-danger); }
+.recommendation-card--medium { border-left-color: var(--color-warning); }
+.recommendation-card--low { border-left-color: var(--color-primary); }
 
 .recommendation-list {
   display: grid;
