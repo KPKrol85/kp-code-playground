@@ -8,7 +8,7 @@ This plan describes how KP_Code Layout Lens should evolve from a static manual a
 Create a polished, trustworthy UI audit workspace that proves the product workflow and establishes clean frontend architecture.
 
 ### Features
-- Landing/dashboard-style interface.
+- [x] Landing/dashboard-style interface.
 - Manual audit checklist grouped by category.
 - Component type presets.
 - Weighted scoring engine.
