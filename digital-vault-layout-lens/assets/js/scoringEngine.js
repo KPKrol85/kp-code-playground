@@ -19,14 +19,23 @@ export function getRuleWeight(rule) {
   return severityWeights[String(rule.severity).toLowerCase()] || severityWeights.medium;
 }
 
-export function calculateAuditScore(rules, statuses) {
-  return finalizeScore(rules.reduce(addRuleToScore(statuses), createEmptyScore()));
+export function calculateEffectiveRuleWeight(rule, profile) {
+  const baseWeight = getRuleWeight(rule);
+  const severity = String(rule.severity).toLowerCase();
+  const severityMultiplier = getPositiveMultiplier(profile?.severityMultipliers?.[severity]);
+  const categoryMultiplier = getPositiveMultiplier(profile?.categoryMultipliers?.[rule.category]);
+
+  return roundWeight(baseWeight * severityMultiplier * categoryMultiplier);
 }
 
-export function calculateCategoryScores(categories, rules, statuses) {
+export function calculateAuditScore(rules, statuses, profile) {
+  return finalizeScore(rules.reduce(addRuleToScore(statuses, profile), createEmptyScore()));
+}
+
+export function calculateCategoryScores(categories, rules, statuses, profile) {
   return categories.map((categoryName) => {
     const categoryRules = rules.filter((rule) => rule.category === categoryName);
-    const score = calculateAuditScore(categoryRules, statuses);
+    const score = calculateAuditScore(categoryRules, statuses, profile);
 
     return {
       categoryId: slugify(categoryName),
@@ -36,10 +45,10 @@ export function calculateCategoryScores(categories, rules, statuses) {
   });
 }
 
-function addRuleToScore(statuses) {
+function addRuleToScore(statuses, profile) {
   return (score, rule) => {
     const status = statuses[rule.id] || SCORE_STATUSES.NOT_CHECKED;
-    const weight = getRuleWeight(rule);
+    const weight = calculateEffectiveRuleWeight(rule, profile);
 
     score.totalRules += 1;
 
@@ -88,8 +97,18 @@ function createEmptyScore() {
 function finalizeScore(score) {
   return {
     ...score,
+    earnedPoints: roundWeight(score.earnedPoints),
+    possiblePoints: roundWeight(score.possiblePoints),
     scorePercent: calculatePercent(score.earnedPoints, score.possiblePoints)
   };
+}
+
+function getPositiveMultiplier(value) {
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+
+function roundWeight(value) {
+  return Math.round(value * 100) / 100;
 }
 
 function calculatePercent(earnedPoints, possiblePoints) {

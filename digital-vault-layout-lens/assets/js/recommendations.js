@@ -1,4 +1,4 @@
-import { SCORE_STATUSES } from './scoringEngine.js';
+import { SCORE_STATUSES, calculateEffectiveRuleWeight } from './scoringEngine.js';
 
 const recommendationDescriptions = {
   high: 'Prioritize this manual checklist issue before release because it can block usability, accessibility, or task completion.',
@@ -6,10 +6,10 @@ const recommendationDescriptions = {
   low: 'Tidy this manual checklist issue when refining the interface so the experience feels more polished.'
 };
 
-export function generateRecommendations(rules, statuses) {
+export function generateRecommendations(rules, statuses, profile) {
   return rules
     .filter((rule) => statuses[rule.id] === SCORE_STATUSES.NEEDS_WORK)
-    .map((rule) => {
+    .map((rule, index) => {
       const priority = normalizePriority(rule.severity);
 
       return {
@@ -18,9 +18,12 @@ export function generateRecommendations(rules, statuses) {
         title: `Improve ${rule.title.toLowerCase()}`,
         description: `${recommendationDescriptions[priority]} Revisit: ${rule.description}`,
         priority,
-        sourceRuleId: rule.id
+        sourceRuleId: rule.id,
+        effectiveWeight: calculateEffectiveRuleWeight(rule, profile),
+        originalIndex: index
       };
-    });
+    })
+    .sort((a, b) => b.effectiveWeight - a.effectiveWeight || a.originalIndex - b.originalIndex);
 }
 
 function normalizePriority(severity) {

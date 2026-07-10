@@ -1,6 +1,7 @@
 import { auditCategories, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
 import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
+import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverityProfile, severityProfiles } from './severityProfiles.js';
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
@@ -41,15 +42,20 @@ const elements = {
   rulePackSelect: document.querySelector('#rule-pack-select'),
   rulePackDescription: document.querySelector('#rule-pack-description'),
   rulePackCount: document.querySelector('#rule-pack-count'),
+  severityProfileSelect: document.querySelector('#severity-profile-select'),
+  severityProfileDescription: document.querySelector('#severity-profile-description'),
+  severityProfileSummary: document.querySelector('#severity-profile-summary'),
   auditStorageStatus: document.querySelector('#audit-storage-status')
 };
 
 let statuses = createInitialStatuses();
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
+let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
 const validRuleIds = new Set(auditRules.map((rule) => rule.id));
 const validPresetIds = new Set(componentPresets.map((preset) => preset.id));
 const validRulePackIds = new Set([ALL_RULES_PACK_ID, ...rulePacks.map((pack) => pack.id)]);
+const validSeverityProfileIds = getValidSeverityProfileIds();
 const validStatuses = new Set(statusOptions.map((option) => option.value));
 
 init();
@@ -60,6 +66,8 @@ function init() {
   renderSelectedPreset();
   renderRulePackOptions();
   renderRulePackSelector();
+  renderSeverityProfileOptions();
+  renderSeverityProfileSelector();
   renderRules();
   renderScore();
   bindEvents();
@@ -86,9 +94,19 @@ function bindEvents() {
       ? elements.rulePackSelect.value
       : ALL_RULES_PACK_ID;
     renderRulePackSelector();
+    renderSeverityProfileSelector();
     renderRules();
     renderScore();
     persistAuditState('Rule pack updated. Saved in this browser.');
+  });
+
+  elements.severityProfileSelect?.addEventListener('change', () => {
+    selectedSeverityProfileId = validSeverityProfileIds.has(elements.severityProfileSelect.value)
+      ? elements.severityProfileSelect.value
+      : DEFAULT_SEVERITY_PROFILE_ID;
+    renderSeverityProfileSelector();
+    renderScore();
+    persistAuditState('Severity profile updated. Saved in this browser.');
   });
 
   elements.presetOptions?.addEventListener('change', (event) => {
@@ -103,11 +121,13 @@ function bindEvents() {
   elements.resetAudit.addEventListener('click', () => {
     selectedPresetId = componentPresets[0]?.id;
     selectedRulePackId = ALL_RULES_PACK_ID;
+    selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
     statuses = createInitialStatuses();
     clearSavedAuditState();
     renderPresets();
     renderSelectedPreset();
     renderRulePackSelector();
+    renderSeverityProfileSelector();
     renderRules();
     renderScore();
     setAuditStorageStatus('Local audit cleared. Browser-only draft removed.');
@@ -129,7 +149,7 @@ function bindEvents() {
 
 
 function restoreSavedAuditState() {
-  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds });
+  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds });
 
   if (result.state) {
     if (result.state.selectedPresetId) {
@@ -138,6 +158,10 @@ function restoreSavedAuditState() {
 
     if (result.state.selectedRulePackId) {
       selectedRulePackId = result.state.selectedRulePackId;
+    }
+
+    if (result.state.selectedSeverityProfileId) {
+      selectedSeverityProfileId = result.state.selectedSeverityProfileId;
     }
 
     statuses = {
@@ -163,6 +187,7 @@ function persistAuditState(message) {
   const saved = saveAuditState({
     selectedPresetId,
     selectedRulePackId,
+    selectedSeverityProfileId,
     ruleStatuses: statuses
   });
 
@@ -246,6 +271,37 @@ function renderRulePackSelector() {
   if (elements.rulePackCount) {
     elements.rulePackCount.textContent = `${scopedRules.length} ${pluralize('rule', scopedRules.length)} in scope`;
   }
+}
+
+
+function renderSeverityProfileOptions() {
+  if (!elements.severityProfileSelect) return;
+
+  elements.severityProfileSelect.innerHTML = severityProfiles
+    .map((profile) => `<option value="${escapeHtml(profile.id)}">${escapeHtml(profile.name)}</option>`)
+    .join('');
+}
+
+function renderSeverityProfileSelector() {
+  const activeProfile = getSelectedSeverityProfile();
+
+  if (elements.severityProfileSelect) {
+    elements.severityProfileSelect.value = activeProfile.id;
+  }
+
+  if (elements.severityProfileDescription) {
+    elements.severityProfileDescription.textContent = activeProfile.description;
+  }
+
+  if (elements.severityProfileSummary) {
+    elements.severityProfileSummary.textContent = activeProfile.summary || activeProfile.description;
+  }
+}
+
+function getSelectedSeverityProfile() {
+  const profile = resolveSeverityProfile(selectedSeverityProfileId);
+  selectedSeverityProfileId = profile.id;
+  return profile;
 }
 
 function getSelectedRulePack() {
@@ -333,9 +389,10 @@ function renderRuleStatus(ruleId) {
 
 function renderScore() {
   const activeRules = getActiveRules();
-  const score = calculateAuditScore(activeRules, statuses);
-  const categoryScores = calculateCategoryScores(getActiveCategories(activeRules), activeRules, statuses);
-  const recommendations = generateRecommendations(activeRules, statuses);
+  const activeProfile = getSelectedSeverityProfile();
+  const score = calculateAuditScore(activeRules, statuses, activeProfile);
+  const categoryScores = calculateCategoryScores(getActiveCategories(activeRules), activeRules, statuses, activeProfile);
+  const recommendations = generateRecommendations(activeRules, statuses, activeProfile);
   const hasScoredRules = score.scorePercent !== null;
 
   elements.totalRules.textContent = score.totalRules;

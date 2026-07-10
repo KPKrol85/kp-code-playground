@@ -1,7 +1,7 @@
 export const AUDIT_STORAGE_KEY = 'kp-layout-lens-audit-v1';
 export const AUDIT_SCHEMA_VERSION = 1;
 
-export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set() }) {
+export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set() }) {
   let parsed;
 
   try {
@@ -22,23 +22,28 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
   const selectedRulePackId = validRulePackIds.has(parsed.selectedRulePackId)
     ? parsed.selectedRulePackId
     : null;
+  const selectedSeverityProfileId = validSeverityProfileIds.has(parsed.selectedSeverityProfileId)
+    ? parsed.selectedSeverityProfileId
+    : null;
   const ruleStatuses = sanitizeRuleStatuses(parsed.ruleStatuses, validRuleIds, validStatuses);
 
   return {
     state: {
       selectedPresetId,
       selectedRulePackId,
+      selectedSeverityProfileId,
       ruleStatuses
     },
     status: 'loaded'
   };
 }
 
-export function saveAuditState({ selectedPresetId, selectedRulePackId, ruleStatuses }) {
+export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses }) {
   const state = {
     schemaVersion: AUDIT_SCHEMA_VERSION,
     selectedPresetId,
     selectedRulePackId,
+    selectedSeverityProfileId,
     ruleStatuses,
     updatedAt: new Date().toISOString()
   };
