@@ -463,7 +463,8 @@ summary:focus-visible {
 .metric-card__label,
 .metric-card__meta,
 .field__hint,
-.rule-pack-count { display: block; }
+.rule-pack-count,
+.profile-summary { display: block; }
 
 .metric-card__label {
   color: var(--color-muted);
@@ -476,7 +477,8 @@ summary:focus-visible {
   font-weight: 650;
 }
 
-.rule-pack-count {
+.rule-pack-count,
+.profile-summary {
   color: var(--color-primary);
   font-size: 0.85rem;
   font-weight: 900;
