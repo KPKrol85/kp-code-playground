@@ -1,5 +1,6 @@
 import { auditCategories, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
+import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
@@ -37,13 +38,18 @@ const elements = {
   selectedPresetDescription: document.querySelector('#selected-preset-description'),
   selectedPresetCategories: document.querySelector('#selected-preset-categories'),
   checklistTitle: document.querySelector('#checklist-title'),
+  rulePackSelect: document.querySelector('#rule-pack-select'),
+  rulePackDescription: document.querySelector('#rule-pack-description'),
+  rulePackCount: document.querySelector('#rule-pack-count'),
   auditStorageStatus: document.querySelector('#audit-storage-status')
 };
 
 let statuses = createInitialStatuses();
 let selectedPresetId = componentPresets[0]?.id;
+let selectedRulePackId = ALL_RULES_PACK_ID;
 const validRuleIds = new Set(auditRules.map((rule) => rule.id));
 const validPresetIds = new Set(componentPresets.map((preset) => preset.id));
+const validRulePackIds = new Set([ALL_RULES_PACK_ID, ...rulePacks.map((pack) => pack.id)]);
 const validStatuses = new Set(statusOptions.map((option) => option.value));
 
 init();
@@ -52,6 +58,8 @@ function init() {
   restoreSavedAuditState();
   renderPresets();
   renderSelectedPreset();
+  renderRulePackOptions();
+  renderRulePackSelector();
   renderRules();
   renderScore();
   bindEvents();
@@ -73,6 +81,16 @@ function bindEvents() {
     persistAuditState('Saved in this browser.');
   });
 
+  elements.rulePackSelect?.addEventListener('change', () => {
+    selectedRulePackId = validRulePackIds.has(elements.rulePackSelect.value)
+      ? elements.rulePackSelect.value
+      : ALL_RULES_PACK_ID;
+    renderRulePackSelector();
+    renderRules();
+    renderScore();
+    persistAuditState('Rule pack updated. Saved in this browser.');
+  });
+
   elements.presetOptions?.addEventListener('change', (event) => {
     const control = event.target.closest('[data-preset-id]');
     if (!control) return;
@@ -84,10 +102,12 @@ function bindEvents() {
 
   elements.resetAudit.addEventListener('click', () => {
     selectedPresetId = componentPresets[0]?.id;
+    selectedRulePackId = ALL_RULES_PACK_ID;
     statuses = createInitialStatuses();
     clearSavedAuditState();
     renderPresets();
     renderSelectedPreset();
+    renderRulePackSelector();
     renderRules();
     renderScore();
     setAuditStorageStatus('Local audit cleared. Browser-only draft removed.');
@@ -109,11 +129,15 @@ function bindEvents() {
 
 
 function restoreSavedAuditState() {
-  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses });
+  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds });
 
   if (result.state) {
     if (result.state.selectedPresetId) {
       selectedPresetId = result.state.selectedPresetId;
+    }
+
+    if (result.state.selectedRulePackId) {
+      selectedRulePackId = result.state.selectedRulePackId;
     }
 
     statuses = {
@@ -138,6 +162,7 @@ function restoreSavedAuditState() {
 function persistAuditState(message) {
   const saved = saveAuditState({
     selectedPresetId,
+    selectedRulePackId,
     ruleStatuses: statuses
   });
 
@@ -193,12 +218,74 @@ function getSelectedPreset() {
   return componentPresets.find((preset) => preset.id === selectedPresetId) || componentPresets[0];
 }
 
-function renderRules() {
-  elements.rulesContainer.innerHTML = auditCategories.map(renderCategory).join('');
+function renderRulePackOptions() {
+  if (!elements.rulePackSelect) return;
+
+  const options = [
+    { id: ALL_RULES_PACK_ID, name: 'All rules' },
+    ...rulePacks
+  ];
+
+  elements.rulePackSelect.innerHTML = options
+    .map((pack) => `<option value="${escapeHtml(pack.id)}">${escapeHtml(pack.name)}</option>`)
+    .join('');
 }
 
-function renderCategory(category) {
-  const rules = auditRules.filter((rule) => rule.category === category);
+function renderRulePackSelector() {
+  const activePack = getSelectedRulePack();
+  const scopedRules = getActiveRules();
+
+  if (elements.rulePackSelect) {
+    elements.rulePackSelect.value = selectedRulePackId;
+  }
+
+  if (elements.rulePackDescription) {
+    elements.rulePackDescription.textContent = activePack.description;
+  }
+
+  if (elements.rulePackCount) {
+    elements.rulePackCount.textContent = `${scopedRules.length} ${pluralize('rule', scopedRules.length)} in scope`;
+  }
+}
+
+function getSelectedRulePack() {
+  if (selectedRulePackId === ALL_RULES_PACK_ID) {
+    return {
+      id: ALL_RULES_PACK_ID,
+      name: 'All rules',
+      description: 'Use the full manual checklist without narrowing the audit scope.',
+      ruleIds: auditRules.map((rule) => rule.id)
+    };
+  }
+
+  return rulePacks.find((pack) => pack.id === selectedRulePackId) || getSelectedRulePackFallback();
+}
+
+function getSelectedRulePackFallback() {
+  selectedRulePackId = ALL_RULES_PACK_ID;
+  return getSelectedRulePack();
+}
+
+function getActiveRules() {
+  const activePack = getSelectedRulePack();
+  const ruleIdSet = new Set(activePack.ruleIds);
+  const scopedRules = auditRules.filter((rule) => ruleIdSet.has(rule.id));
+
+  return scopedRules.length > 0 ? scopedRules : auditRules;
+}
+
+function getActiveCategories(activeRules) {
+  const scopedCategorySet = new Set(activeRules.map((rule) => rule.category));
+  return auditCategories.filter((category) => scopedCategorySet.has(category));
+}
+
+function renderRules() {
+  const activeRules = getActiveRules();
+  elements.rulesContainer.innerHTML = getActiveCategories(activeRules).map((category) => renderCategory(category, activeRules)).join('');
+}
+
+function renderCategory(category, activeRules) {
+  const rules = activeRules.filter((rule) => rule.category === category);
   return `
     <section class="rule-category" aria-labelledby="category-${slugify(category)}">
       <div class="rule-category__header">
@@ -245,9 +332,10 @@ function renderRuleStatus(ruleId) {
 }
 
 function renderScore() {
-  const score = calculateAuditScore(auditRules, statuses);
-  const categoryScores = calculateCategoryScores(auditCategories, auditRules, statuses);
-  const recommendations = generateRecommendations(auditRules, statuses);
+  const activeRules = getActiveRules();
+  const score = calculateAuditScore(activeRules, statuses);
+  const categoryScores = calculateCategoryScores(getActiveCategories(activeRules), activeRules, statuses);
+  const recommendations = generateRecommendations(activeRules, statuses);
   const hasScoredRules = score.scorePercent !== null;
 
   elements.totalRules.textContent = score.totalRules;

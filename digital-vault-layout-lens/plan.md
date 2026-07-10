@@ -37,7 +37,7 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 
 ### Phase 2 — Rule engine and templates
 
-- [ ] Add rule packs for marketing pages, dashboards, forms, ecommerce, content sites, navigation, tables, modals, and drawers.
+- [x] Add rule packs for marketing pages, dashboards, forms, ecommerce, content sites, navigation, tables, modals, and drawers.
 - [ ] Add severity profiles such as baseline, production, premium, and accessibility-first.
 - [ ] Add rule data validation for ids, categories, severity, weights, recommendation metadata, and duplicate references.
 - [ ] Add versioned rule schema metadata so future audit states can migrate safely.

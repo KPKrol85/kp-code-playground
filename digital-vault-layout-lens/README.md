@@ -10,9 +10,10 @@ The current version is deliberately local-first and product-focused:
 - Manual audit checklist grouped by frontend quality category.
 - 32 beginner-friendly audit rules stored as reusable JavaScript data.
 - Component presets for common UI and page types.
+- Rule packs that narrow the active checklist scope for focused manual audits.
 - Weighted scoring based on rule severity and manual status.
 - Category score breakdowns and deterministic recommendations.
-- Browser-only local audit persistence for selected preset and rule statuses.
+- Browser-only local audit persistence for selected preset, selected rule pack, and rule statuses.
 - Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
 This release does **not** include exports, analyzer logic, backend services, login, file upload, AI calls, report generation, browser extension logic, SaaS features, or database storage.
@@ -23,10 +24,11 @@ For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
 1. `assets/js/auditRules.js` defines rule data with `id`, `category`, `title`, `description`, and `severity`.
 2. `assets/js/componentPresets.js` defines manual audit presets for common page and component types.
-3. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
-4. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
-5. `assets/js/auditStorage.js` handles browser-only local audit state.
-6. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, theme state, and status changes.
+3. `assets/js/rulePacks.js` defines reusable rule groups for focused page-type and UI-pattern audits.
+4. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
+5. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
+6. `assets/js/auditStorage.js` handles browser-only local audit state.
+7. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, theme state, and status changes.
 
 Each rule can be marked as:
 
@@ -51,6 +53,7 @@ digital-vault-layout-lens/
         ├── auditStorage.js
         ├── componentPresets.js
         ├── recommendations.js
+        ├── rulePacks.js
         └── scoringEngine.js
 ```
 
