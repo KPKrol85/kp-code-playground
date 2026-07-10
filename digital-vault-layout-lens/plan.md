@@ -26,6 +26,8 @@ This file is the single source of truth for future implementation work. Older pl
 
 The current app is a static, local-first manual audit tool. Users choose a UI preset, review each checklist rule manually, set statuses, and use the resulting score, category breakdown, and recommendations as a lightweight audit summary. The app intentionally does not scan source code, parse pasted HTML/CSS, generate reports, call AI services, use a backend, support accounts, or provide SaaS/browser-extension workflows yet.
 
+- [x] Verified that the current implementation matches the documented product baseline.
+
 ## Needs verification before marking complete
 
 - [ ] Add a repeatable QA command or package script if the project later introduces tooling beyond direct browser usage.
