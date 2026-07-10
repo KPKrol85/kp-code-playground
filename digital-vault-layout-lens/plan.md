@@ -31,9 +31,9 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 ## Needs verification before marking complete
 
 - [ ] Add a repeatable QA command or package script if the project later introduces tooling beyond direct browser usage.
-  - Verification note (2026-07-10): repository remains dependency-free with no package, build, lint, test, or browser automation tooling; condition for adding a QA command has not been triggered.
+  - Verification note (2026-07-10): repository remains dependency-free with no package.json, npm scripts, build, lint, test, browser automation, validation scripts, or other project-local repeatable tooling; condition for adding a QA command has not been triggered.
 - [ ] Re-check screenshots manually when a browser automation runtime is available.
-  - Verification note (2026-07-10): no usable browser automation/runtime command was available in the environment, so screenshot verification remains pending.
+  - Verification note (2026-07-10): no usable browser runtime, browser preview, or browser automation command was available in the environment (`google-chrome`, `google-chrome-stable`, `chromium`, `chromium-browser`, `firefox`, and `playwright` were not found), so screenshot verification remains pending; source-level review only was possible.
 
 ## Next implementation queue
 
