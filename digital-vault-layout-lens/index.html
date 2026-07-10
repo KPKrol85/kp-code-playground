@@ -223,8 +223,17 @@
             <h3 id="config-title">How to use this v1 checklist</h3>
             <p>
               Review the UI manually, category by category. Set each rule to Not checked, Pass,
-              Needs work, or Not applicable. The selected preset and rule statuses are saved locally in this browser only.
+              Needs work, or Not applicable. The selected preset, active rule pack, and rule statuses are saved locally in this browser only.
             </p>
+            <div class="field rule-pack-field">
+              <label for="rule-pack-select">Rule pack scope</label>
+              <select id="rule-pack-select" aria-describedby="rule-pack-description rule-pack-count">
+                <option value="all-rules">All rules</option>
+              </select>
+              <span id="rule-pack-description" class="field__hint" aria-live="polite">Use the full manual checklist without narrowing the audit scope.</span>
+              <strong id="rule-pack-count" class="rule-pack-count" aria-live="polite">32 rules in scope</strong>
+            </div>
+
             <div class="planned-list" aria-label="Planned future modules">
               <span class="module-card__status">Coming next</span>
               <ul>
