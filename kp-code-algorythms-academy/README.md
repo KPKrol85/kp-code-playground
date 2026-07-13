@@ -1,11 +1,12 @@
 # KP_Code Algorithms Academy
 
-KP_Code Algorithms Academy is a static educational platform product for the KP_Code Digital Academy / Digital Vault ecosystem. The first version focuses on a polished dashboard and one complete lesson: **Binary Search / Wyszukiwanie binarne**.
+KP_Code Algorithms Academy is a static educational platform product for the KP_Code Digital Academy / Digital Vault ecosystem. The first version focuses on a polished dashboard and complete beginner lessons including **Algorithmic Thinking Basics** and **Binary Search / Wyszukiwanie binarne**.
 
 ## Structure
 
 ```text
 index.html
+lessons/algorithmic-thinking-basics.html
 lessons/binary-search.html
 assets/css/main.css
 assets/js/main.js
