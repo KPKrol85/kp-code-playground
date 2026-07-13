@@ -21,12 +21,13 @@ Każde zadanie wdrożeniowe uznajemy za gotowe dopiero wtedy, gdy spełnia poni�
 
 ## Plan wdrożeń
 
-### 1. Algorithmic Thinking Basics — **do wdrożenia**
-- **Plik docelowy:** `lessons/algorithmic-thinking-basics.html`
+### 1. Algorithmic Thinking Basics — **wdrożone**
+- **Plik istniejący:** `lessons/algorithmic-thinking-basics.html`
 - **Cel lekcji:** nauczyć rozbijania problemu na wejście, wyjście, ograniczenia, kroki i przypadki brzegowe.
-- **Zakres wdrożenia:** mental model rozwiązywania zadań, analiza przykładu funkcji wyszukiwania, checklisty przed napisaniem kodu.
-- **Przykład:** planowanie funkcji wyszukiwania w aplikacji.
+- **Zakres wdrożony:** cele lekcji, definicja, problem przed kodem, analogia, mental model, analiza wejścia i wyjścia, ograniczenia, plan kroków, walkthrough, pseudokod, JavaScript, wariant wymagań, wprowadzenie do kosztu, błędy, checklista, praktyka, mini challenge, podsumowanie i informacja o następnej lekcji bez uszkodzonego linku.
+- **Przykład:** planowanie funkcji wyszukiwania użytkownika po nazwie w aplikacji.
 - **Poziom:** Beginner.
+- **Uwagi seniorsko-produktowe:** zaktualizowano dashboard, menu lekcji, stopkę oraz nawigację Binary Search; wykonano statyczną weryfikację linków, identyfikatorów, nagłówków i przykładowego JavaScriptu.
 
 ### 2. Big O Notation — **do wdrożenia**
 - **Plik docelowy:** `lessons/big-o-notation.html`
