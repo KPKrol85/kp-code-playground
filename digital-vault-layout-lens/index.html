@@ -256,6 +256,15 @@
             <p class="eyebrow">Weighted scoring</p>
             <h3 id="score-title">Manual audit score</h3>
             <p id="audit-score-summary" class="score-panel__summary">Not enough checked rules yet.</p>
+            <div class="scoring-guide" aria-labelledby="scoring-guide-title">
+              <h4 id="scoring-guide-title">How statuses affect the score</h4>
+              <ul>
+                <li><strong>Pass:</strong> earns the rule’s weighted points.</li>
+                <li><strong>Needs work:</strong> adds the rule to possible points, but earns 0 points.</li>
+                <li><strong>Not applicable:</strong> counts as checked, but is removed from possible points.</li>
+                <li><strong>Not checked:</strong> stays unreviewed and does not affect points yet.</li>
+              </ul>
+            </div>
             <div class="score-ring" aria-label="Overall manual audit score">
               <span><span id="audit-score-value">—</span><small id="audit-score-unit"></small></span>
             </div>

@@ -93,6 +93,7 @@ function bindEvents() {
 
     statuses[control.dataset.ruleStatus] = control.value;
     renderRuleStatus(control.dataset.ruleStatus);
+    updateCategoryProgressIndicators();
     renderScore();
     persistAuditState('Saved in this browser.');
   });
@@ -123,6 +124,7 @@ function bindEvents() {
 
     selectedPresetId = control.value;
     renderSelectedPreset();
+    renderScore();
     persistAuditState('Saved in this browser.');
   });
 
@@ -356,14 +358,31 @@ function renderRules() {
 
 function renderCategory(category, activeRules) {
   const rules = activeRules.filter((rule) => rule.category === category);
+  const progress = calculateCategoryProgress(rules);
+  const progressLabel = formatCategoryProgressLabel(progress);
+  const progressPercent = getCategoryProgressPercent(progress);
+  const safeCategoryId = slugify(category);
+
   return `
-    <section class="rule-category" aria-labelledby="category-${slugify(category)}">
+    <section class="rule-category" aria-labelledby="category-${safeCategoryId}">
       <div class="rule-category__header">
         <div>
-          <h4 id="category-${slugify(category)}" class="rule-category__title">${escapeHtml(category)}</h4>
+          <h4 id="category-${safeCategoryId}" class="rule-category__title">${escapeHtml(category)}</h4>
           <p>${rules.length} manual checks for this audit area.</p>
         </div>
-        <span class="rule-category__count">${rules.length} checks</span>
+        <div class="rule-category__progress" data-category-progress="${escapeHtml(category)}">
+          <span class="rule-category__count">${escapeHtml(progressLabel)}</span>
+          <div
+            class="rule-category__bar"
+            role="progressbar"
+            aria-label="${escapeHtml(category)} reviewed applicable rules"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="${progressPercent}"
+          >
+            <span style="width: ${progressPercent}%"></span>
+          </div>
+        </div>
       </div>
       <div class="rule-list">
         ${rules.map(renderRule).join('')}
@@ -441,6 +460,9 @@ function renderCategoryScore(categoryScore) {
     ? `${categoryScore.needsWorkRules} ${pluralize('rule', categoryScore.needsWorkRules)} needing work`
     : 'Not enough checked rules yet';
 
+  const applicableRules = categoryScore.totalRules - categoryScore.notApplicableRules;
+  const progressPercent = getProgressPercent(applicableCheckedRules, applicableRules);
+
   return `
     <article class="category-score" aria-labelledby="category-score-${categoryScore.categoryId}">
       <div>
@@ -449,9 +471,73 @@ function renderCategoryScore(categoryScore) {
       </div>
       <strong>${hasScore ? `${categoryScore.scorePercent}%` : '—'}</strong>
       <meter class="category-score__meter" min="0" max="100" value="${hasScore ? categoryScore.scorePercent : 0}">${hasScore ? `${categoryScore.scorePercent}%` : 'No category score yet'}</meter>
-      <span class="category-score__meta">${applicableCheckedRules} of ${categoryScore.totalRules - categoryScore.notApplicableRules} applicable ${pluralize('rule', categoryScore.totalRules - categoryScore.notApplicableRules)} checked · ${categoryScore.notCheckedRules} not checked</span>
+      <span class="category-score__meta">${escapeHtml(formatProgressMeta(applicableCheckedRules, applicableRules, categoryScore.notCheckedRules, progressPercent))}</span>
     </article>
   `;
+}
+
+
+function updateCategoryProgressIndicators() {
+  const activeRules = getActiveRules();
+
+  getActiveCategories(activeRules).forEach((category) => {
+    const container = elements.rulesContainer.querySelector(`[data-category-progress="${CSS.escape(category)}"]`);
+    if (!container) return;
+
+    const progress = calculateCategoryProgress(activeRules.filter((rule) => rule.category === category));
+    const progressPercent = getCategoryProgressPercent(progress);
+    const progressLabel = formatCategoryProgressLabel(progress);
+    const label = container.querySelector('.rule-category__count');
+    const bar = container.querySelector('.rule-category__bar');
+    const fill = container.querySelector('.rule-category__bar span');
+
+    if (label) label.textContent = progressLabel;
+    if (bar) bar.setAttribute('aria-valuenow', String(progressPercent));
+    if (fill) fill.style.width = `${progressPercent}%`;
+  });
+}
+
+function calculateCategoryProgress(rules) {
+  return rules.reduce((progress, rule) => {
+    const status = statuses[rule.id] || STATUS_NOT_CHECKED;
+
+    if (status === SCORE_STATUSES.NOT_APPLICABLE) {
+      return progress;
+    }
+
+    progress.applicableRules += 1;
+
+    if (status === SCORE_STATUSES.PASS || status === SCORE_STATUSES.NEEDS_WORK) {
+      progress.reviewedRules += 1;
+    }
+
+    return progress;
+  }, { reviewedRules: 0, applicableRules: 0 });
+}
+
+function formatCategoryProgressLabel(progress) {
+  if (progress.applicableRules === 0) {
+    return 'No applicable rules';
+  }
+
+  return `${progress.reviewedRules} / ${progress.applicableRules} reviewed`;
+}
+
+function getCategoryProgressPercent(progress) {
+  return getProgressPercent(progress.reviewedRules, progress.applicableRules);
+}
+
+function getProgressPercent(reviewedRules, applicableRules) {
+  if (applicableRules <= 0) return 0;
+  return Math.round((reviewedRules / applicableRules) * 100);
+}
+
+function formatProgressMeta(reviewedRules, applicableRules, notCheckedRules, progressPercent) {
+  if (applicableRules === 0) {
+    return 'No applicable rules in this category.';
+  }
+
+  return `${reviewedRules} of ${applicableRules} applicable ${pluralize('rule', applicableRules)} reviewed (${progressPercent}%) · ${notCheckedRules} not checked`;
 }
 
 function renderRecommendations(recommendations) {
