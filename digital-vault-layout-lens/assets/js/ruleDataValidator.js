@@ -1,4 +1,4 @@
-import { auditCategories, auditRules } from './auditRules.js';
+import { RULE_SCHEMA_VERSION, auditCategories, auditRuleSchemaMetadata, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
 import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, severityProfiles } from './severityProfiles.js';
@@ -15,7 +15,9 @@ export class RuleDataValidationError extends Error {
 
 export function validateRuleData(data = {}) {
   const dataset = {
+    ruleSchemaVersion: RULE_SCHEMA_VERSION,
     auditCategories,
+    auditRuleSchemaMetadata,
     auditRules,
     componentPresets,
     allRulesPackId: ALL_RULES_PACK_ID,
@@ -26,6 +28,7 @@ export function validateRuleData(data = {}) {
     ...data
   };
   const errors = [];
+  validateRuleSchemaMetadata(dataset.auditRuleSchemaMetadata, dataset.ruleSchemaVersion, errors);
   const categorySet = validateCategories(dataset.auditCategories, errors);
   const severitySet = validateSeverityWeights(dataset.severityWeights, errors);
   const ruleIdSet = validateRules(dataset.auditRules, categorySet, severitySet, errors);
@@ -51,6 +54,38 @@ export function assertValidRuleData(data) {
 export function formatRuleDataValidationMessage(result) {
   const issueLines = result.errors.map((error) => `- ${error.source}${error.entity ? ` ${error.entity}` : ''}${error.field ? `.${error.field}` : ''}: ${error.reason}`);
   return ['Rule data validation failed:', ...issueLines].join('\n');
+}
+
+
+function validateRuleSchemaMetadata(metadata, ruleSchemaVersion, errors) {
+  if (!Number.isInteger(ruleSchemaVersion) || ruleSchemaVersion < 1) {
+    addError(errors, 'auditRules.js', 'RULE_SCHEMA_VERSION', 'value', 'Rule schema version must be a positive integer.');
+  }
+
+  if (!isPlainObject(metadata)) {
+    addError(errors, 'auditRules.js', 'auditRuleSchemaMetadata', 'root', 'Expected rule schema metadata to be a plain object.');
+    return;
+  }
+
+  validateRequiredText(metadata.schemaName, 'auditRules.js', 'auditRuleSchemaMetadata', 'schemaName', errors);
+  if (!Number.isInteger(metadata.schemaVersion) || metadata.schemaVersion < 1) {
+    addError(errors, 'auditRules.js', 'auditRuleSchemaMetadata', 'schemaVersion', 'Schema metadata version must be a positive integer.');
+  } else if (metadata.schemaVersion !== ruleSchemaVersion) {
+    addError(errors, 'auditRules.js', 'auditRuleSchemaMetadata', 'schemaVersion', 'Schema metadata version must match RULE_SCHEMA_VERSION.');
+  }
+
+  if (!Array.isArray(metadata.compatibleAuditStateVersions) || metadata.compatibleAuditStateVersions.length === 0) {
+    addError(errors, 'auditRules.js', 'auditRuleSchemaMetadata', 'compatibleAuditStateVersions', 'Compatible audit state versions must be a non-empty array.');
+  } else {
+    metadata.compatibleAuditStateVersions.forEach((version, index) => {
+      if (!Number.isInteger(version) || version < 1) {
+        addError(errors, 'auditRules.js', 'auditRuleSchemaMetadata', `compatibleAuditStateVersions[${index}]`, 'Compatible audit state version must be a positive integer.');
+      }
+    });
+  }
+
+  validateRequiredText(metadata.ruleIdStrategy, 'auditRules.js', 'auditRuleSchemaMetadata', 'ruleIdStrategy', errors);
+  validateRequiredText(metadata.migrationNote, 'auditRules.js', 'auditRuleSchemaMetadata', 'migrationNote', errors);
 }
 
 function validateCategories(categories, errors) {

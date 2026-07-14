@@ -1,3 +1,13 @@
+export const RULE_SCHEMA_VERSION = 1;
+
+export const auditRuleSchemaMetadata = {
+  schemaName: 'kp-layout-lens-rule-schema',
+  schemaVersion: RULE_SCHEMA_VERSION,
+  compatibleAuditStateVersions: [1],
+  ruleIdStrategy: 'stable-human-readable-ids',
+  migrationNote: 'Persisted audit drafts store this rule schema version so future rule data changes can trigger safe migrations.'
+};
+
 export const auditCategories = [
   'Layout structure',
   'Responsive behavior',

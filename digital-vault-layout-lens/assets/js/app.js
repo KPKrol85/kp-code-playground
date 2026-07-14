@@ -1,4 +1,4 @@
-import { auditCategories, auditRules } from './auditRules.js';
+import { RULE_SCHEMA_VERSION, auditCategories, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
 import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverityProfile, severityProfiles } from './severityProfiles.js';
@@ -157,7 +157,7 @@ function bindEvents() {
 
 
 function restoreSavedAuditState() {
-  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds });
+  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion: RULE_SCHEMA_VERSION });
 
   if (result.state) {
     if (result.state.selectedPresetId) {
@@ -183,6 +183,11 @@ function restoreSavedAuditState() {
     return;
   }
 
+  if (result.status === 'schema-mismatch') {
+    setAuditStorageStatus('Saved audit data uses a different rule schema and needs a future migration. Starting a fresh browser-only audit.');
+    return;
+  }
+
   if (result.status === 'invalid') {
     setAuditStorageStatus('Saved audit data could not be used. Starting a fresh browser-only audit.');
     return;
@@ -196,7 +201,8 @@ function persistAuditState(message) {
     selectedPresetId,
     selectedRulePackId,
     selectedSeverityProfileId,
-    ruleStatuses: statuses
+    ruleStatuses: statuses,
+    ruleSchemaVersion: RULE_SCHEMA_VERSION
   });
 
   setAuditStorageStatus(saved ? message : 'Browser storage is unavailable. Changes are kept for this session only.');
