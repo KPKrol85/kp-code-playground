@@ -1,7 +1,7 @@
 export const AUDIT_STORAGE_KEY = 'kp-layout-lens-audit-v1';
 export const AUDIT_SCHEMA_VERSION = 1;
 
-export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set() }) {
+export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set(), currentRuleSchemaVersion }) {
   let parsed;
 
   try {
@@ -14,6 +14,10 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
 
   if (!isPlainObject(parsed) || parsed.schemaVersion !== AUDIT_SCHEMA_VERSION) {
     return { state: null, status: 'invalid' };
+  }
+
+  if (!isCompatibleRuleSchemaVersion(parsed.ruleSchemaVersion, currentRuleSchemaVersion)) {
+    return { state: null, status: 'schema-mismatch' };
   }
 
   const selectedPresetId = validPresetIds.has(parsed.selectedPresetId)
@@ -38,9 +42,10 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
   };
 }
 
-export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses }) {
+export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleSchemaVersion }) {
   const state = {
     schemaVersion: AUDIT_SCHEMA_VERSION,
+    ruleSchemaVersion,
     selectedPresetId,
     selectedRulePackId,
     selectedSeverityProfileId,
@@ -63,6 +68,12 @@ export function clearSavedAuditState() {
   } catch {
     return false;
   }
+}
+
+function isCompatibleRuleSchemaVersion(savedRuleSchemaVersion, currentRuleSchemaVersion) {
+  return Number.isInteger(currentRuleSchemaVersion)
+    && Number.isInteger(savedRuleSchemaVersion)
+    && savedRuleSchemaVersion === currentRuleSchemaVersion;
 }
 
 function sanitizeRuleStatuses(ruleStatuses, validRuleIds, validStatuses) {
