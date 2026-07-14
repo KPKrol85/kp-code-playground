@@ -5,6 +5,14 @@ import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverit
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
+import { assertValidRuleData } from './ruleDataValidator.js';
+
+try {
+  assertValidRuleData();
+} catch (error) {
+  console.error(error.message, error.result?.errors || error);
+  throw error;
+}
 
 const THEME_STORAGE_KEY = 'kp-layout-lens-theme';
 const STATUS_NOT_CHECKED = SCORE_STATUSES.NOT_CHECKED;

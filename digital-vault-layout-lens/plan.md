@@ -41,7 +41,8 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 
 - [x] Add rule packs for marketing pages, dashboards, forms, ecommerce, content sites, navigation, tables, modals, and drawers.
 - [x] Add severity profiles such as baseline, production, premium, and accessibility-first.
-- [ ] Add rule data validation for ids, categories, severity, weights, recommendation metadata, and duplicate references.
+- [x] Add rule data validation for ids, categories, severity, weights, recommendation metadata, and duplicate references.
+  - Verification note (2026-07-14): added `assets/js/ruleDataValidator.js` and verified the current complete dataset passes. Inline Node module checks also confirmed detection of a duplicate rule ID, unknown rule reference, unsupported category/severity, invalid profile weight, malformed generated recommendation metadata via malformed rule text, and duplicate references inside rule packs and presets.
 - [ ] Add versioned rule schema metadata so future audit states can migrate safely.
 - [ ] Add conditional applicability logic for rules that only apply to certain presets or UI patterns.
 - [ ] Add clearer scoring explanations for pass, needs-work, not-applicable, and not-checked states.
