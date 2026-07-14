@@ -304,6 +304,43 @@
               <h3 id="checklist-title">Audit checklist</h3>
               <p>Mark every rule as Not checked, Pass, Needs work, or Not applicable.</p>
             </div>
+            <form class="checklist-filters" aria-labelledby="checklist-filters-title">
+              <div class="checklist-filters__header">
+                <div>
+                  <h4 id="checklist-filters-title">Checklist filters</h4>
+                  <p id="checklist-filter-summary">Showing all currently applicable rules.</p>
+                </div>
+                <button id="clear-rule-filters" class="button button--secondary" type="button">Clear filters</button>
+              </div>
+              <div class="checklist-filters__grid">
+                <label class="field" for="status-filter-select">
+                  <span>Status</span>
+                  <select id="status-filter-select" name="status-filter">
+                    <option value="all">All statuses</option>
+                  </select>
+                </label>
+                <label class="field" for="severity-filter-select">
+                  <span>Severity</span>
+                  <select id="severity-filter-select" name="severity-filter">
+                    <option value="all">All severities</option>
+                  </select>
+                </label>
+                <label class="field" for="category-filter-select">
+                  <span>Category</span>
+                  <select id="category-filter-select" name="category-filter">
+                    <option value="all">All categories</option>
+                  </select>
+                </label>
+                <label class="field" for="relevance-filter-select">
+                  <span>Preset relevance</span>
+                  <select id="relevance-filter-select" name="relevance-filter">
+                    <option value="applicable">Relevant to preset</option>
+                    <option value="all">All relevance</option>
+                    <option value="inapplicable">Not relevant to preset</option>
+                  </select>
+                </label>
+              </div>
+            </form>
             <div id="rules-container" class="checklist__rules"></div>
           </div>
         </div>

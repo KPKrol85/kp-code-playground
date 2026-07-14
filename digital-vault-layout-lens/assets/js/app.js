@@ -3,7 +3,7 @@ import { componentPresets } from './componentPresets.js';
 import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverityProfile, severityProfiles } from './severityProfiles.js';
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
-import { getApplicableRules, getPresetPatternIds } from './ruleApplicability.js';
+import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
@@ -54,10 +54,18 @@ const elements = {
   severityProfileSelect: document.querySelector('#severity-profile-select'),
   severityProfileDescription: document.querySelector('#severity-profile-description'),
   severityProfileSummary: document.querySelector('#severity-profile-summary'),
-  auditStorageStatus: document.querySelector('#audit-storage-status')
+  auditStorageStatus: document.querySelector('#audit-storage-status'),
+  statusFilterSelect: document.querySelector('#status-filter-select'),
+  severityFilterSelect: document.querySelector('#severity-filter-select'),
+  categoryFilterSelect: document.querySelector('#category-filter-select'),
+  relevanceFilterSelect: document.querySelector('#relevance-filter-select'),
+  clearRuleFilters: document.querySelector('#clear-rule-filters'),
+  checklistFilterSummary: document.querySelector('#checklist-filter-summary')
 };
 
 let statuses = createInitialStatuses();
+let ruleNotes = {};
+let filters = createInitialFilters();
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -77,6 +85,8 @@ function init() {
   renderRulePackSelector();
   renderSeverityProfileOptions();
   renderSeverityProfileSelector();
+  renderFilterOptions();
+  renderFilterControls();
   renderRules();
   renderScore();
   bindEvents();
@@ -87,16 +97,50 @@ function createInitialStatuses() {
   return Object.fromEntries(auditRules.map((rule) => [rule.id, STATUS_NOT_CHECKED]));
 }
 
+function createInitialFilters() {
+  return {
+    status: 'all',
+    severity: 'all',
+    category: 'all',
+    relevance: 'applicable'
+  };
+}
+
 function bindEvents() {
   elements.rulesContainer.addEventListener('change', (event) => {
-    const control = event.target.closest('[data-rule-status]');
-    if (!control) return;
+    const statusControl = event.target.closest('[data-rule-status]');
+    const noteControl = event.target.closest('[data-rule-note]');
 
-    statuses[control.dataset.ruleStatus] = control.value;
-    renderRuleStatus(control.dataset.ruleStatus);
-    updateCategoryProgressIndicators();
-    renderScore();
-    persistAuditState('Saved in this browser.');
+    if (statusControl) {
+      statuses[statusControl.dataset.ruleStatus] = statusControl.value;
+      if (filters.status === 'all' || filters.status === statusControl.value) {
+        renderRuleStatus(statusControl.dataset.ruleStatus);
+      } else {
+        renderRules();
+      }
+      updateCategoryProgressIndicators();
+      renderScore();
+      persistAuditState('Saved in this browser.');
+      return;
+    }
+
+    if (noteControl) {
+      updateRuleNote(noteControl.dataset.ruleNote, noteControl.value);
+      persistAuditState('Reviewer note saved in this browser.');
+    }
+  });
+
+  [elements.statusFilterSelect, elements.severityFilterSelect, elements.categoryFilterSelect, elements.relevanceFilterSelect].forEach((select) => {
+    select?.addEventListener('change', () => {
+      filters = getFiltersFromControls();
+      renderRules();
+    });
+  });
+
+  elements.clearRuleFilters?.addEventListener('click', () => {
+    filters = createInitialFilters();
+    renderFilterControls();
+    renderRules();
   });
 
   elements.rulePackSelect?.addEventListener('change', () => {
@@ -105,6 +149,7 @@ function bindEvents() {
       : ALL_RULES_PACK_ID;
     renderRulePackSelector();
     renderSeverityProfileSelector();
+    renderFilterControls();
     renderRules();
     renderScore();
     persistAuditState('Rule pack updated. Saved in this browser.');
@@ -136,11 +181,14 @@ function bindEvents() {
     selectedRulePackId = ALL_RULES_PACK_ID;
     selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
     statuses = createInitialStatuses();
+    ruleNotes = {};
+    filters = createInitialFilters();
     clearSavedAuditState();
     renderPresets();
     renderSelectedPreset();
     renderRulePackSelector();
     renderSeverityProfileSelector();
+    renderFilterControls();
     renderRules();
     renderScore();
     setAuditStorageStatus('Local audit cleared. Browser-only draft removed.');
@@ -181,6 +229,8 @@ function restoreSavedAuditState() {
       ...createInitialStatuses(),
       ...result.state.ruleStatuses
     };
+
+    ruleNotes = result.state.ruleNotes || {};
   }
 
   if (result.status === 'loaded') {
@@ -207,6 +257,7 @@ function persistAuditState(message) {
     selectedRulePackId,
     selectedSeverityProfileId,
     ruleStatuses: statuses,
+    ruleNotes,
     ruleSchemaVersion: RULE_SCHEMA_VERSION
   });
 
@@ -216,6 +267,46 @@ function persistAuditState(message) {
 function setAuditStorageStatus(message) {
   if (!elements.auditStorageStatus) return;
   elements.auditStorageStatus.textContent = message;
+}
+
+function renderFilterOptions() {
+  if (elements.statusFilterSelect) {
+    elements.statusFilterSelect.innerHTML = [
+      '<option value="all">All statuses</option>',
+      ...statusOptions.map((option) => `<option value="${escapeHtml(option.value)}">${escapeHtml(option.label)}</option>`)
+    ].join('');
+  }
+
+  if (elements.severityFilterSelect) {
+    const severities = [...new Set(auditRules.map((rule) => rule.severity))].sort();
+    elements.severityFilterSelect.innerHTML = [
+      '<option value="all">All severities</option>',
+      ...severities.map((severity) => `<option value="${escapeHtml(severity)}">${escapeHtml(severity)}</option>`)
+    ].join('');
+  }
+
+  if (elements.categoryFilterSelect) {
+    elements.categoryFilterSelect.innerHTML = [
+      '<option value="all">All categories</option>',
+      ...auditCategories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`)
+    ].join('');
+  }
+}
+
+function renderFilterControls() {
+  if (elements.statusFilterSelect) elements.statusFilterSelect.value = filters.status;
+  if (elements.severityFilterSelect) elements.severityFilterSelect.value = filters.severity;
+  if (elements.categoryFilterSelect) elements.categoryFilterSelect.value = filters.category;
+  if (elements.relevanceFilterSelect) elements.relevanceFilterSelect.value = filters.relevance;
+}
+
+function getFiltersFromControls() {
+  return {
+    status: elements.statusFilterSelect?.value || 'all',
+    severity: elements.severityFilterSelect?.value || 'all',
+    category: elements.categoryFilterSelect?.value || 'all',
+    relevance: elements.relevanceFilterSelect?.value || 'applicable'
+  };
 }
 
 function renderPresets() {
@@ -365,11 +456,59 @@ function getActiveCategories(activeRules) {
 }
 
 function renderRules() {
-  const activeRules = getActiveRules();
-  const activeCategories = getActiveCategories(activeRules);
+  const displayRules = getFilteredDisplayRules();
+  const activeCategories = getActiveCategories(displayRules);
+  updateFilterSummary(displayRules.length);
   elements.rulesContainer.innerHTML = activeCategories.length > 0
-    ? activeCategories.map((category) => renderCategory(category, activeRules)).join('')
-    : renderNoApplicableRules();
+    ? activeCategories.map((category) => renderCategory(category, displayRules)).join('')
+    : renderNoMatchingRules();
+}
+
+function getDisplayScopeRules() {
+  const activePack = getSelectedRulePack();
+  const ruleIdSet = new Set(activePack.ruleIds);
+  const scopedRules = auditRules.filter((rule) => ruleIdSet.has(rule.id));
+  return scopedRules.length > 0 ? scopedRules : auditRules;
+}
+
+function getFilteredDisplayRules() {
+  const context = getApplicabilityContext();
+  return getDisplayScopeRules().filter((rule) => {
+    const applicable = isRuleApplicable(rule, context);
+    const status = statuses[rule.id] || STATUS_NOT_CHECKED;
+
+    if (filters.relevance === 'applicable' && !applicable) return false;
+    if (filters.relevance === 'inapplicable' && applicable) return false;
+    if (filters.status !== 'all' && status !== filters.status) return false;
+    if (filters.severity !== 'all' && rule.severity !== filters.severity) return false;
+    if (filters.category !== 'all' && rule.category !== filters.category) return false;
+
+    return true;
+  });
+}
+
+function updateFilterSummary(displayCount) {
+  if (!elements.checklistFilterSummary) return;
+  const activeCount = getActiveRules().length;
+  const filterDescriptions = [];
+  if (filters.status !== 'all') filterDescriptions.push(`status: ${getStatusLabel(filters.status)}`);
+  if (filters.severity !== 'all') filterDescriptions.push(`severity: ${filters.severity}`);
+  if (filters.category !== 'all') filterDescriptions.push(`category: ${filters.category}`);
+  if (filters.relevance === 'inapplicable') filterDescriptions.push('not relevant to this preset');
+  if (filters.relevance === 'all') filterDescriptions.push('all relevance states');
+
+  elements.checklistFilterSummary.textContent = filterDescriptions.length > 0
+    ? `Showing ${displayCount} ${pluralize('rule', displayCount)} matching ${filterDescriptions.join(', ')}. Scoring still uses ${activeCount} applicable ${pluralize('rule', activeCount)}.`
+    : `Showing ${displayCount} currently applicable ${pluralize('rule', displayCount)}.`;
+}
+
+function renderNoMatchingRules() {
+  return `
+    <article class="recommendation-empty">
+      <h3>No rules match these filters.</h3>
+      <p>Clear filters or choose a broader status, severity, category, or preset relevance option. Saved statuses, notes, and scoring are unchanged.</p>
+    </article>
+  `;
 }
 
 function renderNoApplicableRules() {
@@ -419,23 +558,45 @@ function renderCategory(category, activeRules) {
 function renderRule(rule) {
   const selectedStatus = statuses[rule.id] || STATUS_NOT_CHECKED;
   const safeTitle = escapeHtml(rule.title);
+  const note = ruleNotes[rule.id] || "";
+  const relevant = isRuleApplicable(rule, getApplicabilityContext());
   return `
     <article class="rule-card rule-card--${selectedStatus}" data-rule-card="${escapeHtml(rule.id)}">
       <div class="rule-card__body">
         <div>
-          <p class="rule-card__meta">${escapeHtml(rule.severity)} severity · ${escapeHtml(rule.category)}</p>
+          <p class="rule-card__meta">${escapeHtml(rule.severity)} severity · ${escapeHtml(rule.category)} · ${relevant ? 'Preset relevant' : 'Not preset relevant'}</p>
           <h5 class="rule-card__title">${safeTitle}</h5>
           <p>${escapeHtml(rule.description)}</p>
         </div>
-        <label class="status-select" for="status-${escapeHtml(rule.id)}">
-          <span>Status for ${safeTitle}</span>
-          <select id="status-${escapeHtml(rule.id)}" data-rule-status="${escapeHtml(rule.id)}">
-            ${statusOptions.map((option) => `<option value="${option.value}" ${option.value === selectedStatus ? 'selected' : ''}>${option.label}</option>`).join('')}
-          </select>
-        </label>
+        <div class="rule-card__controls">
+          <label class="status-select" for="status-${escapeHtml(rule.id)}">
+            <span>Status for ${safeTitle}</span>
+            <select id="status-${escapeHtml(rule.id)}" data-rule-status="${escapeHtml(rule.id)}">
+              ${statusOptions.map((option) => `<option value="${option.value}" ${option.value === selectedStatus ? 'selected' : ''}>${option.label}</option>`).join('')}
+            </select>
+          </label>
+          <label class="note-field" for="note-${escapeHtml(rule.id)}">
+            <span>Reviewer note for ${safeTitle}</span>
+            <textarea id="note-${escapeHtml(rule.id)}" data-rule-note="${escapeHtml(rule.id)}" maxlength="1000" rows="2" placeholder="Optional local note">${escapeHtml(note)}</textarea>
+          </label>
+        </div>
       </div>
     </article>
   `;
+}
+
+function updateRuleNote(ruleId, value) {
+  if (!validRuleIds.has(ruleId) || typeof value !== 'string') return;
+  const normalizedNote = value.replace(/\u0000/g, '').slice(0, 1000);
+  if (normalizedNote.length > 0) {
+    ruleNotes[ruleId] = normalizedNote;
+  } else {
+    delete ruleNotes[ruleId];
+  }
+}
+
+function getStatusLabel(status) {
+  return statusOptions.find((option) => option.value === status)?.label || status;
 }
 
 function renderRuleStatus(ruleId) {
