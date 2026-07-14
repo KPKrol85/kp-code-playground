@@ -1,8 +1,9 @@
-import { RULE_SCHEMA_VERSION, auditCategories, auditRules } from './auditRules.js';
+import { RULE_SCHEMA_VERSION, auditCategories, auditRuleSchemaMetadata, auditRules } from './auditRules.js';
 import { componentPresets } from './componentPresets.js';
 import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverityProfile, severityProfiles } from './severityProfiles.js';
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
+import { getApplicableRules, getPresetPatternIds } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
@@ -124,6 +125,8 @@ function bindEvents() {
 
     selectedPresetId = control.value;
     renderSelectedPreset();
+    renderRulePackSelector();
+    renderRules();
     renderScore();
     persistAuditState('Saved in this browser.');
   });
@@ -159,7 +162,7 @@ function bindEvents() {
 
 
 function restoreSavedAuditState() {
-  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion: RULE_SCHEMA_VERSION });
+  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion: RULE_SCHEMA_VERSION, compatibleRuleSchemaVersions: auditRuleSchemaMetadata.compatibleRuleSchemaVersions });
 
   if (result.state) {
     if (result.state.selectedPresetId) {
@@ -285,7 +288,7 @@ function renderRulePackSelector() {
   }
 
   if (elements.rulePackCount) {
-    elements.rulePackCount.textContent = `${scopedRules.length} ${pluralize('rule', scopedRules.length)} in scope`;
+    elements.rulePackCount.textContent = `${scopedRules.length} applicable ${pluralize('rule', scopedRules.length)} in scope`;
   }
 }
 
@@ -342,8 +345,18 @@ function getActiveRules() {
   const activePack = getSelectedRulePack();
   const ruleIdSet = new Set(activePack.ruleIds);
   const scopedRules = auditRules.filter((rule) => ruleIdSet.has(rule.id));
+  const packRules = scopedRules.length > 0 ? scopedRules : auditRules;
 
-  return scopedRules.length > 0 ? scopedRules : auditRules;
+  return getApplicableRules(packRules, getApplicabilityContext());
+}
+
+function getApplicabilityContext() {
+  const preset = getSelectedPreset();
+  return {
+    presetId: preset?.id,
+    rulePackId: selectedRulePackId,
+    patternIds: getPresetPatternIds(preset)
+  };
 }
 
 function getActiveCategories(activeRules) {
@@ -353,7 +366,19 @@ function getActiveCategories(activeRules) {
 
 function renderRules() {
   const activeRules = getActiveRules();
-  elements.rulesContainer.innerHTML = getActiveCategories(activeRules).map((category) => renderCategory(category, activeRules)).join('');
+  const activeCategories = getActiveCategories(activeRules);
+  elements.rulesContainer.innerHTML = activeCategories.length > 0
+    ? activeCategories.map((category) => renderCategory(category, activeRules)).join('')
+    : renderNoApplicableRules();
+}
+
+function renderNoApplicableRules() {
+  return `
+    <article class="recommendation-empty">
+      <h3>No applicable rules for this context.</h3>
+      <p>Choose a different preset or rule pack to bring relevant manual checks back into scope. Saved rule statuses are preserved.</p>
+    </article>
+  `;
 }
 
 function renderCategory(category, activeRules) {

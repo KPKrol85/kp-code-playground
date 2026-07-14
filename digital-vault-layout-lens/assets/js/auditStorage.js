@@ -1,7 +1,7 @@
 export const AUDIT_STORAGE_KEY = 'kp-layout-lens-audit-v1';
 export const AUDIT_SCHEMA_VERSION = 1;
 
-export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set(), currentRuleSchemaVersion }) {
+export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set(), currentRuleSchemaVersion, compatibleRuleSchemaVersions = [currentRuleSchemaVersion] }) {
   let parsed;
 
   try {
@@ -16,7 +16,7 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
     return { state: null, status: 'invalid' };
   }
 
-  if (!isCompatibleRuleSchemaVersion(parsed.ruleSchemaVersion, currentRuleSchemaVersion)) {
+  if (!isCompatibleRuleSchemaVersion(parsed.ruleSchemaVersion, currentRuleSchemaVersion, compatibleRuleSchemaVersions)) {
     return { state: null, status: 'schema-mismatch' };
   }
 
@@ -70,10 +70,14 @@ export function clearSavedAuditState() {
   }
 }
 
-function isCompatibleRuleSchemaVersion(savedRuleSchemaVersion, currentRuleSchemaVersion) {
+function isCompatibleRuleSchemaVersion(savedRuleSchemaVersion, currentRuleSchemaVersion, compatibleRuleSchemaVersions) {
+  const compatibleVersions = Array.isArray(compatibleRuleSchemaVersions)
+    ? compatibleRuleSchemaVersions
+    : [currentRuleSchemaVersion];
+
   return Number.isInteger(currentRuleSchemaVersion)
     && Number.isInteger(savedRuleSchemaVersion)
-    && savedRuleSchemaVersion === currentRuleSchemaVersion;
+    && compatibleVersions.includes(savedRuleSchemaVersion);
 }
 
 function sanitizeRuleStatuses(ruleStatuses, validRuleIds, validStatuses) {
