@@ -3,6 +3,7 @@ import { componentPresets } from './componentPresets.js';
 import { ALL_RULES_PACK_ID, rulePacks } from './rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, severityProfiles } from './severityProfiles.js';
 import { SCORE_STATUSES, calculateEffectiveRuleWeight, severityWeights } from './scoringEngine.js';
+import { getAllPatternIds, getRulePackIds } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
 
 export class RuleDataValidationError extends Error {
@@ -31,7 +32,11 @@ export function validateRuleData(data = {}) {
   validateRuleSchemaMetadata(dataset.auditRuleSchemaMetadata, dataset.ruleSchemaVersion, errors);
   const categorySet = validateCategories(dataset.auditCategories, errors);
   const severitySet = validateSeverityWeights(dataset.severityWeights, errors);
-  const ruleIdSet = validateRules(dataset.auditRules, categorySet, severitySet, errors);
+  const safePresets = Array.isArray(dataset.componentPresets) ? dataset.componentPresets.filter(isPlainObject) : [];
+  const safePacks = Array.isArray(dataset.rulePacks) ? dataset.rulePacks.filter(isPlainObject) : [];
+  const patternSet = new Set(getAllPatternIds(safePresets));
+  const packIdSet = new Set(getRulePackIds(safePacks, dataset.allRulesPackId));
+  const ruleIdSet = validateRules(dataset.auditRules, categorySet, severitySet, errors, { presetIds: new Set(safePresets.map((preset) => preset.id).filter(isNonEmptyString)), packIds: packIdSet, patternIds: patternSet, presets: safePresets });
   validateSeverityProfiles(dataset.severityProfiles, dataset.defaultSeverityProfileId, categorySet, severitySet, errors);
   validateComponentPresets(dataset.componentPresets, categorySet, errors);
   validateRulePacks(dataset.rulePacks, dataset.allRulesPackId, ruleIdSet, errors);
@@ -85,6 +90,7 @@ function validateRuleSchemaMetadata(metadata, ruleSchemaVersion, errors) {
   }
 
   validateRequiredText(metadata.ruleIdStrategy, 'auditRules.js', 'auditRuleSchemaMetadata', 'ruleIdStrategy', errors);
+  if ('compatibleRuleSchemaVersions' in metadata) validatePositiveIntegerList(metadata.compatibleRuleSchemaVersions, 'auditRules.js', 'auditRuleSchemaMetadata', 'compatibleRuleSchemaVersions', errors);
   validateRequiredText(metadata.migrationNote, 'auditRules.js', 'auditRuleSchemaMetadata', 'migrationNote', errors);
 }
 
@@ -130,7 +136,7 @@ function validateSeverityWeights(weights, errors) {
   return severitySet;
 }
 
-function validateRules(rules, categorySet, severitySet, errors) {
+function validateRules(rules, categorySet, severitySet, errors, applicabilityReferences = {}) {
   const ruleIdSet = new Set();
   if (!Array.isArray(rules)) {
     addError(errors, 'auditRules.js', 'auditRules', 'root', 'Expected auditRules to be an array.');
@@ -165,6 +171,7 @@ function validateRules(rules, categorySet, severitySet, errors) {
     if ('weight' in rule && !isPositiveFiniteNumber(rule.weight)) {
       addError(errors, 'auditRules.js', entity, 'weight', 'Optional rule weight must be a positive finite number.');
     }
+    validateApplicability(rule.applicability, applicabilityReferences, 'auditRules.js', entity, errors);
   });
   return ruleIdSet;
 }
@@ -211,6 +218,7 @@ function validateComponentPresets(presets, categorySet, errors) {
     validateUniqueId(preset.id, presetIdSet, 'componentPresets.js', entity, errors);
     ['name', 'description', 'bestUse'].forEach((field) => validateRequiredText(preset[field], 'componentPresets.js', entity, field, errors));
     validateReferenceList(preset.relatedCategories, categorySet, 'componentPresets.js', entity, 'relatedCategories', 'category', errors);
+    if ('supportedPatterns' in preset) validatePatternDefinitionList(preset.supportedPatterns, 'componentPresets.js', entity, 'supportedPatterns', errors);
   });
 }
 
@@ -262,6 +270,56 @@ function validateGeneratedRecommendations(rules, profiles, ruleIdSet, categorySe
   });
 }
 
+
+function validateApplicability(applicability, references, source, entity, errors) {
+  if (applicability === undefined) return;
+  if (!isPlainObject(applicability)) {
+    addError(errors, source, entity, 'applicability', 'Applicability metadata must be a plain object when present.');
+    return;
+  }
+
+  const allowedFields = new Set(['presets', 'packs', 'patterns']);
+  Object.keys(applicability).forEach((field) => {
+    if (!allowedFields.has(field)) addError(errors, source, entity, `applicability.${field}`, `Unknown applicability field "${field}".`);
+  });
+
+  const fields = ['presets', 'packs', 'patterns'].filter((field) => field in applicability);
+  if (fields.length === 0) {
+    addError(errors, source, entity, 'applicability', 'Applicability metadata must contain at least one of presets, packs, or patterns.');
+    return;
+  }
+
+  const referenceMap = {
+    presets: ['preset', references.presetIds || new Set()],
+    packs: ['pack', references.packIds || new Set()],
+    patterns: ['pattern', references.patternIds || new Set()]
+  };
+
+  fields.forEach((field) => {
+    const [label, allowedValues] = referenceMap[field];
+    validateReferenceList(applicability[field], allowedValues, source, entity, `applicability.${field}`, label, errors);
+    if (Array.isArray(applicability[field]) && applicability[field].length === 0) {
+      addError(errors, source, entity, `applicability.${field}`, 'Applicability reference list must not be empty.');
+    }
+  });
+
+  validateApplicabilityHasPossibleContext(applicability, references, source, entity, errors);
+}
+
+function validateApplicabilityHasPossibleContext(applicability, references, source, entity, errors) {
+  if (!Array.isArray(applicability.presets) || !Array.isArray(applicability.patterns)) return;
+
+  const matchingPreset = (references.presets || []).some((preset) => (
+    applicability.presets.includes(preset.id)
+      && Array.isArray(preset.supportedPatterns)
+      && preset.supportedPatterns.some((pattern) => applicability.patterns.includes(pattern))
+  ));
+
+  if (!matchingPreset) {
+    addError(errors, source, entity, 'applicability', 'Applicability presets and patterns have no possible matching preset context.');
+  }
+}
+
 function validateMultiplierMap(map, allowedKeys, source, entity, field, requireAll, errors) {
   if (!isPlainObject(map)) {
     addError(errors, source, entity, field, 'Expected multiplier map to be a plain object.');
@@ -273,6 +331,40 @@ function validateMultiplierMap(map, allowedKeys, source, entity, field, requireA
   Object.entries(map).forEach(([key, value]) => {
     if (!allowedKeys.has(key)) addError(errors, source, entity, `${field}.${key}`, `Unexpected multiplier key "${key}".`);
     if (!isPositiveFiniteNumber(value)) addError(errors, source, entity, `${field}.${key}`, 'Multiplier must be a positive finite number; scoring falls back for invalid multipliers.');
+  });
+}
+
+
+
+function validatePatternDefinitionList(values, source, entity, field, errors) {
+  if (!Array.isArray(values)) {
+    addError(errors, source, entity, field, `Expected ${field} to be an array.`);
+    return;
+  }
+  const seen = new Set();
+  values.forEach((value, index) => {
+    if (!isNonEmptyString(value)) {
+      addError(errors, source, entity, `${field}[${index}]`, 'pattern reference must be a non-empty string.');
+      return;
+    }
+    if (seen.has(value)) addError(errors, source, entity, `${field}[${index}]`, `Duplicate pattern reference "${value}" in this collection.`);
+    seen.add(value);
+  });
+}
+
+function validatePositiveIntegerList(values, source, entity, field, errors) {
+  if (!Array.isArray(values) || values.length === 0) {
+    addError(errors, source, entity, field, 'Expected a non-empty array of positive integers.');
+    return;
+  }
+  const seen = new Set();
+  values.forEach((value, index) => {
+    if (!Number.isInteger(value) || value < 1) {
+      addError(errors, source, entity, `${field}[${index}]`, 'Version reference must be a positive integer.');
+      return;
+    }
+    if (seen.has(value)) addError(errors, source, entity, `${field}[${index}]`, `Duplicate version reference "${value}" in this collection.`);
+    seen.add(value);
   });
 }
 

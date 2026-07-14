@@ -1,9 +1,10 @@
-export const RULE_SCHEMA_VERSION = 1;
+export const RULE_SCHEMA_VERSION = 2;
 
 export const auditRuleSchemaMetadata = {
   schemaName: 'kp-layout-lens-rule-schema',
   schemaVersion: RULE_SCHEMA_VERSION,
   compatibleAuditStateVersions: [1],
+  compatibleRuleSchemaVersions: [1, 2],
   ruleIdStrategy: 'stable-human-readable-ids',
   migrationNote: 'Persisted audit drafts store this rule schema version so future rule data changes can trigger safe migrations.'
 };
@@ -32,11 +33,11 @@ export const auditRules = [
   { id: 'accessibility-focus', category: 'Accessibility basics', title: 'Focus states are visible', description: 'Links, buttons, and form controls show a clear focus indicator that is not color-only.', severity: 'high' },
   { id: 'accessibility-labels', category: 'Accessibility basics', title: 'Controls have meaningful labels', description: 'Inputs, selects, buttons, and icon actions have clear visible or accessible names.', severity: 'high' },
   { id: 'accessibility-contrast', category: 'Accessibility basics', title: 'Text contrast is sufficient', description: 'Body text, labels, links, and status badges remain readable against their backgrounds.', severity: 'high' },
-  { id: 'forms-label-placement', category: 'Forms and controls', title: 'Form labels stay connected to fields', description: 'Users can quickly understand what each field asks for, including on small screens.', severity: 'high' },
-  { id: 'forms-help-errors', category: 'Forms and controls', title: 'Help and error messages are clear', description: 'Supporting text explains requirements, and errors describe how to fix the problem.', severity: 'medium' },
+  { id: 'forms-label-placement', applicability: { patterns: ['form-controls'] }, category: 'Forms and controls', title: 'Form labels stay connected to fields', description: 'Users can quickly understand what each field asks for, including on small screens.', severity: 'high' },
+  { id: 'forms-help-errors', applicability: { patterns: ['form-controls'] }, category: 'Forms and controls', title: 'Help and error messages are clear', description: 'Supporting text explains requirements, and errors describe how to fix the problem.', severity: 'medium' },
   { id: 'forms-states', category: 'Forms and controls', title: 'Control states are distinguishable', description: 'Default, hover, focus, disabled, selected, and error states are understandable.', severity: 'medium' },
   { id: 'forms-native-controls', category: 'Forms and controls', title: 'Native controls are preferred where possible', description: 'The UI uses real buttons, links, inputs, selects, and labels instead of generic clickable elements.', severity: 'high' },
-  { id: 'nav-current-location', category: 'Navigation and interaction', title: 'Current location is understandable', description: 'Users can tell where they are and what section or workflow step they are reviewing.', severity: 'medium' },
+  { id: 'nav-current-location', applicability: { patterns: ['workspace-navigation'] }, category: 'Navigation and interaction', title: 'Current location is understandable', description: 'Users can tell where they are and what section or workflow step they are reviewing.', severity: 'medium' },
   { id: 'nav-primary-actions', category: 'Navigation and interaction', title: 'Primary actions are obvious', description: 'The most important next action is visible, clearly worded, and not competing with too many choices.', severity: 'high' },
   { id: 'nav-feedback', category: 'Navigation and interaction', title: 'Interactions provide feedback', description: 'Users receive a clear response after changing status, submitting input, opening panels, or triggering actions.', severity: 'medium' },
   { id: 'nav-no-dead-ends', category: 'Navigation and interaction', title: 'No obvious dead ends', description: 'Empty states, disabled actions, and finished steps explain what the user can do next.', severity: 'medium' },
@@ -48,8 +49,8 @@ export const auditRules = [
   { id: 'content-actions', category: 'Content clarity', title: 'Action labels are direct', description: 'Buttons and links use clear verbs that explain what will happen next.', severity: 'medium' },
   { id: 'content-empty-states', category: 'Content clarity', title: 'Empty and planned states are honest', description: 'Unavailable future features are labelled as planned or coming next instead of appearing complete.', severity: 'high' },
   { id: 'content-jargon', category: 'Content clarity', title: 'Copy avoids unnecessary jargon', description: 'Explanations are professional but understandable for developers, designers, and stakeholders.', severity: 'low' },
-  { id: 'performance-media', category: 'Performance hygiene', title: 'Media usage is restrained', description: 'Images, video, and decorative assets are appropriately sized and not used where text or CSS would be better.', severity: 'medium' },
+  { id: 'performance-media', applicability: { presets: ['landing-page', 'pricing-page', 'content-article-page', 'ecommerce-product-card'] }, category: 'Performance hygiene', title: 'Media usage is restrained', description: 'Images, video, and decorative assets are appropriately sized and not used where text or CSS would be better.', severity: 'medium' },
   { id: 'performance-effects', category: 'Performance hygiene', title: 'Visual effects are not excessive', description: 'Shadows, blurs, filters, animations, and gradients support the UI without overwhelming rendering.', severity: 'low' },
-  { id: 'performance-motion', category: 'Performance hygiene', title: 'Motion is purposeful and respectful', description: 'Animations are short, helpful, and compatible with reduced-motion preferences.', severity: 'medium' },
+  { id: 'performance-motion', applicability: { packs: ['marketing-pages', 'navigation', 'modals', 'drawers'] }, category: 'Performance hygiene', title: 'Motion is purposeful and respectful', description: 'Animations are short, helpful, and compatible with reduced-motion preferences.', severity: 'medium' },
   { id: 'performance-dom', category: 'Performance hygiene', title: 'Markup complexity is reasonable', description: 'The UI avoids unnecessary wrapper elements and deeply nested structures that make maintenance harder.', severity: 'low' }
 ];
