@@ -46,8 +46,10 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 - [x] Add versioned rule schema metadata so future audit states can migrate safely.
   - Verification note (2026-07-14): added `RULE_SCHEMA_VERSION` and `auditRuleSchemaMetadata`, validated the metadata with the rule data validator, and persisted `ruleSchemaVersion` in browser audit drafts so incompatible saved rule data is detected before restore.
 - [ ] Add conditional applicability logic for rules that only apply to certain presets or UI patterns.
-- [ ] Add clearer scoring explanations for pass, needs-work, not-applicable, and not-checked states.
-- [ ] Add category progress indicators showing reviewed rules versus total applicable rules.
+- [x] Add clearer scoring explanations for pass, needs-work, not-applicable, and not-checked states.
+  - Verification note (2026-07-14): added concise score-panel guidance matching the scoring engine: pass earns weighted points, needs-work contributes possible points without earned points, not-applicable is checked but excluded from possible points, and not-checked is unreviewed and not scored.
+- [x] Add category progress indicators showing reviewed rules versus total applicable rules.
+  - Verification note (2026-07-14): added per-category reviewed/applicable progress using active rules and current statuses; pass and needs-work count as reviewed, not-applicable is excluded from applicable totals, and not-checked remains applicable but unreviewed.
 - [ ] Add filters for status, severity, category, and preset relevance.
 - [ ] Add reviewer notes per rule while keeping notes local and optional.
 - [ ] Add JSON export/import for current audit state before introducing any report or database feature.
