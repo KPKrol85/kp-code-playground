@@ -27,10 +27,11 @@ For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 2. `assets/js/componentPresets.js` defines manual audit presets for common page and component types.
 3. `assets/js/rulePacks.js` defines reusable rule groups for focused page-type and UI-pattern audits.
 4. `assets/js/severityProfiles.js` defines Baseline, Production, Premium, and Accessibility-first profiles that change audit strictness by weighting active rules without changing manual answers. Accessibility-first is an accessibility-focused weighting mode, not WCAG certification or a complete compliance audit.
-5. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
-6. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
-7. `assets/js/auditStorage.js` handles browser-only local audit state.
-8. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, theme state, and status changes.
+5. `assets/js/ruleDataValidator.js` validates rules, categories, severity profiles, rule packs, presets, and recommendation output before app data is rendered, scored, recommended, or restored from local storage.
+6. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
+7. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
+8. `assets/js/auditStorage.js` handles browser-only local audit state.
+9. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, theme state, and status changes.
 
 Each rule can be marked as:
 
@@ -55,6 +56,7 @@ digital-vault-layout-lens/
         ├── auditStorage.js
         ├── componentPresets.js
         ├── recommendations.js
+        ├── ruleDataValidator.js
         ├── rulePacks.js
         ├── scoringEngine.js
         └── severityProfiles.js
