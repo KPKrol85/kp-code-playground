@@ -51,8 +51,10 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
   - Verification note (2026-07-14): added concise score-panel guidance matching the scoring engine: pass earns weighted points, needs-work contributes possible points without earned points, not-applicable is checked but excluded from possible points, and not-checked is unreviewed and not scored.
 - [x] Add category progress indicators showing reviewed rules versus total applicable rules.
   - Verification note (2026-07-14): added per-category reviewed/applicable progress using active rules and current statuses; pass and needs-work count as reviewed, not-applicable is excluded from applicable totals, and not-checked remains applicable but unreviewed.
-- [ ] Add filters for status, severity, category, and preset relevance.
-- [ ] Add reviewer notes per rule while keeping notes local and optional.
+- [x] Add filters for status, severity, category, and preset relevance.
+  - Verification note (2026-07-14): added browser-session checklist filters for status, severity, category, and applicability-based preset relevance with an accessible clear action and empty state. Source checks verified the app and storage modules parse successfully; storage assertions confirmed filters remain UI-only and do not change saved audit answers.
+- [x] Add reviewer notes per rule while keeping notes local and optional.
+  - Verification note (2026-07-14): added optional per-rule browser-local notes keyed by stable rule ID, persisted them in audit storage schema v2 while accepting legacy schema v1 states, normalized malformed note data safely, escaped note rendering, and verified reset/local clear removes notes with the rest of the audit draft.
 - [ ] Add JSON export/import for current audit state before introducing any report or database feature.
 - [ ] Add deterministic issue IDs for findings so reports and future comparisons can reference stable issues.
 - [ ] Add lightweight tests for scoring edge cases when the project introduces test tooling.

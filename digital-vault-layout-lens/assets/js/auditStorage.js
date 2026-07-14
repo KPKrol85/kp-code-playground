@@ -1,5 +1,6 @@
 export const AUDIT_STORAGE_KEY = 'kp-layout-lens-audit-v1';
-export const AUDIT_SCHEMA_VERSION = 1;
+export const AUDIT_SCHEMA_VERSION = 2;
+const NOTE_MAX_LENGTH = 1000;
 
 export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set(), currentRuleSchemaVersion, compatibleRuleSchemaVersions = [currentRuleSchemaVersion] }) {
   let parsed;
@@ -12,7 +13,7 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
     return { state: null, status: 'invalid' };
   }
 
-  if (!isPlainObject(parsed) || parsed.schemaVersion !== AUDIT_SCHEMA_VERSION) {
+  if (!isPlainObject(parsed) || ![1, AUDIT_SCHEMA_VERSION].includes(parsed.schemaVersion)) {
     return { state: null, status: 'invalid' };
   }
 
@@ -30,19 +31,21 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
     ? parsed.selectedSeverityProfileId
     : null;
   const ruleStatuses = sanitizeRuleStatuses(parsed.ruleStatuses, validRuleIds, validStatuses);
+  const ruleNotes = sanitizeRuleNotes(parsed.ruleNotes, validRuleIds);
 
   return {
     state: {
       selectedPresetId,
       selectedRulePackId,
       selectedSeverityProfileId,
-      ruleStatuses
+      ruleStatuses,
+      ruleNotes
     },
     status: 'loaded'
   };
 }
 
-export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleSchemaVersion }) {
+export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes = {}, ruleSchemaVersion }) {
   const state = {
     schemaVersion: AUDIT_SCHEMA_VERSION,
     ruleSchemaVersion,
@@ -50,6 +53,7 @@ export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedS
     selectedRulePackId,
     selectedSeverityProfileId,
     ruleStatuses,
+    ruleNotes: sanitizeRuleNotes(ruleNotes, new Set(Object.keys(ruleStatuses || {}))),
     updatedAt: new Date().toISOString()
   };
 
@@ -88,6 +92,21 @@ function sanitizeRuleStatuses(ruleStatuses, validRuleIds, validStatuses) {
       validRuleIds.has(ruleId) && validStatuses.has(status)
     ))
   );
+}
+
+function sanitizeRuleNotes(ruleNotes, validRuleIds) {
+  if (!isPlainObject(ruleNotes)) return {};
+
+  return Object.fromEntries(
+    Object.entries(ruleNotes)
+      .filter(([ruleId, note]) => validRuleIds.has(ruleId) && typeof note === 'string')
+      .map(([ruleId, note]) => [ruleId, normalizeNote(note)])
+      .filter(([, note]) => note.length > 0)
+  );
+}
+
+function normalizeNote(note) {
+  return note.replace(/\u0000/g, '').slice(0, NOTE_MAX_LENGTH);
 }
 
 function isPlainObject(value) {
