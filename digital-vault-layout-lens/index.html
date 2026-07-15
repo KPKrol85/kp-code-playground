@@ -221,6 +221,53 @@
           </div>
         </section>
 
+
+
+        <section class="analyzer-inputs card" aria-labelledby="analyzer-inputs-title" aria-describedby="analyzer-inputs-description">
+          <div class="analyzer-inputs__header">
+            <div>
+              <p class="eyebrow">Static analyzer inputs</p>
+              <h3 id="analyzer-inputs-title">HTML and CSS source inputs</h3>
+              <p id="analyzer-inputs-description">
+                Paste markup and styles here for future static checks. Code stays local in this browser as plain textarea text and is not analyzed, saved, uploaded, or previewed yet.
+              </p>
+            </div>
+            <span class="module-card__status">Inputs only</span>
+          </div>
+          <div class="analyzer-inputs__grid">
+            <div class="analyzer-field analyzer-field--html">
+              <label for="analyzer-html-input">HTML markup</label>
+              <p id="analyzer-html-description" class="field__hint">Paste static HTML only. The content remains inert plain text and is not inserted into the page.</p>
+              <textarea
+                id="analyzer-html-input"
+                name="analyzer-html-input"
+                data-analyzer-input="html"
+                rows="10"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-describedby="analyzer-inputs-description analyzer-html-description"
+                placeholder="Example: &lt;main&gt;...&lt;/main&gt;"
+              ></textarea>
+            </div>
+            <div class="analyzer-field analyzer-field--css">
+              <label for="analyzer-css-input">CSS styles</label>
+              <p id="analyzer-css-description" class="field__hint">Paste static CSS only. The content remains inert plain text and is not added to a style tag or preview frame.</p>
+              <textarea
+                id="analyzer-css-input"
+                name="analyzer-css-input"
+                data-analyzer-input="css"
+                rows="10"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                aria-describedby="analyzer-inputs-description analyzer-css-description"
+                placeholder="Example: .card { display: grid; gap: 1rem; }"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
         <div class="audit-layout">
           <aside class="audit-config card" aria-labelledby="config-title">
             <h3 id="config-title">How to use this v1 checklist</h3>

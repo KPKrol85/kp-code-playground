@@ -64,8 +64,9 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 
 ### Phase 3 — HTML/CSS input analyzer
 
-- [ ] Add an HTML textarea input for static markup analysis.
-- [ ] Add a CSS textarea input for static style analysis.
+- [x] Add an HTML textarea input for static markup analysis.
+- [x] Add a CSS textarea input for static style analysis.
+  - Verification note (2026-07-15): added a clearly labeled local-only analyzer input section with HTML and CSS textareas, programmatically connected helper text, stable data hooks, responsive/focus styling, and plain-text state handling that does not parse, inject, save, upload, preview, or execute pasted code.
 - [ ] Add optional local file input only if it remains browser-only and does not upload user code.
 - [ ] Add DOMParser-based checks for headings, landmarks, labels, buttons, links, and images.
 - [ ] Add deterministic CSS checks for repeated literal values, fixed widths, missing responsive patterns, and overflow risks.

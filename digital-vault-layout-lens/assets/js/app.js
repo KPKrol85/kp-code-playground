@@ -63,12 +63,14 @@ const elements = {
   categoryFilterSelect: document.querySelector('#category-filter-select'),
   relevanceFilterSelect: document.querySelector('#relevance-filter-select'),
   clearRuleFilters: document.querySelector('#clear-rule-filters'),
-  checklistFilterSummary: document.querySelector('#checklist-filter-summary')
+  checklistFilterSummary: document.querySelector('#checklist-filter-summary'),
+  analyzerInputs: document.querySelectorAll('[data-analyzer-input]')
 };
 
 let statuses = createInitialStatuses();
 let ruleNotes = {};
 let filters = createInitialFilters();
+const analyzerInputState = createInitialAnalyzerInputState();
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -187,6 +189,11 @@ function bindEvents() {
 
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
 
+  elements.analyzerInputs.forEach((input) => {
+    input.addEventListener('input', handleAnalyzerInput);
+    updateAnalyzerInputState(input);
+  });
+
   elements.resetAudit.addEventListener('click', () => {
     selectedPresetId = componentPresets[0]?.id;
     selectedRulePackId = ALL_RULES_PACK_ID;
@@ -218,6 +225,29 @@ function bindEvents() {
   });
 }
 
+
+
+function createInitialAnalyzerInputState() {
+  return {
+    html: '',
+    css: ''
+  };
+}
+
+function handleAnalyzerInput(event) {
+  updateAnalyzerInputState(event.currentTarget);
+}
+
+function updateAnalyzerInputState(input) {
+  const inputType = input?.dataset?.analyzerInput;
+  if (!Object.prototype.hasOwnProperty.call(analyzerInputState, inputType)) return;
+
+  analyzerInputState[inputType] = input.value;
+}
+
+export function getAnalyzerInputState() {
+  return { ...analyzerInputState };
+}
 
 
 function exportCurrentAuditState() {
