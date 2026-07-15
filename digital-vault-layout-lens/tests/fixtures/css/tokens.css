@@ -1,0 +1,1 @@
+:root { --brand: #0a66ff; --space: 16px; }.a { color: var(--brand); margin: var(--space); }.b { background: var(--brand); padding: var(--space); }.c { border-color: var(--brand); gap: var(--space); }.d { color: var(--brand); border-radius: var(--space); }
