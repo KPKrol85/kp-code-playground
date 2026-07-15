@@ -10,6 +10,7 @@ import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
 import { analyzeCssSource } from './cssAnalyzer.js';
 import { validateAnalyzerSourceFile } from './localFileInput.js';
+import { confidenceLabel, sourceLabel } from './findingMetadata.js';
 
 try {
   assertValidRuleData();
@@ -349,18 +350,39 @@ function renderAnalyzerResults(result, target) {
     article.className = 'analyzer-finding';
     const title = document.createElement('h5');
     title.textContent = item.title;
-    const meta = document.createElement('p');
+    const meta = document.createElement('dl');
     meta.className = 'analyzer-finding__meta';
     const affected = item.affectedElementCount != null ? `${item.affectedElementCount} affected` : `${item.occurrenceCount || 0} occurrences`;
-    meta.textContent = `${item.severity} · ${item.category} · ${item.source} · ${item.issueId} · ${affected}`;
+    appendMeta(meta, 'Source', sourceLabel(item.source));
+    appendMeta(meta, 'Confidence', confidenceLabel(item.confidence));
+    appendMeta(meta, 'Severity', item.severity || 'Not set');
+    appendMeta(meta, 'Category', item.category || 'Uncategorized');
+    appendMeta(meta, 'Issue ID', item.issueId || 'Missing');
+    appendMeta(meta, 'Count', affected);
     const message = document.createElement('p');
     message.textContent = item.message;
-    article.append(title, meta, message);
+    const evidence = document.createElement('figure');
+    evidence.className = 'analyzer-finding__evidence';
+    const evidenceCaption = document.createElement('figcaption');
+    evidenceCaption.textContent = 'Evidence snippet';
+    const evidenceCode = document.createElement('code');
+    evidenceCode.textContent = item.evidence?.snippet || 'No evidence snippet available.';
+    evidence.append(evidenceCaption, evidenceCode);
+    if (item.evidence?.location) appendMeta(meta, 'Location', item.evidence.location);
+    if (item.wcag?.length) appendMeta(meta, 'WCAG', item.wcag.map((entry) => `${entry.criterion} ${entry.level} ${entry.title}`).join('; '));
+    article.append(title, meta, message, evidence);
     target.results.append(article);
   });
 }
 
 
+function appendMeta(list, term, value) {
+  const dt = document.createElement('dt');
+  dt.textContent = term;
+  const dd = document.createElement('dd');
+  dd.textContent = value;
+  list.append(dt, dd);
+}
 
 function exportCurrentAuditState() {
   const exportState = createAuditStateExport({

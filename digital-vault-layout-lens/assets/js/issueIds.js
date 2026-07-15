@@ -1,3 +1,5 @@
+import { validateFindingMetadata } from './findingMetadata.js';
+
 const ISSUE_ID_PATTERN = /^[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*(?::[a-z0-9][a-z0-9-]*)?$/;
 
 /**
@@ -36,6 +38,10 @@ export function assertUniqueIssueIds(findings) {
     }
     if (typeof finding.issueId !== 'string' || !ISSUE_ID_PATTERN.test(finding.issueId)) {
       throw new Error(`Generated finding at index ${index} has a malformed issueId.`);
+    }
+    const metadataErrors = validateFindingMetadata(finding, index);
+    if (metadataErrors.length) {
+      throw new Error(metadataErrors.join(' '));
     }
     if (issueIds.has(finding.issueId)) {
       throw new Error(`Duplicate generated issueId "${finding.issueId}".`);
