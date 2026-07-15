@@ -4,6 +4,7 @@ import { OVERLAY_MODE_IDS, OVERLAY_MODES, createOverlayState, normalizeOverlayMo
 import { endKeyboardAudit, nextKeyboardAuditTarget, previousKeyboardAuditTarget, resetKeyboardAuditForPreviewRefresh, restartKeyboardAudit, startKeyboardAudit } from '../assets/js/keyboardAuditState.js';
 import { createPreviewCommand, validatePreviewCommand, validatePreviewResponse } from '../assets/js/previewInspectionProtocol.js';
 import { classifyOverflow, orderFocusableDescriptors, overlayRemovalSummary } from '../assets/js/previewInspectionHelpers.js';
+import { getPreviewScrollBehavior, getPreviewViewportMotionState, isReducedMotionRequested } from '../assets/js/previewMotion.js';
 
 test('overlay configuration contains required single active modes and normalizes invalid values', () => {
   assert.deepEqual(OVERLAY_MODE_IDS, ['off', 'spacing', 'layout-boxes', 'headings', 'focusable', 'overflow']);
@@ -64,4 +65,20 @@ test('preview inspection message protocol rejects malformed or arbitrary command
   assert.equal(validatePreviewCommand({ ...createPreviewCommand('set-overlay'), payload: '<html>' }).ok, false);
   assert.equal(validatePreviewResponse({ protocol: 'kp-layout-lens-preview-inspection', version: 1, type: 'overlay-result', payload: { count: 1 } }).ok, true);
   assert.equal(validatePreviewResponse({ protocol: 'kp-layout-lens-preview-inspection', version: 1, type: 'run-code', payload: {} }).ok, false);
+});
+
+
+test('reduced-motion preference selects immediate preview behavior without hiding state', () => {
+  assert.equal(isReducedMotionRequested({ matches: true }), true);
+  assert.equal(isReducedMotionRequested({ matches: false }), false);
+  assert.equal(getPreviewScrollBehavior(true), 'auto');
+  assert.equal(getPreviewScrollBehavior(false), 'smooth');
+  assert.deepEqual(getPreviewViewportMotionState(true), {
+    reducedMotion: true,
+    animatedViewportResize: false,
+    overlayTransitions: false,
+    focusHighlightPulse: false,
+    scrollBehavior: 'auto'
+  });
+  assert.equal(getPreviewViewportMotionState(false).scrollBehavior, 'smooth');
 });

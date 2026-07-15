@@ -1623,9 +1623,24 @@ textarea:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .overlay-mode,
+  .preview-panel,
+  .preview-panel *,
+  .inspection-controls,
+  .inspection-controls *,
+  .keyboard-audit-panel,
+  .keyboard-audit-panel *,
+  .preview-annotations-panel,
+  .preview-annotations-panel *,
+  .viewport-comparison-panel,
+  .viewport-comparison-panel *,
+  .preview-scroll,
   .preview-canvas,
-  .preview-frame { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  .preview-frame {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 .preview-annotations-panel,
