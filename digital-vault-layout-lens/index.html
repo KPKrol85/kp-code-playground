@@ -275,6 +275,8 @@
           <div class="analyzer-actions">
             <button id="analyze-html" class="button button--primary" type="button">Analyze HTML</button>
             <p id="html-analyzer-status" class="local-save-status" aria-live="polite">HTML checks have not run yet.</p>
+            <button id="analyze-css" class="button button--primary" type="button">Analyze CSS</button>
+            <p id="css-analyzer-status" class="local-save-status" aria-live="polite">CSS checks have not run yet.</p>
           </div>
           <section class="analyzer-results" aria-labelledby="html-analyzer-results-title" aria-describedby="html-analyzer-notice">
             <div class="analyzer-results__header">
@@ -286,6 +288,18 @@
             </div>
             <div id="html-analyzer-results" class="analyzer-results__list" data-empty="true">
               <p class="empty-state">Run analysis to check the current HTML textarea content.</p>
+            </div>
+          </section>
+          <section class="analyzer-results" aria-labelledby="css-analyzer-results-title" aria-describedby="css-analyzer-notice">
+            <div class="analyzer-results__header">
+              <div>
+                <h4 id="css-analyzer-results-title">Static CSS findings</h4>
+                <p id="css-analyzer-notice">CSS checks inspect textarea text only; they are conservative risk indicators and not a rendering or WCAG conformance audit.</p>
+              </div>
+              <strong id="css-analyzer-count">Not analyzed</strong>
+            </div>
+            <div id="css-analyzer-results" class="analyzer-results__list" data-empty="true">
+              <p class="empty-state">Run analysis to check the current CSS textarea content.</p>
             </div>
           </section>
         </section>

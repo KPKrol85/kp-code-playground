@@ -1,4 +1,5 @@
 import { assertUniqueIssueIds, createIssueId } from './issueIds.js';
+import { WCAG, cloneWcag } from './wcag.js';
 
 export const HTML_ANALYZER_SOURCE = 'html-analyzer';
 const SEVERITY = { error: 'high', warning: 'medium', notice: 'low' };
@@ -26,9 +27,10 @@ export function parseHtmlToDetachedDocument(html, parser) {
   return activeParser.parseFromString(html, 'text/html');
 }
 
-function finding(ruleId, title, category, severity, message, elements = []) {
-  return { issueId: createIssueId({ source: HTML_ANALYZER_SOURCE, ruleId }), ruleId, checkId: ruleId, title, category, severity, message, source: HTML_ANALYZER_SOURCE, affectedElementCount: elements.length, locations: elements.map(describeElement).filter(Boolean) };
+function finding(ruleId, title, category, severity, message, elements = [], wcag = wcagForHtmlCheck(ruleId)) {
+  return { issueId: createIssueId({ source: HTML_ANALYZER_SOURCE, ruleId }), ruleId, checkId: ruleId, title, category, severity, message, source: HTML_ANALYZER_SOURCE, findingType: 'static-html', affectedElementCount: elements.length, locations: elements.map(describeElement).filter(Boolean), ...(wcag ? { wcag: cloneWcag(wcag) } : {}) };
 }
+
 
 function checkHeadings(doc) {
   const headings = all(doc, 'h1,h2,h3,h4,h5,h6');
@@ -117,3 +119,13 @@ function ancestors(el) { const out = []; for (let node = el.parentElement; node;
 function cssEscape(value) { return String(value).replace(/["\\]/g, '\\$&'); }
 function landmarkType(el) { const role = el.getAttribute('role'); if (role) return role; const tag = el.tagName.toLowerCase(); return tag === 'nav' ? 'navigation' : tag === 'aside' ? 'complementary' : tag === 'section' ? 'region' : tag; }
 function describeElement(el) { const tag = el.tagName?.toLowerCase(); if (!tag) return ''; const id = el.getAttribute('id'); return id ? `${tag}#${id}` : tag; }
+
+function wcagForHtmlCheck(ruleId) {
+  if (ruleId.startsWith('images-')) return [WCAG.nonTextContent];
+  if (ruleId.startsWith('headings-')) return [WCAG.infoAndRelationships, WCAG.headingsLabels];
+  if (ruleId.startsWith('landmarks-')) return [WCAG.infoAndRelationships];
+  if (ruleId.startsWith('labels-') || ruleId === 'controls-unlabeled') return [WCAG.labelsInstructions, WCAG.nameRoleValue];
+  if (ruleId.startsWith('buttons-')) return [WCAG.nameRoleValue];
+  if (ruleId.startsWith('links-')) return [WCAG.linkPurpose];
+  return undefined;
+}
