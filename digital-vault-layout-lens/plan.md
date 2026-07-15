@@ -67,14 +67,18 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 - [x] Add an HTML textarea input for static markup analysis.
 - [x] Add a CSS textarea input for static style analysis.
   - Verification note (2026-07-15): added a clearly labeled local-only analyzer input section with HTML and CSS textareas, programmatically connected helper text, stable data hooks, responsive/focus styling, and plain-text state handling that does not parse, inject, save, upload, preview, or execute pasted code.
-- [ ] Add optional local file input only if it remains browser-only and does not upload user code.
-- [ ] Add DOMParser-based checks for headings, landmarks, labels, buttons, links, and images.
+- [x] Add optional local file input only if it remains browser-only and does not upload user code.
+  - Verification note (2026-07-15): added a browser-only local source loader for `.html`, `.htm`, and `.css` files with extension routing into the existing HTML/CSS textareas, a 256 KB size limit, empty/unsupported/oversized/unreadable safeguards, accessible status messaging, and plain-text handling through `File.text()` only. Imported content is not uploaded, transmitted, injected into the DOM, executed, previewed, stored in localStorage, or included in the audit-state schema. `npm test` passed locally.
+- [x] Add DOMParser-based checks for headings, landmarks, labels, buttons, links, and images.
+  - Verification note (2026-07-15): added a detached `DOMParser` HTML analyzer for the current HTML textarea with focused deterministic checks for heading structure, landmarks, labels, buttons, links, and images. Findings use normalized `html-analyzer:<check-id>` issue IDs and remain isolated from manual checklist statuses, scoring, recommendations, local persistence, and JSON import/export. Analyzer output is rendered with text nodes rather than HTML injection. `npm test` passed locally.
 - [ ] Add deterministic CSS checks for repeated literal values, fixed widths, missing responsive patterns, and overflow risks.
 - [ ] Add WCAG mapping fields to relevant rules and automated findings.
 - [ ] Add evidence snippets to every automated finding.
 - [ ] Add confidence/source labels that distinguish manual findings from automated analyzer findings.
-- [ ] Keep analyzer output compatible with the existing rule/result model.
+- [x] Keep analyzer output compatible with the existing rule/result model.
+  - Verification note (2026-07-15): automated HTML findings now expose stable issue ID, rule/check ID, title, category, severity, message, source, affected element count, and lightweight location metadata without merging into manual scoring or report generation.
 - [ ] Add analyzer fixture tests before relying on automated findings for reports.
+  - Verification note (2026-07-15): added lightweight Node tests for empty HTML handling, parser-adapter behavior, deterministic analyzer issue IDs, and local file validation. Full browser DOMParser fixture coverage remains a future expansion before report reliance.
 
 ### Phase 4 — Live preview and visual overlays
 

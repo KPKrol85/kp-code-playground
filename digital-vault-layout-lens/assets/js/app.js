@@ -7,6 +7,8 @@ import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './rul
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
+import { analyzeHtmlSource } from './htmlAnalyzer.js';
+import { validateAnalyzerSourceFile } from './localFileInput.js';
 
 try {
   assertValidRuleData();
@@ -64,7 +66,13 @@ const elements = {
   relevanceFilterSelect: document.querySelector('#relevance-filter-select'),
   clearRuleFilters: document.querySelector('#clear-rule-filters'),
   checklistFilterSummary: document.querySelector('#checklist-filter-summary'),
-  analyzerInputs: document.querySelectorAll('[data-analyzer-input]')
+  analyzerInputs: document.querySelectorAll('[data-analyzer-input]'),
+  analyzerFileInput: document.querySelector('[data-analyzer-file-input]'),
+  analyzerFileStatus: document.querySelector('[data-analyzer-file-status]'),
+  analyzeHtml: document.querySelector('#analyze-html'),
+  htmlAnalyzerStatus: document.querySelector('#html-analyzer-status'),
+  htmlAnalyzerCount: document.querySelector('#html-analyzer-count'),
+  htmlAnalyzerResults: document.querySelector('#html-analyzer-results')
 };
 
 let statuses = createInitialStatuses();
@@ -189,6 +197,9 @@ function bindEvents() {
 
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
 
+  elements.analyzerFileInput?.addEventListener('change', handleAnalyzerSourceFile);
+  elements.analyzeHtml?.addEventListener('click', runHtmlAnalyzer);
+
   elements.analyzerInputs.forEach((input) => {
     input.addEventListener('input', handleAnalyzerInput);
     updateAnalyzerInputState(input);
@@ -247,6 +258,83 @@ function updateAnalyzerInputState(input) {
 
 export function getAnalyzerInputState() {
   return { ...analyzerInputState };
+}
+
+async function handleAnalyzerSourceFile(event) {
+  const file = event.target.files?.[0];
+  event.target.value = '';
+  const validation = validateAnalyzerSourceFile(file);
+  if (!validation.ok) {
+    setAnalyzerFileStatus(validation.message);
+    return;
+  }
+
+  try {
+    const content = await file.text();
+    if (!content.trim()) {
+      setAnalyzerFileStatus('The selected file contains no readable text. Current analyzer inputs were not changed.');
+      return;
+    }
+    const target = document.querySelector(`[data-analyzer-input="${validation.kind}"]`);
+    if (!target) {
+      setAnalyzerFileStatus('The matching analyzer input could not be found. Current analyzer inputs were not changed.');
+      return;
+    }
+    target.value = content;
+    updateAnalyzerInputState(target);
+    setAnalyzerFileStatus(`${file.name} loaded into the ${validation.kind.toUpperCase()} textarea as browser-only plain text.`);
+  } catch {
+    setAnalyzerFileStatus('The selected file could not be read. Current analyzer inputs were not changed.');
+  }
+}
+
+function setAnalyzerFileStatus(message) {
+  if (elements.analyzerFileStatus) elements.analyzerFileStatus.textContent = message;
+}
+
+function runHtmlAnalyzer() {
+  try {
+    const result = analyzeHtmlSource(analyzerInputState.html);
+    renderHtmlAnalyzerResults(result);
+  } catch {
+    renderHtmlAnalyzerResults({ findings: [], status: 'error', message: 'HTML analysis could not run in this browser.' });
+  }
+}
+
+function renderHtmlAnalyzerResults(result) {
+  const findings = Array.isArray(result.findings) ? result.findings : [];
+  if (elements.htmlAnalyzerStatus) elements.htmlAnalyzerStatus.textContent = result.message || 'HTML analysis finished.';
+  if (elements.htmlAnalyzerCount) elements.htmlAnalyzerCount.textContent = result.status === 'empty' ? 'No input' : `${findings.length} ${pluralize('finding', findings.length)}`;
+  if (!elements.htmlAnalyzerResults) return;
+  elements.htmlAnalyzerResults.textContent = '';
+  elements.htmlAnalyzerResults.dataset.empty = findings.length ? 'false' : 'true';
+  if (result.status === 'empty') {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = result.message;
+    elements.htmlAnalyzerResults.append(empty);
+    return;
+  }
+  if (!findings.length) {
+    const clear = document.createElement('p');
+    clear.className = 'empty-state';
+    clear.textContent = 'No issues found by these focused static checks. Manual review is still required.';
+    elements.htmlAnalyzerResults.append(clear);
+    return;
+  }
+  findings.forEach((item) => {
+    const article = document.createElement('article');
+    article.className = 'analyzer-finding';
+    const title = document.createElement('h5');
+    title.textContent = item.title;
+    const meta = document.createElement('p');
+    meta.className = 'analyzer-finding__meta';
+    meta.textContent = `${item.severity} · ${item.category} · ${item.issueId} · ${item.affectedElementCount} affected`;
+    const message = document.createElement('p');
+    message.textContent = item.message;
+    article.append(title, meta, message);
+    elements.htmlAnalyzerResults.append(article);
+  });
 }
 
 

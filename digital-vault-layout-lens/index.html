@@ -229,10 +229,16 @@
               <p class="eyebrow">Static analyzer inputs</p>
               <h3 id="analyzer-inputs-title">HTML and CSS source inputs</h3>
               <p id="analyzer-inputs-description">
-                Paste markup and styles here for future static checks. Code stays local in this browser as plain textarea text and is not analyzed, saved, uploaded, or previewed yet.
+                Paste markup and styles or load a local .html, .htm, or .css file. File contents stay in this browser session as inert textarea text and are never uploaded, saved, previewed, or executed.
               </p>
             </div>
-            <span class="module-card__status">Inputs only</span>
+            <span class="module-card__status">Browser-only</span>
+          </div>
+          <div class="analyzer-file-loader">
+            <label class="button button--secondary" for="analyzer-source-file">Load local HTML/CSS file</label>
+            <input id="analyzer-source-file" class="sr-only" type="file" accept=".html,.htm,.css,text/html,text/css" data-analyzer-file-input aria-describedby="analyzer-file-help analyzer-file-status" />
+            <p id="analyzer-file-help" class="field__hint">Optional: loads supported files into the matching textarea as plain text only. Maximum size: 256 KB.</p>
+            <p id="analyzer-file-status" class="local-save-status" data-analyzer-file-status aria-live="polite">No local analyzer file selected.</p>
           </div>
           <div class="analyzer-inputs__grid">
             <div class="analyzer-field analyzer-field--html">
@@ -266,6 +272,22 @@
               ></textarea>
             </div>
           </div>
+          <div class="analyzer-actions">
+            <button id="analyze-html" class="button button--primary" type="button">Analyze HTML</button>
+            <p id="html-analyzer-status" class="local-save-status" aria-live="polite">HTML checks have not run yet.</p>
+          </div>
+          <section class="analyzer-results" aria-labelledby="html-analyzer-results-title" aria-describedby="html-analyzer-notice">
+            <div class="analyzer-results__header">
+              <div>
+                <h4 id="html-analyzer-results-title">Static HTML findings</h4>
+                <p id="html-analyzer-notice">Deterministic static checks can catch common markup issues, but they do not replace manual accessibility review.</p>
+              </div>
+              <strong id="html-analyzer-count">Not analyzed</strong>
+            </div>
+            <div id="html-analyzer-results" class="analyzer-results__list" data-empty="true">
+              <p class="empty-state">Run analysis to check the current HTML textarea content.</p>
+            </div>
+          </section>
         </section>
 
         <div class="audit-layout">
