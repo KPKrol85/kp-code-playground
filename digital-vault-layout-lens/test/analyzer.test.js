@@ -144,3 +144,66 @@ test('relevant HTML findings have WCAG mappings', () => {
   assert.ok(findings.some((f) => f.checkId === 'images-missing-alt' && f.wcag?.[0].criterion === '1.1.1'));
   assert.ok(findings.some((f) => f.checkId === 'controls-unlabeled' && f.wcag?.some((w) => w.criterion === '3.3.2')));
 });
+
+import { assertUniqueIssueIds } from '../assets/js/issueIds.js';
+import { calculateAuditScore } from '../assets/js/scoringEngine.js';
+import { FINDING_CONFIDENCE, FINDING_SOURCES, MAX_EVIDENCE_SNIPPET_LENGTH, createEvidence } from '../assets/js/findingMetadata.js';
+
+test('every HTML analyzer finding contains source confidence and concise evidence', () => {
+  const findings = analyzeHtmlSource('<main></main>', { parser: { parseFromString: () => fixtureDocument() } }).findings;
+  assert.ok(findings.length);
+  findings.forEach((finding) => {
+    assert.equal(finding.source, FINDING_SOURCES.htmlAnalyzer);
+    assert.ok(Object.values(FINDING_CONFIDENCE).includes(finding.confidence));
+    assert.ok(finding.evidence.snippet.length > 0);
+    assert.ok(finding.evidence.snippet.length <= MAX_EVIDENCE_SNIPPET_LENGTH);
+  });
+  assert.equal(findings.find((f) => f.checkId === 'images-missing-alt').confidence, FINDING_CONFIDENCE.high);
+  assert.equal(findings.find((f) => f.checkId === 'links-placeholder-href').evidence.snippet.includes('<a href="#">'), true);
+});
+
+test('HTML evidence is deterministic, normalized, counts multiple matches, and does not change issue IDs', () => {
+  const many = [element('h1', {}, 'One'), element('h1', {}, 'Two')];
+  many.forEach((el) => { el.outerHTML = `<h1> ${el.textContent} </h1>`; });
+  const parser = { parseFromString: () => ({ querySelectorAll: (selector) => selector === 'h1,h2,h3,h4,h5,h6' ? many : [], getElementById() { return null; } }) };
+  const first = analyzeHtmlSource('<h1>One</h1><h1>Two</h1>', { parser }).findings.find((f) => f.checkId === 'headings-multiple-h1');
+  const second = analyzeHtmlSource('<h1> One </h1>\n<h1> Two </h1>', { parser }).findings.find((f) => f.checkId === 'headings-multiple-h1');
+  assert.equal(first.evidence.snippet, second.evidence.snippet);
+  assert.equal(first.evidence.occurrenceCount, 2);
+  assert.equal(first.issueId, second.issueId);
+});
+
+test('every CSS analyzer finding contains source confidence and concise plain-text evidence', () => {
+  const findings = analyzeCssSource('body{overflow-x:hidden}.label{white-space:nowrap}.grid{display:grid;grid-template-columns:360px 360px}.toast{position:fixed;width:420px}.a{color:#fff}.b{color:#fff}.c{color:#fff}.d{color:#fff}').findings;
+  assert.ok(findings.length);
+  findings.forEach((finding) => {
+    assert.equal(finding.source, FINDING_SOURCES.cssAnalyzer);
+    assert.ok(Object.values(FINDING_CONFIDENCE).includes(finding.confidence));
+    assert.ok(finding.evidence.snippet.length > 0);
+    assert.ok(finding.evidence.snippet.length <= MAX_EVIDENCE_SNIPPET_LENGTH);
+    assert.equal(/<script|<style|javascript:/i.test(finding.evidence.snippet), false);
+  });
+  assert.equal(findings.find((f) => f.checkId === 'large-fixed-widths').confidence, FINDING_CONFIDENCE.medium);
+});
+
+test('CSS evidence is deterministic across irrelevant whitespace and comments', () => {
+  const a = analyzeCssSource('/* ignored */ .a{color:#fff}.b{color:#fff}.c{color:#fff}.d{color:#fff}').findings.find((f) => f.checkId === 'repeated-literal-values');
+  const b = analyzeCssSource('.a { color: #fff } .b{ color:#fff }.c{color:#fff}.d{color:#fff}').findings.find((f) => f.checkId === 'repeated-literal-values');
+  assert.equal(a.evidence.snippet, b.evidence.snippet);
+  assert.equal(a.evidence.occurrenceCount, 4);
+  assert.equal(a.issueId, b.issueId);
+});
+
+test('finding metadata validation accepts and rejects controlled source and confidence values', () => {
+  assert.doesNotThrow(() => assertUniqueIssueIds([{ issueId: 'manual:alpha-rule', source: FINDING_SOURCES.manualReview }]));
+  assert.doesNotThrow(() => assertUniqueIssueIds([{ issueId: 'html-analyzer:alpha-rule', source: FINDING_SOURCES.htmlAnalyzer, confidence: FINDING_CONFIDENCE.high, evidence: createEvidence({ snippet: '<button></button>', occurrenceCount: 1 }) }]));
+  assert.throws(() => assertUniqueIssueIds([{ issueId: 'manual:alpha-rule', source: 'manual' }]), /unsupported source/);
+  assert.throws(() => assertUniqueIssueIds([{ issueId: 'html-analyzer:alpha-rule', source: FINDING_SOURCES.htmlAnalyzer, confidence: 'certain', evidence: createEvidence({ snippet: 'x' }) }]), /confidence/);
+  assert.throws(() => assertUniqueIssueIds([{ issueId: 'html-analyzer:alpha-rule', source: FINDING_SOURCES.htmlAnalyzer, confidence: FINDING_CONFIDENCE.high, evidence: { snippet: '' } }]), /evidence snippet/);
+});
+
+test('analyzer findings remain separate from manual scoring and exports', () => {
+  const score = calculateAuditScore([{ id: 'alpha-rule', category: 'Layout', title: 'Alpha', description: 'Alpha', severity: 'high' }], { 'alpha-rule': 'pass' });
+  analyzeCssSource('.panel{width:720px}');
+  assert.equal(score.scorePercent, 100);
+});

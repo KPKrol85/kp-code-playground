@@ -5,6 +5,7 @@ import { calculateAuditScore, calculateCategoryScores, SCORE_STATUSES } from '..
 import { getApplicableRules } from '../assets/js/ruleApplicability.js';
 import { generateRecommendations } from '../assets/js/recommendations.js';
 import { assertUniqueIssueIds, createManualRuleIssueId } from '../assets/js/issueIds.js';
+import { FINDING_SOURCES } from '../assets/js/findingMetadata.js';
 
 const rules = [
   { id: 'alpha-rule', category: 'Layout structure', title: 'Alpha', description: 'Alpha text', severity: 'low' },
@@ -100,5 +101,5 @@ test('manual issue IDs are stable and independent of order or display text', () 
 });
 
 test('distinct findings cannot silently share an issue ID', () => {
-  assert.throws(() => assertUniqueIssueIds([{ issueId: 'manual:alpha-rule' }, { issueId: 'manual:alpha-rule' }]), /Duplicate generated issueId/);
+  assert.throws(() => assertUniqueIssueIds([{ issueId: 'manual:alpha-rule', source: FINDING_SOURCES.manualReview }, { issueId: 'manual:alpha-rule', source: FINDING_SOURCES.manualReview }]), /Duplicate generated issueId/);
 });

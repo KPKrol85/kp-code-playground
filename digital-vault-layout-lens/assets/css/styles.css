@@ -1379,3 +1379,56 @@ textarea:focus-visible {
   .analyzer-file-loader,
   .analyzer-actions { grid-template-columns: auto minmax(0, 1fr); }
 }
+
+.analyzer-finding__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+}
+
+.analyzer-finding__meta dt {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.analyzer-finding__meta dd {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.analyzer-finding__meta dd::after {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 0.85em;
+  margin-inline: var(--space-1) 0;
+  background: var(--color-border);
+  vertical-align: -0.1em;
+}
+
+.analyzer-finding__meta dd:last-child::after { display: none; }
+
+.analyzer-finding__evidence {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+}
+
+.analyzer-finding__evidence figcaption {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.analyzer-finding__evidence code {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface-strong) 70%, transparent);
+  color: var(--color-text);
+}

@@ -1,7 +1,8 @@
 import { assertUniqueIssueIds, createIssueId } from './issueIds.js';
 import { WCAG, cloneWcag } from './wcag.js';
+import { FINDING_CONFIDENCE, FINDING_SOURCES, createEvidence, normalizeEvidenceSnippet } from './findingMetadata.js';
 
-export const HTML_ANALYZER_SOURCE = 'html-analyzer';
+export const HTML_ANALYZER_SOURCE = FINDING_SOURCES.htmlAnalyzer;
 const SEVERITY = { error: 'high', warning: 'medium', notice: 'low' };
 const IGNORED_INPUT_TYPES = new Set(['hidden', 'submit', 'reset', 'button', 'image']);
 const LANDMARK_SELECTORS = ['main', 'nav', 'header', 'footer', 'aside', 'section[aria-label]', 'section[aria-labelledby]', '[role="main"]', '[role="navigation"]', '[role="banner"]', '[role="contentinfo"]', '[role="complementary"]', '[role="region"]'];
@@ -28,7 +29,7 @@ export function parseHtmlToDetachedDocument(html, parser) {
 }
 
 function finding(ruleId, title, category, severity, message, elements = [], wcag = wcagForHtmlCheck(ruleId)) {
-  return { issueId: createIssueId({ source: HTML_ANALYZER_SOURCE, ruleId }), ruleId, checkId: ruleId, title, category, severity, message, source: HTML_ANALYZER_SOURCE, findingType: 'static-html', affectedElementCount: elements.length, locations: elements.map(describeElement).filter(Boolean), ...(wcag ? { wcag: cloneWcag(wcag) } : {}) };
+  return { issueId: createIssueId({ source: HTML_ANALYZER_SOURCE, ruleId }), ruleId, checkId: ruleId, title, category, severity, message, source: HTML_ANALYZER_SOURCE, confidence: confidenceForHtmlCheck(ruleId), evidence: evidenceForElements(ruleId, elements), findingType: 'static-html', affectedElementCount: elements.length, locations: elements.map(describeElement).filter(Boolean), ...(wcag ? { wcag: cloneWcag(wcag) } : {}) };
 }
 
 
@@ -118,7 +119,48 @@ function associatedLabels(control, doc) {
 function ancestors(el) { const out = []; for (let node = el.parentElement; node; node = node.parentElement) out.push(node); return out; }
 function cssEscape(value) { return String(value).replace(/["\\]/g, '\\$&'); }
 function landmarkType(el) { const role = el.getAttribute('role'); if (role) return role; const tag = el.tagName.toLowerCase(); return tag === 'nav' ? 'navigation' : tag === 'aside' ? 'complementary' : tag === 'section' ? 'region' : tag; }
-function describeElement(el) { const tag = el.tagName?.toLowerCase(); if (!tag) return ''; const id = el.getAttribute('id'); return id ? `${tag}#${id}` : tag; }
+function describeElement(el) {
+  const tag = el?.tagName?.toLowerCase();
+  if (!tag) return '';
+  const id = el.getAttribute?.('id');
+  if (id) return `${tag}#${id}`;
+  const name = el.getAttribute?.('name');
+  const role = el.getAttribute?.('role');
+  const type = el.getAttribute?.('type');
+  return [tag, type ? `[type="${type}"]` : '', role ? `[role="${role}"]` : '', name ? `[name="${name}"]` : ''].join('');
+}
+
+function evidenceForElements(ruleId, elements = []) {
+  const first = elements[0];
+  const snippet = first ? elementSnippet(first) : summarySnippetForRule(ruleId);
+  const count = elements.length;
+  return createEvidence({ snippet: count > 1 ? `${snippet} (+${count - 1} more)` : snippet, location: first ? describeElement(first) : summaryLocationForRule(ruleId), occurrenceCount: count });
+}
+
+function elementSnippet(el) {
+  const outer = typeof el?.outerHTML === 'string' ? el.outerHTML : fallbackOuterMarkup(el);
+  return normalizeEvidenceSnippet(outer);
+}
+
+function fallbackOuterMarkup(el) {
+  const tag = el?.tagName?.toLowerCase?.() || 'element';
+  const attrs = ['id', 'class', 'type', 'name', 'href', 'src', 'alt', 'role', 'aria-label', 'aria-labelledby']
+    .filter((name) => el?.hasAttribute?.(name))
+    .map((name) => `${name}="${String(el.getAttribute(name) ?? '').replace(/"/g, '&quot;')}"`)
+    .join(' ');
+  const textValue = text(el);
+  const open = attrs ? `<${tag} ${attrs}>` : `<${tag}>`;
+  return ['input', 'img', 'br', 'hr', 'meta', 'link'].includes(tag) ? open : `${open}${textValue}</${tag}>`;
+}
+
+function summarySnippetForRule(ruleId) {
+  if (ruleId === 'headings-missing') return 'No h1-h6 elements found.';
+  if (ruleId === 'landmarks-missing-main') return 'No main or role="main" landmark found.';
+  if (ruleId === 'landmarks-missing-navigation') return 'Navigation-like link groups found without nav or role="navigation".';
+  return `Static HTML check matched ${ruleId}.`;
+}
+function summaryLocationForRule(ruleId) { return ruleId.startsWith('landmarks-') ? 'document landmarks' : 'document structure'; }
+function confidenceForHtmlCheck(ruleId) { return ruleId === 'images-suspicious-empty-alt' || ruleId === 'landmarks-missing-navigation' ? FINDING_CONFIDENCE.medium : FINDING_CONFIDENCE.high; }
 
 function wcagForHtmlCheck(ruleId) {
   if (ruleId.startsWith('images-')) return [WCAG.nonTextContent];

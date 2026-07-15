@@ -1,6 +1,7 @@
 import { createManualRuleIssueId, assertUniqueIssueIds } from './issueIds.js';
 import { SCORE_STATUSES, calculateEffectiveRuleWeight, normalizeScoreStatus } from './scoringEngine.js';
 import { cloneWcag } from './wcag.js';
+import { FINDING_SOURCES } from './findingMetadata.js';
 
 const recommendationDescriptions = {
   high: 'Prioritize this manual checklist issue before release because it can block usability, accessibility, or task completion.',
@@ -22,6 +23,7 @@ export function generateRecommendations(rules, statuses, profile) {
         description: `${recommendationDescriptions[priority]} Revisit: ${rule.description}`,
         priority,
         sourceRuleId: rule.id,
+        source: FINDING_SOURCES.manualReview,
         effectiveWeight: calculateEffectiveRuleWeight(rule, profile),
         originalIndex: index,
         ...(rule.wcag ? { wcag: cloneWcag(rule.wcag) } : {})
