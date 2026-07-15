@@ -1,4 +1,6 @@
-export const PREVIEW_CSP = "default-src 'none'; style-src 'unsafe-inline'; img-src data: blob:; script-src 'none'; connect-src 'none'; font-src 'none'; frame-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+import { getPreviewInspectionScript } from './previewInspection.js';
+
+export const PREVIEW_CSP = "default-src 'none'; style-src 'unsafe-inline'; img-src data: blob:; script-src 'unsafe-inline'; connect-src 'none'; font-src 'none'; frame-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 
 const EMPTY_PREVIEW_BODY = '<main class="preview-empty" aria-labelledby="preview-empty-title"><h1 id="preview-empty-title">Preview is empty</h1><p>Paste HTML or CSS, then use Refresh preview to render a browser-local isolated preview.</p></main>';
 const NAVIGATION_ATTRIBUTES = new Set(['action', 'formaction', 'ping', 'srcdoc']);
@@ -29,7 +31,7 @@ export function buildPreviewDocument({ html = '', css = '' } = {}, options = {})
   const sanitizedCss = sanitizePreviewCss(css);
   const hasInput = Boolean(String(html || '').trim() || String(css || '').trim());
   const body = hasInput ? sanitizedHtml || '<main><p>No renderable HTML remained after preview safety filtering.</p></main>' : EMPTY_PREVIEW_BODY;
-  return `<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta http-equiv="Content-Security-Policy" content="${escapeAttribute(PREVIEW_CSP)}">\n<title>Local snippet preview</title>\n<style>html{box-sizing:border-box;}*,*::before,*::after{box-sizing:inherit;}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;color:#111827;background:#fff;}.preview-empty{display:grid;min-height:100vh;place-content:center;gap:.5rem;padding:2rem;text-align:center;color:#475569;}.preview-empty h1{margin:0;color:#0f172a;font-size:1.25rem;}img{max-width:100%;height:auto;}</style>\n<style>${escapeStyleEndTags(sanitizedCss)}</style>\n</head>\n<body>\n${body}\n</body>\n</html>`;
+  return `<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta http-equiv="Content-Security-Policy" content="${escapeAttribute(PREVIEW_CSP)}">\n<title>Local snippet preview</title>\n<style>html{box-sizing:border-box;}*,*::before,*::after{box-sizing:inherit;}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;color:#111827;background:#fff;}.preview-empty{display:grid;min-height:100vh;place-content:center;gap:.5rem;padding:2rem;text-align:center;color:#475569;}.preview-empty h1{margin:0;color:#0f172a;font-size:1.25rem;}img{max-width:100%;height:auto;}</style>\n<style>${escapeStyleEndTags(sanitizedCss)}</style>\n</head>\n<body>\n${body}\n<script>${escapeScriptEndTags(getPreviewInspectionScript())}</script>\n</body>\n</html>`;
 }
 
 function sanitizeElement(element) {
@@ -57,6 +59,10 @@ function sanitizeHtmlFallback(source) {
     .replace(/\s(?:action|formaction|ping|srcdoc|target)\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
     .replace(/\s(?:href|src|poster|data|xlink:href)\s*=\s*(["'])\s*(?:javascript:|https?:|\/\/|data:text\/html)[^"']*\1/gi, '')
     .replace(/\sstyle\s*=\s*(["'])[^"']*(?:url\(|@import|javascript:)[^"']*\1/gi, '');
+}
+
+function escapeScriptEndTags(value) {
+  return String(value).replace(/<\/script/gi, '<\\/script');
 }
 
 function escapeStyleEndTags(value) {
