@@ -5,7 +5,7 @@ import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverit
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
 import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
-import { AUDIT_STORAGE_KEY, clearSavedAuditState, loadSavedAuditState, saveAuditState } from './auditStorage.js';
+import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 
 try {
@@ -55,6 +55,9 @@ const elements = {
   severityProfileDescription: document.querySelector('#severity-profile-description'),
   severityProfileSummary: document.querySelector('#severity-profile-summary'),
   auditStorageStatus: document.querySelector('#audit-storage-status'),
+  exportAudit: document.querySelector('#export-audit'),
+  importAudit: document.querySelector('#import-audit'),
+  importAuditFile: document.querySelector('#import-audit-file'),
   statusFilterSelect: document.querySelector('#status-filter-select'),
   severityFilterSelect: document.querySelector('#severity-filter-select'),
   categoryFilterSelect: document.querySelector('#category-filter-select'),
@@ -176,6 +179,14 @@ function bindEvents() {
     persistAuditState('Saved in this browser.');
   });
 
+  elements.exportAudit?.addEventListener('click', exportCurrentAuditState);
+
+  elements.importAudit?.addEventListener('click', () => {
+    elements.importAuditFile?.click();
+  });
+
+  elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
+
   elements.resetAudit.addEventListener('click', () => {
     selectedPresetId = componentPresets[0]?.id;
     selectedRulePackId = ALL_RULES_PACK_ID;
@@ -208,6 +219,90 @@ function bindEvents() {
 }
 
 
+
+function exportCurrentAuditState() {
+  const exportState = createAuditStateExport({
+    selectedPresetId,
+    selectedRulePackId,
+    selectedSeverityProfileId,
+    ruleStatuses: statuses,
+    ruleNotes,
+    ruleSchemaVersion: RULE_SCHEMA_VERSION
+  });
+  const blob = new Blob([stringifyAuditStateExport(exportState)], { type: 'application/json' });
+  const link = document.createElement('a');
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  link.href = URL.createObjectURL(blob);
+  link.download = `kp-layout-lens-audit-${timestamp}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
+  setAuditStorageStatus(`Audit JSON exported with ${Object.keys(statuses).length} saved rule statuses and ${Object.keys(ruleNotes).length} reviewer notes.`);
+}
+
+function handleAuditImportFile(event) {
+  const file = event.target.files?.[0];
+  event.target.value = '';
+  if (!file) {
+    setAuditStorageStatus('Audit import cancelled. Current audit was not changed.');
+    return;
+  }
+  if (!file.name.toLowerCase().endsWith('.json') && file.type && file.type !== 'application/json') {
+    setAuditStorageStatus('Import failed. Choose a .json audit export file.');
+    return;
+  }
+  if (file.size > MAX_AUDIT_IMPORT_BYTES) {
+    setAuditStorageStatus('Import failed. The selected JSON file is too large.');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.addEventListener('load', () => {
+    const result = parseImportedAuditState(String(reader.result || ''), getAuditStateValidationOptions());
+    if (!result.state) {
+      setAuditStorageStatus(result.message || 'Import failed. Current audit was not changed.');
+      return;
+    }
+    const confirmed = window.confirm('Importing this audit JSON will replace the current local audit state. Continue?');
+    if (!confirmed) {
+      setAuditStorageStatus('Audit import cancelled. Current audit was not changed.');
+      return;
+    }
+    applyImportedAuditState(result.state);
+  });
+  reader.addEventListener('error', () => setAuditStorageStatus('Import failed because the file could not be read. Current audit was not changed.'));
+  reader.readAsText(file);
+}
+
+function getAuditStateValidationOptions() {
+  return {
+    validPresetIds,
+    validRuleIds,
+    validStatuses,
+    validRulePackIds,
+    validSeverityProfileIds,
+    currentRuleSchemaVersion: RULE_SCHEMA_VERSION,
+    compatibleRuleSchemaVersions: auditRuleSchemaMetadata.compatibleRuleSchemaVersions
+  };
+}
+
+function applyImportedAuditState(importedState) {
+  selectedPresetId = importedState.selectedPresetId || componentPresets[0]?.id;
+  selectedRulePackId = importedState.selectedRulePackId || ALL_RULES_PACK_ID;
+  selectedSeverityProfileId = importedState.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID;
+  statuses = { ...createInitialStatuses(), ...importedState.ruleStatuses };
+  ruleNotes = importedState.ruleNotes || {};
+  filters = createInitialFilters();
+  renderPresets();
+  renderSelectedPreset();
+  renderRulePackSelector();
+  renderSeverityProfileSelector();
+  renderFilterControls();
+  renderRules();
+  renderScore();
+  persistAuditState('Audit JSON imported successfully and saved in this browser.');
+}
 
 function restoreSavedAuditState() {
   const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion: RULE_SCHEMA_VERSION, compatibleRuleSchemaVersions: auditRuleSchemaMetadata.compatibleRuleSchemaVersions });
