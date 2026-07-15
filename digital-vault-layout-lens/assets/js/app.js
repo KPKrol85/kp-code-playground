@@ -16,6 +16,8 @@ import { OVERLAY_MODE_OFF, OVERLAY_MODES, createOverlayState, setOverlayMode } f
 import { createPreviewCommand, validatePreviewResponse } from './previewInspectionProtocol.js';
 import { createKeyboardAuditState, endKeyboardAudit, resetKeyboardAuditForPreviewRefresh } from './keyboardAuditState.js';
 import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitialViewportState } from './viewportControls.js';
+import { createInitialAnnotationState, createPreviewAnnotation, deletePreviewAnnotation, updatePreviewAnnotation } from './previewAnnotations.js';
+import { COMPARISON_BREAKPOINTS, createInitialComparisonChecklistState, getBreakpointLabel, resetComparisonChecklist, setBreakpointReviewed, summarizeComparisonChecklist, updateBreakpointObservation } from './viewportComparisonChecklist.js';
 
 try {
   assertValidRuleData();
@@ -102,7 +104,14 @@ const elements = {
   keyboardAuditRestart: document.querySelector('#keyboard-audit-restart'),
   keyboardAuditEnd: document.querySelector('#keyboard-audit-end'),
   keyboardAuditStatus: document.querySelector('#keyboard-audit-status'),
-  keyboardAuditFields: document.querySelectorAll('[data-keyboard-audit-field]')
+  keyboardAuditFields: document.querySelectorAll('[data-keyboard-audit-field]'),
+  annotationForm: document.querySelector('#preview-annotation-form'),
+  annotationNote: document.querySelector('#preview-annotation-note'),
+  annotationStatus: document.querySelector('#preview-annotation-status'),
+  annotationList: document.querySelector('#preview-annotation-list'),
+  comparisonChecklist: document.querySelector('#comparison-checklist'),
+  comparisonStatus: document.querySelector('#comparison-status'),
+  comparisonReset: document.querySelector('#comparison-reset')
 };
 
 let statuses = createInitialStatuses();
@@ -112,6 +121,8 @@ const analyzerInputState = createInitialAnalyzerInputState();
 let previewViewportState = createInitialViewportState();
 let overlayState = createOverlayState();
 let keyboardAuditState = createKeyboardAuditState();
+let annotationState = createInitialAnnotationState();
+let comparisonChecklistState = createInitialComparisonChecklistState();
 let keyboardAuditReturnFocus = null;
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
@@ -140,6 +151,8 @@ function init() {
   renderPreviewViewport();
   renderOverlayControls();
   renderKeyboardAuditDetails();
+  renderAnnotations();
+  renderComparisonChecklist();
   initializePreviewFrame();
   syncThemeToggle();
 }
@@ -253,6 +266,12 @@ function bindEvents() {
   elements.keyboardAuditNext?.addEventListener('click', () => runKeyboardAudit('next'));
   elements.keyboardAuditRestart?.addEventListener('click', () => runKeyboardAudit('restart'));
   elements.keyboardAuditEnd?.addEventListener('click', () => endKeyboardAuditMode());
+  elements.annotationForm?.addEventListener('submit', handleAnnotationSubmit);
+  elements.annotationList?.addEventListener('click', handleAnnotationListClick);
+  elements.annotationList?.addEventListener('change', handleAnnotationListChange);
+  elements.comparisonChecklist?.addEventListener('click', handleComparisonClick);
+  elements.comparisonChecklist?.addEventListener('change', handleComparisonChange);
+  elements.comparisonReset?.addEventListener('click', () => { comparisonChecklistState = resetComparisonChecklist(); renderComparisonChecklist(); setComparisonStatus('Manual screenshot checklist reset. No breakpoints are marked reviewed.'); });
   window.addEventListener('message', handlePreviewInspectionMessage);
 
   elements.analyzerInputs.forEach((input) => {
@@ -293,6 +312,149 @@ function bindEvents() {
 
 
 
+
+
+function handleAnnotationSubmit(event) {
+  event.preventDefault();
+  const result = createPreviewAnnotation(annotationState, {
+    note: elements.annotationNote?.value,
+    viewportWidth: previewViewportState.width,
+    overlayMode: overlayState.activeMode,
+    focusedElement: getCurrentKeyboardAuditMetadata()
+  });
+  annotationState = result.state;
+  if (!result.annotation) {
+    setAnnotationStatus(result.error || 'Annotation was not added.');
+    return;
+  }
+  if (elements.annotationNote) elements.annotationNote.value = '';
+  renderAnnotations();
+  setAnnotationStatus(`Annotation ${result.annotation.id} added for ${result.annotation.viewportWidth}px with ${getOverlayLabel(result.annotation.overlayMode)} overlay.`);
+}
+
+function getCurrentKeyboardAuditMetadata() {
+  const current = keyboardAuditState.current;
+  if (!current) return null;
+  return {
+    position: current.position ? `${current.position} of ${keyboardAuditState.count}` : '',
+    type: current.inputType ? `${current.type} (${current.inputType})` : current.type,
+    name: current.name || current.warning || '',
+    details: [current.href ? `href: ${current.href}` : '', current.tabindex !== null && current.tabindex !== undefined ? `tabindex: ${current.tabindex}` : 'normal tab order'].filter(Boolean).join(' · ')
+  };
+}
+
+function handleAnnotationListClick(event) {
+  const edit = event.target.closest('[data-annotation-edit]');
+  const remove = event.target.closest('[data-annotation-delete]');
+  if (edit) {
+    const card = edit.closest('[data-annotation-id]');
+    card?.querySelector('[data-annotation-editor]')?.removeAttribute('hidden');
+    card?.querySelector('[data-annotation-edit-input]')?.focus();
+    return;
+  }
+  if (remove) {
+    annotationState = deletePreviewAnnotation(annotationState, remove.dataset.annotationDelete).state;
+    renderAnnotations();
+    setAnnotationStatus('Preview annotation deleted.');
+  }
+}
+
+function handleAnnotationListChange(event) {
+  const input = event.target.closest('[data-annotation-edit-input]');
+  if (!input) return;
+  const result = updatePreviewAnnotation(annotationState, input.dataset.annotationEditInput, { note: input.value });
+  annotationState = result.state;
+  renderAnnotations();
+  setAnnotationStatus(result.annotation ? `Annotation ${result.annotation.id} updated.` : result.error);
+}
+
+function renderAnnotations() {
+  if (!elements.annotationList) return;
+  elements.annotationList.textContent = '';
+  if (!annotationState.items.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No manual preview annotations yet.';
+    elements.annotationList.append(empty);
+    return;
+  }
+  annotationState.items.forEach((item) => {
+    const article = document.createElement('article');
+    article.className = 'preview-annotation';
+    article.dataset.annotationId = item.id;
+    const title = document.createElement('h6');
+    title.textContent = item.id;
+    const meta = document.createElement('dl');
+    meta.className = 'analyzer-finding__meta';
+    appendMeta(meta, 'Type', 'Manual preview annotation');
+    appendMeta(meta, 'Viewport', `${item.viewportWidth}px`);
+    appendMeta(meta, 'Overlay', getOverlayLabel(item.overlayMode));
+    if (item.focusedElement) appendMeta(meta, 'Focused target', [item.focusedElement.position, item.focusedElement.type, item.focusedElement.name].filter(Boolean).join(' · '));
+    const note = document.createElement('p');
+    note.textContent = item.note;
+    const actions = document.createElement('div');
+    actions.className = 'preview-annotation__actions';
+    const edit = document.createElement('button');
+    edit.type = 'button'; edit.className = 'button button--secondary'; edit.dataset.annotationEdit = item.id; edit.textContent = 'Edit';
+    const del = document.createElement('button');
+    del.type = 'button'; del.className = 'button button--secondary'; del.dataset.annotationDelete = item.id; del.textContent = 'Delete';
+    actions.append(edit, del);
+    const editor = document.createElement('label');
+    editor.className = 'preview-annotation__editor'; editor.hidden = true; editor.dataset.annotationEditor = item.id;
+    editor.textContent = 'Edit annotation note';
+    const textarea = document.createElement('textarea');
+    textarea.value = item.note; textarea.maxLength = 240; textarea.dataset.annotationEditInput = item.id;
+    editor.append(textarea);
+    article.append(title, meta, note, actions, editor);
+    elements.annotationList.append(article);
+  });
+}
+
+function setAnnotationStatus(message) { if (elements.annotationStatus) elements.annotationStatus.textContent = message; }
+
+function handleComparisonClick(event) {
+  const switchButton = event.target.closest('[data-comparison-switch]');
+  if (!switchButton) return;
+  previewViewportState = applyPresetViewport(previewViewportState, switchButton.dataset.comparisonSwitch);
+  renderPreviewViewport();
+  setPreviewStatus(`${switchButton.textContent.trim()} selected for manual screenshot review. Capture screenshots manually; no automatic capture occurred.`);
+}
+
+function handleComparisonChange(event) {
+  const reviewed = event.target.closest('[data-comparison-reviewed]');
+  const observation = event.target.closest('[data-comparison-observation]');
+  if (reviewed) comparisonChecklistState = setBreakpointReviewed(comparisonChecklistState, reviewed.dataset.comparisonReviewed, reviewed.checked);
+  if (observation) comparisonChecklistState = updateBreakpointObservation(comparisonChecklistState, observation.dataset.comparisonObservation, observation.value);
+  renderComparisonChecklist();
+  setComparisonStatus('Manual screenshot checklist updated for this browser session.');
+}
+
+function renderComparisonChecklist() {
+  if (!elements.comparisonChecklist) return;
+  elements.comparisonChecklist.textContent = '';
+  COMPARISON_BREAKPOINTS.forEach((id) => {
+    const preset = VIEWPORT_CONFIG.presets[id];
+    const item = comparisonChecklistState[id] || { reviewed: false, observation: '' };
+    const article = document.createElement('article');
+    article.className = 'comparison-item';
+    article.dataset.reviewed = String(item.reviewed);
+    const heading = document.createElement('h6'); heading.textContent = getBreakpointLabel(id);
+    const status = document.createElement('strong'); status.textContent = item.reviewed ? 'Reviewed' : 'Pending';
+    const switchButton = document.createElement('button'); switchButton.type = 'button'; switchButton.className = 'button button--secondary'; switchButton.dataset.comparisonSwitch = id; switchButton.textContent = `Switch to ${preset.label}`;
+    const label = document.createElement('label'); label.className = 'comparison-item__check';
+    const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = item.reviewed; checkbox.dataset.comparisonReviewed = id;
+    label.append(checkbox, document.createTextNode(' Mark manually reviewed'));
+    const obsLabel = document.createElement('label'); obsLabel.textContent = 'Optional observation';
+    const textarea = document.createElement('textarea'); textarea.rows = 2; textarea.maxLength = 200; textarea.value = item.observation; textarea.dataset.comparisonObservation = id;
+    obsLabel.append(textarea);
+    article.append(heading, status, switchButton, label, obsLabel);
+    elements.comparisonChecklist.append(article);
+  });
+  const summary = summarizeComparisonChecklist(comparisonChecklistState);
+  setComparisonStatus(`${summary.reviewed} of ${summary.total} breakpoints reviewed. ${summary.pending} pending. Manual screenshots only.`);
+}
+
+function setComparisonStatus(message) { if (elements.comparisonStatus) elements.comparisonStatus.textContent = message; }
 
 function initializePreviewFrame() {
   if (elements.previewFrame) elements.previewFrame.srcdoc = buildPreviewDocument();
