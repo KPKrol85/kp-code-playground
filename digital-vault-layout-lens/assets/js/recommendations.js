@@ -1,4 +1,5 @@
-import { SCORE_STATUSES, calculateEffectiveRuleWeight } from './scoringEngine.js';
+import { createManualRuleIssueId, assertUniqueIssueIds } from './issueIds.js';
+import { SCORE_STATUSES, calculateEffectiveRuleWeight, normalizeScoreStatus } from './scoringEngine.js';
 
 const recommendationDescriptions = {
   high: 'Prioritize this manual checklist issue before release because it can block usability, accessibility, or task completion.',
@@ -7,13 +8,14 @@ const recommendationDescriptions = {
 };
 
 export function generateRecommendations(rules, statuses, profile) {
-  return rules
-    .filter((rule) => statuses[rule.id] === SCORE_STATUSES.NEEDS_WORK)
+  const recommendations = rules
+    .filter((rule) => normalizeScoreStatus(statuses[rule.id]) === SCORE_STATUSES.NEEDS_WORK)
     .map((rule, index) => {
       const priority = normalizePriority(rule.severity);
 
       return {
         id: `rec-${rule.id}`,
+        issueId: createManualRuleIssueId(rule.id),
         categoryName: rule.category,
         title: `Improve ${rule.title.toLowerCase()}`,
         description: `${recommendationDescriptions[priority]} Revisit: ${rule.description}`,
@@ -23,7 +25,9 @@ export function generateRecommendations(rules, statuses, profile) {
         originalIndex: index
       };
     })
-    .sort((a, b) => b.effectiveWeight - a.effectiveWeight || a.originalIndex - b.originalIndex);
+    .sort((a, b) => b.effectiveWeight - a.effectiveWeight || a.sourceRuleId.localeCompare(b.sourceRuleId));
+
+  return assertUniqueIssueIds(recommendations);
 }
 
 function normalizePriority(severity) {

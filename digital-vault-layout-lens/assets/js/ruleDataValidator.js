@@ -254,9 +254,13 @@ function validateGeneratedRecommendations(rules, profiles, ruleIdSet, categorySe
     return;
   }
   const recommendationIdSet = new Set();
+  const recommendationIssueIdSet = new Set();
   recommendations.forEach((recommendation, index) => {
     const entity = getEntityLabel('recommendations', recommendation, index);
     validateUniqueId(recommendation.id, recommendationIdSet, 'recommendations.js', entity, errors);
+    validateUniqueId(recommendation.issueId, recommendationIssueIdSet, 'recommendations.js', entity, errors);
+    validateRequiredText(recommendation.issueId, 'recommendations.js', entity, 'issueId', errors);
+    if (isNonEmptyString(recommendation.issueId) && !/^manual:[a-z0-9][a-z0-9-]*$/.test(recommendation.issueId)) addError(errors, 'recommendations.js', entity, 'issueId', `Malformed issueId "${recommendation.issueId}".`);
     validateRequiredText(recommendation.categoryName, 'recommendations.js', entity, 'categoryName', errors);
     if (isNonEmptyString(recommendation.categoryName) && !categorySet.has(recommendation.categoryName)) addError(errors, 'recommendations.js', entity, 'categoryName', `Unknown category "${recommendation.categoryName}".`);
     validateRequiredText(recommendation.title, 'recommendations.js', entity, 'title', errors);
