@@ -338,6 +338,31 @@
                 <div><dt>Details</dt><dd data-keyboard-audit-field="details">—</dd></div>
               </dl>
             </section>
+
+            <section class="preview-annotations-panel" aria-labelledby="preview-annotations-title" aria-describedby="preview-annotations-help">
+              <div>
+                <h5 id="preview-annotations-title">Preview evidence annotations</h5>
+                <p id="preview-annotations-help" class="field__hint">Add session-only reviewer notes for the selected preview viewport and active overlay. These notes are separate from automated analyzer findings, checklist rule notes, scoring, and reports.</p>
+              </div>
+              <form id="preview-annotation-form" class="preview-annotation-form">
+                <label for="preview-annotation-note">Annotation note</label>
+                <textarea id="preview-annotation-note" rows="3" maxlength="240" aria-describedby="preview-annotations-help preview-annotation-status" placeholder="Describe the preview evidence or observed issue."></textarea>
+                <button class="button button--secondary" type="submit">Add annotation</button>
+              </form>
+              <p id="preview-annotation-status" class="local-save-status" aria-live="polite">No preview annotations yet.</p>
+              <div id="preview-annotation-list" class="preview-annotation-list" aria-live="polite"></div>
+            </section>
+            <section class="viewport-comparison-panel" aria-labelledby="viewport-comparison-title" aria-describedby="viewport-comparison-help">
+              <div class="viewport-comparison-panel__header">
+                <div>
+                  <h5 id="viewport-comparison-title">Manual screenshot checklist</h5>
+                  <p id="viewport-comparison-help" class="field__hint">Switch to each fixed breakpoint, capture screenshots manually with your browser or OS tools, then mark the breakpoint reviewed. Layout Lens does not automatically capture screenshots.</p>
+                </div>
+                <button id="comparison-reset" class="button button--secondary" type="button">Reset checklist</button>
+              </div>
+              <p id="comparison-status" class="local-save-status" aria-live="polite">0 of 3 breakpoints reviewed.</p>
+              <div id="comparison-checklist" class="comparison-checklist"></div>
+            </section>
             <div class="preview-panel__meta">
               <strong>Selected viewport: <span id="preview-width-display"></span></strong>
               <p id="preview-status" class="local-save-status" aria-live="polite">Preview has not run yet. Refresh to render the current browser-local snippet.</p>
