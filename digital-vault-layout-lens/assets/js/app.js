@@ -8,6 +8,7 @@ import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
+import { analyzeCssSource } from './cssAnalyzer.js';
 import { validateAnalyzerSourceFile } from './localFileInput.js';
 
 try {
@@ -72,7 +73,11 @@ const elements = {
   analyzeHtml: document.querySelector('#analyze-html'),
   htmlAnalyzerStatus: document.querySelector('#html-analyzer-status'),
   htmlAnalyzerCount: document.querySelector('#html-analyzer-count'),
-  htmlAnalyzerResults: document.querySelector('#html-analyzer-results')
+  htmlAnalyzerResults: document.querySelector('#html-analyzer-results'),
+  analyzeCss: document.querySelector('#analyze-css'),
+  cssAnalyzerStatus: document.querySelector('#css-analyzer-status'),
+  cssAnalyzerCount: document.querySelector('#css-analyzer-count'),
+  cssAnalyzerResults: document.querySelector('#css-analyzer-results')
 };
 
 let statuses = createInitialStatuses();
@@ -199,6 +204,7 @@ function bindEvents() {
 
   elements.analyzerFileInput?.addEventListener('change', handleAnalyzerSourceFile);
   elements.analyzeHtml?.addEventListener('click', runHtmlAnalyzer);
+  elements.analyzeCss?.addEventListener('click', runCssAnalyzer);
 
   elements.analyzerInputs.forEach((input) => {
     input.addEventListener('input', handleAnalyzerInput);
@@ -301,25 +307,41 @@ function runHtmlAnalyzer() {
   }
 }
 
+function runCssAnalyzer() {
+  try {
+    renderCssAnalyzerResults(analyzeCssSource(analyzerInputState.css));
+  } catch {
+    renderCssAnalyzerResults({ findings: [], status: 'error', message: 'CSS analysis could not run in this browser.' });
+  }
+}
+
+function renderCssAnalyzerResults(result) {
+  renderAnalyzerResults(result, { status: elements.cssAnalyzerStatus, count: elements.cssAnalyzerCount, results: elements.cssAnalyzerResults, label: 'CSS', empty: 'Run analysis to check the current CSS textarea content.' });
+}
+
 function renderHtmlAnalyzerResults(result) {
+  renderAnalyzerResults(result, { status: elements.htmlAnalyzerStatus, count: elements.htmlAnalyzerCount, results: elements.htmlAnalyzerResults, label: 'HTML', empty: 'Run analysis to check the current HTML textarea content.' });
+}
+
+function renderAnalyzerResults(result, target) {
   const findings = Array.isArray(result.findings) ? result.findings : [];
-  if (elements.htmlAnalyzerStatus) elements.htmlAnalyzerStatus.textContent = result.message || 'HTML analysis finished.';
-  if (elements.htmlAnalyzerCount) elements.htmlAnalyzerCount.textContent = result.status === 'empty' ? 'No input' : `${findings.length} ${pluralize('finding', findings.length)}`;
-  if (!elements.htmlAnalyzerResults) return;
-  elements.htmlAnalyzerResults.textContent = '';
-  elements.htmlAnalyzerResults.dataset.empty = findings.length ? 'false' : 'true';
-  if (result.status === 'empty') {
+  if (target.status) target.status.textContent = result.message || `${target.label} analysis finished.`;
+  if (target.count) target.count.textContent = result.status === 'empty' ? 'No input' : result.status === 'error' ? 'Error' : `${findings.length} ${pluralize('finding', findings.length)}`;
+  if (!target.results) return;
+  target.results.textContent = '';
+  target.results.dataset.empty = findings.length ? 'false' : 'true';
+  if (result.status === 'empty' || result.status === 'error') {
     const empty = document.createElement('p');
     empty.className = 'empty-state';
-    empty.textContent = result.message;
-    elements.htmlAnalyzerResults.append(empty);
+    empty.textContent = result.message || target.empty;
+    target.results.append(empty);
     return;
   }
   if (!findings.length) {
     const clear = document.createElement('p');
     clear.className = 'empty-state';
     clear.textContent = 'No issues found by these focused static checks. Manual review is still required.';
-    elements.htmlAnalyzerResults.append(clear);
+    target.results.append(clear);
     return;
   }
   findings.forEach((item) => {
@@ -329,13 +351,15 @@ function renderHtmlAnalyzerResults(result) {
     title.textContent = item.title;
     const meta = document.createElement('p');
     meta.className = 'analyzer-finding__meta';
-    meta.textContent = `${item.severity} · ${item.category} · ${item.issueId} · ${item.affectedElementCount} affected`;
+    const affected = item.affectedElementCount != null ? `${item.affectedElementCount} affected` : `${item.occurrenceCount || 0} occurrences`;
+    meta.textContent = `${item.severity} · ${item.category} · ${item.source} · ${item.issueId} · ${affected}`;
     const message = document.createElement('p');
     message.textContent = item.message;
     article.append(title, meta, message);
-    elements.htmlAnalyzerResults.append(article);
+    target.results.append(article);
   });
 }
+
 
 
 function exportCurrentAuditState() {

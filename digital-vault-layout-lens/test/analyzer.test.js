@@ -70,3 +70,77 @@ function element(tagName, attrs = {}, textContent = '') {
     closest() { return null; }
   };
 }
+
+import { analyzeCssSource } from '../assets/js/cssAnalyzer.js';
+import { validateWcagMappings } from '../assets/js/wcag.js';
+import { validateRuleData, validateWcagField } from '../assets/js/ruleDataValidator.js';
+
+test('empty CSS returns an empty-input result without findings', () => {
+  const result = analyzeCssSource('  ');
+  assert.equal(result.status, 'empty');
+  assert.deepEqual(result.findings, []);
+});
+
+test('small valid CSS snippet does not produce responsive warnings', () => {
+  assert.equal(analyzeCssSource('.icon{width:24px;height:24px}.card{max-width:60rem}').findings.length, 0);
+});
+
+test('CSS repeated literals flag threshold values but not custom properties', () => {
+  const repeated = analyzeCssSource('.a{color:#fff;margin:16px}.b{background:#ffffff;padding:16px}.c{border-color:#fff;gap:16px}.d{color:#fff;border-radius:16px}').findings;
+  assert.ok(repeated.some((f) => f.checkId === 'repeated-literal-values' && !f.wcag));
+  const tokens = analyzeCssSource('.a{color:var(--c)}.b{color:var(--c)}.c{color:var(--c)}.d{color:var(--c)}').findings;
+  assert.equal(tokens.length, 0);
+});
+
+test('CSS fixed width checks are conservative and responsive overrides reduce risk', () => {
+  assert.ok(analyzeCssSource('.panel{width:720px}.modal{min-width:480px}').findings.some((f) => f.checkId === 'large-fixed-widths' && f.wcag?.[0].criterion === '1.4.10'));
+  assert.equal(analyzeCssSource('@media (max-width: 40rem){.panel{width:720px}}').findings.some((f) => f.checkId === 'large-fixed-widths'), false);
+});
+
+test('CSS responsive pattern checks handle substantial, media, and container styles', () => {
+  const substantial = Array.from({ length: 22 }, (_, i) => `.c${i}{width:400px;display:grid}`).join('\n');
+  assert.ok(analyzeCssSource(substantial).findings.some((f) => f.checkId === 'missing-responsive-patterns'));
+  assert.equal(analyzeCssSource('@media(max-width:40rem){.a{width:100%}} @container card (min-width:30rem){.b{display:grid}}').findings.length, 0);
+});
+
+test('CSS overflow risk checks detect unsafe and ignore safe handling', () => {
+  const risky = analyzeCssSource('body{overflow-x:hidden}.label{white-space:nowrap}.grid{display:grid;grid-template-columns:360px 360px}.toast{position:fixed;width:420px}').findings.map((f) => f.checkId);
+  assert.ok(risky.includes('overflow-x-hidden'));
+  assert.ok(risky.includes('nowrap-without-overflow-strategy'));
+  assert.ok(risky.includes('rigid-grid-tracks'));
+  assert.ok(risky.includes('positioned-fixed-width'));
+  assert.equal(analyzeCssSource('.label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}').findings.some((f) => f.checkId === 'nowrap-without-overflow-strategy'), false);
+});
+
+test('malformed CSS returns a clear error without throwing', () => {
+  const result = analyzeCssSource('.card { width: 400px;');
+  assert.equal(result.status, 'error');
+  assert.deepEqual(result.findings, []);
+});
+
+test('CSS findings and issue IDs are deterministic and unique despite whitespace and comments', () => {
+  const a = analyzeCssSource('/*x*/.a{color:#fff}.b{color:#ffffff}.c{color:#fff}.d{color:#fff;width:720px}').findings.map((f) => f.issueId).sort();
+  const b = analyzeCssSource('.d { width:720px; color:#fff } .c{ color:#fff }.b{color:#fff}.a{color:#fff}').findings.map((f) => f.issueId).sort();
+  assert.deepEqual(a, b);
+  assert.equal(new Set(a).size, a.length);
+});
+
+test('WCAG metadata validation accepts optional and valid mappings', () => {
+  assert.deepEqual(validateWcagMappings(undefined), []);
+  assert.deepEqual(validateWcagMappings([{ criterion: '1.4.10', level: 'AA', title: 'Reflow' }]), []);
+  assert.equal(validateRuleData().valid, true);
+});
+
+test('WCAG metadata validation rejects malformed entries', () => {
+  assert.ok(validateWcagMappings([{ criterion: '1.4', level: 'AA', title: 'Reflow' }]).length);
+  assert.ok(validateWcagMappings([{ criterion: '1.4.10', level: 'Gold', title: 'Reflow' }]).length);
+  assert.ok(validateWcagMappings([{ criterion: '1.4.10', level: 'AA', title: 'Reflow' }, { criterion: '1.4.10', level: 'AA', title: 'Reflow' }]).length);
+  const errors = validateWcagField([{ criterion: '1.4.10', level: 'AA', title: '' }]);
+  assert.ok(errors.length);
+});
+
+test('relevant HTML findings have WCAG mappings', () => {
+  const findings = analyzeHtmlSource('<main></main>', { parser: { parseFromString: () => fixtureDocument() } }).findings;
+  assert.ok(findings.some((f) => f.checkId === 'images-missing-alt' && f.wcag?.[0].criterion === '1.1.1'));
+  assert.ok(findings.some((f) => f.checkId === 'controls-unlabeled' && f.wcag?.some((w) => w.criterion === '3.3.2')));
+});

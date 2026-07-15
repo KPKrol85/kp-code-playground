@@ -5,6 +5,7 @@ import { DEFAULT_SEVERITY_PROFILE_ID, severityProfiles } from './severityProfile
 import { SCORE_STATUSES, calculateEffectiveRuleWeight, severityWeights } from './scoringEngine.js';
 import { getAllPatternIds, getRulePackIds } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
+import { validateWcagMappings } from './wcag.js';
 
 export class RuleDataValidationError extends Error {
   constructor(result) {
@@ -171,6 +172,7 @@ function validateRules(rules, categorySet, severitySet, errors, applicabilityRef
     if ('weight' in rule && !isPositiveFiniteNumber(rule.weight)) {
       addError(errors, 'auditRules.js', entity, 'weight', 'Optional rule weight must be a positive finite number.');
     }
+    validateWcagField(rule.wcag, 'auditRules.js', entity, 'wcag', errors);
     validateApplicability(rule.applicability, applicabilityReferences, 'auditRules.js', entity, errors);
   });
   return ruleIdSet;
@@ -274,6 +276,11 @@ function validateGeneratedRecommendations(rules, profiles, ruleIdSet, categorySe
   });
 }
 
+
+export function validateWcagField(wcag, source = 'finding', entity = 'item', field = 'wcag', errors = []) {
+  validateWcagMappings(wcag).forEach((reason) => addError(errors, source, entity, field, reason));
+  return errors;
+}
 
 function validateApplicability(applicability, references, source, entity, errors) {
   if (applicability === undefined) return;
