@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js tests/*.test.mjs",
+    "test:analyzer": "node --test test/analyzer.test.js tests/analyzerFixtures.test.mjs"
   },
   "type": "module"
 }

@@ -1,0 +1,1 @@
+.icon { width: 32px; height: 32px; }.label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }.scroller { overflow-x: auto; } @media (max-width: 40rem) { .panel { width: 720px; } } @container card (min-width: 30rem) { .card { display: grid; grid-template-columns: 1fr 1fr; } }
