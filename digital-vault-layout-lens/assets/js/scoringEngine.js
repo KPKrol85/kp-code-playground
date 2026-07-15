@@ -28,8 +28,9 @@ export function calculateEffectiveRuleWeight(rule, profile) {
   return roundWeight(baseWeight * severityMultiplier * categoryMultiplier);
 }
 
-export function calculateAuditScore(rules, statuses, profile) {
-  return finalizeScore(rules.reduce(addRuleToScore(statuses, profile), createEmptyScore()));
+export function calculateAuditScore(rules, statuses = {}, profile) {
+  const safeRules = Array.isArray(rules) ? rules : [];
+  return finalizeScore(safeRules.reduce(addRuleToScore(statuses, profile), createEmptyScore()));
 }
 
 export function calculateCategoryScores(categories, rules, statuses, profile) {
@@ -47,7 +48,7 @@ export function calculateCategoryScores(categories, rules, statuses, profile) {
 
 function addRuleToScore(statuses, profile) {
   return (score, rule) => {
-    const status = statuses[rule.id] || SCORE_STATUSES.NOT_CHECKED;
+    const status = normalizeScoreStatus(statuses?.[rule.id]);
     const weight = calculateEffectiveRuleWeight(rule, profile);
 
     score.totalRules += 1;
@@ -78,6 +79,10 @@ function addRuleToScore(statuses, profile) {
 
     return score;
   };
+}
+
+export function normalizeScoreStatus(status) {
+  return Object.values(SCORE_STATUSES).includes(status) ? status : SCORE_STATUSES.NOT_CHECKED;
 }
 
 function createEmptyScore() {

@@ -31,7 +31,7 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 ## Needs verification before marking complete
 
 - [x] Add a repeatable QA command or package script if the project later introduces tooling beyond direct browser usage.
-  - Verification note (2026-07-14): verified that the current repository remains dependency-free and contains no project-local build, lint, test, browser automation, validation, or similar repeatable QA tooling. A QA command is therefore not required for the current static baseline and must be added when future tooling is introduced.
+  - Verification note (2026-07-15): project-local test tooling now exists through the dependency-free Node.js test runner. `npm test` runs the scoring and issue ID checks added for Phase 2 and passed locally.
 - [ ] Re-check screenshots manually when a browser automation runtime is available.
   - Verification note (2026-07-10): no usable browser runtime, browser preview, or browser automation command was available in the environment (`google-chrome`, `google-chrome-stable`, `chromium`, `chromium-browser`, `firefox`, and `playwright` were not found), so screenshot verification remains pending; source-level review only was possible.
 
@@ -57,8 +57,10 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
   - Verification note (2026-07-14): added optional per-rule browser-local notes keyed by stable rule ID, persisted them in audit storage schema v2 while accepting legacy schema v1 states, normalized malformed note data safely, escaped note rendering, and verified reset/local clear removes notes with the rest of the audit draft.
 - [x] Add JSON export/import for current audit state before introducing any report or database feature.
   - Verification note (2026-07-14): added browser-local JSON export/import for the current audit state with schema/product metadata, readable deterministic formatting, file-size/type guards, confirmation before replacement, strict import validation for schema versions, rule schema compatibility, preset/pack/profile/status/note references, and legacy persisted state support. Node checks verified valid export JSON round-trips with statuses and notes, preset/pack/profile restoration data, malformed JSON rejection, unrelated JSON rejection, unsupported future schema rejection, unknown ID/invalid status rejection, and legacy schema v1 import compatibility.
-- [ ] Add deterministic issue IDs for findings so reports and future comparisons can reference stable issues.
-- [ ] Add lightweight tests for scoring edge cases when the project introduces test tooling.
+- [x] Add deterministic issue IDs for findings so reports and future comparisons can reference stable issues.
+  - Verification note (2026-07-15): generated manual findings now expose stable `issueId` values in the documented `manual:<rule-id>` format. IDs are derived only from the finding source and stable rule ID, remain unchanged across reload/export/import, rule ordering, display text, notes, and scoring recalculation, and validation rejects malformed or duplicate generated issue IDs.
+- [x] Add lightweight tests for scoring edge cases when the project introduces test tooling.
+  - Verification note (2026-07-15): added dependency-free `node:test` coverage for no reviewed applicable rules, all passing rules, needs-work scoring, not-checked progress handling, not-applicable exclusion, mixed severity/profile weights, zero possible points, category scoring, conditional applicability, deterministic scoring across rule order, unknown status normalization, stable issue IDs, and duplicate issue ID rejection. `npm test` passed with 13 tests.
 
 ### Phase 3 — HTML/CSS input analyzer
 
