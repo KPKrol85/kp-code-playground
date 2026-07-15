@@ -188,6 +188,9 @@
           </div>
           <div class="panel-actions" aria-label="Audit actions">
             <p id="audit-storage-status" class="local-save-status" aria-live="polite">Browser-only audit state.</p>
+            <button id="export-audit" class="button button--secondary" type="button">Export JSON</button>
+            <button id="import-audit" class="button button--secondary" type="button">Import JSON</button>
+            <input id="import-audit-file" class="sr-only" type="file" accept="application/json,.json" aria-label="Import audit state JSON file" />
             <button id="reset-audit" class="button button--secondary" type="button">Reset local audit</button>
           </div>
         </div>
@@ -247,7 +250,7 @@
               <span class="module-card__status">Coming next</span>
               <ul>
                 <li>No account or cloud sync</li>
-                <li>Saved audits, exports, and reports remain planned</li>
+                <li>JSON import/export is local-only; reports remain planned</li>
               </ul>
             </div>
           </aside>

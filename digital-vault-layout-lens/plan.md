@@ -55,7 +55,8 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
   - Verification note (2026-07-14): added browser-session checklist filters for status, severity, category, and applicability-based preset relevance with an accessible clear action and empty state. Source checks verified the app and storage modules parse successfully; storage assertions confirmed filters remain UI-only and do not change saved audit answers.
 - [x] Add reviewer notes per rule while keeping notes local and optional.
   - Verification note (2026-07-14): added optional per-rule browser-local notes keyed by stable rule ID, persisted them in audit storage schema v2 while accepting legacy schema v1 states, normalized malformed note data safely, escaped note rendering, and verified reset/local clear removes notes with the rest of the audit draft.
-- [ ] Add JSON export/import for current audit state before introducing any report or database feature.
+- [x] Add JSON export/import for current audit state before introducing any report or database feature.
+  - Verification note (2026-07-14): added browser-local JSON export/import for the current audit state with schema/product metadata, readable deterministic formatting, file-size/type guards, confirmation before replacement, strict import validation for schema versions, rule schema compatibility, preset/pack/profile/status/note references, and legacy persisted state support. Node checks verified valid export JSON round-trips with statuses and notes, preset/pack/profile restoration data, malformed JSON rejection, unrelated JSON rejection, unsupported future schema rejection, unknown ID/invalid status rejection, and legacy schema v1 import compatibility.
 - [ ] Add deterministic issue IDs for findings so reports and future comparisons can reference stable issues.
 - [ ] Add lightweight tests for scoring edge cases when the project introduces test tooling.
 
