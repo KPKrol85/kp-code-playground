@@ -11,6 +11,8 @@ import { analyzeHtmlSource } from './htmlAnalyzer.js';
 import { analyzeCssSource } from './cssAnalyzer.js';
 import { validateAnalyzerSourceFile } from './localFileInput.js';
 import { confidenceLabel, sourceLabel } from './findingMetadata.js';
+import { buildPreviewDocument } from './previewDocument.js';
+import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitialViewportState } from './viewportControls.js';
 
 try {
   assertValidRuleData();
@@ -78,13 +80,24 @@ const elements = {
   analyzeCss: document.querySelector('#analyze-css'),
   cssAnalyzerStatus: document.querySelector('#css-analyzer-status'),
   cssAnalyzerCount: document.querySelector('#css-analyzer-count'),
-  cssAnalyzerResults: document.querySelector('#css-analyzer-results')
+  cssAnalyzerResults: document.querySelector('#css-analyzer-results'),
+  previewRefresh: document.querySelector('#preview-refresh'),
+  previewStatus: document.querySelector('#preview-status'),
+  previewFrame: document.querySelector('#snippet-preview-frame'),
+  previewCanvas: document.querySelector('#preview-canvas'),
+  previewWidthDisplay: document.querySelector('#preview-width-display'),
+  viewportPresetButtons: document.querySelectorAll('[data-preview-viewport]'),
+  customViewportInput: document.querySelector('#custom-viewport-width'),
+  customViewportApply: document.querySelector('#apply-custom-viewport'),
+  customViewportMessage: document.querySelector('#custom-viewport-message'),
+  viewportWidthLabels: document.querySelectorAll('[data-preview-viewport-width]')
 };
 
 let statuses = createInitialStatuses();
 let ruleNotes = {};
 let filters = createInitialFilters();
 const analyzerInputState = createInitialAnalyzerInputState();
+let previewViewportState = createInitialViewportState();
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -109,6 +122,8 @@ function init() {
   renderRules();
   renderScore();
   bindEvents();
+  renderPreviewViewport();
+  initializePreviewFrame();
   syncThemeToggle();
 }
 
@@ -206,6 +221,15 @@ function bindEvents() {
   elements.analyzerFileInput?.addEventListener('change', handleAnalyzerSourceFile);
   elements.analyzeHtml?.addEventListener('click', runHtmlAnalyzer);
   elements.analyzeCss?.addEventListener('click', runCssAnalyzer);
+  elements.previewRefresh?.addEventListener('click', refreshPreview);
+  elements.viewportPresetButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      previewViewportState = applyPresetViewport(previewViewportState, button.dataset.previewViewport);
+      renderPreviewViewport();
+      setPreviewStatus(`${button.textContent.trim()} viewport active at ${previewViewportState.width}px. Preview source was not changed.`);
+    });
+  });
+  elements.customViewportApply?.addEventListener('click', applyCustomViewportFromInput);
 
   elements.analyzerInputs.forEach((input) => {
     input.addEventListener('input', handleAnalyzerInput);
@@ -244,6 +268,59 @@ function bindEvents() {
 }
 
 
+
+
+function initializePreviewFrame() {
+  if (elements.previewFrame) elements.previewFrame.srcdoc = buildPreviewDocument();
+}
+
+function refreshPreview() {
+  if (!elements.previewFrame) return;
+  try {
+    elements.previewFrame.srcdoc = buildPreviewDocument({ html: analyzerInputState.html, css: analyzerInputState.css });
+    const hasInput = Boolean(analyzerInputState.html.trim() || analyzerInputState.css.trim());
+    setPreviewStatus(hasInput ? `Preview refreshed locally at ${previewViewportState.width}px. Scripts and remote resources remain blocked.` : 'Preview refreshed with an empty browser-local document.');
+  } catch {
+    elements.previewFrame.srcdoc = buildPreviewDocument();
+    setPreviewStatus('Preview could not render the supplied snippet, so a safe empty preview was shown.');
+  }
+}
+
+function renderPreviewViewport() {
+  if (elements.previewCanvas) elements.previewCanvas.style.width = `${previewViewportState.width}px`;
+  if (elements.previewWidthDisplay) elements.previewWidthDisplay.textContent = `${previewViewportState.width}px`;
+  elements.viewportPresetButtons.forEach((button) => {
+    const isActive = button.dataset.previewViewport === previewViewportState.active;
+    button.setAttribute('aria-pressed', String(isActive));
+    button.dataset.active = String(isActive);
+  });
+  elements.viewportWidthLabels.forEach((label) => {
+    const preset = VIEWPORT_CONFIG.presets[label.dataset.previewViewportWidth];
+    if (preset) label.textContent = `${preset.width}px`;
+  });
+  if (elements.customViewportInput) {
+    elements.customViewportInput.min = String(VIEWPORT_CONFIG.custom.min);
+    elements.customViewportInput.max = String(VIEWPORT_CONFIG.custom.max);
+    elements.customViewportInput.value = String(previewViewportState.customWidth);
+  }
+  if (elements.customViewportMessage) elements.customViewportMessage.textContent = `Custom width accepts whole pixels from ${VIEWPORT_CONFIG.custom.min}px to ${VIEWPORT_CONFIG.custom.max}px.`;
+}
+
+function applyCustomViewportFromInput() {
+  const { state, result } = applyCustomViewport(previewViewportState, elements.customViewportInput?.value);
+  previewViewportState = state;
+  renderPreviewViewport();
+  if (result.ok) {
+    const note = result.reason === 'clamped-min' || result.reason === 'clamped-max' ? `Custom width normalized to ${result.width}px.` : `Custom width applied at ${result.width}px.`;
+    setPreviewStatus(`${note} Preview source was not changed.`);
+    return;
+  }
+  setPreviewStatus('Custom viewport width was not applied. Enter a whole pixel value within the allowed range.');
+}
+
+function setPreviewStatus(message) {
+  if (elements.previewStatus) elements.previewStatus.textContent = message;
+}
 
 function createInitialAnalyzerInputState() {
   return {

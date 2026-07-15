@@ -229,7 +229,7 @@
               <p class="eyebrow">Static analyzer inputs</p>
               <h3 id="analyzer-inputs-title">HTML and CSS source inputs</h3>
               <p id="analyzer-inputs-description">
-                Paste markup and styles or load a local .html, .htm, or .css file. File contents stay in this browser session as inert textarea text and are never uploaded, saved, previewed, or executed.
+                Paste markup and styles or load a local .html, .htm, or .css file. File contents stay in this browser session and are never uploaded, saved, or added to the main application DOM.
               </p>
             </div>
             <span class="module-card__status">Browser-only</span>
@@ -258,7 +258,7 @@
             </div>
             <div class="analyzer-field analyzer-field--css">
               <label for="analyzer-css-input">CSS styles</label>
-              <p id="analyzer-css-description" class="field__hint">Paste static CSS only. The content remains inert plain text and is not added to a style tag or preview frame.</p>
+              <p id="analyzer-css-description" class="field__hint">Paste static CSS only. It is analyzed as text and applied only inside the isolated local preview when you refresh it.</p>
               <textarea
                 id="analyzer-css-input"
                 name="analyzer-css-input"
@@ -278,6 +278,41 @@
             <button id="analyze-css" class="button button--primary" type="button">Analyze CSS</button>
             <p id="css-analyzer-status" class="local-save-status" aria-live="polite">CSS checks have not run yet.</p>
           </div>
+
+          <section class="preview-panel" aria-labelledby="preview-title" aria-describedby="preview-description">
+            <div class="preview-panel__header">
+              <div>
+                <h4 id="preview-title">Local snippet preview</h4>
+                <p id="preview-description">Refresh renders the current HTML and CSS textareas inside a sandboxed browser-local iframe. Pasted code is not uploaded, stored, executed, or inserted into this app page.</p>
+              </div>
+              <button id="preview-refresh" class="button button--primary" type="button">Refresh preview</button>
+            </div>
+            <div class="viewport-controls" aria-label="Preview viewport controls">
+              <div class="viewport-presets" role="group" aria-label="Viewport presets">
+                <button class="viewport-preset" type="button" data-preview-viewport="mobile" aria-pressed="false">Mobile <span data-preview-viewport-width="mobile"></span></button>
+                <button class="viewport-preset" type="button" data-preview-viewport="tablet" aria-pressed="false">Tablet <span data-preview-viewport-width="tablet"></span></button>
+                <button class="viewport-preset" type="button" data-preview-viewport="desktop" aria-pressed="true">Desktop <span data-preview-viewport-width="desktop"></span></button>
+              </div>
+              <div class="custom-viewport">
+                <label for="custom-viewport-width">Custom width</label>
+                <div class="custom-viewport__row">
+                  <input id="custom-viewport-width" type="number" inputmode="numeric" step="1" aria-describedby="custom-viewport-message" />
+                  <span aria-hidden="true">px</span>
+                  <button id="apply-custom-viewport" class="button button--secondary" type="button">Apply custom</button>
+                </div>
+                <p id="custom-viewport-message" class="field__hint">Custom width accepts configured whole-pixel values.</p>
+              </div>
+            </div>
+            <div class="preview-panel__meta">
+              <strong>Selected viewport: <span id="preview-width-display"></span></strong>
+              <p id="preview-status" class="local-save-status" aria-live="polite">Preview has not run yet. Refresh to render the current browser-local snippet.</p>
+            </div>
+            <div class="preview-scroll" tabindex="0" aria-label="Scrollable preview canvas">
+              <div id="preview-canvas" class="preview-canvas">
+                <iframe id="snippet-preview-frame" class="preview-frame" title="Isolated local HTML and CSS snippet preview" sandbox referrerpolicy="no-referrer"></iframe>
+              </div>
+            </div>
+          </section>
           <section class="analyzer-results" aria-labelledby="html-analyzer-results-title" aria-describedby="html-analyzer-notice">
             <div class="analyzer-results__header">
               <div>
