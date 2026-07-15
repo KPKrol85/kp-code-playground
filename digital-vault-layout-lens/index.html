@@ -303,13 +303,48 @@
                 <p id="custom-viewport-message" class="field__hint">Custom width accepts configured whole-pixel values.</p>
               </div>
             </div>
+            <section class="inspection-controls" aria-labelledby="overlay-controls-title">
+              <div>
+                <h5 id="overlay-controls-title">Preview inspection overlays</h5>
+                <p id="overlay-controls-description" class="field__hint">Overlays are temporary project-owned preview helpers. They do not change pasted source, scoring, or saved audit state.</p>
+              </div>
+              <div class="overlay-mode-list" role="group" aria-describedby="overlay-controls-description" aria-label="Preview overlay mode">
+                <button class="overlay-mode" type="button" data-overlay-mode="off" aria-pressed="true">Off</button>
+                <button class="overlay-mode" type="button" data-overlay-mode="spacing" aria-pressed="false">Spacing</button>
+                <button class="overlay-mode" type="button" data-overlay-mode="layout-boxes" aria-pressed="false">Layout boxes</button>
+                <button class="overlay-mode" type="button" data-overlay-mode="headings" aria-pressed="false">Headings</button>
+                <button class="overlay-mode" type="button" data-overlay-mode="focusable" aria-pressed="false">Focusable elements</button>
+                <button class="overlay-mode" type="button" data-overlay-mode="overflow" aria-pressed="false">Overflow</button>
+              </div>
+              <p id="overlay-status" class="local-save-status" aria-live="polite">Overlay off.</p>
+            </section>
+            <section class="keyboard-audit-panel" aria-labelledby="keyboard-audit-title">
+              <div>
+                <h5 id="keyboard-audit-title">Keyboard-only audit mode</h5>
+                <p class="field__hint">Navigate the detected sequential focus order. This helper does not replace a real manual keyboard test.</p>
+              </div>
+              <div class="keyboard-audit-actions" role="group" aria-label="Keyboard audit controls">
+                <button id="keyboard-audit-start" class="button button--secondary" type="button">Start keyboard audit</button>
+                <button id="keyboard-audit-prev" class="button button--secondary" type="button">Previous focus target</button>
+                <button id="keyboard-audit-next" class="button button--secondary" type="button">Next focus target</button>
+                <button id="keyboard-audit-restart" class="button button--secondary" type="button">Restart from first</button>
+                <button id="keyboard-audit-end" class="button button--secondary" type="button">End audit</button>
+              </div>
+              <p id="keyboard-audit-status" class="local-save-status" aria-live="polite">Keyboard audit has not started.</p>
+              <dl id="keyboard-audit-details" class="keyboard-audit-details">
+                <div><dt>Position</dt><dd data-keyboard-audit-field="position">—</dd></div>
+                <div><dt>Element</dt><dd data-keyboard-audit-field="element">—</dd></div>
+                <div><dt>Name</dt><dd data-keyboard-audit-field="name">—</dd></div>
+                <div><dt>Details</dt><dd data-keyboard-audit-field="details">—</dd></div>
+              </dl>
+            </section>
             <div class="preview-panel__meta">
               <strong>Selected viewport: <span id="preview-width-display"></span></strong>
               <p id="preview-status" class="local-save-status" aria-live="polite">Preview has not run yet. Refresh to render the current browser-local snippet.</p>
             </div>
             <div class="preview-scroll" tabindex="0" aria-label="Scrollable preview canvas">
               <div id="preview-canvas" class="preview-canvas">
-                <iframe id="snippet-preview-frame" class="preview-frame" title="Isolated local HTML and CSS snippet preview" sandbox referrerpolicy="no-referrer"></iframe>
+                <iframe id="snippet-preview-frame" class="preview-frame" title="Isolated local HTML and CSS snippet preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
               </div>
             </div>
           </section>

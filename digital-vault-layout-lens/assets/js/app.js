@@ -12,6 +12,9 @@ import { analyzeCssSource } from './cssAnalyzer.js';
 import { validateAnalyzerSourceFile } from './localFileInput.js';
 import { confidenceLabel, sourceLabel } from './findingMetadata.js';
 import { buildPreviewDocument } from './previewDocument.js';
+import { OVERLAY_MODE_OFF, OVERLAY_MODES, createOverlayState, setOverlayMode } from './overlayConfig.js';
+import { createPreviewCommand, validatePreviewResponse } from './previewInspectionProtocol.js';
+import { createKeyboardAuditState, endKeyboardAudit, resetKeyboardAuditForPreviewRefresh } from './keyboardAuditState.js';
 import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitialViewportState } from './viewportControls.js';
 
 try {
@@ -90,7 +93,16 @@ const elements = {
   customViewportInput: document.querySelector('#custom-viewport-width'),
   customViewportApply: document.querySelector('#apply-custom-viewport'),
   customViewportMessage: document.querySelector('#custom-viewport-message'),
-  viewportWidthLabels: document.querySelectorAll('[data-preview-viewport-width]')
+  viewportWidthLabels: document.querySelectorAll('[data-preview-viewport-width]'),
+  overlayModeButtons: document.querySelectorAll('[data-overlay-mode]'),
+  overlayStatus: document.querySelector('#overlay-status'),
+  keyboardAuditStart: document.querySelector('#keyboard-audit-start'),
+  keyboardAuditPrev: document.querySelector('#keyboard-audit-prev'),
+  keyboardAuditNext: document.querySelector('#keyboard-audit-next'),
+  keyboardAuditRestart: document.querySelector('#keyboard-audit-restart'),
+  keyboardAuditEnd: document.querySelector('#keyboard-audit-end'),
+  keyboardAuditStatus: document.querySelector('#keyboard-audit-status'),
+  keyboardAuditFields: document.querySelectorAll('[data-keyboard-audit-field]')
 };
 
 let statuses = createInitialStatuses();
@@ -98,6 +110,9 @@ let ruleNotes = {};
 let filters = createInitialFilters();
 const analyzerInputState = createInitialAnalyzerInputState();
 let previewViewportState = createInitialViewportState();
+let overlayState = createOverlayState();
+let keyboardAuditState = createKeyboardAuditState();
+let keyboardAuditReturnFocus = null;
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -123,6 +138,8 @@ function init() {
   renderScore();
   bindEvents();
   renderPreviewViewport();
+  renderOverlayControls();
+  renderKeyboardAuditDetails();
   initializePreviewFrame();
   syncThemeToggle();
 }
@@ -230,6 +247,13 @@ function bindEvents() {
     });
   });
   elements.customViewportApply?.addEventListener('click', applyCustomViewportFromInput);
+  elements.overlayModeButtons.forEach((button) => button.addEventListener('click', () => applyOverlayMode(button.dataset.overlayMode)));
+  elements.keyboardAuditStart?.addEventListener('click', (event) => runKeyboardAudit('start', event.currentTarget));
+  elements.keyboardAuditPrev?.addEventListener('click', () => runKeyboardAudit('previous'));
+  elements.keyboardAuditNext?.addEventListener('click', () => runKeyboardAudit('next'));
+  elements.keyboardAuditRestart?.addEventListener('click', () => runKeyboardAudit('restart'));
+  elements.keyboardAuditEnd?.addEventListener('click', () => endKeyboardAuditMode());
+  window.addEventListener('message', handlePreviewInspectionMessage);
 
   elements.analyzerInputs.forEach((input) => {
     input.addEventListener('input', handleAnalyzerInput);
@@ -277,10 +301,14 @@ function initializePreviewFrame() {
 function refreshPreview() {
   if (!elements.previewFrame) return;
   try {
+    keyboardAuditState = resetKeyboardAuditForPreviewRefresh(keyboardAuditState);
+    renderKeyboardAuditDetails();
     elements.previewFrame.srcdoc = buildPreviewDocument({ html: analyzerInputState.html, css: analyzerInputState.css });
     const hasInput = Boolean(analyzerInputState.html.trim() || analyzerInputState.css.trim());
     setPreviewStatus(hasInput ? `Preview refreshed locally at ${previewViewportState.width}px. Scripts and remote resources remain blocked.` : 'Preview refreshed with an empty browser-local document.');
   } catch {
+    keyboardAuditState = resetKeyboardAuditForPreviewRefresh(keyboardAuditState);
+    renderKeyboardAuditDetails();
     elements.previewFrame.srcdoc = buildPreviewDocument();
     setPreviewStatus('Preview could not render the supplied snippet, so a safe empty preview was shown.');
   }
@@ -320,6 +348,85 @@ function applyCustomViewportFromInput() {
 
 function setPreviewStatus(message) {
   if (elements.previewStatus) elements.previewStatus.textContent = message;
+}
+
+function postPreviewCommand(type, payload = {}) {
+  elements.previewFrame?.contentWindow?.postMessage(createPreviewCommand(type, payload), '*');
+}
+
+function applyOverlayMode(mode) {
+  overlayState = setOverlayMode(overlayState, mode);
+  renderOverlayControls();
+  postPreviewCommand('set-overlay', { mode: overlayState.activeMode });
+  setOverlayStatus(overlayState.activeMode === OVERLAY_MODE_OFF ? 'Overlay off.' : `${getOverlayLabel(overlayState.activeMode)} overlay requested. Preview source and audit state were not changed.`);
+}
+
+function renderOverlayControls() {
+  elements.overlayModeButtons.forEach((button) => {
+    const isActive = button.dataset.overlayMode === overlayState.activeMode;
+    button.setAttribute('aria-pressed', String(isActive));
+    button.dataset.active = String(isActive);
+  });
+}
+
+function setOverlayStatus(message) {
+  if (elements.overlayStatus) elements.overlayStatus.textContent = message;
+}
+
+function getOverlayLabel(mode) {
+  return OVERLAY_MODES.find((item) => item.id === mode)?.label || 'Off';
+}
+
+function runKeyboardAudit(action, returnFocusElement = null) {
+  if (returnFocusElement) keyboardAuditReturnFocus = returnFocusElement;
+  overlayState = setOverlayMode(overlayState, 'focusable');
+  renderOverlayControls();
+  postPreviewCommand('keyboard-audit', { action, index: keyboardAuditState.index });
+  setKeyboardAuditStatus(`${action === 'start' ? 'Starting' : 'Updating'} keyboard audit. Focusable-elements overlay is active.`);
+}
+
+function endKeyboardAuditMode() {
+  postPreviewCommand('keyboard-audit', { action: 'end' });
+  keyboardAuditState = endKeyboardAudit(keyboardAuditState);
+  renderKeyboardAuditDetails();
+  keyboardAuditReturnFocus?.focus();
+}
+
+function handlePreviewInspectionMessage(event) {
+  if (event.source !== elements.previewFrame?.contentWindow) return;
+  const result = validatePreviewResponse(event.data);
+  if (!result.ok) return;
+  if (result.type === 'ready') {
+    postPreviewCommand('set-overlay', { mode: overlayState.activeMode });
+    return;
+  }
+  if (result.type === 'overlay-result') {
+    setOverlayStatus(result.payload.summary || `${getOverlayLabel(result.payload.mode)} overlay updated.`);
+    return;
+  }
+  if (result.type === 'keyboard-audit-result') {
+    keyboardAuditState = { ...keyboardAuditState, ...result.payload };
+    renderKeyboardAuditDetails();
+    if (result.payload.active === false) keyboardAuditReturnFocus?.focus();
+  }
+}
+
+function setKeyboardAuditStatus(message) {
+  if (elements.keyboardAuditStatus) elements.keyboardAuditStatus.textContent = message;
+}
+
+function renderKeyboardAuditDetails() {
+  setKeyboardAuditStatus(keyboardAuditState.message || 'Keyboard audit has not started.');
+  const fields = Object.fromEntries([...elements.keyboardAuditFields].map((field) => [field.dataset.keyboardAuditField, field]));
+  const current = keyboardAuditState.current;
+  if (!current) {
+    ['position', 'element', 'name', 'details'].forEach((key) => { if (fields[key]) fields[key].textContent = '—'; });
+    return;
+  }
+  if (fields.position) fields.position.textContent = `${current.position || keyboardAuditState.index + 1} of ${keyboardAuditState.count}`;
+  if (fields.element) fields.element.textContent = current.inputType ? `${current.type} (${current.inputType})` : current.type;
+  if (fields.name) fields.name.textContent = current.name || current.warning || 'No accessible name detected.';
+  if (fields.details) fields.details.textContent = [current.href ? `href: ${current.href}` : '', current.tabindex !== null && current.tabindex !== undefined ? `tabindex: ${current.tabindex}` : 'normal tab order', current.positiveTabindex ? 'uses positive tabindex' : '', current.warning || ''].filter(Boolean).join(' · ');
 }
 
 function createInitialAnalyzerInputState() {

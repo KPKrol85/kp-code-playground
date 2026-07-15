@@ -6,21 +6,24 @@ import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitia
 import { createAuditStateExport } from '../assets/js/auditStorage.js';
 
 test('preview document removes executable and navigation-capable HTML', () => {
-  const doc = buildPreviewDocument({ html: '<base href="https://evil.test/"><meta http-equiv="refresh" content="0;url=https://evil.test"><script>parent.pwned=1</script><button onclick="evil()">Go</button><a href="javascript:alert(1)" target="_top">bad</a><form action="https://evil.test"><input formaction="https://evil.test"></form><object data="x"></object><iframe src="https://evil.test"></iframe>', css: '' });
-  assert.doesNotMatch(doc, /<script/i);
-  assert.doesNotMatch(doc, /onclick/i);
-  assert.doesNotMatch(doc, /javascript:/i);
-  assert.doesNotMatch(doc, /<base/i);
-  assert.doesNotMatch(doc, /http-equiv="refresh"/i);
-  assert.doesNotMatch(doc, /<object|<iframe/i);
-  assert.doesNotMatch(doc, /formaction|action=/i);
+  const source = '<base href="https://evil.test/"><meta http-equiv="refresh" content="0;url=https://evil.test"><script>parent.pwned=1</script><button onclick="evil()">Go</button><a href="javascript:alert(1)" target="_top">bad</a><form action="https://evil.test"><input formaction="https://evil.test"></form><object data="x"></object><iframe src="https://evil.test"></iframe>';
+  const sanitized = sanitizePreviewHtml(source);
+  const doc = buildPreviewDocument({ html: source, css: '' });
+  assert.doesNotMatch(sanitized, /<script>parent\.pwned/i);
+  assert.match(doc, /kp-layout-lens-preview-inspection/);
+  assert.doesNotMatch(sanitized, /onclick/i);
+  assert.doesNotMatch(sanitized, /javascript:/i);
+  assert.doesNotMatch(sanitized, /<base/i);
+  assert.doesNotMatch(sanitized, /http-equiv="refresh"/i);
+  assert.doesNotMatch(sanitized, /<object|<iframe/i);
+  assert.doesNotMatch(sanitized, /formaction|action=/i);
 });
 
-test('preview CSP blocks remote resources and permits only inline styles and local images', () => {
+test('preview CSP blocks remote resources and permits only inline styles, trusted inline inspection script, and local images', () => {
   assert.match(PREVIEW_CSP, /default-src 'none'/);
   assert.match(PREVIEW_CSP, /style-src 'unsafe-inline'/);
   assert.match(PREVIEW_CSP, /img-src data: blob:/);
-  assert.match(PREVIEW_CSP, /script-src 'none'/);
+  assert.match(PREVIEW_CSP, /script-src 'unsafe-inline'/);
   assert.match(PREVIEW_CSP, /connect-src 'none'/);
   assert.match(PREVIEW_CSP, /frame-src 'none'/);
   assert.match(buildPreviewDocument(), /Content-Security-Policy/);
