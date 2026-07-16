@@ -18,6 +18,9 @@ import { createKeyboardAuditState, endKeyboardAudit, resetKeyboardAuditForPrevie
 import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitialViewportState } from './viewportControls.js';
 import { createInitialAnnotationState, createPreviewAnnotation, deletePreviewAnnotation, updatePreviewAnnotation } from './previewAnnotations.js';
 import { COMPARISON_BREAKPOINTS, createInitialComparisonChecklistState, getBreakpointLabel, resetComparisonChecklist, setBreakpointReviewed, summarizeComparisonChecklist, updateBreakpointObservation } from './viewportComparisonChecklist.js';
+import { buildManualAuditReportData } from './reportData.js';
+import { serializeManualAuditReportMarkdown } from './markdownReport.js';
+import { renderManualAuditReportView } from './reportRenderer.js';
 
 try {
   assertValidRuleData();
@@ -69,6 +72,12 @@ const elements = {
   exportAudit: document.querySelector('#export-audit'),
   importAudit: document.querySelector('#import-audit'),
   importAuditFile: document.querySelector('#import-audit-file'),
+  exportMarkdownReport: document.querySelector('#export-markdown-report'),
+  showReportView: document.querySelector('#show-report-view'),
+  leaveReportView: document.querySelector('#leave-report-view'),
+  reportStatus: document.querySelector('#report-status'),
+  reportView: document.querySelector('#report-view'),
+  reportContent: document.querySelector('#report-content'),
   statusFilterSelect: document.querySelector('#status-filter-select'),
   severityFilterSelect: document.querySelector('#severity-filter-select'),
   categoryFilterSelect: document.querySelector('#category-filter-select'),
@@ -124,6 +133,7 @@ let keyboardAuditState = createKeyboardAuditState();
 let annotationState = createInitialAnnotationState();
 let comparisonChecklistState = createInitialComparisonChecklistState();
 let keyboardAuditReturnFocus = null;
+let reportViewReturnFocus = null;
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -247,6 +257,9 @@ function bindEvents() {
   });
 
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
+  elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
+  elements.showReportView?.addEventListener('click', (event) => enterReportView(event.currentTarget));
+  elements.leaveReportView?.addEventListener('click', leaveReportView);
 
   elements.analyzerFileInput?.addEventListener('change', handleAnalyzerSourceFile);
   elements.analyzeHtml?.addEventListener('click', runHtmlAnalyzer);
@@ -728,6 +741,57 @@ function appendMeta(list, term, value) {
   const dd = document.createElement('dd');
   dd.textContent = value;
   list.append(dt, dd);
+}
+
+
+function buildCurrentManualAuditReport() {
+  const activeRules = getActiveRules();
+  return buildManualAuditReportData({
+    preset: getSelectedPreset(),
+    rulePack: getSelectedRulePack(),
+    severityProfile: getSelectedSeverityProfile(),
+    categories: getActiveCategories(activeRules),
+    rules: activeRules,
+    statuses,
+    ruleNotes
+  });
+}
+
+function exportMarkdownReport() {
+  const report = buildCurrentManualAuditReport();
+  const blob = new Blob([serializeManualAuditReportMarkdown(report)], { type: 'text/markdown;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'layout-lens-audit-report.md';
+  document.body.append(link);
+  link.click();
+  const objectUrl = link.href;
+  link.remove();
+  URL.revokeObjectURL(objectUrl);
+  setReportStatus('Markdown report downloaded from the current manual audit state.');
+}
+
+function enterReportView(returnFocusElement) {
+  reportViewReturnFocus = returnFocusElement || document.activeElement;
+  renderManualAuditReportView(elements.reportContent, buildCurrentManualAuditReport());
+  document.body.dataset.reportView = 'true';
+  elements.reportView?.removeAttribute('hidden');
+  elements.reportView?.scrollIntoView({ block: 'start' });
+  elements.leaveReportView?.focus();
+  setReportStatus('Report view opened. Use Leave report view to return to the audit workspace.');
+}
+
+function leaveReportView() {
+  document.body.dataset.reportView = 'false';
+  elements.reportView?.setAttribute('hidden', '');
+  setReportStatus('Report view closed.');
+  if (reportViewReturnFocus && typeof reportViewReturnFocus.focus === 'function') {
+    reportViewReturnFocus.focus();
+  }
+}
+
+function setReportStatus(message) {
+  if (elements.reportStatus) elements.reportStatus.textContent = message;
 }
 
 function exportCurrentAuditState() {

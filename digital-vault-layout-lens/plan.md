@@ -105,8 +105,10 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 
 ### Phase 5 — Exportable reports
 
-- [ ] Add Markdown report generation from audit state.
-- [ ] Add a print-optimized report view for category scores, findings, notes, and recommendations.
+- [x] Add Markdown report generation from audit state.
+  - Verification note (2026-07-16): added deterministic manual audit report data building, Markdown serialization, and a browser-local `.md` download action using `Blob` plus temporary object URLs. Report content includes selected preset, rule pack, severity profile, weighted score, reviewed/applicable totals, category scores/progress, Needs work findings with stable manual issue IDs, reviewer notes, deterministic recommendations, and clear empty states while excluding analyzer and preview state. QA executed: `node --check assets/js/app.js`, `node --check assets/js/reportData.js`, `node --check assets/js/markdownReport.js`, `node --check assets/js/reportRenderer.js`, `npm test`, and `npm run test:analyzer`.
+- [x] Add a print-optimized report view for category scores, findings, notes, and recommendations.
+  - Verification note (2026-07-16): added an accessible report view generated from the same normalized report content as the Markdown export, safe DOM rendering with `textContent` for notes, focus-preserving enter/leave controls, and print CSS that hides non-report UI, forces readable light output, removes decorative effects, wraps long text, and avoids awkward breaks for report blocks where practical. QA executed: `node --check assets/js/app.js`, `node --check assets/js/reportData.js`, `node --check assets/js/markdownReport.js`, `node --check assets/js/reportRenderer.js`, `npm test`, and `npm run test:analyzer`.
 - [ ] Add a browser print-based PDF workflow before adding any PDF dependency.
 - [ ] Add report templates for internal QA, freelancer/client delivery, agency review, SaaS teams, and design system teams.
 - [ ] Add report cover metadata such as project name, owner, project type, target URL, reviewer, and review date.

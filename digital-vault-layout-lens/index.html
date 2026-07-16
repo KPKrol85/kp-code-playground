@@ -189,8 +189,11 @@
           <div class="panel-actions" aria-label="Audit actions">
             <p id="audit-storage-status" class="local-save-status" aria-live="polite">Browser-only audit state.</p>
             <button id="export-audit" class="button button--secondary" type="button">Export JSON</button>
+            <button id="export-markdown-report" class="button button--secondary" type="button">Download Markdown report</button>
+            <button id="show-report-view" class="button button--primary" type="button">Open report view</button>
             <button id="import-audit" class="button button--secondary" type="button">Import JSON</button>
             <input id="import-audit-file" class="sr-only" type="file" accept="application/json,.json" aria-label="Import audit state JSON file" />
+            <p id="report-status" class="local-save-status" aria-live="polite">Reports use the current manual audit state only.</p>
             <button id="reset-audit" class="button button--secondary" type="button">Reset local audit</button>
           </div>
         </div>
@@ -537,6 +540,19 @@
           </p>
         </div>
         <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
+      </section>
+
+
+      <section id="report-view" class="report-view section-shell" aria-labelledby="report-view-title" hidden>
+        <div class="report-view__toolbar" aria-label="Report view controls">
+          <div>
+            <p class="eyebrow">Manual report view</p>
+            <h2 id="report-view-title">Printable audit report</h2>
+            <p>This view is generated from the same deterministic manual audit report content as the Markdown download.</p>
+          </div>
+          <button id="leave-report-view" class="button button--secondary" type="button">Leave report view</button>
+        </div>
+        <div id="report-content"></div>
       </section>
 
       <section id="roadmap" class="roadmap section-shell" aria-labelledby="roadmap-title">
