@@ -69,6 +69,37 @@ export function buildExecutiveSummary({ score = {}, categoryScores = [], finding
   return { reviewedRules, applicableRules, completionPercent, needsWorkFindings: findings.length, passingRules: score.passedRules || 0, severityCounts, strengths, priorities, sections };
 }
 
+
+export function buildScreenReaderSummary({ title = REPORT_TITLE, template = {}, metadata = {}, score = {}, categoryScores = [], findings = [], notes = [], recommendations = [], executiveSummary = {} } = {}) {
+  const reviewedRules = executiveSummary.reviewedRules ?? ((score.passedRules || 0) + (score.needsWorkRules || 0));
+  const applicableRules = executiveSummary.applicableRules ?? Math.max(0, (score.totalRules || 0) - (score.notApplicableRules || 0));
+  const completionPercent = executiveSummary.completionPercent ?? (applicableRules > 0 ? Math.round((reviewedRules / applicableRules) * 100) : null);
+  const severityCounts = executiveSummary.severityCounts || {};
+  const severityItems = Object.keys(severityCounts).sort().map((severity) => ({ severity, count: severityCounts[severity], text: `${severity}: ${severityCounts[severity]}` }));
+  const strengths = (executiveSummary.strengths || []).map((item) => ({ ...item, text: `${item.name}: ${item.scorePercent}% with ${item.reviewedRules} reviewed applicable rules` }));
+  const priorities = (executiveSummary.priorities || []).map((item) => ({ ...item, text: `${item.name}: ${item.scorePercent}% with ${item.needsWorkRules} Needs work findings` }));
+  const hasReviewerNotes = notes.length > 0;
+  const items = [];
+  items.push(`Report title: ${title}.`);
+  items.push(`Selected report template: ${template.name || 'Unknown template'}.`);
+  if (metadata.projectName) items.push(`Project name: ${metadata.projectName}.`);
+  items.push(`Overall weighted score: ${score.scorePercent === null || score.scorePercent === undefined ? 'not available because there is not enough checked rule data' : `${score.scorePercent}%`}.`);
+  items.push(`Reviewed rules: ${reviewedRules} of ${applicableRules} applicable rules.`);
+  items.push(`Audit completion: ${completionPercent === null ? 'not available' : `${completionPercent}%`}.`);
+  items.push(`Passing rules: ${score.passedRules || 0}.`);
+  items.push(`Needs work findings: ${findings.length}.`);
+  if ((score.notApplicableRules || 0) > 0) items.push(`Rules marked Not applicable and excluded from applicable totals: ${score.notApplicableRules}.`);
+  if (reviewedRules === 0) items.push('There is not enough reviewed audit data to provide a quality conclusion. Complete manual Pass or Needs work statuses before using the score as a review signal.');
+  else if (findings.length === 0) items.push('No manual issues were recorded within the reviewed scope.');
+  if (strengths.length) items.push(`Strongest reviewed categories: ${strengths.map((item) => item.text).join('; ')}.`);
+  if (priorities.length) items.push(`Priority reviewed categories: ${priorities.map((item) => item.text).join('; ')}.`);
+  else if (reviewedRules > 0) items.push('Priority reviewed categories: no reviewed categories contain Needs work findings.');
+  items.push(`Severity distribution of current findings: ${severityItems.length ? severityItems.map((item) => item.text).join('; ') : 'no current Needs work findings'}.`);
+  items.push(`Recommendations: ${recommendations.length}.`);
+  items.push(`Reviewer notes: ${hasReviewerNotes ? 'present' : 'not provided'}.`);
+  return { id: 'screen-reader-summary', title: 'Report summary for screen readers', reviewedRules, applicableRules, completionPercent, passingRules: score.passedRules || 0, needsWorkFindings: findings.length, notApplicableRules: score.notApplicableRules || 0, strengths, priorities, severityItems, recommendationCount: recommendations.length, hasReviewerNotes, items };
+}
+
 function categorySummary(category) { return { id: category.categoryId || category.categoryName, name: category.categoryName, scorePercent: category.scorePercent, reviewedRules: category.reviewedRules, applicableRules: category.applicableRules, needsWorkRules: category.needsWorkRules }; }
 
 export function buildManualAuditReportData({ preset, rulePack, severityProfile, categories = [], rules = [], statuses = {}, ruleNotes = {}, templateId = DEFAULT_REPORT_TEMPLATE_ID, metadata = {} } = {}) {
@@ -85,5 +116,7 @@ export function buildManualAuditReportData({ preset, rulePack, severityProfile, 
   const recommendations = generateRecommendations(activeRules, statuses, severityProfile).map((recommendation) => ({ id: recommendation.id, issueId: recommendation.issueId, title: recommendation.title, description: recommendation.description, categoryName: recommendation.categoryName, priority: recommendation.priority }));
   const normalizedMetadata = normalizeReportMetadata(metadata);
   const context = { preset: { id: preset?.id || '', name: preset?.name || 'Unknown preset' }, rulePack: { id: rulePack?.id || '', name: rulePack?.name || 'Unknown rule pack' }, severityProfile: { id: severityProfile?.id || '', name: severityProfile?.name || 'Unknown severity profile' } };
-  return { title: REPORT_TITLE, template: { id: template.id, name: template.name, description: template.description, sectionOrder: [...template.sectionOrder], labels: { ...template.labels }, metadataLabels: { ...(template.metadataLabels || {}) } }, metadata: normalizedMetadata, metadataEntries: getReportMetadataEntries(normalizedMetadata), ...context, score, categoryScores, findings, notes, recommendations, executiveSummary: buildExecutiveSummary({ score, categoryScores, findings, recommendations, ...context }) };
+  const executiveSummary = buildExecutiveSummary({ score, categoryScores, findings, recommendations, ...context });
+  const screenReaderSummary = buildScreenReaderSummary({ title: REPORT_TITLE, template, metadata: normalizedMetadata, score, categoryScores, findings, notes, recommendations, executiveSummary });
+  return { title: REPORT_TITLE, template: { id: template.id, name: template.name, description: template.description, sectionOrder: [...template.sectionOrder], labels: { ...template.labels }, metadataLabels: { ...(template.metadataLabels || {}) } }, metadata: normalizedMetadata, metadataEntries: getReportMetadataEntries(normalizedMetadata), ...context, score, categoryScores, findings, notes, recommendations, executiveSummary, screenReaderSummary };
 }
