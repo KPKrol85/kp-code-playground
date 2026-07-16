@@ -6,6 +6,8 @@ import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './
 import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
+import { createProject, deleteProject, getProject, isIndexedDbAvailable, listProjects, updateProject } from './savedProjectsDb.js';
+import { createAuditStateForSavedProject, normalizeProjectName, normalizeSavedProjectAuditState } from './savedProjectModel.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
 import { analyzeCssSource } from './cssAnalyzer.js';
@@ -72,6 +74,13 @@ const elements = {
   severityProfileDescription: document.querySelector('#severity-profile-description'),
   severityProfileSummary: document.querySelector('#severity-profile-summary'),
   auditStorageStatus: document.querySelector('#audit-storage-status'),
+  savedProjectsHeading: document.querySelector('#saved-projects-title'),
+  savedProjectName: document.querySelector('#saved-project-name'),
+  saveProjectNew: document.querySelector('#save-project-new'),
+  saveProjectChanges: document.querySelector('#save-project-changes'),
+  newAudit: document.querySelector('#new-audit'),
+  savedProjectsStatus: document.querySelector('#saved-projects-status'),
+  savedProjectsList: document.querySelector('#saved-projects-list'),
   exportAudit: document.querySelector('#export-audit'),
   importAudit: document.querySelector('#import-audit'),
   importAuditFile: document.querySelector('#import-audit-file'),
@@ -142,6 +151,8 @@ let comparisonChecklistState = createInitialComparisonChecklistState();
 let keyboardAuditReturnFocus = null;
 let reportViewReturnFocus = null;
 let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
+let activeSavedProjectId = null;
+let savedProjects = [];
 let reportMetadata = {};
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
@@ -175,6 +186,7 @@ function init() {
   renderComparisonChecklist();
   initializePreviewFrame();
   syncThemeToggle();
+  initializeSavedProjects();
 }
 
 function createInitialStatuses() {
@@ -267,6 +279,10 @@ function bindEvents() {
   });
 
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
+  elements.saveProjectNew?.addEventListener('click', saveCurrentAuditAsProject);
+  elements.saveProjectChanges?.addEventListener('click', saveActiveProjectChanges);
+  elements.newAudit?.addEventListener('click', startNewAudit);
+  elements.savedProjectsList?.addEventListener('click', handleSavedProjectsClick);
   elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
   elements.reportTemplateSelect?.addEventListener('change', handleReportTemplateChange);
   elements.reportMetadataControls.forEach((control) => control.addEventListener('input', handleReportMetadataInput));
@@ -312,6 +328,7 @@ function bindEvents() {
     statuses = createInitialStatuses();
     ruleNotes = {};
     filters = createInitialFilters();
+    activeSavedProjectId = null;
     clearSavedAuditState();
     renderPresets();
     renderSelectedPreset();
@@ -320,7 +337,8 @@ function bindEvents() {
     renderFilterControls();
     renderRules();
     renderScore();
-    setAuditStorageStatus('Local audit cleared. Browser-only draft removed.');
+    setAuditStorageStatus('Local audit cleared. Browser-only draft removed. Saved projects were not deleted.');
+    renderSavedProjects();
   });
 
   elements.themeToggle?.addEventListener('click', () => {
@@ -881,6 +899,83 @@ function exportCurrentAuditState() {
   setAuditStorageStatus(`Audit JSON exported with ${Object.keys(statuses).length} saved rule statuses and ${Object.keys(ruleNotes).length} reviewer notes.`);
 }
 
+function getCurrentManualAuditSnapshot() {
+  return createAuditStateForSavedProject({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses: statuses, ruleNotes, ruleSchemaVersion: RULE_SCHEMA_VERSION });
+}
+
+async function initializeSavedProjects() {
+  if (!elements.savedProjectsList) return;
+  if (!isIndexedDbAvailable()) { setSavedProjectsStatus('IndexedDB is unavailable. The local draft still works, but named saved projects cannot be used in this browser.'); renderSavedProjects(); return; }
+  setSavedProjectsStatus('Loading saved projects…');
+  try { savedProjects = await listProjects(); renderSavedProjects(); setSavedProjectsStatus(savedProjects.length ? `${savedProjects.length} saved project${savedProjects.length === 1 ? '' : 's'} available.` : 'No saved projects yet. Save the current audit as a named project when you are ready.'); }
+  catch { setSavedProjectsStatus('Saved projects could not be loaded. The local draft remains available.'); renderSavedProjects(); }
+}
+
+async function saveCurrentAuditAsProject() {
+  const name = normalizeProjectName(elements.savedProjectName?.value);
+  if (!name) { setSavedProjectsStatus('Enter a project name before saving.'); elements.savedProjectName?.focus(); return; }
+  try { const record = await createProject({ name, auditState: getCurrentManualAuditSnapshot() }); activeSavedProjectId = record.id; elements.savedProjectName.value = ''; await refreshSavedProjects(`Project saved successfully: ${record.name}.`); }
+  catch { setSavedProjectsStatus('Project could not be saved. IndexedDB may be unavailable or full.'); }
+}
+
+async function saveActiveProjectChanges() {
+  if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving project changes.'); return; }
+  const current = savedProjects.find((project) => project.id === activeSavedProjectId);
+  try { const record = await updateProject(activeSavedProjectId, { name: current?.name, auditState: getCurrentManualAuditSnapshot() }); await refreshSavedProjects(`Project updated successfully: ${record.name}.`); }
+  catch { setSavedProjectsStatus('Project changes could not be saved. Current audit was not deleted.'); }
+}
+
+async function handleSavedProjectsClick(event) {
+  const openButton = event.target.closest('[data-open-project]');
+  const deleteButton = event.target.closest('[data-delete-project]');
+  if (openButton) await openSavedProject(openButton.dataset.openProject);
+  if (deleteButton) await confirmAndDeleteSavedProject(deleteButton.dataset.deleteProject, deleteButton);
+}
+
+async function openSavedProject(id) {
+  const before = { selectedPresetId, selectedRulePackId, selectedSeverityProfileId, statuses: { ...statuses }, ruleNotes: { ...ruleNotes } };
+  try {
+    const record = await getProject(id);
+    if (!record) throw new Error('missing');
+    const result = normalizeSavedProjectAuditState(record.auditState, getAuditStateValidationOptions());
+    if (!result.state) { setSavedProjectsStatus(result.message || 'Saved project is malformed or incompatible. Current audit was not changed.'); return; }
+    applyProjectAuditState(result.state);
+    activeSavedProjectId = record.id;
+    persistAuditState('Saved project opened and copied into the browser-local draft.');
+    await refreshSavedProjects(`Project opened successfully: ${record.name}.`);
+    elements.checklistTitle?.focus?.();
+  } catch { selectedPresetId = before.selectedPresetId; selectedRulePackId = before.selectedRulePackId; selectedSeverityProfileId = before.selectedSeverityProfileId; statuses = before.statuses; ruleNotes = before.ruleNotes; setSavedProjectsStatus('Saved project could not be opened. Current audit was not changed.'); }
+}
+
+async function confirmAndDeleteSavedProject(id, button) {
+  const record = savedProjects.find((project) => project.id === id);
+  if (!record) return;
+  if (!window.confirm(`Delete saved project "${record.name}"? This does not reset the current local draft.`)) { setSavedProjectsStatus('Project deletion cancelled.'); return; }
+  const index = savedProjects.findIndex((project) => project.id === id);
+  try { await deleteProject(id); if (activeSavedProjectId === id) activeSavedProjectId = null; await refreshSavedProjects(`Project deleted successfully: ${record.name}.`); focusAfterProjectDelete(index); }
+  catch { button?.focus(); setSavedProjectsStatus('Project could not be deleted. It remains saved.'); }
+}
+
+function startNewAudit() {
+  activeSavedProjectId = null; selectedPresetId = componentPresets[0]?.id; selectedRulePackId = ALL_RULES_PACK_ID; selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID; statuses = createInitialStatuses(); ruleNotes = {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore(); persistAuditState('New audit started. Saved projects were not deleted.'); renderSavedProjects(); elements.checklistTitle?.focus?.();
+}
+
+function applyProjectAuditState(state) {
+  selectedPresetId = state.selectedPresetId || componentPresets[0]?.id; selectedRulePackId = state.selectedRulePackId || ALL_RULES_PACK_ID; selectedSeverityProfileId = state.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID; statuses = { ...createInitialStatuses(), ...state.ruleStatuses }; ruleNotes = state.ruleNotes || {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore();
+}
+
+async function refreshSavedProjects(message) { savedProjects = await listProjects(); renderSavedProjects(); setSavedProjectsStatus(message); }
+function setSavedProjectsStatus(message) { if (elements.savedProjectsStatus) elements.savedProjectsStatus.textContent = message; }
+function renderSavedProjects() {
+  if (!elements.savedProjectsList) return;
+  if (elements.saveProjectChanges) elements.saveProjectChanges.disabled = !activeSavedProjectId;
+  if (!savedProjects.length) { elements.savedProjectsList.innerHTML = '<li class="saved-projects__empty">No saved projects yet.</li>'; return; }
+  elements.savedProjectsList.innerHTML = savedProjects.map((project) => `<li class="saved-project${project.id === activeSavedProjectId ? ' is-active' : ''}"><div><strong>${escapeProjectHtml(project.name)}</strong>${project.id === activeSavedProjectId ? '<span class="saved-project__active">Current opened project</span>' : ''}<span>Last updated ${formatProjectDate(project.updatedAt)}</span></div><div class="saved-project__actions"><button class="button button--secondary" type="button" data-open-project="${escapeProjectHtml(project.id)}">Open project</button><button class="button button--secondary" type="button" data-delete-project="${escapeProjectHtml(project.id)}">Delete project</button></div></li>`).join('');
+}
+function focusAfterProjectDelete(index) { const buttons = elements.savedProjectsList?.querySelectorAll('[data-open-project]'); (buttons?.[Math.min(index, buttons.length - 1)] || elements.savedProjectsHeading)?.focus?.(); }
+function formatProjectDate(value) { try { return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)); } catch { return value; } }
+function escapeProjectHtml(value) { return String(value).replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char])); }
+
 function handleAuditImportFile(event) {
   const file = event.target.files?.[0];
   event.target.value = '';
@@ -928,6 +1023,7 @@ function getAuditStateValidationOptions() {
 }
 
 function applyImportedAuditState(importedState) {
+  activeSavedProjectId = null;
   selectedPresetId = importedState.selectedPresetId || componentPresets[0]?.id;
   selectedRulePackId = importedState.selectedRulePackId || ALL_RULES_PACK_ID;
   selectedSeverityProfileId = importedState.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID;

@@ -216,6 +216,29 @@
           </div>
         </div>
 
+        <section class="saved-projects card" aria-labelledby="saved-projects-title" aria-describedby="saved-projects-help">
+          <div class="saved-projects__header">
+            <div>
+              <p class="eyebrow">Local database</p>
+              <h3 id="saved-projects-title" tabindex="-1">Saved projects</h3>
+              <p id="saved-projects-help">Save named manual audit snapshots in this browser with IndexedDB. Projects stay on this device and are separate from the automatic local draft.</p>
+            </div>
+            <button id="new-audit" class="button button--secondary" type="button">New audit</button>
+          </div>
+          <div class="saved-projects__controls">
+            <label class="field" for="saved-project-name">
+              <span>Project name</span>
+              <input id="saved-project-name" type="text" maxlength="80" autocomplete="off" required aria-describedby="saved-projects-help saved-projects-status" />
+            </label>
+            <div class="saved-projects__actions">
+              <button id="save-project-new" class="button button--primary" type="button">Save as new project</button>
+              <button id="save-project-changes" class="button button--secondary" type="button" disabled>Save project changes</button>
+            </div>
+          </div>
+          <p id="saved-projects-status" class="local-save-status" aria-live="polite">Saved projects are loading.</p>
+          <ul id="saved-projects-list" class="saved-projects__list" aria-label="Saved audit projects"></ul>
+        </section>
+
         <section class="preset-panel card" aria-labelledby="preset-title">
           <div class="preset-panel__header">
             <div>
@@ -503,7 +526,7 @@
 
           <div class="checklist card" aria-labelledby="checklist-title">
             <div class="checklist__header">
-              <h3 id="checklist-title">Audit checklist</h3>
+              <h3 id="checklist-title" tabindex="-1">Audit checklist</h3>
               <p>Mark every rule as Not checked, Pass, Needs work, or Not applicable.</p>
             </div>
             <form class="checklist-filters" aria-labelledby="checklist-filters-title">
