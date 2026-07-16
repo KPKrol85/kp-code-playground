@@ -7,7 +7,7 @@ import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './rul
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
 import { createProject, deleteProject, getProject, isIndexedDbAvailable, listProjects, updateProject } from './savedProjectsDb.js';
-import { createAuditStateForSavedProject, normalizeProjectName, normalizeSavedProjectAuditState } from './savedProjectModel.js';
+import { createAuditStateForSavedProject, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState } from './savedProjectModel.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
 import { analyzeCssSource } from './cssAnalyzer.js';
@@ -76,6 +76,8 @@ const elements = {
   auditStorageStatus: document.querySelector('#audit-storage-status'),
   savedProjectsHeading: document.querySelector('#saved-projects-title'),
   savedProjectName: document.querySelector('#saved-project-name'),
+  projectMetadataControls: document.querySelectorAll('[data-project-metadata]'),
+  projectAuditPreset: document.querySelector('#project-audit-preset'),
   saveProjectNew: document.querySelector('#save-project-new'),
   saveProjectChanges: document.querySelector('#save-project-changes'),
   newAudit: document.querySelector('#new-audit'),
@@ -154,6 +156,7 @@ let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
 let activeSavedProjectId = null;
 let savedProjects = [];
 let reportMetadata = {};
+let workingProjectMetadata = normalizeProjectMetadata();
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -169,6 +172,7 @@ function init() {
   restoreSavedAuditState();
   renderPresets();
   renderSelectedPreset();
+  renderProjectDetailsPreset();
   renderRulePackOptions();
   renderReportTemplateSelector();
   renderRulePackSelector();
@@ -266,6 +270,7 @@ function bindEvents() {
 
     selectedPresetId = control.value;
     renderSelectedPreset();
+    renderProjectDetailsPreset();
     renderRulePackSelector();
     renderRules();
     renderScore();
@@ -329,9 +334,11 @@ function bindEvents() {
     ruleNotes = {};
     filters = createInitialFilters();
     activeSavedProjectId = null;
+    populateProjectDetails();
     clearSavedAuditState();
     renderPresets();
     renderSelectedPreset();
+    renderProjectDetailsPreset();
     renderRulePackSelector();
     renderSeverityProfileSelector();
     renderFilterControls();
@@ -899,6 +906,25 @@ function exportCurrentAuditState() {
   setAuditStorageStatus(`Audit JSON exported with ${Object.keys(statuses).length} saved rule statuses and ${Object.keys(ruleNotes).length} reviewer notes.`);
 }
 
+function getCurrentProjectMetadata() {
+  return normalizeProjectMetadata(Object.fromEntries([...elements.projectMetadataControls].map((control) => [control.dataset.projectMetadata, control.value])));
+}
+
+function populateProjectDetails({ name = '', metadata = normalizeProjectMetadata() } = {}) {
+  if (elements.savedProjectName) elements.savedProjectName.value = name;
+  workingProjectMetadata = normalizeProjectMetadata(metadata);
+  elements.projectMetadataControls.forEach((control) => { control.value = workingProjectMetadata[control.dataset.projectMetadata] || ''; });
+  renderProjectDetailsPreset();
+}
+
+function renderProjectDetailsPreset() {
+  if (elements.projectAuditPreset) elements.projectAuditPreset.textContent = getPresetLabel(selectedPresetId);
+}
+
+function getPresetLabel(presetId) {
+  return componentPresets.find((preset) => preset.id === presetId)?.name || 'No preset selected';
+}
+
 function getCurrentManualAuditSnapshot() {
   return createAuditStateForSavedProject({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses: statuses, ruleNotes, ruleSchemaVersion: RULE_SCHEMA_VERSION });
 }
@@ -914,14 +940,14 @@ async function initializeSavedProjects() {
 async function saveCurrentAuditAsProject() {
   const name = normalizeProjectName(elements.savedProjectName?.value);
   if (!name) { setSavedProjectsStatus('Enter a project name before saving.'); elements.savedProjectName?.focus(); return; }
-  try { const record = await createProject({ name, auditState: getCurrentManualAuditSnapshot() }); activeSavedProjectId = record.id; elements.savedProjectName.value = ''; await refreshSavedProjects(`Project saved successfully: ${record.name}.`); }
+  try { const record = await createProject({ name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); activeSavedProjectId = record.id; populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project saved successfully: ${record.name}.`); }
   catch { setSavedProjectsStatus('Project could not be saved. IndexedDB may be unavailable or full.'); }
 }
 
 async function saveActiveProjectChanges() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving project changes.'); return; }
   const current = savedProjects.find((project) => project.id === activeSavedProjectId);
-  try { const record = await updateProject(activeSavedProjectId, { name: current?.name, auditState: getCurrentManualAuditSnapshot() }); await refreshSavedProjects(`Project updated successfully: ${record.name}.`); }
+  try { const record = await updateProject(activeSavedProjectId, { name: normalizeProjectName(elements.savedProjectName?.value) || current?.name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project updated successfully: ${record.name}.`); }
   catch { setSavedProjectsStatus('Project changes could not be saved. Current audit was not deleted.'); }
 }
 
@@ -941,6 +967,7 @@ async function openSavedProject(id) {
     if (!result.state) { setSavedProjectsStatus(result.message || 'Saved project is malformed or incompatible. Current audit was not changed.'); return; }
     applyProjectAuditState(result.state);
     activeSavedProjectId = record.id;
+    populateProjectDetails({ name: record.name, metadata: record.metadata });
     persistAuditState('Saved project opened and copied into the browser-local draft.');
     await refreshSavedProjects(`Project opened successfully: ${record.name}.`);
     elements.checklistTitle?.focus?.();
@@ -952,16 +979,17 @@ async function confirmAndDeleteSavedProject(id, button) {
   if (!record) return;
   if (!window.confirm(`Delete saved project "${record.name}"? This does not reset the current local draft.`)) { setSavedProjectsStatus('Project deletion cancelled.'); return; }
   const index = savedProjects.findIndex((project) => project.id === id);
-  try { await deleteProject(id); if (activeSavedProjectId === id) activeSavedProjectId = null; await refreshSavedProjects(`Project deleted successfully: ${record.name}.`); focusAfterProjectDelete(index); }
+  try { const wasActive = activeSavedProjectId === id; await deleteProject(id); if (wasActive) { activeSavedProjectId = null; populateProjectDetails(); } await refreshSavedProjects(wasActive ? `Opened project deleted: ${record.name}. Current audit remains in the workspace; save as a new project to keep changes.` : `Project deleted successfully: ${record.name}.`); focusAfterProjectDelete(index); }
   catch { button?.focus(); setSavedProjectsStatus('Project could not be deleted. It remains saved.'); }
 }
 
 function startNewAudit() {
-  activeSavedProjectId = null; selectedPresetId = componentPresets[0]?.id; selectedRulePackId = ALL_RULES_PACK_ID; selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID; statuses = createInitialStatuses(); ruleNotes = {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore(); persistAuditState('New audit started. Saved projects were not deleted.'); renderSavedProjects(); elements.checklistTitle?.focus?.();
+  activeSavedProjectId = null;
+  populateProjectDetails(); selectedPresetId = componentPresets[0]?.id; selectedRulePackId = ALL_RULES_PACK_ID; selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID; statuses = createInitialStatuses(); ruleNotes = {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderProjectDetailsPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore(); persistAuditState('New audit started. Saved projects were not deleted.'); renderSavedProjects(); elements.checklistTitle?.focus?.();
 }
 
 function applyProjectAuditState(state) {
-  selectedPresetId = state.selectedPresetId || componentPresets[0]?.id; selectedRulePackId = state.selectedRulePackId || ALL_RULES_PACK_ID; selectedSeverityProfileId = state.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID; statuses = { ...createInitialStatuses(), ...state.ruleStatuses }; ruleNotes = state.ruleNotes || {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore();
+  selectedPresetId = state.selectedPresetId || componentPresets[0]?.id; selectedRulePackId = state.selectedRulePackId || ALL_RULES_PACK_ID; selectedSeverityProfileId = state.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID; statuses = { ...createInitialStatuses(), ...state.ruleStatuses }; ruleNotes = state.ruleNotes || {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderProjectDetailsPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore();
 }
 
 async function refreshSavedProjects(message) { savedProjects = await listProjects(); renderSavedProjects(); setSavedProjectsStatus(message); }
@@ -969,12 +997,34 @@ function setSavedProjectsStatus(message) { if (elements.savedProjectsStatus) ele
 function renderSavedProjects() {
   if (!elements.savedProjectsList) return;
   if (elements.saveProjectChanges) elements.saveProjectChanges.disabled = !activeSavedProjectId;
-  if (!savedProjects.length) { elements.savedProjectsList.innerHTML = '<li class="saved-projects__empty">No saved projects yet.</li>'; return; }
-  elements.savedProjectsList.innerHTML = savedProjects.map((project) => `<li class="saved-project${project.id === activeSavedProjectId ? ' is-active' : ''}"><div><strong>${escapeProjectHtml(project.name)}</strong>${project.id === activeSavedProjectId ? '<span class="saved-project__active">Current opened project</span>' : ''}<span>Last updated ${formatProjectDate(project.updatedAt)}</span></div><div class="saved-project__actions"><button class="button button--secondary" type="button" data-open-project="${escapeProjectHtml(project.id)}">Open project</button><button class="button button--secondary" type="button" data-delete-project="${escapeProjectHtml(project.id)}">Delete project</button></div></li>`).join('');
+  elements.savedProjectsList.textContent = '';
+  if (!savedProjects.length) { const empty = document.createElement('li'); empty.className = 'saved-projects__empty'; empty.textContent = 'No saved projects yet.'; elements.savedProjectsList.append(empty); return; }
+  savedProjects.forEach((project) => elements.savedProjectsList.append(createSavedProjectListItem(project)));
+}
+
+function createSavedProjectListItem(project) {
+  const item = document.createElement('li');
+  item.className = `saved-project${project.id === activeSavedProjectId ? ' is-active' : ''}`;
+  const details = document.createElement('div');
+  const title = document.createElement('strong'); title.textContent = project.name; details.append(title);
+  if (project.id === activeSavedProjectId) { const active = document.createElement('span'); active.className = 'saved-project__active'; active.textContent = 'Current opened project'; details.append(active); }
+  const updated = document.createElement('span'); updated.textContent = `Last updated ${formatProjectDate(project.updatedAt)}`; details.append(updated);
+  const meta = document.createElement('dl'); meta.className = 'saved-project__metadata';
+  getSavedProjectMetadataEntries(project).forEach(([label, value]) => { const dt = document.createElement('dt'); dt.textContent = label; const dd = document.createElement('dd'); dd.textContent = value; meta.append(dt, dd); });
+  if (meta.childElementCount) details.append(meta);
+  const actions = document.createElement('div'); actions.className = 'saved-project__actions';
+  const open = document.createElement('button'); open.className = 'button button--secondary'; open.type = 'button'; open.dataset.openProject = project.id; open.textContent = 'Open project';
+  const del = document.createElement('button'); del.className = 'button button--secondary'; del.type = 'button'; del.dataset.deleteProject = project.id; del.textContent = 'Delete project'; actions.append(open, del);
+  item.append(details, actions);
+  return item;
+}
+
+function getSavedProjectMetadataEntries(project) {
+  const metadata = normalizeProjectMetadata(project.metadata);
+  return [['Owner', metadata.owner], ['Project type', metadata.projectType], ['Target URL', metadata.targetUrl], ['Review date', metadata.reviewDate], ['Audit preset', getPresetLabel(project.auditState?.selectedPresetId)]].filter(([, value]) => value);
 }
 function focusAfterProjectDelete(index) { const buttons = elements.savedProjectsList?.querySelectorAll('[data-open-project]'); (buttons?.[Math.min(index, buttons.length - 1)] || elements.savedProjectsHeading)?.focus?.(); }
 function formatProjectDate(value) { try { return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)); } catch { return value; } }
-function escapeProjectHtml(value) { return String(value).replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char])); }
 
 function handleAuditImportFile(event) {
   const file = event.target.files?.[0];
@@ -1024,6 +1074,7 @@ function getAuditStateValidationOptions() {
 
 function applyImportedAuditState(importedState) {
   activeSavedProjectId = null;
+  populateProjectDetails();
   selectedPresetId = importedState.selectedPresetId || componentPresets[0]?.id;
   selectedRulePackId = importedState.selectedRulePackId || ALL_RULES_PACK_ID;
   selectedSeverityProfileId = importedState.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID;

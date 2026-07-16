@@ -225,11 +225,17 @@
             </div>
             <button id="new-audit" class="button button--secondary" type="button">New audit</button>
           </div>
-          <div class="saved-projects__controls">
+          <div class="saved-projects__controls project-details-form" aria-describedby="saved-projects-help project-details-help">
+            <p id="project-details-help" class="field__hint">Project details are saved only when you choose Save as new project or Save project changes. They are separate from report cover metadata and the automatic local draft.</p>
             <label class="field" for="saved-project-name">
               <span>Project name</span>
-              <input id="saved-project-name" type="text" maxlength="80" autocomplete="off" required aria-describedby="saved-projects-help saved-projects-status" />
+              <input id="saved-project-name" type="text" maxlength="80" autocomplete="off" required aria-describedby="saved-projects-help project-details-help saved-projects-status" />
             </label>
+            <label class="field" for="project-owner"><span>Owner</span><input id="project-owner" data-project-metadata="owner" type="text" autocomplete="off" aria-describedby="project-details-help saved-projects-status" /></label>
+            <label class="field" for="project-type"><span>Project type</span><input id="project-type" data-project-metadata="projectType" type="text" autocomplete="off" aria-describedby="project-details-help saved-projects-status" /></label>
+            <label class="field" for="project-target-url"><span>Target URL</span><input id="project-target-url" data-project-metadata="targetUrl" type="url" autocomplete="off" aria-describedby="project-details-help saved-projects-status" /></label>
+            <label class="field" for="project-review-date"><span>Review date</span><input id="project-review-date" data-project-metadata="reviewDate" type="date" aria-describedby="project-details-help saved-projects-status" /></label>
+            <p class="project-details-form__preset"><span>Audit preset</span><strong id="project-audit-preset">Landing page</strong></p>
             <div class="saved-projects__actions">
               <button id="save-project-new" class="button button--primary" type="button">Save as new project</button>
               <button id="save-project-changes" class="button button--secondary" type="button" disabled>Save project changes</button>

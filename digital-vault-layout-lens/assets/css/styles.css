@@ -2014,3 +2014,12 @@ body[data-report-view="true"] .report-view {
 .saved-projects__empty { color: var(--color-muted); padding: 1rem; border: 1px dashed var(--color-border); border-radius: 1rem; }
 @media (max-width: 720px) { .saved-projects__header, .saved-project { align-items: stretch; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .saved-project, .saved-projects * { scroll-behavior: auto; } }
+
+.project-details-form { align-items: stretch; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+.project-details-form .field { flex: unset; }
+.project-details-form .field__hint { grid-column: 1 / -1; margin: 0; }
+.project-details-form__preset { border: 1px solid var(--color-border); border-radius: .85rem; display: grid; gap: .25rem; margin: 0; padding: .75rem; }
+.project-details-form__preset span { color: var(--color-muted); font-size: .9rem; }
+.saved-project__metadata { display: grid; gap: .15rem .5rem; grid-template-columns: max-content minmax(0, 1fr); margin: .35rem 0 0; }
+.saved-project__metadata dt { color: var(--color-muted); font-weight: 700; }
+.saved-project__metadata dd { margin: 0; overflow-wrap: anywhere; }

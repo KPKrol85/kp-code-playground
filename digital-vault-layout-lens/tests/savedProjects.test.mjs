@@ -6,7 +6,7 @@ import { ALL_RULES_PACK_ID } from '../assets/js/rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, resolveSeverityProfile } from '../assets/js/severityProfiles.js';
 import { calculateAuditScore } from '../assets/js/scoringEngine.js';
 import { generateRecommendations } from '../assets/js/recommendations.js';
-import { createAuditStateForSavedProject, createSavedProjectRecord, MAX_PROJECT_NAME_LENGTH, normalizeProjectName, normalizeSavedProjectAuditState, SAVED_PROJECT_SCHEMA_VERSION, sortSavedProjectRecords, updateSavedProjectRecord, validateSavedProjectRecord } from '../assets/js/savedProjectModel.js';
+import { createAuditStateForSavedProject, createSavedProjectRecord, MAX_PROJECT_NAME_LENGTH, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState, SAVED_PROJECT_SCHEMA_VERSION, sortSavedProjectRecords, updateSavedProjectRecord, validateSavedProjectRecord } from '../assets/js/savedProjectModel.js';
 import { SAVED_PROJECT_DB_NAME, SAVED_PROJECT_DB_VERSION, SAVED_PROJECT_STORE_NAME } from '../assets/js/savedProjectsDb.js';
 
 const validOptions = {
@@ -37,9 +37,33 @@ test('saved project record creation normalizes model fields without mutating aud
   assert.equal(record.name, 'Checkout audit');
   assert.equal(record.createdAt, '2026-07-16T10:00:00.000Z');
   assert.equal(record.updatedAt, record.createdAt);
+  assert.deepEqual(record.metadata, { owner: '', projectType: '', targetUrl: '', reviewDate: '' });
   assert.deepEqual(source, auditState);
   source.ruleStatuses[firstRule] = 'not-checked';
   assert.equal(record.auditState.ruleStatuses[firstRule], 'pass');
+});
+
+
+test('project metadata normalizes strings, malformed input, and review dates', () => {
+  assert.deepEqual(normalizeProjectMetadata({ owner: '  KP   Code ', projectType: ' Web app ', targetUrl: ' https://example.test/a?b=1 ', reviewDate: '2026-07-16' }), { owner: 'KP Code', projectType: 'Web app', targetUrl: 'https://example.test/a?b=1', reviewDate: '2026-07-16' });
+  assert.deepEqual(normalizeProjectMetadata({ owner: 7, projectType: null, targetUrl: { href: 'x' }, reviewDate: '2026-02-30' }), { owner: '', projectType: '', targetUrl: '', reviewDate: '' });
+  assert.equal(normalizeProjectMetadata({ reviewDate: '07/16/2026' }).reviewDate, '');
+  assert.equal(normalizeProjectMetadata(null).reviewDate, '');
+});
+
+test('saved project creation, update, opening, and legacy records normalize metadata while preset stays canonical in audit state', () => {
+  const created = createSavedProjectRecord({ id: 'with-metadata', name: 'Metadata', metadata: { owner: ' Ada ', projectType: ' SaaS ', targetUrl: 'example.test', reviewDate: '2026-07-16', selectedPresetId: 'duplicate' }, auditState });
+  assert.deepEqual(created.metadata, { owner: 'Ada', projectType: 'SaaS', targetUrl: 'example.test', reviewDate: '2026-07-16' });
+  assert.equal(created.auditState.selectedPresetId, 'landing-page');
+  assert.equal(Object.hasOwn(created.metadata, 'selectedPresetId'), false);
+
+  const updated = updateSavedProjectRecord(created, { metadata: { owner: ' Grace ', reviewDate: 'bad' }, auditState: { ...auditState, selectedPresetId: 'landing-page' }, now: '2026-07-16T12:00:00.000Z' });
+  assert.deepEqual(updated.metadata, { owner: 'Grace', projectType: '', targetUrl: '', reviewDate: '' });
+  assert.equal(updated.auditState.selectedPresetId, 'landing-page');
+
+  const legacy = validateSavedProjectRecord({ ...created, metadata: undefined });
+  assert.deepEqual(legacy.metadata, { owner: '', projectType: '', targetUrl: '', reviewDate: '' });
+  assert.equal(normalizeSavedProjectAuditState(legacy.auditState, validOptions).status, 'loaded');
 });
 
 test('saved project names are required and capped', () => {
@@ -57,7 +81,7 @@ test('update keeps createdAt stable and advances updatedAt only in returned reco
 });
 
 test('stored audit state includes only manual audit contract data', () => {
-  const noisy = { ...auditState, analyzerInput: '<button>x</button>', analyzerFindings: [{ id: 'html' }], preview: { annotations: [] }, reportMetadata: { projectName: 'x' }, reportTemplateId: 'client', filters: { status: 'pass' }, score: { scorePercent: 100 }, recommendations: [{ id: 'fake' }] };
+  const noisy = { ...auditState, metadata: { owner: 'not audit state' }, analyzerInput: '<button>x</button>', analyzerFindings: [{ id: 'html' }], preview: { annotations: [] }, reportMetadata: { projectName: 'x' }, reportTemplateId: 'client', filters: { status: 'pass' }, score: { scorePercent: 100 }, recommendations: [{ id: 'fake' }] };
   const record = createSavedProjectRecord({ name: 'Boundary', auditState: noisy });
   assert.equal(record.auditState.selectedPresetId, 'landing-page');
   assert.equal(record.auditState.selectedRulePackId, ALL_RULES_PACK_ID);
@@ -65,7 +89,7 @@ test('stored audit state includes only manual audit contract data', () => {
   assert.equal(record.auditState.ruleStatuses[firstRule], 'pass');
   assert.equal(record.auditState.ruleNotes[secondRule], 'Needs clearer affordance.');
   assert.equal(record.auditState.ruleSchemaVersion, RULE_SCHEMA_VERSION);
-  for (const excluded of ['analyzerInput', 'analyzerFindings', 'preview', 'reportMetadata', 'reportTemplateId', 'filters', 'score', 'recommendations']) assert.equal(Object.hasOwn(record.auditState, excluded), false);
+  for (const excluded of ['metadata', 'analyzerInput', 'analyzerFindings', 'preview', 'reportMetadata', 'reportTemplateId', 'filters', 'score', 'recommendations']) assert.equal(Object.hasOwn(record.auditState, excluded), false);
 });
 
 test('records sort deterministically by updatedAt, name, then id', () => {
@@ -94,6 +118,8 @@ test('restored state feeds deterministic scoring and recommendations', () => {
   const score = calculateAuditScore(auditRules, { ...Object.fromEntries(auditRules.map((rule) => [rule.id, 'not-checked'])), ...restored.ruleStatuses }, profile);
   const recommendations = generateRecommendations(auditRules, restored.ruleStatuses, profile);
   assert.equal(score.passedRules, 1);
+  const metadataScore = calculateAuditScore(auditRules, restored.ruleStatuses, profile);
+  assert.deepEqual(calculateAuditScore(auditRules, restored.ruleStatuses, profile), metadataScore);
   assert.equal(score.needsWorkRules, 1);
   assert.ok(recommendations.length >= 1);
 });
