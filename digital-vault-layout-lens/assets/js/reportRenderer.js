@@ -17,8 +17,22 @@ export function renderManualAuditReportView(container, report) {
   appendMeta(context, 'Rule pack', `${report.rulePack.name} (${report.rulePack.id})`);
   appendMeta(context, 'Severity profile', `${report.severityProfile.name} (${report.severityProfile.id})`);
   header.append(context); article.append(header);
+  appendScreenReaderSummarySection(article, report);
   (report.template?.sectionOrder || ['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'notes', 'recommendations']).forEach((sectionId) => appendReportSection(article, report, sectionId));
   container.append(article);
+}
+
+function appendScreenReaderSummarySection(article, report) {
+  const model = report.screenReaderSummary;
+  if (!model?.items?.length) return;
+  const section = document.createElement('section');
+  section.setAttribute('aria-labelledby', 'report-screen-reader-summary-title');
+  section.className = 'print-report__section report-screen-reader-summary';
+  appendText(section, 'h3', model.title || 'Report summary for screen readers').id = 'report-screen-reader-summary-title';
+  appendText(section, 'p', 'Concise deterministic summary of the current normalized manual audit report data.');
+  const list = document.createElement('ul');
+  model.items.forEach((text) => { const li = document.createElement('li'); li.textContent = text; list.append(li); });
+  section.append(list); article.append(section);
 }
 
 function appendReportSection(article, report, sectionId) {

@@ -18,7 +18,8 @@ import { createKeyboardAuditState, endKeyboardAudit, resetKeyboardAuditForPrevie
 import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitialViewportState } from './viewportControls.js';
 import { createInitialAnnotationState, createPreviewAnnotation, deletePreviewAnnotation, updatePreviewAnnotation } from './previewAnnotations.js';
 import { COMPARISON_BREAKPOINTS, createInitialComparisonChecklistState, getBreakpointLabel, resetComparisonChecklist, setBreakpointReviewed, summarizeComparisonChecklist, updateBreakpointObservation } from './viewportComparisonChecklist.js';
-import { buildManualAuditReportData, normalizeReportMetadata } from './reportData.js';
+import { normalizeReportMetadata } from './reportData.js';
+import { adaptManualAuditReport } from './reportAdapter.js';
 import { serializeManualAuditReportMarkdown } from './markdownReport.js';
 import { renderManualAuditReportView } from './reportRenderer.js';
 import { DEFAULT_REPORT_TEMPLATE_ID, REPORT_TEMPLATES, getReportTemplate } from './reportTemplates.js';
@@ -791,7 +792,7 @@ function handleReportMetadataInput() {
 
 function buildCurrentManualAuditReport() {
   const activeRules = getActiveRules();
-  return buildManualAuditReportData({
+  return adaptManualAuditReport({
     preset: getSelectedPreset(),
     rulePack: getSelectedRulePack(),
     severityProfile: getSelectedSeverityProfile(),

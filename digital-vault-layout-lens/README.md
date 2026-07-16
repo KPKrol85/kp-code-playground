@@ -19,6 +19,7 @@ The current version is deliberately local-first and product-focused:
 - Local Markdown report download generated from the current manual audit state.
 - Optional session-only report cover metadata for project name, owner, project type, target URL, reviewer, and review date.
 - Deterministic executive summaries generated from the current manual audit state without AI or external services.
+- Accessible report summaries for screen-reader users generated from the same normalized report model as the visual report outputs.
 - Five report templates: Internal QA, Freelancer / Client Delivery, Agency Review, SaaS Team, and Design System Team.
 - Browser print-optimized report view for cover metadata, executive summaries, manual scores, findings, notes, and recommendations.
 - Native browser print workflow: use **Print or save as PDF** to open the browser print dialog, then print or choose **Save as PDF** in the browser.
@@ -39,7 +40,7 @@ For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 7. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
 8. `assets/js/auditStorage.js` handles browser-only local audit state and stores the active rule schema version with each draft so incompatible future rule data can be migrated or rejected safely.
 9. `assets/js/reportTemplates.js` centralizes the five presentation templates and their labels, descriptions, and section order.
-10. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic manual report content, serialize Markdown, render the print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state. Report metadata remains report-workflow session state and is not included in manual audit JSON export/import or browser audit persistence.
+10. `assets/js/reportAdapter.js` is the shared reporting entry point that consumes current manual audit state and returns one immutable normalized report model. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic report facts, serialize Markdown, render the on-screen/print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state. Report metadata remains report-workflow session state and is not included in manual audit JSON export/import or browser audit persistence.
 11. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, report actions, theme state, and status changes.
 
 Each rule can be marked as:
@@ -61,7 +62,7 @@ Report templates are presentation settings only. They all consume the same norma
 
 The selected template affects both the on-screen/print report view and the Markdown report. The report output includes the selected template name. Optional report cover metadata supports project name, owner, project type, target URL, reviewer, and review date; empty fields are omitted from generated reports. The target URL is preserved as text in the report workflow and is not fetched, scanned, or validated remotely.
 
-Executive summaries are generated from the current deterministic manual audit state: weighted score, reviewed/applicable counts, category scores, Needs work findings, severity counts, and existing deterministic recommendations. They do not use AI, randomness, external services, analyzer findings, preview annotations, or speculative claims, and they do not claim WCAG certification or production readiness.
+Executive summaries and screen-reader-oriented report summaries are generated from the current deterministic manual audit state: weighted score, reviewed/applicable counts, category scores, Needs work findings, severity counts, reviewer-note presence, metadata when provided, and existing deterministic recommendations. The accessible summary is rendered as semantic report content in the on-screen/print report view and appears as a concise textual summary in Markdown. All report outputs use the same normalized report model from the shared adapter, remain browser-local, do not use AI, randomness, external services, analyzer findings, preview annotations, or speculative claims, and do not claim WCAG certification or production readiness.
 
 Layout Lens uses the browser-native print dialog for printing. Select **Print or save as PDF** to render the current report template, open the native print dialog with `window.print()`, and then choose either a printer or **Save as PDF** if your browser offers that destination. Layout Lens does not include a PDF dependency, canvas-based PDF workflow, server-side generator, or direct PDF file generator.
 
@@ -81,6 +82,7 @@ digital-vault-layout-lens/
         ├── auditStorage.js
         ├── componentPresets.js
         ├── recommendations.js
+        ├── reportAdapter.js
         ├── reportData.js
         ├── markdownReport.js
         ├── printReport.js

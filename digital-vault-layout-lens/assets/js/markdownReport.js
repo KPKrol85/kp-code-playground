@@ -13,8 +13,17 @@ export function serializeManualAuditReportMarkdown(report) {
   output.push(`- Selected preset: ${inline(report.preset?.name)} (${inline(report.preset?.id)})`);
   output.push(`- Selected rule pack: ${inline(report.rulePack?.name)} (${inline(report.rulePack?.id)})`);
   output.push(`- Selected severity profile: ${inline(report.severityProfile?.name)} (${inline(report.severityProfile?.id)})`, '');
+  appendScreenReaderSummary(output, report);
   (report.template?.sectionOrder || ['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'notes', 'recommendations']).forEach((sectionId) => appendSection(output, report, sectionId));
   return `${output.join('\n').replace(/\n{3,}/g, '\n\n')}\n`;
+}
+
+function appendScreenReaderSummary(output, report) {
+  const summary = report.screenReaderSummary;
+  if (!summary?.items?.length) return;
+  output.push(`## ${inline(summary.title || 'Report summary for screen readers')}`, '');
+  summary.items.forEach((item) => output.push(`- ${inline(item)}`));
+  output.push('');
 }
 
 function appendSection(output, report, sectionId) {

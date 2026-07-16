@@ -142,3 +142,96 @@ test('summary facts are stable across templates and summary generation does not 
   assert.deepEqual(input, before);
   assert.deepEqual(a, build({ ...input, templateId: 'internal-qa' }).executiveSummary);
 });
+
+import { adaptManualAuditReport } from '../assets/js/reportAdapter.js';
+import { readFileSync } from 'node:fs';
+
+test('report adapter is DOM-free, deterministic, immutable, and contains normalized report sections', () => {
+  const previousDocument = globalThis.document;
+  const previousWindow = globalThis.window;
+  try {
+    delete globalThis.document;
+    delete globalThis.window;
+    const input = { preset, rulePack, severityProfile, categories: ['Content clarity', 'Layout structure'], rules: [...rules].reverse(), statuses: { 'layout-alpha': 'needs-work', 'layout-beta': 'pass', 'content-gamma': 'pass', 'content-delta': 'not-applicable' }, ruleNotes: { 'layout-alpha': 'Finding note', 'content-gamma': 'Passing note' }, metadata: { projectName: '  Adapter project  ', owner: '\u0000' }, analyzerFindings: [{ issueId: 'html-analyzer:ignored' }], previewState: { note: 'Preview note' }, templateId: 'missing-template' };
+    const before = structuredClone(input);
+    const first = adaptManualAuditReport(input);
+    const second = adaptManualAuditReport(structuredClone(input));
+    assert.deepEqual(input, before);
+    assert.deepEqual(first, second);
+    assert.equal(Object.isFrozen(first), true);
+    assert.equal(first.template.id, 'internal-qa');
+    ['title', 'template', 'metadata', 'metadataEntries', 'preset', 'rulePack', 'severityProfile', 'score', 'categoryScores', 'findings', 'notes', 'recommendations', 'executiveSummary', 'screenReaderSummary'].forEach((key) => assert.ok(Object.hasOwn(first, key), key));
+    assert.equal(first.metadata.projectName, 'Adapter project');
+    assert.deepEqual(first.findings.map((finding) => finding.issueId), ['manual:layout-alpha']);
+    assert.equal(first.findings[0].note, 'Finding note');
+    assert.deepEqual(first.notes.map((note) => note.ruleId), ['content-gamma', 'layout-alpha']);
+    assert.equal(JSON.stringify(first).includes('html-analyzer'), false);
+    assert.equal(JSON.stringify(first).includes('Preview note'), false);
+  } finally {
+    if (previousDocument !== undefined) globalThis.document = previousDocument;
+    if (previousWindow !== undefined) globalThis.window = previousWindow;
+  }
+});
+
+test('adapter handles empty, no finding, no note, no recommendation, and zero possible score states', () => {
+  const empty = adaptManualAuditReport({ preset, rulePack, severityProfile, categories: [], rules: [], statuses: {}, ruleNotes: {} });
+  assert.equal(empty.score.possiblePoints, 0);
+  assert.equal(empty.screenReaderSummary.reviewedRules, 0);
+  assert.match(empty.screenReaderSummary.items.join(' '), /not enough reviewed audit data/);
+  const clean = adaptManualAuditReport({ preset, rulePack, severityProfile, categories: ['Layout structure'], rules: [rules[0]], statuses: { 'layout-alpha': 'pass' }, ruleNotes: {} });
+  assert.equal(clean.findings.length, 0);
+  assert.equal(clean.notes.length, 0);
+  assert.equal(clean.recommendations.length, 0);
+  assert.match(clean.screenReaderSummary.items.join(' '), /No manual issues were recorded within the reviewed scope/);
+});
+
+test('screen-reader summary covers required deterministic facts and safe language', () => {
+  const report = adaptManualAuditReport({ preset, rulePack, severityProfile, categories: ['Layout structure', 'Content clarity'], rules, statuses: { 'layout-alpha': 'pass', 'layout-beta': 'needs-work', 'content-gamma': 'pass', 'content-delta': 'not-applicable' }, ruleNotes: { 'layout-beta': 'Needs adjustment.' }, metadata: { projectName: 'Lens Project' }, templateId: 'saas-team' });
+  const text = report.screenReaderSummary.items.join(' ');
+  assert.match(text, /KP_Code Layout Lens Audit Report/);
+  assert.match(text, /Selected report template: SaaS Team/);
+  assert.match(text, /Project name: Lens Project/);
+  assert.match(text, /Overall weighted score: 67%/);
+  assert.match(text, /Reviewed rules: 3 of 3 applicable rules/);
+  assert.match(text, /Audit completion: 100%/);
+  assert.match(text, /Passing rules: 2/);
+  assert.match(text, /Needs work findings: 1/);
+  assert.match(text, /Not applicable.*1/);
+  assert.match(text, /Strongest reviewed categories: Content clarity/);
+  assert.match(text, /Priority reviewed categories: Layout structure/);
+  assert.match(text, /Severity distribution.*medium: 1/);
+  assert.match(text, /Recommendations: 1/);
+  assert.match(text, /Reviewer notes: present/);
+  assert.doesNotMatch(text, /WCAG|certification|compliance|production-readiness|production readiness|AI|launch readiness/i);
+});
+
+test('screen-reader summary excludes not checked and not applicable rules from findings and unreviewed category rankings', () => {
+  const localRules = [
+    { id: 'a', title: 'A', description: 'A', category: 'Beta', severity: 'low' },
+    { id: 'b', title: 'B', description: 'B', category: 'Alpha', severity: 'low' },
+    { id: 'c', title: 'C', description: 'C', category: 'Gamma', severity: 'high' },
+    { id: 'd', title: 'D', description: 'D', category: 'Delta', severity: 'high' }
+  ];
+  const report = adaptManualAuditReport({ preset, rulePack, severityProfile, categories: ['Beta', 'Alpha', 'Gamma', 'Delta'], rules: localRules, statuses: { a: 'pass', b: 'pass', c: 'not-checked', d: 'not-applicable' } });
+  assert.deepEqual(report.screenReaderSummary.strengths.map((item) => item.name), ['Beta', 'Alpha']);
+  assert.deepEqual(report.screenReaderSummary.priorities, []);
+  assert.equal(report.screenReaderSummary.needsWorkFindings, 0);
+  assert.doesNotMatch(report.screenReaderSummary.items.join(' '), /Gamma|Delta|high: 1/);
+});
+
+test('screen-reader summary facts are identical across templates except template identity text', () => {
+  const input = { preset, rulePack, severityProfile, categories: ['Layout structure', 'Content clarity'], rules, statuses: { 'layout-alpha': 'needs-work', 'layout-beta': 'pass' } };
+  const stripTemplateItem = (summary) => ({ ...summary, items: summary.items.filter((item) => !item.startsWith('Selected report template:')) });
+  assert.deepEqual(stripTemplateItem(adaptManualAuditReport({ ...input, templateId: 'internal-qa' }).screenReaderSummary), stripTemplateItem(adaptManualAuditReport({ ...input, templateId: 'design-system-team' }).screenReaderSummary));
+  assert.deepEqual(adaptManualAuditReport(input).screenReaderSummary, adaptManualAuditReport(input).screenReaderSummary);
+});
+
+test('report outputs consume adapter-shaped normalized report models', () => {
+  const appSource = readFileSync(new URL('../assets/js/app.js', import.meta.url), 'utf8');
+  const markdownSource = readFileSync(new URL('../assets/js/markdownReport.js', import.meta.url), 'utf8');
+  const rendererSource = readFileSync(new URL('../assets/js/reportRenderer.js', import.meta.url), 'utf8');
+  assert.match(appSource, /adaptManualAuditReport/);
+  assert.doesNotMatch(appSource, /buildManualAuditReportData/);
+  assert.match(markdownSource, /screenReaderSummary/);
+  assert.match(rendererSource, /screenReaderSummary/);
+});
