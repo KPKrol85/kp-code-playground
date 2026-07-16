@@ -44,7 +44,7 @@ test('switching templates preserves scores, findings, issue IDs, reviewer notes,
 test('section ordering follows the selected template', () => {
   const r = report('freelancer-client');
   const markdown = serializeManualAuditReportMarkdown(r);
-  assert.deepEqual(r.template.sectionOrder, ['summary', 'findings', 'recommendations', 'categories', 'notes']);
+  assert.deepEqual(r.template.sectionOrder, ['cover-metadata', 'executive-summary', 'summary', 'findings', 'recommendations', 'categories', 'notes']);
   assert.ok(markdown.indexOf('## Quality score') < markdown.indexOf('## Important findings'));
   assert.ok(markdown.indexOf('## Important findings') < markdown.indexOf('## Suggested next actions'));
 });

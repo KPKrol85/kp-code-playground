@@ -194,6 +194,18 @@
               <select id="report-template-select" aria-describedby="report-template-description report-status"></select>
               <p id="report-template-description" class="field__hint">Choose the audience for the report presentation.</p>
             </div>
+            <details class="report-metadata-form">
+              <summary>Optional report cover metadata</summary>
+              <p id="report-metadata-help" class="field__hint">Add session-only cover details for reports. Empty fields are omitted and the target URL is never fetched.</p>
+              <div class="report-metadata-form__grid" aria-describedby="report-metadata-help">
+                <label for="report-project-name">Project name<input id="report-project-name" data-report-metadata="projectName" type="text" autocomplete="off" aria-describedby="report-metadata-help" /></label>
+                <label for="report-owner">Owner<input id="report-owner" data-report-metadata="owner" type="text" autocomplete="off" aria-describedby="report-metadata-help" /></label>
+                <label for="report-project-type">Project type<input id="report-project-type" data-report-metadata="projectType" type="text" autocomplete="off" aria-describedby="report-metadata-help" /></label>
+                <label for="report-target-url">Target URL<input id="report-target-url" data-report-metadata="targetUrl" type="url" autocomplete="off" aria-describedby="report-metadata-help" /></label>
+                <label for="report-reviewer">Reviewer<input id="report-reviewer" data-report-metadata="reviewer" type="text" autocomplete="off" aria-describedby="report-metadata-help" /></label>
+                <label for="report-review-date">Review date<input id="report-review-date" data-report-metadata="reviewDate" type="date" aria-describedby="report-metadata-help" /></label>
+              </div>
+            </details>
             <button id="export-markdown-report" class="button button--secondary" type="button">Download Markdown report</button>
             <button id="show-report-view" class="button button--primary" type="button">Open report view</button>
             <button id="print-report" data-print-report class="button button--secondary" type="button">Print or save as PDF</button>
