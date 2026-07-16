@@ -17,11 +17,13 @@ export function renderManualAuditReportView(container, report) {
   appendMeta(context, 'Rule pack', `${report.rulePack.name} (${report.rulePack.id})`);
   appendMeta(context, 'Severity profile', `${report.severityProfile.name} (${report.severityProfile.id})`);
   header.append(context); article.append(header);
-  (report.template?.sectionOrder || ['summary', 'categories', 'findings', 'notes', 'recommendations']).forEach((sectionId) => appendReportSection(article, report, sectionId));
+  (report.template?.sectionOrder || ['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'notes', 'recommendations']).forEach((sectionId) => appendReportSection(article, report, sectionId));
   container.append(article);
 }
 
 function appendReportSection(article, report, sectionId) {
+  if (sectionId === 'cover-metadata') appendCoverMetadataSection(article, report);
+  if (sectionId === 'executive-summary') appendExecutiveSummarySection(article, report);
   if (sectionId === 'summary') appendSummarySection(article, report);
   if (sectionId === 'categories') appendCategorySection(article, report);
   if (sectionId === 'findings') appendFindingsSection(article, report);
@@ -29,6 +31,23 @@ function appendReportSection(article, report, sectionId) {
   if (sectionId === 'recommendations') appendRecommendationsSection(article, report);
 }
 function sectionTitle(report, sectionId, fallback) { return report.template?.labels?.[sectionId] || fallback; }
+
+function appendCoverMetadataSection(article, report) {
+  if (!report.metadataEntries?.length) return;
+  const section = document.createElement('section'); section.setAttribute('aria-labelledby', 'report-cover-metadata-title'); section.className = 'print-report__section report-cover-metadata';
+  appendText(section, 'h3', sectionTitle(report, 'cover-metadata', 'Report cover')).id = 'report-cover-metadata-title';
+  const meta = document.createElement('dl'); meta.className = 'report-meta';
+  report.metadataEntries.forEach((entry) => appendMeta(meta, report.template?.metadataLabels?.[entry.id] || entry.label, entry.value));
+  section.append(meta); article.append(section);
+}
+function appendExecutiveSummarySection(article, report) {
+  const sections = report.executiveSummary?.sections || [];
+  if (!sections.length) return;
+  const summary = document.createElement('section'); summary.setAttribute('aria-labelledby', 'report-executive-summary-title'); summary.className = 'print-report__section report-executive-summary';
+  appendText(summary, 'h3', sectionTitle(report, 'executive-summary', 'Executive summary')).id = 'report-executive-summary-title';
+  sections.forEach((item) => { const block = document.createElement('section'); block.className = 'report-summary-block'; appendText(block, 'h4', item.title); const list = document.createElement('ul'); item.items.forEach((text) => { const li = document.createElement('li'); li.textContent = text; list.append(li); }); block.append(list); summary.append(block); });
+  article.append(summary);
+}
 function appendSummarySection(article, report) {
   const summary = document.createElement('section'); summary.setAttribute('aria-labelledby', 'report-summary-title'); summary.className = 'print-report__section';
   appendText(summary, 'h3', sectionTitle(report, 'summary', 'Overall score summary')).id = 'report-summary-title';

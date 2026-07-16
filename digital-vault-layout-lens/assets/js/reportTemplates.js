@@ -1,26 +1,26 @@
-export const REPORT_SECTION_IDS = Object.freeze(['summary', 'categories', 'findings', 'notes', 'recommendations']);
+export const REPORT_SECTION_IDS = Object.freeze(['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'notes', 'recommendations']);
 export const DEFAULT_REPORT_TEMPLATE_ID = 'internal-qa';
 
 export const REPORT_TEMPLATES = Object.freeze([
-  template('internal-qa', 'Internal QA', 'Concise operational report for QA passes with technical findings, issue IDs, notes, and next-pass recommendations.', ['summary', 'categories', 'findings', 'notes', 'recommendations'], {
+  template('internal-qa', 'Internal QA', 'Concise operational report for QA passes with technical findings, issue IDs, notes, and next-pass recommendations.', ['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'notes', 'recommendations'], {
     eyebrow: 'Internal QA report', intro: 'Operational QA report focused on audit status, category progress, technical findings, reviewer notes, and next-pass recommendations.',
-    summary: 'Audit status', categories: 'Category progress', findings: 'Technical findings', notes: 'Reviewer notes', recommendations: 'Next QA recommendations'
+    'cover-metadata': 'Report cover', 'executive-summary': 'Executive summary', summary: 'Audit status', categories: 'Category progress', findings: 'Technical findings', notes: 'Reviewer notes', recommendations: 'Next QA recommendations'
   }),
-  template('freelancer-client', 'Freelancer / Client Delivery', 'Client-friendly report emphasizing quality score, completed review scope, important findings, and suggested next actions.', ['summary', 'findings', 'recommendations', 'categories', 'notes'], {
+  template('freelancer-client', 'Freelancer / Client Delivery', 'Client-friendly report emphasizing quality score, completed review scope, important findings, and suggested next actions.', ['cover-metadata', 'executive-summary', 'summary', 'findings', 'recommendations', 'categories', 'notes'], {
     eyebrow: 'Client delivery report', intro: 'Client-friendly report focused on the quality score, completed review scope, important findings, and suggested next actions.',
-    summary: 'Quality score', categories: 'Review scope by category', findings: 'Important findings', notes: 'Review notes', recommendations: 'Suggested next actions'
+    'cover-metadata': 'Project details', 'executive-summary': 'Executive summary', summary: 'Quality score', categories: 'Review scope by category', findings: 'Important findings', notes: 'Review notes', recommendations: 'Suggested next actions'
   }),
-  template('agency-review', 'Agency Review', 'Professional stakeholder review with scope, category breakdown, prioritized findings, stable issue IDs, notes, and handoff recommendations.', ['summary', 'categories', 'findings', 'recommendations', 'notes'], {
+  template('agency-review', 'Agency Review', 'Professional stakeholder review with scope, category breakdown, prioritized findings, stable issue IDs, notes, and handoff recommendations.', ['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'recommendations', 'notes'], {
     eyebrow: 'Agency review report', intro: 'Stakeholder-ready report focused on review scope, category breakdown, prioritized findings with stable issue IDs, and handoff-ready recommendations.',
-    summary: 'Review scope summary', categories: 'Category breakdown', findings: 'Prioritized findings', notes: 'Reviewer notes', recommendations: 'Handoff recommendations'
+    'cover-metadata': 'Review cover', 'executive-summary': 'Executive summary', summary: 'Review scope summary', categories: 'Category breakdown', findings: 'Prioritized findings', notes: 'Reviewer notes', recommendations: 'Handoff recommendations'
   }),
-  template('saas-team', 'SaaS Team', 'Product UI quality report emphasizing accessibility, responsive behavior, consistency findings, and task-trackable issue IDs.', ['summary', 'categories', 'recommendations', 'findings', 'notes'], {
+  template('saas-team', 'SaaS Team', 'Product UI quality report emphasizing accessibility, responsive behavior, consistency findings, and task-trackable issue IDs.', ['cover-metadata', 'executive-summary', 'summary', 'categories', 'recommendations', 'findings', 'notes'], {
     eyebrow: 'SaaS product UI report', intro: 'Product-team report focused on UI quality, accessibility and responsive categories, consistency findings, prioritized implementation recommendations, and issue IDs for later task tracking.',
-    summary: 'Product UI quality', categories: 'Accessibility, responsive, and UI categories', findings: 'Trackable findings', notes: 'Implementation notes', recommendations: 'Prioritized implementation recommendations'
+    'cover-metadata': 'Product context', 'executive-summary': 'Executive summary', summary: 'Product UI quality', categories: 'Accessibility, responsive, and UI categories', findings: 'Trackable findings', notes: 'Implementation notes', recommendations: 'Prioritized implementation recommendations'
   }),
-  template('design-system-team', 'Design System Team', 'Design-system-oriented report for visual consistency, reusable patterns, accessibility, layout, and responsive behavior.', ['summary', 'findings', 'categories', 'recommendations', 'notes'], {
+  template('design-system-team', 'Design System Team', 'Design-system-oriented report for visual consistency, reusable patterns, accessibility, layout, and responsive behavior.', ['cover-metadata', 'executive-summary', 'summary', 'findings', 'categories', 'recommendations', 'notes'], {
     eyebrow: 'Design system quality report', intro: 'Design-system-oriented report focused on visual consistency, reusable UI patterns, component-related findings, accessibility, layout, and responsive behavior present in the audit state.',
-    summary: 'Shared UI quality', categories: 'Pattern and category coverage', findings: 'Component and consistency findings', notes: 'System quality notes', recommendations: 'Shared system recommendations'
+    'cover-metadata': 'System context', 'executive-summary': 'Executive summary', summary: 'Shared UI quality', categories: 'Pattern and category coverage', findings: 'Component and consistency findings', notes: 'System quality notes', recommendations: 'Shared system recommendations'
   })
 ]);
 

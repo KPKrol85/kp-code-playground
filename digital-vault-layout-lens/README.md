@@ -17,12 +17,14 @@ The current version is deliberately local-first and product-focused:
 - Browser-only local audit persistence for selected preset, selected rule pack, selected severity profile, rule statuses, and reviewer notes.
 - Local JSON audit import/export for manual audit state.
 - Local Markdown report download generated from the current manual audit state.
+- Optional session-only report cover metadata for project name, owner, project type, target URL, reviewer, and review date.
+- Deterministic executive summaries generated from the current manual audit state without AI or external services.
 - Five report templates: Internal QA, Freelancer / Client Delivery, Agency Review, SaaS Team, and Design System Team.
-- Browser print-optimized report view for manual scores, findings, notes, and recommendations.
+- Browser print-optimized report view for cover metadata, executive summaries, manual scores, findings, notes, and recommendations.
 - Native browser print workflow: use **Print or save as PDF** to open the browser print dialog, then print or choose **Save as PDF** in the browser.
 - Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
-This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, saved projects, backend services, login, cloud upload, AI calls, browser extension logic, SaaS features, or database storage. Analyzer and preview data remain separate from manual report generation.
+This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, saved projects, backend services, login, cloud upload, AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, or database storage. Analyzer and preview data remain separate from manual report generation.
 
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
@@ -37,7 +39,7 @@ For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 7. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
 8. `assets/js/auditStorage.js` handles browser-only local audit state and stores the active rule schema version with each draft so incompatible future rule data can be migrated or rejected safely.
 9. `assets/js/reportTemplates.js` centralizes the five presentation templates and their labels, descriptions, and section order.
-10. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic manual report content, serialize Markdown, render the print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state.
+10. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic manual report content, serialize Markdown, render the print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state. Report metadata remains report-workflow session state and is not included in manual audit JSON export/import or browser audit persistence.
 11. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, report actions, theme state, and status changes.
 
 Each rule can be marked as:
@@ -49,7 +51,7 @@ Each rule can be marked as:
 
 ## Report templates and browser printing
 
-Report templates are presentation settings only. They all consume the same normalized manual audit report data and do not change scores, findings, issue IDs, reviewer notes, or deterministic recommendations. Available templates are:
+Report templates are presentation settings only. They all consume the same normalized manual audit report data and do not change scores, summary facts, findings, issue IDs, reviewer notes, cover metadata values, or deterministic recommendations. Available templates are:
 
 - **Internal QA** — concise operational QA status, category progress, technical findings, notes, and next-pass recommendations.
 - **Freelancer / Client Delivery** — client-friendly quality score, important findings, completed review scope, and suggested next actions.
@@ -57,7 +59,9 @@ Report templates are presentation settings only. They all consume the same norma
 - **SaaS Team** — product UI quality with accessibility, responsive behavior, consistency findings, task-trackable issue IDs, and implementation recommendations.
 - **Design System Team** — visual consistency, reusable UI patterns, component-related findings, accessibility, layout, responsive behavior, and shared system recommendations.
 
-The selected template affects both the on-screen/print report view and the Markdown report. The report output includes the selected template name.
+The selected template affects both the on-screen/print report view and the Markdown report. The report output includes the selected template name. Optional report cover metadata supports project name, owner, project type, target URL, reviewer, and review date; empty fields are omitted from generated reports. The target URL is preserved as text in the report workflow and is not fetched, scanned, or validated remotely.
+
+Executive summaries are generated from the current deterministic manual audit state: weighted score, reviewed/applicable counts, category scores, Needs work findings, severity counts, and existing deterministic recommendations. They do not use AI, randomness, external services, analyzer findings, preview annotations, or speculative claims, and they do not claim WCAG certification or production readiness.
 
 Layout Lens uses the browser-native print dialog for printing. Select **Print or save as PDF** to render the current report template, open the native print dialog with `window.print()`, and then choose either a printer or **Save as PDF** if your browser offers that destination. Layout Lens does not include a PDF dependency, canvas-based PDF workflow, server-side generator, or direct PDF file generator.
 

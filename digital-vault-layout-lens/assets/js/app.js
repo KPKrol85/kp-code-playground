@@ -18,7 +18,7 @@ import { createKeyboardAuditState, endKeyboardAudit, resetKeyboardAuditForPrevie
 import { VIEWPORT_CONFIG, applyCustomViewport, applyPresetViewport, createInitialViewportState } from './viewportControls.js';
 import { createInitialAnnotationState, createPreviewAnnotation, deletePreviewAnnotation, updatePreviewAnnotation } from './previewAnnotations.js';
 import { COMPARISON_BREAKPOINTS, createInitialComparisonChecklistState, getBreakpointLabel, resetComparisonChecklist, setBreakpointReviewed, summarizeComparisonChecklist, updateBreakpointObservation } from './viewportComparisonChecklist.js';
-import { buildManualAuditReportData } from './reportData.js';
+import { buildManualAuditReportData, normalizeReportMetadata } from './reportData.js';
 import { serializeManualAuditReportMarkdown } from './markdownReport.js';
 import { renderManualAuditReportView } from './reportRenderer.js';
 import { DEFAULT_REPORT_TEMPLATE_ID, REPORT_TEMPLATES, getReportTemplate } from './reportTemplates.js';
@@ -80,6 +80,7 @@ const elements = {
   reportStatus: document.querySelector('#report-status'),
   reportTemplateSelect: document.querySelector('#report-template-select'),
   reportTemplateDescription: document.querySelector('#report-template-description'),
+  reportMetadataControls: document.querySelectorAll('[data-report-metadata]'),
   printReportButtons: document.querySelectorAll('[data-print-report]'),
   reportView: document.querySelector('#report-view'),
   reportContent: document.querySelector('#report-content'),
@@ -140,6 +141,7 @@ let comparisonChecklistState = createInitialComparisonChecklistState();
 let keyboardAuditReturnFocus = null;
 let reportViewReturnFocus = null;
 let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
+let reportMetadata = {};
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -266,6 +268,7 @@ function bindEvents() {
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
   elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
   elements.reportTemplateSelect?.addEventListener('change', handleReportTemplateChange);
+  elements.reportMetadataControls.forEach((control) => control.addEventListener('input', handleReportMetadataInput));
   elements.printReportButtons.forEach((button) => button.addEventListener('click', printCurrentReport));
   elements.showReportView?.addEventListener('click', (event) => enterReportView(event.currentTarget));
   elements.leaveReportView?.addEventListener('click', leaveReportView);
@@ -780,6 +783,12 @@ function handleReportTemplateChange(event) {
   setReportStatus(`${getReportTemplate(selectedReportTemplateId).name} template selected for report view, Markdown, and browser printing.`);
 }
 
+function handleReportMetadataInput() {
+  reportMetadata = normalizeReportMetadata(Object.fromEntries([...elements.reportMetadataControls].map((control) => [control.dataset.reportMetadata, control.value])));
+  if (document.body.dataset.reportView === 'true') renderManualAuditReportView(elements.reportContent, buildCurrentManualAuditReport());
+  setReportStatus('Report cover metadata updated for this page session only. Empty fields are omitted.');
+}
+
 function buildCurrentManualAuditReport() {
   const activeRules = getActiveRules();
   return buildManualAuditReportData({
@@ -790,7 +799,8 @@ function buildCurrentManualAuditReport() {
     rules: activeRules,
     statuses,
     ruleNotes,
-    templateId: selectedReportTemplateId
+    templateId: selectedReportTemplateId,
+    metadata: reportMetadata
   });
 }
 

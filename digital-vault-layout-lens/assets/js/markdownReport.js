@@ -1,5 +1,5 @@
 function line(value = '') { return String(value).replace(/\r\n?/g, '\n'); }
-function inline(value = '') { return line(value).replace(/\s+/g, ' ').trim() || '—'; }
+function inline(value = '') { return line(value).replace(/\s+/g, ' ').replace(/([\[\]`*_#|\\])/g, '\\$1').trim() || '—'; }
 function block(value = '') { return line(value).split('\n').map((entry) => `  ${entry || ' '}`).join('\n'); }
 function scoreLabel(percent) { return percent === null || percent === undefined ? 'Not enough checked rules' : `${percent}%`; }
 
@@ -13,12 +13,14 @@ export function serializeManualAuditReportMarkdown(report) {
   output.push(`- Selected preset: ${inline(report.preset?.name)} (${inline(report.preset?.id)})`);
   output.push(`- Selected rule pack: ${inline(report.rulePack?.name)} (${inline(report.rulePack?.id)})`);
   output.push(`- Selected severity profile: ${inline(report.severityProfile?.name)} (${inline(report.severityProfile?.id)})`, '');
-  (report.template?.sectionOrder || ['summary', 'categories', 'findings', 'notes', 'recommendations']).forEach((sectionId) => appendSection(output, report, sectionId));
+  (report.template?.sectionOrder || ['cover-metadata', 'executive-summary', 'summary', 'categories', 'findings', 'notes', 'recommendations']).forEach((sectionId) => appendSection(output, report, sectionId));
   return `${output.join('\n').replace(/\n{3,}/g, '\n\n')}\n`;
 }
 
 function appendSection(output, report, sectionId) {
   const labels = report.template?.labels || {};
+  if (sectionId === 'cover-metadata') appendCoverMetadata(output, report, labels['cover-metadata'] || 'Report cover');
+  if (sectionId === 'executive-summary') appendExecutiveSummary(output, report, labels['executive-summary'] || 'Executive summary');
   if (sectionId === 'summary') appendSummary(output, report, labels.summary || 'Overall score');
   if (sectionId === 'categories') appendCategories(output, report, labels.categories || 'Category scores and progress');
   if (sectionId === 'findings') appendFindings(output, report, labels.findings || 'Manual findings');
@@ -26,6 +28,23 @@ function appendSection(output, report, sectionId) {
   if (sectionId === 'recommendations') appendRecommendations(output, report, labels.recommendations || 'Recommendations');
 }
 
+
+function appendCoverMetadata(output, report, title) {
+  if (!report.metadataEntries?.length) return;
+  output.push(`## ${inline(title)}`, '');
+  report.metadataEntries.forEach((entry) => output.push(`- ${inline(report.template?.metadataLabels?.[entry.id] || entry.label)}: ${inline(entry.value)}`));
+  output.push('');
+}
+function appendExecutiveSummary(output, report, title) {
+  const sections = report.executiveSummary?.sections || [];
+  if (!sections.length) return;
+  output.push(`## ${inline(title)}`, '');
+  sections.forEach((section) => {
+    output.push(`### ${inline(section.title)}`, '');
+    section.items.forEach((item) => output.push(`- ${inline(item)}`));
+    output.push('');
+  });
+}
 function appendSummary(output, report, title) {
   output.push(`## ${inline(title)}`, '');
   output.push(`- Weighted score: ${scoreLabel(report.score?.scorePercent)}`);
