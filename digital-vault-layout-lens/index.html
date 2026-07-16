@@ -189,11 +189,17 @@
           <div class="panel-actions" aria-label="Audit actions">
             <p id="audit-storage-status" class="local-save-status" aria-live="polite">Browser-only audit state.</p>
             <button id="export-audit" class="button button--secondary" type="button">Export JSON</button>
+            <div class="report-template-control">
+              <label for="report-template-select">Report template</label>
+              <select id="report-template-select" aria-describedby="report-template-description report-status"></select>
+              <p id="report-template-description" class="field__hint">Choose the audience for the report presentation.</p>
+            </div>
             <button id="export-markdown-report" class="button button--secondary" type="button">Download Markdown report</button>
             <button id="show-report-view" class="button button--primary" type="button">Open report view</button>
+            <button id="print-report" data-print-report class="button button--secondary" type="button">Print or save as PDF</button>
             <button id="import-audit" class="button button--secondary" type="button">Import JSON</button>
             <input id="import-audit-file" class="sr-only" type="file" accept="application/json,.json" aria-label="Import audit state JSON file" />
-            <p id="report-status" class="local-save-status" aria-live="polite">Reports use the current manual audit state only.</p>
+            <p id="report-status" class="local-save-status" aria-live="polite">Reports use the current manual audit state only. Use the browser print dialog to print or choose Save as PDF; Layout Lens does not generate PDF files directly.</p>
             <button id="reset-audit" class="button button--secondary" type="button">Reset local audit</button>
           </div>
         </div>
@@ -548,9 +554,12 @@
           <div>
             <p class="eyebrow">Manual report view</p>
             <h2 id="report-view-title">Printable audit report</h2>
-            <p>This view is generated from the same deterministic manual audit report content as the Markdown download.</p>
+            <p>This view is generated from the same deterministic manual audit report content as the Markdown download. Use Print or save as PDF to open the browser print dialog and choose Print or Save as PDF.</p>
           </div>
-          <button id="leave-report-view" class="button button--secondary" type="button">Leave report view</button>
+          <div class="report-view__actions">
+            <button id="leave-report-view" class="button button--secondary" type="button">Leave report view</button>
+            <button class="button button--primary" type="button" data-print-report>Print or save as PDF</button>
+          </div>
         </div>
         <div id="report-content"></div>
       </section>
