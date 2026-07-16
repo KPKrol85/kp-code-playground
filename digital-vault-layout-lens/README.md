@@ -17,10 +17,12 @@ The current version is deliberately local-first and product-focused:
 - Browser-only local audit persistence for selected preset, selected rule pack, selected severity profile, rule statuses, and reviewer notes.
 - Local JSON audit import/export for manual audit state.
 - Local Markdown report download generated from the current manual audit state.
+- Five report templates: Internal QA, Freelancer / Client Delivery, Agency Review, SaaS Team, and Design System Team.
 - Browser print-optimized report view for manual scores, findings, notes, and recommendations.
+- Native browser print workflow: use **Print or save as PDF** to open the browser print dialog, then print or choose **Save as PDF** in the browser.
 - Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
-This release does **not** include PDF export, report templates, saved projects, backend services, login, cloud upload, AI calls, browser extension logic, SaaS features, or database storage. Analyzer and preview data remain separate from manual report generation.
+This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, saved projects, backend services, login, cloud upload, AI calls, browser extension logic, SaaS features, or database storage. Analyzer and preview data remain separate from manual report generation.
 
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
@@ -34,8 +36,9 @@ For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 6. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
 7. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
 8. `assets/js/auditStorage.js` handles browser-only local audit state and stores the active rule schema version with each draft so incompatible future rule data can be migrated or rejected safely.
-9. `assets/js/reportData.js`, `assets/js/markdownReport.js`, and `assets/js/reportRenderer.js` build deterministic manual report content, serialize Markdown, and render the print report view without including analyzer or preview state.
-10. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, report actions, theme state, and status changes.
+9. `assets/js/reportTemplates.js` centralizes the five presentation templates and their labels, descriptions, and section order.
+10. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic manual report content, serialize Markdown, render the print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state.
+11. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, report actions, theme state, and status changes.
 
 Each rule can be marked as:
 
@@ -43,6 +46,20 @@ Each rule can be marked as:
 - `Pass`
 - `Needs work`
 - `Not applicable`
+
+## Report templates and browser printing
+
+Report templates are presentation settings only. They all consume the same normalized manual audit report data and do not change scores, findings, issue IDs, reviewer notes, or deterministic recommendations. Available templates are:
+
+- **Internal QA** — concise operational QA status, category progress, technical findings, notes, and next-pass recommendations.
+- **Freelancer / Client Delivery** — client-friendly quality score, important findings, completed review scope, and suggested next actions.
+- **Agency Review** — professional scope, category breakdown, prioritized findings, stable issue IDs, notes, and handoff recommendations.
+- **SaaS Team** — product UI quality with accessibility, responsive behavior, consistency findings, task-trackable issue IDs, and implementation recommendations.
+- **Design System Team** — visual consistency, reusable UI patterns, component-related findings, accessibility, layout, responsive behavior, and shared system recommendations.
+
+The selected template affects both the on-screen/print report view and the Markdown report. The report output includes the selected template name.
+
+Layout Lens uses the browser-native print dialog for printing. Select **Print or save as PDF** to render the current report template, open the native print dialog with `window.print()`, and then choose either a printer or **Save as PDF** if your browser offers that destination. Layout Lens does not include a PDF dependency, canvas-based PDF workflow, server-side generator, or direct PDF file generator.
 
 ## Folder structure
 
@@ -62,7 +79,9 @@ digital-vault-layout-lens/
         ├── recommendations.js
         ├── reportData.js
         ├── markdownReport.js
+        ├── printReport.js
         ├── reportRenderer.js
+        ├── reportTemplates.js
         ├── ruleDataValidator.js
         ├── rulePacks.js
         ├── scoringEngine.js

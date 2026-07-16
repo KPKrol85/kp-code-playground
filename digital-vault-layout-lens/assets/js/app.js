@@ -21,6 +21,8 @@ import { COMPARISON_BREAKPOINTS, createInitialComparisonChecklistState, getBreak
 import { buildManualAuditReportData } from './reportData.js';
 import { serializeManualAuditReportMarkdown } from './markdownReport.js';
 import { renderManualAuditReportView } from './reportRenderer.js';
+import { DEFAULT_REPORT_TEMPLATE_ID, REPORT_TEMPLATES, getReportTemplate } from './reportTemplates.js';
+import { runBrowserPrintWorkflow } from './printReport.js';
 
 try {
   assertValidRuleData();
@@ -76,6 +78,9 @@ const elements = {
   showReportView: document.querySelector('#show-report-view'),
   leaveReportView: document.querySelector('#leave-report-view'),
   reportStatus: document.querySelector('#report-status'),
+  reportTemplateSelect: document.querySelector('#report-template-select'),
+  reportTemplateDescription: document.querySelector('#report-template-description'),
+  printReportButtons: document.querySelectorAll('[data-print-report]'),
   reportView: document.querySelector('#report-view'),
   reportContent: document.querySelector('#report-content'),
   statusFilterSelect: document.querySelector('#status-filter-select'),
@@ -134,6 +139,7 @@ let annotationState = createInitialAnnotationState();
 let comparisonChecklistState = createInitialComparisonChecklistState();
 let keyboardAuditReturnFocus = null;
 let reportViewReturnFocus = null;
+let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
 let selectedPresetId = componentPresets[0]?.id;
 let selectedRulePackId = ALL_RULES_PACK_ID;
 let selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID;
@@ -150,6 +156,7 @@ function init() {
   renderPresets();
   renderSelectedPreset();
   renderRulePackOptions();
+  renderReportTemplateSelector();
   renderRulePackSelector();
   renderSeverityProfileOptions();
   renderSeverityProfileSelector();
@@ -258,6 +265,8 @@ function bindEvents() {
 
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
   elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
+  elements.reportTemplateSelect?.addEventListener('change', handleReportTemplateChange);
+  elements.printReportButtons.forEach((button) => button.addEventListener('click', printCurrentReport));
   elements.showReportView?.addEventListener('click', (event) => enterReportView(event.currentTarget));
   elements.leaveReportView?.addEventListener('click', leaveReportView);
 
@@ -744,6 +753,33 @@ function appendMeta(list, term, value) {
 }
 
 
+function renderReportTemplateSelector() {
+  if (!elements.reportTemplateSelect) return;
+  elements.reportTemplateSelect.textContent = '';
+  REPORT_TEMPLATES.forEach((template) => {
+    const option = document.createElement('option');
+    option.value = template.id;
+    option.textContent = template.name;
+    elements.reportTemplateSelect.append(option);
+  });
+  elements.reportTemplateSelect.value = getReportTemplate(selectedReportTemplateId).id;
+  updateReportTemplateDescription();
+}
+
+function updateReportTemplateDescription() {
+  const template = getReportTemplate(selectedReportTemplateId);
+  selectedReportTemplateId = template.id;
+  if (elements.reportTemplateSelect) elements.reportTemplateSelect.value = template.id;
+  if (elements.reportTemplateDescription) elements.reportTemplateDescription.textContent = template.description;
+}
+
+function handleReportTemplateChange(event) {
+  selectedReportTemplateId = getReportTemplate(event.target.value).id;
+  updateReportTemplateDescription();
+  if (document.body.dataset.reportView === 'true') renderManualAuditReportView(elements.reportContent, buildCurrentManualAuditReport());
+  setReportStatus(`${getReportTemplate(selectedReportTemplateId).name} template selected for report view, Markdown, and browser printing.`);
+}
+
 function buildCurrentManualAuditReport() {
   const activeRules = getActiveRules();
   return buildManualAuditReportData({
@@ -753,11 +789,13 @@ function buildCurrentManualAuditReport() {
     categories: getActiveCategories(activeRules),
     rules: activeRules,
     statuses,
-    ruleNotes
+    ruleNotes,
+    templateId: selectedReportTemplateId
   });
 }
 
 function exportMarkdownReport() {
+  selectedReportTemplateId = getReportTemplate(selectedReportTemplateId).id;
   const report = buildCurrentManualAuditReport();
   const blob = new Blob([serializeManualAuditReportMarkdown(report)], { type: 'text/markdown;charset=utf-8' });
   const link = document.createElement('a');
@@ -772,6 +810,7 @@ function exportMarkdownReport() {
 }
 
 function enterReportView(returnFocusElement) {
+  selectedReportTemplateId = getReportTemplate(selectedReportTemplateId).id;
   reportViewReturnFocus = returnFocusElement || document.activeElement;
   renderManualAuditReportView(elements.reportContent, buildCurrentManualAuditReport());
   document.body.dataset.reportView = 'true';
@@ -779,6 +818,22 @@ function enterReportView(returnFocusElement) {
   elements.reportView?.scrollIntoView({ block: 'start' });
   elements.leaveReportView?.focus();
   setReportStatus('Report view opened. Use Leave report view to return to the audit workspace.');
+}
+
+function printCurrentReport(event) {
+  const returnFocus = event?.currentTarget || document.activeElement;
+  selectedReportTemplateId = getReportTemplate(selectedReportTemplateId).id;
+  const templateName = getReportTemplate(selectedReportTemplateId).name;
+  runBrowserPrintWorkflow({
+    focusTarget: returnFocus,
+    onStatus: setReportStatus,
+    render() {
+      renderManualAuditReportView(elements.reportContent, buildCurrentManualAuditReport());
+      document.body.dataset.reportView = 'true';
+      elements.reportView?.removeAttribute('hidden');
+      setReportStatus(`${templateName} report rendered. Use the browser print dialog to print or choose Save as PDF.`);
+    }
+  });
 }
 
 function leaveReportView() {

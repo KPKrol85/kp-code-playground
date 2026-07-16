@@ -1,6 +1,7 @@
 import { createManualRuleIssueId } from './issueIds.js';
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores, normalizeScoreStatus } from './scoringEngine.js';
 import { generateRecommendations } from './recommendations.js';
+import { DEFAULT_REPORT_TEMPLATE_ID, getReportTemplate } from './reportTemplates.js';
 
 export const REPORT_TITLE = 'KP_Code Layout Lens Audit Report';
 
@@ -16,7 +17,8 @@ export function normalizeReportNote(value) {
     .slice(0, 1000);
 }
 
-export function buildManualAuditReportData({ preset, rulePack, severityProfile, categories = [], rules = [], statuses = {}, ruleNotes = {} } = {}) {
+export function buildManualAuditReportData({ preset, rulePack, severityProfile, categories = [], rules = [], statuses = {}, ruleNotes = {}, templateId = DEFAULT_REPORT_TEMPLATE_ID } = {}) {
+  const template = getReportTemplate(templateId);
   const activeRules = Array.isArray(rules) ? rules.slice() : [];
   const score = calculateAuditScore(activeRules, statuses, severityProfile);
   const categoryScores = calculateCategoryScores(categories, activeRules, statuses, severityProfile).map((categoryScore) => {
@@ -49,6 +51,7 @@ export function buildManualAuditReportData({ preset, rulePack, severityProfile, 
 
   return {
     title: REPORT_TITLE,
+    template: { id: template.id, name: template.name, description: template.description, sectionOrder: [...template.sectionOrder], labels: { ...template.labels } },
     preset: { id: preset?.id || '', name: preset?.name || 'Unknown preset' },
     rulePack: { id: rulePack?.id || '', name: rulePack?.name || 'Unknown rule pack' },
     severityProfile: { id: severityProfile?.id || '', name: severityProfile?.name || 'Unknown severity profile' },
