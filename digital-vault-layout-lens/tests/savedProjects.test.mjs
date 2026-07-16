@@ -1,0 +1,114 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { auditRules, RULE_SCHEMA_VERSION } from '../assets/js/auditRules.js';
+import { ALL_RULES_PACK_ID } from '../assets/js/rulePacks.js';
+import { DEFAULT_SEVERITY_PROFILE_ID, resolveSeverityProfile } from '../assets/js/severityProfiles.js';
+import { calculateAuditScore } from '../assets/js/scoringEngine.js';
+import { generateRecommendations } from '../assets/js/recommendations.js';
+import { createAuditStateForSavedProject, createSavedProjectRecord, MAX_PROJECT_NAME_LENGTH, normalizeProjectName, normalizeSavedProjectAuditState, SAVED_PROJECT_SCHEMA_VERSION, sortSavedProjectRecords, updateSavedProjectRecord, validateSavedProjectRecord } from '../assets/js/savedProjectModel.js';
+import { SAVED_PROJECT_DB_NAME, SAVED_PROJECT_DB_VERSION, SAVED_PROJECT_STORE_NAME } from '../assets/js/savedProjectsDb.js';
+
+const validOptions = {
+  validPresetIds: new Set(['landing-page']),
+  validRuleIds: new Set(auditRules.map((rule) => rule.id)),
+  validStatuses: new Set(['not-checked', 'pass', 'needs-work', 'not-applicable']),
+  validRulePackIds: new Set([ALL_RULES_PACK_ID]),
+  validSeverityProfileIds: new Set([DEFAULT_SEVERITY_PROFILE_ID]),
+  currentRuleSchemaVersion: RULE_SCHEMA_VERSION,
+  compatibleRuleSchemaVersions: [RULE_SCHEMA_VERSION]
+};
+const firstRule = auditRules[0].id;
+const secondRule = auditRules[1].id;
+const auditState = createAuditStateForSavedProject({
+  selectedPresetId: 'landing-page',
+  selectedRulePackId: ALL_RULES_PACK_ID,
+  selectedSeverityProfileId: DEFAULT_SEVERITY_PROFILE_ID,
+  ruleSchemaVersion: RULE_SCHEMA_VERSION,
+  ruleStatuses: { [firstRule]: 'pass', [secondRule]: 'needs-work' },
+  ruleNotes: { [secondRule]: 'Needs clearer affordance.' }
+});
+
+test('saved project record creation normalizes model fields without mutating audit state', () => {
+  const source = structuredClone(auditState);
+  const record = createSavedProjectRecord({ id: 'stable-id', name: '  Checkout   audit  ', auditState: source, now: '2026-07-16T10:00:00.000Z' });
+  assert.equal(record.id, 'stable-id');
+  assert.equal(record.schemaVersion, SAVED_PROJECT_SCHEMA_VERSION);
+  assert.equal(record.name, 'Checkout audit');
+  assert.equal(record.createdAt, '2026-07-16T10:00:00.000Z');
+  assert.equal(record.updatedAt, record.createdAt);
+  assert.deepEqual(source, auditState);
+  source.ruleStatuses[firstRule] = 'not-checked';
+  assert.equal(record.auditState.ruleStatuses[firstRule], 'pass');
+});
+
+test('saved project names are required and capped', () => {
+  assert.equal(normalizeProjectName('  A   B  '), 'A B');
+  assert.equal(normalizeProjectName('x'.repeat(MAX_PROJECT_NAME_LENGTH + 5)).length, MAX_PROJECT_NAME_LENGTH);
+  assert.throws(() => createSavedProjectRecord({ name: '   ', auditState }), /required/);
+});
+
+test('update keeps createdAt stable and advances updatedAt only in returned record', () => {
+  const record = createSavedProjectRecord({ id: 'stable-id', name: 'Original', auditState, now: '2026-07-16T10:00:00.000Z' });
+  const updated = updateSavedProjectRecord(record, { auditState: { ...auditState, ruleNotes: {} }, now: '2026-07-16T11:00:00.000Z' });
+  assert.equal(updated.createdAt, record.createdAt);
+  assert.equal(updated.updatedAt, '2026-07-16T11:00:00.000Z');
+  assert.equal(record.updatedAt, '2026-07-16T10:00:00.000Z');
+});
+
+test('stored audit state includes only manual audit contract data', () => {
+  const noisy = { ...auditState, analyzerInput: '<button>x</button>', analyzerFindings: [{ id: 'html' }], preview: { annotations: [] }, reportMetadata: { projectName: 'x' }, reportTemplateId: 'client', filters: { status: 'pass' }, score: { scorePercent: 100 }, recommendations: [{ id: 'fake' }] };
+  const record = createSavedProjectRecord({ name: 'Boundary', auditState: noisy });
+  assert.equal(record.auditState.selectedPresetId, 'landing-page');
+  assert.equal(record.auditState.selectedRulePackId, ALL_RULES_PACK_ID);
+  assert.equal(record.auditState.selectedSeverityProfileId, DEFAULT_SEVERITY_PROFILE_ID);
+  assert.equal(record.auditState.ruleStatuses[firstRule], 'pass');
+  assert.equal(record.auditState.ruleNotes[secondRule], 'Needs clearer affordance.');
+  assert.equal(record.auditState.ruleSchemaVersion, RULE_SCHEMA_VERSION);
+  for (const excluded of ['analyzerInput', 'analyzerFindings', 'preview', 'reportMetadata', 'reportTemplateId', 'filters', 'score', 'recommendations']) assert.equal(Object.hasOwn(record.auditState, excluded), false);
+});
+
+test('records sort deterministically by updatedAt, name, then id', () => {
+  const records = [
+    createSavedProjectRecord({ id: 'b', name: 'Beta', auditState, now: '2026-07-16T10:00:00.000Z' }),
+    createSavedProjectRecord({ id: 'a', name: 'Alpha', auditState, now: '2026-07-16T10:00:00.000Z' }),
+    createSavedProjectRecord({ id: 'c', name: 'Current', auditState, now: '2026-07-16T12:00:00.000Z' })
+  ];
+  assert.deepEqual(sortSavedProjectRecords(records).map((record) => record.id), ['c', 'a', 'b']);
+});
+
+test('restore accepts valid projects and rejects malformed, future, and incompatible records without mutating current state', () => {
+  const current = { selectedPresetId: 'landing-page', ruleStatuses: { [firstRule]: 'not-checked' } };
+  const restored = normalizeSavedProjectAuditState(auditState, validOptions);
+  assert.equal(restored.status, 'loaded');
+  assert.equal(restored.state.ruleStatuses[firstRule], 'pass');
+  assert.deepEqual(current, { selectedPresetId: 'landing-page', ruleStatuses: { [firstRule]: 'not-checked' } });
+  assert.throws(() => validateSavedProjectRecord({ ...createSavedProjectRecord({ name: 'Bad', auditState }), schemaVersion: 99 }), /unsupported/);
+  assert.equal(normalizeSavedProjectAuditState(null, validOptions).status, 'invalid');
+  assert.equal(normalizeSavedProjectAuditState({ ...auditState, ruleSchemaVersion: 999 }, validOptions).status, 'schema-mismatch');
+});
+
+test('restored state feeds deterministic scoring and recommendations', () => {
+  const restored = normalizeSavedProjectAuditState(auditState, validOptions).state;
+  const profile = resolveSeverityProfile(restored.selectedSeverityProfileId);
+  const score = calculateAuditScore(auditRules, { ...Object.fromEntries(auditRules.map((rule) => [rule.id, 'not-checked'])), ...restored.ruleStatuses }, profile);
+  const recommendations = generateRecommendations(auditRules, restored.ruleStatuses, profile);
+  assert.equal(score.passedRules, 1);
+  assert.equal(score.needsWorkRules, 1);
+  assert.ok(recommendations.length >= 1);
+});
+
+test('IndexedDB constants and source boundaries stay focused', () => {
+  assert.equal(SAVED_PROJECT_DB_NAME, 'kp-layout-lens-projects');
+  assert.equal(SAVED_PROJECT_DB_VERSION, 1);
+  assert.equal(SAVED_PROJECT_STORE_NAME, 'audit-projects');
+  const idbModule = readFileSync(new URL('../assets/js/savedProjectsDb.js', import.meta.url), 'utf8');
+  const app = readFileSync(new URL('../assets/js/app.js', import.meta.url), 'utf8');
+  for (const file of ['reportData.js', 'reportAdapter.js', 'markdownReport.js', 'reportRenderer.js', 'scoringEngine.js', 'recommendations.js']) {
+    const source = readFileSync(new URL(`../assets/js/${file}`, import.meta.url), 'utf8');
+    assert.equal(source.includes('savedProjectsDb'), false, `${file} must not import IndexedDB persistence`);
+  }
+  assert.equal(idbModule.includes('document.'), false);
+  assert.equal(idbModule.includes('querySelector'), false);
+  assert.equal((app.match(/indexedDB/g) || []).length, 0);
+});

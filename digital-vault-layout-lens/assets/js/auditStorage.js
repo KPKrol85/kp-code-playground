@@ -20,7 +20,7 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
 }
 
 export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes = {}, ruleSchemaVersion }) {
-  const state = createPersistedAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes, ruleSchemaVersion });
+  const state = createManualAuditSnapshot({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes, ruleSchemaVersion });
 
   try {
     localStorage.setItem(AUDIT_STORAGE_KEY, JSON.stringify(state));
@@ -78,7 +78,7 @@ export function clearSavedAuditState() {
   }
 }
 
-function createPersistedAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes = {}, ruleSchemaVersion }) {
+export function createManualAuditSnapshot({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes = {}, ruleSchemaVersion }) {
   return {
     schemaVersion: AUDIT_SCHEMA_VERSION,
     schemaId: AUDIT_SCHEMA_ID,

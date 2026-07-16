@@ -14,7 +14,8 @@ The current version is deliberately local-first and product-focused:
 - Severity profiles for Baseline, Production, Premium, and Accessibility-first audit weighting.
 - Weighted scoring based on rule severity and manual status.
 - Category score breakdowns and deterministic recommendations.
-- Browser-only local audit persistence for selected preset, selected rule pack, selected severity profile, rule statuses, and reviewer notes.
+- Browser-only local audit draft persistence for selected preset, selected rule pack, selected severity profile, rule statuses, and reviewer notes.
+- Explicit saved audit projects stored locally in IndexedDB on the current browser/device; projects can be listed, opened, updated, and deleted.
 - Local JSON audit import/export for manual audit state.
 - Local Markdown report download generated from the current manual audit state.
 - Optional session-only report cover metadata for project name, owner, project type, target URL, reviewer, and review date.
@@ -25,7 +26,7 @@ The current version is deliberately local-first and product-focused:
 - Native browser print workflow: use **Print or save as PDF** to open the browser print dialog, then print or choose **Save as PDF** in the browser.
 - Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
-This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, saved projects, backend services, login, cloud upload, AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, or database storage. Analyzer and preview data remain separate from manual report generation.
+This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, project version history, project duplication, full project metadata, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation.
 
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
@@ -38,10 +39,11 @@ For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 5. `assets/js/ruleDataValidator.js` validates rule schema metadata, rules, categories, severity profiles, rule packs, presets, and recommendation output before app data is rendered, scored, recommended, or restored from local storage.
 6. `assets/js/scoringEngine.js` calculates the weighted overall score and category scores.
 7. `assets/js/recommendations.js` generates deterministic recommendations from rules marked as needing work.
-8. `assets/js/auditStorage.js` handles browser-only local audit state and stores the active rule schema version with each draft so incompatible future rule data can be migrated or rejected safely.
-9. `assets/js/reportTemplates.js` centralizes the five presentation templates and their labels, descriptions, and section order.
-10. `assets/js/reportAdapter.js` is the shared reporting entry point that consumes current manual audit state and returns one immutable normalized report model. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic report facts, serialize Markdown, render the on-screen/print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state. Report metadata remains report-workflow session state and is not included in manual audit JSON export/import or browser audit persistence.
-11. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, report actions, theme state, and status changes.
+8. `assets/js/auditStorage.js` handles browser-only local draft audit state and stores the active rule schema version with each draft so incompatible future rule data can be migrated or rejected safely.
+9. `assets/js/savedProjectModel.js` and `assets/js/savedProjectsDb.js` provide named saved audit projects in browser-local IndexedDB. Each record uses `id`, `schemaVersion`, `name`, `createdAt`, `updatedAt`, and a manual `auditState` snapshot; analyzer, preview, report metadata, report-template state, filters, generated reports, computed scores, and recommendations are excluded.
+10. `assets/js/reportTemplates.js` centralizes the five presentation templates and their labels, descriptions, and section order.
+11. `assets/js/reportAdapter.js` is the shared reporting entry point that consumes current manual audit state and returns one immutable normalized report model. `assets/js/reportData.js`, `assets/js/markdownReport.js`, `assets/js/reportRenderer.js`, and `assets/js/printReport.js` build deterministic report facts, serialize Markdown, render the on-screen/print report view, and request the browser-native print dialog without adding a PDF library or including analyzer/preview state. Report metadata remains report-workflow session state and is not included in manual audit JSON export/import or browser audit persistence.
+12. `assets/js/app.js` renders presets, category sections, rule cards, scores, recommendations, report actions, theme state, and status changes.
 
 Each rule can be marked as:
 
@@ -49,6 +51,19 @@ Each rule can be marked as:
 - `Pass`
 - `Needs work`
 - `Not applicable`
+
+## Saved projects and local drafts
+
+The automatic local draft and saved projects are separate browser-local features:
+
+- The existing local draft remains a working-session recovery mechanism and updates as the manual audit changes.
+- **Save as new project** creates an explicitly named IndexedDB project snapshot on the current browser/device.
+- **Open project** restores only the supported manual audit state: selected preset, rule pack, severity profile, rule statuses, reviewer notes, and compatible audit/rule schema metadata. Scores, category progress, findings, and recommendations are recalculated after restore.
+- **Save project changes** updates the currently opened project only when the user chooses that action; editing an opened project does not silently write to IndexedDB.
+- **Delete project** removes a saved project after confirmation without deleting the current local draft.
+- **New audit** resets the current working audit and local draft but does not delete saved projects.
+
+Saved projects never leave the browser and do not use accounts, backend services, cloud sync, collaboration, API storage, or cross-device backup.
 
 ## Report templates and browser printing
 
@@ -82,6 +97,8 @@ digital-vault-layout-lens/
         ├── auditStorage.js
         ├── componentPresets.js
         ├── recommendations.js
+        ├── savedProjectModel.js
+        ├── savedProjectsDb.js
         ├── reportAdapter.js
         ├── reportData.js
         ├── markdownReport.js
