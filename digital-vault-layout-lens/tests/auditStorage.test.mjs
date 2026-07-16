@@ -39,3 +39,8 @@ assert.equal(parseImportedAuditState(JSON.stringify({ hello: 'world' }), options
 assert.equal(parseImportedAuditState(JSON.stringify({ schema: { id: AUDIT_SCHEMA_ID, version: 2, ruleSchemaVersion: 2 }, audit: { selectedPresetId: 'missing', ruleStatuses: {} } }), options).status, 'invalid-reference');
 assert.equal(parseImportedAuditState(JSON.stringify({ schema: { id: AUDIT_SCHEMA_ID, version: 2, ruleSchemaVersion: 2 }, audit: { ruleStatuses: { 'layout-landmarks': 'bad' } } }), options).status, 'invalid-status');
 assert.equal(parseImportedAuditState(JSON.stringify({ schemaVersion: 1, ruleSchemaVersion: 1, selectedPresetId: 'landing-page', ruleStatuses: { 'layout-landmarks': 'pass' } }), options).status, 'loaded');
+
+assert.equal(Object.hasOwn(exported.metadata, 'owner'), false);
+assert.equal(Object.hasOwn(exported.metadata, 'projectType'), false);
+assert.equal(Object.hasOwn(exported.metadata, 'targetUrl'), false);
+assert.equal(Object.hasOwn(exported.metadata, 'reviewDate'), false);

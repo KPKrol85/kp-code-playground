@@ -6,18 +6,18 @@ export const SAVED_PROJECT_STORE_NAME = 'audit-projects';
 
 export function isIndexedDbAvailable() { return typeof indexedDB !== 'undefined'; }
 
-export async function createProject({ name, auditState }) {
+export async function createProject({ name, metadata, auditState }) {
   const db = await openSavedProjectsDb();
-  const record = createSavedProjectRecord({ name, auditState });
+  const record = createSavedProjectRecord({ name, metadata, auditState });
   await putRecord(db, record, 'readwrite');
   return validateSavedProjectRecord(record);
 }
 
-export async function updateProject(id, { name, auditState }) {
+export async function updateProject(id, { name, metadata, auditState }) {
   const db = await openSavedProjectsDb();
   const existing = await getRecord(db, id);
   if (!existing) throw new Error('Saved project was not found.');
-  const next = updateSavedProjectRecord(existing, { name, auditState });
+  const next = updateSavedProjectRecord(existing, { name, metadata, auditState });
   await putRecord(db, next, 'readwrite');
   return validateSavedProjectRecord(next);
 }
