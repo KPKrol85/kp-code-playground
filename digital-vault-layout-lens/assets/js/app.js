@@ -8,6 +8,7 @@ import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, createAuditStateExport, parseImportedAuditState, stringifyAuditStateExport } from './auditStorage.js';
 import { canUseSavedProjects, clearDraft, createSavedProject, deleteSavedProject, duplicateSavedProject, getSavedProject, listSavedProjects, loadDraft, saveDraft, saveSavedProjectAuditVersion, updateSavedProject } from './storageAdapter.js';
 import { createAuditStateForSavedProject, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState, restoreAuditVersion, startNewImprovementPass } from './savedProjectModel.js';
+import { getSavedProjectFailureMessage, getSavedProjectSuccessMessage, getSavedProjectsViewState } from './savedProjectUiState.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
 import { analyzeCssSource } from './cssAnalyzer.js';
@@ -159,6 +160,9 @@ let reportViewReturnFocus = null;
 let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
 let activeSavedProjectId = null;
 let savedProjects = [];
+let savedProjectsLoadStatus = 'loading';
+let savedProjectsLoadError = '';
+let savedProjectsInvalidCount = 0;
 let reportMetadata = {};
 let workingProjectMetadata = normalizeProjectMetadata();
 let selectedPresetId = componentPresets[0]?.id;
@@ -295,6 +299,7 @@ function bindEvents() {
   elements.newAudit?.addEventListener('click', startNewAudit);
   elements.savedProjectsList?.addEventListener('click', handleSavedProjectsClick);
   elements.auditVersionList?.addEventListener('click', handleSavedProjectsClick);
+  elements.savedProjectsList?.addEventListener('click', handleSavedProjectsRetry);
   elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
   elements.reportTemplateSelect?.addEventListener('change', handleReportTemplateChange);
   elements.reportMetadataControls.forEach((control) => control.addEventListener('input', handleReportMetadataInput));
@@ -938,24 +943,54 @@ function getCurrentManualAuditSnapshot() {
 
 async function initializeSavedProjects() {
   if (!elements.savedProjectsList) return;
-  if (!canUseSavedProjects()) { setSavedProjectsStatus('IndexedDB is unavailable. The local draft still works, but named saved projects cannot be used in this browser.'); renderSavedProjects(); return; }
-  setSavedProjectsStatus('Loading saved projects…');
-  try { const result = await listSavedProjects(); if (!result.ok) throw new Error(result.error); savedProjects = result.value; renderSavedProjects(); setSavedProjectsStatus(savedProjects.length ? `${savedProjects.length} saved project${savedProjects.length === 1 ? '' : 's'} available.` : 'No saved projects yet. Save the current audit as a named project when you are ready.'); }
-  catch { setSavedProjectsStatus('Saved projects could not be loaded. The local draft remains available.'); renderSavedProjects(); }
+  if (!canUseSavedProjects()) {
+    savedProjectsLoadStatus = 'error';
+    savedProjectsLoadError = 'Saved projects could not be accessed because IndexedDB is unavailable. The current audit and local draft remain available.';
+    savedProjects = [];
+    setSavedProjectsStatus(savedProjectsLoadError);
+    renderSavedProjects();
+    return;
+  }
+  savedProjectsLoadStatus = 'loading';
+  savedProjectsLoadError = '';
+  savedProjects = [];
+  renderSavedProjects();
+  setSavedProjectsStatus('Loading saved projects from this browser…');
+  const result = await listSavedProjects();
+  if (!result.ok) {
+    savedProjectsLoadStatus = 'error';
+    savedProjectsLoadError = result.error || 'Saved projects could not be accessed. The current audit and local draft remain available.';
+    savedProjects = [];
+    setSavedProjectsStatus(savedProjectsLoadError);
+    renderSavedProjects();
+    return;
+  }
+  savedProjectsLoadStatus = 'ready';
+  savedProjectsLoadError = '';
+  savedProjects = result.value || [];
+  renderSavedProjects();
+  setSavedProjectsStatus(getSavedProjectsViewState({ status: 'ready', projects: savedProjects, invalidCount: savedProjectsInvalidCount }).message);
 }
 
 async function saveCurrentAuditAsProject() {
   const name = normalizeProjectName(elements.savedProjectName?.value);
   if (!name) { setSavedProjectsStatus('Enter a project name before saving.'); elements.savedProjectName?.focus(); return; }
-  try { const result = await createSavedProject({ name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); if (!result.ok) throw new Error(result.error); const record = result.value; activeSavedProjectId = record.id; populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project saved successfully: ${record.name}.`); }
-  catch { setSavedProjectsStatus('Project could not be saved. IndexedDB may be unavailable or full.'); }
+  const result = await createSavedProject({ name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() });
+  if (!result.ok) { setSavedProjectsStatus(getSavedProjectFailureMessage('create')); return; }
+  const record = result.value;
+  activeSavedProjectId = record.id;
+  populateProjectDetails({ name: record.name, metadata: record.metadata });
+  await refreshSavedProjects(getSavedProjectSuccessMessage('create', { name: record.name }));
 }
 
 async function saveActiveProjectChanges() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving project changes.'); return; }
   const current = savedProjects.find((project) => project.id === activeSavedProjectId);
-  try { const result = await updateSavedProject(activeSavedProjectId, { name: normalizeProjectName(elements.savedProjectName?.value) || current?.name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); if (!result.ok) throw new Error(result.error); const record = result.value; populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project updated successfully: ${record.name}.`); }
-  catch { setSavedProjectsStatus('Project changes could not be saved. Current audit was not deleted.'); }
+  const result = await updateSavedProject(activeSavedProjectId, { name: normalizeProjectName(elements.savedProjectName?.value) || current?.name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() });
+  if (!result.ok) { setSavedProjectsStatus(getSavedProjectFailureMessage('update')); return; }
+  const record = result.value;
+  populateProjectDetails({ name: record.name, metadata: record.metadata });
+  await refreshSavedProjects(getSavedProjectSuccessMessage('update', { name: record.name }));
 }
 
 async function handleSavedProjectsClick(event) {
@@ -969,48 +1004,50 @@ async function handleSavedProjectsClick(event) {
   if (deleteButton) await confirmAndDeleteSavedProject(deleteButton.dataset.deleteProject, deleteButton);
 }
 
+function handleSavedProjectsRetry(event) {
+  const retryButton = event.target.closest('[data-retry-saved-projects]');
+  if (retryButton) initializeSavedProjects();
+}
+
 async function openSavedProject(id) {
   const before = { selectedPresetId, selectedRulePackId, selectedSeverityProfileId, statuses: { ...statuses }, ruleNotes: { ...ruleNotes } };
+  const result = await getSavedProject(id);
+  if (!result.ok || !result.value) { setSavedProjectsStatus(getSavedProjectFailureMessage('open')); return; }
+  const record = result.value;
+  const auditResult = normalizeSavedProjectAuditState(record.auditState, getAuditStateValidationOptions());
+  if (!auditResult.state) { setSavedProjectsStatus(auditResult.message || getSavedProjectFailureMessage('open')); return; }
   try {
-    const result = await getSavedProject(id);
-    if (!result.ok) throw new Error(result.error);
-    const record = result.value;
-    if (!record) throw new Error('missing');
-    const auditResult = normalizeSavedProjectAuditState(record.auditState, getAuditStateValidationOptions());
-    if (!auditResult.state) { setSavedProjectsStatus(auditResult.message || 'Saved project is malformed or incompatible. Current audit was not changed.'); return; }
     applyProjectAuditState(auditResult.state);
     activeSavedProjectId = record.id;
     populateProjectDetails({ name: record.name, metadata: record.metadata });
     persistAuditState('Saved project opened and copied into the browser-local draft.');
-    await refreshSavedProjects(`Project opened successfully: ${record.name}.`);
+    await refreshSavedProjects(getSavedProjectSuccessMessage('open', { name: record.name }));
     elements.checklistTitle?.focus?.();
-  } catch { selectedPresetId = before.selectedPresetId; selectedRulePackId = before.selectedRulePackId; selectedSeverityProfileId = before.selectedSeverityProfileId; statuses = before.statuses; ruleNotes = before.ruleNotes; setSavedProjectsStatus('Saved project could not be opened. Current audit was not changed.'); }
+  } catch {
+    selectedPresetId = before.selectedPresetId; selectedRulePackId = before.selectedRulePackId; selectedSeverityProfileId = before.selectedSeverityProfileId; statuses = before.statuses; ruleNotes = before.ruleNotes;
+    setSavedProjectsStatus(getSavedProjectFailureMessage('open'));
+  }
 }
-
 
 async function saveCurrentAuditVersion() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving an audit version.'); return; }
-  try {
-    const result = await saveSavedProjectAuditVersion(activeSavedProjectId, { label: elements.auditVersionLabel?.value, reviewDate: getCurrentProjectMetadata().reviewDate, auditState: getCurrentManualAuditSnapshot() });
-    if (!result.ok) throw new Error(result.error);
-    const record = result.value;
-    if (elements.auditVersionLabel) elements.auditVersionLabel.value = '';
-    await refreshSavedProjects(`Audit version saved for ${record.name}.`);
-  } catch { setSavedProjectsStatus('Audit version could not be saved. Current audit remains unchanged.'); }
+  const result = await saveSavedProjectAuditVersion(activeSavedProjectId, { label: elements.auditVersionLabel?.value, reviewDate: getCurrentProjectMetadata().reviewDate, auditState: getCurrentManualAuditSnapshot() });
+  if (!result.ok) { setSavedProjectsStatus(getSavedProjectFailureMessage('auditVersion')); return; }
+  const record = result.value;
+  if (elements.auditVersionLabel) elements.auditVersionLabel.value = '';
+  await refreshSavedProjects(getSavedProjectSuccessMessage('auditVersion', { name: record.name }));
 }
 
 async function duplicateActiveProject() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open a project before duplicating it.'); return; }
-  try {
-    const original = savedProjects.find((project) => project.id === activeSavedProjectId);
-    const result = await duplicateSavedProject(activeSavedProjectId, { name: `${original?.name || 'Project'} — Copy`, auditState: getCurrentManualAuditSnapshot() });
-    if (!result.ok) throw new Error(result.error);
-    const record = result.value;
-    activeSavedProjectId = record.id;
-    populateProjectDetails({ name: record.name, metadata: record.metadata });
-    applyProjectAuditState(record.auditState);
-    await refreshSavedProjects(`Duplicate project created: ${record.name}.`);
-  } catch { setSavedProjectsStatus('Project could not be duplicated. Original project was not changed.'); }
+  const original = savedProjects.find((project) => project.id === activeSavedProjectId);
+  const result = await duplicateSavedProject(activeSavedProjectId, { name: `${original?.name || 'Project'} — Copy`, auditState: getCurrentManualAuditSnapshot() });
+  if (!result.ok) { setSavedProjectsStatus(getSavedProjectFailureMessage('duplicate')); return; }
+  const record = result.value;
+  activeSavedProjectId = record.id;
+  populateProjectDetails({ name: record.name, metadata: record.metadata });
+  applyProjectAuditState(record.auditState);
+  await refreshSavedProjects(getSavedProjectSuccessMessage('duplicate', { name: record.name }));
 }
 
 function getActiveProjectVersion(versionId) {
@@ -1021,18 +1058,22 @@ function restoreVersionIntoWorkspace(versionId) {
   const version = getActiveProjectVersion(versionId);
   if (!version) return;
   if (!window.confirm(`Restore version "${version.label}" into the current workspace? Save project changes separately if you want to persist it.`)) { setSavedProjectsStatus('Version restore cancelled.'); return; }
-  applyProjectAuditState(restoreAuditVersion(version));
-  persistAuditState('Audit version restored into the browser-local draft. Save project changes separately to update the project.');
-  setSavedProjectsStatus(`Restored version: ${version.label}.`);
+  try {
+    applyProjectAuditState(restoreAuditVersion(version));
+    persistAuditState('Audit version restored into the browser-local draft. Save project changes separately to update the project.');
+    setSavedProjectsStatus(getSavedProjectSuccessMessage('restoreVersion', { label: version.label }));
+  } catch { setSavedProjectsStatus(getSavedProjectFailureMessage('restoreVersion')); }
 }
 
 function startImprovementPassFromVersion(versionId) {
   const version = getActiveProjectVersion(versionId);
   if (!version) return;
-  const pass = startNewImprovementPass(version.auditState, { label: `New pass from ${version.label}`, reviewDate: getCurrentProjectMetadata().reviewDate });
-  applyProjectAuditState(pass.auditState);
-  persistAuditState('New improvement pass started from a historical version. Save project changes or save an audit version when ready.');
-  setSavedProjectsStatus(`Start new improvement pass from ${version.label}.`);
+  try {
+    const pass = startNewImprovementPass(version.auditState, { label: `New pass from ${version.label}`, reviewDate: getCurrentProjectMetadata().reviewDate });
+    applyProjectAuditState(pass.auditState);
+    persistAuditState('New improvement pass started from a historical version. Save project changes or save an audit version when ready.');
+    setSavedProjectsStatus(getSavedProjectSuccessMessage('improvementPass', { label: version.label }));
+  } catch { setSavedProjectsStatus(getSavedProjectFailureMessage('improvementPass')); }
 }
 
 function renderAuditHistory() {
@@ -1056,8 +1097,12 @@ async function confirmAndDeleteSavedProject(id, button) {
   if (!record) return;
   if (!window.confirm(`Delete saved project "${record.name}"? This does not reset the current local draft.`)) { setSavedProjectsStatus('Project deletion cancelled.'); return; }
   const index = savedProjects.findIndex((project) => project.id === id);
-  try { const wasActive = activeSavedProjectId === id; const result = await deleteSavedProject(id); if (!result.ok) throw new Error(result.error); if (wasActive) { activeSavedProjectId = null; populateProjectDetails(); } await refreshSavedProjects(wasActive ? `Opened project deleted: ${record.name}. Current audit remains in the workspace; save as a new project to keep changes.` : `Project deleted successfully: ${record.name}.`); focusAfterProjectDelete(index); }
-  catch { button?.focus(); setSavedProjectsStatus('Project could not be deleted. It remains saved.'); }
+  const wasActive = activeSavedProjectId === id;
+  const result = await deleteSavedProject(id);
+  if (!result.ok) { button?.focus(); setSavedProjectsStatus(getSavedProjectFailureMessage('delete')); return; }
+  if (wasActive) { activeSavedProjectId = null; populateProjectDetails(); }
+  await refreshSavedProjects(getSavedProjectSuccessMessage(wasActive ? 'deleteActive' : 'delete', { name: record.name }));
+  focusAfterProjectDelete(index);
 }
 
 function startNewAudit() {
@@ -1069,7 +1114,22 @@ function applyProjectAuditState(state) {
   selectedPresetId = state.selectedPresetId || componentPresets[0]?.id; selectedRulePackId = state.selectedRulePackId || ALL_RULES_PACK_ID; selectedSeverityProfileId = state.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID; statuses = { ...createInitialStatuses(), ...state.ruleStatuses }; ruleNotes = state.ruleNotes || {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderProjectDetailsPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore();
 }
 
-async function refreshSavedProjects(message) { const result = await listSavedProjects(); savedProjects = result.ok ? result.value : []; renderSavedProjects(); setSavedProjectsStatus(result.ok ? message : result.error); }
+async function refreshSavedProjects(message) {
+  const result = await listSavedProjects();
+  if (!result.ok) {
+    savedProjectsLoadStatus = 'error';
+    savedProjectsLoadError = result.error || 'Saved projects could not be accessed. The current audit and local draft remain available.';
+    savedProjects = [];
+    renderSavedProjects();
+    setSavedProjectsStatus(savedProjectsLoadError);
+    return;
+  }
+  savedProjectsLoadStatus = 'ready';
+  savedProjectsLoadError = '';
+  savedProjects = result.value || [];
+  renderSavedProjects();
+  setSavedProjectsStatus(message || getSavedProjectsViewState({ status: 'ready', projects: savedProjects, invalidCount: savedProjectsInvalidCount }).message);
+}
 function setSavedProjectsStatus(message) { if (elements.savedProjectsStatus) elements.savedProjectsStatus.textContent = message; }
 function renderSavedProjects() {
   if (!elements.savedProjectsList) return;
@@ -1078,33 +1138,46 @@ function renderSavedProjects() {
   if (elements.saveAuditVersion) elements.saveAuditVersion.disabled = !activeSavedProjectId;
   renderAuditHistory();
   elements.savedProjectsList.textContent = '';
-  if (!savedProjects.length) { const empty = document.createElement('li'); empty.className = 'saved-projects__empty'; empty.textContent = 'No saved projects yet.'; elements.savedProjectsList.append(empty); return; }
-  savedProjects.forEach((project) => elements.savedProjectsList.append(createSavedProjectListItem(project)));
+  const view = getSavedProjectsViewState({ status: savedProjectsLoadStatus, projects: savedProjects, error: savedProjectsLoadError, invalidCount: savedProjectsInvalidCount });
+  elements.savedProjectsList.dataset.state = view.kind;
+  if (view.kind === 'list') {
+    if (view.invalidCount) elements.savedProjectsList.append(createSavedProjectNotice(`${view.invalidCount} stored project record${view.invalidCount === 1 ? '' : 's'} could not be shown safely. Valid projects remain available.`, 'warning'));
+    view.projects.forEach((project) => elements.savedProjectsList.append(createSavedProjectListItem(project)));
+    return;
+  }
+  elements.savedProjectsList.append(createSavedProjectStateItem(view));
 }
 
-function createSavedProjectListItem(project) {
+function createSavedProjectStateItem(view) {
   const item = document.createElement('li');
-  item.className = `saved-project${project.id === activeSavedProjectId ? ' is-active' : ''}`;
-  const details = document.createElement('div');
-  const title = document.createElement('strong'); title.textContent = project.name; details.append(title);
-  if (project.id === activeSavedProjectId) { const active = document.createElement('span'); active.className = 'saved-project__active'; active.textContent = 'Current opened project'; details.append(active); }
-  const updated = document.createElement('span'); updated.textContent = `Last updated ${formatProjectDate(project.updatedAt)}`; details.append(updated);
-  const meta = document.createElement('dl'); meta.className = 'saved-project__metadata';
-  getSavedProjectMetadataEntries(project).forEach(([label, value]) => { const dt = document.createElement('dt'); dt.textContent = label; const dd = document.createElement('dd'); dd.textContent = value; meta.append(dt, dd); });
-  if (meta.childElementCount) details.append(meta);
-  const actions = document.createElement('div'); actions.className = 'saved-project__actions';
-  const open = document.createElement('button'); open.className = 'button button--secondary'; open.type = 'button'; open.dataset.openProject = project.id; open.textContent = 'Open project';
-  const del = document.createElement('button'); del.className = 'button button--secondary'; del.type = 'button'; del.dataset.deleteProject = project.id; del.textContent = 'Delete project'; actions.append(open, del);
-  item.append(details, actions);
+  item.className = `saved-projects__state saved-projects__state--${view.kind}`;
+  if (view.kind === 'loading') item.setAttribute('role', 'status');
+  if (view.kind === 'error') item.setAttribute('role', 'alert');
+  const title = document.createElement('strong');
+  title.textContent = view.kind === 'empty' ? 'No saved projects yet' : view.kind === 'loading' ? 'Loading saved projects' : 'Saved projects unavailable';
+  const description = document.createElement('p');
+  description.textContent = view.kind === 'empty'
+    ? 'No saved projects have been created yet. Projects are stored only in this browser on this device. Use Save as new project when you are ready to keep a named audit snapshot.'
+    : view.message;
+  item.append(title, description);
+  if (view.retry) {
+    const retry = document.createElement('button');
+    retry.className = 'button button--secondary';
+    retry.type = 'button';
+    retry.dataset.retrySavedProjects = 'true';
+    retry.textContent = 'Retry saved projects';
+    item.append(retry);
+  }
   return item;
 }
 
-function getSavedProjectMetadataEntries(project) {
-  const metadata = normalizeProjectMetadata(project.metadata);
-  return [['Owner', metadata.owner], ['Project type', metadata.projectType], ['Target URL', metadata.targetUrl], ['Review date', metadata.reviewDate], ['Audit preset', getPresetLabel(project.auditState?.selectedPresetId)]].filter(([, value]) => value);
+function createSavedProjectNotice(message, tone) {
+  const item = document.createElement('li');
+  item.className = `saved-projects__notice saved-projects__notice--${tone}`;
+  item.setAttribute('role', 'status');
+  item.textContent = message;
+  return item;
 }
-function focusAfterProjectDelete(index) { const buttons = elements.savedProjectsList?.querySelectorAll('[data-open-project]'); (buttons?.[Math.min(index, buttons.length - 1)] || elements.savedProjectsHeading)?.focus?.(); }
-function formatProjectDate(value) { try { return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)); } catch { return value; } }
 
 function handleAuditImportFile(event) {
   const file = event.target.files?.[0];
