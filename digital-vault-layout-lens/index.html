@@ -599,6 +599,34 @@
         <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
       </section>
 
+      <section id="ai-review" class="ai-review section-shell" aria-labelledby="ai-review-title" aria-describedby="ai-review-description">
+        <div class="section-heading">
+          <p class="eyebrow">Manual AI handoff</p>
+          <h2 id="ai-review-title">AI-assisted review summary</h2>
+          <p id="ai-review-description">Layout Lens never contacts a model automatically and does not upload data. Prepare a session-only evidence package, copy it only if you choose where to send it, then paste the external AI model's JSON response for validation. Only the displayed deterministic evidence package is intended for the external model. Imported AI content remains AI-generated, session-only, and separate from scores, findings, recommendations, and reports.</p>
+        </div>
+        <div class="ai-review__grid">
+          <div class="ai-review__panel card">
+            <h3>Prepare request</h3>
+            <p class="field__hint">The package can include manual score facts, reviewed counts, selected preset/rule pack/severity profile, category score facts, selected manual findings and notes, deterministic recommendations, and analyzer findings. It excludes raw HTML, raw CSS, preview content, project metadata, report metadata, storage internals, filters, browser details, and saved-project history.</p>
+            <div class="ai-review__actions">
+              <button id="prepare-ai-review" class="button button--primary" type="button">Prepare AI review</button>
+              <button id="copy-ai-request" class="button button--secondary" type="button" disabled>Copy AI request</button>
+              <button id="clear-ai-summary" class="button button--secondary" type="button">Clear AI summary</button>
+            </div>
+            <p id="ai-review-status" class="local-save-status" aria-live="polite">No AI review request prepared.</p>
+            <label class="field" for="ai-request-output">Prepared AI request</label>
+            <textarea id="ai-request-output" class="ai-review__textarea" readonly rows="10" aria-describedby="ai-review-description ai-review-status" placeholder="Prepare an AI review to show the copyable request package."></textarea>
+          </div>
+          <div class="ai-review__panel card">
+            <h3>Import response</h3>
+            <label class="field" for="ai-response-input">External AI response JSON</label>
+            <textarea id="ai-response-input" class="ai-review__textarea" rows="10" aria-describedby="ai-review-description ai-review-status" placeholder='{ "summary": "...", "strengths": [], "priorities": [], "cautions": [] }'></textarea>
+            <button id="import-ai-summary" class="button button--primary" type="button">Import AI summary</button>
+          </div>
+        </div>
+        <div id="ai-summary-output" class="ai-summary" aria-live="polite"></div>
+      </section>
 
       <section id="report-view" class="report-view section-shell" aria-labelledby="report-view-title" hidden>
         <div class="report-view__toolbar" aria-label="Report view controls">

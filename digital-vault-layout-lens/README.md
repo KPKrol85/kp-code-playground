@@ -23,10 +23,11 @@ The current version is deliberately local-first and product-focused:
 - Accessible report summaries for screen-reader users generated from the same normalized report model as the visual report outputs.
 - Five report templates: Internal QA, Freelancer / Client Delivery, Agency Review, SaaS Team, and Design System Team.
 - Browser print-optimized report view for cover metadata, executive summaries, manual scores, findings, notes, and recommendations.
+- Session-only manual AI handoff workflow for copying deterministic evidence to an external AI model and importing a validated AI-assisted summary.
 - Native browser print workflow: use **Print or save as PDF** to open the browser print dialog, then print or choose **Save as PDF** in the browser.
 - Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
-This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation.
+This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, automatic AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation. The AI-assisted workflow is manual only: Layout Lens prepares copyable evidence and validates pasted JSON, but it never contacts, uploads to, authenticates with, or selects an AI provider.
 
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
@@ -52,6 +53,22 @@ Each rule can be marked as:
 - `Pass`
 - `Needs work`
 - `Not applicable`
+
+## Manual AI handoff workflow
+
+The **AI-assisted review summary** section is a local-first handoff tool, not direct AI integration. Layout Lens does not include an API key, provider SDK, backend endpoint, authentication flow, automatic model call, retry queue, or upload feature. Every action requires explicit user interaction:
+
+1. Select **Prepare AI review** to build a session-only evidence snapshot from deterministic Layout Lens data.
+2. Select **Copy AI request** only if you choose to send that displayed package to an external AI model outside Layout Lens.
+3. Paste the model's structured JSON response into Layout Lens.
+4. Select **Import AI summary** to validate the response against the evidence IDs in the prepared snapshot.
+5. Use **Clear AI summary** to remove the session-only request and imported summary.
+
+The evidence package may include only these deterministic facts: weighted score values, reviewed/applicable counts, selected preset, selected rule pack, selected severity profile, category score facts, manual Needs work findings, useful manual Pass findings for strengths, stable manual issue IDs, rule title/category/severity, reviewer notes, existing deterministic recommendations, and HTML/CSS analyzer findings with their stable issue IDs, title, category, severity, source, confidence, deterministic message, evidence snippet, occurrence count, location metadata, and WCAG mapping already attached by the deterministic analyzer.
+
+The package excludes raw pasted HTML, raw pasted CSS, complete source files, preview iframe content, preview annotations, viewport comparison notes, report cover metadata, generated reports, saved-project metadata/history, duplicate-project lineage, localStorage or IndexedDB internals, filters, hidden UI state, browser/device details, target URLs, and unsupported speculative context.
+
+Imported AI content is rendered in a separate **AI-assisted summary** area. It is AI-generated and must be reviewed by a person. It is never treated as a deterministic finding, never changes scores, never creates recommendations, never modifies manual statuses or analyzer results, is not included in reports, is not exported in audit JSON, and is not saved to localStorage drafts or IndexedDB projects. If manual audit evidence or analyzer results change after preparation, the request/summary is marked stale and a new explicit preparation is required.
 
 ## Saved projects and local drafts
 
@@ -106,6 +123,9 @@ digital-vault-layout-lens/
     │   └── styles.css
     └── js/
         ├── app.js
+        ├── aiEvidenceAdapter.js
+        ├── aiReviewRequest.js
+        ├── aiSummaryValidator.js
         ├── auditRules.js
         ├── auditStorage.js
         ├── componentPresets.js
