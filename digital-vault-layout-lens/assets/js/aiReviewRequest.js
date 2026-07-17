@@ -16,6 +16,7 @@ export function buildAiReviewRequest(evidencePackage, { presetId = 'senior-front
     presetId: preset.id,
     presetLabel: preset.label,
     evidencePackageVersion: evidencePackage.version,
+    privacyDisclosure: evidencePackage.privacyDisclosure,
     evidenceIds: evidencePackage.evidenceIds,
     prompt,
     evidence: evidencePackage,
@@ -23,7 +24,7 @@ export function buildAiReviewRequest(evidencePackage, { presetId = 'senior-front
       schemaVersion: AI_REVIEW_RESPONSE_SCHEMA_VERSION,
       requestId: id,
       presetId: preset.id,
-      summary: { text: 'Concise overall evidence-based review summary.', evidenceIds: ['manual:example-rule'] },
+      summary: { text: 'Concise overall evidence-based review summary.', evidenceIds: ['manual:example-rule'], confidence: 'medium' },
       strengths: [{ text: 'Observed strength.', evidenceIds: ['manual:example-rule'] }],
       priorities: [{ text: 'Priority improvement.', evidenceIds: ['html-analyzer:example-check'] }],
       cautions: [{ text: 'Important limitation or review caution.', evidenceIds: ['css-analyzer:example-check'] }]

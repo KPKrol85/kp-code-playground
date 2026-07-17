@@ -13,11 +13,11 @@ export function buildAiReviewPrompt({ requestId, preset, evidencePackage }) {
     'Use only supplied evidence IDs and evidence fields in the evidence package. The full normalized evidence package remains available regardless of preset. State when evidence is insufficient instead of guessing.', '',
     '# Evidence package', evidenceJson, '',
     '# Required response format',
-    JSON.stringify({ schemaVersion: AI_REVIEW_RESPONSE_SCHEMA_VERSION, requestId, presetId: preset.id, summary: { text: 'Overall evidence-based summary.', evidenceIds: ['manual:example-rule'] }, strengths: [], priorities: [], cautions: [] }, null, 2), '',
+    JSON.stringify({ schemaVersion: AI_REVIEW_RESPONSE_SCHEMA_VERSION, requestId, presetId: preset.id, summary: { text: 'Overall evidence-based summary.', evidenceIds: ['manual:example-rule'], confidence: 'medium' }, strengths: [], priorities: [], cautions: [] }, null, 2), '',
     '# Evidence-reference rules',
-    'Every factual claim must be an object with text and evidenceIds. Cite one or more known evidence IDs for every claim, including summary, strengths, priorities, cautions, risks, recommendations, observations, and category conclusions. Do not use duplicate evidence IDs inside one claim. Do not cite evidence that is not included in the prepared package.', '',
+    'Every factual claim must be an object with text and evidenceIds, and may include only an optional confidence value of high, medium, or low. Cite one or more known evidence IDs for every claim, including summary, strengths, priorities, cautions, risks, recommendations, observations, and category conclusions. Do not use duplicate evidence IDs inside one claim. Do not cite evidence that is not included in the prepared package.', '',
     '# Prohibited behavior',
-    'Avoid unsupported conclusions. Avoid inventing issues. Avoid changing deterministic scores. Avoid treating confidence as severity. Avoid claiming WCAG compliance. Avoid claiming production readiness. Avoid claiming source inspection beyond supplied snippets. Avoid direct AI/provider/API/upload assumptions.', '',
+    'Avoid unsupported conclusions. Avoid inventing issues. Avoid changing deterministic scores. Avoid treating AI-reported confidence as severity or independent verification. Avoid claiming WCAG compliance. Avoid claiming production readiness. Avoid claiming source inspection beyond supplied snippets. Avoid direct AI/provider/API/upload assumptions.', '',
     '# Review limitations',
     'This is a manual external AI handoff. No browser, assistive-technology, runtime, backend, API, provider, production, or full-source inspection occurred unless explicitly represented in supplied evidence.'
   ].join('\n');

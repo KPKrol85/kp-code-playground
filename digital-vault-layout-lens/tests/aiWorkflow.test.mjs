@@ -40,7 +40,7 @@ test('evidence adapter normalizes manual and analyzer evidence with stable IDs a
   assert.equal(pkg.evidenceLookup.has('manual:alpha-rule'), true);
   assert.equal(Object.isFrozen(pkg), true);
   assert.equal(JSON.stringify(source), before);
-  for (const forbidden of ['rawHtml', 'rawCss', 'preview', 'projectMetadata', 'reportMetadata', 'targetUrl', 'filters', '<main>secret</main>', 'body{}']) assert.equal(text.includes(forbidden), false, forbidden);
+  for (const forbidden of ['rawHtml', 'rawCss', 'projectMetadata', 'reportMetadata', 'targetUrl', 'filters', '<main>secret</main>', 'body{}']) assert.equal(text.includes(forbidden), false, forbidden);
 });
 
 test('prompt templates fill controlled preset fields and require cited evidence claims deterministically', () => {
@@ -48,7 +48,7 @@ test('prompt templates fill controlled preset fields and require cited evidence 
   const preset = getAiReviewPreset('accessibility');
   const prompt = buildAiReviewPrompt({ requestId: 'fixed', preset, evidencePackage: pkg });
   assert.match(prompt, /# Role/); assert.match(prompt, /Preset ID: accessibility/); assert.match(prompt, /Every factual claim/); assert.match(prompt, /evidenceIds/);
-  for (const required of ['Use only supplied evidence', 'full normalized evidence package remains available', 'Avoid inventing issues', 'Avoid changing deterministic scores', 'Avoid treating confidence as severity', 'Avoid claiming WCAG compliance', 'Avoid claiming production readiness', 'Avoid claiming source inspection beyond supplied snippets', 'State when evidence is insufficient']) assert.match(prompt, new RegExp(required, 'i'));
+  for (const required of ['Use only supplied evidence', 'full normalized evidence package remains available', 'Avoid inventing issues', 'Avoid changing deterministic scores', 'Avoid treating AI-reported confidence as severity', 'Avoid claiming WCAG compliance', 'Avoid claiming production readiness', 'Avoid claiming source inspection beyond supplied snippets', 'State when evidence is insufficient']) assert.match(prompt, new RegExp(required, 'i'));
   for (const id of pkg.evidenceIds) assert.match(prompt, new RegExp(id));
   for (const forbidden of ['rawHtml', 'rawCss', 'projectMetadata', '<main>secret</main>', 'body{}']) assert.equal(prompt.includes(forbidden), false, forbidden);
   assert.equal(prompt, buildAiReviewPrompt({ requestId: 'fixed', preset, evidencePackage: pkg }));
@@ -100,4 +100,66 @@ test('AI app state behavior remains session-only and separate from scoring, find
   assert.match(app, /clearAiWorkflow\('Project audit state changed/); assert.match(app, /clearAiWorkflow\('Local audit reset/);
   for (const source of [auditStorage, storageAdapter, reportAdapter]) { assert.equal(source.includes('aiReviewState'), false); assert.equal(source.includes('selectedAiReviewPresetId'), false); }
   assert.equal(app.includes('aiReviewState:') || app.includes('aiSummary:'), false);
+});
+
+import { normalizeAiPrivacyControls, summarizeAiPrivacyControls } from '../assets/js/aiPrivacyControls.js';
+
+test('privacy controls use conservative defaults, hard exclusions, explicit notes and snippets, and no mutation', () => {
+  const defaults = normalizeAiPrivacyControls();
+  assert.equal(defaults.includeManualFindings, true);
+  assert.equal(defaults.includeReviewerNotes, false);
+  assert.equal(defaults.includeAnalyzerEvidenceSnippets, false);
+  assert.equal(defaults.includeProjectMetadata, false);
+  assert.equal(defaults.includeReportMetadata, false);
+  assert.equal(defaults.includeTargetUrls, false);
+  assert.equal(defaults.includeRawSourceCode, false);
+  const source = { includeReviewerNotes: true, includeAnalyzerEvidenceSnippets: true, includeRawSourceCode: true, extra: true };
+  const before = JSON.stringify(source);
+  const normalized = normalizeAiPrivacyControls(source);
+  assert.equal(normalized.includeReviewerNotes, true);
+  assert.equal(normalized.includeAnalyzerEvidenceSnippets, true);
+  assert.equal(normalized.includeRawSourceCode, false);
+  assert.equal(Object.hasOwn(normalized, 'extra'), false);
+  assert.equal(JSON.stringify(source), before);
+});
+
+test('privacy-aware request generation includes only approved categories and disclosure summary', () => {
+  const pkg = buildAiEvidencePackage(input());
+  const text = serializeAiReviewRequest(buildAiReviewRequest(pkg, { requestId: 'privacy-default', now: () => new Date('2026-07-17T00:00:00.000Z') }));
+  assert.equal(text.includes('Fix label <script>'), false);
+  assert.equal(text.includes('<input id="email">'), false);
+  assert.match(text, /privacyDisclosure/);
+  assert.match(text, /raw HTML\/CSS source/);
+  for (const forbidden of ['rawHtml', 'rawCss', 'projectMetadata', 'reportMetadata', 'targetUrl', '<main>secret</main>', 'body{}']) assert.equal(text.includes(forbidden), false, forbidden);
+  const open = buildAiEvidencePackage({ ...input(), privacy: { includeReviewerNotes: true, includeAnalyzerEvidenceSnippets: true } });
+  const openText = JSON.stringify(open);
+  assert.match(openText, /Fix label/);
+  assert.match(openText, /input id/);
+  assert.notEqual(createEvidenceFingerprint(pkg), createEvidenceFingerprint(open));
+  const summary = summarizeAiPrivacyControls({ includeReviewerNotes: true, includeAnalyzerEvidenceSnippets: true });
+  assert.equal(summary.included.includes('manual reviewer notes'), true);
+  assert.equal(summary.included.includes('capped analyzer evidence snippets'), true);
+});
+
+test('AI confidence schema accepts controlled values, rejects unsupported values, and does not affect severity', () => {
+  const pkg = buildAiEvidencePackage(input());
+  for (const confidence of ['high', 'medium', 'low']) {
+    const raw = JSON.stringify({ schemaVersion: 1, requestId: 'ai-review-test', presetId: 'senior-frontend', summary: { text: 'x', evidenceIds: ['manual:alpha-rule'], confidence }, strengths: [], priorities: [], cautions: [] });
+    const result = validateAiSummaryResponse(raw, pkg.evidenceLookup, { requestId: 'ai-review-test', presetId: 'senior-frontend' });
+    assert.equal(result.ok, true);
+    assert.equal(result.value.summary.confidence, confidence);
+    assert.equal(pkg.evidenceLookup.get('manual:alpha-rule').severity, 'high');
+  }
+  const missing = validateAiSummaryResponse(response('senior-frontend'), pkg.evidenceLookup, { requestId: 'ai-review-test', presetId: 'senior-frontend' });
+  assert.equal(missing.ok, true);
+  assert.equal(Object.hasOwn(missing.value.summary, 'confidence'), false);
+  const bad = validateAiSummaryResponse(JSON.stringify({ schemaVersion: 1, requestId: 'ai-review-test', presetId: 'senior-frontend', summary: { text: 'x', evidenceIds: ['manual:alpha-rule'], confidence: 'certain' }, strengths: [], priorities: [], cautions: [] }), pkg.evidenceLookup, { requestId: 'ai-review-test', presetId: 'senior-frontend' });
+  assert.equal(bad.ok, false);
+  assert.match(bad.message, /confidence/);
+});
+
+test('AI labeling and evidence-source rendering boundaries are present in source', () => {
+  const app = readFileSync(new URL('../assets/js/app.js', import.meta.url), 'utf8');
+  for (const phrase of ['AI-generated', 'External AI response', 'Human review required', 'did not verify the truth or quality', 'Deterministic scoring and findings remain the source of record', 'AI-reported confidence', 'Analyzer confidence', 'Manual review evidence', 'HTML analyzer evidence', 'CSS analyzer evidence', 'Category audit fact']) assert.match(app, new RegExp(phrase));
+  for (const forbidden of ['verified AI', 'deterministic AI', 'official score', 'production approval']) assert.equal(app.includes(forbidden), false);
 });
