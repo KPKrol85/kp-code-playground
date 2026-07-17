@@ -58,17 +58,22 @@ Each rule can be marked as:
 
 The **AI-assisted review summary** section is a local-first handoff tool, not direct AI integration. Layout Lens does not include an API key, provider SDK, backend endpoint, authentication flow, automatic model call, retry queue, or upload feature. Every action requires explicit user interaction:
 
-1. Select **Prepare AI review** to build a session-only evidence snapshot from deterministic Layout Lens data.
-2. Select **Copy AI request** only if you choose to send that displayed package to an external AI model outside Layout Lens.
-3. Paste the model's structured JSON response into Layout Lens.
-4. Select **Import AI summary** to validate the response against the evidence IDs in the prepared snapshot.
-5. Use **Clear AI summary** to remove the session-only request and imported summary.
+1. Choose a session-only review preset. The safe default is **Senior frontend reviewer**; other options are **Accessibility reviewer**, **Product polish reviewer**, and **Design-system reviewer**.
+2. Select **Prepare AI review** to build a session-only evidence snapshot from deterministic Layout Lens data and bind it to the selected preset.
+3. Select **Copy AI request** only if you choose to send that displayed package to an external AI model outside Layout Lens.
+4. Paste the model's structured JSON response into Layout Lens.
+5. Select **Import AI summary** to validate the response against the request ID, preset ID, and evidence IDs in the prepared snapshot.
+6. Use **Clear AI summary** to remove the session-only request and imported summary.
+
+Review presets change only the requested perspective, terminology, focus, and output emphasis. They do not change deterministic evidence, manual scores, analyzer findings, severity, confidence, issue IDs, WCAG mappings, recommendations, or evidence eligibility. The four presets are: **Senior frontend reviewer** for implementation quality, maintainability, responsive behavior, accessibility basics, frontend risk, and practical prioritization; **Accessibility reviewer** for existing accessibility-related findings, analyzer evidence, WCAG mappings, keyboard, semantics, labels, headings, landmarks, and reflow risks without conformance or certification claims; **Product polish reviewer** for visual consistency, content clarity, interaction quality, responsive polish, usability friction, and high-impact refinement opportunities; and **Design-system reviewer** for consistency, reusable patterns, token opportunities, component behavior, shared UI rules, and maintainability across repeated interfaces.
 
 The evidence package may include only these deterministic facts: weighted score values, reviewed/applicable counts, selected preset, selected rule pack, selected severity profile, category score facts, manual Needs work findings, useful manual Pass findings for strengths, stable manual issue IDs, rule title/category/severity, reviewer notes, existing deterministic recommendations, and HTML/CSS analyzer findings with their stable issue IDs, title, category, severity, source, confidence, deterministic message, evidence snippet, occurrence count, location metadata, and WCAG mapping already attached by the deterministic analyzer.
 
 The package excludes raw pasted HTML, raw pasted CSS, complete source files, preview iframe content, preview annotations, viewport comparison notes, report cover metadata, generated reports, saved-project metadata/history, duplicate-project lineage, localStorage or IndexedDB internals, filters, hidden UI state, browser/device details, target URLs, and unsupported speculative context.
 
-Imported AI content is rendered in a separate **AI-assisted summary** area. It is AI-generated and must be reviewed by a person. It is never treated as a deterministic finding, never changes scores, never creates recommendations, never modifies manual statuses or analyzer results, is not included in reports, is not exported in audit JSON, and is not saved to localStorage drafts or IndexedDB projects. If manual audit evidence or analyzer results change after preparation, the request/summary is marked stale and a new explicit preparation is required.
+Every imported factual AI claim must use the structured claim shape with `text` and one or more known `evidenceIds`, including the overall summary, strengths, priorities, and cautions. Responses are rejected when evidence references are missing, duplicated within a claim, unknown to the prepared package, tied to another request ID, tied to another preset ID, or outside the supported schema.
+
+Imported AI content is rendered in a separate **AI-assisted summary** area. It is AI-generated and must be reviewed by a person. It is never treated as a deterministic finding, never changes scores, never creates recommendations, never modifies manual statuses or analyzer results, is not included in reports, is not exported in audit JSON, and is not saved to localStorage drafts or IndexedDB projects. If the review preset, manual audit evidence, analyzer results, saved project, import state, reset state, or evidence snapshot changes after preparation, the request/summary is marked stale and a new explicit preparation is required.
 
 ## Saved projects and local drafts
 

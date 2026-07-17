@@ -30,6 +30,7 @@ import { runBrowserPrintWorkflow } from './printReport.js';
 import { buildAiEvidencePackage, createEvidenceFingerprint } from './aiEvidenceAdapter.js';
 import { buildAiReviewRequest, serializeAiReviewRequest } from './aiReviewRequest.js';
 import { validateAiSummaryResponse } from './aiSummaryValidator.js';
+import { DEFAULT_AI_REVIEW_PRESET_ID, aiReviewPresets, getAiReviewPreset, validateAiReviewPresets } from './aiReviewPresets.js';
 
 try {
   assertValidRuleData();
@@ -154,7 +155,9 @@ const elements = {
   aiRequestOutput: document.querySelector('#ai-request-output'),
   aiResponseInput: document.querySelector('#ai-response-input'),
   aiReviewStatus: document.querySelector('#ai-review-status'),
-  aiSummaryOutput: document.querySelector('#ai-summary-output')
+  aiSummaryOutput: document.querySelector('#ai-summary-output'),
+  aiPresetSelect: document.querySelector('#ai-preset-select'),
+  aiPresetDescription: document.querySelector('#ai-preset-description')
 };
 
 let statuses = createInitialStatuses();
@@ -169,6 +172,7 @@ let comparisonChecklistState = createInitialComparisonChecklistState();
 let htmlAnalyzerResult = { findings: [], status: 'empty', message: 'HTML checks have not run yet.' };
 let cssAnalyzerResult = { findings: [], status: 'empty', message: 'CSS checks have not run yet.' };
 let aiReviewState = createInitialAiReviewState();
+let selectedAiReviewPresetId = DEFAULT_AI_REVIEW_PRESET_ID;
 let keyboardAuditReturnFocus = null;
 let reportViewReturnFocus = null;
 let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
@@ -210,6 +214,7 @@ function init() {
   renderKeyboardAuditDetails();
   renderAnnotations();
   renderComparisonChecklist();
+  renderAiPresetSelector();
   initializePreviewFrame();
   syncThemeToggle();
   initializeSavedProjects();
@@ -350,6 +355,7 @@ function bindEvents() {
   elements.comparisonChecklist?.addEventListener('click', handleComparisonClick);
   elements.comparisonChecklist?.addEventListener('change', handleComparisonChange);
   elements.comparisonReset?.addEventListener('click', () => { comparisonChecklistState = resetComparisonChecklist(); renderComparisonChecklist(); setComparisonStatus('Manual screenshot checklist reset. No breakpoints are marked reviewed.'); });
+  elements.aiPresetSelect?.addEventListener('change', handleAiPresetChange);
   elements.prepareAiReview?.addEventListener('click', prepareAiReview);
   elements.copyAiRequest?.addEventListener('click', copyAiRequest);
   elements.importAiSummary?.addEventListener('click', importAiSummary);
@@ -1819,8 +1825,34 @@ function renderRecommendation(recommendation) {
 }
 
 function createInitialAiReviewState() {
-  return { requestText: '', evidencePackage: null, evidenceFingerprint: '', summary: null, stale: false };
+  return { requestText: '', requestId: '', presetId: DEFAULT_AI_REVIEW_PRESET_ID, evidencePackage: null, evidenceFingerprint: '', summary: null, stale: false };
 }
+
+function renderAiPresetSelector() {
+  const validation = validateAiReviewPresets();
+  if (!validation.ok) setAiReviewStatus(`AI review presets are invalid: ${validation.errors[0]}`);
+  if (elements.aiPresetSelect) {
+    elements.aiPresetSelect.textContent = '';
+    aiReviewPresets.forEach((preset) => { const option = document.createElement('option'); option.value = preset.id; option.textContent = preset.label; elements.aiPresetSelect.append(option); });
+    elements.aiPresetSelect.value = selectedAiReviewPresetId;
+  }
+  renderSelectedAiPresetDescription();
+}
+
+function renderSelectedAiPresetDescription() {
+  const preset = getAiReviewPreset(selectedAiReviewPresetId);
+  if (elements.aiPresetDescription) elements.aiPresetDescription.textContent = preset.description;
+}
+
+function handleAiPresetChange() {
+  const nextPreset = getAiReviewPreset(elements.aiPresetSelect?.value).id;
+  if (nextPreset === selectedAiReviewPresetId) return;
+  selectedAiReviewPresetId = nextPreset;
+  renderSelectedAiPresetDescription();
+  markAiWorkflowStale('Review preset changed. The prepared request or imported summary is stale; select Prepare AI review to build a new request.');
+  if (!aiReviewState.requestText && !aiReviewState.summary) setAiReviewStatus('Review preset changed. Select Prepare AI review to build a request for this preset.');
+}
+
 
 function buildCurrentAiEvidencePackage() {
   const activeRules = getActiveRules();
@@ -1843,12 +1875,12 @@ function buildCurrentAiEvidencePackage() {
 
 function prepareAiReview() {
   const evidencePackage = buildCurrentAiEvidencePackage();
-  const request = buildAiReviewRequest(evidencePackage);
-  aiReviewState = { requestText: serializeAiReviewRequest(request), evidencePackage, evidenceFingerprint: createEvidenceFingerprint(evidencePackage), summary: null, stale: false };
+  const request = buildAiReviewRequest(evidencePackage, { presetId: selectedAiReviewPresetId });
+  aiReviewState = { requestText: serializeAiReviewRequest(request), requestId: request.requestId, presetId: request.presetId, evidencePackage, evidenceFingerprint: createEvidenceFingerprint(evidencePackage), summary: null, stale: false };
   if (elements.aiRequestOutput) elements.aiRequestOutput.value = aiReviewState.requestText;
   if (elements.copyAiRequest) elements.copyAiRequest.disabled = false;
   renderAiSummary();
-  setAiReviewStatus(`AI review request prepared with ${evidencePackage.evidenceIds.length} evidence references. Nothing was uploaded.`);
+  setAiReviewStatus(`AI review request prepared for ${getAiReviewPreset(selectedAiReviewPresetId).label} with ${evidencePackage.evidenceIds.length} evidence references. Nothing was uploaded.`);
 }
 
 async function copyAiRequest() {
@@ -1864,7 +1896,7 @@ async function copyAiRequest() {
 
 function importAiSummary() {
   if (!aiReviewState.evidencePackage || aiReviewState.stale) { setAiReviewStatus('Prepare a current AI review request before importing a summary.'); return; }
-  const result = validateAiSummaryResponse(elements.aiResponseInput?.value || '', aiReviewState.evidencePackage.evidenceLookup);
+  const result = validateAiSummaryResponse(elements.aiResponseInput?.value || '', aiReviewState.evidencePackage.evidenceLookup, { requestId: aiReviewState.requestId, presetId: aiReviewState.presetId });
   if (!result.ok) { setAiReviewStatus(`AI summary was not imported: ${result.message}`); return; }
   aiReviewState = { ...aiReviewState, summary: result.value, stale: false };
   renderAiSummary();
@@ -1874,7 +1906,7 @@ function importAiSummary() {
 function markAiWorkflowStale(message) {
   if (!aiReviewState.requestText && !aiReviewState.summary) return;
   const current = buildCurrentAiEvidencePackage();
-  if (createEvidenceFingerprint(current) === aiReviewState.evidenceFingerprint) return;
+  if (selectedAiReviewPresetId === aiReviewState.presetId && createEvidenceFingerprint(current) === aiReviewState.evidenceFingerprint) return;
   aiReviewState = { ...aiReviewState, stale: true };
   renderAiSummary();
   setAiReviewStatus(message);
@@ -1899,8 +1931,10 @@ function renderAiSummary() {
   const section = document.createElement('section'); section.className = 'ai-summary__content'; section.setAttribute('aria-labelledby', 'ai-summary-title');
   const title = document.createElement('h3'); title.id = 'ai-summary-title'; title.textContent = 'AI-assisted summary';
   const note = document.createElement('p'); note.textContent = 'AI-generated content shown separately from deterministic Layout Lens results. It does not affect scoring, findings, recommendations, or reports.';
-  const summary = document.createElement('p'); summary.textContent = aiReviewState.summary.summary;
-  section.append(title, note, summary);
+  const details = document.createElement('p'); details.className = 'ai-summary__details'; details.textContent = `Preset: ${getAiReviewPreset(aiReviewState.summary.presetId).label} · Request: ${aiReviewState.summary.requestId}`;
+  const summary = document.createElement('p'); summary.textContent = aiReviewState.summary.summary.text;
+  const summaryRefs = document.createElement('p'); summaryRefs.className = 'ai-summary__refs'; summaryRefs.textContent = `Evidence: ${aiReviewState.summary.summary.evidenceIds.map(formatEvidenceReference).join('; ')}`;
+  section.append(title, note, details, summary, summaryRefs);
   ['strengths', 'priorities', 'cautions'].forEach((name) => section.append(renderAiSummaryList(name, aiReviewState.summary[name])));
   elements.aiSummaryOutput.append(section);
 }
@@ -1915,7 +1949,8 @@ function renderAiSummaryList(name, items) {
 function formatEvidenceReference(id) {
   const evidence = aiReviewState.evidencePackage?.evidenceLookup?.get(id);
   const label = evidence?.title || evidence?.category || evidence?.checkId || evidence?.ruleId || 'Evidence';
-  return `${id} (${label})`;
+  const source = id.startsWith('manual:') ? 'Manual' : id.startsWith('html-analyzer:') ? 'HTML analyzer' : id.startsWith('css-analyzer:') ? 'CSS analyzer' : id.startsWith('category:') ? 'Category' : 'Evidence';
+  return `${source} ${id} (${label})`;
 }
 
 function setAiReviewStatus(message) { if (elements.aiReviewStatus) elements.aiReviewStatus.textContent = message; }
