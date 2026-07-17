@@ -5,7 +5,8 @@ const MAX_SUMMARY = 1200;
 const MAX_TEXT = 700;
 const MAX_ITEMS = 8;
 const ALLOWED_TOP = new Set(['schemaVersion', 'requestId', 'presetId', 'summary', ...SECTIONS]);
-const ALLOWED_CLAIM = new Set(['text', 'evidenceIds']);
+const ALLOWED_CLAIM = new Set(['text', 'evidenceIds', 'confidence']);
+const ALLOWED_CONFIDENCE = new Set(['high', 'medium', 'low']);
 
 export function validateAiSummaryResponse(input, evidenceLookup, { requestId = '', presetId = '' } = {}) {
   let parsed;
@@ -46,7 +47,12 @@ function normalizeClaim(item, label, knownEvidenceIds, maxText) {
   if (new Set(refs).size !== refs.length) return fail(`${label} contains duplicate evidence references.`);
   const unknownRef = refs.find((id) => !knownEvidenceIds.has(id));
   if (unknownRef) return fail(`Unknown evidence reference: ${unknownRef}.`);
-  return { ok: true, value: { text, evidenceIds: refs } };
+  let confidence;
+  if (Object.hasOwn(item, 'confidence')) {
+    if (typeof item.confidence !== 'string' || !ALLOWED_CONFIDENCE.has(item.confidence)) return fail(`${label} has unsupported AI-reported confidence.`);
+    confidence = item.confidence;
+  }
+  return { ok: true, value: { text, evidenceIds: refs, ...(confidence ? { confidence } : {}) } };
 }
 
 function normalizeText(value, max) { return typeof value === 'string' ? value.replace(/\u0000/g, '').replace(/[\t\r\n ]+/g, ' ').trim().slice(0, max) : ''; }

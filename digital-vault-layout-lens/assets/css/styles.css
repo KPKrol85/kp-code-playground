@@ -2102,3 +2102,44 @@ body[data-report-view="true"] .report-view {
   color: var(--color-muted);
   font-size: 0.9rem;
 }
+
+.ai-privacy,
+.ai-privacy-review {
+  border: 1px solid var(--border-color, #d7dce5);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: var(--surface-muted, #f8fafc);
+}
+
+.ai-privacy label,
+.ai-approval {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.ai-privacy-review__preview {
+  max-height: 24rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: var(--surface-color, #fff);
+}
+
+.ai-summary__badges {
+  position: sticky;
+  top: 0;
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  background: #fff3cd;
+  color: #5c4100;
+}
+
+.ai-summary__confidence {
+  font-size: 0.95rem;
+  font-weight: 600;
+}

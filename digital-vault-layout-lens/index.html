@@ -611,6 +611,20 @@
             <p class="field__hint">The package can include manual score facts, reviewed counts, selected preset/rule pack/severity profile, category score facts, selected manual findings and notes, deterministic recommendations, and analyzer findings. It excludes raw HTML, raw CSS, preview content, project metadata, report metadata, storage internals, filters, browser details, and saved-project history.</p>
             <label class="field" for="ai-preset-select"><span>Review preset</span><select id="ai-preset-select" aria-describedby="ai-preset-description ai-review-status"></select></label>
             <p id="ai-preset-description" class="field__hint" aria-live="polite">Senior frontend reviewer is the default preset.</p>
+            <fieldset class="ai-privacy" aria-describedby="ai-privacy-help">
+              <legend>Privacy controls</legend>
+              <p id="ai-privacy-help" class="field__hint">Conservative defaults include deterministic findings but exclude reviewer notes and snippets until explicitly enabled.</p>
+              <label><input type="checkbox" data-ai-privacy="includeManualFindings" checked> Include manual audit findings</label>
+              <label><input type="checkbox" data-ai-privacy="includeReviewerNotes"> Include manual reviewer notes</label>
+              <label><input type="checkbox" data-ai-privacy="includeHtmlAnalyzerFindings" checked> Include HTML analyzer findings</label>
+              <label><input type="checkbox" data-ai-privacy="includeCssAnalyzerFindings" checked> Include CSS analyzer findings</label>
+              <label><input type="checkbox" data-ai-privacy="includeAnalyzerEvidenceSnippets"> Include analyzer evidence snippets</label>
+              <label><input type="checkbox" data-ai-privacy="includeWcagMappings" checked> Include existing WCAG mappings</label>
+              <label><input type="checkbox" data-ai-privacy="includeDeterministicRecommendations" checked> Include deterministic recommendations</label>
+            </fieldset>
+            <button id="review-ai-data" class="button button--secondary" type="button">Review AI data</button>
+            <div id="ai-privacy-review" class="ai-privacy-review" aria-live="polite"></div>
+            <label class="ai-approval"><input id="ai-copy-approval" type="checkbox" disabled> I reviewed the data above and choose to copy it for an external AI service.</label>
             <div class="ai-review__actions">
               <button id="prepare-ai-review" class="button button--primary" type="button">Prepare AI review</button>
               <button id="copy-ai-request" class="button button--secondary" type="button" disabled>Copy AI request</button>

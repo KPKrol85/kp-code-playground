@@ -1,9 +1,11 @@
 import { createManualRuleIssueId } from './issueIds.js';
+import { normalizeAiPrivacyControls, summarizeAiPrivacyControls } from './aiPrivacyControls.js';
 
 export const AI_EVIDENCE_PACKAGE_VERSION = '1.0.0';
 
-export function buildAiEvidencePackage({ preset, rulePack, severityProfile, categories = [], rules = [], statuses = {}, ruleNotes = {}, score = {}, categoryScores = [], recommendations = [], htmlAnalyzer = {}, cssAnalyzer = {} } = {}) {
-  const manualFindings = rules
+export function buildAiEvidencePackage({ preset, rulePack, severityProfile, categories = [], rules = [], statuses = {}, ruleNotes = {}, score = {}, categoryScores = [], recommendations = [], htmlAnalyzer = {}, cssAnalyzer = {}, privacy } = {}) {
+  const privacyConfig = normalizeAiPrivacyControls(privacy);
+  const manualFindings = (privacyConfig.includeManualFindings ? rules : [])
     .filter((rule) => ['needs-work', 'pass'].includes(statuses[rule.id]))
     .map((rule) => freezePlain({
       id: createManualRuleIssueId(rule.id),
@@ -12,7 +14,7 @@ export function buildAiEvidencePackage({ preset, rulePack, severityProfile, cate
       title: clean(rule.title),
       category: clean(rule.category),
       severity: clean(rule.severity),
-      reviewerNote: clean(ruleNotes[rule.id] || '')
+      reviewerNote: privacyConfig.includeReviewerNotes ? clean(ruleNotes[rule.id] || '') : ''
     }));
   const categoryFacts = categoryScores.map((item) => freezePlain({
     id: `category:${slug(item.categoryName || item.categoryId)}`,
@@ -45,18 +47,19 @@ export function buildAiEvidencePackage({ preset, rulePack, severityProfile, cate
     }),
     categoryFacts: freezeArray(categoryFacts),
     manualFindings: freezeArray(manualFindings),
-    deterministicRecommendations: freezeArray((recommendations || []).map((item) => freezePlain({ title: clean(item.title), category: clean(item.categoryName), priority: clean(item.priority), description: clean(item.description) }))),
+    deterministicRecommendations: freezeArray(privacyConfig.includeDeterministicRecommendations ? (recommendations || []).map((item) => freezePlain({ title: clean(item.title), category: clean(item.categoryName), priority: clean(item.priority), description: clean(item.description) })) : []),
     analyzerFindings: freezeArray([
-      ...normalizeAnalyzerFindings(htmlAnalyzer.findings, 'html-analyzer'),
-      ...normalizeAnalyzerFindings(cssAnalyzer.findings, 'css-analyzer')
-    ])
+      ...(privacyConfig.includeHtmlAnalyzerFindings ? normalizeAnalyzerFindings(htmlAnalyzer.findings, 'html-analyzer', privacyConfig) : []),
+      ...(privacyConfig.includeCssAnalyzerFindings ? normalizeAnalyzerFindings(cssAnalyzer.findings, 'css-analyzer', privacyConfig) : [])
+    ]),
+    privacyDisclosure: freezePlain(summarizeAiPrivacyControls(privacyConfig))
   };
   const evidenceLookup = new Map();
   [...model.categoryFacts, ...model.manualFindings, ...model.analyzerFindings].forEach((item) => evidenceLookup.set(item.id, item));
   return deepFreeze({ ...model, evidenceIds: freezeArray([...evidenceLookup.keys()].sort()), evidenceLookup });
 }
 
-function normalizeAnalyzerFindings(findings = [], fallbackSource) {
+function normalizeAnalyzerFindings(findings = [], fallbackSource, privacyConfig) {
   return (Array.isArray(findings) ? findings : []).filter(Boolean).map((item) => freezePlain({
     id: item.issueId,
     checkId: clean(item.checkId || item.ruleId),
@@ -66,15 +69,15 @@ function normalizeAnalyzerFindings(findings = [], fallbackSource) {
     source: clean(item.source || fallbackSource),
     confidence: clean(item.confidence),
     message: clean(item.message),
-    evidenceSnippet: clean(item.evidence?.snippet || ''),
+    evidenceSnippet: privacyConfig.includeAnalyzerEvidenceSnippets ? clean(item.evidence?.snippet || '').slice(0, 280) : '',
     occurrenceCount: number(item.occurrenceCount ?? item.evidence?.occurrenceCount ?? item.affectedElementCount),
     location: clean(item.evidence?.location || (Array.isArray(item.locations) ? item.locations.join('; ') : '')),
-    wcag: freezeArray((item.wcag || []).map((entry) => freezePlain({ criterion: clean(entry.criterion), level: clean(entry.level), title: clean(entry.title) })))
+    wcag: freezeArray(privacyConfig.includeWcagMappings ? (item.wcag || []).map((entry) => freezePlain({ criterion: clean(entry.criterion), level: clean(entry.level), title: clean(entry.title) })) : [])
   })).filter((item) => item.id && item.id.startsWith(`${fallbackSource}:`));
 }
 
 export function createEvidenceFingerprint(evidencePackage) {
-  return stableStringify({ version: evidencePackage?.version, ids: evidencePackage?.evidenceIds || [], score: evidencePackage?.score, manual: evidencePackage?.manualFindings, analyzer: evidencePackage?.analyzerFindings, categories: evidencePackage?.categoryFacts });
+  return stableStringify({ version: evidencePackage?.version, ids: evidencePackage?.evidenceIds || [], score: evidencePackage?.score, manual: evidencePackage?.manualFindings, analyzer: evidencePackage?.analyzerFindings, categories: evidencePackage?.categoryFacts, privacy: evidencePackage?.privacyDisclosure });
 }
 
 function clean(value) { return typeof value === 'string' ? value.replace(/\u0000/g, '').replace(/\s+/g, ' ').trim().slice(0, 1000) : ''; }
