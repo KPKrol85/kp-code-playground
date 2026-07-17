@@ -197,3 +197,25 @@ test('IndexedDB constants and source boundaries stay focused', () => {
   assert.equal(idbModule.includes('querySelector'), false);
   assert.equal((app.match(/indexedDB/g) || []).length, 0);
 });
+
+test('saved project migrations preserve identity, timestamps, legacy audit snapshots, and boundaries', () => {
+  const legacy = { id: 'legacy-migrate', name: 'Legacy migrate', createdAt: '2026-07-01T10:00:00.000Z', updatedAt: '2026-07-02T10:00:00.000Z', auditState: { ...auditState, schemaVersion: 1, analyzerInput: '<main></main>' }, auditVersions: [{ id: 'v-old', label: 'Old', createdAt: '2026-07-01T11:00:00.000Z', auditState: { ...auditState, schemaVersion: 1, ruleNotes: { [secondRule]: 'Old note' } } }] };
+  const before = structuredClone(legacy);
+  const migrated = validateSavedProjectRecord(legacy);
+  assert.deepEqual(legacy, before);
+  assert.equal(migrated.schemaVersion, SAVED_PROJECT_SCHEMA_VERSION);
+  assert.equal(migrated.id, 'legacy-migrate');
+  assert.equal(migrated.createdAt, '2026-07-01T10:00:00.000Z');
+  assert.equal(migrated.updatedAt, '2026-07-02T10:00:00.000Z');
+  assert.deepEqual(migrated.metadata, { owner: '', projectType: '', targetUrl: '', reviewDate: '' });
+  assert.equal(Object.hasOwn(migrated.auditState, 'analyzerInput'), false);
+  assert.equal(migrated.auditVersions.length, 1);
+  const restored = restoreAuditVersion(migrated.auditVersions[0]);
+  restored.ruleNotes[secondRule] = 'Changed';
+  assert.equal(migrated.auditVersions[0].auditState.ruleNotes[secondRule], 'Old note');
+});
+
+test('saved project migrations reject future and malformed records', () => {
+  assert.throws(() => validateSavedProjectRecord({ ...createSavedProjectRecord({ name: 'Future', auditState }), schemaVersion: SAVED_PROJECT_SCHEMA_VERSION + 1 }), /unsupported/);
+  assert.throws(() => validateSavedProjectRecord({ schemaVersion: 0, id: '', name: '', auditState: null }), /required|malformed/);
+});
