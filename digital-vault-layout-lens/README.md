@@ -15,7 +15,7 @@ The current version is deliberately local-first and product-focused:
 - Weighted scoring based on rule severity and manual status.
 - Category score breakdowns and deterministic recommendations.
 - Browser-only local audit draft persistence for selected preset, selected rule pack, selected severity profile, rule statuses, and reviewer notes.
-- Explicit saved audit projects stored locally in IndexedDB on the current browser/device; projects include durable project metadata and can be listed, opened, updated, and deleted.
+- Explicit saved audit projects stored locally in IndexedDB on the current browser/device; projects include durable project metadata and can be listed, opened, updated, duplicated, versioned, restored, and deleted.
 - Local JSON audit import/export for manual audit state.
 - Local Markdown report download generated from the current manual audit state.
 - Optional session-only report cover metadata for project name, owner, project type, target URL, reviewer, and review date.
@@ -26,7 +26,7 @@ The current version is deliberately local-first and product-focused:
 - Native browser print workflow: use **Print or save as PDF** to open the browser print dialog, then print or choose **Save as PDF** in the browser.
 - Manual light/dark theme toggle with persisted preference and system-theme fallback.
 
-This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, project version history, project duplication, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation.
+This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation.
 
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
@@ -60,6 +60,10 @@ The automatic local draft and saved projects are separate browser-local features
 - **Save as new project** creates an explicitly named IndexedDB project snapshot on the current browser/device with entered owner, project type, target URL, and review date metadata.
 - **Open project** restores saved project metadata into the project-details form and restores only the supported manual audit state: selected preset, rule pack, severity profile, rule statuses, reviewer notes, and compatible audit/rule schema metadata. Scores, category progress, findings, and recommendations are recalculated after restore.
 - **Save project changes** updates the currently opened project audit state and project metadata only when the user chooses that action; editing metadata does not silently write to IndexedDB.
+- **Save audit version** creates an explicit immutable audit-history snapshot with a stable version ID, label, timestamp, optional review date, and the supported manual audit state only. Versions are never created automatically during field edits or normal project saves.
+- **Audit history** lists saved versions newest first and offers **Restore version** to copy a historical audit into the current workspace; restoration recalculates scores, category progress, findings, and recommendations through the existing engines and does not overwrite IndexedDB until Save project changes or Save audit version is chosen.
+- **Start new improvement pass** deep-copies a selected historical version into the workspace for repeated before/after review without mutating the original version or silently persisting later edits.
+- **Duplicate project** creates an independent project with a new project ID, new timestamps, copied normalized metadata, and a deep copy of the current manual audit state under a generated copy name. Duplicate projects start with the copied current audit as their new baseline and do not inherit the original project history.
 - **Delete project** removes a saved project after confirmation without deleting the current local draft; deleting the opened project clears the project association while leaving the working audit understandable and available to save as new.
 - **New audit** resets the current working audit, clears the current project association and project metadata form, and resets the local draft without deleting saved projects.
 

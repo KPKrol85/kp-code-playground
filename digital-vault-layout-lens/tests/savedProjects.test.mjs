@@ -6,7 +6,7 @@ import { ALL_RULES_PACK_ID } from '../assets/js/rulePacks.js';
 import { DEFAULT_SEVERITY_PROFILE_ID, resolveSeverityProfile } from '../assets/js/severityProfiles.js';
 import { calculateAuditScore } from '../assets/js/scoringEngine.js';
 import { generateRecommendations } from '../assets/js/recommendations.js';
-import { createAuditStateForSavedProject, createSavedProjectRecord, MAX_PROJECT_NAME_LENGTH, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState, SAVED_PROJECT_SCHEMA_VERSION, sortSavedProjectRecords, updateSavedProjectRecord, validateSavedProjectRecord } from '../assets/js/savedProjectModel.js';
+import { addAuditVersionToProject, createAuditStateForSavedProject, createAuditVersionRecord, createSavedProjectRecord, duplicateSavedProjectRecord, MAX_PROJECT_NAME_LENGTH, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState, restoreAuditVersion, SAVED_PROJECT_SCHEMA_VERSION, sortSavedProjectRecords, startNewImprovementPass, updateSavedProjectRecord, validateSavedProjectRecord } from '../assets/js/savedProjectModel.js';
 import { SAVED_PROJECT_DB_NAME, SAVED_PROJECT_DB_VERSION, SAVED_PROJECT_STORE_NAME } from '../assets/js/savedProjectsDb.js';
 
 const validOptions = {
@@ -122,6 +122,65 @@ test('restored state feeds deterministic scoring and recommendations', () => {
   assert.deepEqual(calculateAuditScore(auditRules, restored.ruleStatuses, profile), metadataScore);
   assert.equal(score.needsWorkRules, 1);
   assert.ok(recommendations.length >= 1);
+});
+
+
+
+test('audit versions are deterministic, unique, immutable, newest first, and preserve manual-only boundaries', () => {
+  const first = createAuditVersionRecord({ id: 'v1', label: '  Baseline   pass  ', auditState: { ...auditState, analyzerFindings: ['no'] }, reviewDate: '2026-07-16', now: '2026-07-16T10:00:00.000Z' });
+  const second = createAuditVersionRecord({ id: 'v2', label: '', auditState, now: '2026-07-16T11:00:00.000Z' });
+  assert.equal(first.label, 'Baseline pass');
+  assert.equal(second.label, 'Audit pass 1');
+  assert.notEqual(first.id, second.id);
+  assert.equal(first.reviewDate, '2026-07-16');
+  assert.equal(Object.hasOwn(first.auditState, 'analyzerFindings'), false);
+  const project = addAuditVersionToProject(createSavedProjectRecord({ id: 'p1', name: 'History', auditState }), { label: 'Later', now: '2026-07-16T12:00:00.000Z' });
+  assert.equal(project.auditVersions.length, 1);
+  assert.equal(project.auditVersions[0].label, 'Later');
+  assert.throws(() => { project.auditVersions[0].auditState.ruleStatuses[firstRule] = 'needs-work'; }, TypeError);
+});
+
+test('restoring a version deep-copies without mutating stored snapshot', () => {
+  const version = createAuditVersionRecord({ id: 'v-restore', label: 'Restore me', auditState });
+  const restored = restoreAuditVersion(version);
+  restored.ruleStatuses[firstRule] = 'needs-work';
+  restored.ruleNotes[secondRule] = 'Changed after restore';
+  assert.equal(version.auditState.ruleStatuses[firstRule], 'pass');
+  assert.equal(version.auditState.ruleNotes[secondRule], 'Needs clearer affordance.');
+});
+
+test('legacy project records without history open safely with an empty version list', () => {
+  const legacy = validateSavedProjectRecord({ ...createSavedProjectRecord({ id: 'legacy', name: 'Legacy', auditState }), auditVersions: undefined });
+  assert.deepEqual(legacy.auditVersions, []);
+  assert.equal(normalizeSavedProjectAuditState(legacy.auditState, validOptions).status, 'loaded');
+});
+
+test('starting a new improvement pass deep-copies selected audit state and creates a fresh version shell', () => {
+  let count = 0;
+  const pass = startNewImprovementPass(auditState, { uuidFactory: () => `pass-${++count}`, now: '2026-07-17T09:00:00.000Z', reviewDate: '2026-07-17' });
+  assert.equal(pass.version.id, 'pass-1');
+  assert.equal(pass.version.createdAt, '2026-07-17T09:00:00.000Z');
+  pass.auditState.ruleStatuses[firstRule] = 'needs-work';
+  assert.equal(auditState.ruleStatuses[firstRule], 'pass');
+  assert.equal(pass.version.auditState.ruleStatuses[firstRule], 'pass');
+});
+
+test('duplicate project replaces id and timestamps, copies metadata/current audit, clears history, and does not share nested references', () => {
+  const original = addAuditVersionToProject(createSavedProjectRecord({ id: 'original', name: 'Original', metadata: { owner: 'Ada', projectType: 'App', targetUrl: 'https://example.test', reviewDate: '2026-07-16' }, auditState, now: '2026-07-16T10:00:00.000Z' }), { label: 'Baseline', now: '2026-07-16T11:00:00.000Z' });
+  const duplicate = duplicateSavedProjectRecord(original, { id: 'copy', now: '2026-07-17T12:00:00.000Z' });
+  assert.equal(duplicate.id, 'copy');
+  assert.equal(duplicate.name, 'Original — Copy');
+  assert.equal(duplicate.createdAt, '2026-07-17T12:00:00.000Z');
+  assert.equal(duplicate.updatedAt, '2026-07-17T12:00:00.000Z');
+  assert.deepEqual(duplicate.metadata, original.metadata);
+  assert.deepEqual(duplicate.auditState, original.auditState);
+  assert.deepEqual(duplicate.auditVersions, []);
+  duplicate.auditState.ruleStatuses[firstRule] = 'not-checked';
+  duplicate.metadata.owner = 'Grace';
+  assert.equal(original.auditState.ruleStatuses[firstRule], 'pass');
+  assert.equal(original.metadata.owner, 'Ada');
+  assert.equal(original.id, 'original');
+  assert.equal(original.auditVersions.length, 1);
 });
 
 test('IndexedDB constants and source boundaries stay focused', () => {
