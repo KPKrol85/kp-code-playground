@@ -6,8 +6,8 @@ import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './
 import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
 import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
-import { createProject, deleteProject, getProject, isIndexedDbAvailable, listProjects, updateProject } from './savedProjectsDb.js';
-import { createAuditStateForSavedProject, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState } from './savedProjectModel.js';
+import { createProject, deleteProject, duplicateProject, getProject, isIndexedDbAvailable, listProjects, saveProjectAuditVersion, updateProject } from './savedProjectsDb.js';
+import { createAuditStateForSavedProject, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState, restoreAuditVersion, startNewImprovementPass } from './savedProjectModel.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
 import { analyzeCssSource } from './cssAnalyzer.js';
@@ -80,6 +80,10 @@ const elements = {
   projectAuditPreset: document.querySelector('#project-audit-preset'),
   saveProjectNew: document.querySelector('#save-project-new'),
   saveProjectChanges: document.querySelector('#save-project-changes'),
+  duplicateProject: document.querySelector('#duplicate-project'),
+  auditVersionLabel: document.querySelector('#audit-version-label'),
+  saveAuditVersion: document.querySelector('#save-audit-version'),
+  auditVersionList: document.querySelector('#audit-version-list'),
   newAudit: document.querySelector('#new-audit'),
   savedProjectsStatus: document.querySelector('#saved-projects-status'),
   savedProjectsList: document.querySelector('#saved-projects-list'),
@@ -286,8 +290,11 @@ function bindEvents() {
   elements.importAuditFile?.addEventListener('change', handleAuditImportFile);
   elements.saveProjectNew?.addEventListener('click', saveCurrentAuditAsProject);
   elements.saveProjectChanges?.addEventListener('click', saveActiveProjectChanges);
+  elements.duplicateProject?.addEventListener('click', duplicateActiveProject);
+  elements.saveAuditVersion?.addEventListener('click', saveCurrentAuditVersion);
   elements.newAudit?.addEventListener('click', startNewAudit);
   elements.savedProjectsList?.addEventListener('click', handleSavedProjectsClick);
+  elements.auditVersionList?.addEventListener('click', handleSavedProjectsClick);
   elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
   elements.reportTemplateSelect?.addEventListener('change', handleReportTemplateChange);
   elements.reportMetadataControls.forEach((control) => control.addEventListener('input', handleReportMetadataInput));
@@ -952,6 +959,10 @@ async function saveActiveProjectChanges() {
 }
 
 async function handleSavedProjectsClick(event) {
+  const restoreVersionButton = event.target.closest('[data-restore-version]');
+  const newPassButton = event.target.closest('[data-new-pass-version]');
+  if (restoreVersionButton) { restoreVersionIntoWorkspace(restoreVersionButton.dataset.restoreVersion); return; }
+  if (newPassButton) { startImprovementPassFromVersion(newPassButton.dataset.newPassVersion); return; }
   const openButton = event.target.closest('[data-open-project]');
   const deleteButton = event.target.closest('[data-delete-project]');
   if (openButton) await openSavedProject(openButton.dataset.openProject);
@@ -972,6 +983,66 @@ async function openSavedProject(id) {
     await refreshSavedProjects(`Project opened successfully: ${record.name}.`);
     elements.checklistTitle?.focus?.();
   } catch { selectedPresetId = before.selectedPresetId; selectedRulePackId = before.selectedRulePackId; selectedSeverityProfileId = before.selectedSeverityProfileId; statuses = before.statuses; ruleNotes = before.ruleNotes; setSavedProjectsStatus('Saved project could not be opened. Current audit was not changed.'); }
+}
+
+
+async function saveCurrentAuditVersion() {
+  if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving an audit version.'); return; }
+  try {
+    const record = await saveProjectAuditVersion(activeSavedProjectId, { label: elements.auditVersionLabel?.value, reviewDate: getCurrentProjectMetadata().reviewDate, auditState: getCurrentManualAuditSnapshot() });
+    if (elements.auditVersionLabel) elements.auditVersionLabel.value = '';
+    await refreshSavedProjects(`Audit version saved for ${record.name}.`);
+  } catch { setSavedProjectsStatus('Audit version could not be saved. Current audit remains unchanged.'); }
+}
+
+async function duplicateActiveProject() {
+  if (!activeSavedProjectId) { setSavedProjectsStatus('Open a project before duplicating it.'); return; }
+  try {
+    const original = savedProjects.find((project) => project.id === activeSavedProjectId);
+    const record = await duplicateProject(activeSavedProjectId, { name: `${original?.name || 'Project'} — Copy`, auditState: getCurrentManualAuditSnapshot() });
+    activeSavedProjectId = record.id;
+    populateProjectDetails({ name: record.name, metadata: record.metadata });
+    applyProjectAuditState(record.auditState);
+    await refreshSavedProjects(`Duplicate project created: ${record.name}.`);
+  } catch { setSavedProjectsStatus('Project could not be duplicated. Original project was not changed.'); }
+}
+
+function getActiveProjectVersion(versionId) {
+  return savedProjects.find((project) => project.id === activeSavedProjectId)?.auditVersions?.find((version) => version.id === versionId);
+}
+
+function restoreVersionIntoWorkspace(versionId) {
+  const version = getActiveProjectVersion(versionId);
+  if (!version) return;
+  if (!window.confirm(`Restore version "${version.label}" into the current workspace? Save project changes separately if you want to persist it.`)) { setSavedProjectsStatus('Version restore cancelled.'); return; }
+  applyProjectAuditState(restoreAuditVersion(version));
+  persistAuditState('Audit version restored into the browser-local draft. Save project changes separately to update the project.');
+  setSavedProjectsStatus(`Restored version: ${version.label}.`);
+}
+
+function startImprovementPassFromVersion(versionId) {
+  const version = getActiveProjectVersion(versionId);
+  if (!version) return;
+  const pass = startNewImprovementPass(version.auditState, { label: `New pass from ${version.label}`, reviewDate: getCurrentProjectMetadata().reviewDate });
+  applyProjectAuditState(pass.auditState);
+  persistAuditState('New improvement pass started from a historical version. Save project changes or save an audit version when ready.');
+  setSavedProjectsStatus(`Start new improvement pass from ${version.label}.`);
+}
+
+function renderAuditHistory() {
+  if (!elements.auditVersionList) return;
+  elements.auditVersionList.textContent = '';
+  const versions = savedProjects.find((project) => project.id === activeSavedProjectId)?.auditVersions || [];
+  if (!activeSavedProjectId) { const empty = document.createElement('li'); empty.className = 'saved-projects__empty'; empty.textContent = 'Open or save a project to use Audit history.'; elements.auditVersionList.append(empty); return; }
+  if (!versions.length) { const empty = document.createElement('li'); empty.className = 'saved-projects__empty'; empty.textContent = 'No audit versions yet. Use Save audit version to capture an explicit pass.'; elements.auditVersionList.append(empty); return; }
+  versions.forEach((version) => {
+    const item = document.createElement('li'); item.className = 'audit-history__item';
+    const details = document.createElement('div'); const title = document.createElement('strong'); title.textContent = version.label; const date = document.createElement('span'); date.textContent = `Created ${formatProjectDate(version.createdAt)}${version.reviewDate ? ` · Review date ${version.reviewDate}` : ''}`; details.append(title, date);
+    const actions = document.createElement('div'); actions.className = 'saved-project__actions';
+    const restore = document.createElement('button'); restore.className = 'button button--secondary'; restore.type = 'button'; restore.dataset.restoreVersion = version.id; restore.textContent = 'Restore version';
+    const pass = document.createElement('button'); pass.className = 'button button--secondary'; pass.type = 'button'; pass.dataset.newPassVersion = version.id; pass.textContent = 'Start new improvement pass';
+    actions.append(restore, pass); item.append(details, actions); elements.auditVersionList.append(item);
+  });
 }
 
 async function confirmAndDeleteSavedProject(id, button) {
@@ -997,6 +1068,9 @@ function setSavedProjectsStatus(message) { if (elements.savedProjectsStatus) ele
 function renderSavedProjects() {
   if (!elements.savedProjectsList) return;
   if (elements.saveProjectChanges) elements.saveProjectChanges.disabled = !activeSavedProjectId;
+  if (elements.duplicateProject) elements.duplicateProject.disabled = !activeSavedProjectId;
+  if (elements.saveAuditVersion) elements.saveAuditVersion.disabled = !activeSavedProjectId;
+  renderAuditHistory();
   elements.savedProjectsList.textContent = '';
   if (!savedProjects.length) { const empty = document.createElement('li'); empty.className = 'saved-projects__empty'; empty.textContent = 'No saved projects yet.'; elements.savedProjectsList.append(empty); return; }
   savedProjects.forEach((project) => elements.savedProjectsList.append(createSavedProjectListItem(project)));

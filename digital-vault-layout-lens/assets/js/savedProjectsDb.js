@@ -1,4 +1,4 @@
-import { createSavedProjectRecord, sortSavedProjectRecords, updateSavedProjectRecord, validateSavedProjectRecord } from './savedProjectModel.js';
+import { addAuditVersionToProject, createSavedProjectRecord, duplicateSavedProjectRecord, sortSavedProjectRecords, updateSavedProjectRecord, validateSavedProjectRecord } from './savedProjectModel.js';
 
 export const SAVED_PROJECT_DB_NAME = 'kp-layout-lens-projects';
 export const SAVED_PROJECT_DB_VERSION = 1;
@@ -11,6 +11,24 @@ export async function createProject({ name, metadata, auditState }) {
   const record = createSavedProjectRecord({ name, metadata, auditState });
   await putRecord(db, record, 'readwrite');
   return validateSavedProjectRecord(record);
+}
+
+export async function saveProjectAuditVersion(id, { label, auditState, reviewDate }) {
+  const db = await openSavedProjectsDb();
+  const existing = await getRecord(db, id);
+  if (!existing) throw new Error('Saved project was not found.');
+  const next = addAuditVersionToProject(existing, { label, auditState, reviewDate });
+  await putRecord(db, next, 'readwrite');
+  return validateSavedProjectRecord(next);
+}
+
+export async function duplicateProject(id, { name, auditState } = {}) {
+  const db = await openSavedProjectsDb();
+  const existing = await getRecord(db, id);
+  if (!existing) throw new Error('Saved project was not found.');
+  const duplicate = duplicateSavedProjectRecord(auditState ? { ...existing, auditState } : existing, { name });
+  await putRecord(db, duplicate, 'readwrite');
+  return validateSavedProjectRecord(duplicate);
 }
 
 export async function updateProject(id, { name, metadata, auditState }) {

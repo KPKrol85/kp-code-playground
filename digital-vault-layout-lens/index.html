@@ -239,6 +239,16 @@
             <div class="saved-projects__actions">
               <button id="save-project-new" class="button button--primary" type="button">Save as new project</button>
               <button id="save-project-changes" class="button button--secondary" type="button" disabled>Save project changes</button>
+              <button id="duplicate-project" class="button button--secondary" type="button" disabled>Duplicate project</button>
+            </div>
+            <label class="field" for="audit-version-label"><span>Version label</span><input id="audit-version-label" type="text" maxlength="48" autocomplete="off" aria-describedby="audit-history-help saved-projects-status" placeholder="Audit pass 1" /></label>
+            <div class="audit-history" aria-labelledby="audit-history-title" aria-describedby="audit-history-help">
+              <div>
+                <h4 id="audit-history-title">Audit history</h4>
+                <p id="audit-history-help" class="field__hint">Versions are created only when you choose Save audit version. Restore version or Start new improvement pass copies a snapshot into the workspace without saving later edits automatically.</p>
+              </div>
+              <button id="save-audit-version" class="button button--secondary" type="button" disabled>Save audit version</button>
+              <ul id="audit-version-list" class="audit-history__list" aria-label="Saved audit versions"></ul>
             </div>
           </div>
           <p id="saved-projects-status" class="local-save-status" aria-live="polite">Saved projects are loading.</p>
