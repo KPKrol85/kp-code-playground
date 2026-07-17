@@ -609,6 +609,8 @@
           <div class="ai-review__panel card">
             <h3>Prepare request</h3>
             <p class="field__hint">The package can include manual score facts, reviewed counts, selected preset/rule pack/severity profile, category score facts, selected manual findings and notes, deterministic recommendations, and analyzer findings. It excludes raw HTML, raw CSS, preview content, project metadata, report metadata, storage internals, filters, browser details, and saved-project history.</p>
+            <label class="field" for="ai-preset-select"><span>Review preset</span><select id="ai-preset-select" aria-describedby="ai-preset-description ai-review-status"></select></label>
+            <p id="ai-preset-description" class="field__hint" aria-live="polite">Senior frontend reviewer is the default preset.</p>
             <div class="ai-review__actions">
               <button id="prepare-ai-review" class="button button--primary" type="button">Prepare AI review</button>
               <button id="copy-ai-request" class="button button--secondary" type="button" disabled>Copy AI request</button>
@@ -621,7 +623,7 @@
           <div class="ai-review__panel card">
             <h3>Import response</h3>
             <label class="field" for="ai-response-input">External AI response JSON</label>
-            <textarea id="ai-response-input" class="ai-review__textarea" rows="10" aria-describedby="ai-review-description ai-review-status" placeholder='{ "summary": "...", "strengths": [], "priorities": [], "cautions": [] }'></textarea>
+            <textarea id="ai-response-input" class="ai-review__textarea" rows="10" aria-describedby="ai-review-description ai-review-status" placeholder='{ "schemaVersion": 1, "requestId": "matching-request-id", "presetId": "senior-frontend", "summary": { "text": "...", "evidenceIds": ["manual:example-rule"] }, "strengths": [], "priorities": [], "cautions": [] }'></textarea>
             <button id="import-ai-summary" class="button button--primary" type="button">Import AI summary</button>
           </div>
         </div>

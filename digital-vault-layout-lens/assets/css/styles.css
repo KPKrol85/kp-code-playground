@@ -2097,3 +2097,8 @@ body[data-report-view="true"] .report-view {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.ai-summary__details {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
