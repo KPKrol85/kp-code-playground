@@ -27,6 +27,9 @@ import { serializeManualAuditReportMarkdown } from './markdownReport.js';
 import { renderManualAuditReportView } from './reportRenderer.js';
 import { DEFAULT_REPORT_TEMPLATE_ID, REPORT_TEMPLATES, getReportTemplate } from './reportTemplates.js';
 import { runBrowserPrintWorkflow } from './printReport.js';
+import { buildAiEvidencePackage, createEvidenceFingerprint } from './aiEvidenceAdapter.js';
+import { buildAiReviewRequest, serializeAiReviewRequest } from './aiReviewRequest.js';
+import { validateAiSummaryResponse } from './aiSummaryValidator.js';
 
 try {
   assertValidRuleData();
@@ -143,7 +146,15 @@ const elements = {
   annotationList: document.querySelector('#preview-annotation-list'),
   comparisonChecklist: document.querySelector('#comparison-checklist'),
   comparisonStatus: document.querySelector('#comparison-status'),
-  comparisonReset: document.querySelector('#comparison-reset')
+  comparisonReset: document.querySelector('#comparison-reset'),
+  prepareAiReview: document.querySelector('#prepare-ai-review'),
+  copyAiRequest: document.querySelector('#copy-ai-request'),
+  importAiSummary: document.querySelector('#import-ai-summary'),
+  clearAiSummary: document.querySelector('#clear-ai-summary'),
+  aiRequestOutput: document.querySelector('#ai-request-output'),
+  aiResponseInput: document.querySelector('#ai-response-input'),
+  aiReviewStatus: document.querySelector('#ai-review-status'),
+  aiSummaryOutput: document.querySelector('#ai-summary-output')
 };
 
 let statuses = createInitialStatuses();
@@ -155,6 +166,9 @@ let overlayState = createOverlayState();
 let keyboardAuditState = createKeyboardAuditState();
 let annotationState = createInitialAnnotationState();
 let comparisonChecklistState = createInitialComparisonChecklistState();
+let htmlAnalyzerResult = { findings: [], status: 'empty', message: 'HTML checks have not run yet.' };
+let cssAnalyzerResult = { findings: [], status: 'empty', message: 'CSS checks have not run yet.' };
+let aiReviewState = createInitialAiReviewState();
 let keyboardAuditReturnFocus = null;
 let reportViewReturnFocus = null;
 let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
@@ -228,12 +242,14 @@ function bindEvents() {
       }
       updateCategoryProgressIndicators();
       renderScore();
+      markAiWorkflowStale('Manual audit evidence changed. Prepare a new AI review before importing or relying on a summary.');
       persistAuditState('Saved in this browser.');
       return;
     }
 
     if (noteControl) {
       updateRuleNote(noteControl.dataset.ruleNote, noteControl.value);
+      markAiWorkflowStale('Manual audit evidence changed. Prepare a new AI review before importing or relying on a summary.');
       persistAuditState('Reviewer note saved in this browser.');
     }
   });
@@ -260,6 +276,7 @@ function bindEvents() {
     renderFilterControls();
     renderRules();
     renderScore();
+    markAiWorkflowStale('Manual audit scope changed. Prepare a new AI review.');
     persistAuditState('Rule pack updated. Saved in this browser.');
   });
 
@@ -269,6 +286,7 @@ function bindEvents() {
       : DEFAULT_SEVERITY_PROFILE_ID;
     renderSeverityProfileSelector();
     renderScore();
+    markAiWorkflowStale('Manual scoring profile changed. Prepare a new AI review.');
     persistAuditState('Severity profile updated. Saved in this browser.');
   });
 
@@ -282,6 +300,7 @@ function bindEvents() {
     renderRulePackSelector();
     renderRules();
     renderScore();
+    markAiWorkflowStale('Manual preset changed. Prepare a new AI review.');
     persistAuditState('Saved in this browser.');
   });
 
@@ -331,6 +350,10 @@ function bindEvents() {
   elements.comparisonChecklist?.addEventListener('click', handleComparisonClick);
   elements.comparisonChecklist?.addEventListener('change', handleComparisonChange);
   elements.comparisonReset?.addEventListener('click', () => { comparisonChecklistState = resetComparisonChecklist(); renderComparisonChecklist(); setComparisonStatus('Manual screenshot checklist reset. No breakpoints are marked reviewed.'); });
+  elements.prepareAiReview?.addEventListener('click', prepareAiReview);
+  elements.copyAiRequest?.addEventListener('click', copyAiRequest);
+  elements.importAiSummary?.addEventListener('click', importAiSummary);
+  elements.clearAiSummary?.addEventListener('click', () => clearAiWorkflow('AI-assisted summary cleared. Prepare a new request when needed.'));
   window.addEventListener('message', handlePreviewInspectionMessage);
 
   elements.analyzerInputs.forEach((input) => {
@@ -357,6 +380,7 @@ function bindEvents() {
     renderRules();
     renderScore();
     setAuditStorageStatus('Local audit cleared. Browser-only draft removed. Saved projects were not deleted.');
+    clearAiWorkflow('Local audit reset cleared the session-only AI workflow.');
     renderSavedProjects();
   });
 
@@ -711,7 +735,9 @@ function setAnalyzerFileStatus(message) {
 function runHtmlAnalyzer() {
   try {
     const result = analyzeHtmlSource(analyzerInputState.html);
+    htmlAnalyzerResult = result;
     renderHtmlAnalyzerResults(result);
+    markAiWorkflowStale('HTML analyzer evidence changed. Prepare a new AI review.');
   } catch {
     renderHtmlAnalyzerResults({ findings: [], status: 'error', message: 'HTML analysis could not run in this browser.' });
   }
@@ -719,7 +745,9 @@ function runHtmlAnalyzer() {
 
 function runCssAnalyzer() {
   try {
-    renderCssAnalyzerResults(analyzeCssSource(analyzerInputState.css));
+    cssAnalyzerResult = analyzeCssSource(analyzerInputState.css);
+    renderCssAnalyzerResults(cssAnalyzerResult);
+    markAiWorkflowStale('CSS analyzer evidence changed. Prepare a new AI review.');
   } catch {
     renderCssAnalyzerResults({ findings: [], status: 'error', message: 'CSS analysis could not run in this browser.' });
   }
@@ -1106,11 +1134,13 @@ async function confirmAndDeleteSavedProject(id, button) {
 }
 
 function startNewAudit() {
+  clearAiWorkflow('New audit cleared the session-only AI workflow.');
   activeSavedProjectId = null;
   populateProjectDetails(); selectedPresetId = componentPresets[0]?.id; selectedRulePackId = ALL_RULES_PACK_ID; selectedSeverityProfileId = DEFAULT_SEVERITY_PROFILE_ID; statuses = createInitialStatuses(); ruleNotes = {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderProjectDetailsPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore(); persistAuditState('New audit started. Saved projects were not deleted.'); renderSavedProjects(); elements.checklistTitle?.focus?.();
 }
 
 function applyProjectAuditState(state) {
+  clearAiWorkflow('Project audit state changed. Prepare a new AI review.');
   selectedPresetId = state.selectedPresetId || componentPresets[0]?.id; selectedRulePackId = state.selectedRulePackId || ALL_RULES_PACK_ID; selectedSeverityProfileId = state.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID; statuses = { ...createInitialStatuses(), ...state.ruleStatuses }; ruleNotes = state.ruleNotes || {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderProjectDetailsPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore();
 }
 
@@ -1226,6 +1256,7 @@ function getAuditStateValidationOptions() {
 }
 
 function applyImportedAuditState(importedState) {
+  clearAiWorkflow('Audit import cleared the session-only AI workflow.');
   activeSavedProjectId = null;
   populateProjectDetails();
   selectedPresetId = importedState.selectedPresetId || componentPresets[0]?.id;
@@ -1786,6 +1817,108 @@ function renderRecommendation(recommendation) {
     </article>
   `;
 }
+
+function createInitialAiReviewState() {
+  return { requestText: '', evidencePackage: null, evidenceFingerprint: '', summary: null, stale: false };
+}
+
+function buildCurrentAiEvidencePackage() {
+  const activeRules = getActiveRules();
+  const activeProfile = getSelectedSeverityProfile();
+  return buildAiEvidencePackage({
+    preset: getSelectedPreset(),
+    rulePack: getSelectedRulePack(),
+    severityProfile: activeProfile,
+    categories: getActiveCategories(activeRules),
+    rules: activeRules,
+    statuses,
+    ruleNotes,
+    score: calculateAuditScore(activeRules, statuses, activeProfile),
+    categoryScores: calculateCategoryScores(getActiveCategories(activeRules), activeRules, statuses, activeProfile),
+    recommendations: generateRecommendations(activeRules, statuses, activeProfile),
+    htmlAnalyzer: htmlAnalyzerResult,
+    cssAnalyzer: cssAnalyzerResult
+  });
+}
+
+function prepareAiReview() {
+  const evidencePackage = buildCurrentAiEvidencePackage();
+  const request = buildAiReviewRequest(evidencePackage);
+  aiReviewState = { requestText: serializeAiReviewRequest(request), evidencePackage, evidenceFingerprint: createEvidenceFingerprint(evidencePackage), summary: null, stale: false };
+  if (elements.aiRequestOutput) elements.aiRequestOutput.value = aiReviewState.requestText;
+  if (elements.copyAiRequest) elements.copyAiRequest.disabled = false;
+  renderAiSummary();
+  setAiReviewStatus(`AI review request prepared with ${evidencePackage.evidenceIds.length} evidence references. Nothing was uploaded.`);
+}
+
+async function copyAiRequest() {
+  if (!aiReviewState.requestText) { setAiReviewStatus('Prepare an AI review before copying.'); return; }
+  try {
+    await navigator.clipboard.writeText(aiReviewState.requestText);
+    setAiReviewStatus('AI request copied. You choose whether and where to send it.');
+  } catch {
+    elements.aiRequestOutput?.select?.();
+    setAiReviewStatus('Copy failed. Select the prepared request text and copy it manually.');
+  }
+}
+
+function importAiSummary() {
+  if (!aiReviewState.evidencePackage || aiReviewState.stale) { setAiReviewStatus('Prepare a current AI review request before importing a summary.'); return; }
+  const result = validateAiSummaryResponse(elements.aiResponseInput?.value || '', aiReviewState.evidencePackage.evidenceLookup);
+  if (!result.ok) { setAiReviewStatus(`AI summary was not imported: ${result.message}`); return; }
+  aiReviewState = { ...aiReviewState, summary: result.value, stale: false };
+  renderAiSummary();
+  setAiReviewStatus('AI-assisted summary imported. Review it manually before using it.');
+}
+
+function markAiWorkflowStale(message) {
+  if (!aiReviewState.requestText && !aiReviewState.summary) return;
+  const current = buildCurrentAiEvidencePackage();
+  if (createEvidenceFingerprint(current) === aiReviewState.evidenceFingerprint) return;
+  aiReviewState = { ...aiReviewState, stale: true };
+  renderAiSummary();
+  setAiReviewStatus(message);
+}
+
+function clearAiWorkflow(message) {
+  aiReviewState = createInitialAiReviewState();
+  if (elements.aiRequestOutput) elements.aiRequestOutput.value = '';
+  if (elements.aiResponseInput) elements.aiResponseInput.value = '';
+  if (elements.copyAiRequest) elements.copyAiRequest.disabled = true;
+  renderAiSummary();
+  setAiReviewStatus(message || 'AI workflow cleared.');
+}
+
+function renderAiSummary() {
+  if (!elements.aiSummaryOutput) return;
+  elements.aiSummaryOutput.textContent = '';
+  if (aiReviewState.stale) {
+    const stale = document.createElement('p'); stale.className = 'ai-summary__stale'; stale.textContent = 'Evidence changed after this AI request was prepared. Prepare a new AI review before treating a response as current.'; elements.aiSummaryOutput.append(stale);
+  }
+  if (!aiReviewState.summary) return;
+  const section = document.createElement('section'); section.className = 'ai-summary__content'; section.setAttribute('aria-labelledby', 'ai-summary-title');
+  const title = document.createElement('h3'); title.id = 'ai-summary-title'; title.textContent = 'AI-assisted summary';
+  const note = document.createElement('p'); note.textContent = 'AI-generated content shown separately from deterministic Layout Lens results. It does not affect scoring, findings, recommendations, or reports.';
+  const summary = document.createElement('p'); summary.textContent = aiReviewState.summary.summary;
+  section.append(title, note, summary);
+  ['strengths', 'priorities', 'cautions'].forEach((name) => section.append(renderAiSummaryList(name, aiReviewState.summary[name])));
+  elements.aiSummaryOutput.append(section);
+}
+
+function renderAiSummaryList(name, items) {
+  const wrap = document.createElement('div'); const heading = document.createElement('h4'); heading.textContent = name[0].toUpperCase() + name.slice(1); const list = document.createElement('ul');
+  if (!items.length) { const empty = document.createElement('li'); empty.textContent = `No ${name} provided.`; list.append(empty); }
+  items.forEach((item) => { const li = document.createElement('li'); const text = document.createElement('p'); text.textContent = item.text; const refs = document.createElement('p'); refs.className = 'ai-summary__refs'; refs.textContent = `Evidence: ${item.evidenceIds.map(formatEvidenceReference).join('; ')}`; li.append(text, refs); list.append(li); });
+  wrap.append(heading, list); return wrap;
+}
+
+function formatEvidenceReference(id) {
+  const evidence = aiReviewState.evidencePackage?.evidenceLookup?.get(id);
+  const label = evidence?.title || evidence?.category || evidence?.checkId || evidence?.ruleId || 'Evidence';
+  return `${id} (${label})`;
+}
+
+function setAiReviewStatus(message) { if (elements.aiReviewStatus) elements.aiReviewStatus.textContent = message; }
 
 function pluralize(word, count) {
   return count === 1 ? word : `${word}s`;

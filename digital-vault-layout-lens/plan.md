@@ -143,7 +143,8 @@ The current app is a static, local-first manual audit tool. Users choose a UI pr
 
 ### Phase 7 — AI-assisted senior frontend review
 
-- [ ] Add AI-assisted summaries based only on deterministic manual and analyzer evidence.
+- [x] Add AI-assisted summaries based only on deterministic manual and analyzer evidence.
+  - Verification note (2026-07-17): added a session-only manual AI handoff workflow with separate DOM-free evidence, request-builder, and response-validator modules. Evidence is normalized only from deterministic manual audit facts, existing recommendations, and HTML/CSS analyzer findings with stable references; raw HTML/CSS, preview data, report/project/storage/filter/browser context, API/provider configuration, and remote calls are excluded. The UI requires explicit Prepare, Copy, Import, and Clear actions, marks prepared requests/imported summaries stale when evidence changes, clears AI state on reset/import/project changes, and renders imported AI text separately from deterministic scores, findings, recommendations, persistence, and reports. Exact QA commands executed: `node --check assets/js/app.js assets/js/aiEvidenceAdapter.js assets/js/aiReviewRequest.js assets/js/aiSummaryValidator.js`, `node --check tests/aiWorkflow.test.mjs`, `npm test`, `npm run test:analyzer`, and a focused source check for `fetch`, `XMLHttpRequest`, `WebSocket`, provider SDKs, API keys, automatic upload, backend endpoints, and remote model calls in the AI workflow files.
 - [ ] Add review-tone presets such as senior frontend reviewer, accessibility reviewer, product polish reviewer, and design-system reviewer.
 - [ ] Add prompt templates that require evidence references for every AI claim.
 - [ ] Add privacy controls before sending pasted code, snippets, reports, or project data to any model.
