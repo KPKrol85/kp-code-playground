@@ -1,6 +1,7 @@
 import { AUDIT_SCHEMA_ID, AUDIT_SCHEMA_VERSION, createManualAuditSnapshot, parseImportedAuditState } from './auditStorage.js';
+import { SAVED_PROJECT_SCHEMA_VERSION, migrateSavedProjectRecord } from './savedProjectMigrations.js';
 
-export const SAVED_PROJECT_SCHEMA_VERSION = 1;
+export { SAVED_PROJECT_SCHEMA_VERSION };
 export const MAX_PROJECT_NAME_LENGTH = 80;
 export const PROJECT_METADATA_FIELDS = Object.freeze(['owner', 'projectType', 'targetUrl', 'reviewDate']);
 export const MAX_VERSION_LABEL_LENGTH = 48;
@@ -42,13 +43,13 @@ export function updateSavedProjectRecord(existingRecord, { name, metadata, audit
 
 export function validateSavedProjectRecord(record) {
   if (!isPlainObject(record)) throw new Error('Saved project record is malformed.');
-  if (record.schemaVersion !== SAVED_PROJECT_SCHEMA_VERSION) throw new Error('Saved project record version is unsupported.');
-  const name = normalizeProjectName(record.name);
+  const migrated = migrateSavedProjectRecord(record);
+  const name = normalizeProjectName(migrated.name);
   if (!name) throw new Error('Project name is required.');
-  const id = normalizeProjectId(record.id);
+  const id = normalizeProjectId(migrated.id);
   if (!id) throw new Error('Project id is required.');
-  if (!isIsoLike(record.createdAt) || !isIsoLike(record.updatedAt)) throw new Error('Saved project timestamps are malformed.');
-  return { id, schemaVersion: SAVED_PROJECT_SCHEMA_VERSION, name, createdAt: record.createdAt, updatedAt: record.updatedAt, metadata: normalizeProjectMetadata(record.metadata), auditState: cloneManualAuditSnapshot(record.auditState), auditVersions: normalizeAuditVersions(record.auditVersions) };
+  if (!isIsoLike(migrated.createdAt) || !isIsoLike(migrated.updatedAt)) throw new Error('Saved project timestamps are malformed.');
+  return { id, schemaVersion: SAVED_PROJECT_SCHEMA_VERSION, name, createdAt: migrated.createdAt, updatedAt: migrated.updatedAt, metadata: normalizeProjectMetadata(migrated.metadata), auditState: cloneManualAuditSnapshot(migrated.auditState), auditVersions: normalizeAuditVersions(migrated.auditVersions) };
 }
 
 export function sortSavedProjectRecords(records) {

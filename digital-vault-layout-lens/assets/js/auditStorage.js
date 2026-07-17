@@ -1,7 +1,7 @@
 export const AUDIT_STORAGE_KEY = 'kp-layout-lens-audit-v1';
-export const AUDIT_SCHEMA_ID = 'kp-layout-lens-audit-state';
-export const AUDIT_PRODUCT_ID = 'kp-code-digital-vault-layout-lens';
-export const AUDIT_SCHEMA_VERSION = 2;
+import { AUDIT_PRODUCT_ID, AUDIT_SCHEMA_ID, AUDIT_SCHEMA_VERSION, migrateStoredAuditState } from './auditMigrations.js';
+
+export { AUDIT_PRODUCT_ID, AUDIT_SCHEMA_ID, AUDIT_SCHEMA_VERSION };
 export const MAX_AUDIT_IMPORT_BYTES = 200000;
 const NOTE_MAX_LENGTH = 1000;
 
@@ -16,7 +16,7 @@ export function loadSavedAuditState({ validPresetIds, validRuleIds, validStatuse
     return { state: null, status: 'invalid' };
   }
 
-  return normalizeAuditState(parsed, { validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion, compatibleRuleSchemaVersions });
+  return migrateStoredAuditState(parsed, { validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion, compatibleRuleSchemaVersions }, { normalizeAuditState });
 }
 
 export function saveAuditState({ selectedPresetId, selectedRulePackId, selectedSeverityProfileId, ruleStatuses, ruleNotes = {}, ruleSchemaVersion }) {
@@ -66,7 +66,7 @@ export function parseImportedAuditState(rawJson, validationOptions) {
     return { state: null, status: 'invalid-json', message: 'Import failed because the file is not valid JSON.' };
   }
 
-  return normalizeAuditState(unwrapImportedAuditState(parsed), validationOptions, { strict: true });
+  return migrateStoredAuditState(unwrapImportedAuditState(parsed), validationOptions, { strict: true, normalizeAuditState });
 }
 
 export function clearSavedAuditState() {
@@ -106,12 +106,10 @@ function unwrapImportedAuditState(parsed) {
   return parsed;
 }
 
-function normalizeAuditState(parsed, { validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set(), currentRuleSchemaVersion, compatibleRuleSchemaVersions = [currentRuleSchemaVersion] }, options = {}) {
+export function normalizeAuditState(parsed, { validPresetIds, validRuleIds, validStatuses, validRulePackIds = new Set(), validSeverityProfileIds = new Set(), currentRuleSchemaVersion, compatibleRuleSchemaVersions = [currentRuleSchemaVersion] }, options = {}) {
   const strict = Boolean(options.strict);
   if (!isPlainObject(parsed)) return reject('invalid', 'Import failed because the JSON is not an audit state object.');
   if (strict && !parsed.__importEnvelope && !looksLikeLegacyAuditState(parsed)) return reject('unrelated', 'Import failed because the JSON does not look like a Layout Lens audit export.');
-  if (strict && parsed.schemaVersion > AUDIT_SCHEMA_VERSION) return reject('future-version', 'Import failed because the audit was created by a newer unsupported schema version.');
-  if (![1, AUDIT_SCHEMA_VERSION].includes(parsed.schemaVersion)) return reject('invalid', 'Import failed because the audit schema version is unsupported.');
   if (strict && parsed.schemaId && parsed.schemaId !== AUDIT_SCHEMA_ID) return reject('unrelated', 'Import failed because the JSON belongs to a different product or schema.');
   if (!isCompatibleRuleSchemaVersion(parsed.ruleSchemaVersion, currentRuleSchemaVersion, compatibleRuleSchemaVersions)) return reject('schema-mismatch', 'Import failed because the rule schema version is not supported by this app.');
 

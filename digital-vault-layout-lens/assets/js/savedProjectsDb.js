@@ -49,7 +49,7 @@ export async function getProject(id) {
 export async function listProjects() {
   const db = await openSavedProjectsDb();
   const records = await getAllRecords(db);
-  return sortSavedProjectRecords(records);
+  return sortSavedProjectRecords(records.filter((record) => { try { validateSavedProjectRecord(record); return true; } catch { return false; } }));
 }
 
 export async function deleteProject(id) {

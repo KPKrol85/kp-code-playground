@@ -5,8 +5,8 @@ import { DEFAULT_SEVERITY_PROFILE_ID, getValidSeverityProfileIds, resolveSeverit
 import { SCORE_STATUSES, calculateAuditScore, calculateCategoryScores } from './scoringEngine.js';
 import { getApplicableRules, getPresetPatternIds, isRuleApplicable } from './ruleApplicability.js';
 import { generateRecommendations } from './recommendations.js';
-import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, clearSavedAuditState, createAuditStateExport, loadSavedAuditState, parseImportedAuditState, saveAuditState, stringifyAuditStateExport } from './auditStorage.js';
-import { createProject, deleteProject, duplicateProject, getProject, isIndexedDbAvailable, listProjects, saveProjectAuditVersion, updateProject } from './savedProjectsDb.js';
+import { AUDIT_STORAGE_KEY, MAX_AUDIT_IMPORT_BYTES, createAuditStateExport, parseImportedAuditState, stringifyAuditStateExport } from './auditStorage.js';
+import { canUseSavedProjects, clearDraft, createSavedProject, deleteSavedProject, duplicateSavedProject, getSavedProject, listSavedProjects, loadDraft, saveDraft, saveSavedProjectAuditVersion, updateSavedProject } from './storageAdapter.js';
 import { createAuditStateForSavedProject, normalizeProjectMetadata, normalizeProjectName, normalizeSavedProjectAuditState, restoreAuditVersion, startNewImprovementPass } from './savedProjectModel.js';
 import { assertValidRuleData } from './ruleDataValidator.js';
 import { analyzeHtmlSource } from './htmlAnalyzer.js';
@@ -342,7 +342,7 @@ function bindEvents() {
     filters = createInitialFilters();
     activeSavedProjectId = null;
     populateProjectDetails();
-    clearSavedAuditState();
+    clearDraft();
     renderPresets();
     renderSelectedPreset();
     renderProjectDetailsPreset();
@@ -938,23 +938,23 @@ function getCurrentManualAuditSnapshot() {
 
 async function initializeSavedProjects() {
   if (!elements.savedProjectsList) return;
-  if (!isIndexedDbAvailable()) { setSavedProjectsStatus('IndexedDB is unavailable. The local draft still works, but named saved projects cannot be used in this browser.'); renderSavedProjects(); return; }
+  if (!canUseSavedProjects()) { setSavedProjectsStatus('IndexedDB is unavailable. The local draft still works, but named saved projects cannot be used in this browser.'); renderSavedProjects(); return; }
   setSavedProjectsStatus('Loading saved projects…');
-  try { savedProjects = await listProjects(); renderSavedProjects(); setSavedProjectsStatus(savedProjects.length ? `${savedProjects.length} saved project${savedProjects.length === 1 ? '' : 's'} available.` : 'No saved projects yet. Save the current audit as a named project when you are ready.'); }
+  try { const result = await listSavedProjects(); if (!result.ok) throw new Error(result.error); savedProjects = result.value; renderSavedProjects(); setSavedProjectsStatus(savedProjects.length ? `${savedProjects.length} saved project${savedProjects.length === 1 ? '' : 's'} available.` : 'No saved projects yet. Save the current audit as a named project when you are ready.'); }
   catch { setSavedProjectsStatus('Saved projects could not be loaded. The local draft remains available.'); renderSavedProjects(); }
 }
 
 async function saveCurrentAuditAsProject() {
   const name = normalizeProjectName(elements.savedProjectName?.value);
   if (!name) { setSavedProjectsStatus('Enter a project name before saving.'); elements.savedProjectName?.focus(); return; }
-  try { const record = await createProject({ name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); activeSavedProjectId = record.id; populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project saved successfully: ${record.name}.`); }
+  try { const result = await createSavedProject({ name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); if (!result.ok) throw new Error(result.error); const record = result.value; activeSavedProjectId = record.id; populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project saved successfully: ${record.name}.`); }
   catch { setSavedProjectsStatus('Project could not be saved. IndexedDB may be unavailable or full.'); }
 }
 
 async function saveActiveProjectChanges() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving project changes.'); return; }
   const current = savedProjects.find((project) => project.id === activeSavedProjectId);
-  try { const record = await updateProject(activeSavedProjectId, { name: normalizeProjectName(elements.savedProjectName?.value) || current?.name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project updated successfully: ${record.name}.`); }
+  try { const result = await updateSavedProject(activeSavedProjectId, { name: normalizeProjectName(elements.savedProjectName?.value) || current?.name, metadata: getCurrentProjectMetadata(), auditState: getCurrentManualAuditSnapshot() }); if (!result.ok) throw new Error(result.error); const record = result.value; populateProjectDetails({ name: record.name, metadata: record.metadata }); await refreshSavedProjects(`Project updated successfully: ${record.name}.`); }
   catch { setSavedProjectsStatus('Project changes could not be saved. Current audit was not deleted.'); }
 }
 
@@ -972,11 +972,13 @@ async function handleSavedProjectsClick(event) {
 async function openSavedProject(id) {
   const before = { selectedPresetId, selectedRulePackId, selectedSeverityProfileId, statuses: { ...statuses }, ruleNotes: { ...ruleNotes } };
   try {
-    const record = await getProject(id);
+    const result = await getSavedProject(id);
+    if (!result.ok) throw new Error(result.error);
+    const record = result.value;
     if (!record) throw new Error('missing');
-    const result = normalizeSavedProjectAuditState(record.auditState, getAuditStateValidationOptions());
-    if (!result.state) { setSavedProjectsStatus(result.message || 'Saved project is malformed or incompatible. Current audit was not changed.'); return; }
-    applyProjectAuditState(result.state);
+    const auditResult = normalizeSavedProjectAuditState(record.auditState, getAuditStateValidationOptions());
+    if (!auditResult.state) { setSavedProjectsStatus(auditResult.message || 'Saved project is malformed or incompatible. Current audit was not changed.'); return; }
+    applyProjectAuditState(auditResult.state);
     activeSavedProjectId = record.id;
     populateProjectDetails({ name: record.name, metadata: record.metadata });
     persistAuditState('Saved project opened and copied into the browser-local draft.');
@@ -989,7 +991,9 @@ async function openSavedProject(id) {
 async function saveCurrentAuditVersion() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open or save a project before saving an audit version.'); return; }
   try {
-    const record = await saveProjectAuditVersion(activeSavedProjectId, { label: elements.auditVersionLabel?.value, reviewDate: getCurrentProjectMetadata().reviewDate, auditState: getCurrentManualAuditSnapshot() });
+    const result = await saveSavedProjectAuditVersion(activeSavedProjectId, { label: elements.auditVersionLabel?.value, reviewDate: getCurrentProjectMetadata().reviewDate, auditState: getCurrentManualAuditSnapshot() });
+    if (!result.ok) throw new Error(result.error);
+    const record = result.value;
     if (elements.auditVersionLabel) elements.auditVersionLabel.value = '';
     await refreshSavedProjects(`Audit version saved for ${record.name}.`);
   } catch { setSavedProjectsStatus('Audit version could not be saved. Current audit remains unchanged.'); }
@@ -999,7 +1003,9 @@ async function duplicateActiveProject() {
   if (!activeSavedProjectId) { setSavedProjectsStatus('Open a project before duplicating it.'); return; }
   try {
     const original = savedProjects.find((project) => project.id === activeSavedProjectId);
-    const record = await duplicateProject(activeSavedProjectId, { name: `${original?.name || 'Project'} — Copy`, auditState: getCurrentManualAuditSnapshot() });
+    const result = await duplicateSavedProject(activeSavedProjectId, { name: `${original?.name || 'Project'} — Copy`, auditState: getCurrentManualAuditSnapshot() });
+    if (!result.ok) throw new Error(result.error);
+    const record = result.value;
     activeSavedProjectId = record.id;
     populateProjectDetails({ name: record.name, metadata: record.metadata });
     applyProjectAuditState(record.auditState);
@@ -1050,7 +1056,7 @@ async function confirmAndDeleteSavedProject(id, button) {
   if (!record) return;
   if (!window.confirm(`Delete saved project "${record.name}"? This does not reset the current local draft.`)) { setSavedProjectsStatus('Project deletion cancelled.'); return; }
   const index = savedProjects.findIndex((project) => project.id === id);
-  try { const wasActive = activeSavedProjectId === id; await deleteProject(id); if (wasActive) { activeSavedProjectId = null; populateProjectDetails(); } await refreshSavedProjects(wasActive ? `Opened project deleted: ${record.name}. Current audit remains in the workspace; save as a new project to keep changes.` : `Project deleted successfully: ${record.name}.`); focusAfterProjectDelete(index); }
+  try { const wasActive = activeSavedProjectId === id; const result = await deleteSavedProject(id); if (!result.ok) throw new Error(result.error); if (wasActive) { activeSavedProjectId = null; populateProjectDetails(); } await refreshSavedProjects(wasActive ? `Opened project deleted: ${record.name}. Current audit remains in the workspace; save as a new project to keep changes.` : `Project deleted successfully: ${record.name}.`); focusAfterProjectDelete(index); }
   catch { button?.focus(); setSavedProjectsStatus('Project could not be deleted. It remains saved.'); }
 }
 
@@ -1063,7 +1069,7 @@ function applyProjectAuditState(state) {
   selectedPresetId = state.selectedPresetId || componentPresets[0]?.id; selectedRulePackId = state.selectedRulePackId || ALL_RULES_PACK_ID; selectedSeverityProfileId = state.selectedSeverityProfileId || DEFAULT_SEVERITY_PROFILE_ID; statuses = { ...createInitialStatuses(), ...state.ruleStatuses }; ruleNotes = state.ruleNotes || {}; filters = createInitialFilters(); renderPresets(); renderSelectedPreset(); renderProjectDetailsPreset(); renderRulePackSelector(); renderSeverityProfileSelector(); renderFilterControls(); renderRules(); renderScore();
 }
 
-async function refreshSavedProjects(message) { savedProjects = await listProjects(); renderSavedProjects(); setSavedProjectsStatus(message); }
+async function refreshSavedProjects(message) { const result = await listSavedProjects(); savedProjects = result.ok ? result.value : []; renderSavedProjects(); setSavedProjectsStatus(result.ok ? message : result.error); }
 function setSavedProjectsStatus(message) { if (elements.savedProjectsStatus) elements.savedProjectsStatus.textContent = message; }
 function renderSavedProjects() {
   if (!elements.savedProjectsList) return;
@@ -1166,7 +1172,7 @@ function applyImportedAuditState(importedState) {
 }
 
 function restoreSavedAuditState() {
-  const result = loadSavedAuditState({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion: RULE_SCHEMA_VERSION, compatibleRuleSchemaVersions: auditRuleSchemaMetadata.compatibleRuleSchemaVersions });
+  const result = loadDraft({ validPresetIds, validRuleIds, validStatuses, validRulePackIds, validSeverityProfileIds, currentRuleSchemaVersion: RULE_SCHEMA_VERSION, compatibleRuleSchemaVersions: auditRuleSchemaMetadata.compatibleRuleSchemaVersions });
 
   if (result.state) {
     if (result.state.selectedPresetId) {
@@ -1208,7 +1214,7 @@ function restoreSavedAuditState() {
 }
 
 function persistAuditState(message) {
-  const saved = saveAuditState({
+  const saved = saveDraft({
     selectedPresetId,
     selectedRulePackId,
     selectedSeverityProfileId,
@@ -1217,7 +1223,7 @@ function persistAuditState(message) {
     ruleSchemaVersion: RULE_SCHEMA_VERSION
   });
 
-  setAuditStorageStatus(saved ? message : 'Browser storage is unavailable. Changes are kept for this session only.');
+  setAuditStorageStatus(saved.ok ? message : 'Browser storage is unavailable. Changes are kept for this session only.');
 }
 
 function setAuditStorageStatus(message) {
