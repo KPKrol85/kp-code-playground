@@ -2011,7 +2011,14 @@ body[data-report-view="true"] .report-view {
 .saved-project span { color: var(--color-muted); }
 .saved-project__active { display: inline-block; font-weight: 700; color: var(--color-text); }
 .saved-project.is-active { outline: 2px solid currentColor; outline-offset: 2px; }
-.saved-projects__empty { color: var(--color-muted); padding: 1rem; border: 1px dashed var(--color-border); border-radius: 1rem; }
+.saved-projects__empty,
+.saved-projects__state,
+.saved-projects__notice { color: var(--color-muted); padding: 1rem; border: 1px dashed var(--color-border); border-radius: 1rem; }
+.saved-projects__state { display: grid; gap: .5rem; background: var(--color-surface-subtle); }
+.saved-projects__state strong { color: var(--color-text); }
+.saved-projects__state p { margin: 0; }
+.saved-projects__state--error { border-color: color-mix(in srgb, var(--color-danger) 48%, var(--color-border)); }
+.saved-projects__notice--warning { border-color: color-mix(in srgb, var(--color-warning) 56%, var(--color-border)); color: var(--color-text); }
 @media (max-width: 720px) { .saved-projects__header, .saved-project { align-items: stretch; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .saved-project, .saved-projects * { scroll-behavior: auto; } }
 
