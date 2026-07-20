@@ -6,6 +6,7 @@ import { buildAiReviewRequest, serializeAiReviewRequest } from '../assets/js/aiR
 import { validateAiSummaryResponse } from '../assets/js/aiSummaryValidator.js';
 import { DEFAULT_AI_REVIEW_PRESET_ID, aiReviewPresets, getAiReviewPreset, validateAiReviewPresets } from '../assets/js/aiReviewPresets.js';
 import { buildAiReviewPrompt } from '../assets/js/aiPromptTemplates.js';
+import { AI_USAGE_POLICY, aiUsageSummary, allowAiUsageAction, createAiUsageState, measureAiRequestPackage } from '../assets/js/aiUsageControls.js';
 
 const input = () => ({
   preset: { id: 'component', name: 'Component' }, rulePack: { id: 'all', name: 'All rules' }, severityProfile: { id: 'default', name: 'Default' }, categories: ['Accessibility'],
@@ -61,6 +62,20 @@ test('request builder contains preset binding, safety instructions, IDs, timesta
   assert.equal(req.requestId, 'ai-review-test'); assert.equal(req.presetId, 'design-system'); assert.equal(req.createdAt, '2026-07-17T00:00:00.000Z');
   assert.match(text, /Every factual claim/); assert.match(text, /Do not change deterministic evidence/); assert.match(text, /Do not cite evidence that is not included/);
   for (const forbidden of ['apiKey', 'provider SDK', 'fetch', 'XMLHttpRequest', 'WebSocket', '<main>secret</main>', 'body{}']) assert.equal(text.includes(forbidden), false, forbidden);
+  assert.deepEqual(req.packageMeasurement, measureAiRequestPackage(req));
+  assert.equal(req.packageMeasurement.evidenceCount, pkg.evidenceIds.length);
+});
+
+test('session-only usage policy limits rapid repeated preparation and copying with deterministic package measurements', () => {
+  let state = createAiUsageState();
+  const first = allowAiUsageAction(state, 'prepare', 1000); assert.equal(first.ok, true); state = first.state;
+  assert.equal(allowAiUsageAction(state, 'prepare', 1001).reason, 'cooldown');
+  const copied = allowAiUsageAction(state, 'copy', 3000); assert.equal(copied.ok, true);
+  const exhausted = { ...state, prepared: AI_USAGE_POLICY.maxPreparedRequestsPerSession };
+  assert.equal(allowAiUsageAction(exhausted, 'prepare', 9000).reason, 'session-limit');
+  const usage = aiUsageSummary(copied.state);
+  assert.equal(usage.prepared, 1); assert.equal(usage.copied, 1);
+  assert.match(usage.disclaimer, /does not know or calculate provider price, token usage, network latency, or external model execution time/i);
 });
 
 test('summary validator accepts valid response for each preset and normalizes without mutation', () => {
@@ -98,8 +113,17 @@ test('AI app state behavior remains session-only and separate from scoring, find
   assert.match(app, /requestId: request\.requestId/); assert.match(app, /presetId: request\.presetId/);
   assert.match(app, /validateAiSummaryResponse\([^\n]+requestId: aiReviewState\.requestId, presetId: aiReviewState\.presetId/);
   assert.match(app, /clearAiWorkflow\('Project audit state changed/); assert.match(app, /clearAiWorkflow\('Local audit reset/);
+  assert.match(app, /One prepared AI request is already active/); assert.match(app, /allowAiUsageAction/); assert.match(app, /renderAiUsageSummary/);
   for (const source of [auditStorage, storageAdapter, reportAdapter]) { assert.equal(source.includes('aiReviewState'), false); assert.equal(source.includes('selectedAiReviewPresetId'), false); }
   assert.equal(app.includes('aiReviewState:') || app.includes('aiSummary:'), false);
+});
+
+test('validator rejects invented finding fields and cross-request references rather than creating audit data', () => {
+  const lookup = buildAiEvidencePackage(input()).evidenceLookup;
+  const attemptedFinding = JSON.stringify({ schemaVersion: 1, requestId: 'ai-review-test', presetId: 'senior-frontend', summary: { text: 'x', evidenceIds: ['manual:alpha-rule'], issueId: 'invented:1' }, strengths: [], priorities: [], cautions: [] });
+  const crossRequest = JSON.stringify({ schemaVersion: 1, requestId: 'ai-review-test', presetId: 'senior-frontend', summary: { text: 'x', evidenceIds: ['manual:alpha-rule', 'html-analyzer:other-request'] }, strengths: [], priorities: [], cautions: [] });
+  assert.match(validateAiSummaryResponse(attemptedFinding, lookup, { requestId: 'ai-review-test', presetId: 'senior-frontend' }).message, /Unsupported/);
+  assert.match(validateAiSummaryResponse(crossRequest, lookup, { requestId: 'ai-review-test', presetId: 'senior-frontend' }).message, /Unknown/);
 });
 
 import { normalizeAiPrivacyControls, summarizeAiPrivacyControls } from '../assets/js/aiPrivacyControls.js';
