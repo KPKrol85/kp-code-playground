@@ -18,6 +18,7 @@ The current version is deliberately local-first and product-focused:
 - Explicit saved audit projects stored locally in IndexedDB on the current browser/device; projects include durable project metadata and can be listed, opened, updated, duplicated, versioned, restored, and deleted.
 - Local JSON audit import/export for manual audit state.
 - Local Markdown report download generated from the current manual audit state.
+- Local machine-readable JSON report download, generated from the same normalized manual report model for future integration work.
 - Optional session-only report cover metadata for project name, owner, project type, target URL, reviewer, and review date.
 - Deterministic executive summaries generated from the current manual audit state without AI or external services.
 - Accessible report summaries for screen-reader users generated from the same normalized report model as the visual report outputs.
@@ -29,6 +30,8 @@ The current version is deliberately local-first and product-focused:
 
 This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, automatic AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation. The AI-assisted workflow is manual only: Layout Lens prepares copyable evidence and validates pasted JSON, but it never contacts, uploads to, authenticates with, or selects an AI provider.
 
+Machine-readable JSON reports download only when the user chooses the action in the browser. They do not run CI, upload reports, contact repositories, or enforce build thresholds; AI-generated content and analyzer findings are excluded to preserve the current manual-report and scoring boundary. Saved projects remain browser-local. Billing, subscriptions, accounts, organizations, multi-tenant permissions, and enterprise workflows are intentionally deferred; no backend, cloud synchronization, authentication, payment integration, or enterprise platform has been added. See [`docs/machine-readable-report-schema.md`](docs/machine-readable-report-schema.md) and [`docs/enterprise-feature-deferral.md`](docs/enterprise-feature-deferral.md).
+
 Browser extension and live-page inspection work is currently **feasibility planning only**. Implementation remains deferred until the documented static-analyzer trust gate—including real-browser `DOMParser` fixtures, browser smoke tests, quality review, performance checks, and demonstrated user value—is satisfied. No browser extension, live-page capture, broad page permission, backend, or remote inspection has been added; see [`docs/browser-extension-feasibility.md`](docs/browser-extension-feasibility.md).
 
 Future extension workflows are planned to reuse the existing deterministic rule validation, static analyzers, finding evidence/issue IDs/WCAG mappings, and report concepts through the platform-neutral [`docs/extension-workflow-model.md`](docs/extension-workflow-model.md) contract. No extension runtime or live-page collection has been added. A SaaS dashboard is also deferred: browser-local saved projects do not yet validate collaboration or synchronization demand; see [`docs/saas-dashboard-feasibility.md`](docs/saas-dashboard-feasibility.md).
@@ -37,7 +40,7 @@ Future extension workflows are planned to reuse the existing deterministic rule 
 
 Organization rule libraries and organization quality profiles are documented architecture and governance plans for possible future team use in [`docs/organization-rule-libraries.md`](docs/organization-rule-libraries.md). Current built-in rules, component presets, rule packs, and severity profiles remain the active implementation. No organization accounts, shared libraries, team permissions, or remote configuration have been added.
 
-Issue-tracker, design-system, and CI work is feasibility-only in [`docs/integration-feasibility.md`](docs/integration-feasibility.md). No provider connection, API key, OAuth flow, webhook, remote request, or CI enforcement has been added. CI remains dependent on the separate, future machine-readable report-output roadmap item, which is not implemented.
+Issue-tracker, design-system, and CI work is feasibility-only in [`docs/integration-feasibility.md`](docs/integration-feasibility.md). The local machine-readable JSON artifact is available as a future foundation, but no provider connection, API key, OAuth flow, webhook, remote request, CI runner, or CI enforcement has been added.
 
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 

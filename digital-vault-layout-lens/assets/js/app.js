@@ -27,6 +27,7 @@ import { serializeManualAuditReportMarkdown } from './markdownReport.js';
 import { renderManualAuditReportView } from './reportRenderer.js';
 import { DEFAULT_REPORT_TEMPLATE_ID, REPORT_TEMPLATES, getReportTemplate } from './reportTemplates.js';
 import { runBrowserPrintWorkflow } from './printReport.js';
+import { createMachineReadableReport, downloadMachineReadableReport } from './machineReadableReport.js';
 import { buildAiEvidencePackage, createEvidenceFingerprint } from './aiEvidenceAdapter.js';
 import { buildAiReviewRequest, serializeAiReviewRequest } from './aiReviewRequest.js';
 import { validateAiSummaryResponse } from './aiSummaryValidator.js';
@@ -98,6 +99,7 @@ const elements = {
   importAudit: document.querySelector('#import-audit'),
   importAuditFile: document.querySelector('#import-audit-file'),
   exportMarkdownReport: document.querySelector('#export-markdown-report'),
+  exportMachineReadableReport: document.querySelector('#export-machine-readable-report'),
   showReportView: document.querySelector('#show-report-view'),
   leaveReportView: document.querySelector('#leave-report-view'),
   reportStatus: document.querySelector('#report-status'),
@@ -335,6 +337,7 @@ function bindEvents() {
   elements.auditVersionList?.addEventListener('click', handleSavedProjectsClick);
   elements.savedProjectsList?.addEventListener('click', handleSavedProjectsRetry);
   elements.exportMarkdownReport?.addEventListener('click', exportMarkdownReport);
+  elements.exportMachineReadableReport?.addEventListener('click', exportMachineReadableReport);
   elements.reportTemplateSelect?.addEventListener('change', handleReportTemplateChange);
   elements.reportMetadataControls.forEach((control) => control.addEventListener('input', handleReportMetadataInput));
   elements.printReportButtons.forEach((button) => button.addEventListener('click', printCurrentReport));
@@ -902,6 +905,13 @@ function exportMarkdownReport() {
   link.remove();
   URL.revokeObjectURL(objectUrl);
   setReportStatus('Markdown report downloaded from the current manual audit state.');
+}
+
+function exportMachineReadableReport() {
+  selectedReportTemplateId = getReportTemplate(selectedReportTemplateId).id;
+  const result = downloadMachineReadableReport(createMachineReadableReport(buildCurrentManualAuditReport()));
+  if (result.ok) setReportStatus('Machine-readable JSON report downloaded locally from the current manual audit state. It does not upload, run CI, or enforce thresholds.');
+  else setReportStatus('Machine-readable JSON download is unavailable in this browser. Your audit was not changed.');
 }
 
 function enterReportView(returnFocusElement) {
