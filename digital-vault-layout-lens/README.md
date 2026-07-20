@@ -31,6 +31,8 @@ This release does **not** include a PDF dependency, direct PDF generator, automa
 
 Browser extension and live-page inspection work is currently **feasibility planning only**. Implementation remains deferred until the documented static-analyzer trust gate—including real-browser `DOMParser` fixtures, browser smoke tests, quality review, performance checks, and demonstrated user value—is satisfied. No browser extension, live-page capture, broad page permission, backend, or remote inspection has been added; see [`docs/browser-extension-feasibility.md`](docs/browser-extension-feasibility.md).
 
+Future extension workflows are planned to reuse the existing deterministic rule validation, static analyzers, finding evidence/issue IDs/WCAG mappings, and report concepts through the platform-neutral [`docs/extension-workflow-model.md`](docs/extension-workflow-model.md) contract. No extension runtime or live-page collection has been added. A SaaS dashboard is also deferred: browser-local saved projects do not yet validate collaboration or synchronization demand; see [`docs/saas-dashboard-feasibility.md`](docs/saas-dashboard-feasibility.md).
+
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
 ## How the manual checklist works
