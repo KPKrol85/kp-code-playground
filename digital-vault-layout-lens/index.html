@@ -207,11 +207,12 @@
               </div>
             </details>
             <button id="export-markdown-report" class="button button--secondary" type="button">Download Markdown report</button>
+            <button id="export-machine-readable-report" class="button button--secondary" type="button">Download machine-readable JSON report</button>
             <button id="show-report-view" class="button button--primary" type="button">Open report view</button>
             <button id="print-report" data-print-report class="button button--secondary" type="button">Print or save as PDF</button>
             <button id="import-audit" class="button button--secondary" type="button">Import JSON</button>
             <input id="import-audit-file" class="sr-only" type="file" accept="application/json,.json" aria-label="Import audit state JSON file" />
-            <p id="report-status" class="local-save-status" aria-live="polite">Reports use the current manual audit state only. Use the browser print dialog to print or choose Save as PDF; Layout Lens does not generate PDF files directly.</p>
+            <p id="report-status" class="local-save-status" aria-live="polite">Reports use the current manual audit state only. Machine-readable JSON downloads locally for future integration work; it does not upload, run CI, or enforce thresholds. Use the browser print dialog to print or choose Save as PDF.</p>
             <button id="reset-audit" class="button button--secondary" type="button">Reset local audit</button>
           </div>
         </div>
