@@ -33,6 +33,12 @@ Browser extension and live-page inspection work is currently **feasibility plann
 
 Future extension workflows are planned to reuse the existing deterministic rule validation, static analyzers, finding evidence/issue IDs/WCAG mappings, and report concepts through the platform-neutral [`docs/extension-workflow-model.md`](docs/extension-workflow-model.md) contract. No extension runtime or live-page collection has been added. A SaaS dashboard is also deferred: browser-local saved projects do not yet validate collaboration or synchronization demand; see [`docs/saas-dashboard-feasibility.md`](docs/saas-dashboard-feasibility.md).
 
+## Future organization and integration planning
+
+Organization rule libraries and organization quality profiles are documented architecture and governance plans for possible future team use in [`docs/organization-rule-libraries.md`](docs/organization-rule-libraries.md). Current built-in rules, component presets, rule packs, and severity profiles remain the active implementation. No organization accounts, shared libraries, team permissions, or remote configuration have been added.
+
+Issue-tracker, design-system, and CI work is feasibility-only in [`docs/integration-feasibility.md`](docs/integration-feasibility.md). No provider connection, API key, OAuth flow, webhook, remote request, or CI enforcement has been added. CI remains dependent on the separate, future machine-readable report-output roadmap item, which is not implemented.
+
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
 ## How the manual checklist works
