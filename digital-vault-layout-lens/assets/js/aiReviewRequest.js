@@ -1,5 +1,6 @@
 import { getAiReviewPreset } from './aiReviewPresets.js';
 import { AI_REVIEW_RESPONSE_SCHEMA_VERSION, buildAiReviewPrompt } from './aiPromptTemplates.js';
+import { measureAiRequestPackage } from './aiUsageControls.js';
 
 export { AI_REVIEW_RESPONSE_SCHEMA_VERSION };
 
@@ -8,7 +9,7 @@ export function buildAiReviewRequest(evidencePackage, { presetId = 'senior-front
   const id = typeof requestId === 'function' ? requestId() : requestId;
   const preset = getAiReviewPreset(presetId);
   const prompt = buildAiReviewPrompt({ requestId: id, preset, evidencePackage });
-  return {
+  const request = {
     product: 'KP_Code Layout Lens',
     workflow: 'Manual AI handoff for session-only AI-assisted summary review.',
     requestId: id,
@@ -30,8 +31,9 @@ export function buildAiReviewRequest(evidencePackage, { presetId = 'senior-front
       cautions: [{ text: 'Important limitation or review caution.', evidenceIds: ['css-analyzer:example-check'] }]
     }
   };
+  return Object.freeze({ ...request, packageMeasurement: measureAiRequestPackage(request) });
 }
 
 export function serializeAiReviewRequest(request) { return JSON.stringify(request, replacer, 2); }
 function createRequestId() { return `ai-review-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`; }
-function replacer(key, value) { return value instanceof Map ? undefined : value; }
+function replacer(key, value) { return key === 'packageMeasurement' || value instanceof Map ? undefined : value; }

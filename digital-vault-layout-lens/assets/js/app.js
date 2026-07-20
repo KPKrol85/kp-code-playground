@@ -32,6 +32,7 @@ import { buildAiReviewRequest, serializeAiReviewRequest } from './aiReviewReques
 import { validateAiSummaryResponse } from './aiSummaryValidator.js';
 import { DEFAULT_AI_REVIEW_PRESET_ID, aiReviewPresets, getAiReviewPreset, validateAiReviewPresets } from './aiReviewPresets.js';
 import { normalizeAiPrivacyControls, summarizeAiPrivacyControls } from './aiPrivacyControls.js';
+import { AI_USAGE_POLICY, aiUsageSummary, allowAiUsageAction, createAiUsageState } from './aiUsageControls.js';
 
 try {
   assertValidRuleData();
@@ -162,7 +163,8 @@ const elements = {
   aiPresetDescription: document.querySelector('#ai-preset-description'),
   aiPrivacyControls: document.querySelectorAll('[data-ai-privacy]'),
   aiPrivacyReview: document.querySelector('#ai-privacy-review'),
-  aiCopyApproval: document.querySelector('#ai-copy-approval')
+  aiCopyApproval: document.querySelector('#ai-copy-approval'),
+  aiUsageSummary: document.querySelector('#ai-usage-summary')
 };
 
 let statuses = createInitialStatuses();
@@ -179,6 +181,7 @@ let cssAnalyzerResult = { findings: [], status: 'empty', message: 'CSS checks ha
 let aiReviewState = createInitialAiReviewState();
 let selectedAiReviewPresetId = DEFAULT_AI_REVIEW_PRESET_ID;
 let aiPrivacyControls = normalizeAiPrivacyControls();
+let aiUsageState = createAiUsageState();
 let keyboardAuditReturnFocus = null;
 let reportViewReturnFocus = null;
 let selectedReportTemplateId = DEFAULT_REPORT_TEMPLATE_ID;
@@ -221,6 +224,7 @@ function init() {
   renderAnnotations();
   renderComparisonChecklist();
   renderAiPresetSelector();
+  renderAiUsageSummary();
   initializePreviewFrame();
   syncThemeToggle();
   initializeSavedProjects();
@@ -1837,6 +1841,12 @@ function createInitialAiReviewState() {
   return { requestText: '', requestId: '', presetId: DEFAULT_AI_REVIEW_PRESET_ID, evidencePackage: null, evidenceFingerprint: '', summary: null, stale: false, approvedRequestId: '', reviewed: false };
 }
 
+function renderAiUsageSummary() {
+  if (!elements.aiUsageSummary) return;
+  const usage = aiUsageSummary(aiUsageState, AI_USAGE_POLICY);
+  elements.aiUsageSummary.textContent = `Session-only local activity: ${usage.prepared}/${usage.prepareLimit} requests prepared; ${usage.copied}/${usage.copyLimit} requests copied. Package measurements are deterministic local character/evidence/snippet counts only. ${usage.disclaimer}`;
+}
+
 function renderAiPresetSelector() {
   const validation = validateAiReviewPresets();
   if (!validation.ok) setAiReviewStatus(`AI review presets are invalid: ${validation.errors[0]}`);
@@ -1932,6 +1942,10 @@ function renderAiPrivacyReview(evidencePackage) {
 
 function prepareAiReview() {
   if (!aiReviewState.reviewed) { setAiReviewStatus('Review AI data before preparing the request.'); return; }
+  if (aiReviewState.requestText && !aiReviewState.stale) { setAiReviewStatus('One prepared AI request is already active. Clear or invalidate it before preparing another.'); return; }
+  const allowance = allowAiUsageAction(aiUsageState, 'prepare');
+  if (!allowance.ok) { setAiReviewStatus(`Request preparation blocked by the local ${allowance.reason === 'cooldown' ? 'rapid-action cooldown' : 'session limit'}.`); return; }
+  aiUsageState = allowance.state;
   const evidencePackage = buildCurrentAiEvidencePackage();
   const request = buildAiReviewRequest(evidencePackage, { presetId: selectedAiReviewPresetId });
   aiReviewState = { requestText: serializeAiReviewRequest(request), requestId: request.requestId, presetId: request.presetId, evidencePackage, evidenceFingerprint: createEvidenceFingerprint(evidencePackage), summary: null, stale: false, approvedRequestId: '', reviewed: true };
@@ -1939,14 +1953,20 @@ function prepareAiReview() {
   if (elements.copyAiRequest) elements.copyAiRequest.disabled = false;
   if (elements.aiCopyApproval) { elements.aiCopyApproval.checked = false; elements.aiCopyApproval.disabled = false; }
   renderAiSummary();
-  setAiReviewStatus(`AI review request prepared for ${getAiReviewPreset(selectedAiReviewPresetId).label} with ${evidencePackage.evidenceIds.length} evidence references. Nothing was uploaded.`);
+  renderAiUsageSummary();
+  const m = request.packageMeasurement;
+  setAiReviewStatus(`AI review request prepared for ${getAiReviewPreset(selectedAiReviewPresetId).label}: ${m.characters} characters, ${m.evidenceCount} evidence references, ${m.snippetCount} included snippets. Nothing was uploaded.`);
 }
 
 async function copyAiRequest() {
   if (!aiReviewState.requestText) { setAiReviewStatus('Prepare an AI review before copying.'); return; }
   if (elements.aiCopyApproval && (!elements.aiCopyApproval.checked || aiReviewState.approvedRequestId !== aiReviewState.requestId)) { setAiReviewStatus('Approval required before copying this prepared request.'); return; }
+  const allowance = allowAiUsageAction(aiUsageState, 'copy');
+  if (!allowance.ok) { setAiReviewStatus(`Copy blocked by the local ${allowance.reason === 'cooldown' ? 'rapid-action cooldown' : 'session limit'}.`); return; }
   try {
     await navigator.clipboard.writeText(aiReviewState.requestText);
+    aiUsageState = allowance.state;
+    renderAiUsageSummary();
     setAiReviewStatus('AI request copied. You choose whether and where to send it.');
   } catch {
     elements.aiRequestOutput?.select?.();
@@ -1980,6 +2000,7 @@ function clearAiWorkflow(message) {
   if (elements.aiCopyApproval) { elements.aiCopyApproval.checked = false; elements.aiCopyApproval.disabled = true; }
   if (elements.aiPrivacyReview) elements.aiPrivacyReview.textContent = '';
   renderAiSummary();
+  renderAiUsageSummary();
   setAiReviewStatus(message || 'AI workflow cleared.');
 }
 
