@@ -29,6 +29,8 @@ The current version is deliberately local-first and product-focused:
 
 This release does **not** include a PDF dependency, direct PDF generator, automatic PDF file creation, backend services, login, accounts, cloud upload, cloud sync, collaboration, automatic AI calls, automatic website analysis from the target URL, browser extension logic, SaaS features, cross-device backup, API storage, or backend storage. Analyzer and preview data remain separate from manual report generation. The AI-assisted workflow is manual only: Layout Lens prepares copyable evidence and validates pasted JSON, but it never contacts, uploads to, authenticates with, or selects an AI provider.
 
+Browser extension and live-page inspection work is currently **feasibility planning only**. Implementation remains deferred until the documented static-analyzer trust gate—including real-browser `DOMParser` fixtures, browser smoke tests, quality review, performance checks, and demonstrated user value—is satisfied. No browser extension, live-page capture, broad page permission, backend, or remote inspection has been added; see [`docs/browser-extension-feasibility.md`](docs/browser-extension-feasibility.md).
+
 For the consolidated implementation roadmap, see [`plan.md`](plan.md).
 
 ## How the manual checklist works
