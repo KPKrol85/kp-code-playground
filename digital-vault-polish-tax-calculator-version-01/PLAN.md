@@ -1,97 +1,97 @@
-# Digital Vault Polish Tax Calculator — plan rozwoju
+# Digital Vault Polish Tax Calculator — Development Plan
 
-## Status projektu
+## Project Status
 
-Projekt jest statycznym, działającym kalkulatorem orientacyjnym/portfolio project w HTML, CSS i JavaScript. Obsługuje sześć form współpracy oraz kierunki brutto → netto i netto → brutto, ale nie jest kandydatem do wydania jako zweryfikowany kalkulator podatkowy. Najważniejsze ograniczenie: dane i formuły oznaczone jako model 2026 nie mają w repozytorium źródeł urzędowych ani udokumentowanego audytu poprawności.
+The project is a static, working calculator/prototype portfolio project built with HTML, CSS, and JavaScript. It supports six engagement types and gross → net and net → gross directions, but it is not a release candidate for a verified tax calculator. The key limitation is that the data and formulas labelled as the 2026 model have no official sources or documented accuracy audit in the repository.
 
-## Zweryfikowany obecny zakres
+## Verified Current Scope
 
-- [x] Statyczna aplikacja oparta na modułach ES, bez procesu budowania i bez zależności npm.
-- [x] Wejście kwoty, walidacja pustej, niedodatniej i bardzo dużej wartości oraz komunikat przy polu.
-- [x] Tryby brutto → netto i netto → brutto; drugi korzysta z binarnego wyszukiwania wyniku funkcji brutto → netto.
-- [x] Miesięczny model oraz roczne wejście/wyjście oparte na podziale i mnożeniu przez 12.
-- [x] Obliczenia dla UoP, zlecenia, dzieła oraz B2B: skala, liniowy i ryczałt.
-- [x] Opcje formularza dla ulgi dla młodych, PPK, PIT-2, KUP oraz B2B ZUS (w tym wartości własne); część opcji jest wyłączana zależnie od typu umowy.
-- [x] Wyniki z pozycjami składek, PIT, PPK, obciążeniem i — tylko dla UoP — kosztem pracodawcy, plus ranking sześciu form współpracy.
-- [x] Parametry URL dla stanu kalkulacji, wydruk podsumowania i preferencja motywu w `localStorage`.
-- [x] Jasny, ciemny i systemowy motyw, układ responsywny, style fokusu, `aria-live`, semantyczne grupy formularza oraz reguła ograniczonego ruchu.
-- [x] Dependency-free harness Node.js dla logiki obliczeń.
-- [ ] Poprawność wartości, formuł i ich zgodność z rzeczywistymi polskimi zasadami nie została zweryfikowana w repozytorium.
-- [ ] Nie ma testów DOM/UI, automatycznego audytu dostępności ani zapisanych scenariuszy kalkulacji.
+- [x] Static application based on ES modules, with no build process and no npm dependencies.
+- [x] Amount input, validation for empty, non-positive, and very large values, and a message at the field.
+- [x] Gross → net and net → gross modes; the latter uses binary search over the gross → net function result.
+- [x] Monthly model and annual input/output based on dividing and multiplying by 12.
+- [x] Calculations for employment, mandate, specific-work, and B2B contracts: tax scale, flat tax, and lump-sum taxation.
+- [x] Form options for the under-26 relief, PPK, PIT-2, deductible costs (KUP), and B2B ZUS (including custom values); some options are disabled depending on the contract type.
+- [x] Results with contribution, PIT, PPK, deduction, and—only for employment—employer-cost entries, plus a ranking of six engagement types.
+- [x] URL parameters for calculation state, summary printing, and a theme preference in `localStorage`.
+- [x] Light, dark, and system themes; responsive layout; focus styles; `aria-live`; semantic form groups; and a reduced-motion rule.
+- [x] Dependency-free Node.js harness for calculation logic.
+- [ ] The accuracy of values and formulas, and their compliance with actual Polish rules, has not been verified in the repository.
+- [ ] There are no DOM/UI tests, automated accessibility audits, or saved calculation scenarios.
 
-## Zasady rozwoju
+## Development Principles
 
-- [ ] Nie przedstawiać wyników jako porady podatkowej, prawnej, księgowej ani finansowej.
-- [ ] Zmieniać dane i formuły dopiero po weryfikacji w wiarygodnych źródłach oraz dodaniu odpowiednich testów.
-- [ ] Oddzielać dane reguł od funkcji obliczeń i renderowania interfejsu; zachować obecne granice `tax-config.js`, `calculations.js`, `utils.js` i `main.js`.
-- [ ] Dokumentować uproszczenia, źródła, datę przeglądu, reguły zaokrągleń i przypadki nieobsługiwane.
-- [ ] Chronić prywatność: domyślnie nie przesyłać ani nie zapisywać danych finansowych użytkownika.
+- [ ] Do not present results as tax, legal, accounting, or financial advice.
+- [ ] Change data and formulas only after verification using reliable sources and after adding appropriate tests.
+- [ ] Keep rule data separate from calculation functions and interface rendering; retain the current boundaries of `tax-config.js`, `calculations.js`, `utils.js`, and `main.js`.
+- [ ] Document simplifications, sources, review date, rounding rules, and unsupported cases.
+- [ ] Protect privacy: do not transmit or save users' financial data by default.
 
-## Wymagane prace przed pozycjonowaniem jako wiarygodny kalkulator
+## Required Work Before Positioning as a Reliable Calculator
 
-### 1. Poprawność obliczeń
+### 1. Calculation Accuracy
 
-- [ ] Zweryfikować każdą stałą i formułę w `js/tax-config.js` oraz `js/calculations.js` względem zamierzonego zbioru polskich reguł.
-- [ ] Udokumentować wspierany rok/reguły, źródła, datę ich przeglądu i wszystkie świadome uproszczenia.
-- [ ] Zweryfikować progi, ulgi, składki, KUP, wartości minimalne, limity i zależności obliczeń bez wprowadzania niepotwierdzonych danych.
-- [ ] Ustalić kolejność obliczeń oraz zasady zaokrągleń do groszy i potwierdzić zgodność wyświetlanych sum z wartościami wewnętrznymi.
-- [ ] Sprawdzić ścieżki UoP, zlecenia, dzieła i każdej formy B2B, w tym odwrócone wyszukiwanie netto → brutto.
-- [ ] Wyjaśnić lub zmienić model roczny, który obecnie annualizuje model miesięczny.
+- [ ] Verify every constant and formula in `js/tax-config.js` and `js/calculations.js` against the intended set of Polish rules.
+- [ ] Document the supported year/rules, sources, review date, and all deliberate simplifications.
+- [ ] Verify thresholds, reliefs, contributions, deductible costs (KUP), minimum values, limits, and calculation dependencies without introducing unconfirmed data.
+- [ ] Establish the calculation order and rounding rules to grosz, and confirm that displayed totals agree with internal values.
+- [ ] Check the employment, mandate, specific-work, and every B2B path, including the reverse net → gross search.
+- [ ] Explain or change the annual model, which currently annualizes the monthly model.
 
-### 2. Walidacja i obsługa błędów
+### 2. Validation and Error Handling
 
-- [ ] Przetestować zero, liczby ujemne, puste i błędnie sformatowane wartości oraz wartości nietypowo duże.
-- [ ] Zweryfikować zakresy i format własnych składek B2B oraz zachowanie opcji nieobsługiwanych przez daną umowę.
-- [ ] Zapewnić zrozumiałe błędy przy polu i zachowanie wprowadzonych wartości po błędzie.
-- [ ] Upewnić się, że nieaktualne wyniki nie są widoczne po nieprawidłowej kalkulacji.
+- [ ] Test zero, negative, empty, incorrectly formatted, and unusually large values.
+- [ ] Verify ranges and formatting for custom B2B contributions and the behavior of options unsupported by a given contract.
+- [ ] Provide understandable errors at the field and preserve entered values after an error.
+- [ ] Ensure stale results are not visible after an invalid calculation.
 
-### 3. Testy i weryfikacja
+### 3. Tests and Verification
 
-- [ ] Dodać źródłowo potwierdzone lub zweryfikowane przez specjalistę przypadki referencyjne dla wszystkich ścieżek obliczeń.
-- [ ] Dodać testy progów, wartości granicznych, zaokrągleń, ulg, PPK, PIT-2, KUP, typów ZUS i modelu rocznego.
-- [ ] Dodać regresje dla każdej naprawionej wady obliczeń oraz rozdzielić testy obecnego zachowania od testów poprawności merytorycznej.
-- [ ] Dodać testy interakcji formularza, przywracania URL, resetu i formatowania wyników, jeżeli zostanie wybrany lekki runner przeglądarkowy.
+- [ ] Add source-confirmed or specialist-verified reference cases for all calculation paths.
+- [ ] Add tests for thresholds, boundary values, rounding, reliefs, PPK, PIT-2, KUP, ZUS types, and the annual model.
+- [ ] Add regressions for every corrected calculation defect and separate current-behavior tests from substantive-accuracy tests.
+- [ ] Add tests for form interactions, URL restoration, reset, and result formatting if a lightweight browser runner is selected.
 
-### 4. Dostępność i jakość interakcji
+### 4. Accessibility and Interaction Quality
 
-- [ ] Wykonać keyboard-only walkthrough, przegląd kolejności fokusu i działania resetu oraz ponownej kalkulacji.
-- [ ] Przeprowadzić screen-reader smoke test etykiet, opisów, błędów, aktualizacji wyników, założeń i tabeli porównawczej.
-- [ ] Sprawdzić kontrast w obu motywach i czy podsumowanie pozostaje zrozumiałe bez formatowania wizualnego.
-- [ ] Sprawdzić czytelność formularza, wyników i porównania na reprezentatywnych widokach mobilnych i desktopowych.
-- [ ] Doprecyzować nazwy, jednostki i objaśnienia brutto, netto, obciążenia, PIT, składek i kosztu pracodawcy.
+- [ ] Complete a keyboard-only walkthrough and review focus order, reset behavior, and recalculation.
+- [ ] Perform a screen-reader smoke test of labels, descriptions, errors, result updates, assumptions, and the comparison table.
+- [ ] Check contrast in both themes and whether the summary remains understandable without visual formatting.
+- [ ] Check the readability of the form, results, and comparison on representative mobile and desktop viewports.
+- [ ] Clarify names, units, and explanations for gross pay, net pay, deductions, PIT, contributions, and employer cost.
 
-### 5. Prywatność, dokumentacja i gotowość wydaniowa
+### 5. Privacy, Documentation, and Release Readiness
 
-- [ ] Potwierdzić przed wydaniem, że dane finansowe pozostają lokalne, oraz ponownie sprawdzić brak usług zewnętrznych i niezamierzonego trwałego zapisu.
-- [ ] Utrzymywać widoczne ograniczenia modelu i disclaimer w interfejsie oraz dokumentacji.
-- [ ] Zweryfikować uruchomienie przez udokumentowany serwer HTTP, ścieżki assetów, druk, metadane i zachowanie w wspieranych przeglądarkach.
-- [ ] Usunąć błędy i ostrzeżenia konsoli wykryte podczas zwykłego użycia.
-- [ ] Potwierdzić, że README, plan i changelog odpowiadają wydawanemu kodowi.
+- [ ] Before release, confirm that financial data remains local, and recheck for external services and unintended persistent storage.
+- [ ] Maintain visible model limitations and disclaimers in the interface and documentation.
+- [ ] Verify startup using the documented HTTP server, asset paths, printing, metadata, and behavior in supported browsers.
+- [ ] Remove console errors and warnings found during normal use.
+- [ ] Confirm that the README, plan, and changelog match the released code.
 
-## Zalecane usprawnienia po weryfikacji podstaw
+## Recommended Improvements After the Fundamentals Are Verified
 
-- [ ] Rozdzielić szczegóły kosztu pracodawcy na składniki, jeśli zostaną poprawnie zdefiniowane dla modelu.
-- [ ] Dodać objaśnienia/glosariusz oraz czytelniejsze wyjaśnienie relacji w rankingu.
-- [ ] Rozważyć dostępną prezentację porównania przy małych szerokościach bez utraty kontekstu tabeli.
-- [ ] Rozstrzygnąć los informacyjnego przełącznika VAT: jasno utrzymać go jako no-op, usunąć albo modelować dopiero w ramach zweryfikowanego zakresu.
-- [ ] Rozważyć wybór stawki ryczałtu wyłącznie z opisanym zakresem i testami; obecnie kod używa jednej stawki IT.
-- [ ] Przy rozbudowie UI podzielić `main.js` na mniejsze moduły, zachowując istniejący przepływ stanu i URL.
+- [ ] Break down employer-cost details into components if they are correctly defined for the model.
+- [ ] Add explanations/a glossary and a clearer explanation of the relationships in the ranking.
+- [ ] Consider an accessible comparison presentation at small widths without losing table context.
+- [ ] Decide the fate of the informational VAT switch: explicitly keep it as a no-op, remove it, or model it only within a verified scope.
+- [ ] Consider lump-sum-rate selection only with a documented scope and tests; the code currently uses one IT rate.
+- [ ] When expanding the UI, split `main.js` into smaller modules while retaining the existing state and URL flow.
 
-## Opcjonalny przyszły rozwój
+## Optional Future Development
 
-- [ ] Zweryfikowane konfiguracje dodatkowych lat podatkowych.
-- [ ] Porównanie zapisanych scenariuszy lokalnie w przeglądarce, z jasną informacją o przechowywaniu danych.
-- [ ] Eksport lub druk przyjaznego podsumowania po uprzedniej weryfikacji obliczeń.
-- [ ] Wielojęzyczność, integracje backendowe lub automatyczne aktualizacje danych — tylko po zdefiniowaniu prywatności, źródeł i odpowiedzialności za dane.
+- [ ] Verified configurations for additional tax years.
+- [ ] Comparison of saved scenarios locally in the browser, with clear information about data storage.
+- [ ] Export or print of a user-friendly summary after calculation verification.
+- [ ] Multilingual support, backend integrations, or automatic data updates—only after defining privacy, sources, and data responsibility.
 
-## Kryteria ukończenia wymaganej pracy
+## Completion Criteria for the Required Work
 
-- [ ] Wszystkie wspierane ścieżki kalkulacji mają udokumentowane reguły i zweryfikowane przypadki referencyjne.
-- [ ] Przypadki graniczne, odwrócone wyszukiwanie i zaokrąglenia są pokryte testami.
-- [ ] Nie ma znanych krytycznych błędów obliczeń, a ograniczenia i przypadki nieobsługiwane są opisane.
-- [ ] Przeglądy dostępności, responsywności, druku i podstawowych przeglądarek są wykonane oraz odnotowane.
-- [ ] Projekt uruchamia się poleceniem opisanym w README, a dokumentacja jest zgodna z kodem.
+- [ ] All supported calculation paths have documented rules and verified reference cases.
+- [ ] Boundary cases, reverse search, and rounding are covered by tests.
+- [ ] There are no known critical calculation defects, and limitations and unsupported cases are described.
+- [ ] Accessibility, responsiveness, printing, and baseline browser reviews have been completed and recorded.
+- [ ] The project starts with the command described in the README, and the documentation matches the code.
 
-## Migracja wcześniejszych notatek
+## Migration of Previous Notes
 
-Dotychczasowy plik planu został zastąpiony tym dokumentem po odróżnieniu funkcji widocznych w kodzie od niezweryfikowanych deklaracji. W katalogu projektu nie istniał osobny plik z listą ulepszeń, więc nie było dodatkowej listy do migracji. Przydatne, nadal otwarte tematy z wcześniejszego planu zostały skonsolidowane powyżej jako wymagane, zalecane albo opcjonalne zadania.
+The previous plan file was replaced with this document after distinguishing features visible in the code from unverified claims. No separate file containing an improvement list existed in the project directory, so there was no additional list to migrate. Useful open topics from the previous plan were consolidated above as required, recommended, or optional tasks.

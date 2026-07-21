@@ -1,29 +1,29 @@
 # Changelog
 
-Wszystkie istotne zmiany w tym projekcie będą dokumentowane w tym pliku. Planowane prace należą do [PLAN.md](PLAN.md).
+All notable changes to this project will be documented in this file. Planned work belongs in [PLAN.md](PLAN.md).
 
 ## Unreleased
 
 ### Documentation
 
-- Uporządkowano dokumentację w kanonicznych plikach `README.md`, `PLAN.md` i `CHANGELOG.md`.
-- Zastąpiono historyczny plik planu planem opartym na bieżącym kodzie oraz usunięto poprzedni plik po migracji istotnych otwartych zadań.
-- Uściślono opis uproszczonego modelu, ograniczeń, uruchomienia, testów, prywatności i statusu w README.
+- Reorganized documentation into the canonical `README.md`, `PLAN.md`, and `CHANGELOG.md` files.
+- Replaced the historical plan file with a plan based on the current code and removed the previous file after migrating relevant open tasks.
+- Clarified the README description of the simplified model, limitations, setup, tests, privacy, and status.
 
-## Udokumentowane kamienie milowe repozytorium
+## Documented Repository Milestones
 
-Poniższe wpisy wynikają z historii Git dla katalogu projektu. Nie odtwarzają pełnej historii wydań ani nie potwierdzają merytorycznej poprawności obliczeń.
+The entries below are derived from the Git history for the project directory. They do not reconstruct a complete release history or confirm the substantive accuracy of calculations.
 
 ### 2026-06-29
 
 #### Changed
 
-- Dodano lub rozszerzono podstawy zaufania interfejsu, w tym metadane modelu i założenia, obsługę motywu, style druku oraz dependency-free harness obliczeń.
-- Wzmocniono walidację kwoty i stany opcji formularza zależne od typu umowy.
-- Odświeżono wcześniejszą roadmapę projektu.
+- Added or expanded interface trust foundations, including model metadata and assumptions, theme handling, print styles, and a dependency-free calculation harness.
+- Strengthened amount validation and contract-type-dependent form option states.
+- Refreshed the previous project roadmap.
 
 ### 2026-06-28
 
 #### Added
 
-- Dodano początkową wersję projektu ze statycznym interfejsem, modułami JavaScript, arkuszem stylów, lokalnym fontem, README i planem.
+- Added the initial project version with a static interface, JavaScript modules, stylesheet, local font, README, and plan.
