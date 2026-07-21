@@ -1,73 +1,73 @@
 # Digital Vault Polish Tax Calculator
 
-Statyczny, przeglądarkowy kalkulator orientacyjny wynagrodzeń i obciążeń dla Polski. Aplikacja przyjmuje kwotę brutto albo docelowe netto, oblicza uproszczone wyniki i porównuje dostępne formy współpracy. Jest to działający prototyp/portfolio project, a nie produkt gotowy do podejmowania rzeczywistych decyzji podatkowych.
+A static, browser-based calculator for indicative Polish remuneration and tax burdens. The application accepts a gross amount or a target net amount, calculates simplified results, and compares the available engagement types. It is a working prototype/portfolio project, not a product intended for real tax decisions.
 
-## Zakres obecnej wersji
+## Current Version Scope
 
-Kod zawiera model oznaczony jako `PL-2026-simplified-v1` i rok `2026`. Konfiguracja nie zawiera źródeł urzędowych ani audytu reguł, dlatego oznaczenie roku opisuje dane zapisane w projekcie, **nie** potwierdzoną zgodność z aktualnym prawem.
+The code contains a model identified as `PL-2026-simplified-v1` and tax year `2026`. The configuration does not include official sources or an audit of the rules; therefore, the year label describes the data stored in the project, **not** confirmed compliance with current law.
 
-W obecnej wersji można:
+The current version can:
 
-- obliczać uproszczone przejście brutto → netto i wyszukiwać przybliżoną kwotę netto → brutto;
-- wybrać okres miesięczny albo roczny; tryb roczny dzieli wartość wejściową przez 12, stosuje model miesięczny i annualizuje wynik;
-- wybrać: umowę o pracę, umowę zlecenie, umowę o dzieło, B2B na skali, B2B liniowo albo B2B ryczałt;
-- użyć opcji wieku poniżej 26 lat, PPK, PIT-2 i KUP, gdy interfejs dopuszcza je dla wybranego typu umowy;
-- dla B2B wybrać preset ZUS albo wpisać własne składki społeczne i zdrowotną;
-- wyświetlić netto, brutto, obciążenie, koszt pracodawcy tam, gdzie model go wylicza, oraz szczegóły potrąceń i tabelę porównawczą;
-- przywrócić część stanu kalkulacji z parametrów URL, wydrukować poprawnie obliczone podsumowanie i zapisać wyłącznie preferencję motywu w `localStorage`.
+- calculate a simplified gross → net conversion and estimate a net → gross amount;
+- select a monthly or annual period; annual mode divides the input by 12, applies the monthly model, and annualizes the result;
+- select an employment contract (`umowa o pracę`), mandate contract (`umowa zlecenie`), contract for specific work (`umowa o dzieło`), B2B under the tax scale, B2B with a flat tax, or B2B lump-sum taxation (`ryczałt`);
+- use the under-26 option, PPK, PIT-2, and deductible costs (KUP) when the interface permits them for the selected contract type;
+- select a ZUS preset for B2B or enter custom social and health contributions;
+- display net pay, gross pay, deductions, employer cost where the model calculates it, deduction details, and a comparison table;
+- restore part of the calculation state from URL parameters, print a correctly calculated summary, and save only the theme preference in `localStorage`.
 
-## Ograniczenia i założenia
+## Limitations and Assumptions
 
-- Model jest uproszczony i jego stawki, progi, limity, kolejność obliczeń oraz zaokrąglenia nie zostały w tym repozytorium zweryfikowane z oficjalnymi źródłami.
-- B2B nie modeluje kosztów działalności, VAT, księgowości, urlopu, chorobowego ani prywatnych ubezpieczeń. Przełącznik płatnika VAT ma wyłącznie charakter informacyjny i nie zmienia wyniku.
-- Ryczałt B2B zawsze korzysta z zapisanej w konfiguracji stawki IT 12%; interfejs nie udostępnia wyboru stawki.
-- Zlecenie w formularzu nie udostępnia dobrowolnej składki chorobowej. Własne składki B2B są przyjmowane jako dodatnie miesięczne wartości.
-- Wynik nie jest poradą podatkową, prawną, księgową ani finansową. Przed użyciem wyniku w realnej decyzji należy sprawdzić aktualne zasady w źródłach urzędowych lub skonsultować się ze specjalistą.
+- The model is simplified. Its rates, thresholds, limits, calculation order, and rounding have not been verified against official sources in this repository.
+- B2B does not model business expenses, VAT, accounting, leave, sickness benefits, or private insurance. The VAT payer switch is informational only and does not affect the result.
+- B2B lump-sum taxation always uses the 12% IT rate stored in the configuration; the interface does not provide a rate selection.
+- The mandate contract form does not offer voluntary sickness insurance. Custom B2B contributions are accepted as positive monthly amounts.
+- The result is not tax, legal, accounting, or financial advice. Before using a result for a real decision, verify the current rules using official sources or consult a professional.
 
-## Technologia i uruchomienie
+## Technology and Setup
 
-Projekt to statyczna aplikacja HTML, CSS i JavaScript z modułami ES. Nie ma zależności npm ani skryptu budowania. Zainstalowany lokalnie font Inter znajduje się w `assets/fonts/`.
+This project is a static HTML, CSS, and JavaScript application using ES modules. It has no npm dependencies or build script. The locally installed Inter font is located in `assets/fonts/`.
 
-Do uruchomienia potrzebny jest serwer HTTP, ponieważ aplikacja używa modułów ES. Z katalogu projektu można użyć na przykład:
+An HTTP server is required because the application uses ES modules. From the project directory, for example:
 
 ```bash
 npx serve .
 ```
 
-Następnie otwórz adres podany przez serwer. Można też użyć dowolnego innego lokalnego serwera statycznego wskazującego ten katalog.
+Then open the address provided by the server. Any other local static server pointing to this directory can also be used.
 
-## Testy
+## Tests
 
-Lekki harness Node.js sprawdza bieżące zachowanie funkcji kalkulacyjnych: przypadki smoke dla sześciu typów umów, wybrane wartości regresyjne, tolerancję odwróconego wyszukiwania i rozmiar porównania.
+A lightweight Node.js harness checks the current behavior of the calculation functions: smoke cases for six contract types, selected regression values, reverse-search tolerance, and comparison size.
 
 ```bash
 npm run test:calculations
 ```
 
-Testy nie są walidacją reguł podatkowych z oficjalnymi przykładami i nie obejmują interfejsu, URL, druku ani dostępności.
+The tests do not validate tax rules against official examples and do not cover the interface, URL handling, printing, or accessibility.
 
-## Struktura projektu
+## Project Structure
 
 ```text
 .
-├── index.html                    # formularz, wyniki i tabela porównawcza
-├── css/style.css                 # motywy, układ responsywny i style druku
+├── index.html                    # form, results, and comparison table
+├── css/style.css                 # themes, responsive layout, and print styles
 ├── js/
-│   ├── tax-config.js             # dane oraz założenia uproszczonego modelu
-│   ├── calculations.js           # funkcje obliczeń i porównania
-│   ├── main.js                   # obsługa formularza, renderowanie i URL
-│   └── utils.js                  # formatowanie, parsowanie i przeliczenie okresu
-├── scripts/test-calculations.js  # dependency-free harness Node.js
+│   ├── tax-config.js             # data and assumptions for the simplified model
+│   ├── calculations.js           # calculation and comparison functions
+│   ├── main.js                   # form handling, rendering, and URL state
+│   └── utils.js                  # formatting, parsing, and period conversion
+├── scripts/test-calculations.js  # dependency-free Node.js harness
 ├── assets/fonts/InterVariable.woff2
-├── PLAN.md                       # zweryfikowana mapa dalszych prac
-└── CHANGELOG.md                  # udokumentowane zmiany i historia repozytorium
+├── PLAN.md                       # verified roadmap for further work
+└── CHANGELOG.md                  # documented changes and repository history
 ```
 
-## Prywatność, dostępność i responsywność
+## Privacy, Accessibility, and Responsiveness
 
-Obliczenia są wykonywane w przeglądarce przez lokalny kod aplikacji. W kodzie nie ma integracji sieciowej ani mechanizmu zapisu danych kalkulacji; `localStorage` służy wyłącznie do zapisu wybranego motywu. Interfejs zawiera etykiety formularza, grupy `fieldset`/`legend`, obszary `aria-live`, komunikat błędu kwoty, style widocznego fokusu, preferencję ograniczonego ruchu oraz responsywną prezentację tabeli. Te podstawy nie zastępują pełnego audytu dostępności.
+Calculations are performed in the browser by the application's local code. The code contains no network integration or mechanism for saving calculation data; `localStorage` stores only the selected theme. The interface includes form labels, `fieldset`/`legend` groups, `aria-live` regions, an amount error message, visible focus styles, a reduced-motion preference, and responsive table presentation. These foundations do not replace a full accessibility audit.
 
-## Dokumentacja projektu
+## Project Documentation
 
-- [PLAN.md](PLAN.md) zawiera zweryfikowany stan, wymagane prace, zalecenia i opcjonalne kierunki rozwoju.
-- [CHANGELOG.md](CHANGELOG.md) rejestruje wyłącznie udokumentowane zmiany; nie zawiera planowanych funkcji.
+- [PLAN.md](PLAN.md) contains the verified status, required work, recommendations, and optional development directions.
+- [CHANGELOG.md](CHANGELOG.md) records documented changes only; it does not contain planned features.
