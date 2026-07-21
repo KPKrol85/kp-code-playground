@@ -2,7 +2,7 @@
 
 ## Project status
 
-This is an educational, standalone CSS token-library and browser catalogue. It contains 200 selectable visual systems intended as starting points for frontend interfaces, rather than a published package or a shared design-system foundation. The verified implementation is limited to CSS custom-property files, a browser catalogue, and a Node.js generator. It has no package manifest, automated test suite, schema validation, platform exports, or documented accessibility verification. The generator currently does not reproduce the tracked `index.html` exactly, so the source-to-output relationship needs reconciliation before it can be treated as a reliable release workflow.
+This is a standalone product in the **KP_Code Digital Vault**: a browser-based catalogue of 200 selectable CSS design-token systems. It is a practical frontend resource for browsing, filtering, previewing, copying, and reusing CSS token configurations. The verified implementation consists of CSS custom-property files, a browser catalogue, and a Node.js generator. It is a local/static product, not a published package or multi-platform token framework. The generator/source-to-output inconsistency around the tracked catalogue shell remains an important technical issue to reconcile before the generation workflow can be considered reliable.
 
 ## Current verified scope
 
@@ -13,6 +13,7 @@ This is an educational, standalone CSS token-library and browser catalogue. It c
 - [x] `assets/vault-data.js` provides browser-consumable catalogue data and CSS strings for the copy action.
 - [x] `index.html`, `assets/vault.css`, and `assets/vault.js` provide filtering, sorting, CSS copying, component previews, and a light/dark preference for the catalogue interface.
 - [x] `guide.html` documents selection, copying, importing, and the preview classes for users of the catalogue.
+- [x] The current generator writes `tokens/`, `assets/vault-data.js`, `index.html`, and `README.md`; the tracked `index.html` is not reproduced exactly by the current generator.
 - [ ] Primitive, semantic, and component token layers are not separately represented in the generated token files; color properties mix foundation and role-like names.
 - [ ] The light/dark toggle applies to the catalogue interface only; no per-token-system theme override architecture is verified.
 - [ ] No JSON, JavaScript module, native-platform, package-publishing, or external design-tool export is present.
@@ -21,79 +22,102 @@ This is an educational, standalone CSS token-library and browser catalogue. It c
 
 ## Design-token principles
 
-- [x] Keep `scripts/build-tokens.js` as the authoritative definition for generated token systems until the architecture is deliberately changed.
-- [x] Treat `tokens/`, `assets/vault-data.js`, and generated portions of `README.md` as generated outputs; do not edit them manually when regenerating from the current workflow.
-- [ ] Define a documented separation between primitive values, semantic roles, and component-level aliases; do not place component-specific values in the primitive layer.
-- [ ] Use consistent, predictable names with category, property, variant, and state segments; avoid unexplained duplicates and ambiguous abbreviations.
-- [ ] Keep token changes traceable and reviewable, and evaluate backward compatibility before renaming or removing public `--dt-*` properties.
-- [ ] Use accessible interaction defaults, predictable theme overrides, and explicit fallback behaviour where token references can be absent.
+- Maintain one authoritative source of truth for token-system definitions.
+- Treat intentionally generated files as build outputs rather than manually maintained source files.
+- Keep the current consumable CSS format simple and practical.
+- Introduce additional architectural layers only when they solve a verified problem.
+- Keep public `--dt-*` token names predictable and stable.
+- Evaluate backward compatibility before renaming or removing public tokens.
+- Avoid unsupported accessibility or standards-compliance claims.
+- Keep the browser catalogue, generated outputs, and source metadata synchronized.
 
 ## Roadmap phases
 
-### Phase 1 — Required: source and token architecture
+### Phase 1 — Required: product documentation and source/build reconciliation
 
-- [ ] Reconcile `index.html` with the generator so a clean generation produces every committed generated output without unexpected differences.
-- [ ] Document the complete source-to-output map, including the purpose of the catalogue metadata, CSS files, embedded copy payloads, and preview styles.
-- [ ] Separate primitive palette values, semantic UI roles, and optional component aliases; define inheritance and fallback rules.
-- [ ] Audit the 200 systems for duplicated, overlapping, conflicting, or undocumented values, removing magic values only where the intended visual output is preserved.
+- [ ] Correct user-facing documentation so it consistently describes this as a KP_Code Digital Vault product and accurately states its local/static consumption model.
+- [ ] Document the complete source-to-output map, including the purpose of system metadata, CSS files, catalogue data, embedded copy payloads, preview data, and generated documentation sections where verified.
+- [ ] Verify that system IDs, names, metadata, generated CSS, catalogue entries, copy payloads, and preview data are derived from one authoritative source rather than duplicated manually.
+- [ ] Decide and document whether `index.html` is a generated output that must be reproduced exactly or a manually maintained catalogue shell that token generation must not overwrite, then align the generator and release checks with that decision.
+- [ ] Reconcile the generator and tracked outputs according to the documented `index.html` decision, without unexpected differences in files intentionally generated by the build.
 - [ ] Decide whether preview BEM classes remain bundled with consumable token files or move to clearly separate demonstration assets.
 
-### Phase 2 — Required: naming, color, and themes
+### Phase 2 — Required: deterministic generation and validation
 
-- [ ] Publish naming rules for categories, properties, variants, states, and any replacement or deprecated names; prevent namespace collisions.
-- [ ] Review color palettes and semantic foreground/background, border, action, success, warning, error, information, disabled, hover, active, selected, and focus roles.
-- [ ] Establish and document a per-system theme strategy. If light/dark themes are supported, map semantic roles rather than duplicating complete token sets and test missing-token fallbacks.
-- [ ] Identify text/control pairings that require contrast verification; do not claim WCAG compliance until measurements and review criteria are recorded.
-
-### Phase 3 — Recommended: scale quality and accessibility
-
-- [ ] Review font-family fallbacks, size, weight, line-height, and letter-spacing relationships; remove unused or duplicated typography values where safe.
-- [ ] Review spacing, container, and layout scales; add reusable sizing, grid, gap, breakpoint, or touch-target tokens only when they have a real use case.
-- [ ] Review border widths/styles, radius intent, shadows, and elevation roles. Ensure boundaries do not rely on shadows alone without an accessible alternative.
-- [ ] Review motion durations and easing, distinguish functional from decorative transitions, and define reduced-motion alternatives without using long motion for essential feedback.
-- [ ] Verify visible focus treatment and state differentiation that does not rely solely on color; record all remaining unverified combinations.
-
-### Phase 4 — Required: build validation and testing
-
-- [ ] Add a deterministic generation check that fails when committed generated files differ from a clean build.
+- [ ] Add a deterministic generation check for files intentionally generated by the documented build workflow.
 - [ ] Add schema validation for required fields, duplicate system IDs/files/names, invalid values or units, undefined aliases, and circular references where aliases are introduced.
-- [ ] Add automated checks for token-file completeness, generated CSS references, catalogue-data completeness, and theme mappings when themes exist.
+- [ ] Add automated checks for token-file completeness, generated CSS references, and catalogue-data completeness.
+- [ ] Audit the 200 systems for duplicated, overlapping, conflicting, or undocumented values, removing magic values only where the intended visual output is preserved.
 - [ ] Add regression tests for corrected token defects and verify the documented build and validation commands in a clean environment.
 - [ ] Document which generated files must be committed and which build artefacts should be ignored.
 
-### Phase 5 — Recommended: documentation and governance
+### Phase 3 — Required: catalogue quality and accessibility
 
-- [ ] Update user-facing documentation to explain the hierarchy, naming rules, source versus generated files, consumption examples, theme use, and contribution workflow.
-- [ ] Keep implementation status in project documentation, future work in `PLAN.md`, and completed changes in `CHANGELOG.md`.
-- [ ] Define how contributors propose, reuse, alias, add, deprecate, and remove tokens, including review rules and migration guidance for breaking public-token changes.
-- [ ] Keep the library understandable by adding categories only when they are supported by a concrete use case.
+- [ ] Verify keyboard access to filtering, sorting, system selection, previews, and CSS-copy controls.
+- [ ] Review visible focus states and logical focus order.
+- [ ] Ensure copy actions provide accessible success and failure feedback.
+- [ ] Review filtering and sorting semantics and control labelling.
+- [ ] Add or verify a clear empty-results state.
+- [ ] Verify that every one of the 200 systems can be selected, previewed, and copied correctly.
+- [ ] Review responsive behaviour across representative mobile, tablet, and desktop widths.
+- [ ] Verify long system names, long CSS values, and large content blocks do not break layouts.
+- [ ] Review light/dark catalogue-interface behaviour.
+- [ ] Respect reduced-motion preferences in catalogue transitions and interactive feedback where applicable.
+- [ ] Review component-preview semantics and readability.
+- [ ] Verify that the catalogue remains usable without relying only on color.
+- [ ] Check for console errors, broken controls, and inconsistent catalogue metadata.
+
+### Phase 4 — Required: release workflow
+
+- [ ] Publish naming rules for categories, properties, variants, states, and any replacement or deprecated names; prevent namespace collisions.
+- [ ] Identify text/control pairings that require contrast verification; do not claim WCAG compliance until measurements and review criteria are recorded.
+- [ ] Document the supported consumption method, source workflow, intentionally generated outputs, and any remaining unverified areas.
+- [ ] Define and run a repeatable release check for this local/static catalogue product.
+
+## Recommended architecture evolution
+
+The current flat set of 55 consumable CSS custom properties is a valid product format. The following work should be pursued only when it solves a verified consumer or maintenance need.
+
+- [ ] Evaluate whether primitive, semantic, and component layers would improve the source model without unnecessarily complicating consumable CSS output.
+- [ ] Decide whether architectural layering should exist only in the generator source model or also in generated CSS files.
+- [ ] Evaluate whether component aliases solve a real consumer use case.
+- [ ] Evaluate whether per-system light/dark theme mappings are appropriate for the product.
+- [ ] Define semantic theme mapping only after a verified theme use case exists.
+- [ ] Review color palettes and semantic foreground/background, border, action, success, warning, error, information, disabled, hover, active, selected, and focus roles when semantic roles are introduced.
+- [ ] Review font-family fallbacks, size, weight, line-height, and letter-spacing relationships; remove unused or duplicated typography values where safe.
+- [ ] Review spacing, container, and layout scales; add reusable sizing, grid, gap, breakpoint, or touch-target tokens only when they have a real use case.
+- [ ] Review border widths/styles, radius intent, shadows, and elevation roles. Ensure boundaries do not rely on shadows alone without an accessible alternative.
+- [ ] Introduce deprecation and migration procedures when public token changes begin to require them.
+- [ ] Keep the token model understandable by adding categories only when they are supported by a concrete use case.
 
 ## Release readiness
 
-Before a release or distribution decision, complete these required checks:
+Before a release of the KP_Code Digital Vault product, complete these required checks:
 
-- [ ] A clean build reproduces all committed generated outputs, including `index.html`.
-- [ ] All public token references resolve and any supported theme contains complete mappings.
-- [ ] Validation and regression-test commands pass in a clean environment.
-- [ ] No unexpected generated-file differences remain.
-- [ ] Documentation accurately describes the source workflow, supported outputs, and intended consumption method.
-- [ ] Breaking changes, removals, and deprecations are documented with supported migration guidance.
-- [ ] Accessibility-related token combinations and motion behaviour have been reviewed and any unverified cases are clearly labelled.
+- [ ] The documented build deterministically reproduces files intentionally generated by it; `index.html` is included only if the documented architecture designates it as generated.
+- [ ] Source definitions and catalogue data are synchronized, including IDs, names, metadata, CSS copy payloads, and preview data.
+- [ ] All 200 systems can be browsed, filtered, sorted, selected, previewed, and copied correctly.
+- [ ] All public token references resolve.
+- [ ] No unexpected differences remain in intentionally generated files.
+- [ ] Validation and regression-test commands pass in a clean environment once they exist.
+- [ ] Product documentation accurately describes the source workflow, supported outputs, and intended consumption method.
+- [ ] Catalogue accessibility, focus, color-independent use, and reduced-motion behaviour have been reviewed without unsupported compliance claims.
+- [ ] Remaining unverified areas are clearly documented.
 
 ## Optional future development
 
 The following ideas are not current commitments:
 
-- [ ] Add additional theme modes, such as high-contrast mappings, after a semantic theme architecture and validation exist.
-- [ ] Add JSON, JavaScript module, or platform-specific exports after the source model supports them.
-- [ ] Evaluate Style Dictionary, Figma integration, package publishing, automated visual documentation, or a token playground only when they serve a defined consumer workflow.
-- [ ] Consider component-library integration, migration utilities, and automated accessibility reporting after the core validation and governance work is complete.
+- [ ] Add JSON or JavaScript module exports after the source model supports them.
+- [ ] Evaluate Style Dictionary, Figma integration, or automated visual documentation only when they serve a defined consumer workflow.
+- [ ] Consider package publishing, high-contrast themes, platform-specific exports, component-library integration, migration utilities, or automated accessibility reporting after the core product and validation work is complete.
 
 ## Definition of done
 
-- [ ] The token architecture, source-to-output relationship, and naming rules are documented and consistently implemented.
-- [ ] Generated outputs are deterministic, all token references resolve, and required themes have complete mappings.
-- [ ] Build, validation, and regression-test commands pass in a clean environment.
-- [ ] Accessibility-related color, focus, state, and motion decisions are reviewed and documented without unsupported compliance claims.
-- [ ] Documentation matches the repository, and public breaking changes, deprecations, and migrations are recorded where applicable.
-- [ ] The project is ready for its documented consumption method.
+- [ ] The KP_Code Digital Vault product's source-to-output relationship, naming rules, and intentionally generated files are documented and consistently implemented.
+- [ ] Generated outputs are deterministic, all public token references resolve, and source definitions remain synchronized with catalogue data.
+- [ ] The 200 systems can be reliably browsed, filtered, sorted, previewed, and copied in the catalogue.
+- [ ] Build, validation, and regression-test commands pass in a clean environment once implemented.
+- [ ] Catalogue accessibility-related focus, state, color, and motion decisions are reviewed and documented without unsupported compliance claims.
+- [ ] Documentation matches the repository, and any remaining unverified areas are recorded.
+- [ ] The product is ready for its documented local/static consumption method.
