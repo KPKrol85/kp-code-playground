@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Layout Lens — native DOMParser analyzer fixtures</title>
+  <style>body{font:16px system-ui,sans-serif;margin:2rem;max-width:70rem} .pass{color:#087f23}.fail{color:#b00020} code,pre{background:#f3f4f6;padding:.2rem}.summary{font-weight:700}</style>
+</head>
+<body>
+  <h1>HTML analyzer fixture runner</h1>
+  <p id="environment">Loading browser environment…</p>
+  <p id="summary" class="summary">Loading fixtures…</p>
+  <ol id="results"></ol>
+  <p>This harness calls <code>analyzeHtmlSource(source)</code> without its optional parser adapter. It requires and reports native <code>window.DOMParser</code>.</p>
+  <script type="module">
+    import { analyzeHtmlSource, parseHtmlToDetachedDocument } from '../../assets/js/htmlAnalyzer.js';
+    import { createIssueId } from '../../assets/js/issueIds.js';
+    import { FINDING_SOURCES } from '../../assets/js/findingMetadata.js';
+
+    const fixture = async (name) => (await fetch(`../../tests/fixtures/html/${name}`)).text();
+    const ids = (findings) => findings.map((finding) => finding.checkId).sort();
+    const assert = (condition, message) => { if (!condition) throw new Error(message); };
+    const includes = (actual, expected) => expected.forEach((id) => assert(actual.includes(id), `Expected ${id}; got ${actual.join(', ') || '(none)'}`));
+    const excludes = (actual, expected) => expected.forEach((id) => assert(!actual.includes(id), `Did not expect ${id}; got ${actual.join(', ') || '(none)'}`));
+    const scenarios = [
+      ['valid semantic document produces no obvious false positives', 'semantic-valid.html', 0, [], ['headings-missing-h1', 'landmarks-missing-main', 'controls-unlabeled', 'buttons-empty-name', 'links-empty-name', 'images-missing-alt']],
+      ['empty HTML remains a safe empty result', null, 0, [], [], '   ', 'empty'],
+      ['problematic HTML isolates deterministic accessibility checks', 'problematic.html', 15, ['headings-multiple-h1', 'headings-empty', 'landmarks-multiple-main', 'landmarks-unnamed-navigation', 'landmarks-unnamed-region', 'labels-empty', 'labels-invalid-for', 'controls-unlabeled', 'buttons-empty-name', 'links-empty-name', 'links-missing-href', 'links-placeholder-href', 'images-missing-alt', 'images-suspicious-empty-alt', 'images-invalid-src'], ['headings-missing-h1', 'landmarks-missing-main', 'landmarks-missing-navigation']],
+      ['navigation-like links without main are reported without crashing', 'no-main-navlike.html', null, ['landmarks-missing-main', 'landmarks-missing-navigation'], ['headings-missing-h1']],
+      ['all supported valid labelling patterns avoid control findings', 'labels-valid.html', 0, [], ['controls-unlabeled', 'labels-invalid-for', 'labels-empty']],
+      ['malformed HTML is recovered by native DOMParser safely', 'malformed.html', null, ['headings-skipped-level'], ['controls-unlabeled', 'buttons-empty-name']]
+    ];
+    const results = [];
+    const run = async (name, test) => { try { await test(); results.push({ name, pass: true }); } catch (error) { results.push({ name, pass: false, message: error.message }); } };
+
+    const nativeAvailable = typeof window.DOMParser === 'function';
+    document.querySelector('#environment').textContent = `User agent: ${navigator.userAgent}. Native window.DOMParser: ${nativeAvailable ? 'available' : 'unavailable'}.`;
+    await run('native window.DOMParser is available and parses HTML', () => {
+      assert(nativeAvailable, 'window.DOMParser is unavailable');
+      const parsed = parseHtmlToDetachedDocument('<main><h1>Native parser check</h1></main>');
+      assert(parsed.querySelector('main h1')?.textContent === 'Native parser check', 'Native DOMParser did not return the expected document');
+    });
+    for (const [name, file, count, mustInclude, mustNotInclude, sourceOverride, status = 'analyzed'] of scenarios) {
+      await run(`HTML fixture: ${name}`, async () => {
+        const result = analyzeHtmlSource(sourceOverride ?? await fixture(file));
+        assert(result.status === status, `Expected status ${status}; got ${result.status}`);
+        if (count !== null) assert(result.findings.length === count, `Expected ${count} findings; got ${result.findings.length}`);
+        includes(ids(result.findings), mustInclude); excludes(ids(result.findings), mustNotInclude);
+      });
+    }
+    await run('fixture findings are deterministic across equivalent whitespace and comments', async () => {
+      const base = await fixture('problematic.html');
+      const noisy = `<!-- ignored -->\n${base.replaceAll('><', '>\n  <')}`;
+      assert(JSON.stringify(ids(analyzeHtmlSource(base).findings)) === JSON.stringify(ids(analyzeHtmlSource(noisy).findings)), 'Issue IDs changed');
+    });
+    await run('fixture issue IDs do not depend on display wording or evidence text', async () => {
+      const result = analyzeHtmlSource(await fixture('problematic.html'));
+      const finding = result.findings.find((item) => item.checkId === 'buttons-empty-name');
+      assert(finding?.issueId === createIssueId({ source: FINDING_SOURCES.htmlAnalyzer, ruleId: 'buttons-empty-name' }), 'Unexpected stable issue ID');
+    });
+    const passed = results.filter((result) => result.pass).length;
+    const failed = results.length - passed;
+    document.querySelector('#summary').textContent = `Result: ${passed} passed, ${failed} failed, 0 skipped (${results.length} total).`;
+    document.querySelector('#results').replaceChildren(...results.map((result) => { const item = document.createElement('li'); item.className = result.pass ? 'pass' : 'fail'; item.textContent = `${result.pass ? 'PASS' : 'FAIL'} — ${result.name}${result.message ? `: ${result.message}` : ''}`; return item; }));
+  </script>
+</body>
+</html>
