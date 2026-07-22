@@ -4,7 +4,7 @@ All notable changes to KP_Code Layout Lens are documented in this file.
 
 ## [Unreleased]
 
-No active release changes yet.
+- Fixed machine-readable manual reports so valid fractional weighted score points from severity/category profiles pass schema validation.
 
 ## [2026-07-20] — Roadmap completion and documentation standardization
 

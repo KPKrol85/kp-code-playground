@@ -37,6 +37,18 @@ test('validates schema shape and rejects unsupported versions or unknown fields'
   assert.throws(() => validateMachineReadableReport({ ...value, findings: [...value.findings, value.findings[0]] }));
 });
 
+test('supports fractional weighted score points from a selected severity profile', () => {
+  const weighted = buildManualAuditReportData({
+    ...input,
+    severityProfile: { id: 'production', name: 'Production', severityMultipliers: { low: 1, medium: 1.15, high: 1.4 } },
+    statuses: { b: 'pass', a: 'needs-work' }
+  });
+  const value = createMachineReadableReport(weighted, { generatedAt: '2026-01-01T00:00:00.000Z' });
+  assert.equal(value.scores.earnedPoints, 4.2);
+  assert.equal(value.scores.possiblePoints, 5.2);
+  assert.equal(validateMachineReadableReport(value), true);
+});
+
 test('normalizes safe local filenames and handles unavailable or failed download APIs', () => {
   assert.equal(normalizeMachineReadableFilename(' My / audit <> '), 'my-audit.json');
   const value = createMachineReadableReport(report(), { generatedAt: '2026-01-01T00:00:00.000Z' });
