@@ -22,7 +22,9 @@ KP_Code Layout Lens has completed its local-first browser audit baseline: manual
 ### Phase 1 — Verification and release readiness
 
 - [ ] Run the HTML analyzer fixture suite in a real browser runtime and record the result.
+  - 2026-07-22 verification preparation: added `docs/browser-harness/html-analyzer-fixtures.html`, which calls the production analyzer without a parser adapter and reports native `window.DOMParser` availability plus 9 fixture checks. This Linux environment had no launchable browser; transient Playwright/Chromium installation was blocked by npm HTTP 403, so no browser result was recorded. Run `python3 -m http.server 4173 --directory .` and open the harness as documented in `docs/release-readiness-browser-qa.md`.
 - [ ] Perform a documented manual browser QA pass for preview, overlays, keyboard audit, viewport comparison, downloads, print/PDF, and IndexedDB project workflows.
+  - 2026-07-22 verification preparation: documented the complete browser QA matrix, expected results, evidence requirements, and exact remaining steps in `docs/release-readiness-browser-qa.md`. No browser was available in this environment, so all interactive/browser-native checks remain `NOT RUN` or `BLOCKED`; this item is not complete.
 - [ ] Conduct keyboard and screen-reader checks for the primary audit, report, saved-project, and AI-handoff flows.
 - [ ] Validate the Markdown, print, and machine-readable report outputs with representative saved-project audit examples.
 
