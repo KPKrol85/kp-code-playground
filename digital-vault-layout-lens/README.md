@@ -75,7 +75,7 @@ npm run test:analyzer
 ```
 
 - `npm test` runs the complete dependency-free Node test suite.
-- `npm run test:analyzer` runs the focused HTML/CSS analyzer fixtures and unit tests. In a Node-only runtime, the real-`DOMParser` test is expected to be skipped.
+- `npm run test:analyzer` runs the focused HTML/CSS analyzer fixtures, including project-owned representative validation samples and correction regressions. In a Node-only runtime, the real-`DOMParser` test is expected to be skipped.
 
 ## Documentation
 
@@ -83,3 +83,5 @@ npm run test:analyzer
 - [`CHANGELOG.md`](CHANGELOG.md) — concise history of completed implementation stages.
 - [`docs/machine-readable-report-schema.md`](docs/machine-readable-report-schema.md) — the local manual-audit JSON report schema and boundaries.
 - [`docs/extension-workflow-model.md`](docs/extension-workflow-model.md) — a platform-neutral future compatibility contract, not an extension implementation.
+- [`docs/real-world-validation.md`](docs/real-world-validation.md) — executed representative analyzer validation, its evidence review, and browser limitations.
+- [`docs/consented-usability-session-plan.md`](docs/consented-usability-session-plan.md) — prepared consented-session procedure and evidence template; no sessions are claimed.
