@@ -43,7 +43,11 @@ digital-vault-microinteractions-lab/
 ├── PLAN.md                 # Verified status and forward-looking roadmap
 ├── CHANGELOG.md            # Evidence-based record of maintained changes
 ├── docs/
+│   ├── contributing-microinteractions.md # Catalogue workflow, taxonomy, and maintainability decision
+│   ├── release-checklist.md         # Release-decision checklist (not QA evidence)
 │   └── release-readiness-browser-qa.md # Repeatable manual browser QA checklist
+├── scripts/
+│   └── validate-catalogue.js         # Dependency-free catalogue validation command
 └── assets/
     ├── css/
     │   └── main.css        # Tokens, themes, components, responsiveness, motion rules
@@ -71,4 +75,10 @@ This is a static demonstration rather than a packaged component library. The rep
 
 - [`PLAN.md`](PLAN.md) records the verified baseline, required follow-up work, and clearly separated optional enhancements.
 - [`CHANGELOG.md`](CHANGELOG.md) records changes supported by repository evidence and provides the format for future maintenance.
+- [`docs/contributing-microinteractions.md`](docs/contributing-microinteractions.md) explains the required record metadata, taxonomy, preview registration, snippets, accessibility, reduced-motion behavior, verification, and the evidence-based `main.js` maintainability decision.
+- [`docs/release-checklist.md`](docs/release-checklist.md) prepares the browser-target, QA, accessibility, Clipboard, documentation, and packaging decisions required before a release.
 - [`docs/release-readiness-browser-qa.md`](docs/release-readiness-browser-qa.md) provides the repeatable, not-yet-run browser QA checklist for the first Phase 1 verification item.
+
+## Catalogue validation
+
+Run `node scripts/validate-catalogue.js` to validate the current catalogue without installing dependencies. It reuses the startup validation logic and reports unique IDs, required fields, taxonomy values, snippet strings, accessibility notes, and reduced-motion guidance violations as a non-zero exit.
