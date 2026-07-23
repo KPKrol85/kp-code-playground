@@ -33,11 +33,16 @@ Verification note (2026-07-23): added `docs/release-readiness-browser-qa.md`, a 
 
 ## Phase 2 — Required maintainability guardrails
 
-- [ ] Decide whether to add a lightweight, dependency-free automated check for the interaction data (unique IDs, required fields, taxonomy, snippets, and motion guidance) rather than relying only on startup console warnings.
-- [ ] Document a contributor workflow for adding or changing a pattern: metadata, preview renderer, snippets, accessibility note, reduced-motion behavior, and manual checks.
-- [ ] Review `assets/js/main.js` as the catalogue grows and separate responsibilities only when the single-file implementation becomes difficult to maintain; preserve the static, dependency-free architecture unless a deliberate product decision changes it.
-- [ ] Define concise taxonomy guidance for complexity and motion levels so new entries are categorized consistently.
-- [ ] Establish a release checklist with verified browser support targets, QA evidence, accessibility review scope, content review, and an explicit decision about the demo's packaging status.
+- [x] Decide whether to add a lightweight, dependency-free automated check for the interaction data (unique IDs, required fields, taxonomy, snippets, and motion guidance) rather than relying only on startup console warnings.
+  - Verification note (2026-07-23): added `scripts/validate-catalogue.js`, which evaluates the real catalogue data and reuses the browser startup validator without external dependencies.
+- [x] Document a contributor workflow for adding or changing a pattern: metadata, preview renderer, snippets, accessibility note, reduced-motion behavior, and manual checks.
+  - Verification note (2026-07-23): added `docs/contributing-microinteractions.md` with instructions grounded in the data, renderer map, generated snippets, and existing browser QA checklist.
+- [x] Review `assets/js/main.js` as the catalogue grows and separate responsibilities only when the single-file implementation becomes difficult to maintain; preserve the static, dependency-free architecture unless a deliberate product decision changes it.
+  - Verification note (2026-07-23): documented the evidence-based decision not to split the still-cohesive 32-item static implementation, plus concrete extraction triggers, in `docs/contributing-microinteractions.md`.
+- [x] Define concise taxonomy guidance for complexity and motion levels so new entries are categorized consistently.
+  - Verification note (2026-07-23): documented all supported categories and practical complexity and motion criteria with current catalogue examples in `docs/contributing-microinteractions.md`.
+- [x] Establish a release checklist with verified browser support targets, QA evidence, accessibility review scope, content review, and an explicit decision about the demo's packaging status.
+  - Verification note (2026-07-23): added `docs/release-checklist.md`; all manual/browser items remain explicitly unrun pending recorded evidence.
 
 ## Phase 3 — Required documentation upkeep
 

@@ -98,6 +98,18 @@ const requiredInteractionFields = [
   'js'
 ];
 
+const requiredStringInteractionFields = [
+  'id',
+  'name',
+  'category',
+  'complexity',
+  'motion',
+  'description',
+  'bestFor',
+  'accessibility',
+  'previewType'
+];
+
 const interactions = [
   {
     id: "button-magnetic",
@@ -769,6 +781,15 @@ function validateInteractions(interactionList) {
       }
     });
 
+    requiredStringInteractionFields.forEach((field) => {
+      if (Object.prototype.hasOwnProperty.call(interaction, field) && (typeof interaction[field] !== 'string' || interaction[field].trim() === '')) {
+        warnings.push(`${label}: required field "${field}" must be a non-empty string.`);
+      }
+    });
+    if (Object.prototype.hasOwnProperty.call(interaction, 'featured') && typeof interaction.featured !== 'boolean') {
+      warnings.push(`${label}: required field "featured" must be a boolean.`);
+    }
+
     if (interaction.id) {
       if (ids.has(interaction.id)) {
         duplicateIds.add(interaction.id);
@@ -828,6 +849,8 @@ function validateInteractions(interactionList) {
   if (warnings.length > 0) {
     console.warn('Interaction metadata validation warnings:', warnings);
   }
+
+  return warnings;
 }
 
 
