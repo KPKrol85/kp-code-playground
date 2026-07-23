@@ -22,12 +22,14 @@ The next development priority is not catalogue expansion. It is to make the exis
 
 These are verification and documentation gaps; they are not claims that the existing implementation is broken.
 
-- [ ] Create a repeatable manual QA checklist covering initial render, search, all filter combinations, reset paths, selected-card changes, no-result state, preview updates, code tabs, copy success/failure feedback, and console errors.
+- [x] Create a repeatable manual QA checklist covering initial render, search, all filter combinations, reset paths, selected-card changes, no-result state, preview updates, code tabs, copy success/failure feedback, and console errors.
 - [ ] Manually test keyboard-only navigation for the skip link, theme toggle, filters, cards, preview controls, tabs, and copy controls.
 - [ ] Manually inspect the current layouts at narrow, medium, and wide viewport widths, including the documented 480px, 760px, and 1024px breakpoints.
 - [ ] Manually test a reduced-motion browser preference and verify that important focus, selected, loading, and status information remains understandable without animation.
 - [ ] Verify theme contrast and focus visibility in both themes; record findings only after a real review.
 - [ ] Verify Clipboard API failure and fallback behavior in the browser environments intended for support, including the visible fallback guidance.
+
+Verification note (2026-07-23): added `docs/release-readiness-browser-qa.md`, a repeatable, not-yet-run browser QA checklist grounded in the current 32-item catalogue, controls, filter taxonomy, copy feedback, and console checks.
 
 ## Phase 2 — Required maintainability guardrails
 

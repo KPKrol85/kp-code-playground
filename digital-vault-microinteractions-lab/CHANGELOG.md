@@ -18,3 +18,4 @@ This changelog follows the structure of [Keep a Changelog](https://keepachangelo
 
 - Canonicalized project documentation as `README.md`, `PLAN.md`, and `CHANGELOG.md`.
 - Consolidated the former planning and improvement notes into the current plan without carrying forward unsupported completion dates or unverified future work.
+- Added a repeatable, not-yet-run browser QA checklist grounded in the current catalogue, controls, filter values, preview behavior, copy feedback, and console checks.
