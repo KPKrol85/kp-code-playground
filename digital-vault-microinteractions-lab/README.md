@@ -42,6 +42,8 @@ digital-vault-microinteractions-lab/
 ├── README.md               # Project overview and operating notes
 ├── PLAN.md                 # Verified status and forward-looking roadmap
 ├── CHANGELOG.md            # Evidence-based record of maintained changes
+├── docs/
+│   └── release-readiness-browser-qa.md # Repeatable manual browser QA checklist
 └── assets/
     ├── css/
     │   └── main.css        # Tokens, themes, components, responsiveness, motion rules
@@ -63,9 +65,10 @@ digital-vault-microinteractions-lab/
 
 ## Development status and limitations
 
-This is a static demonstration rather than a packaged component library. The repository does not currently include an automated test suite, a formal manual QA checklist, downloadable snippet packs, framework-specific exports, Figma token export, or an accessibility audit mode. The visual roadmap section in `index.html` describes possible directions and should not be read as an implementation commitment.
+This is a static demonstration rather than a packaged component library. The repository does not currently include an automated test suite, downloadable snippet packs, framework-specific exports, Figma token export, or an accessibility audit mode. The visual roadmap section in `index.html` describes possible directions and should not be read as an implementation commitment.
 
 ## Documentation
 
 - [`PLAN.md`](PLAN.md) records the verified baseline, required follow-up work, and clearly separated optional enhancements.
 - [`CHANGELOG.md`](CHANGELOG.md) records changes supported by repository evidence and provides the format for future maintenance.
+- [`docs/release-readiness-browser-qa.md`](docs/release-readiness-browser-qa.md) provides the repeatable, not-yet-run browser QA checklist for the first Phase 1 verification item.
