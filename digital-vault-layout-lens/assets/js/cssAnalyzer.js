@@ -73,7 +73,7 @@ function checkMissingResponsivePatterns(parsed) {
 function checkOverflowRisks(parsed) {
   const risks = [];
   const overflowHidden = parsed.declarations.filter((d) => d.property === 'overflow-x' && /hidden/i.test(d.value));
-  const nowrap = parsed.declarations.filter((d) => d.property === 'white-space' && /nowrap/i.test(d.value));
+  const nowrap = parsed.declarations.filter((d) => d.property === 'white-space' && /nowrap/i.test(d.value) && !blockHasExplicitNoWrapStrategy(parsed, d));
   const rigidGrid = parsed.declarations.filter((d) => d.property === 'grid-template-columns' && rigidGridRisk(d.value));
   const absFixed = parsed.blocks.filter((b) => b.declarations.some((d) => d.property === 'position' && /^(fixed|absolute)$/i.test(d.value)) && b.declarations.some((d) => ['width', 'min-width'].includes(d.property) && pxValue(d.value) >= CSS_ANALYZER_THRESHOLDS.largeMinWidthPx));
   if (overflowHidden.length) risks.push(finding('overflow-x-hidden', 'Horizontal overflow hidden', 'Responsive behavior', 'medium', 'overflow-x: hidden can mask content that does not reflow. Verify narrow viewports manually; this static check is a potential WCAG reflow risk only.', { occurrenceCount: overflowHidden.length, examples: overflowHidden.slice(0, 2) }, [WCAG.reflow]));
@@ -81,6 +81,18 @@ function checkOverflowRisks(parsed) {
   if (rigidGrid.length) risks.push(finding('rigid-grid-tracks', 'Rigid wide grid tracks', 'Responsive behavior', 'medium', 'Grid columns use wide rigid pixel tracks that may exceed narrow viewports unless adapted elsewhere.', { occurrenceCount: rigidGrid.length, examples: rigidGrid.slice(0, 2) }, [WCAG.reflow]));
   if (absFixed.length) risks.push(finding('positioned-fixed-width', 'Positioned element with large fixed width', 'Responsive behavior', 'medium', 'Fixed or absolute positioned elements with large fixed widths can escape narrow layouts.', { occurrenceCount: absFixed.length, examples: absFixed.flatMap((b) => b.declarations.filter((d) => ['position', 'width', 'min-width'].includes(d.property))).slice(0, 3) }, [WCAG.reflow]));
   return risks;
+}
+
+// A same-rule horizontal scroll container is an explicit, reviewable strategy for
+// intentionally non-wrapping tabular content. It is not a proof of good reflow,
+// but it avoids reporting the narrower "without overflow strategy" condition.
+function blockHasExplicitNoWrapStrategy(parsed, declaration) {
+  const block = parsed.blocks.find((candidate) => candidate.selector === declaration.selector && candidate.declarations.includes(declaration));
+  return block?.declarations.some((item) => (
+    item.property === 'overflow-wrap'
+    || item.property.startsWith('text-overflow')
+    || (['overflow', 'overflow-x'].includes(item.property) && /\b(auto|scroll)\b/i.test(item.value))
+  ));
 }
 
 function finding(checkId, title, category, severity, message, metadata = {}, wcag) { return { issueId: createIssueId({ source: CSS_ANALYZER_SOURCE, ruleId: checkId, discriminator: stableDiscriminator(metadata) }), ruleId: checkId, checkId, title, category, severity, message, source: CSS_ANALYZER_SOURCE, confidence: confidenceForCssCheck(checkId), evidence: evidenceForCssCheck(checkId, metadata), findingType: 'static-css', occurrenceCount: metadata.occurrenceCount || 0, metadata, ...(wcag ? { wcag: cloneWcag(wcag) } : {}) }; }

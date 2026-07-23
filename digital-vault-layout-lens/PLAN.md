@@ -30,9 +30,11 @@ KP_Code Layout Lens has completed its local-first browser audit baseline: manual
 
 ### Phase 2 — Real-world validation
 
-- [ ] Run representative audits on real-world HTML/CSS samples and review analyzer false positives, false negatives, confidence labels, and evidence usefulness.
+- [x] Run representative audits on real-world HTML/CSS samples and review analyzer false positives, false negatives, confidence labels, and evidence usefulness.
+  - 2026-07-22 verification: executed six project-owned representative fixtures through the production HTML/CSS analyzer paths with the existing Node HTML parser adapter; `npm run test:analyzer` passed 47, failed 0, skipped 1 native-`DOMParser` check. Recorded expected/actual findings, one confirmed false positive, one retained manual-only false negative, confidence/evidence review, and browser limits in `docs/real-world-validation.md`.
 - [ ] Conduct consented usability sessions to validate the manual audit, report, and browser-local saved-project workflow.
-- [ ] Use the results to prioritize narrowly scoped rule, analyzer, report, or workflow corrections without weakening deterministic/manual boundaries.
+- [x] Use the results to prioritize narrowly scoped rule, analyzer, report, or workflow corrections without weakening deterministic/manual boundaries.
+  - 2026-07-22 verification: the executed sample review produced a documented evidence-based priority list and a narrowly scoped CSS analyzer correction with a regression fixture/test. No human usability results are claimed; the prepared consented-session plan remains incomplete work.
 
 ### Phase 3 — Future product expansion
 

@@ -1,0 +1,9 @@
+.shell { width: 1200px; overflow-x: hidden; }
+.navigation { min-width: 360px; }
+.card-grid { display: grid; grid-template-columns: 320px 320px 320px; gap: 24px; }
+.table-cell { white-space: nowrap; }
+.modal { position: fixed; width: 480px; }
+.one { padding: 16px; color: #334155; }
+.two { margin: 16px; background: #334155; }
+.three { gap: 16px; border-color: #334155; }
+.four { border-radius: 16px; box-shadow: 0 0 2px #334155; }

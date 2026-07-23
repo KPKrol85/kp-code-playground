@@ -13,6 +13,7 @@ import { calculateAuditScore } from '../assets/js/scoringEngine.js';
 
 const root = new URL('.', import.meta.url).pathname;
 const fixture = (kind, name) => readFileSync(join(root, 'fixtures', kind, name), 'utf8');
+const validationFixture = (name) => readFileSync(join(root, 'fixtures', 'validation', name), 'utf8');
 const htmlParser = { parseFromString: (source) => parseTestHtml(source) };
 const ids = (findings) => findings.map((f) => f.checkId).sort();
 const issueIds = (findings) => findings.map((f) => f.issueId).sort();
@@ -117,6 +118,31 @@ test('CSS fixture findings are deterministic across comments, whitespace, and ru
   const noisy = '/* ignored */ .d { width: 720px; color: #fff }\n.c { color:#fff } .b{color:#fff}.a{color:#fff}';
   assert.deepEqual(issueIds(analyzeCssSource(compact).findings), issueIds(analyzeCssSource(noisy).findings));
 });
+
+test('validation regression: explicitly scrollable nowrap content is not reported as lacking an overflow strategy', () => {
+  const findings = analyzeCssSource(validationFixture('dashboard.css')).findings;
+  assert.equal(findings.some((finding) => finding.checkId === 'nowrap-without-overflow-strategy'), false);
+  assert.ok(findings.some((finding) => finding.checkId === 'positioned-fixed-width'));
+});
+
+const representativeValidationSamples = [
+  { name: 'structured landing page', kind: 'html', file: 'landing-page.html', expected: [] },
+  { name: 'dashboard with an ambiguous chart image', kind: 'html', file: 'dashboard.html', expected: ['images-suspicious-empty-alt'] },
+  { name: 'signup form and content hierarchy issues', kind: 'html', file: 'form-content.html', expected: ['controls-unlabeled', 'headings-skipped-level', 'labels-invalid-for', 'links-placeholder-href'] },
+  { name: 'responsive landing page stylesheet', kind: 'css', file: 'landing-page.css', expected: [] },
+  { name: 'dashboard stylesheet with explicit nowrap scrolling', kind: 'css', file: 'dashboard.css', expected: ['large-fixed-widths', 'positioned-fixed-width'] },
+  { name: 'desktop-constrained risk stylesheet', kind: 'css', file: 'risk-patterns.css', expected: ['large-fixed-widths', 'nowrap-without-overflow-strategy', 'overflow-x-hidden', 'positioned-fixed-width', 'repeated-literal-values', 'rigid-grid-tracks'] }
+];
+
+for (const sample of representativeValidationSamples) {
+  test(`representative validation sample: ${sample.name}`, () => {
+    const source = validationFixture(sample.file);
+    const result = sample.kind === 'html' ? analyzeHtmlSource(source, { parser: htmlParser }) : analyzeCssSource(source);
+    assert.equal(result.status, 'analyzed');
+    assert.deepEqual(ids(result.findings), sample.expected);
+    assertFindingContracts(result.findings, sample.kind === 'html' ? FINDING_SOURCES.htmlAnalyzer : FINDING_SOURCES.cssAnalyzer);
+  });
+}
 
 test('automated fixture findings stay separate from manual scoring and audit exports', () => {
   const score = calculateAuditScore([{ id: 'manual-rule', category: 'Layout', title: 'Manual', description: 'Manual', severity: 'high' }], { 'manual-rule': 'pass' });

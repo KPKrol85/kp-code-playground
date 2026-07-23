@@ -5,6 +5,9 @@ All notable changes to KP_Code Layout Lens are documented in this file.
 ## [Unreleased]
 
 - Fixed machine-readable manual reports so valid fractional weighted score points from severity/category profiles pass schema validation.
+- Added six project-owned representative HTML/CSS validation fixtures and a recorded Phase 2 analyzer review covering expected/actual findings, confidence, evidence usefulness, false positives, and retained manual-only limits.
+- Fixed a confirmed CSS analyzer false positive: same-rule explicitly scrollable `white-space: nowrap` content is no longer described as lacking an overflow strategy; retained other responsive review prompts and added regression coverage.
+- Added a consented usability-session plan and de-identified evidence template; no participant sessions are claimed.
 
 ## [2026-07-20] — Roadmap completion and documentation standardization
 
