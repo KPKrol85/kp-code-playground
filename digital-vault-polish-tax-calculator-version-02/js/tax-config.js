@@ -18,7 +18,7 @@ export const TAX_CONFIG = {
       "Obliczenia roczne są uproszczone i nie zastępują rozliczenia według rzeczywistych przychodów w kolejnych miesiącach.",
       "Kalkulator nie prowadzi kwalifikacji prawnej formy współpracy ani prawa do ulg.",
     ],
-    disclaimer: "Wynik jest orientacyjną symulacją i nie stanowi porady prawnej, podatkowej, księgowej ani finansowej. Przed podjęciem decyzji zweryfikuj dane w oficjalnych źródłach lub z doradcą.",
+    disclaimer: "Wynik jest szacunkiem obecnego, niezweryfikowanego modelu i nie stanowi porady podatkowej, prawnej, księgowej, pracowniczej ani finansowej. Stałe i formuły oznaczone jako 2026 nie przeszły audytu źródeł urzędowych; ważne obliczenia zweryfikuj w aktualnych źródłach urzędowych lub u wykwalifikowanego specjalisty.",
   },
   constants: {
     annualTaxFreeAmount: 30000,
@@ -78,7 +78,7 @@ export const TAX_CONFIG = {
     lumpSumRates: { it: 0.12, default: 0.12 },
   },
   notes: {
-    disclaimer: "Wyniki mają charakter orientacyjny. Przy indywidualnych przypadkach skonsultuj się z księgowym.",
+    disclaimer: "Wyniki są szacunkami obecnego modelu; uproszczenia i nieobsługiwane okoliczności mogą zmienić rezultat.",
   },
 };
 

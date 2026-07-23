@@ -2,9 +2,9 @@
 
 ## Project status
 
-The repository contains a static, vanilla JavaScript calculator that estimates gross-to-net and approximate net-to-gross outcomes for six selected Polish employment and B2B models. It is a working calculator and portfolio-style implementation with regression tests, not a release candidate for tax-critical or public production use. The most important limitation is that the configured tax and contribution values are explicitly marked as requiring official-source verification; the model is also intentionally simplified, especially for annual handling and B2B.
+The repository contains a static, vanilla JavaScript calculator that estimates gross-to-net and approximate net-to-gross outcomes for six selected Polish employment and B2B models. It is an unverified static KP_Code Digital Vault product prototype with current-behavior regression tests, not an authoritative, tax-critical, or public-production calculator. The most important limitation is that the configured tax and contribution values are explicitly marked as requiring official-source verification; the model is also intentionally simplified, especially for annual handling and B2B.
 
-## Current verified scope
+## Current prototype scope
 
 - [x] Static HTML/CSS/ES-module application with no backend or build pipeline.
 - [x] Six calculation models: employment, mandate, specific work, B2B scale, B2B linear, and B2B lump sum.
@@ -13,8 +13,10 @@ The repository contains a static, vanilla JavaScript calculator that estimates g
 - [x] Results, an employment-only employer-cost estimate, and a comparison table.
 - [x] Model-specific option applicability, deductible-cost choices, B2B ZUS presets/custom values, quick scenarios, and an informational VAT-payer control.
 - [x] Local history (maximum eight entries), local theme preference, print and copy actions after valid calculations.
+  - Verification note (2026-07-23): storage, URL-state, print, clipboard, network-request, and external-asset code paths were inspected and documented in `README.md`; financial history persists locally, so privacy claims remain carefully scoped.
 - [x] Responsive styling, theme controls, focus-visible styles, reduced-motion rules, skip link, labels/fieldsets, live regions, table caption, and scoped headers.
 - [x] Node.js regression tests and documented tax-verification, manual-QA, and release checklists.
+  - Verification note (2026-07-23): `docs/calculation-tests.md` now explicitly classifies the harness as current-behavior regression coverage, not source-confirmed accuracy evidence.
 - [ ] Official verification of the configured tax year/rule set and calculation constants.
 - [ ] Completed manual browser, accessibility, and release verification evidence.
 
@@ -71,17 +73,21 @@ The repository contains a static, vanilla JavaScript calculator that estimates g
 ### 6. Architecture and maintainability — recommended
 
 - [x] Keep calculations in a DOM-independent module and keep tax configuration separate from presentation.
-- [ ] Review module boundaries, naming, state flow, storage handling, and potential duplicated or obsolete code/assets.
+  - Verification note (2026-07-23): inspected and preserved the boundaries between `js/tax-config.js`, `js/calculations.js`, `js/utils.js`, and `js/main.js`; the audit matrix maps their current roles.
+- [x] Review module boundaries, naming, state flow, storage handling, and potential duplicated or obsolete code/assets.
+  - Verification note (2026-07-23): reviewed calculation/config/utility/rendering boundaries and storage paths for audit documentation; no boundary changes were needed.
 - [ ] Avoid magic numbers and duplicate formulas; prepare configuration boundaries for verified future rulesets only when needed.
 - [ ] Add lightweight formatting or linting only if it improves maintenance without imposing an unnecessary toolchain.
 
 ### 7. Privacy, security, and legal clarity — required before public release
 
 - [x] Use browser-local storage for theme preference and calculation history; no backend is implemented.
+  - Verification note (2026-07-23): repository inspection found no application network requests, analytics, external services, form endpoints, or external asset URLs; `README.md` documents local history, theme, in-memory, URL, print, and clipboard behavior.
 - [ ] Verify runtime network behavior and third-party assets before release.
 - [ ] Document storage clearing behavior or implement a clear-history control with appropriate confirmation and tests.
 - [ ] Ensure entered values are not exposed through URLs, logs, analytics, error messages, or future integrations without explicit intent.
-- [ ] Keep the informational disclaimer visible and document when official guidance or professional advice is needed.
+- [x] Keep the informational disclaimer visible and document when official guidance or professional advice is needed.
+  - Verification note (2026-07-23): the visible hero warning and README now identify estimates, unaudited 2026 constants/formulas, no-advice scope, and the need for current official information or a qualified specialist.
 
 ### 8. Performance and technical quality — recommended
 
@@ -108,7 +114,7 @@ The repository contains a static, vanilla JavaScript calculator that estimates g
 
 ## Definition of done
 
-The calculator is ready for its intended public or portfolio release only when:
+The calculator is ready for its intended public release only when:
 
 - [ ] Every supported calculation path and configuration claim is verified for the stated ruleset or clearly removed/re-scoped.
 - [ ] Critical boundaries, thresholds, invalid inputs, option combinations, and rounding behavior are tested.
