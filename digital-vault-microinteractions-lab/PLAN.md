@@ -46,10 +46,13 @@ Verification note (2026-07-23): added `docs/release-readiness-browser-qa.md`, a 
 
 ## Phase 3 — Required documentation upkeep
 
-- [ ] Keep `README.md`, `PLAN.md`, and `CHANGELOG.md` synchronized when verified behavior or project scope changes.
+- [x] Keep `README.md`, `PLAN.md`, and `CHANGELOG.md` synchronized when verified behavior or project scope changes.
+  - Verification note (2026-07-23): aligned the core documentation and release/contributor guidance with the 32-pattern catalogue, implemented controls and themes, validation command, maintainability decision, and explicitly unrun manual verification work.
 - [ ] Add browser-support and local-preview notes only after they have been decided and verified.
-- [ ] Record completed work in `CHANGELOG.md` with evidence; do not add dates, version numbers, or test results that were not established.
-- [ ] Keep accessibility language practical and pattern-specific; do not claim WCAG conformance without a separate formal audit.
+- [x] Record completed work in `CHANGELOG.md` with evidence; do not add dates, version numbers, or test results that were not established.
+  - Verification note (2026-07-23): recorded the repository-backed QA checklist, validator, contributor workflow, taxonomy, cohesive `main.js` decision, release checklist, and documentation synchronization without asserting manual QA results or a release version.
+- [x] Keep accessibility language practical and pattern-specific; do not claim WCAG conformance without a separate formal audit.
+  - Verification note (2026-07-23): reviewed repository-facing accessibility wording; documentation and user-facing copy describe implemented guidance and controls while keeping keyboard, reduced-motion, contrast, Clipboard, and assistive-technology checks explicitly pending.
 
 ## Optional future enhancements
 

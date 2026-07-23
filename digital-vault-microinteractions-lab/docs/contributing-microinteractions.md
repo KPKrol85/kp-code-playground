@@ -34,7 +34,7 @@ Use the currently supported categories only: `feedback`, `navigation`, `forms`, 
 ## Verify and document the change
 
 1. Run `node scripts/validate-catalogue.js`. It evaluates the actual `interactions` data and invokes the same validation function used at browser startup; it must report no warnings.
-2. Open `index.html` in a browser and manually verify the changed card, its selected preview, all three code tabs, and the copy action. For a new category, complexity, or motion value, also verify filtering. Follow the relevant rows in [`release-readiness-browser-qa.md`](release-readiness-browser-qa.md); do not mark them complete without real evidence.
+2. Open `index.html` with JavaScript enabled and manually verify the changed card, its selected preview, all three code tabs, and the copy action. For a new category, complexity, or motion value, also verify filtering. Follow the relevant rows in [`release-readiness-browser-qa.md`](release-readiness-browser-qa.md); do not mark them complete without real evidence. This is a contributor check instruction, not a verified local-preview or browser-support claim.
 3. Update `README.md` if the user-visible scope or contributor/release workflow changed, `PLAN.md` only for fulfilled roadmap work, and `CHANGELOG.md` for meaningful implemented changes. Keep the release checklist and QA evidence synchronized when preparing a release.
 
 ## `main.js` maintainability decision

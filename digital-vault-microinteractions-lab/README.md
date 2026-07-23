@@ -10,7 +10,7 @@ The current implementation includes:
 
 - A data-driven catalogue of 32 interaction patterns with search and combined category, complexity, and motion filters.
 - Taxonomy-backed filter options and Polish display labels.
-- Selectable cards, an accessible no-results state, and result-count feedback.
+- Selectable cards, a textual no-results state, and result-count feedback.
 - A controlled `previewType`-to-renderer map for live previews; snippet strings are displayed and copied, not executed as arbitrary code.
 - HTML, CSS, and optional JavaScript snippet tabs, plus per-snippet copy actions.
 - Clipboard copying with a legacy selection fallback and visible live-region feedback.
@@ -19,11 +19,11 @@ The current implementation includes:
 - Responsive layouts at 480px, 760px, and 1024px minimum-width breakpoints.
 - Global `prefers-reduced-motion` rules that shorten or remove animations and transforms while retaining focus and selected-state feedback.
 
-The lab provides practical implementation guidance; it is **not** a WCAG conformance claim or a substitute for a product-specific accessibility audit.
+The lab includes practical accessibility guidance and implementation features such as visible focus styling, labelled native controls, status messaging, and reduced-motion rules. It is prepared for further manual keyboard, contrast, reduced-motion, Clipboard, and assistive-technology verification; it is **not** a WCAG conformance claim, formal accessibility audit, or substitute for product-specific review.
 
 ## Run locally
 
-Open `index.html` in a modern browser. No installation or build command is required.
+For local development, open `index.html` with JavaScript enabled. No installation or build command is required. This is a development instruction, not a verified local-preview or browser-support guarantee: the project has no approved browser-support matrix, and browser targets and release-preview notes remain pending manual release-readiness work.
 
 JavaScript is required for catalogue rendering, filtering, live previews, code tabs, copying, and theme switching. With JavaScript disabled, the page shows a notice instead of those interactive features.
 
@@ -67,9 +67,13 @@ digital-vault-microinteractions-lab/
 - Keep snippets self-contained: use semantic markup, scoped `mi-*` classes, no app-shell dependencies, no external CDN/link dependencies, and no `<script>` or `eval` content.
 - Include an interaction-specific Polish accessibility note. Patterns marked with medium or expressive motion need a clear reduced-motion alternative.
 
+Follow the full [contributor workflow](docs/contributing-microinteractions.md) when changing a pattern: update its metadata, controlled preview renderer and snippets together, provide pattern-specific accessibility and reduced-motion guidance, run the dependency-free validator, then complete the relevant manual checks only with real browser evidence. The current 32-record implementation remains intentionally cohesive in `assets/js/main.js`; the contributor guide documents the evidence-based decision and concrete triggers for reconsidering a split.
+
 ## Development status and limitations
 
 This is a static demonstration rather than a packaged component library. The repository does not currently include an automated test suite, downloadable snippet packs, framework-specific exports, Figma token export, or an accessibility audit mode. The visual roadmap section in `index.html` describes possible directions and should not be read as an implementation commitment.
+
+The repeatable functional browser checklist exists, but the remaining Phase 1 keyboard-only, viewport, reduced-motion, theme-contrast/focus, Clipboard-path, and assistive-technology-related manual checks have not yet been run. Browser support targets, verified local-preview notes, and release status must not be inferred from this documentation.
 
 ## Documentation
 
