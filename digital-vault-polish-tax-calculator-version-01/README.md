@@ -42,9 +42,10 @@ A lightweight Node.js harness checks the current behavior of the calculation fun
 
 ```bash
 npm run test:calculations
+npm run test:ui
 ```
 
-The tests do not validate tax rules against official examples and do not cover the interface, URL handling, printing, or accessibility.
+`test:ui` is a dependency-free Node.js DOM shim and static accessibility check. It covers core form submission, validation, stale-result clearing, directions, reset, URL restoration, result updates, and basic structural/accessibility regressions. It is not a browser or assistive-technology audit. Neither test validates tax rules against official examples.
 
 ## Project Structure
 

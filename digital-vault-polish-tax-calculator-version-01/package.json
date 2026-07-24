@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "test:calculations": "node scripts/test-calculations.js"
+    "test:calculations": "node scripts/test-calculations.js",
+    "test:ui": "node scripts/test-ui-and-a11y.js"
   }
 }
