@@ -16,12 +16,15 @@ The project is a static, working calculator/prototype portfolio project built wi
 - [x] URL parameters for calculation state, summary printing, and a theme preference in `localStorage`.
 - [x] Light, dark, and system themes; responsive layout; focus styles; `aria-live`; semantic form groups; and a reduced-motion rule.
 - [x] Dependency-free Node.js harness for calculation logic.
-- [ ] The accuracy of values and formulas, and their compliance with actual Polish rules, has not been verified in the repository.
 - [x] DOM/UI tests cover the current core calculation form behaviors in a dependency-free Node.js harness.
 - [x] Automated static accessibility checks cover the current HTML structure and key ARIA relationships.
-- [ ] There are no saved calculation scenarios.
 
 Verification note: `npm run test:calculations` verifies current-behavior characterization snapshots for all six calculation paths in both directions, applicable options, period transformations, finite/large/invalid inputs, repeated calculation stability, and displayed cent precision. It freezes the present implementation only; it does not verify tax accuracy or compliance. `npm run test:ui` verifies core UI state transitions with a small DOM shim and checks the static document for labels, group names, error associations, live regions, native keyboard-operable controls, duplicate IDs, ARIA references, and baseline document structure. It does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
+
+## Known Limitations
+
+- [ ] Verify the accuracy of values and formulas against documented Polish rules and reliable sources.
+- [ ] Add local saved calculation scenarios only after calculation accuracy, privacy requirements, and storage behavior are clearly defined.
 
 ## Development Principles
 
