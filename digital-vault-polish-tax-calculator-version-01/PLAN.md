@@ -21,7 +21,7 @@ The project is a static, working calculator/prototype portfolio project built wi
 - [x] Automated static accessibility checks cover the current HTML structure and key ARIA relationships.
 - [ ] There are no saved calculation scenarios.
 
-Verification note: `npm run test:ui` verifies core UI state transitions with a small DOM shim and checks the static document for labels, group names, error associations, live regions, native keyboard-operable controls, duplicate IDs, ARIA references, and baseline document structure. It does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
+Verification note: `npm run test:calculations` verifies current-behavior characterization snapshots for all six calculation paths in both directions, applicable options, period transformations, finite/large/invalid inputs, repeated calculation stability, and displayed cent precision. It freezes the present implementation only; it does not verify tax accuracy or compliance. `npm run test:ui` verifies core UI state transitions with a small DOM shim and checks the static document for labels, group names, error associations, live regions, native keyboard-operable controls, duplicate IDs, ARIA references, and baseline document structure. It does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
 
 ## Development Principles
 
@@ -53,7 +53,8 @@ Verification note: `npm run test:ui` verifies core UI state transitions with a s
 
 - [ ] Add source-confirmed or specialist-verified reference cases for all calculation paths.
 - [ ] Add tests for thresholds, boundary values, rounding, reliefs, PPK, PIT-2, KUP, ZUS types, and the annual model.
-- [ ] Add regressions for every corrected calculation defect and separate current-behavior tests from substantive-accuracy tests.
+- [x] Keep current-behavior characterization tests separate from future substantive-accuracy tests.
+- [ ] Add regressions for every corrected calculation defect.
 - [x] Add tests for form interactions, URL restoration, reset, and result formatting with a lightweight dependency-free DOM harness.
 
 ### 4. Accessibility and Interaction Quality
