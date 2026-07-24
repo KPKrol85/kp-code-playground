@@ -67,7 +67,9 @@ Verification note: `npm run test:ui` passed and verifies the focused amount-vali
 - [ ] Perform a screen-reader smoke test of labels, descriptions, errors, result updates, assumptions, and the comparison table.
 - [ ] Check contrast in both themes and whether the summary remains understandable without visual formatting.
 - [ ] Check the readability of the form, results, and comparison on representative mobile and desktop viewports.
-- [ ] Clarify names, units, and explanations for gross pay, net pay, deductions, PIT, contributions, and employer cost.
+- [x] Clarify names, units, and explanations for gross pay, net pay, deductions, PIT, contributions, and employer cost.
+
+Verification note: `npm run test:ui` passed after the focused terminology update. The dependency-free DOM/static check verifies expanded PPK, PIT, KUP, and ZUS explanations; period-labelled results and comparison headings; employer-cost wording; and existing ID and ARIA-reference checks. It does not verify tax-rule accuracy, keyboard-only use, screen-reader output, contrast, or viewport behavior.
 
 ### 5. Privacy, Documentation, and Release Readiness
 

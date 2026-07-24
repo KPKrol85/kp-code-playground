@@ -208,11 +208,11 @@ function renderAssumptionsPanel(state = readFormState()) {
   const isB2B = state.contractType.startsWith('b2b');
   const active = [
     `Wybrany typ: ${contractLabels[state.contractType]}.`,
-    `PIT-2: ${state.options.pit2 && state.contractType === 'employment' ? 'uwzględniony dla UoP' : 'nie wpływa na wybrany typ w tym modelu'}.`,
-    `PPK: ${state.options.ppk && state.contractType === 'employment' ? '2% po stronie pracownika dla UoP' : 'nieaktywne lub nie dotyczy wybranego typu'}.`,
-    `KUP: ${isB2B ? 'nie stosujemy kosztów działalności B2B' : state.options.deductibleCosts}.`,
+    `PIT-2: ${state.options.pit2 && state.contractType === 'employment' ? 'uwzględnione jako uproszczone miesięczne pomniejszenie zaliczki PIT dla UoP' : 'nie wpływa na wybrany typ w tym modelu'}.`,
+    `PPK (Pracownicze Plany Kapitałowe): ${state.options.ppk && state.contractType === 'employment' ? 'model odejmuje wpłatę pracownika od netto, a wpłatę pracodawcy uwzględnia wyłącznie w koszcie pracodawcy dla UoP' : 'nieaktywne lub nie dotyczy wybranego typu'}.`,
+    `KUP (koszty uzyskania przychodu): ${isB2B ? 'model nie uwzględnia kosztów działalności B2B' : state.options.deductibleCosts}.`,
   ];
-  if (isB2B) active.push(`ZUS B2B: ${state.options.zusType}; VAT: informacyjnie, bez wpływu na wynik.`);
+  if (isB2B) active.push(`ZUS (Zakład Ubezpieczeń Społecznych) dla B2B: ${state.options.zusType}; VAT: informacyjnie, bez wpływu na wynik.`);
 
   assumptionsPanel.innerHTML = `
     <h3 id="assumptions-title">Założenia kalkulacji</h3>
@@ -229,7 +229,7 @@ function renderInactiveState({ invalid = false } = {}) {
   const title = invalid ? 'Popraw kwotę, aby odświeżyć wyniki.' : 'Wpisz kwotę i kliknij „Oblicz wyniki”.';
   const description = invalid
     ? 'Wyniki i ranking są ukryte, żeby nie sugerować aktualności poprzedniej kalkulacji.'
-    : 'Zobaczysz kwotę netto, brutto, składki, PIT, koszt pracodawcy i porównanie umów.';
+    : 'Zobaczysz kwotę netto po potrąceniach, kwotę brutto/przychód, składki, zaliczkę PIT, osobny koszt pracodawcy i porównanie umów.';
   const comparisonMessage = invalid
     ? 'Popraw kwotę wejściową, aby zobaczyć aktualny ranking form współpracy.'
     : 'Wpisz poprawną kwotę, aby zobaczyć ranking form współpracy.';
@@ -238,7 +238,7 @@ function renderInactiveState({ invalid = false } = {}) {
   comparisonBody.innerHTML = `<tr><td colspan="5" class="comparison-empty">${comparisonMessage}</td></tr>`;
   comparisonContext.textContent = invalid
     ? 'Ranking zostanie przeliczony po podaniu poprawnej kwoty.'
-    : 'Po wpisaniu poprawnej kwoty zobaczysz ranking: najwyższe netto albo najniższe wymagane brutto.';
+    : 'Po wpisaniu poprawnej kwoty zobaczysz ranking: najwyższą kwotę netto po potrąceniach albo najniższą wymaganą kwotę brutto/przychodu.';
   warningEl.textContent = TAX_CONFIG.notes.legalDisclaimer;
   printSummaryButton.hidden = true;
   if (!invalid) setAmountValidity(false);
@@ -260,6 +260,8 @@ function renderResultRow(label, value) {
 }
 
 function renderResults(data, state) {
+  const period = periodLabel(state.period);
+  const personSide = state.contractType === 'employment' ? 'pracownika' : 'osoby rozliczanej';
   const gross = monthlyToPeriod(data.gross, state.period);
   const net = monthlyToPeriod(data.net, state.period);
   const pit = monthlyToPeriod(data.pit, state.period);
@@ -274,23 +276,23 @@ function renderResults(data, state) {
 
   resultsEl.innerHTML = `
     <div class="results-summary">
-      <div class="metric metric--primary"><span>Netto ${periodLabel(state.period)}</span><strong>${formatMoney(net)}</strong></div>
-      <div class="metric"><span>Brutto ${periodLabel(state.period)}</span><strong>${formatMoney(gross)}</strong></div>
-      <div class="metric metric--accent"><span>Obciążenie</span><strong>${data.effectiveBurden.toFixed(2)}%</strong></div>
-      <div class="metric"><span>Koszt pracodawcy</span><strong>${employerCost ? formatMoney(employerCost) : 'nie dotyczy'}</strong></div>
+      <div class="metric metric--primary"><span>Kwota netto po potrąceniach — ${period}</span><strong>${formatMoney(net)}</strong></div>
+      <div class="metric"><span>Kwota brutto / przychód — ${period}</span><strong>${formatMoney(gross)}</strong></div>
+      <div class="metric metric--accent"><span>Obciążenie od brutto/przychodu</span><strong>${data.effectiveBurden.toFixed(2)}%</strong></div>
+      <div class="metric"><span>Całkowity koszt pracodawcy — ${period}</span><strong>${employerCost ? formatMoney(employerCost) : 'nie dotyczy'}</strong></div>
     </div>
     <div class="result-list" aria-label="Szczegóły kalkulacji">
       ${renderResultRow('Typ kalkulacji', `${contractLabels[state.contractType]} • ${state.direction === 'grossToNet' ? 'brutto → netto' : 'netto → brutto'}`)}
-      ${renderResultRow('Suma składek społecznych', formatMoney(socialTotal))}
-      ${renderResultRow('Składka emerytalna', formatMoney(pension))}
-      ${renderResultRow('Składka rentowa', formatMoney(disability))}
-      ${renderResultRow('Składka chorobowa', formatMoney(sickness))}
-      ${renderResultRow('Składka zdrowotna', formatMoney(health))}
-      ${renderResultRow('PIT / zaliczka podatkowa', formatMoney(pit))}
-      ${renderResultRow('PPK pracownika', formatMoney(ppk))}
-      ${renderResultRow('Łączne potrącenia', formatMoney(deductions))}
+      ${renderResultRow(`Suma składek społecznych po stronie ${personSide} — ${period}`, formatMoney(socialTotal))}
+      ${renderResultRow(`Składka emerytalna po stronie ${personSide} — ${period}`, formatMoney(pension))}
+      ${renderResultRow(`Składka rentowa po stronie ${personSide} — ${period}`, formatMoney(disability))}
+      ${renderResultRow(`Składka chorobowa po stronie ${personSide} — ${period}`, formatMoney(sickness))}
+      ${renderResultRow(`Składka zdrowotna po stronie ${personSide} — ${period}`, formatMoney(health))}
+      ${renderResultRow(`Zaliczka PIT (podatek dochodowy od osób fizycznych) — ${period}`, formatMoney(pit))}
+      ${renderResultRow(`Wpłata PPK po stronie ${personSide} — ${period}`, formatMoney(ppk))}
+      ${renderResultRow(`Łączne potrącenia od brutto/przychodu po stronie ${personSide} — ${period}`, formatMoney(deductions))}
     </div>
-    <p class="result-note">Wartości są zaokrąglone do groszy i przeliczone dla okresu: ${periodLabel(state.period)}. Model ma charakter orientacyjny.</p>`;
+    <p class="result-note">Wartości są zaokrąglone do groszy i dotyczą okresu: ${period}. Całkowity koszt pracodawcy, gdy model go wylicza, jest kosztem po stronie pracodawcy i nie wchodzi do kwoty brutto ani netto. Model ma charakter orientacyjny.</p>`;
   printSummaryButton.hidden = false;
   renderAssumptionsPanel(state);
 }
@@ -307,16 +309,16 @@ function renderComparison(items, state) {
     const bounded = Math.max(0, Math.min(100, ratio));
     return `<tr${item.label === contractLabels[state.contractType] ? ' class="is-active"' : ''}>
       <td data-label="Typ umowy"><strong>${item.label}</strong></td>
-      <td data-label="Brutto">${formatMoney(gross)}</td>
-      <td data-label="Netto">${formatMoney(net)}</td>
-      <td data-label="Obciążenie">${item.effectiveBurden.toFixed(2)}%</td>
-      <td data-label="Relacja"><div class="bar"><span class="bar__track"><span class="bar__fill" style="width:${bounded.toFixed(2)}%"></span></span><strong>${bounded.toFixed(0)}%</strong></div></td>
+      <td data-label="Kwota brutto / przychód — wybrany okres">${formatMoney(gross)}</td>
+      <td data-label="Kwota netto po potrąceniach — wybrany okres">${formatMoney(net)}</td>
+      <td data-label="Obciążenie od brutto/przychodu">${item.effectiveBurden.toFixed(2)}%</td>
+      <td data-label="Wynik względem lidera rankingu"><div class="bar"><span class="bar__track"><span class="bar__fill" style="width:${bounded.toFixed(2)}%"></span></span><strong>${bounded.toFixed(0)}%</strong></div></td>
     </tr>`;
   }).join('');
 
   comparisonContext.textContent = state.direction === 'grossToNet'
-    ? `Ranking dla tej samej kwoty brutto, ${periodLabel(state.period)} — najwyższy szacunkowy wynik netto jest najwyżej.`
-    : `Ranking dla tej samej kwoty netto, ${periodLabel(state.period)} — najniższa wymagana kwota brutto/przychodu jest najwyżej.`;
+    ? `Ranking dla tej samej kwoty brutto/przychodu — ${periodLabel(state.period)}. Porównywana jest kwota netto po potrąceniach; najwyższa wartość jest najwyżej.`
+    : `Ranking dla tej samej docelowej kwoty netto — ${periodLabel(state.period)}. Porównywana jest wymagana kwota brutto/przychodu; najniższa wartość jest najwyżej.`;
 }
 
 function updateConditionalFields(state = readFormState()) {

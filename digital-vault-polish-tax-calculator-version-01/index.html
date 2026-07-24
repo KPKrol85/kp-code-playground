@@ -61,7 +61,7 @@
       <div class="hero__content">
         <p class="hero__badge">Digital Vault • Polska • 2026</p>
         <h1 class="hero__title">Kalkulator podatkowy i wynagrodzeń</h1>
-        <p class="hero__subtitle">Oblicz netto, brutto, koszt pracodawcy i porównaj najpopularniejsze formy współpracy w jednym szybkim widoku.</p>
+        <p class="hero__subtitle">Porównaj kwotę brutto/przychód i kwotę netto po potrąceniach. Koszt pracodawcy jest pokazywany osobno — nie jest częścią brutto ani netto.</p>
         <div class="hero__meta" aria-label="Zakres kalkulatora">
           <span>UoP</span>
           <span>Zlecenie</span>
@@ -90,7 +90,7 @@
             <input id="amount" name="amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Np. 10 000" aria-describedby="amount-helper amount-error" aria-errormessage="amount-error" aria-invalid="false" required>
             <span>PLN</span>
           </div>
-          <p id="amount-helper" class="form__helper">Podaj dodatnią kwotę brutto albo docelowe netto, zależnie od wybranego kierunku.</p>
+          <p id="amount-helper" class="form__helper">Podaj dodatnią kwotę brutto/przychód albo docelową kwotę netto, zależnie od kierunku. Kwota dotyczy wybranego okresu: miesiąca albo roku.</p>
           <p id="amount-error" class="form__error" aria-live="polite"></p>
           <div class="quick-values" aria-label="Szybkie kwoty">
             <button type="button" data-amount="6000">6 000</button>
@@ -108,12 +108,13 @@
           </div>
         </fieldset>
 
-        <fieldset class="form__fieldset">
+        <fieldset class="form__fieldset" aria-describedby="period-help">
           <legend>Okres</legend>
           <div class="segmented">
             <label><input type="radio" name="period" value="monthly" checked><span>Miesięcznie</span></label>
             <label><input type="radio" name="period" value="yearly"><span>Rocznie</span></label>
           </div>
+          <p id="period-help" class="form__helper">W trybie rocznym formularz dzieli kwotę przez 12, stosuje model miesięczny, a następnie mnoży wynik przez 12.</p>
         </fieldset>
 
         <div class="form__field">
@@ -132,17 +133,17 @@
           <legend>Opcje dodatkowe</legend>
           <div class="option-grid">
             <label class="check-card"><input type="checkbox" id="under26" aria-describedby="under26-help"><span>Wiek poniżej 26 lat</span><small id="under26-help">Uproszczona ulga dla młodych dla wybranych przychodów; nie dotyczy dzieła w tym modelu.</small></label>
-            <label class="check-card"><input type="checkbox" id="ppk" aria-describedby="ppk-help"><span>Uczestnictwo w PPK</span><small id="ppk-help">Stosowane dla umowy o pracę; przy B2B i dziele nie zmienia wyniku.</small></label>
-            <label class="check-card"><input type="checkbox" id="pit2" aria-describedby="pit2-help" checked><span>Miesięczne pomniejszenie PIT-2</span><small id="pit2-help">Uproszczone miesięczne zmniejszenie zaliczki PIT; nie działa dla B2B, zlecenia i dzieła.</small></label>
+            <label class="check-card"><input type="checkbox" id="ppk" aria-describedby="ppk-help"><span>Uczestnictwo w PPK (Pracowniczych Planach Kapitałowych)</span><small id="ppk-help">Dla umowy o pracę model odejmuje wpłatę PPK po stronie pracownika od netto i uwzględnia wpłatę pracodawcy wyłącznie w osobnym koszcie pracodawcy. Przy B2B i dziele nie zmienia wyniku.</small></label>
+            <label class="check-card"><input type="checkbox" id="pit2" aria-describedby="pit2-help" checked><span>Miesięczne pomniejszenie zaliczki PIT</span><small id="pit2-help">PIT to podatek dochodowy od osób fizycznych. Model stosuje uproszczone miesięczne pomniejszenie zaliczki PIT; nie działa ono dla B2B, zlecenia i dzieła.</small></label>
           </div>
           <div class="form__field">
-            <label for="deductibleCosts">Koszty uzyskania przychodu</label>
+            <label for="deductibleCosts">Koszty uzyskania przychodu (KUP)</label>
             <select id="deductibleCosts" aria-describedby="deductibleCosts-help">
               <option value="standard">standardowe</option>
               <option value="elevated">podwyższone</option>
               <option value="fifty">50%</option>
             </select>
-            <p id="deductibleCosts-help" class="form__helper">KUP wpływa na UoP, zlecenie i dzieło; dla B2B koszty działalności nie są modelowane.</p>
+            <p id="deductibleCosts-help" class="form__helper">KUP to koszty uzyskania przychodu używane przez model przy obliczaniu PIT. Wpływają na UoP, zlecenie i dzieło; dla B2B koszty działalności nie są modelowane.</p>
           </div>
         </fieldset>
 
@@ -150,18 +151,18 @@
           <legend>Opcje B2B</legend>
           <label class="check-card check-card--inline"><input type="checkbox" id="vatPayer" aria-describedby="vatPayer-help" checked><span>Płatnik VAT</span><small id="vatPayer-help">Informacyjnie — VAT nie zmienia wyniku w obecnej wersji kalkulatora.</small></label>
           <div class="form__field">
-            <label for="zusType">Typ ZUS</label>
+            <label for="zusType">Typ składek ZUS</label>
             <select id="zusType" aria-describedby="zusType-help">
               <option value="full">pełny ZUS</option>
               <option value="preferential">preferencyjny ZUS</option>
               <option value="starter">ulga na start</option>
               <option value="custom">własne wartości</option>
             </select>
-            <p id="zusType-help" class="form__helper">Typ ZUS działa tylko dla form B2B i wpływa na składki społeczne oraz zdrowotne.</p>
+            <p id="zusType-help" class="form__helper">ZUS oznacza Zakład Ubezpieczeń Społecznych. Ten wybór działa tylko dla B2B i określa modelowane miesięczne składki społeczne oraz zdrowotne po stronie osoby prowadzącej działalność.</p>
           </div>
           <div class="form__grid" id="custom-zus" hidden>
-            <div class="form__field"><label for="customSocial">Składki społeczne (własne)</label><input type="number" id="customSocial" min="0" step="0.01" value="0" aria-describedby="customSocial-help customSocial-error" aria-errormessage="customSocial-error"><p id="customSocial-help" class="form__helper">Wpisz miesięczną wartość społeczną dla B2B, jeśli znasz własną podstawę.</p><p id="customSocial-error" class="form__error" aria-live="polite"></p></div>
-            <div class="form__field"><label for="customHealth">Składka zdrowotna (własna)</label><input type="number" id="customHealth" min="0" step="0.01" value="0" aria-describedby="customHealth-help customHealth-error" aria-errormessage="customHealth-error"><p id="customHealth-help" class="form__helper">Własna miesięczna zdrowotna zastępuje wartość wyliczoną przez uproszczony model.</p><p id="customHealth-error" class="form__error" aria-live="polite"></p></div>
+            <div class="form__field"><label for="customSocial">Własne składki społeczne ZUS — miesięcznie</label><input type="number" id="customSocial" min="0" step="0.01" value="0" aria-describedby="customSocial-help customSocial-error" aria-errormessage="customSocial-error"><p id="customSocial-help" class="form__helper">Wpisz miesięczną kwotę składek społecznych po stronie B2B. Zastępuje ona wartość społeczną używaną przez model.</p><p id="customSocial-error" class="form__error" aria-live="polite"></p></div>
+            <div class="form__field"><label for="customHealth">Własna składka zdrowotna — miesięcznie</label><input type="number" id="customHealth" min="0" step="0.01" value="0" aria-describedby="customHealth-help customHealth-error" aria-errormessage="customHealth-error"><p id="customHealth-help" class="form__helper">Wpisz miesięczną składkę zdrowotną po stronie B2B. Zastępuje ona wartość wyliczoną przez uproszczony model.</p><p id="customHealth-error" class="form__error" aria-live="polite"></p></div>
           </div>
         </fieldset>
         <div class="form__actions">
@@ -188,12 +189,12 @@
           <p>Krok 3</p>
           <h2 id="comparison-title">Porównanie typów umów</h2>
         </div>
-        <span id="comparison-context">Po wpisaniu kwoty zobaczysz ranking netto.</span>
+        <span id="comparison-context">Po wpisaniu kwoty zobaczysz ranking według kwoty netto albo wymaganej kwoty brutto/przychodu.</span>
       </div>
       <div class="table-wrapper">
         <table class="comparison-table" id="comparison-table">
-          <caption>Porównanie szacunkowego brutto, netto i obciążenia dla dostępnych form współpracy.</caption>
-          <thead><tr><th>Typ umowy</th><th>Brutto</th><th>Netto</th><th>Obciążenie</th><th>Relacja</th></tr></thead>
+          <caption>Porównanie dla wybranego okresu: kwoty brutto/przychodu, kwoty netto po potrąceniach oraz obciążenia w modelu.</caption>
+          <thead><tr><th scope="col">Typ umowy</th><th scope="col">Kwota brutto / przychód — wybrany okres</th><th scope="col">Kwota netto po potrąceniach — wybrany okres</th><th scope="col">Obciążenie od brutto/przychodu</th><th scope="col">Wynik względem lidera rankingu</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
