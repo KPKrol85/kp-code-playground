@@ -57,7 +57,7 @@ Verification note: `npm run test:ui` passed and verifies the focused amount-vali
 - [ ] Add source-confirmed or specialist-verified reference cases for all calculation paths.
 - [ ] Add tests for thresholds, boundary values, rounding, reliefs, PPK, PIT-2, KUP, ZUS types, and the annual model.
 - [x] Keep current-behavior characterization tests separate from future substantive-accuracy tests.
-- [ ] Add regressions for every corrected calculation defect.
+- For every corrected calculation defect, add a focused regression test.
 - [x] Add tests for form interactions, URL restoration, reset, and result formatting with a lightweight dependency-free DOM harness.
 
 ### 4. Accessibility and Interaction Quality
