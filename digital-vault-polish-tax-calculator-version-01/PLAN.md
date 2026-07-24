@@ -19,7 +19,7 @@ The project is a static, working calculator/prototype portfolio project built wi
 - [x] DOM/UI tests cover the current core calculation form behaviors in a dependency-free Node.js harness.
 - [x] Automated static accessibility checks cover the current HTML structure and key ARIA relationships.
 
-Verification note: `npm run test:calculations` verifies current-behavior characterization snapshots for all six calculation paths in both directions, applicable options, period transformations, finite/large/invalid inputs, repeated calculation stability, and displayed cent precision. It freezes the present implementation only; it does not verify tax accuracy or compliance. `npm run test:ui` verifies core UI state transitions with a small DOM shim and checks the static document for labels, group names, error associations, live regions, native keyboard-operable controls, duplicate IDs, ARIA references, and baseline document structure. It does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
+Verification note: `npm run test:ui` passed and verifies the focused amount-validation flow in the dependency-free DOM harness: empty, zero, negative, malformed/non-numeric, and unusually large values; retained input; focus return on invalid submission; clearing stale results, print control, and comparison content; and successful recalculation after correction. It also checks the static amount-error association. This focused check does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
 
 ## Known Limitations
 
@@ -47,10 +47,10 @@ Verification note: `npm run test:calculations` verifies current-behavior charact
 
 ### 2. Validation and Error Handling
 
-- [ ] Test zero, negative, empty, incorrectly formatted, and unusually large values.
+- [x] Test zero, negative, empty, incorrectly formatted, and unusually large values.
 - [ ] Verify ranges and formatting for custom B2B contributions and the behavior of options unsupported by a given contract.
-- [ ] Provide understandable errors at the field and preserve entered values after an error.
-- [ ] Ensure stale results are not visible after an invalid calculation.
+- [x] Provide understandable errors at the field and preserve entered values after an error.
+- [x] Ensure stale results are not visible after an invalid calculation.
 
 ### 3. Tests and Verification
 
