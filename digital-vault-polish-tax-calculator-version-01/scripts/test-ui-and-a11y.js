@@ -38,6 +38,7 @@ function runStaticAccessibilityChecks() {
 
   assert.match(html, /<p id="amount-error"[^>]*aria-live="polite"/, 'amount error must be a polite live region');
   assert.match(html, /<input id="amount"[^>]*aria-describedby="[^"]*amount-error/, 'amount input must describe its error');
+  assert.match(html, /<input id="amount"[^>]*aria-errormessage="amount-error"/, 'amount input must associate its error message');
   assert.match(html, /<div id="results"[^>]*aria-live="polite"/, 'results must be a polite live region');
   assert.equal((html.match(/<fieldset\b/g) || []).length, (html.match(/<legend>/g) || []).length, 'each fieldset must have a legend');
   assert.match(html, /<html lang="pl">/, 'document language is required');
@@ -55,6 +56,7 @@ class Element {
     this.style = {}; this.classList = { add() {}, remove() {}, contains() { return false; }, toggle() {} };
   }
   setAttribute(name, value) { this.attributes[name] = String(value); }
+  focus() { document.activeElement = this; }
   addEventListener(type, listener) { (this.listeners[type] ||= []).push(listener); }
   emit(type) { for (const listener of this.listeners[type] || []) listener({ preventDefault() {} }); }
 }
@@ -80,6 +82,7 @@ form.querySelector = (selector) => {
 
 globalThis.document = {
   documentElement: new Element('root'),
+  activeElement: null,
   getElementById(id) { return id === 'calculator-form' ? form : id === 'common-options' ? commonOptions : elements[id]; },
   querySelector(selector) { return selector === '#comparison-table tbody' ? comparisonBody : null; },
   querySelectorAll() { return []; },
@@ -104,10 +107,34 @@ await test('valid gross-to-net submission renders formatted results and updates 
   assert.match(elements.results.innerHTML, /Netto miesięcznie/); assert.match(elements.results.innerHTML, /zł/);
   assert.equal(elements['print-summary'].hidden, false); assert.match(comparisonBody.innerHTML, /<tr/); assert.match(window.location.search, /direction=grossToNet/);
 });
-await test('empty and invalid amounts announce an error and remove stale results', () => {
+await test('empty submission keeps focus at the amount field and clears stale result content', () => {
+  elements.amount.value = '10000'; submit();
+  assert.match(elements.results.innerHTML, /Netto miesięcznie/); assert.match(comparisonBody.innerHTML, /<tr/);
+
   elements.amount.value = ''; submit();
-  assert.match(elements['amount-error'].textContent, /Wprowadź kwotę/); assert.equal(elements.amount.attributes['aria-invalid'], 'true'); assert.match(elements.results.innerHTML, /Wyniki i ranking są ukryte/); assert.equal(elements['print-summary'].hidden, true);
-  elements.amount.value = '-5'; submit(); assert.match(elements['amount-error'].textContent, /dodatnią liczbą/);
+  assert.match(elements['amount-error'].textContent, /Wprowadź kwotę/); assert.equal(elements.amount.attributes['aria-invalid'], 'true'); assert.equal(document.activeElement, elements.amount);
+  assert.match(elements.results.innerHTML, /Wyniki i ranking są ukryte/); assert.doesNotMatch(comparisonBody.innerHTML, /umowa o pracę/); assert.equal(elements['print-summary'].hidden, true);
+});
+await test('zero, negative, malformed, and unusually large values show specific field errors without changing the entered value', () => {
+  const cases = [
+    ['0', /większa od zera/],
+    ['-5', /większa od zera/],
+    ['nie-liczba', /formacie liczbowym/],
+    ['100000001', /zbyt duża/],
+  ];
+
+  cases.forEach(([value, message]) => {
+    elements.amount.value = value; submit();
+    assert.equal(elements.amount.value, value); assert.match(elements['amount-error'].textContent, message); assert.equal(elements.amount.attributes['aria-invalid'], 'true');
+    assert.equal(document.activeElement, elements.amount); assert.match(elements.results.innerHTML, /Wyniki i ranking są ukryte/); assert.doesNotMatch(comparisonBody.innerHTML, /umowa o pracę/);
+  });
+});
+await test('a corrected amount clears the error and calculates again after an invalid submission', () => {
+  elements.amount.value = '-1'; submit();
+  assert.match(elements.results.innerHTML, /Wyniki i ranking są ukryte/);
+  elements.amount.value = '10000'; submit();
+  assert.equal(elements['amount-error'].textContent, ''); assert.equal(elements.amount.attributes['aria-invalid'], 'false');
+  assert.match(elements.results.innerHTML, /Netto miesięcznie/); assert.match(comparisonBody.innerHTML, /umowa o pracę/);
 });
 await test('gross-to-net and net-to-gross directions update their result description', () => {
   elements.amount.value = '10000'; direction.grossToNet.checked = false; direction.netToGross.checked = true; submit();

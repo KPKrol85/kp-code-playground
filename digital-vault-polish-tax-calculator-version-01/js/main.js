@@ -156,8 +156,13 @@ function validateAmount(value) {
     setAmountValidity(true);
     return false;
   }
-  if (!Number.isFinite(value) || value <= 0) {
-    amountError.textContent = 'Kwota musi być dodatnią liczbą.';
+  if (!Number.isFinite(value)) {
+    amountError.textContent = 'Wprowadź dodatnią kwotę w formacie liczbowym.';
+    setAmountValidity(true);
+    return false;
+  }
+  if (value <= 0) {
+    amountError.textContent = 'Kwota musi być większa od zera.';
     setAmountValidity(true);
     return false;
   }
@@ -339,7 +344,11 @@ function calculateAndRender({ shouldValidate = true } = {}) {
   updateWarning(state);
 
   if (!shouldValidate && amountInput.value.trim() === '') return setEmptyState();
-  if (!validateAmount(state.amount)) { setInvalidState(); return; }
+  if (!validateAmount(state.amount)) {
+    setInvalidState();
+    if (shouldValidate) amountInput.focus();
+    return;
+  }
 
   const monthlyAmount = annualize(state.amount, state.period);
   const result = state.direction === 'grossToNet' ? grossToNet(state.contractType, monthlyAmount, state.options) : netToGross(state.contractType, monthlyAmount, state.options);
