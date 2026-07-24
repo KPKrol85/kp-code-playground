@@ -17,7 +17,11 @@ The project is a static, working calculator/prototype portfolio project built wi
 - [x] Light, dark, and system themes; responsive layout; focus styles; `aria-live`; semantic form groups; and a reduced-motion rule.
 - [x] Dependency-free Node.js harness for calculation logic.
 - [ ] The accuracy of values and formulas, and their compliance with actual Polish rules, has not been verified in the repository.
-- [ ] There are no DOM/UI tests, automated accessibility audits, or saved calculation scenarios.
+- [x] DOM/UI tests cover the current core calculation form behaviors in a dependency-free Node.js harness.
+- [x] Automated static accessibility checks cover the current HTML structure and key ARIA relationships.
+- [ ] There are no saved calculation scenarios.
+
+Verification note: `npm run test:ui` verifies core UI state transitions with a small DOM shim and checks the static document for labels, group names, error associations, live regions, native keyboard-operable controls, duplicate IDs, ARIA references, and baseline document structure. It does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
 
 ## Development Principles
 
@@ -50,10 +54,11 @@ The project is a static, working calculator/prototype portfolio project built wi
 - [ ] Add source-confirmed or specialist-verified reference cases for all calculation paths.
 - [ ] Add tests for thresholds, boundary values, rounding, reliefs, PPK, PIT-2, KUP, ZUS types, and the annual model.
 - [ ] Add regressions for every corrected calculation defect and separate current-behavior tests from substantive-accuracy tests.
-- [ ] Add tests for form interactions, URL restoration, reset, and result formatting if a lightweight browser runner is selected.
+- [x] Add tests for form interactions, URL restoration, reset, and result formatting with a lightweight dependency-free DOM harness.
 
 ### 4. Accessibility and Interaction Quality
 
+- [x] Add automated static checks for accessible labels, group names, error associations, live regions, keyboard-operable native controls, duplicate IDs, ARIA references, and required document structure.
 - [ ] Complete a keyboard-only walkthrough and review focus order, reset behavior, and recalculation.
 - [ ] Perform a screen-reader smoke test of labels, descriptions, errors, result updates, assumptions, and the comparison table.
 - [ ] Check contrast in both themes and whether the summary remains understandable without visual formatting.
