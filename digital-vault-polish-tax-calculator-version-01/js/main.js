@@ -18,6 +18,10 @@ const warningEl = document.getElementById('context-warning');
 const b2bOptions = document.getElementById('b2b-options');
 const customZus = document.getElementById('custom-zus');
 const amountError = document.getElementById('amount-error');
+const customSocialInput = document.getElementById('customSocial');
+const customHealthInput = document.getElementById('customHealth');
+const customSocialError = document.getElementById('customSocial-error');
+const customHealthError = document.getElementById('customHealth-error');
 const contractTypeSelect = document.getElementById('contractType');
 const commonOptions = document.getElementById('common-options');
 const assumptionsPanel = document.getElementById('assumptions-panel');
@@ -176,6 +180,30 @@ function validateAmount(value) {
   return true;
 }
 
+function setCustomContributionValidity(input, error, message = '') {
+  input.setAttribute('aria-invalid', String(Boolean(message)));
+  error.textContent = message;
+}
+
+function validateCustomContributions(state) {
+  if (!state.contractType.startsWith('b2b') || state.options.zusType !== 'custom') {
+    setCustomContributionValidity(customSocialInput, customSocialError);
+    setCustomContributionValidity(customHealthInput, customHealthError);
+    return true;
+  }
+  const fields = [[customSocialInput, customSocialError, state.options.customSocial], [customHealthInput, customHealthError, state.options.customHealth]];
+  let isValid = true;
+  fields.forEach(([input, error, value]) => {
+    let message = '';
+    if (input.value.trim() === '') message = 'Wprowadź miesięczną kwotę składki.';
+    else if (!Number.isFinite(value)) message = 'Wprowadź kwotę w formacie liczbowym.';
+    else if (value < 0) message = 'Kwota składki nie może być ujemna.';
+    setCustomContributionValidity(input, error, message);
+    if (message) isValid = false;
+  });
+  return isValid;
+}
+
 function renderAssumptionsPanel(state = readFormState()) {
   const isB2B = state.contractType.startsWith('b2b');
   const active = [
@@ -308,10 +336,22 @@ function updateConditionalFields(state = readFormState()) {
   pit2Input.disabled = !isEmployment;
   deductibleCostsSelect.disabled = isB2B;
 
+  document.getElementById('vatPayer').disabled = !isB2B;
+  document.getElementById('zusType').disabled = !isB2B;
+  customSocialInput.disabled = !isB2B || state.options.zusType !== 'custom';
+  customHealthInput.disabled = !isB2B || state.options.zusType !== 'custom';
+
   if (under26Input.disabled) under26Input.checked = false;
   if (ppkInput.disabled) ppkInput.checked = false;
+  if (pit2Input.disabled) pit2Input.checked = false;
+  if (deductibleCostsSelect.disabled) deductibleCostsSelect.value = deductibleCostsSelect.defaultValue;
+  if (!isB2B) {
+    document.getElementById('vatPayer').checked = false;
+    document.getElementById('zusType').value = document.getElementById('zusType').defaultValue;
+  }
 
-  customZus.hidden = state.options.zusType !== 'custom';
+  customZus.hidden = !isB2B || state.options.zusType !== 'custom';
+  if (!isB2B || state.options.zusType !== 'custom') validateCustomContributions(readFormState());
 }
 
 function updateWarning(state) {
@@ -349,6 +389,11 @@ function calculateAndRender({ shouldValidate = true } = {}) {
     if (shouldValidate) amountInput.focus();
     return;
   }
+  if (!validateCustomContributions(state)) {
+    setInvalidState();
+    if (shouldValidate) (customSocialError.textContent ? customSocialInput : customHealthInput).focus();
+    return;
+  }
 
   const monthlyAmount = annualize(state.amount, state.period);
   const result = state.direction === 'grossToNet' ? grossToNet(state.contractType, monthlyAmount, state.options) : netToGross(state.contractType, monthlyAmount, state.options);
@@ -375,11 +420,18 @@ function applyStateFromQuery() {
     const value = params.get(id);
     if (input && value !== null) input.checked = value === '1' || value === 'true';
   });
-  ['deductibleCosts', 'zusType', 'customSocial', 'customHealth'].forEach((id) => {
+  ['deductibleCosts'].forEach((id) => {
     const el = document.getElementById(id);
     const value = params.get(id);
     if (el && value !== null) el.value = value;
   });
+  if (contractTypeSelect.value.startsWith('b2b')) {
+    ['zusType', 'customSocial', 'customHealth'].forEach((id) => {
+      const el = document.getElementById(id);
+      const value = params.get(id);
+      if (el && value !== null) el.value = value;
+    });
+  }
   return true;
 }
 

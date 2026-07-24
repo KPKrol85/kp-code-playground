@@ -39,6 +39,12 @@ function runStaticAccessibilityChecks() {
   assert.match(html, /<p id="amount-error"[^>]*aria-live="polite"/, 'amount error must be a polite live region');
   assert.match(html, /<input id="amount"[^>]*aria-describedby="[^"]*amount-error/, 'amount input must describe its error');
   assert.match(html, /<input id="amount"[^>]*aria-errormessage="amount-error"/, 'amount input must associate its error message');
+  ['customSocial', 'customHealth'].forEach((id) => {
+    const input = html.match(new RegExp(`<input[^>]*\\bid="${id}"[^>]*>`))?.[0] || '';
+    assert.match(input, new RegExp(`aria-describedby="[^"]*${id}-error`), `${id} must describe its error`);
+    assert.match(input, new RegExp(`aria-errormessage="${id}-error"`), `${id} must associate its error message`);
+    assert.match(html, new RegExp(`<p id="${id}-error"[^>]*aria-live="polite"`), `${id} error must be a polite live region`);
+  });
   assert.match(html, /<div id="results"[^>]*aria-live="polite"/, 'results must be a polite live region');
   assert.equal((html.match(/<fieldset\b/g) || []).length, (html.match(/<legend>/g) || []).length, 'each fieldset must have a legend');
   assert.match(html, /<html lang="pl">/, 'document language is required');
@@ -64,7 +70,7 @@ class Element {
 const elements = Object.fromEntries([
   ['amount', { value: '' }], ['amount-error', {}], ['results', {}], ['comparison-context', {}], ['context-warning', {}], ['b2b-options', {}], ['custom-zus', {}],
   ['contractType', { value: 'employment', defaultValue: 'employment' }], ['under26', {}], ['ppk', {}], ['pit2', { checked: true }], ['deductibleCosts', { value: 'standard', defaultValue: 'standard' }],
-  ['vatPayer', { checked: true }], ['zusType', { value: 'full', defaultValue: 'full' }], ['customSocial', { value: '0' }], ['customHealth', { value: '0' }], ['assumptions-panel', {}], ['print-summary', {}],
+  ['vatPayer', { checked: true }], ['zusType', { value: 'full', defaultValue: 'full' }], ['customSocial', { value: '0' }], ['customHealth', { value: '0' }], ['customSocial-error', {}], ['customHealth-error', {}], ['assumptions-panel', {}], ['print-summary', {}],
 ].map(([id, options]) => [id, new Element(id, options)]));
 const direction = { grossToNet: new Element('grossToNet', { checked: true }), netToGross: new Element('netToGross') };
 const period = { monthly: new Element('monthly', { checked: true }), yearly: new Element('yearly') };
@@ -77,6 +83,7 @@ form.querySelector = (selector) => {
   if (!match) return null;
   const group = match[1] === 'direction' ? direction : period;
   const input = group[match[2]];
+  if (!input) return null;
   return { set checked(value) { if (value) Object.values(group).forEach((item) => { item.checked = false; }); input.checked = value; } };
 };
 
@@ -141,6 +148,30 @@ await test('gross-to-net and net-to-gross directions update their result descrip
   assert.match(elements.results.innerHTML, /netto → brutto/); assert.match(elements['comparison-context'].textContent, /najniższa wymagana/);
   direction.grossToNet.checked = true; direction.netToGross.checked = false; submit(); assert.match(elements.results.innerHTML, /brutto → netto/);
 });
+await test('custom B2B contributions validate their own fields, retain entered text, and recalculate after correction', () => {
+  resetToDefaults(); elements.amount.value = '10000'; elements.contractType.value = 'b2bLinear'; elements.zusType.value = 'custom';
+  elements.customSocial.value = ''; elements.customHealth.value = '100'; submit();
+  assert.match(elements['customSocial-error'].textContent, /Wprowadź miesięczną/); assert.equal(elements.customSocial.value, ''); assert.equal(elements.customSocial.attributes['aria-invalid'], 'true'); assert.equal(document.activeElement, elements.customSocial);
+  assert.match(elements.results.innerHTML, /Wyniki i ranking są ukryte/);
+
+  [['0', '0'], ['123.45', '67,89'], ['999999999999', '1']].forEach(([social, health]) => {
+    elements.customSocial.value = social; elements.customHealth.value = health; submit();
+    assert.equal(elements['customSocial-error'].textContent, ''); assert.equal(elements['customHealth-error'].textContent, ''); assert.match(elements.results.innerHTML, /B2B podatek liniowy/);
+  });
+  elements.customSocial.value = '-1'; elements.customHealth.value = 'nie-liczba'; submit();
+  assert.match(elements['customSocial-error'].textContent, /nie może być ujemna/); assert.match(elements['customHealth-error'].textContent, /formacie liczbowym/);
+  assert.equal(elements.customSocial.value, '-1'); assert.equal(elements.customHealth.value, 'nie-liczba');
+  elements.customSocial.value = '123.45'; elements.customHealth.value = '67,89'; submit();
+  assert.match(elements.results.innerHTML, /B2B podatek liniowy/); assert.equal(elements.customSocial.attributes['aria-invalid'], 'false');
+});
+await test('contract switching clears unsupported active options and stale custom errors', () => {
+  elements.contractType.value = 'b2bScale'; elements.zusType.value = 'custom'; elements.customSocial.value = '-5'; elements.customHealth.value = '10'; elements.amount.value = '10000'; submit();
+  assert.notEqual(elements['customSocial-error'].textContent, '');
+  elements.under26.checked = true; elements.ppk.checked = true; elements.pit2.checked = true; elements.deductibleCosts.value = 'fifty'; elements.contractType.value = 'specificWork'; form.emit('change');
+  assert.equal(elements.zusType.value, 'full'); assert.equal(elements.vatPayer.checked, false); assert.equal(elements.under26.checked, false); assert.equal(elements.ppk.checked, false); assert.equal(elements.pit2.checked, false); assert.equal(elements.deductibleCosts.value, 'fifty');
+  assert.equal(elements['customSocial-error'].textContent, ''); assert.equal(elements['custom-zus'].hidden, true); assert.equal(elements.zusType.disabled, true);
+  elements.contractType.value = 'b2bScale'; form.emit('change'); assert.equal(elements.zusType.value, 'full'); assert.equal(elements.deductibleCosts.value, 'standard'); assert.equal(elements.zusType.disabled, false); assert.match(elements.results.innerHTML, /B2B skala podatkowa/);
+});
 await test('reset clears state, URL, and visible results', () => {
   elements.amount.value = '6000'; submit(); resetToDefaults(); form.emit('reset'); timers.splice(0).forEach((callback) => callback());
   assert.equal(window.location.search, ''); assert.equal(elements['amount-error'].textContent, ''); assert.match(elements.results.innerHTML, /Wpisz kwotę/);
@@ -151,4 +182,10 @@ await test('supported URL state restores options and calculates a yearly net-to-
   await import(`../js/main.js?restore=${Date.now()}`);
   assert.equal(elements.contractType.value, 'b2bLinear'); assert.equal(period.yearly.checked, true); assert.equal(direction.netToGross.checked, true);
   assert.equal(elements.customSocial.value, '100'); assert.match(elements.results.innerHTML, /Netto rocznie/); assert.match(elements['comparison-context'].textContent, /najniższa wymagana/);
+});
+await test('incompatible URL B2B options are ignored for a non-B2B contract', async () => {
+  window.location.search = '?amount=10000&contractType=employment&zusType=custom&customSocial=-5&customHealth=not-a-number';
+  await import(`../js/main.js?incompatible=${Date.now()}`);
+  assert.equal(elements.contractType.value, 'employment'); assert.equal(elements.zusType.value, 'full'); assert.equal(elements['custom-zus'].hidden, true);
+  assert.equal(elements['customSocial-error'].textContent, ''); assert.match(elements.results.innerHTML, /umowa o pracę/);
 });

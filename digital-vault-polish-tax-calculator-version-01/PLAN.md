@@ -19,7 +19,7 @@ The project is a static, working calculator/prototype portfolio project built wi
 - [x] DOM/UI tests cover the current core calculation form behaviors in a dependency-free Node.js harness.
 - [x] Automated static accessibility checks cover the current HTML structure and key ARIA relationships.
 
-Verification note: `npm run test:ui` passed and verifies the focused amount-validation flow in the dependency-free DOM harness: empty, zero, negative, malformed/non-numeric, and unusually large values; retained input; focus return on invalid submission; clearing stale results, print control, and comparison content; and successful recalculation after correction. It also checks the static amount-error association. This focused check does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
+Verification note: `npm run test:ui` passed and verifies the focused amount-validation and B2B custom-contribution flow in the dependency-free DOM harness: empty, zero, negative, malformed/non-numeric, and unusually large values; retained input; focus return on invalid submission; clearing stale results, print control, and comparison content; successful recalculation after correction; custom B2B field error associations; contract-option cleanup; URL restoration; and reset behavior. Custom contribution checks are technical only and do not verify substantive Polish ZUS limits or eligibility. This focused check does not replace browser, keyboard-only, screen-reader, contrast, or responsive testing. Calculation accuracy and compliance remain unverified.
 
 ## Known Limitations
 
@@ -48,7 +48,7 @@ Verification note: `npm run test:ui` passed and verifies the focused amount-vali
 ### 2. Validation and Error Handling
 
 - [x] Test zero, negative, empty, incorrectly formatted, and unusually large values.
-- [ ] Verify ranges and formatting for custom B2B contributions and the behavior of options unsupported by a given contract.
+- [x] Validate formatting for custom B2B contributions with neutral technical checks (required, finite numeric, and non-negative), and clear options unsupported by the selected contract. Substantive Polish-law ZUS ranges and eligibility remain unverified.
 - [x] Provide understandable errors at the field and preserve entered values after an error.
 - [x] Ensure stale results are not visible after an invalid calculation.
 
