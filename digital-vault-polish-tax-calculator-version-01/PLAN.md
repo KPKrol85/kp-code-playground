@@ -28,11 +28,11 @@ Verification note: `npm run test:calculations` verifies current-behavior charact
 
 ## Development Principles
 
-- [ ] Do not present results as tax, legal, accounting, or financial advice.
-- [ ] Change data and formulas only after verification using reliable sources and after adding appropriate tests.
-- [ ] Keep rule data separate from calculation functions and interface rendering; retain the current boundaries of `tax-config.js`, `calculations.js`, `utils.js`, and `main.js`.
-- [ ] Document simplifications, sources, review date, rounding rules, and unsupported cases.
-- [ ] Protect privacy: do not transmit or save users' financial data by default.
+- Do not present results as tax, legal, accounting, or financial advice.
+- Change data and formulas only after verification using reliable sources and after adding appropriate tests.
+- Keep rule data separate from calculation functions and interface rendering; retain the current boundaries of `tax-config.js`, `calculations.js`, `utils.js`, and `main.js`.
+- Document simplifications, sources, review date, rounding rules, and unsupported cases.
+- Protect privacy: do not transmit or save users' financial data by default.
 
 ## Required Work Before Positioning as a Reliable Calculator
 
