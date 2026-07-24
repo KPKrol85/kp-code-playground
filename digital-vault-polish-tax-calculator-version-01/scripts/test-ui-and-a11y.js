@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+const mainSource = await readFile(new URL('../js/main.js', import.meta.url), 'utf8');
 
 async function test(name, callback) {
   try {
@@ -46,6 +47,13 @@ function runStaticAccessibilityChecks() {
     assert.match(html, new RegExp(`<p id="${id}-error"[^>]*aria-live="polite"`), `${id} error must be a polite live region`);
   });
   assert.match(html, /<div id="results"[^>]*aria-live="polite"/, 'results must be a polite live region');
+  assert.match(html, /PPK \(Pracowniczych Planach Kapitałowych\)/, 'PPK must be expanded in visible form text');
+  assert.match(html, /PIT to podatek dochodowy od osób fizycznych/, 'PIT must be explained in visible form text');
+  assert.match(html, /KUP to koszty uzyskania przychodu/, 'KUP must be explained in visible form text');
+  assert.match(html, /ZUS oznacza Zakład Ubezpieczeń Społecznych/, 'ZUS must be explained in visible form text');
+  assert.match(mainSource, /Całkowity koszt pracodawcy — \$\{period\}/, 'result label must identify employer cost and its period');
+  assert.match(html, /Kwota netto po potrąceniach — wybrany okres/, 'comparison header must identify net amount and period');
+  assert.match(html, /aria-describedby="period-help"/, 'period choice must describe annual conversion');
   assert.equal((html.match(/<fieldset\b/g) || []).length, (html.match(/<legend>/g) || []).length, 'each fieldset must have a legend');
   assert.match(html, /<html lang="pl">/, 'document language is required');
   assert.match(html, /<title>[^<]+<\/title>/, 'document title is required');
@@ -109,14 +117,14 @@ function submit() { form.emit('submit'); }
 function resetToDefaults() { Object.values(elements).forEach((element) => { element.value = element.defaultValue; element.checked = element.defaultChecked; }); direction.grossToNet.checked = true; direction.netToGross.checked = false; period.monthly.checked = true; period.yearly.checked = false; }
 
 await test('static accessibility and document checks pass', runStaticAccessibilityChecks);
-await test('valid gross-to-net submission renders formatted results and updates the URL', () => {
+await test('valid gross-to-net submission renders period-labelled results and updates the URL', () => {
   elements.amount.value = '10000'; submit();
-  assert.match(elements.results.innerHTML, /Netto miesięcznie/); assert.match(elements.results.innerHTML, /zł/);
+  assert.match(elements.results.innerHTML, /Kwota netto po potrąceniach — miesięcznie/); assert.match(elements.results.innerHTML, /Całkowity koszt pracodawcy — miesięcznie/); assert.match(elements.results.innerHTML, /zł/);
   assert.equal(elements['print-summary'].hidden, false); assert.match(comparisonBody.innerHTML, /<tr/); assert.match(window.location.search, /direction=grossToNet/);
 });
 await test('empty submission keeps focus at the amount field and clears stale result content', () => {
   elements.amount.value = '10000'; submit();
-  assert.match(elements.results.innerHTML, /Netto miesięcznie/); assert.match(comparisonBody.innerHTML, /<tr/);
+  assert.match(elements.results.innerHTML, /Kwota netto po potrąceniach — miesięcznie/); assert.match(comparisonBody.innerHTML, /<tr/);
 
   elements.amount.value = ''; submit();
   assert.match(elements['amount-error'].textContent, /Wprowadź kwotę/); assert.equal(elements.amount.attributes['aria-invalid'], 'true'); assert.equal(document.activeElement, elements.amount);
@@ -141,11 +149,11 @@ await test('a corrected amount clears the error and calculates again after an in
   assert.match(elements.results.innerHTML, /Wyniki i ranking są ukryte/);
   elements.amount.value = '10000'; submit();
   assert.equal(elements['amount-error'].textContent, ''); assert.equal(elements.amount.attributes['aria-invalid'], 'false');
-  assert.match(elements.results.innerHTML, /Netto miesięcznie/); assert.match(comparisonBody.innerHTML, /umowa o pracę/);
+  assert.match(elements.results.innerHTML, /Kwota netto po potrąceniach — miesięcznie/); assert.match(comparisonBody.innerHTML, /umowa o pracę/);
 });
 await test('gross-to-net and net-to-gross directions update their result description', () => {
   elements.amount.value = '10000'; direction.grossToNet.checked = false; direction.netToGross.checked = true; submit();
-  assert.match(elements.results.innerHTML, /netto → brutto/); assert.match(elements['comparison-context'].textContent, /najniższa wymagana/);
+  assert.match(elements.results.innerHTML, /netto → brutto/); assert.match(elements['comparison-context'].textContent, /wymagana kwota brutto\/przychodu/);
   direction.grossToNet.checked = true; direction.netToGross.checked = false; submit(); assert.match(elements.results.innerHTML, /brutto → netto/);
 });
 await test('custom B2B contributions validate their own fields, retain entered text, and recalculate after correction', () => {
@@ -181,7 +189,7 @@ await test('supported URL state restores options and calculates a yearly net-to-
   // Re-import with a cache-busting URL so module startup applies the query state.
   await import(`../js/main.js?restore=${Date.now()}`);
   assert.equal(elements.contractType.value, 'b2bLinear'); assert.equal(period.yearly.checked, true); assert.equal(direction.netToGross.checked, true);
-  assert.equal(elements.customSocial.value, '100'); assert.match(elements.results.innerHTML, /Netto rocznie/); assert.match(elements['comparison-context'].textContent, /najniższa wymagana/);
+  assert.equal(elements.customSocial.value, '100'); assert.match(elements.results.innerHTML, /Kwota netto po potrąceniach — rocznie/); assert.match(elements['comparison-context'].textContent, /najniższa wartość/);
 });
 await test('incompatible URL B2B options are ignored for a non-B2B contract', async () => {
   window.location.search = '?amount=10000&contractType=employment&zusType=custom&customSocial=-5&customHealth=not-a-number';

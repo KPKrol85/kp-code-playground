@@ -11,9 +11,9 @@ The current version can:
 - calculate a simplified gross → net conversion and estimate a net → gross amount;
 - select a monthly or annual period; annual mode divides the input by 12, applies the monthly model, and annualizes the result;
 - select an employment contract (`umowa o pracę`), mandate contract (`umowa zlecenie`), contract for specific work (`umowa o dzieło`), B2B under the tax scale, B2B with a flat tax, or B2B lump-sum taxation (`ryczałt`);
-- use the under-26 option, PPK, PIT-2, and deductible costs (KUP) when the interface permits them for the selected contract type;
-- select a ZUS preset for B2B or enter custom social and health contributions;
-- display net pay, gross pay, deductions, employer cost where the model calculates it, deduction details, and a comparison table;
+- use the under-26 option, PPK (Pracownicze Plany Kapitałowe), PIT-2, and deductible costs/KUP (koszty uzyskania przychodu) when the interface permits them for the selected contract type;
+- select a ZUS (Zakład Ubezpieczeń Społecznych) preset for B2B or enter custom **monthly** social and health contributions;
+- display the gross amount/revenue and net amount after deductions for the selected monthly or annual period, a breakdown of deductions on the person’s side, and employer cost only as a separate employer-side value where the model calculates it;
 - restore part of the calculation state from URL parameters, print a correctly calculated summary, and save only the theme preference in `localStorage`.
 
 ## Limitations and Assumptions
@@ -22,6 +22,8 @@ The current version can:
 - B2B does not model business expenses, VAT, accounting, leave, sickness benefits, or private insurance. The VAT payer switch is informational only and does not affect the result.
 - B2B lump-sum taxation always uses the 12% IT rate stored in the configuration; the interface does not provide a rate selection.
 - The mandate contract form does not offer voluntary sickness insurance. Custom B2B contributions are accepted as positive monthly amounts.
+- “Gross amount/revenue” and “net amount after deductions” are the values compared by the selected period. “Total deductions” is the modelled sum subtracted from gross/revenue on the person’s side: social and health contributions, PIT advance, and the person’s PPK payment. Employer cost is separate from both gross/revenue and net; for employment it includes the modelled employer-side contributions (including employer PPK when selected).
+- PIT means personal income tax in the interface; its displayed amount is the modelled PIT advance. KUP only describes the deductible-cost option used by this model and is not a statement of eligibility.
 - The result is not tax, legal, accounting, or financial advice. Before using a result for a real decision, verify the current rules using official sources or consult a professional.
 
 ## Technology and Setup
@@ -45,7 +47,7 @@ npm run test:calculations
 npm run test:ui
 ```
 
-`test:ui` is a dependency-free Node.js DOM shim and static accessibility check. It covers core form submission, validation, stale-result clearing, directions, reset, URL restoration, result updates, and basic structural/accessibility regressions. It is not a browser or assistive-technology audit. Neither test validates tax rules against official examples.
+`test:ui` is a dependency-free Node.js DOM shim and static accessibility check. It covers core form submission, validation, stale-result clearing, directions, reset, URL restoration, period-labelled result updates, terminology/ARIA structural regressions, and basic accessibility regressions. It is not a browser or assistive-technology audit. Neither test validates tax rules against official examples.
 
 ## Project Structure
 
